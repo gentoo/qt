@@ -13,8 +13,6 @@
 # Based on the qt4-build eclass by Caleb Tennis <caleb@gentoo.org>
 
 # WARNING: This eclass now requires EAPI=2
-#    TODO: test for this requirement
-#          warning that gcc <4.1 is unsupported
 #
 # NOTES:
 #
@@ -103,6 +101,14 @@ qt4-build-edge_pkg_setup() {
 	PATH="${S}/bin:${PATH}"
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
 
+	# Make sure ebuilds use the required EAPI
+	if [[ $EAPI != 2 ]]; then
+		ewarn "The qt4-build-edge eclass requires EAPI=2, but this ebuild does not"
+		ewarn "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
+		ewarn "to be fixed. Using qt4-build-edge eclass without EAPI=2 will fail."
+		die "qt4-build-edge eclass requires EAPI=2 set"
+	fi
+
 	# Let users know what they are getting themselves into ;-)
 	echo
 	case "${PV}" in
@@ -119,6 +125,11 @@ qt4-build-edge_pkg_setup() {
 			;;
 	esac
 	echo
+
+	if [[ "$(gcc-version)" -lt "4.1" ]]; then
+		ewarn "Using a GCC version lower than 4.1 is not supported!"
+		echo
+	fi
 }
 
 qt4-build-edge_src_unpack() {
