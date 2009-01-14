@@ -72,6 +72,7 @@ case "${PV}" in
 		;;
 	4.9999)
 		EGIT_REPO_URI="git://labs.trolltech.com/qt/all"
+		EGIT_PROJECT="qt-${PV}"
 		SRC_URI=
 		;;
 	4.4.?)
