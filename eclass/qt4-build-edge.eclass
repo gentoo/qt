@@ -192,7 +192,7 @@ qt4-build-edge_src_prepare() {
 }
 
 qt4-build-edge_src_configure() {
-	if ! use custom-cxxflags; then
+	if use custom-cxxflags; then
 		echo
 		ewarn "You have set USE=custom-cxxflags, which means Qt will be built with the"
 		ewarn "CXXFLAGS you have set in /etc/make.conf. This is not supported, and we"
