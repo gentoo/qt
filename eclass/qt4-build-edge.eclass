@@ -126,7 +126,7 @@ qt4-build-edge_pkg_setup() {
 	esac
 	echo
 
-	if [[ "$(gcc-version)" -lt "4.1" ]]; then
+	if ! version_is_at_least 4.1 $(gcc-version) ; then
 		ewarn "Using a GCC version lower than 4.1 is not supported!"
 		echo
 	fi
