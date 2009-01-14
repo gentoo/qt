@@ -70,7 +70,6 @@ src_configure() {
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
-		$(qt_use input_devices_wacom tablet)
 		$(qt_use mng libmng system)
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
@@ -93,7 +92,7 @@ src_configure() {
 
 src_install() {
 	QCONFIG_ADD="x11sm xshape xcursor xfixes xrandr xrender xkb fontconfig
-		$(use input_devices_wacom && echo tablet) $(usev accessibility)
+		$(usev accessibility)
 		$(usev xinerama) $(usev cups) $(usev nas) gif png system-png system-jpeg
 		$(use mng && echo system-mng) $(use tiff && echo system-tiff)"
 	QCONFIG_REMOVE="no-gif no-png"
