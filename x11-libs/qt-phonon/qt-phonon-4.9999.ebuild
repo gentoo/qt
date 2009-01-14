@@ -1,18 +1,17 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The Phonon module for the Qt toolkit."
+DESCRIPTION="The Phonon module for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE="dbus"
 
 DEPEND="~x11-libs/qt-gui-${PV}[glib]
-	
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-libs/gst-plugins-base

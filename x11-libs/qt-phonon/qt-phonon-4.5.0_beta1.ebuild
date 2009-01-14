@@ -11,7 +11,7 @@ SLOT="4"
 KEYWORDS="~amd64 ~x86"
 IUSE="dbus"
 
-DEPEND="~x11-libs/qt-gui-${PV}[glib=]
+DEPEND="~x11-libs/qt-gui-${PV}[glib]
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-libs/gst-plugins-base
