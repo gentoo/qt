@@ -26,13 +26,13 @@ IUSE="${IUSE} -custom-cxxflags debug pch"
 
 case "${PV}" in
 	4.?.9999)
-		inherit eutils multilib toolchain-funcs flag-o-matic subversion
+		inherit eutils multilib toolchain-funcs flag-o-matic subversion versionator
 		;;
 	4.9999)
 		inherit eutils multilib toolchain-funcs flag-o-matic git versionator
 		;;
 	*)
-		inherit eutils multilib toolchain-funcs flag-o-matic
+		inherit eutils multilib toolchain-funcs flag-o-matic versionator
 		;;
 esac
 
