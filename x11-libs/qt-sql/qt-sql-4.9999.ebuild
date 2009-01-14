@@ -6,8 +6,6 @@ EAPI="2"
 inherit qt4-build-edge
 
 DESCRIPTION="The SQL module for the Qt toolkit."
-HOMEPAGE="http://www.trolltech.com/"
-
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
