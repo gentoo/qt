@@ -1,0 +1,10 @@
+# ChangeLog for x11-libs/qt-xmlpatterns
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qt-xmlpatterns-4.5.0_beta1 (14 Jan 2009)
+
+  14 Jan 2009; Ben de Groot <yngwin@gentoo.org> +metadata.xml,
+  +qt-xmlpatterns-4.5.0_beta1.ebuild:
+  Initial import from kde-crazy overlay. Fix src_configure.
+

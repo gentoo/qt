@@ -1,0 +1,10 @@
+# ChangeLog for x11-libs/qt-assistant
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qt-assistant-4.5.0_beta1 (13 Jan 2009)
+
+  13 Jan 2009; Ben de Groot <yngwin@gentoo.org> +files/Assistant.desktop,
+  +metadata.xml, +qt-assistant-4.5.0_beta1.ebuild:
+  Initial import from kde-crazy overlay
+

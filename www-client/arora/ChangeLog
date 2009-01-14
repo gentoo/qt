@@ -1,0 +1,21 @@
+# ChangeLog for www-client/arora
+# Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
+# Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
+
+  11 Nov 2008; Ben de Groot <yngwin@gentoo.org>; -arora-9999.ebuild,
+  -arora-9999-r1.ebuild, +arora-9999-r2.ebuild:
+  Reverting to not process linguas, as live svn code breaks too often.
+
+  03 Oct 2008; Ben de Groot <yngwin@gentoo.org>; +arora-9999-r1.ebuild:
+  Bringing arora ebuild up to speed with linguas and eapi-2 changes as used in
+  the ebuild in portage
+
+  09 Jul 2008; Ben de Groot <yngwin@gentoo.org>; arora-9999.ebuild:
+  Updating install procedure to use Makefile
+
+  08 Jul 2008; Ben de Groot <yngwin@gentoo.org>; arora-9999.ebuild:
+  Changed git repo to the new main Arora repo.
+
+  14 May 2008; Ben de Groot <yngwin@gentoo.org>; ChangeLog:
+  Initial commit. Ebuild by me.
+

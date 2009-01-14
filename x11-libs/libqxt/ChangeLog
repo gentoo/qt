@@ -1,0 +1,12 @@
+# ChangeLog for x11-libs/libqxt
+# Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
+
+  10 May 2008; Ben de Groot <yngwin@gentoo.org>; libqxt-9999.ebuild:
+  Adapting ebuild to split qt-4.4.
+
+  02 Mar 2008; Ben de Groot <yngwin@gentoo.org>; libqxt-9999.ebuild:
+  Improved ebuild a bit. Make qt4 ssl usecheck optional.
+
+  02 Mar 2008; Ben de Groot <yngwin@gentoo.org>; +libqxt-9999.ebuild:
+  Initial import. Ebuild based on the release version in portage.
+
