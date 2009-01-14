@@ -24,7 +24,7 @@ src/plugins/iconengines/svgiconengine"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 
 src_configure() {
-	myconf="${myconf} -svg -no-xkb -no-tablet -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -svg -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
