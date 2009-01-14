@@ -17,7 +17,7 @@
 #          warning that gcc <4.1 is unsupported
 #
 # NOTES:
-# 
+#
 #	4.9999 stands for live ebuilds from qtsoftware's git repository
 #			(that is nokia, previously trolltech)
 #	4.?.9999 stands for live ebuilds from kdesvn repository
@@ -61,7 +61,7 @@ case "${PV}" in
 	4.?.9999)
 		HOMEPAGE="http://websvn.kde.org/trunk/qt-copy/";;
 	*)
-		HOMEPAGE="http://http://www.qtsoftware.com/";;
+		HOMEPAGE="http://www.qtsoftware.com/";;
 esac
 
 case "${PV}" in
