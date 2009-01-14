@@ -59,6 +59,13 @@ SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
 
 case "${PV}" in
 	4.?.9999)
+		HOMEPAGE="http://websvn.kde.org/trunk/qt-copy/";;
+	*)
+		HOMEPAGE="http://http://www.qtsoftware.com/";;
+esac
+
+case "${PV}" in
+	4.?.9999)
 		ESVN_REPO_URI="svn://anonsvn.kde.org/home/trunk/qt-copy"
 		ESVN_PROJECT="qt-copy"
 		SRC_URI=
