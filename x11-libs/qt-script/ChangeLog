@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-script/qt-script-4.9999.ebuild:
+  Removing -no-tablet configure switch as it has been dropped by upstream
+
 *qt-script-4.5.0_beta1 (14 Jan 2009)
 
   14 Jan 2009; Ben de Groot <yngwin@gentoo.org> +metadata.xml,
