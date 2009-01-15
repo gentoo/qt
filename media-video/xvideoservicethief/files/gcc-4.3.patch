@@ -1,0 +1,13 @@
+Index: work/src/pakunpak/pakunpak.h
+===================================================================
+--- work.orig/src/pakunpak/pakunpak.h
++++ work/src/pakunpak/pakunpak.h
+@@ -31,7 +31,7 @@
+ #include <string>
+ #include <vector>
+ #include <fstream>
+-
++#include <cstring>
+ #include <iostream>
+ 
+ class Packer
