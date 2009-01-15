@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +x11-libs/qt-webkit/qt-webkit-4.4.9999.ebuild,
+  x11-libs/qt-webkit/qt-webkit-4.5.0_beta1.ebuild:
+  Adding qt-webkit-4.4.9999 ebuild, removing obsolete eclasses from inherit
+
 *qt-webkit-4.5.0_beta1 (14 Jan 2009)
 
   14 Jan 2009; Ben de Groot <yngwin@gentoo.org>
