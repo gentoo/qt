@@ -33,5 +33,6 @@ src_configure() {
 	myconf="${myconf} -qt3support -no-gstreamer -no-phonon
 		$(qt_use accessibility)"
 
-	qt4-build_src_configure
+	qt4-build-edge_src_configure
+
 }

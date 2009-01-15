@@ -3,6 +3,10 @@
 # $Header: $
 
   15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-qt3support/qt-qt3support-4.4.9999.ebuild:
+  Fixing _src_configure call
+
+  15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +x11-libs/qt-qt3support/qt-qt3support-4.4.9999.ebuild:
   Adding qt-qt3support-4.4.9999 ebuild
 
