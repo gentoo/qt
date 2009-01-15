@@ -24,8 +24,6 @@ src_unpack() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
 
 	qt4-build-edge_src_unpack
-	#Executable Allocator Patch
-	epatch "${FILESDIR}"/ExecutableAllocator_h.patch
 }
 
 src_configure() {

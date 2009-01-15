@@ -3,6 +3,10 @@
 # $Header: $
 
   15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-webkit/qt-webkit-4.9999.ebuild:
+  Removing ExecutableAllocator patch from qt-webkit-4.9999 package
+
+  15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   x11-libs/qt-webkit/qt-webkit-4.4.9999.ebuild:
   Removing ExecutableAllocator patch from 4.4.9999 ebuild
 
