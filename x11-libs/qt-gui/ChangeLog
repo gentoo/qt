@@ -3,6 +3,11 @@
 # $Header: $
 
   15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-gui/qt-gui-4.4.9999.ebuild,
+  x11-libs/qt-gui/qt-gui-4.9999.ebuild:
+  Qt-creator needed files installation
+
+  15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +x11-libs/qt-gui/qt-gui-4.4.9999.ebuild:
   Adding qt-gui-4.4.9999 ebuild
 

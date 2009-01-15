@@ -113,6 +113,20 @@ src_install() {
 	doins "${S}"/tools/designer/src/lib/shared/*
 	doins "${S}"/tools/designer/src/lib/sdk/*
 	
+	# qt-creator
+	# some qt-creator headers are located
+	# under /usr/inclute/qt4/QtDesigner/private.
+	# those headers are just includes of the headers
+	# which are located under tools/designer/src/lib/*
+	# So instead of installing both , we create the
+	# private folder
+	# and drop tools/designer/src/lib/* headers in
+	# it.
+	dodir /usr/include/qt4/QtDesigner/private/
+	insinto /usr/include/qt4/QtDesigner/private/
+	doins "${S}"/tools/designer/src/lib/shared/*
+	doins "${S}"/tools/designer/src/lib/sdk/*
+
 	#creating icons
 	dodir /usr/share/pixmaps/ || die "dodir failed"
 	insinto /usr/share/pixmaps/
