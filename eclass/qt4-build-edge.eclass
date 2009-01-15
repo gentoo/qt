@@ -64,7 +64,7 @@ esac
 
 case "${PV}" in
 	4.?.9999)
-		ESVN_REPO_URI="svn://anonsvn.kde.org/home/trunk/qt-copy"
+		ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/qt-copy"
 		ESVN_PROJECT="qt-copy"
 		SRC_URI=
 		;;
