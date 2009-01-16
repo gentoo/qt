@@ -52,7 +52,9 @@ src_compile() {
 	# ugly hack to build docs
 	cd ${S}
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
-	emake docs || die "emake docs failed"
+	# set LD_LIBRARY_PATH. qhelpgenerator requires it
+	export LD_LIBRARY_PATH="${S}/lib"
+	emake qch_docs || die "emake qch_docs failed"
 }
 
 src_install() {

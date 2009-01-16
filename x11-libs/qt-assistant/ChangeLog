@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  16 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-assistant/qt-assistant-4.4.9999.ebuild:
+  LD_LIBRARY_PATH export in order to build qch documentation
+
   15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +x11-libs/qt-assistant/qt-assistant-4.4.9999.ebuild:
   Adding qt-assistant-4.4.9999 ebuild
