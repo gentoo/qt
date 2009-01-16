@@ -1,0 +1,11 @@
+# ChangeLog for dev-util/qt-creator
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  16 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +dev-util/qt-creator/files/docs_path.patch,
+  +dev-util/qt-creator/files/fix_headers.patch,
+  +dev-util/qt-creator/files/qtcreator_pro.patch,
+  +dev-util/qt-creator/metadata.xml:
+  Adding qt-creator live and beta_1 package
+
