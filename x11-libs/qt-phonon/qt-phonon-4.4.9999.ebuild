@@ -9,7 +9,7 @@ DESCRIPTION="The Phonon module for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
-IUSE="dbus"
+IUSE="+dbus"
 
 DEPEND="~x11-libs/qt-gui-${PV}[glib]
 	!media-sound/phonon

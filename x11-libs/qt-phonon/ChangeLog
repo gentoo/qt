@@ -3,6 +3,11 @@
 # $Header: $
 
   17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-phonon/qt-phonon-4.4.9999.ebuild,
+  x11-libs/qt-phonon/qt-phonon-4.9999.ebuild:
+  Enabling dbus support by default
+
+  17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +x11-libs/qt-phonon/qt-phonon-4.4.9999.ebuild:
   Adding qt-phonon-4.4.9999 ebuild
 
