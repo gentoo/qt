@@ -9,7 +9,7 @@ DESCRIPTION="The Qt toolkit is a comprehensive C++ application development frame
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
-IUSE="doc glib +qt3support ssl"
+IUSE="doc +glib +qt3support +ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )

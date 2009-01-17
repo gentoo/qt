@@ -5,6 +5,11 @@
   17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   x11-libs/qt-core/qt-core-4.4.9999.ebuild,
   x11-libs/qt-core/qt-core-4.9999.ebuild:
+  Enabling glib,ssl flags by default
+
+  17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-core/qt-core-4.4.9999.ebuild,
+  x11-libs/qt-core/qt-core-4.9999.ebuild:
   Fixing doc installation, using -xshape on ./configure to support drag and
   drop on Designer
 
