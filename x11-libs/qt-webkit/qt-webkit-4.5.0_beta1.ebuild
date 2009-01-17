@@ -12,7 +12,8 @@ KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 -sparc ~x86"
 IUSE=""
 
 DEPEND="~x11-libs/qt-core-${PV}[ssl]
-	~x11-libs/qt-gui-${PV}"
+	~x11-libs/qt-gui-${PV}
+	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-sound/phonon )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"
