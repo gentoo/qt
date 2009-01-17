@@ -25,8 +25,8 @@ DEPEND="
 	~x11-libs/qt-test-${PV}:${SLOT}
 	~x11-libs/qt-webkit-${PV}:${SLOT}
 	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}
-	!x11-libs/qt:${SLOT}
 	"
+
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="demos
