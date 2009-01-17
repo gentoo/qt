@@ -3,6 +3,10 @@
 # $Header: $
 
   17 Jan 2009; Ben de Groot <yngwin@gentoo.org>
+  qt-qt3support-4.4.9999.ebuild:
+  Removing unneeded qt block and RDEPEND. Clean up whitespace.
+
+  17 Jan 2009; Ben de Groot <yngwin@gentoo.org>
   qt-qt3support-4.5.0_beta1.ebuild:
   Add keywords as per 4.4.2 in official tree
 

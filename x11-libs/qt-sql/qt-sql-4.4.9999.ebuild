@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,15 +14,12 @@ KEYWORDS=""
 
 IUSE="firebird mysql odbc postgres +qt3support +sqlite"
 
-DEPEND="
-	~x11-libs/qt-core-${PV}[qt3support=]
-	!x11-libs/qt:${SLOT}
+DEPEND="~x11-libs/qt-core-${PV}[qt3support=]
 	firebird? ( dev-db/firebird )
 	sqlite? ( dev-db/sqlite:3 )
 	mysql? ( virtual/mysql )
 	postgres? ( virtual/postgresql-base )
 	odbc? ( dev-db/unixODBC )"
-RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"

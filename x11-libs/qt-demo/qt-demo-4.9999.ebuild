@@ -1,18 +1,17 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="Demonstration module of the Qt toolkit."
+DESCRIPTION="Demonstration module of the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="
-	~x11-libs/qt-assistant-${PV}:${SLOT}
+DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 	~x11-libs/qt-core-${PV}:${SLOT}
 	~x11-libs/qt-dbus-${PV}:${SLOT}
 	~x11-libs/qt-gui-${PV}:${SLOT}
@@ -24,10 +23,7 @@ DEPEND="
 	~x11-libs/qt-svg-${PV}:${SLOT}
 	~x11-libs/qt-test-${PV}:${SLOT}
 	~x11-libs/qt-webkit-${PV}:${SLOT}
-	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}
-	"
-
-RDEPEND="${DEPEND}"
+	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}"
 
 QT4_TARGET_DIRECTORIES="demos
 	examples"

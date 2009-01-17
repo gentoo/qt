@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,9 +12,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="~x11-libs/qt-core-${PV}[ssl]
-	~x11-libs/qt-gui-${PV}
-	!x11-libs/qt:${SLOT}"
-RDEPEND="${DEPEND}"
+	~x11-libs/qt-gui-${PV}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"
 QT4_EXTRACT_DIRECTORIES="src/3rdparty/webkit src/3rdparty/sqlite

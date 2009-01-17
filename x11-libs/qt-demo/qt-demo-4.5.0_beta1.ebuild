@@ -11,8 +11,7 @@ SLOT="4"
 KEYWORDS="~amd64 ~hppa ~ppc64 ~x86"
 IUSE=""
 
-DEPEND="
-	~x11-libs/qt-assistant-${PV}:${SLOT}
+DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 	~x11-libs/qt-core-${PV}:${SLOT}
 	~x11-libs/qt-dbus-${PV}:${SLOT}
 	~x11-libs/qt-gui-${PV}:${SLOT}
@@ -24,10 +23,7 @@ DEPEND="
 	~x11-libs/qt-svg-${PV}:${SLOT}
 	~x11-libs/qt-test-${PV}:${SLOT}
 	~x11-libs/qt-webkit-${PV}:${SLOT}
-	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}
-	!x11-libs/qt:${SLOT}
-	"
-RDEPEND="${DEPEND}"
+	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}"
 
 QT4_TARGET_DIRECTORIES="demos
 	examples"
