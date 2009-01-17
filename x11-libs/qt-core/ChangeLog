@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-core/qt-core-4.4.9999.ebuild,
+  x11-libs/qt-core/qt-core-4.9999.ebuild:
+  Fixing doc installation, using -xshape on ./configure to support drag and
+  drop on Designer
+
   16 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   x11-libs/qt-core/qt-core-4.4.9999.ebuild:
   Added workarounds for html docs installation

@@ -97,7 +97,7 @@ src_configure() {
 		$(qt_use qt3support)"
 
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
-		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
+		-no-xfixes -no-xcursor -no-xinerama -xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
 		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
@@ -115,6 +115,15 @@ src_configure() {
 
 }
 
+src_compile() {
+	qt4-build-edge_src_compile
+	if use doc;then
+		# yet another hack for docs generation
+		cd ${S}
+		make docs || die "make docs failed"
+	fi
+}
+
 src_install() {
 	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed."
 
@@ -123,7 +132,9 @@ src_install() {
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
+		# due to unknown reason, make install_htmldocs fail
+		insinto ${QTDOCDIR} || die "insinto html docs failed"
+		doins -r ${S}/doc/html/ || die "doins html docs failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
