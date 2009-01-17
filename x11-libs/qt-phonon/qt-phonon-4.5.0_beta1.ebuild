@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Phonon module for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~x86"
 IUSE="dbus"
 
 DEPEND="~x11-libs/qt-gui-${PV}[glib]

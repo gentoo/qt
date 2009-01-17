@@ -1,14 +1,14 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="Demonstration module of the Qt toolkit."
+DESCRIPTION="Demonstration module of the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~hppa ~ppc64 ~x86"
 IUSE=""
 
 DEPEND="

@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Jan 2009; Ben de Groot <yngwin@gentoo.org>
+  qt-qt3support-4.5.0_beta1.ebuild:
+  Add keywords as per 4.4.2 in official tree
+
   15 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   x11-libs/qt-qt3support/qt-qt3support-4.4.9999.ebuild:
   Fixing _src_configure call

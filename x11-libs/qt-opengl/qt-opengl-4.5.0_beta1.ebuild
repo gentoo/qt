@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="+qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[qt3support=]

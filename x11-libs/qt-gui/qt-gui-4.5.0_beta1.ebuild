@@ -8,7 +8,7 @@ inherit eutils qt4-build-edge
 DESCRIPTION="The GUI module(s) for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE_INPUT_DEVICES="input_devices_wacom"
 IUSE="+accessibility cups +dbus debug +glib +gtkstyle mng nas nis tiff +qt3support xinerama ${IUSE_INPUT_DEVICES}"

@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The SQL module for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
 IUSE="firebird mysql odbc postgres +qt3support +sqlite"
 
