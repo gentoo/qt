@@ -1,6 +1,8 @@
---- src/3rdparty/webkit/JavaScriptCore/jit/ExecutableAllocator.h	2008-12-17 17:16:38.000000000 +0000
-+++ src/3rdparty/webkit/JavaScriptCore/jit/ExecutableAllocator.h	2008-12-24 01:01:58.000000000 +0000
-@@ -59,7 +59,7 @@
+Index: qt-x11-opensource-src-4.5.0-beta1/src/3rdparty/webkit/JavaScriptCore/jit/ExecutableAllocator.h
+===================================================================
+--- qt-x11-opensource-src-4.5.0-beta1.orig/src/3rdparty/webkit/JavaScriptCore/jit/ExecutableAllocator.h
++++ qt-x11-opensource-src-4.5.0-beta1/src/3rdparty/webkit/JavaScriptCore/jit/ExecutableAllocator.h
+@@ -59,7 +59,7 @@ public:
          if (n < static_cast<size_t>(m_end - m_freePtr)) {
              char* result = m_freePtr;
              // ensure m_freePtr is word aligned.
