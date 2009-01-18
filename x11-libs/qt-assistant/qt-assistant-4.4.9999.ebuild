@@ -33,7 +33,7 @@ pkg_setup() {
 }
 
 src_configure() {
-	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-tablet -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon

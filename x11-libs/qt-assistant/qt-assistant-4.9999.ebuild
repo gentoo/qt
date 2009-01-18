@@ -51,8 +51,9 @@ src_compile() {
 	qt4-build-edge_src_compile
 	# ugly hack to build docs
 	cd ${S}
+	export LD_LIBRARY_PATH="${S}/lib"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
-	emake docs || die "emake docs failed"
+	emake qch_docs || die "emake docs failed"
 }
 
 src_install() {
