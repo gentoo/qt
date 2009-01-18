@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +dev-python/PyQt4/PyQt4-4.4.5_pre20090116.ebuild,
+  -dev-python/PyQt4/PyQt4-4.4.5_p20090116.ebuild:
+  Fixing ebuild name. Using _pre instead of _p.
+
   17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +dev-python/PyQt4/PyQt4-4.4.5_p20090116.ebuild:
   PyQt4-4.4.5 snapshot ebuild added
