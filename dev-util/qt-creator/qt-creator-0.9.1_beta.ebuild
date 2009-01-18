@@ -4,7 +4,7 @@
 
 EGIT_BRANCH="0.9.1-beta"
 
-inherit git
+inherit qt4 git
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://trolltech.com/developer/qt-creator"
@@ -13,22 +13,22 @@ EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=x11-libs/qt-assistant-4.5
-	>=x11-libs/qt-core-4.5
-	>=x11-libs/qt-dbus-4.5
-	>=x11-libs/qt-gui-4.5
-	>=x11-libs/qt-qt3support-4.5
-	>=x11-libs/qt-script-4.5
-	>=x11-libs/qt-sql-4.5
-	>=x11-libs/qt-svg-4.5
-	>=x11-libs/qt-test-4.5
-	>=x11-libs/qt-webkit-4.5"
+DEPEND=">=x11-libs/qt-assistant-4.4.9999
+	>=x11-libs/qt-core-4.4.9999
+	>=x11-libs/qt-dbus-4.4.9999
+	>=x11-libs/qt-gui-4.4.9999
+	>=x11-libs/qt-qt3support-4.4.9999
+	>=x11-libs/qt-script-4.4.9999
+	>=x11-libs/qt-sql-4.4.9999
+	>=x11-libs/qt-svg-4.4.9999
+	>=x11-libs/qt-test-4.4.9999
+	>=x11-libs/qt-webkit-4.4.9999"
 
 RDEPEND="${DEPEND}
-	media-sound/phonon"
+	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.4.9999 )"
 
 src_unpack() {
 	git_src_unpack
@@ -43,7 +43,7 @@ src_unpack() {
 }
 
 src_compile() {
-	qmake -r|| die "qmake failed"
+	eqmake4 qtcreator.pro || die "qmake failed"
 	emake || die "emake failed"
 }
 
@@ -51,8 +51,7 @@ src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
 	dobin bin/qtcreator || die "dobin failed"
 	# installing libraries as the Makefile doesnt
-	insinto /usr/lib
-	doins lib/*
+	dolib lib/* || die "dolib failed"
 	# need to delete the broken symlinks
 	cd "${D}"/usr/lib
 	rm -v lib/{libAggregation.so{,.1,.1.0},libCPlusPlus.so{,.1,.1.0},libExtensionSystem.so{,.1,.1.0}}
@@ -61,8 +60,8 @@ src_install() {
 	# the symlinks arent kept from the ${S} folder so I need to 
 	# recreate them on destination folder.
 	for lib in Aggregation CPlusPlus ExtensionSystem QtConcurrent Utils ; do
-		ln -sv lib${lib}.so.1.0.0 lib${lib}.so
-		ln -sv lib${lib}.so.1.0.0 lib${lib}.so.1
-		ln -sv lib${lib}.so.1.0.0 lib${lib}.so.1.0
+		dosym lib${lib}.so.1.0.0 lib${lib}.so || die "dosym failed"
+		dosym lib${lib}.so.1.0.0 lib${lib}.so.1 || die "dosym failed"
+		dosym lib${lib}.so.1.0.0 lib${lib}.so.1.0 || die "dosym failed"
 	done
 }

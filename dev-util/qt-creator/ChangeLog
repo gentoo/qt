@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  dev-util/qt-creator/qt-creator-0.9.1_beta.ebuild,
+  dev-util/qt-creator/qt-creator-9999.ebuild:
+  Ebuilds cleanup, use portage functions
+
   16 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +dev-util/qt-creator/files/docs_path.patch,
   +dev-util/qt-creator/files/fix_headers.patch,
