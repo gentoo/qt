@@ -5,6 +5,11 @@
   18 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   dev-util/qt-creator/qt-creator-0.9.1_beta.ebuild,
   dev-util/qt-creator/qt-creator-9999.ebuild:
+  Fixing dependencies,plus a couple of other fixes
+
+  18 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  dev-util/qt-creator/qt-creator-0.9.1_beta.ebuild,
+  dev-util/qt-creator/qt-creator-9999.ebuild:
   Ebuilds cleanup, use portage functions
 
   16 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>

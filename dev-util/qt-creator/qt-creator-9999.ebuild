@@ -12,21 +12,21 @@ EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="debug"
 
-DEPEND=">=x11-libs/qt-assistant-4.4.9999
-	>=x11-libs/qt-core-4.4.9999
-	>=x11-libs/qt-dbus-4.4.9999
-	>=x11-libs/qt-gui-4.4.9999
-	>=x11-libs/qt-qt3support-4.4.9999
-	>=x11-libs/qt-script-4.4.9999
-	>=x11-libs/qt-sql-4.4.9999
-	>=x11-libs/qt-svg-4.4.9999
-	>=x11-libs/qt-test-4.4.9999
-	>=x11-libs/qt-webkit-4.4.9999"
+DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
+	>=x11-libs/qt-core-4.5.0_beta1
+	>=x11-libs/qt-dbus-4.5.0_beta1
+	>=x11-libs/qt-gui-4.5.0_beta1
+	>=x11-libs/qt-qt3support-4.5.0_beta1
+	>=x11-libs/qt-script-4.5.0_beta1
+	>=x11-libs/qt-sql-4.5.0_beta1
+	>=x11-libs/qt-svg-4.5.0_beta1
+	>=x11-libs/qt-test-4.5.0_beta1
+	>=x11-libs/qt-webkit-4.5.0_beta1"
 
 RDEPEND="${DEPEND}
-	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.4.9999 ) "
+	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 ) "
 
 src_unpack() {
 	git_src_unpack
@@ -37,7 +37,7 @@ src_unpack() {
 }
 
 src_compile() {
-	qmake -r || die "qmake failed"
+	eqmake4 qtcreator.pro || die "eqmake4 failed"
 	emake || die "emake failed"
 }
 
@@ -45,7 +45,8 @@ src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
 	dobin bin/qtcreator || die "dobin failed"
 	# installing libraries as the Makefile doesnt
-	dolib lib/* || die "dolib failed"
+	insinto /usr/$(get_libdir)/ || die "insinto failed"
+	doins -r lib/* || die "doins failed"
 	einfo "Re-building symlinks"
 	cd "${D}"/usr/lib
 	rm -v lib/{libAggregation.so{,.1,.1.0},libCPlusPlus.so{,.1,.1.0},libExtensionSystem.so{,.1,.1.0}}
