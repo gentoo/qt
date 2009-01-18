@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit git
+inherit qt4 multilib git
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://trolltech.com/developer/qt-creator"
@@ -11,7 +11,7 @@ EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
@@ -26,14 +26,14 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
 	>=x11-libs/qt-webkit-4.5.0_beta1"
 
 RDEPEND="${DEPEND}
-	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 ) "
+	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 )"
 
 src_unpack() {
 	git_src_unpack
 	#adding paths
-	echo 'bin.path = "'${D}'/usr/bin"' >> "${S}"/qtcreator.pro
-	echo 'libs.path = "'${D}'/usr/lib"' >> "${S}"/qtcreator.pro
-	echo 'docs.path = "'${D}'/usr/share/docs/qt-creator"' >> "${S}"/qtcreator.pro
+	echo "bin.path = ${D}/usr/bin" >> "${S}"/qtcreator.pro
+	echo "libs.path = ${D}/usr/$(get_libdir)" >> "${S}"/qtcreator.pro
+	echo "docs.path = ${D}/usr/share/docs/${PF}" >> "${S}"/qtcreator.pro
 }
 
 src_compile() {
@@ -47,14 +47,16 @@ src_install() {
 	# installing libraries as the Makefile doesnt
 	insinto /usr/$(get_libdir)/ || die "insinto failed"
 	doins -r lib/* || die "doins failed"
-	einfo "Re-building symlinks"
-	cd "${D}"/usr/lib
+	# need to delete the broken symlinks
+	cd "${D}"/usr/$(get_libdir)/
 	rm -v lib/{libAggregation.so{,.1,.1.0},libCPlusPlus.so{,.1,.1.0},libExtensionSystem.so{,.1,.1.0}}
 	rm -v lib/{libQtConcurrent.so{,.1,.1.0},libUtils.so{,.1,.1.0}}
-	for lib in Aggregation CPlusPlus ExtensionSystem \
-			QtConcurrent Utils ; do
-		dosym lib${lib}.so.1.0.0 lib${lib}.so || die "dosym failed"
-		dosym lib${lib}.so.1.0.0 lib${lib}.so.1 || die "dosym failed"
-		dosym lib${lib}.so.1.0.0 lib${lib}.so.1.0 || die "dosym failed"
+	einfo "Creating symlinks"
+	# the symlinks arent kept from the ${S} folder so I need to 
+	# recreate them on destination folder.
+	for lib in Aggregation CPlusPlus ExtensionSystem QtConcurrent Utils ; do
+		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so || die "dosym failed"
+		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so.1 || die "dosym failed"
+		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so.1.0 || die "dosym failed"
 	done
 }

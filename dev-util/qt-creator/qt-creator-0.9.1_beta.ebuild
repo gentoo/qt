@@ -38,8 +38,8 @@ src_unpack() {
 	epatch ${FILESDIR}/docs_path.patch
 	#adding paths
 	echo "bin.path = ${D}/usr/bin" >> "${S}"/qtcreator.pro
-	echo "libs.path = ${D}/usr/lib" >> "${S}"/qtcreator.pro
-	echo "docs.path = ${D}/usr/share/docs/qt-creator" >> "${S}"/qtcreator.pro
+	echo "libs.path = ${D}/usr/$(get_libdir)" >> "${S}"/qtcreator.pro
+	echo "docs.path = ${D}/usr/share/docs/${PF}" >> "${S}"/qtcreator.pro
 }
 
 src_compile() {
@@ -54,15 +54,15 @@ src_install() {
 	insinto /usr/$(get_libdir)/ || die "insinto failed"
 	doins -r lib/* || die "doins failed"
 	# need to delete the broken symlinks
-	cd "${D}"/usr/lib
+	cd "${D}"/usr/$(get_libdir)/
 	rm -v lib/{libAggregation.so{,.1,.1.0},libCPlusPlus.so{,.1,.1.0},libExtensionSystem.so{,.1,.1.0}}
 	rm -v lib/{libQtConcurrent.so{,.1,.1.0},libUtils.so{,.1,.1.0}}
 	einfo "Creating symlinks"
 	# the symlinks arent kept from the ${S} folder so I need to 
 	# recreate them on destination folder.
 	for lib in Aggregation CPlusPlus ExtensionSystem QtConcurrent Utils ; do
-		dosym lib${lib}.so.1.0.0 lib${lib}.so || die "dosym failed"
-		dosym lib${lib}.so.1.0.0 lib${lib}.so.1 || die "dosym failed"
-		dosym lib${lib}.so.1.0.0 lib${lib}.so.1.0 || die "dosym failed"
+		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so || die "dosym failed"
+		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so.1 || die "dosym failed"
+		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so.1.0 || die "dosym failed"
 	done
 }
