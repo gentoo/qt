@@ -1,0 +1,8 @@
+# ChangeLog for app-misc/SocNetV
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  19 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +app-misc/SocNetV/SocNetV-0.49.ebuild:
+  Initial import of SocNetV ebuild
+
