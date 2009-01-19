@@ -11,7 +11,7 @@ EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
