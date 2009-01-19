@@ -120,7 +120,7 @@ src_compile() {
 	if use doc;then
 		# yet another hack for docs generation
 		cd ${S}
-		make docs || die "make docs failed"
+		make adp_docs || die "make docs failed"
 	fi
 }
 

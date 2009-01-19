@@ -3,6 +3,13 @@
 # $Header: $
 
   19 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-core/qt-core-4.4.9999.ebuild,
+  x11-libs/qt-core/qt-core-4.9999.ebuild:
+  Build adp_doc(html documentation) instead of full
+  documentation(html+examples+qch) cause it will fails if there is no qt-gui
+  installed on system.
+
+  19 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   x11-libs/qt-core/qt-core-4.4.9999.ebuild:
   Removing non-existing target (bootstrap) which made qt-core to build
   useless projects
