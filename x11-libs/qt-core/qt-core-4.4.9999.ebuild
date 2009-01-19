@@ -20,7 +20,6 @@ DEPEND="${RDEPEND}
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV} )"
 
 QT4_TARGET_DIRECTORIES="
-src/tools/bootstrap/
 src/tools/moc/
 src/tools/rcc/
 src/tools/uic/
