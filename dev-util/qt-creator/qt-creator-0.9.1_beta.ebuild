@@ -16,19 +16,19 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
-	>=x11-libs/qt-core-4.5.0_beta1
-	>=x11-libs/qt-dbus-4.5.0_beta1
-	>=x11-libs/qt-gui-4.5.0_beta1
-	>=x11-libs/qt-qt3support-4.5.0_beta1
-	>=x11-libs/qt-script-4.5.0_beta1
-	>=x11-libs/qt-sql-4.5.0_beta1
-	>=x11-libs/qt-svg-4.5.0_beta1
-	>=x11-libs/qt-test-4.5.0_beta1
-	>=x11-libs/qt-webkit-4.5.0_beta1"
+DEPEND="=x11-libs/qt-assistant-4.5*
+	=x11-libs/qt-core-4.5*
+	=x11-libs/qt-dbus-4.5*
+	=x11-libs/qt-gui-4.5*
+	=x11-libs/qt-qt3support-4.5*
+	=x11-libs/qt-script-4.5*
+	=x11-libs/qt-sql-4.5*
+	=x11-libs/qt-svg-4.5*
+	=x11-libs/qt-test-4.5*
+	=x11-libs/qt-webkit-4.5*"
 
 RDEPEND="${DEPEND}
-	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 )"
+	|| ( media-sound/phonon =x11-libs/qt-phonon-4.5* )"
 
 src_unpack() {
 	git_src_unpack
@@ -55,14 +55,16 @@ src_install() {
 	doins -r lib/* || die "doins failed"
 	# need to delete the broken symlinks
 	cd "${D}"/usr/$(get_libdir)/
-	rm -v lib/{libAggregation.so{,.1,.1.0},libCPlusPlus.so{,.1,.1.0},libExtensionSystem.so{,.1,.1.0}}
-	rm -v lib/{libQtConcurrent.so{,.1,.1.0},libUtils.so{,.1,.1.0}}
+	rm -v libAggregation.so{,.1,.1.0} libCPlusPlus.so{,.1,.1.0} libExtensionSystem.so{,.1,.1.0}
+	rm -v libQtConcurrent.so{,.1,.1.0} libUtils.so{,.1,.1.0}
 	einfo "Creating symlinks"
 	# the symlinks arent kept from the ${S} folder so I need to 
 	# recreate them on destination folder.
 	for lib in Aggregation CPlusPlus ExtensionSystem QtConcurrent Utils ; do
-		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so || die "dosym failed"
-		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so.1 || die "dosym failed"
-		dosym /usr/$(get_libdir)/lib${lib}.so.1.0.0 /usr/$(get_libdir)/lib${lib}.so.1.0 || die "dosym failed"
+		ln -s lib${lib}.so.1.0.0 lib${lib}.so || die "dosym failed"
+		ln -s lib${lib}.so.1.0.0 lib${lib}.so.1 || die "dosym failed"
+		ln -s lib${lib}.so.1.0.0 lib${lib}.so.1.0 || die "dosym failed"
 	done
+	make_desktop_entry qtcreator QtCreator designer.png \
+		'Qt;Development;GUIDesigner' || die "make_desktop_entry failed"
 }

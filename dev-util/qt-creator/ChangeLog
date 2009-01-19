@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  dev-util/qt-creator/qt-creator-0.9.1_beta.ebuild,
+  dev-util/qt-creator/qt-creator-9999.ebuild:
+  Create desktop menu entry on both ebuilds, use ln -s instead of dosym due
+  to QA notices, a couple of minor fixes, qt-creator-0.9.1_beta package
+  strictly depend on qt-4.5* packages only.
+
   18 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   dev-util/qt-creator/qt-creator-0.9.1_beta.ebuild,
   dev-util/qt-creator/qt-creator-9999.ebuild:
