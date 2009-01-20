@@ -3,6 +3,10 @@
 # $Header: $
 
   20 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  media-sound/cuberok/cuberok-0.0.4a.ebuild:
+  Add gstreamer on dependency
+
+  20 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +media-sound/cuberok/cuberok-0.0.4a.ebuild:
   Initial import of cuberok package
 
