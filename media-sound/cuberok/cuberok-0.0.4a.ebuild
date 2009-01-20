@@ -26,6 +26,7 @@ src_compile(){
 
 src_install() {
 	dobin unix/cuberok
+	dolib unix/plugins/* || die "dolib failed"
 	doicon images/${PN}.png
 	make_desktop_entry cuberok Cuberok ${PN}.png 'Qt;AudioVideo;Audio' \
 		|| die "make_desktop_entry failed"
