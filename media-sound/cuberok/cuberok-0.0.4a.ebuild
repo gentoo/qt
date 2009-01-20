@@ -13,12 +13,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND="<=x11-libs/qt-gui-4.4.9999
-	<=x11-libs/qt-sql-4.4.9999"
+DEPEND=">=media-libs/gstreamer-0.10
+	<x11-libs/qt-gui-4.9999
+	<x11-libs/qt-sql-4.9999"
 RDEPEND="${DEPEND}
-	media-libs/gstreamer
-	media-libs/libpng
-	media-libs/freetype
 	media-libs/taglib"
 
 src_compile(){
