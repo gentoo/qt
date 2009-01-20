@@ -25,9 +25,8 @@ src_compile(){
 }
 
 src_install() {
-	dobin unix/cuberok
-	dolib unix/plugins/* || die "dolib failed"
+	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 	doicon images/${PN}.png
 	make_desktop_entry cuberok Cuberok ${PN}.png 'Qt;AudioVideo;Audio' \
-		|| die "make_desktop_entry failed"
+		die || "make_desktop_entry_failed"
 }
