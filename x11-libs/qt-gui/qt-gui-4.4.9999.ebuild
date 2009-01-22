@@ -62,6 +62,8 @@ src_unpack() {
 
 	# fixing hardcoded fonts, bug #252312
 	epatch ${FILESDIR}/hardcoded_fonts.patch
+	# fix colors under kde4, bug #255632
+	epatch ${FILESDIR}/libqt4-read-kde4-kdeglobals.patch
 }
 
 src_configure() {
