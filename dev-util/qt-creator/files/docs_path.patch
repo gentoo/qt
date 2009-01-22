@@ -1,18 +1,3 @@
-Index: qt-creator-0.9.1_beta/src/app/app.pro
-===================================================================
---- qt-creator-0.9.1_beta.orig/src/app/app.pro
-+++ qt-creator-0.9.1_beta/src/app/app.pro
-@@ -37,7 +37,7 @@ macx {
-         GDBDEBUGGER.path = Contents/Resources
-         GDBDEBUGGER.files = $$IDE_SOURCE_TREE/bin/gdbmacros
-         DOC.path = Contents/Resources/doc
--        DOC.files = $$IDE_SOURCE_TREE/doc/qtcreator.qch
-+        DOC.files = /usr/share/docs/qt-creator/qtcreator.qch
-         LICENSE.path = Contents/Resources
-         LICENSE.files = $$IDE_SOURCE_TREE/bin/license.txt
-         RUNINTERMINAL.path = Contents/Resources
-Index: qt-creator-0.9.1_beta/src/plugins/help/helpplugin.cpp
-===================================================================
 --- qt-creator-0.9.1_beta.orig/src/plugins/help/helpplugin.cpp
 +++ qt-creator-0.9.1_beta/src/plugins/help/helpplugin.cpp
 @@ -439,12 +439,7 @@ void HelpPlugin::extensionsInitialized()

@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  dev-util/qt-creator/files/docs_path.patch,
+  +dev-util/qt-creator/files/license.patch,
+  +dev-util/qt-creator/files/templates.patch:
+  Fixed /bin folder and license.txt installation
+
   19 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   dev-util/qt-creator/qt-creator-0.9.1_beta.ebuild,
   dev-util/qt-creator/qt-creator-9999.ebuild:

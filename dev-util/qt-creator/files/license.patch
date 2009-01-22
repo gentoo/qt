@@ -1,0 +1,13 @@
+Index: qt-creator-0.9.1_beta/src/plugins/coreplugin/versiondialog.cpp
+===================================================================
+--- qt-creator-0.9.1_beta.orig/src/plugins/coreplugin/versiondialog.cpp
++++ qt-creator-0.9.1_beta/src/plugins/coreplugin/versiondialog.cpp
+@@ -123,7 +123,7 @@ void VersionDialog::popupLicense()
+     // Read file into string
+     ICore * core = CoreImpl::instance();
+     QTC_ASSERT(core, return);
+-    QString fileName = core->resourcePath() + "/license.txt";
++    QString fileName = "/usr/share/qt-creator/license.txt";
+     QFile file(fileName);
+ 
+     QString licenseText;

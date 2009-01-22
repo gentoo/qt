@@ -1,0 +1,31 @@
+Index: qt-creator-0.9.1_beta/src/app/app.pro
+===================================================================
+--- qt-creator-0.9.1_beta.orig/src/app/app.pro
++++ qt-creator-0.9.1_beta/src/app/app.pro
+@@ -27,19 +27,19 @@ SOURCES += main.cpp
+ 
+ macx {
+         SNIPPETS.path = Contents/Resources
+-        SNIPPETS.files = $$IDE_SOURCE_TREE/bin/snippets
++        SNIPPETS.files = $$IDE_SOURCE_TREE/share/qt-creator/snippets
+         TEMPLATES.path = Contents/Resources
+-        TEMPLATES.files = $$IDE_SOURCE_TREE/bin/templates
++        TEMPLATES.files = $$IDE_SOURCE_TREE/share/qt-creator/templates
+         DESIGNER.path = Contents/Resources
+-        DESIGNER.files = $$IDE_SOURCE_TREE/bin/designer
++        DESIGNER.files = $$IDE_SOURCE_TREE/share/qt-creator/designer
+         SCHEMES.path = Contents/Resources
+-        SCHEMES.files = $$IDE_SOURCE_TREE/bin/schemes
++        SCHEMES.files = $$IDE_SOURCE_TREE/share/qt-creator/schemes
+         GDBDEBUGGER.path = Contents/Resources
+-        GDBDEBUGGER.files = $$IDE_SOURCE_TREE/bin/gdbmacros
++        GDBDEBUGGER.files = $$IDE_SOURCE_TREE/share/qt-creator/gdbmacros
+         DOC.path = Contents/Resources/doc
+-        DOC.files = $$IDE_SOURCE_TREE/doc/qtcreator.qch
++        DOC.files = $$IDE_SOURCE_TREE/share/docs/qtcreator.qch
+         LICENSE.path = Contents/Resources
+-        LICENSE.files = $$IDE_SOURCE_TREE/bin/license.txt
++        LICENSE.files = $$IDE_SOURCE_TREE/share/qt-creator/license.txt
+         RUNINTERMINAL.path = Contents/Resources
+         RUNINTERMINAL.files = $$IDE_SOURCE_TREE/bin/runInTerminal.command
+         QMAKE_BUNDLE_DATA += SNIPPETS TEMPLATES DESIGNER SCHEMES GDBDEBUGGER DOC LICENSE RUNINTERMINAL

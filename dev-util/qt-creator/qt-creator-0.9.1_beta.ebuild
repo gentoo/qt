@@ -33,13 +33,22 @@ RDEPEND="${DEPEND}
 src_unpack() {
 	git_src_unpack
 	#fixing headers,qtcreator.pro file and docs path
+	einfo "Applying various patches and fixes"
+	# patching the docs_path patch in order to fix every release of qt-creator
 	epatch ${FILESDIR}/fix_headers.patch
 	epatch ${FILESDIR}/qtcreator_pro.patch
 	epatch ${FILESDIR}/docs_path.patch
+	epatch ${FILESDIR}/templates.patch
+	epatch ${FILESDIR}/license.patch
+	sed -i "s/docs\/qt-creator/docs\/${PF}/" ${S}/src/plugins/help/helpplugin.cpp
+	sed -i "s/docs\/qt-creator/docs\/${PF}/" ${S}/src/app/app.pro
 	#adding paths
-	echo "bin.path = ${D}/usr/bin" >> "${S}"/qtcreator.pro
-	echo "libs.path = ${D}/usr/$(get_libdir)" >> "${S}"/qtcreator.pro
-	echo "docs.path = ${D}/usr/share/docs/${PF}" >> "${S}"/qtcreator.pro
+	echo "bin.path = /usr/bin" >> "${S}"/qtcreator.pro
+	echo "libs.path = /usr/$(get_libdir)" >> "${S}"/qtcreator.pro
+	echo "docs.path = /usr/share/docs/${PF}" >> "${S}"/qtcreator.pro
+	# fix qtcreator.qch placement
+	sed -i "s/html\/qtcreator.qhp/docs\/${PF}\/html\/qtcreator.qhp/" ${S}/doc/doc.pri
+	sed -i "s/qtcreator.qch/docs\/${PF}\/qtcreator.qch/" ${S}/doc/doc.pri
 }
 
 src_compile() {
@@ -48,8 +57,15 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 	dobin bin/qtcreator || die "dobin failed"
+	# installing several templates , desinger etc under /usr/share/qt-creator/
+	insinto /usr/share/qt-creator/ || die "insinto failed"
+	for i in designer gdbmacros schemes snippets templates; do
+		doins -r ${S}/bin/${i} || die  "doins failed"
+	done
+	# install licence
+	doins ${S}/bin/license.txt || die "doins license.txt failed"
 	# installing libraries as the Makefile doesnt
 	insinto /usr/$(get_libdir)/ || die "insinto failed"
 	doins -r lib/* || die "doins failed"
