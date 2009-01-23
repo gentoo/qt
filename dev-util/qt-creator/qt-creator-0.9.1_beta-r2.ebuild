@@ -40,6 +40,7 @@ src_unpack() {
 	epatch ${FILESDIR}/docs_path.patch
 	epatch ${FILESDIR}/templates.patch
 	epatch ${FILESDIR}/license.patch
+	epatch ${FILESDIR}/wizard.patch
 	sed -i "s/docs\/qt-creator/docs\/${PF}/" ${S}/src/plugins/help/helpplugin.cpp
 	sed -i "s/docs\/qt-creator/docs\/${PF}/" ${S}/src/app/app.pro
 	#adding paths

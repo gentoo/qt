@@ -1,0 +1,14 @@
+Index: qt-creator-0.9.1_beta/src/plugins/qt4projectmanager/wizards/qtwizard.cpp
+===================================================================
+--- qt-creator-0.9.1_beta.orig/src/plugins/qt4projectmanager/wizards/qtwizard.cpp
++++ qt-creator-0.9.1_beta/src/plugins/qt4projectmanager/wizards/qtwizard.cpp
+@@ -101,7 +101,7 @@ bool QtWizard::postGenerateFiles(const C
+ 
+ QString QtWizard::templateDir() const
+ {
+-    QString rc = core()->resourcePath();
+-    rc += QLatin1String("/templates/qt4project");
++    QString rc;
++    rc += QLatin1String("/usr/share/qt-creator/templates/qt4project");
+     return rc;
+ }
