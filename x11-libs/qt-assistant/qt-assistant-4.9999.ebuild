@@ -64,6 +64,8 @@ src_install() {
 	cd "${S}"
 	insinto ${QTDOCDIR}
 	doins -r "${S}"/doc/qch || die "doins qch documentation failed"
+	exeinto /usr/qt/3/bin/ || die "exeinto failed"
+	doexe ${S}/bin/qhelpgenerator || die "doexe failed"
 	#emake INSTALL_ROOT="${D}" install_qchdocs || die "emake install_qchdocs	failed"
 	domenu "${FILESDIR}"/Assistant.desktop || die "domenu failed"
 }

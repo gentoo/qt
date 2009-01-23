@@ -132,9 +132,14 @@ src_install() {
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
+		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
 		# due to unknown reason, make install_htmldocs fail
-		insinto ${QTDOCDIR} || die "insinto html docs failed"
-		doins -r ${S}/doc/html/ || die "doins html docs failed"
+		# insinto ${QTDOCDIR} || die "insinto html docs failed"
+		# doins -r ${S}/doc/html/ || die "doins html docs failed"
+		# we also need to install qdoc3 executable under
+		# /usr/qt/3/tools/qmake/ folder. Some programs requires it
+		exeinto /usr/qt/3/tools/qdoc3/ || die "exeinto failed"
+		doexe ${S}/tools/qdoc3/qdoc3 || die "doexe failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
