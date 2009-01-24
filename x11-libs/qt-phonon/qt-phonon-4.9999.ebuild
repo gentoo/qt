@@ -11,7 +11,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE="+dbus"
 
-DEPEND="~x11-libs/qt-gui-${PV}[glib]
+DEPEND="~x11-libs/qt-gui-${PV}[glib,qt3support]
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-libs/gst-plugins-base
