@@ -1,7 +1,8 @@
-## Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=2
 inherit qt4 eutils
 
 DESCRIPTION="Qt4 GUI for wine"
@@ -15,16 +16,14 @@ IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql[sqlite]"
-
 RDEPEND="${DEPEND}
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
 	>=media-gfx/icoutils-0.26.0"
 
-src_compile() {
+src_configure() {
 	eqmake4 || die "eqmake4 failed"
-    emake || die "make failed"
 }
 
 src_install() {

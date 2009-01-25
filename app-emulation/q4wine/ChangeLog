@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Jan 2009; Ben de Groot <yngwin@gentoo.org> q4wine-0.109-r1.ebuild:
+  Eapi-2-ify and fix whitespace
+
   25 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +app-emulation/q4wine/q4wine-0.109-r1.ebuild:
   Initial import for Q4Make package
