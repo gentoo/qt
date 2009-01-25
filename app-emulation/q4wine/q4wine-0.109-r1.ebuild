@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4
-	x11-libs/qt-sql[sqlite]"
+	x11-libs/qt-sql:4[sqlite]"
 RDEPEND="${DEPEND}
 	app-admin/sudo
 	app-emulation/wine
