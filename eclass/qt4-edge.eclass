@@ -15,18 +15,24 @@
 
 inherit eutils multilib toolchain-funcs versionator base
 
-QTPKG="x11-libs/qt-"
-QT4MAJORVERSIONS="4.4 4.3 4.2 4.1 4.0"
-QT4VERSIONS="4.4.2 4.4.1 4.4.0 4.4.0_beta1 4.4.0_rc1
-	     4.3.4-r1 4.3.5 4.3.4 4.3.3 4.3.2-r1 4.3.2 4.3.1-r1 4.3.1
-	     4.3.0-r2 4.3.0-r1 4.3.0 4.3.0_rc1 4.3.0_beta1
-	     4.2.3-r1 4.2.3 4.2.2 4.2.1 4.2.0-r2 4.2.0-r1 4.2.0
-	     4.1.4-r2 4.1.4-r1 4.1.4 4.1.3 4.1.2 4.1.1 4.1.0
-	     4.0.1 4.0.0"
+# ********* NOTICE ****************
+# (hwoarang) These stuff seems obsolete to me. 
+# I would suggest having pre-defined depedencies and use variables foe extra#
+# stuff.  A good example would be kde4-base.eclass.
+#
+
+#QTPKG="x11-libs/qt-"
+#QT4MAJORVERSIONS="4.4 4.3 4.2 4.1 4.0"
+#QT4VERSIONS="4.4.2 4.4.1 4.4.0 4.4.0_beta1 4.4.0_rc1
+#	     4.3.4-r1 4.3.5 4.3.4 4.3.3 4.3.2-r1 4.3.2 4.3.1-r1 4.3.1
+#	     4.3.0-r2 4.3.0-r1 4.3.0 4.3.0_rc1 4.3.0_beta1
+#	     4.2.3-r1 4.2.3 4.2.2 4.2.1 4.2.0-r2 4.2.0-r1 4.2.0
+#	     4.1.4-r2 4.1.4-r1 4.1.4 4.1.3 4.1.2 4.1.1 4.1.0
+#	     4.0.1 4.0.0"
+#
 
 
-
-## BIG FAT WARNING ##
+## BIG FAT WARNING (hwoarang) ##
 # This function seems deprecated to me (hwoarang). As long as I understand , it
 # is useless anymore since it just checks the QT4_BUILT_WITH_USE stuff. We dont
 # use that anymore. So I am commenting it out, and I wont export it for now
@@ -245,22 +251,28 @@ qt4_src_compile() {
 	esac
 }
 
+# (hwoarang) I dont think we should have a default src_install since we cannot
+# be sure if INSTALL_ROOT is needed or DESTIR. Furthermore , we normally have to
+# do <dodoc> and <make_desktop_entry> on every ebuild so I am commenting out.
+# Contact me if you want to talk it out :)
+
 # @FUNCTION: qt4_src_install
 # @MAINTAINER:
 # @DESCRIPTION:
 # Default src_install function for packages that depends on qt4. If you have to
 # override src_install in your ebuild, you should call qt4_src_install in it.
-qt4_src_install() {
-	debug-print-function $FUNCNAME "$@"
+#qt4_src_install() {
+#	debug-print-function $FUNCNAME "$@"
+#
+#	emake INSTALL_ROOT="${D}" install || die "emake install failed"
+#}
 
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-}
-
+# droping pkg_setup and src_install as a state previously 
 case ${EAPI} in
 	2)
-		EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile src_install
+		EXPORT_FUNCTIONS src_prepare src_configure src_compile
 		;;
 	*)
-		EXPORT_FUNCTIONS pkg_setup src_compile src_install
+		EXPORT_FUNCTIONS src_compile
 		;;
 esac
