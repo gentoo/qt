@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-libs/qt-assistant/qt-assistant-4.9999.ebuild:
+  Dropping webkit use flag since upstream removed -no-assistant configure
+  switch
+
   23 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   x11-libs/qt-assistant/qt-assistant-4.5.0_beta1.ebuild,
   x11-libs/qt-assistant/qt-assistant-4.9999.ebuild,

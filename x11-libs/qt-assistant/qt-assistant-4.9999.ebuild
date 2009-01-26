@@ -9,11 +9,11 @@ DESCRIPTION="The assistant help module for the Qt toolkit."
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
-IUSE="+webkit"
+IUSE=""
 
 DEPEND="~x11-libs/qt-gui-${PV}
 	~x11-libs/qt-sql-${PV}
-	!alpha? ( !ia64? ( !ppc? ( webkit? ( ~x11-libs/qt-webkit-${PV} ) ) ) )
+	!alpha? ( !ia64? ( !ppc? ( ~x11-libs/qt-webkit-${PV}  ) ) )
 	"
 
 # Pixeltool isn't really assistant related, but it relies on
@@ -39,11 +39,6 @@ src_configure() {
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-glib -no-opengl -no-qt3support -no-svg"
-	if use webkit; then
-		myconf="$myconf -assistant-webkit"
-	else
-		myconf="$myconf -no-webkit"
-	fi
 	qt4-build-edge_src_configure
 }
 
