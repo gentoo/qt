@@ -1,0 +1,9 @@
+# ChangeLog for media-sound/qmpdclient-ne
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  29 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +media-sound/qmpdclient-ne/qmpdclient-ne-9999.ebuild:
+  New live ebuild for qmpdclient-ne thanks to Alex Alexander (wired)
+  <alex.alexander@gmail.com>
+
