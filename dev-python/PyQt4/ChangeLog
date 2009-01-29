@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Jan 2009; Theo Chatzimichos <tampakrap@gmail.com>
+  -dev-python/PyQt4/PyQt4-4.4.5_pre20090116.ebuild,
+  +dev-python/PyQt4/PyQt4-4.4.5_pre20090127.ebuild:
+  PyQt4 bump version, remove old
+
   18 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +dev-python/PyQt4/PyQt4-4.4.5_pre20090116.ebuild,
   -dev-python/PyQt4/PyQt4-4.4.5_p20090116.ebuild:
