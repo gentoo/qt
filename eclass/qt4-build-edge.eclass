@@ -265,7 +265,8 @@ standard_configure_options() {
 		-datadir ${QTDATADIR} -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
 		-translationdir ${QTTRANSDIR} -examplesdir ${QTEXAMPLESDIR}
-		-demosdir ${QTDEMOSDIR} -silent -fast -reduce-relocations
+		-demosdir ${QTDEMOSDIR} -silent -fast
+		$(use x86-fbsd || echo -reduce-relocations)
 		-nomake examples -nomake demos"
 
 	echo "${myconf}"
