@@ -1,0 +1,13 @@
+Index: qt-creator-9999/src/shared/qrceditor/resourcefile_p.h
+===================================================================
+--- qt-creator-9999.orig/src/shared/qrceditor/resourcefile_p.h
++++ qt-creator-9999/src/shared/qrceditor/resourcefile_p.h
+@@ -42,7 +42,7 @@
+ #include <QtCore/QStringList>
+ #include <QtGui/QIcon>
+ 
+-#include "shared_global_p.h"
++#include <QtDesigner/private/shared_global_p.h>
+ 
+ QT_BEGIN_NAMESPACE
+ 

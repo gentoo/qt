@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +dev-util/qt-creator/files/fix_headers_git.patch:
+  Fix 'fix_headers.patch' for live ebuild
+
   23 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   dev-util/qt-creator/qt-creator-9999.ebuild:
   Fixing qt-creator-9999 live ebuild

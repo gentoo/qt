@@ -30,7 +30,7 @@ RDEPEND="${DEPEND}
 
 src_unpack() {
 	git_src_unpack
-	epatch ${FILESDIR}/fix_headers.patch
+	epatch ${FILESDIR}/fix_headers_git.patch
 }
 
 src_compile() {
