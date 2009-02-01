@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Feb 2009; Ben de Groot <yngwin@gentoo.org> -metadata.xml:
+  Remove metadata.xml which we dont need here
+
   31 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +dev-util/qt-creator/files/fix_headers_git.patch:
   Fix 'fix_headers.patch' for live ebuild
