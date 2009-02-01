@@ -200,6 +200,7 @@ qt4-build-edge_src_configure() {
 		ewarn "Just do not start crying if it breaks your system, or eats your kitten"
 		ewarn "for breakfast. ;-) "
 		echo
+	else
 		strip-flags
 		replace-flags -O3 -O2
 	fi
