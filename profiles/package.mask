@@ -1,0 +1,3 @@
+# Markos Chandras <hwoarang@silverarrow.gr> ( 2 Feb 2009 )
+# Masking for further testing and possible cleanup
+=x11-libs/qt-embedded-4.4.3
