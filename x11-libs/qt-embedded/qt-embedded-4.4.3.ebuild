@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit eutils
+inherit eutils multilib
 
 MY_PN="${PN}-linux-opensource-src"
 
