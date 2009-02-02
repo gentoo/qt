@@ -1,0 +1,8 @@
+# ChangeLog for x11-libs/qt-embedded
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  +x11-libs/qt-embedded/qt-embedded-4.4.3.ebuild:
+  Initial Import for qt-embedded-4.4.3
+
