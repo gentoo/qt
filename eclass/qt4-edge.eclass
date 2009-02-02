@@ -13,8 +13,19 @@
 # 08.16.06 - Renamed qt_min_* to qt4_min_* to avoid conflicts with the qt3 eclass.
 #    - Caleb Tennis <caleb@gentoo.org>
 
-inherit eutils multilib toolchain-funcs versionator base
+inherit eutils multilib toolchain-funcs base
 
+
+# @ECLASS-VARIABLE: EAPI
+# @DESCRIPTION: 
+# qt4-edge eclass requires EAPI=2.
+# (hwoarang): Maybe we should have a fallback here ,and set EAPI=2 if the user 
+# forgets to specify EAPI on his ebuild
+
+case ${EAPI} in
+	2) : ;;
+	*) die "EAPI older than 2 is not supported";;
+esac
 
 # @ECLASS-VARIABLE: PATCHES[x]
 # @DESCRIPTION:
@@ -26,8 +37,7 @@ inherit eutils multilib toolchain-funcs versionator base
 # PATCHES="${FILESDIR}"/mypatch.patch"
 # PATCHES1="${FILESDIR}"/mypatch2.patch"
 
-# @FUNCTION: qt4_src_prepare
-# @MAINTAINER:
+# @FUNCTION: qt4-edge_src_prepare
 # @DESCRIPTION:
 # Default src_prepare function for packages that depends on qt4. If you have to
 # override src_prepare in your ebuild, you should call qt4_src_prepare in it,
@@ -38,8 +48,7 @@ qt4-edge_src_prepare() {
 	base_src_prepare
 }
 
-# @FUNCTION: qt4_src_configure
-# @MAINTAINER:
+# @FUNCTION: qt4-edge_src_configure
 # @DESCRIPTION:
 # Default src_configure function for packages that depends on qt4. If you have to
 # override src_configure in your ebuild, call qt4_src_configure in it.
@@ -49,8 +58,7 @@ qt4-edge_src_configure() {
 	eqmake4 || die "eqmake4 failed"
 }
 
-# @FUNCTION: qt4_src_compile
-# @MAINTAINER:
+# @FUNCTION: qt4-edge_src_compile
 # @DESCRIPTION:
 # Default src_compile function for packages that depends on qt4. If you have to
 # override src_compile in your ebuild (probably you don't need to), call
