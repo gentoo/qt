@@ -64,9 +64,6 @@ pkg_setup() {
 	PLATFORM=$(qt_mkspecs_dir)
 	PATH="${S}/bin:${PATH}"
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
-}
-
-src_prepare() {
 	ewarn
 	ewarn "Qt-embedded is using only a small part of configure options. This"
 	ewarn "might not fit your embedded linux setup. In this case, you need "
