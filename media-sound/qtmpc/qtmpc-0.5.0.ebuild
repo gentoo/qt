@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4 kde4-base
+inherit qt4-edge kde4-base
 
 DESCRIPTION="Qt MPD client with a tree view music library interface"
 HOMEPAGE="http://lowblog.nl/category/qtmpc/"
