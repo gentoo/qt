@@ -29,7 +29,7 @@ S="${WORKDIR}"
 # TODO: translations, documentation
 
 src_configure() {
-	eqmake4 xVideoServiceThief.pro || die "eqmake4 failed"
+	eqmake4 xVideoServiceThief.pro
 }
 
 src_install() {

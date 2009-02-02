@@ -33,7 +33,7 @@ src_prepare() {
 }
 
 src_configure() {
-	eqmake4 qmpdclient.pro || die "eqmake4 failed"
+	eqmake4 qmpdclient.pro
 }
 
 src_install() {

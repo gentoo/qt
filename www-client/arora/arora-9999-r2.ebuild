@@ -19,7 +19,7 @@ RDEPEND="x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
 
 src_configure() {
-	eqmake4 arora.pro PREFIX="${D}/usr" || die "eqmake4 failed"
+	eqmake4 arora.pro PREFIX="${D}/usr"
 }
 
 src_compile() {

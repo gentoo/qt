@@ -20,7 +20,7 @@ RDEPEND="${DEPEND}
 	media-libs/taglib"
 
 src_configure(){
-	eqmake4 Cuberok.pro || die "eqmake4 failed"
+	eqmake4 Cuberok.pro
 }
 
 src_install() {
