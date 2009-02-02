@@ -6,7 +6,7 @@ EAPI="2"
 
 EGIT_REPO_URI="git://github.com/Voker57/qmpdclient-ne.git"
 
-inherit qt4 git
+inherit qt4-edge git
 
 DESCRIPTION="QMPDClient with NBL additions, such as lyrics' display"
 HOMEPAGE="http://github.com/Voker57/qmpdclient-ne/tree/master"
