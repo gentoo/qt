@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  x11-wm/antico/antico-9999.ebuild:
+  Code cleanup, use new qt4-edge eclass
+
 *antico-9999 (12 Jan 2009)
 
   12 Jan 2009; Ben de Groot <yngwin@gentoo.org> +antico-9999.ebuild:

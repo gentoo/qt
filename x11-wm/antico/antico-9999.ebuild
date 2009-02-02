@@ -3,11 +3,13 @@
 # $Header: $
 
 EAPI="2"
-inherit git qt4
+
+EGIT_REPO_URI="git://github.com/antico/antico.git"
+
+inherit qt4-edge git
 
 DESCRIPTION="A simple Qt4/X11 window manager"
 HOMEPAGE="http://antico.wordpress.com/introduction/"
-EGIT_REPO_URI="git://github.com/antico/antico.git"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -15,7 +17,7 @@ KEYWORDS="~x86"
 IUSE="debug"
 
 RDEPEND="x11-libs/qt-gui:4[dbus]"
-DEPEND="$RDEPEND"
+DEPEND="${RDEPEND}"
 
 src_prepare() {
 	if ! use debug; then
@@ -26,17 +28,13 @@ src_prepare() {
 	fi
 }
 
-src_configure() {
-	eqmake4
-}
-
 src_install() {
-	dodir /usr/share/${P}
-	exeinto /usr/share/${P}
+	dodir /usr/share/${P} || die "dodir failed"
+	exeinto /usr/share/${P} || die "exeinto failed"
 	doexe antico || die "Installing antico binary failed"
-	insinto /usr/share/${P}
+	insinto /usr/share/${P} || die "insinto failed"
 	doins -r theme || die "Installing default theme failed"
-	dodoc README CHANGELOG
+	dodoc README CHANGELOG || die "dodoc failed"
 
 	echo "#!/bin/bash" > antico.sh
 	echo "pushd /usr/share/${P}" >> antico.sh
