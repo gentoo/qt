@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit qt4 multilib git
+inherit qt4-edge multilib git
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://trolltech.com/developer/qt-creator"
@@ -28,14 +28,10 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 )"
 
-src_unpack() {
-	git_src_unpack
-	epatch ${FILESDIR}/fix_headers_git.patch
-}
+PATCHES="${FILESDIR}/fix_headers_git.patch"
 
-src_compile() {
+src_configure() {
 	eqmake4 qtcreator.pro || die "eqmake4 failed"
-	emake || die "emake failed"
 }
 
 src_install() {

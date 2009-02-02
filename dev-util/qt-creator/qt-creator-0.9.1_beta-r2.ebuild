@@ -2,9 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 EGIT_BRANCH="0.9.1-beta"
 
-inherit qt4 multilib git
+inherit qt4-edge multilib git
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://trolltech.com/developer/qt-creator"
@@ -30,17 +32,15 @@ DEPEND="=x11-libs/qt-assistant-4.5*
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon =x11-libs/qt-phonon-4.5* )"
 
-src_unpack() {
-	git_src_unpack
-	#fixing headers,qtcreator.pro file and docs path
-	einfo "Applying various patches and fixes"
-	# patching the docs_path patch in order to fix every release of qt-creator
-	epatch ${FILESDIR}/fix_headers.patch
-	epatch ${FILESDIR}/qtcreator_pro.patch
-	epatch ${FILESDIR}/docs_path.patch
-	epatch ${FILESDIR}/templates.patch
-	epatch ${FILESDIR}/license.patch
-	epatch ${FILESDIR}/wizard.patch
+PATCHES="${FILESDIR}/fix_headers.patch
+	${FILESDIR}/qtcreator_pro.patch
+	${FILESDIR}/docs_path.patch
+	${FILESDIR}/templates.patch
+	${FILESDIR}/license.patch
+	${FILESDIR}/wizard.patch"
+
+src_prepare() {
+	qt4-edge_src_prepare
 	sed -i "s/docs\/qt-creator/docs\/${PF}/" ${S}/src/plugins/help/helpplugin.cpp
 	sed -i "s/docs\/qt-creator/docs\/${PF}/" ${S}/src/app/app.pro
 	#adding paths
@@ -52,9 +52,8 @@ src_unpack() {
 	sed -i "s/qtcreator.qch/docs\/${PF}\/qtcreator.qch/" ${S}/doc/doc.pri
 }
 
-src_compile() {
+src_configure() {
 	eqmake4 qtcreator.pro || die "eqmake4 failed"
-	emake || die "emake failed"
 }
 
 src_install() {
