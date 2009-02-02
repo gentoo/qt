@@ -53,7 +53,7 @@ qt4-edge_src_prepare() {
 qt4-edge_src_configure() {
 	debug-print-function $FUNCNAME "$@"
 
-	eqmake4 || die "eqmake4 failed"
+	eqmake4
 }
 
 # @FUNCTION: qt4-edge_src_compile
