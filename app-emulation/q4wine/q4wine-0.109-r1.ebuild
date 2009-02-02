@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-inherit qt4 eutils
+EAPI="2"
+inherit qt4-edge
 
 DESCRIPTION="Qt4 GUI for wine"
 HOMEPAGE="http://sourceforge.net/projects/q4wine/"
@@ -21,10 +21,6 @@ RDEPEND="${DEPEND}
 	app-emulation/wine
 	>=sys-apps/which-2.19
 	>=media-gfx/icoutils-0.26.0"
-
-src_configure() {
-	eqmake4 || die "eqmake4 failed"
-}
 
 src_install() {
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
