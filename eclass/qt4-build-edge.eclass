@@ -166,9 +166,11 @@ qt4-build-edge_src_unpack() {
 qt4-build-edge_src_prepare() {
 	case "${PV}" in
 		4.?.9999)
-			# apply KDE patchset
+			# Apply KDE patchset
 			cd "${S}"
-			python apply_patches.py || die "Applying KDE patchset failed"
+			# Blacklist broken systray fixes
+			echo -e "0269\n0270\n0271" >> patches/DISABLED
+			./apply_patches || die "Applying KDE patchset failed"
 			;;
 	esac
 
