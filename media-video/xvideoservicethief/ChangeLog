@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  eclass/qt4-edge.eclass:
+  Updating to qt4-edge eclass
+
 *xvideoservicethief-1.8.2 (15 Jan 2009)
 
   15 Jan 2009; Ben de Groot <yngwin@gentoo.org> +files/gcc-4.3.patch,

@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4 versionator
+inherit qt4-edge versionator
 
 MY_PV=$(replace_all_version_separators '_')
 
@@ -22,13 +22,11 @@ DEPEND="app-arch/unzip
 RDEPEND="x11-libs/qt-gui:4
 	media-video/ffmpeg"
 
+PATCHES="${FILESDIR}/gcc-4.3.patch"
+
 S="${WORKDIR}"
 
 # TODO: translations, documentation
-
-src_prepare() {
-	epatch "${FILESDIR}/gcc-4.3.patch"
-}
 
 src_configure() {
 	eqmake4 xVideoServiceThief.pro || die "eqmake4 failed"
