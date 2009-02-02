@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit qt4
+inherit qt4-edge
 
 DESCRIPTION="Qt4 lightweight music player"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/Cuberok?content=97885"
@@ -19,9 +19,8 @@ DEPEND=">=media-libs/gstreamer-0.10
 RDEPEND="${DEPEND}
 	media-libs/taglib"
 
-src_compile(){
+src_configure(){
 	eqmake4 Cuberok.pro || die "eqmake4 failed"
-	emake || die "emake failed"
 }
 
 src_install() {

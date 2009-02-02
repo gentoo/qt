@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  media-sound/cuberok/cuberok-0.0.4a.ebuild:
+  Move to new qt4-edge eclass
+
   20 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   media-sound/cuberok/cuberok-0.0.4a.ebuild:
   Fixing src_install
