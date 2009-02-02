@@ -4,12 +4,11 @@
 
 EAPI="2"
 
-EGIT_REPO_URI="git://github.com/Arora/arora.git"
-
 inherit git qt4-edge
 
 DESCRIPTION="A cross-platform Qt4 WebKit browser"
 HOMEPAGE="http://arora.googlecode.com/"
+EGIT_REPO_URI="git://github.com/Arora/arora.git"
 
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="0"

@@ -4,12 +4,11 @@
 
 EAPI="2"
 
-EGIT_REPO_URI="git://github.com/antico/antico.git"
-
 inherit qt4-edge git
 
 DESCRIPTION="A simple Qt4/X11 window manager"
 HOMEPAGE="http://antico.wordpress.com/introduction/"
+EGIT_REPO_URI="git://github.com/antico/antico.git"
 
 LICENSE="GPL-2"
 SLOT="0"
