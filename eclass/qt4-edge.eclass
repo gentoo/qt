@@ -16,16 +16,16 @@
 inherit eutils multilib toolchain-funcs base
 
 
-# @ECLASS-VARIABLE: EAPI
-# @DESCRIPTION: 
-# qt4-edge eclass requires EAPI=2.
-# (hwoarang): Maybe we should have a fallback here ,and set EAPI=2 if the user 
-# forgets to specify EAPI on his ebuild
+qt4-edge_pkg_setup() {
+	case ${EAPI} in
+		2) : ;;
+		*) ewarn "The qt4-edge eclass requires EAPI=2, but this ebuild does not"
+	       ewarn "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
+	       ewarn "to be fixed. Using qt4-edge eclass without EAPI=2 will fail."
+	       die "qt4-edge eclass requires EAPI=2 set";;
 
-case ${EAPI} in
-	2) : ;;
-	*) die "EAPI older than 2 is not supported";;
-esac
+	esac
+}
 
 # @ECLASS-VARIABLE: PATCHES[x]
 # @DESCRIPTION:
@@ -149,9 +149,9 @@ eqmake4() {
 
 case ${EAPI} in
 	2)
-		EXPORT_FUNCTIONS src_prepare src_configure src_compile
+		EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile
 		;;
 	*)
-		EXPORT_FUNCTIONS src_compile
+		EXPORT_FUNCTIONS pkg_setup src_compile
 		;;
 esac
