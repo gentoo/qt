@@ -27,16 +27,14 @@ qt4-edge_pkg_setup() {
 	esac
 }
 
-# @ECLASS-VARIABLE: PATCHES[x]
+# @ECLASS-VARIABLE: PATCHES
 # @DESCRIPTION:
-# In case you have pathes to apply , specify them on PATCHES[x] variable. Make sure
-# to specify the full path, Thjs variable is necessary for src_prepare phase. In
-# case you have multiple patches to apply you need to put each one on a separate
-# PATCHES variable.
+# In case you have pathes to apply , specify them on PATCHES variable. Make sure
+# to specify the full path, Thjs variable is necessary for src_prepare phase.
 # example:
-# PATCHES="${FILESDIR}"/mypatch.patch"
-# PATCHES1="${FILESDIR}"/mypatch2.patch"
-
+# PATCHES="${FILESDIR}"/mypatch.patch
+# 	${FILESDIR}"/mypatch2.patch"
+#
 # @FUNCTION: qt4-edge_src_prepare
 # @DESCRIPTION:
 # Default src_prepare function for packages that depends on qt4. If you have to
