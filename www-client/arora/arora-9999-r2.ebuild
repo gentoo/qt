@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit git qt4-edge
+inherit qt4-edge git
 
 DESCRIPTION="A cross-platform Qt4 WebKit browser"
 HOMEPAGE="http://arora.googlecode.com/"
