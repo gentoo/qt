@@ -23,17 +23,17 @@ S="${WORKDIR}/pysmssend"
 
 src_install() {
 	distutils_src_install
-	dodir /usr/share/${PN}
+	dodir /usr/share/${PN} || die "dodir failed"
 	if use qt4; then
-		insinto /usr/share/${PN}/Icons
-		doins   Icons/*
-		doicon  Icons/pysmssend.png
-		dobin   pysmssend pysmssendcmd
-		make_desktop_entry pysmssend pySMSsend pysmssend.png "Applications;Network" 
+		insinto /usr/share/${PN}/Icons || die "insinto failed"
+		doins   Icons/* || die "doins failed"
+		doicon  Icons/pysmssend.png || die "doicon failed"
+		dobin   pysmssend pysmssendcmd || die "dobin failed"
+		make_desktop_entry pysmssend pySMSsend pysmssend.png \
+			"Qt;Network;TelephonyTools" || die "make_desktop_entry failed"
 	else
-		dobin   pysmssendcmd
-		dosym   pysmssendcmd /usr/bin/pysmssend
+		dobin   pysmssendcmd || die "dobin failed"
+		dosym   pysmssendcmd /usr/bin/pysmssend || die "dosym failed"
 	fi
-	dodoc	README AUTHORS TODO
-
+	dodoc	README AUTHORS TODO || die "dodoc failed"
 }
