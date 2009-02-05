@@ -4,13 +4,11 @@
 
 NEED_PYTHON=2.5
 
-inherit distutils eutils python multilib cvs
-
-ECVS_SERVER="pysmssend.cvs.sourceforge.net/cvsroot/pysmssend/"
-ECVS_MODULE="pysmssend"
+inherit distutils eutils python multilib git
 
 DESCRIPTION="Python Application for sending sms over multiple ISPs"
 HOMEPAGE="http://pysmssend.sourceforge.net/"
+EGIT_REPO_URI="git://github.com/hwoarang/pysmssend.git"
 
 LICENSE="GPL-3"
 SLOT="0"

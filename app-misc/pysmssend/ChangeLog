@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
+  app-misc/pysmssend/pysmssend-9999.ebuild:
+  Moving repository from cvs to git
+
   17 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +app-misc/pysmssend/pysmssend-9999.ebuild:
   Adding pysmssend live ebuild
