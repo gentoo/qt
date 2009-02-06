@@ -17,7 +17,7 @@ KEYWORDS=""
 IUSE="debug"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
-	>=x11-libs/qt-core-4.5.0_beta1
+	>=x11-libs/qt-core-4.5.0_beta1[doc]
 	>=x11-libs/qt-dbus-4.5.0_beta1
 	>=x11-libs/qt-gui-4.5.0_beta1
 	>=x11-libs/qt-qt3support-4.5.0_beta1

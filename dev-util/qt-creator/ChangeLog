@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-creator-9999.ebuild:
+  add qt-core[doc] as dependency
+
   06 Feb 2009; Markos Chandras <hwoarang@gentoo.org> +files/docs_gen.patch,
   qt-creator-9999.ebuild:
   Fix location for qdoc3 and qhelpgenerator
