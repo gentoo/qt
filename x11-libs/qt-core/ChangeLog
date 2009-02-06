@@ -5,6 +5,11 @@
   06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-core-4.5.0_beta1.ebuild, qt-core-4.5.0_rc1.ebuild,
   qt-core-4.9999.ebuild:
+  Build qdoc3 when doc flag is enabled
+
+  06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-core-4.5.0_beta1.ebuild, qt-core-4.5.0_rc1.ebuild,
+  qt-core-4.9999.ebuild:
   Moving qdoc3 installation on /usr/bin and make it independent from doc use
   flag
 
