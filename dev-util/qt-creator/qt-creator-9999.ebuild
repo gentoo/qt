@@ -39,6 +39,6 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
-	make_desktop_entry qtcreator QtCreator designer.png \
-		'Qt;Development;GUIDesigner' || die "make_desktop_entry failed"
+	make_desktop_entry qtcreator QtCreator qtcreator_logo_48 \
+		'Qt;Development;IDE' || die "make_desktop_entry failed"
 }
