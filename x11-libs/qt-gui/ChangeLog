@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Feb 2009; Ben de Groot <yngwin@gentoo.org> -qt-gui-4.5.0_beta1.ebuild:
+  Remove beta ebuild, use rc1 instead
+
   22 Jan 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   +x11-libs/qt-gui/files/libqt4-read-kde4-kdeglobals.patch:
   Apply patch for bug #255632

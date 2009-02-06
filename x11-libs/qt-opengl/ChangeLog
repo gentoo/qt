@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Feb 2009; Ben de Groot <yngwin@gentoo.org>
+  -qt-opengl-4.5.0_beta1.ebuild:
+  Remove beta ebuild, use rc1 instead
+
   17 Jan 2009; Ben de Groot <yngwin@gentoo.org>
   qt-opengl-4.5.0_beta1.ebuild:
   Add keywords as per 4.4.2 in official tree

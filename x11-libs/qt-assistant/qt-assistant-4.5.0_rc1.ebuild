@@ -17,7 +17,7 @@ DEPEND="~x11-libs/qt-gui-${PV}
 RDEPEND="${DEPEND}"
 
 # Pixeltool isn't really assistant related, but it relies on
-# the assistant libraries.
+# the assistant libraries. And qdoc3 is needed by qt-creator...
 QT4_TARGET_DIRECTORIES="tools/assistant tools/pixeltool tools/qdoc3"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 src/3rdparty/clucene/
@@ -40,5 +40,6 @@ src_install() {
 	qt4-build-edge_src_install
 	insinto ${QTDOCDIR}
 	doins -r "${S}"/doc/qch/ || die "Installing qch documentation failed"
+	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"
 	domenu "${FILESDIR}"/Assistant.desktop
 }
