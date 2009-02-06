@@ -270,7 +270,8 @@ standard_configure_options() {
 		-datadir ${QTDATADIR} -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
 		-translationdir ${QTTRANSDIR} -examplesdir ${QTEXAMPLESDIR}
-		-demosdir ${QTDEMOSDIR} -silent -fast -no-exceptions
+		-demosdir ${QTDEMOSDIR} -silent -fast
+		$([[ ${PN} == qt-xmlpatterns ]] || echo -no-exceptions)
 		$(use x86-fbsd || echo -reduce-relocations)
 		-nomake examples -nomake demos"
 
