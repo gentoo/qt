@@ -16,19 +16,19 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
-	>=x11-libs/qt-core-4.5.0_beta1[doc]
-	>=x11-libs/qt-dbus-4.5.0_beta1
-	>=x11-libs/qt-gui-4.5.0_beta1
-	>=x11-libs/qt-qt3support-4.5.0_beta1
-	>=x11-libs/qt-script-4.5.0_beta1
-	>=x11-libs/qt-sql-4.5.0_beta1
-	>=x11-libs/qt-svg-4.5.0_beta1
-	>=x11-libs/qt-test-4.5.0_beta1
-	>=x11-libs/qt-webkit-4.5.0_beta1"
+DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
+	>=x11-libs/qt-core-4.5.0_rc1
+	>=x11-libs/qt-dbus-4.5.0_rc1
+	>=x11-libs/qt-gui-4.5.0_rc1
+	>=x11-libs/qt-qt3support-4.5.0_rc1
+	>=x11-libs/qt-script-4.5.0_rc1
+	>=x11-libs/qt-sql-4.5.0_rc1
+	>=x11-libs/qt-svg-4.5.0_rc1
+	>=x11-libs/qt-test-4.5.0_rc1
+	>=x11-libs/qt-webkit-4.5.0_rc1"
 
 RDEPEND="${DEPEND}
-	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 )"
+	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_rc1 )"
 
 PATCHES="${FILESDIR}/fix_headers_git.patch
 	${FILESDIR}/docs_gen.patch"
