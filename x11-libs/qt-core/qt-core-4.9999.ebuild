@@ -136,7 +136,6 @@ src_install() {
 		# due to unknown reason, make install_htmldocs fail
 		# insinto ${QTDOCDIR} || die "insinto html docs failed"
 		# doins -r ${S}/doc/html/ || die "doins html docs failed"
-		dobin ${S}/tools/qdoc3/qdoc3 || die "dobin failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"

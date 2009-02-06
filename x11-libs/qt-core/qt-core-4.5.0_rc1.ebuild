@@ -145,8 +145,6 @@ src_install() {
 
 	if use doc; then
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
-		# install qdoc3. Required at least for qt-creator package
-		dobin ${S}/tools/qdoc3/qdoc3 || die "dobin failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"

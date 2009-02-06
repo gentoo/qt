@@ -3,6 +3,10 @@
 # $Header: $
 
   06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-core-4.5.0_rc1.ebuild, qt-core-4.9999.ebuild:
+  Removing qdoc3 installation
+
+  06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-core-4.5.0_beta1.ebuild, qt-core-4.5.0_rc1.ebuild,
   qt-core-4.9999.ebuild:
   Build qdoc3 when doc flag is enabled
