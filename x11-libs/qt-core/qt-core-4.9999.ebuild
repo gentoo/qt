@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -126,6 +126,7 @@ src_compile() {
 
 src_install() {
 	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed."
+	dobin ${S}/tools/qdoc3/qdoc3 || die "dobin failed"
 
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
@@ -136,10 +137,6 @@ src_install() {
 		# due to unknown reason, make install_htmldocs fail
 		# insinto ${QTDOCDIR} || die "insinto html docs failed"
 		# doins -r ${S}/doc/html/ || die "doins html docs failed"
-		# we also need to install qdoc3 executable under
-		# /usr/qt/3/tools/qmake/ folder. Some programs requires it
-		exeinto /usr/qt/3/tools/qdoc3/ || die "exeinto failed"
-		doexe ${S}/tools/qdoc3/qdoc3 || die "doexe failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
