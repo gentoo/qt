@@ -47,7 +47,6 @@ src_install() {
 	qt4-build-edge_src_install
 	insinto ${QTDOCDIR}
 	doins -r "${S}"/doc/qch/ || die "doins qch documentation failed"
-	exeinto /usr/qt/3/bin/ || die "exeinto failed"
-	doexe ${S}/bin/qhelpgenerator || die "doexe failed"
+	dobin ${S}/bin/qhelpgenerator || die "dobin failed"
 	domenu "${FILESDIR}"/Assistant.desktop || die "domenu failed"
 }
