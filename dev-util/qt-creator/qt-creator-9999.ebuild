@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit qt4-edge multilib git
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
