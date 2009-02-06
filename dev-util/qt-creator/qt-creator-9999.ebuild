@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,7 +17,7 @@ KEYWORDS=""
 IUSE="debug"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
-	>=x11-libs/qt-core-4.5.0_beta1[doc]
+	>=x11-libs/qt-core-4.5.0_beta1
 	>=x11-libs/qt-dbus-4.5.0_beta1
 	>=x11-libs/qt-gui-4.5.0_beta1
 	>=x11-libs/qt-qt3support-4.5.0_beta1
@@ -30,7 +30,8 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_beta1
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_beta1 )"
 
-PATCHES="${FILESDIR}/fix_headers_git.patch"
+PATCHES="${FILESDIR}/fix_headers_git.patch
+	${FILESDIR}/docs_gen.patch"
 
 src_configure() {
 	eqmake4 qtcreator.pro || die "eqmake4 failed"

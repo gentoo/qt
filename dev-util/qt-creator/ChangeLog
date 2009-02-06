@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Feb 2009; Markos Chandras <hwoarang@gentoo.org> +files/docs_gen.patch,
+  qt-creator-9999.ebuild:
+  Fix location for qdoc3 and qhelpgenerator
+
   02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   dev-util/qt-creator/qt-creator-0.9.1_beta-r2.ebuild,
   dev-util/qt-creator/qt-creator-9999.ebuild:
