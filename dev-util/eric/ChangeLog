@@ -1,0 +1,11 @@
+# ChangeLog for dev-util/eric
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*eric-4.3_pre20090201 (06 Feb 2009)
+
+  06 Feb 2009; Ben de Groot <yngwin@gentoo.org>
+  +files/4.2.3-no-interactive.patch, +files/4.3-paths.patch,
+  +eric-4.3_pre20090201.ebuild:
+  Initial import. Snapshot ebuild based on the one in portage. EAPI-2-ified.
+

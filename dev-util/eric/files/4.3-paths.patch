@@ -1,0 +1,63 @@
+--- eric4-4.3-snapshot-20090201.orig/install.py	2009-02-01 13:05:24.000000000 +0100
++++ eric4-4.3-snapshot-20090201/install.py	2009-02-06 23:19:04.000000000 +0100
+@@ -185,12 +185,12 @@
+     Create the global plugins directory, if it doesn't exist.
+     """
+     global cfg, distDir
+-    
++
+     pdir = os.path.join(cfg['mdir'], "eric4plugins")
+     fname = os.path.join(pdir, "__init__.py")
+     if not os.path.exists(fname):
+         if not os.path.exists(pdir):
+-            os.mkdir(pdir,  0755)
++            os.makedirs(pdir,  0755)
+         f = open(fname, "wb")
+         f.write(\
+ '''# -*- coding: utf-8 -*-
+@@ -206,16 +206,19 @@
+ def getAPIsPath(progLanguage = None):
+     """
+     Get the name of the directory containing the API files.
+-    
++
+     @param progLanguage programming language of the API files (string)
+     @return name of the directory containing the API files (string)
+     """
+     global cfg, qtDataDir
+-    
++
+     if not specialInstall and qtDataDir is None:
+         try:
+             from PyQt4 import pyqtconfig
+-            qtDataDir = pyqtconfig._pkg_config["qt_data_dir"]
++            if distDir:
++                qtDataDir = distDir + pyqtconfig._pkg_config["qt_data_dir"]
++            else:
++                qtDataDir = pyqtconfig._pkg_config["qt_data_dir"]
+         except (AttributeError, ImportError):
+             print
+             print "Please enter the name of the Qt data directory."
+@@ -487,17 +490,17 @@
+         pass
+ 
+     raise AttributeError, '"%%s" is not a valid configuration value' %% name
+-""" % (cfg['ericDir'], cfg['ericPixDir'], cfg['ericIconDir'], 
+-       cfg['ericDTDDir'], cfg['ericCSSDir'], 
++""" % (cfg['ericDir'], cfg['ericPixDir'], cfg['ericIconDir'],
++       cfg['ericDTDDir'], cfg['ericCSSDir'],
+        cfg['ericStylesDir'], cfg['ericDocDir'],
+        cfg['ericExamplesDir'], cfg['ericTranslationsDir'],
+        cfg['ericTemplatesDir'],
+        cfg['ericCodeTemplatesDir'], cfg['ericOthersDir'],
+-       cfg['bindir'], cfg['mdir'], 
+-       getAPIsPath(), apis)
++       cfg['bindir'], cfg['mdir'],
++       getAPIsPath()[len(distDir):], apis)
+     copyToFile(fn, config)
+ 
+-def doDependancyChecks():    
++def doDependancyChecks():
+     """
+     Perform some dependancy checks.
+     """
