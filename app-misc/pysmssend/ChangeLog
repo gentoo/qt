@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Feb 2009; Markos Chandras <hwoarang@gentoo.org> pysmssend-9999.ebuild:
+  Dropping keywords
+
   05 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   app-misc/pysmssend/pysmssend-9999.ebuild:
   Moving repository from cvs to git

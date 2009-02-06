@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://github.com/hwoarang/pysmssend.git"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="qt4"
 
 RDEPEND="${DEPEND}
