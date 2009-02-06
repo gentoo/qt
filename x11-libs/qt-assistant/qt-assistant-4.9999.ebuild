@@ -12,9 +12,8 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-sql-${PV}
-	!alpha? ( !ia64? ( !ppc? ( ~x11-libs/qt-webkit-${PV}  ) ) )
-	"
+	~x11-libs/qt-sql-${PV}[sqlite]
+	~x11-libs/qt-webkit-${PV}"
 
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
@@ -23,14 +22,6 @@ tools/assistant
 tools/pixeltool
 tools/qdoc3"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
-
-pkg_setup() {
-	qt4-build-edge_pkg_setup
-
-	if ! built_with_use x11-libs/qt-sql sqlite; then
-		die "You must first emerge x11-libs/qt-sql with the \"sqlite\" use flag in order to use qt-assistant"
-	fi
-}
 
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr

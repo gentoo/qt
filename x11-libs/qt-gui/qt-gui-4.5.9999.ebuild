@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,6 @@ LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 
-IUSE_INPUT_DEVICES="input_devices_wacom"
 IUSE="+accessibility cups +dbus debug +glib mng nas nis tiff +qt3support xinerama ${IUSE_INPUT_DEVICES}"
 
 RDEPEND="
@@ -62,8 +61,6 @@ src_unpack() {
 
 	# fixing hardcoded fonts, bug #252312
 	epatch ${FILESDIR}/hardcoded_fonts.patch
-	# fix colors under kde4, bug #255632
-	epatch ${FILESDIR}/libqt4-read-kde4-kdeglobals.patch
 }
 
 src_configure() {
@@ -72,7 +69,6 @@ src_configure() {
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
-		$(qt_use input_devices_wacom tablet)
 		$(qt_use mng libmng system)
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
@@ -95,7 +91,7 @@ src_configure() {
 
 src_install() {
 	QCONFIG_ADD="x11sm xshape xcursor xfixes xrandr xrender xkb fontconfig
-		$(usev accessibility) $(use input_devices_wacom && echo tablet)
+		$(usev accessibility)
 		$(usev xinerama) $(usev cups) $(usev nas) gif png system-png system-jpeg
 		$(use mng && echo system-mng) $(use tiff && echo system-tiff)"
 	QCONFIG_REMOVE="no-gif no-png"
@@ -114,7 +110,7 @@ src_install() {
 	insinto /usr/include/qt4/QtDesigner/private/
 	doins "${S}"/tools/designer/src/lib/shared/*
 	doins "${S}"/tools/designer/src/lib/sdk/*
-	
+
 	# qt-creator
 	# some qt-creator headers are located
 	# under /usr/inclute/qt4/QtDesigner/private.

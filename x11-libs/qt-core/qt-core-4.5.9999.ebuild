@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -20,6 +20,7 @@ DEPEND="${RDEPEND}
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV} )"
 
 QT4_TARGET_DIRECTORIES="
+src/tools/bootstrap/
 src/tools/moc/
 src/tools/rcc/
 src/tools/uic/
@@ -95,7 +96,7 @@ src_configure() {
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} -no-xkb -no-tablet -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
@@ -131,9 +132,10 @@ src_install() {
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
+		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
 		# due to unknown reason, make install_htmldocs fail
-		insinto ${QTDOCDIR} || die "insinto html docs failed"
-		doins -r ${S}/doc/html/ || die "doins html docs failed"
+		# insinto ${QTDOCDIR} || die "insinto html docs failed"
+		# doins -r ${S}/doc/html/ || die "doins html docs failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"

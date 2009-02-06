@@ -11,13 +11,13 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[ssl]
-	~x11-libs/qt-gui-${PV}
+DEPEND="~x11-libs/qt-gui-${PV}
+	~x11-libs/qt-core-${PV}[ssl]
 	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-sound/phonon )"
+RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"
-QT4_EXTRACT_DIRECTORIES="src/3rdparty/webkit src/3rdparty/sqlite
-tools/designer/src/plugins/qwebview"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 QCONFIG_ADD="webkit"
 QCONFIG_DEFINE="QT_WEBKIT"
 
@@ -29,6 +29,5 @@ src_unpack() {
 
 src_configure() {
 	myconf="${myconf} -webkit"
-
 	qt4-build-edge_src_configure
 }

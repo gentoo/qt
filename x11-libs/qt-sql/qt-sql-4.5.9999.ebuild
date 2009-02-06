@@ -6,15 +6,14 @@ EAPI="2"
 inherit qt4-build-edge
 
 DESCRIPTION="The SQL module for the Qt toolkit."
-HOMEPAGE="http://www.trolltech.com/"
-
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 
 IUSE="firebird mysql odbc postgres +qt3support +sqlite"
 
-DEPEND="~x11-libs/qt-core-${PV}[qt3support=]
+DEPEND="
+	~x11-libs/qt-core-${PV}[qt3support=]
 	firebird? ( dev-db/firebird )
 	sqlite? ( dev-db/sqlite:3 )
 	mysql? ( virtual/mysql )
@@ -50,12 +49,12 @@ src_configure() {
 		$(qt_use odbc sql-odbc plugin)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} -no-xkb -no-tablet -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility -no-fontconfig
 		-no-glib -no-opengl -no-svg"
-
+	
 	qt4-build-edge_src_configure
 }
