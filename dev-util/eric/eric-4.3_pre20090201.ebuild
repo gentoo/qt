@@ -27,7 +27,7 @@ LICENSE="GPL-3"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="linguas_cs linguas_de linguas_es linguas_fr linguas_ru linguas_tr linguas_zh"
 
-DEPEND="dev-python/PyQt4
+DEPEND="dev-python/PyQt4[svg]
 	>=dev-python/qscintilla-python-2.2[qt4]"
 RDEPEND="${DEPEND}"
 

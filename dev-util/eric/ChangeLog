@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  eric-4.3_pre20090201.ebuild:
+  Add svg use dependency on PyQt4 ( see bug #257976 )
+
 *eric-4.3_pre20090201 (06 Feb 2009)
 
   06 Feb 2009; Ben de Groot <yngwin@gentoo.org>
