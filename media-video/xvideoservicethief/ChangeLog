@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  xvideoservicethief-1.8.2.ebuild:
+  add ~amd64 keyword
+
   02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   eclass/qt4-edge.eclass:
   Updating to qt4-edge eclass

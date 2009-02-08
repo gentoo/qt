@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/xviservicethief/xVideoServiceThief_${MY_PV}_alpha_
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND="app-arch/unzip
