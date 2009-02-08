@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,7 +11,7 @@ ESVN_REPO_URI="svn://libqxt.org/svn/libqxt/trunk"
 
 LICENSE="CPL-1.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="berkdb crypt debug doc sql web"
 
 RDEPEND="|| ( ( x11-libs/qt-gui:4

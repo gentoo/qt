@@ -6,7 +6,3 @@
 # Ben de Groot <yngwin@gentoo.org> (06 Feb 2009)
 # Fails on demos/arthurplugin
 =x11-libs/qt-demo-4.5.0_rc1
-
-# Markos Chandras <hwoarang@silverarrow.gr> (02 Feb 2009)
-# Masking for further testing and possible cleanup
-=x11-libs/qt-embedded-4.4.3

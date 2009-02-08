@@ -1,5 +1,8 @@
 # ChangeLog for x11-libs/libqxt
-# Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
+# Copyright 2006-2009 Berkano Overlay; distributed under the GPL version 2
+
+  08 Feb 2009; Markos Chandras <hwoarang@gentoo.org> libqxt-9999.ebuild:
+  Dropped keywords
 
   10 May 2008; Ben de Groot <yngwin@gentoo.org>; libqxt-9999.ebuild:
   Adapting ebuild to split qt-4.4.
