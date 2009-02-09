@@ -22,6 +22,8 @@ RDEPEND="${DEPEND}
 	>=sys-apps/which-2.19
 	>=media-gfx/icoutils-0.26.0"
 
+S="${WORKDIR}/${PN}"
+
 src_install() {
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 	dodoc README || die "dodoc failed"
