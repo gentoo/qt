@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-edge
+inherit qt4-edge cmake-utils
 
 DESCRIPTION="Qt4 GUI for wine"
 HOMEPAGE="http://sourceforge.net/projects/q4wine/"
@@ -20,12 +20,13 @@ RDEPEND="${DEPEND}
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
-	>=media-gfx/icoutils-0.26.0"
+	>=media-gfx/icoutils-0.26.0
+	dev-util/cmake[qt4]"
 
 S="${WORKDIR}/${PN}"
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
+	cmake-utils_src_install
 	dodoc README || die "dodoc failed"
 	doicon src/data/wine16x16.png || die "doicon failed"
 	make_desktop_entry q4wine Q4Wine wine16x16 "Utility" || die "make_desktop_entry failed"
