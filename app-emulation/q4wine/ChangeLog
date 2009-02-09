@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*q4wine-0.110 (09 Feb 2009)
+
+  09 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  -q4wine-0.109-r1.ebuild, +q4wine-0.110.ebuild:
+  version bump
+
   02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   app-emulation/q4wine/q4wine-0.109-r1.ebuild:
   Use qt4-edge eclass
