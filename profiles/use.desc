@@ -2,3 +2,4 @@
 # Please keep alphabetically sorted
 
 custom-cxxflags - Allows building with user set CXXFLAGS
+raster - Use raster backend engine for Qt
