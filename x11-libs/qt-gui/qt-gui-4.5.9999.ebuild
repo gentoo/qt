@@ -10,10 +10,9 @@ LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 
-IUSE="+accessibility cups +dbus debug +glib mng nas nis tiff +qt3support xinerama ${IUSE_INPUT_DEVICES}"
+IUSE="+accessibility cups +dbus debug +glib mng nas nis tiff opengl +qt3support raster xinerama ${IUSE_INPUT_DEVICES}"
 
-RDEPEND="
-	
+RDEPEND="	
 	media-libs/fontconfig
 	>=media-libs/freetype-2
 	media-libs/jpeg
@@ -36,7 +35,8 @@ DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV} )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV} )
+	opengl? ( ~x11-libs/qt-opengl-${PV} )"
 
 QT4_TARGET_DIRECTORIES="
 src/gui
@@ -46,6 +46,22 @@ src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
+
+pkg_setup() {
+	qt4-build-edge_pkg_setup
+	if use raster && use opengl;then
+		eerror
+		eerror "You can't have both raster and opengl use flags enabled"
+		eerror "Please choose one grapchics backend engine."
+		eerror
+		die "You cant't have both raster and opengl use flags enabled"
+	fi
+	if use opengl;then
+		ewarn
+		ewarn "You have enabled experimental opengl backend engine for Qt."
+		ewarn 
+	fi
+}
 
 src_unpack() {
 	use dbus && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} tools/qdbus/qdbusviewer"
@@ -75,6 +91,8 @@ src_configure() {
 		$(qt_use dbus qdbus)
 		$(qt_use qt3support)
 		$(qt_use xinerama)"
+		use raster && myconf="${myconf} -graphicssystem raster"
+		use opengl && myconf="${myconf} -graphicssystem opengl"
 
 	use nas	&& myconf="${myconf} -system-nas-sound"
 
