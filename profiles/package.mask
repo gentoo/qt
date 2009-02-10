@@ -3,6 +3,19 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Maciej Mrozowski <reavertm@poczta.fm> (10 Feb 2009)
+# Masked for testing - those ebuilds contain qt-copy patches
+# for 4.4.2 series.
+# qt-gui so far works very fine and solves reproducible crashes
+# with plasmoids (I even managed to reproduce them on Ubuntu)
+# qt-core contains some *unsafe* patches that cause
+# kbuilsycoca4 to crash and need to be sorted out - I commented them
+# out for now.
+=x11-libs/qt-core-4.4.2-r2
+=x11-libs/qt-gui-4.4.2-r3
+=x11-libs/qt-sql-4.4.2-r1
+=x11-libs/qt-webkit-4.4.2-r1
+
 # Ben de Groot <yngwin@gentoo.org> (06 Feb 2009)
 # Fails on demos/arthurplugin
 =x11-libs/qt-demo-4.5.0_rc1
