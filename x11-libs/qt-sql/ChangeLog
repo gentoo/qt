@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-sql-4.4.2-r1 (10 Feb 2009)
+
+  10 Feb 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  +files/0234-fix-mysql-threaded.diff, +qt-sql-4.4.2-r1.ebuild:
+  Added qt-copy patchset to 4.4.2
+
 *qt-sql-4.5.9999 (06 Feb 2009)
 
   06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
