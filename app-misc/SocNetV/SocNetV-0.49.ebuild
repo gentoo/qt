@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,8 +8,7 @@ inherit qt4
 
 DESCRIPTION="Qt Social Network Visualizer"
 HOMEPAGE="http://socnetv.sourceforge.net/index.html"
-SRC_URI="mirror://sourceforge/socnetv/${P}.tar.gz
-	doc? ( http://socnetv.sourceforge.net/help.pdf )"
+SRC_URI="mirror://sourceforge/socnetv/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -30,7 +29,6 @@ src_install() {
 	doins nets/* || die "doins failed"
 	dodoc AUTHORS ChangeLog README || die "dodoc failed"
 	if use doc; then
-		insinto /usr/share/doc/${PF} || die "insinto failed"
-		newins "${DISTDIR}"/help.pdf "${P}"-help.pdf || die "newins failed"
+		dohtml -r "${S}"/doc/* || die "dohtml failed"
 	fi
 }
