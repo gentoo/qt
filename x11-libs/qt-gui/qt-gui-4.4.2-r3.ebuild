@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-gui/qt-gui-4.4.2-r2.ebuild,v 1.2 2009/02/04 12:35:56 alexxy Exp $
+# $Header: $
 
 EAPI="1"
 inherit eutils qt4-build
@@ -69,7 +69,6 @@ src_unpack() {
 	qt4-build_src_unpack
 
 	# Apply bugfix patches from qt-copy (KDE)
-	epatch "${FILESDIR}"/0180-window-role.diff
 	epatch "${FILESDIR}"/0195-compositing-properties.diff
 	epatch "${FILESDIR}"/0203-qtexthtmlparser-link-color.diff
 	epatch "${FILESDIR}"/0224-fast-qpixmap-fill.diff

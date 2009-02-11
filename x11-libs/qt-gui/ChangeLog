@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  11 Feb 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  -files/0180-window-role.diff, qt-gui-4.4.2-r3.ebuild:
+  Removed "unsafe" patch from qt-gui - its just unsafe as it would need to
+  be applied to *every* qt split ebuild as it modifies QObject behaviour -
+  and doesnt change anything in noticable manner
+
   11 Feb 2009; Markos Chandras <hwoarang@gentoo.org> qt-gui-4.5.9999.ebuild,
   qt-gui-4.9999.ebuild:
   Drop opengl flag due to linking issues

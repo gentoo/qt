@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-core/qt-core-4.4.2-r1.ebuild,v 1.2 2009/02/04 11:41:13 alexxy Exp $
+# $Header: $
 
 EAPI="1"
 inherit qt4-build
@@ -103,13 +103,10 @@ src_unpack() {
 	# Make patches apply...
 	cd "${S}"
 
-	# Apply bugfix patches from qt-copy (KDE) - some of them cause crash - TODO sort it out
-	#epatch "${FILESDIR}"/0118-qtcopy-define.diff
-	#epatch "${FILESDIR}"/0167-fix-group-reading.diff
-	#epatch "${FILESDIR}"/0180-window-role.diff
-	#epatch "${FILESDIR}"/0209-prevent-qt-mixing.diff
-	#epatch "${FILESDIR}"/0253-qmake_correct_path_separators.diff
-	#epatch "${FILESDIR}"/0257-qurl-validate-speedup.diff
+	# Apply bugfix patches from qt-copy (KDE)
+	epatch "${FILESDIR}"/0167-fix-group-reading.diff
+	epatch "${FILESDIR}"/0253-qmake_correct_path_separators.diff
+	epatch "${FILESDIR}"/0257-qurl-validate-speedup.diff
 
 	# Don't pre-strip, bug 235026
 	for i in kr jp cn tw ; do
