@@ -1,6 +1,6 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-sql/qt-sql-4.4.2.ebuild,v 1.8 2009/02/06 16:23:47 armin76 Exp $
+# $Header: $
 
 EAPI="1"
 inherit qt4-build
