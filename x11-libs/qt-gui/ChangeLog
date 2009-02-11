@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  11 Feb 2009; Ben de Groot <yngwin@gentoo.org> qt-gui-4.5.0_rc1.ebuild:
+  Add USE=raster to 4.5.0_rc1 ebuild
+
   11 Feb 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
   -files/0180-window-role.diff, qt-gui-4.4.2-r3.ebuild:
   Removed "unsafe" patch from qt-gui - its just unsafe as it would need to

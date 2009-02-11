@@ -5,12 +5,12 @@
 EAPI="2"
 inherit eutils qt4-build-edge
 
-DESCRIPTION="The GUI module(s) for the Qt toolkit"
+DESCRIPTION="The GUI module for the Qt toolkit"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
-IUSE="+accessibility cups +dbus debug +glib +gtkstyle mng nas nis tiff +qt3support xinerama"
+IUSE="+accessibility cups +dbus debug +glib +gtkstyle mng nas nis raster tiff +qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
@@ -63,7 +63,7 @@ src_prepare() {
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
 
-	#fixing hardcoded fonts as described on bug #252312
+	# fixing hardcoded fonts, bug #252312
 	EPATCH_OPTS="--ignore-whitespace"
 	epatch "${FILESDIR}"/hardcoded_fonts.patch
 }
@@ -84,6 +84,7 @@ src_configure() {
 		$(qt_use xinerama)"
 
 	use nas	&& myconf="${myconf} -system-nas-sound"
+	use raster && myconf="${myconf} -graphicssystem raster"
 
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
