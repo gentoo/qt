@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  11 Feb 2009; Markos Chandras <hwoarang@gentoo.org> qt-gui-4.5.9999.ebuild,
+  qt-gui-4.9999.ebuild:
+  Drop opengl flag due to linking issues
+
   09 Feb 2009; Markos Chandras <hwoarang@gentoo.org> qt-gui-4.5.9999.ebuild,
   qt-gui-4.9999.ebuild:
   Add raster,opengl use flags on live ebuilds for alternative Qt backend
