@@ -10,7 +10,7 @@ LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 
-IUSE="+accessibility cups +dbus debug +glib mng nas nis tiff +qt3support raster xinerama ${IUSE_INPUT_DEVICES}"
+IUSE="+accessibility cups +dbus debug +glib +gtkstyle mng nas nis tiff +qt3support raster xinerama ${IUSE_INPUT_DEVICES}"
 
 RDEPEND="	
 	media-libs/fontconfig
@@ -72,6 +72,7 @@ src_configure() {
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
+		$(qt_use gtkstyle)
 		$(qt_use qt3support)
 		$(qt_use xinerama)"
 		use raster && myconf="${myconf} -graphicssystem raster"
