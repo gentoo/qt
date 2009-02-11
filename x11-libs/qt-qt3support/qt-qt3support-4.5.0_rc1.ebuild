@@ -15,7 +15,8 @@ DEPEND="~x11-libs/qt-core-${PV}[qt3support]
 	~x11-libs/qt-gui-${PV}[accessibility=,qt3support]
 	~x11-libs/qt-sql-${PV}[qt3support]"
 RDEPEND="${DEPEND}"
-PDEPEND="phonon? ( || ( ~x11-libs/qt-phonon-${PV} media-sound/phonon ) )"
+PDEPEND="phonon? (
+	|| ( ~x11-libs/qt-phonon-${PV} media-sound/phonon[gstreamer] ) )"
 
 QT4_TARGET_DIRECTORIES="
 src/qt3support
