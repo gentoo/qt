@@ -30,8 +30,7 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_rc1 )"
 
-PATCHES="${FILESDIR}/fix_headers_git.patch
-	${FILESDIR}/docs_gen.patch"
+PATCHES="${FILESDIR}/docs_gen.patch"
 
 src_configure() {
 	eqmake4 qtcreator.pro || die "eqmake4 failed"
