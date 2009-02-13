@@ -19,7 +19,10 @@ IUSE="dbus debug doc examples opengl qt3support svg webkit X"
 
 RDEPEND=">=dev-python/sip-4.7.8
 	>=x11-libs/qt-core-4.4.2:4
-	dbus? ( >=x11-libs/qt-dbus-4.4.2:4 )
+	dbus? (
+		dev-python/dbus-python
+		>=x11-libs/qt-dbus-4.4.2:4
+	)
 	opengl? ( >=x11-libs/qt-opengl-4.4.2:4 )
 	svg? ( >=x11-libs/qt-svg-4.4.2:4 )
 	qt3support? ( >=x11-libs/qt-qt3support-4.4.2:4 )
@@ -34,8 +37,8 @@ S=${WORKDIR}/${MY_P}
 src_unpack() {
 	unpack ${A}
 	sed -i -e "s:^[ \t]*check_license():# check_license():" "${S}"/configure.py
-	# 
-	# I dont think we need those stuff here... 
+	#
+	# I dont think we need those stuff here...
 	#
 	#sed -i -e "s:join(qt_dir, \"mkspecs\":join(\"/usr/share/qt4\",	\"mkspecs\":g" "${S}"/configure.py
 	#sed -i -e "s:\"QT_INSTALL_HEADERS\"\:   os.path.join(qt_dir, \"include\":\"QT_INSTALL_HEADERS\"\:   os.path.join(qt_dir, \"include/qt4\":g" "${S}"/configure.py
