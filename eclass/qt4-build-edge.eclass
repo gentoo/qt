@@ -6,7 +6,7 @@
 # @MAINTAINER:
 # Ben de Groot <yngwin@gentoo.org>
 # Christian Franke <cfchris6@ts2server.com>
-# Markos Chandras <hwoarang@silverarrow.gr>
+# Markos Chandras <hwoarang@genoo.org>
 # @BLURB: Eclass for Qt4 split ebuilds in qting-edge overlay.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt4
@@ -130,6 +130,16 @@ qt4-build-edge_pkg_setup() {
 		ewarn "Using a GCC version lower than 4.1 is not supported!"
 		echo
 	fi
+
+	if use custom-cxxflags; then
+		echo
+		ewarn "You have set USE=custom-cxxflags, which means Qt will be built with the"
+		ewarn "CXXFLAGS you have set in /etc/make.conf. This is not supported, and we"
+		ewarn "recommend to unset this useflag. But you are free to experiment with it."
+		ewarn "Just do not start crying if it breaks your system, or eats your kitten"
+		ewarn "for breakfast. ;-) "
+		echo
+	fi
 }
 
 qt4-build-edge_src_unpack() {
@@ -181,6 +191,11 @@ qt4-build-edge_src_prepare() {
 		symlink_binaries_to_buildtree
 	fi
 
+	if ! use custom-cxxflags;then
+		strip-flags
+		replace-flags -O3 -O2
+	fi
+
 	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
 		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
 		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
@@ -194,25 +209,7 @@ qt4-build-edge_src_prepare() {
 }
 
 qt4-build-edge_src_configure() {
-	if use custom-cxxflags; then
-		echo
-		ewarn "You have set USE=custom-cxxflags, which means Qt will be built with the"
-		ewarn "CXXFLAGS you have set in /etc/make.conf. This is not supported, and we"
-		ewarn "recommend to unset this useflag. But you are free to experiment with it."
-		ewarn "Just do not start crying if it breaks your system, or eats your kitten"
-		ewarn "for breakfast. ;-) "
-		echo
-	else
-		strip-flags
-		replace-flags -O3 -O2
-	fi
-
-	# hardened needs this, so it's needed in official tree still
-#	if [[ $(gcc-fullversion) == "3.4.6" && gcc-specs-ssp ]] ; then
-#		ewarn "Appending -fno-stack-protector to CFLAGS/CXXFLAGS"
-#		append-flags -fno-stack-protector
-#	fi
-
+	
 	myconf="$(standard_configure_options) ${myconf}"
 
 	echo ./configure ${myconf}
