@@ -89,6 +89,17 @@ src_unpack() {
 	qt4-build-edge_src_unpack
 }
 
+src_prepare() {
+	# bug #172219
+	if use custom-cxxflags;then
+		sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
+			"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CXXFLAGS failed"
+	fi
+	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS}:" \
+		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix LDFLAGS failed"
+	qt4-build_src_prepare
+}
+
 src_configure() {
 	unset QMAKESPEC
 	myconf="${myconf}
