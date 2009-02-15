@@ -178,7 +178,7 @@ qt4-build-edge_src_prepare() {
 		4.?.9999)
 			# Apply KDE patchset
 			cd "${S}"
-			# Make autopatcher skip already applied patches - apply_patches scripts check for that...
+			# Make autopatcher skip already applied patches - apply_patches scripts check for that.
 			mkdir .svn
 			./apply_patches || die "Applying KDE patchset failed"
 			;;
