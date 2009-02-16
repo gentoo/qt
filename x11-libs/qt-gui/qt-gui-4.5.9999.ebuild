@@ -26,6 +26,7 @@ RDEPEND="
 	~x11-libs/qt-script-${PV}
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV} )
+	gtkstyle? ( x11-libs/gtk+:2 )
 	input_devices_wacom? ( x11-libs/libXi x11-drivers/linuxwacom )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
@@ -39,6 +40,7 @@ PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV} )"
 
 QT4_TARGET_DIRECTORIES="
 src/gui
+src/scripttools/
 tools/designer
 tools/linguist
 src/plugins/imageformats/gif
