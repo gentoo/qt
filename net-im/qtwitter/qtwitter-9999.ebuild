@@ -13,7 +13,7 @@ EGIT_REPO_URI="git://github.com/ayoy/qtwitter.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
