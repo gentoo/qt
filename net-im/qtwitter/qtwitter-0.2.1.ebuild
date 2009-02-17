@@ -7,7 +7,7 @@ EAPI="2"
 inherit qt4-edge
 
 DESCRIPTION="A Qt client for Twitter"
-HOMEPAGE="http://github.com/ayoy/qtwitter"
+HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
 SRC_URI="http://cloud.github.com/downloads/ayoy/${PN}/${P}-src.tar.gz"
 
 LICENSE="GPL-3"
