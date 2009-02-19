@@ -141,10 +141,10 @@ src_install() {
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
+		#emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
 		# due to unknown reason, make install_htmldocs fail
-		# insinto ${QTDOCDIR} || die "insinto html docs failed"
-		# doins -r ${S}/doc/html/ || die "doins html docs failed"
+		 insinto ${QTDOCDIR} || die "insinto html docs failed"
+		 dohtml -r ${S}/doc/html/ || die "doins html docs failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
