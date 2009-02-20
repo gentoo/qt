@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*q4wine-9999 (20 Feb 2009)
+
+  20 Feb 2009; Markos Chandras <hwoarang@gentoo.org> +q4wine-9999.ebuild:
+  Adding q4wine live ebuild
+
   09 Feb 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-0.110.ebuild:
   Use cmake build system, ebuild clean up
 
