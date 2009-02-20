@@ -2,13 +2,15 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*xvideoservicethief-9999 (20 Feb 2009)
+
+  20 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
+  +xvideoservicethief-9999.ebuild:
+  Adding live ebuild
+
   08 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
   xvideoservicethief-1.8.2.ebuild:
   add ~amd64 keyword
-
-  02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
-  eclass/qt4-edge.eclass:
-  Updating to qt4-edge eclass
 
 *xvideoservicethief-1.8.2 (15 Jan 2009)
 
