@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/sip/sip-4.7.9.ebuild,v 1.7 2009/02/18 20:10:12 jer Exp $
 
+EAPI="2"
+
 NEED_PYTHON=2.3
 
 inherit python toolchain-funcs versionator multilib
@@ -22,7 +24,7 @@ S=${WORKDIR}/${MY_P}
 DEPEND=""
 RDEPEND=""
 
-src_compile(){
+src_configure(){
 	python_version
 
 	local myconf
@@ -39,7 +41,6 @@ src_compile(){
 		CC=$(tc-getCC) CXX=$(tc-getCXX) \
 		LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX) \
 		STRIP="true" || die "configure failed"
-	emake || die "emake failed"
 }
 
 src_install() {
