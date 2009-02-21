@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
+  21 Feb 2009; Markos Chandras <hwoarang@gentoo.org> arora-9999-r2.ebuild:
+  Dropping keywords
+
   02 Feb 2009; Markos Chandras (hwoarang) <hwoarang@silverarrow.gr>
   www-client/arora/arora-9999-r2.ebuild:
   Code cleanup , inherit the new qt4-edge eclass
