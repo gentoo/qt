@@ -14,7 +14,7 @@ SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip$(get_major_versi
 
 LICENSE="sip"
 SLOT="0"
-KEYWORDS="alpha amd64 hppa ia64 ppc ppc64 sparc x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="debug"
 
 S=${WORKDIR}/${MY_P}
