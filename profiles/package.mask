@@ -5,7 +5,7 @@
 
 # Markos Chandras <hwoarang@gentoo.org> (20 Feb 2009)
 # Seems to brake some PyQt4 applications
-dev-python/sip-4.8_pre20090220
+=dev-python/sip-4.8_pre20090220
 
 # Ben de Groot <yngwin@gentoo.org> (06 Feb 2009)
 # Fails on demos/arthurplugin
