@@ -23,8 +23,6 @@ RDEPEND="${DEPEND}
 	>=media-gfx/icoutils-0.26.0
 	dev-util/cmake[qt4]"
 
-S="${WORKDIR}/${PN}"
-
 src_install() {
 	cmake-utils_src_install
 	dodoc README || die "dodoc failed"
