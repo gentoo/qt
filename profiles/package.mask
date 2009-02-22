@@ -5,4 +5,4 @@
 
 # Ben de Groot <yngwin@gentoo.org> (06 Feb 2009)
 # Fails on demos/arthurplugin
-#=x11-libs/qt-demo-4.5.0_rc1
+=x11-libs/qt-demo-4.5.0_rc1
