@@ -127,6 +127,7 @@ eqmake4() {
 		QMAKE_LFLAGS_RELEASE="${LDFLAGS}" \
 		QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
 		QMAKE_RPATH= \
+		QMAKE_STRIP= \
 		"${@}" >> ${LOGFILE} 2>&1
 
 	local result=$?
