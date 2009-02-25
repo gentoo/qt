@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Feb 2009; Ben de Groot <yngwin@gentoo.org> cuberok-0.0.5.ebuild:
+  Specifying EAPI=2
+
 *cuberok-0.0.5 (21 Feb 2009)
 
   21 Feb 2009; Markos Chandras <hwoarang@gentoo.org> -cuberok-0.0.4a.ebuild,
