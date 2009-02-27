@@ -3,6 +3,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Ben de Groot <yngwin@gentoo.org> (27 Feb 2009)
+# Does not compile with Qt 4.5
+=media-sound/cuberok-0.0.5
+
 # Ben de Groot <yngwin@gentoo.org> (06 Feb 2009)
 # Fails on demos/arthurplugin
 =x11-libs/qt-demo-4.5.0_rc1

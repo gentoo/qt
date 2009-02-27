@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*cuberok-0.0.4a (27 Feb 2009)
+
+  27 Feb 2009; Ben de Groot <yngwin@gentoo.org> +cuberok-0.0.4a.ebuild:
+  Restore 0.0.4a, as 0.0.5 does not compile with Qt 4.5
+
   25 Feb 2009; Ben de Groot <yngwin@gentoo.org> cuberok-0.0.5.ebuild:
   Specifying EAPI=2
 
