@@ -30,7 +30,8 @@ QT4_TARGET_DIRECTORIES="demos
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	doc/src/images
 	src/
-	include/"
+	include/
+	tools/"
 
 src_configure() {
 	# Doesn't find qt-gui and fails linking
