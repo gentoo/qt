@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  +files/cuberok-0.0.5_qt-4.5.patch, cuberok-0.0.5.ebuild:
+  patch for cuberok-0.0.5 from svn, builds with qt-4.5 now
+
 *cuberok-9999 (03 Mar 2009)
 
   03 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>

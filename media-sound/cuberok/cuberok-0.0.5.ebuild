@@ -20,6 +20,8 @@ DEPEND=">=media-libs/gstreamer-0.10
 RDEPEND="${DEPEND}
 	media-libs/taglib"
 
+PATCHES=( "${FILESDIR}/cuberok-0.0.5_qt-4.5.patch" )
+
 src_configure(){
 	eqmake4 Cuberok.pro
 }
