@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-creator-1.0.0 (03 Mar 2009)
+
+  03 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
+  +qt-creator-1.0.0.ebuild:
+  Initial for 1.0.0 verion of qt-creator for testing before hitting the tree
+
   12 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
   -files/fix_headers_git.patch, qt-creator-9999.ebuild:
   Dropping fix_headers_git.patch. Applied by upstream
