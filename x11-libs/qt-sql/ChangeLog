@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-sql-4.5.0 (03 Mar 2009)
+
+  03 Mar 2009; Ben de Groot <yngwin@gentoo.org> +qt-sql-4.5.0.ebuild:
+  Add 4.5.0 release ebuild for testing
+
 *qt-sql-4.4.2-r1 (10 Feb 2009)
 
   10 Feb 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>

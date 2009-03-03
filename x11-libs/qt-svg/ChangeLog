@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-svg-4.5.0 (03 Mar 2009)
+
+  03 Mar 2009; Ben de Groot <yngwin@gentoo.org> +qt-svg-4.5.0.ebuild:
+  Add 4.5.0 release ebuild for testing
+
 *qt-svg-4.5.9999 (06 Feb 2009)
 
   06 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
