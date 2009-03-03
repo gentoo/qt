@@ -29,7 +29,7 @@ MY_P=qt-x11-${SRCTYPE}-${MY_PV}
 S=${WORKDIR}/${MY_P}
 
 HOMEPAGE="http://www.qtsoftware.com/"
-SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
+SRC_URI="http://download.qtsoftware.com/qt/source/${MY_P}.tar.bz2"
 
 case "${PV}" in
 	4.4.?) SRC_URI="${SRC_URI} mirror://gentoo/${MY_P}-headers.tar.bz2" ;;
