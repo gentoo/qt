@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Mar 2009; Ben de Groot <yngwin@gentoo.org> -qt-4.5.0.ebuild:
+  Cleaning out 4.5.0 ebuilds that are now in portage
+
   03 Mar 2009; Ben de Groot <yngwin@gentoo.org>
   +x11-libs/qt/qt-4.5.0.ebuild:
   Add qt meta ebuild for convenience while testing new release

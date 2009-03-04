@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Mar 2009; Ben de Groot <yngwin@gentoo.org> -qt-core-4.5.0.ebuild:
+  Cleaning out 4.5.0 ebuilds that are now in portage
+
 *qt-core-4.5.0 (03 Mar 2009)
 
   03 Mar 2009; Ben de Groot <yngwin@gentoo.org> +qt-core-4.5.0.ebuild:
