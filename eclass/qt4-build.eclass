@@ -37,7 +37,7 @@ case "${PV}" in
 esac
 
 if version_is_at_least 4.5 ${PV} ; then
-	LICENSE="|| ( LGPL-2.1 GPL-3 GPL-2 )"
+	LICENSE="|| ( LGPL-2.1 GPL-3 )"
 fi
 
 qt4-build_pkg_setup() {
