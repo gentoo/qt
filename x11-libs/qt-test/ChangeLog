@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-test-4.5.0.ebuild,
+  qt-test-4.5.9999.ebuild, qt-test-4.9999.ebuild:
+  Adding iconv use flag
+
 *qt-test-4.5.0 (03 Mar 2009)
 
   03 Mar 2009; Ben de Groot <yngwin@gentoo.org> +qt-test-4.5.0.ebuild:
