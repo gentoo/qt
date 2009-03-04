@@ -5,6 +5,10 @@
  *qt-creator-1.0.0 (03 Mar 2009)
 
   04 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qt-creator-1.0.0.ebuild:
+  Removing 1.0.0 version as I added it to the tree
+
+  04 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-creator-1.0.0.ebuild, qt-creator-9999.ebuild:
   Updating license
 
