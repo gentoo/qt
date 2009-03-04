@@ -11,7 +11,7 @@ HOMEPAGE="http://trolltech.com/developer/qt-creator"
 
 EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 
-LICENSE="|| ( GPL-2 GPL-3 )"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug"
@@ -30,7 +30,9 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_rc1 )"
 
-PATCHES="${FILESDIR}/docs_gen.patch"
+PATCHES=(
+	"${FILESDIR}/docs_gen.patch"
+)
 
 src_configure() {
 	eqmake4 qtcreator.pro || die "eqmake4 failed"

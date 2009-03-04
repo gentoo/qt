@@ -13,7 +13,7 @@ DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://trolltech.com/developer/qt-creator"
 SRC_URI="http://download.qtsoftware.com/${MY_PN}/${MY_P}.zip"
 
-LICENSE="|| ( GPL-2 GPL-3 )"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
