@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  +files/qt-demo-4.5.0-fixes.patch, qt-demo-4.5.0.ebuild:
+  fixed qt-demo ebuild
+
   01 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-demo-4.5.0_rc1.ebuild:
   Add tools/ as extracted target

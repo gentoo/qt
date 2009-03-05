@@ -33,17 +33,15 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	tools/"
 
 src_configure() {
-	# Doesn't find qt-gui and fails linking
-	sed -e '/QT_BUILD_TREE/ s:=:+=:' \
-		-i "${S}"/examples/tools/plugandpaint/plugandpaint.pro \
-		|| die "Fixing plugandpaint example failed."
+	# patch errors in arthurwidgets and plugandpaint
+	epatch "${FILESDIR}"/qt-demo-4.5.0-fixes.patch
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_install() {
 	insinto ${QTDOCDIR}/src
 	doins -r "${S}"/doc/src/images || die "Installing images failed."
 
-	qt4-build-edge_src_install
+	qt4-build_src_install
 }
