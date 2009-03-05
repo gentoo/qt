@@ -3,6 +3,10 @@
 # $Header: $
 
   05 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  qt-demo-4.5.0.ebuild:
+  moved epatch to src_prepare
+
+  05 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
   +files/qt-demo-4.5.0-fixes.patch, qt-demo-4.5.0.ebuild:
   fixed qt-demo ebuild
 

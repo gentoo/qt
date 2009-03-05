@@ -32,11 +32,11 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include/
 	tools/"
 
-src_configure() {
+src_prepare() {
 	# patch errors in arthurwidgets and plugandpaint
 	epatch "${FILESDIR}"/qt-demo-4.5.0-fixes.patch
 
-	qt4-build_src_configure
+	qt4-build_src_prepare
 }
 
 src_install() {
