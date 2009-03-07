@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  07 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Fixing multilib-issue ( bug #261448 )
+
   04 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
   -qt-creator-1.0.0.ebuild:
   Removing 1.0.0 version as I added it to the tree

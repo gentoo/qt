@@ -34,6 +34,16 @@ PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
 )
 
+src_prepare() {
+	# bug #261448
+	for target in src/qworkbench.pri src/qworkbenchlibrary.pri srcqworkbenchplugin.pri;do
+		einfo "Fixing ${target}"
+		sed -i "s/lib\/qtcreator/$(get_libdir)\/qtcreator/" \
+			${target} || die "seding ${target} failed"
+	done
+	qt4-edge_src_prepare
+}
+
 src_configure() {
 	eqmake4 qtcreator.pro || die "eqmake4 failed"
 }
