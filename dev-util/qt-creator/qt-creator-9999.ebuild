@@ -36,7 +36,7 @@ PATCHES=(
 
 src_prepare() {
 	# bug #261448
-	for target in src/qworkbench.pri src/qworkbenchlibrary.pri srcqworkbenchplugin.pri;do
+	for target in src/qworkbench.pri src/qworkbenchlibrary.pri src/qworkbenchplugin.pri;do
 		einfo "Fixing ${target}"
 		sed -i "s/lib\/qtcreator/$(get_libdir)\/qtcreator/" \
 			${target} || die "seding ${target} failed"
