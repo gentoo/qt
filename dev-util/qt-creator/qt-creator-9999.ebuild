@@ -14,7 +14,7 @@ EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug doc"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-core-4.5.0_rc1
@@ -50,6 +50,11 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
+	if use doc;then
+		insinto /usr/share/doc/qtcreator/
+		doins "${S}"/share/doc/qtcreator/qtcreator.qch || die "Installing documentation failed"
+		doins -r "${S}"/doc/html || die "Installing html documentation  failed"
+	fi
 	make_desktop_entry qtcreator QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 }
