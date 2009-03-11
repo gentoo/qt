@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qtwitter-0.5.0 (11 Mar 2009)
+
+  11 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  -qtwitter-0.4.2.ebuild, +qtwitter-0.5.0.ebuild:
+  version bump
+
 *qtwitter-0.4.2 (05 Mar 2009)
 
   05 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
