@@ -1,0 +1,11 @@
+# ChangeLog for x11-libs/qtscriptgenerator
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qtscriptgenerator-9999 (12 Mar 2009)
+*qtscriptgenerator-0.1.0 (12 Mar 2009)
+
+  12 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
+  +qtscriptgenerator-0.1.0.ebuild, +qtscriptgenerator-9999.ebuild:
+  Initial import of qtscriptgenerator packages
+
