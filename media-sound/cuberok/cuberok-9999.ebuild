@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI="2"
 inherit qt4-edge subversion
 
 DESCRIPTION="Qt4 lightweight music player"
@@ -12,13 +12,23 @@ ESVN_REPO_URI="http://cuberok.googlecode.com/svn/trunk/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug mp3"
 
-DEPEND=">=media-libs/gstreamer-0.10
-	<x11-libs/qt-gui-4.9999
-	<x11-libs/qt-sql-4.9999"
+DEPEND="media-libs/gstreamer
+	x11-libs/qt-gui:4
+	x11-libs/qt-sql:4
+	 mp3? ( media-plugins/gst-plugins-mad )"
 RDEPEND="${DEPEND}
 	media-libs/taglib"
+
+src_prepare(){
+	#fixing multilib issues
+	for target in cuberok_style/cuberok_style.pro player_gst/player_gst.pro;do
+		einfo "fixing ${target}"
+		sed -i "s/lib\/cuberok/$(get_libdir)\/cuberok/" \
+		"${S}"/plugins/${target} || die "seding ${target} failed"
+	done
+}
 
 src_configure(){
 	eqmake4 Cuberok.pro
