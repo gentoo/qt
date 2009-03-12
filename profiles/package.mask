@@ -2,3 +2,6 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (12 Mar 2009)
+# Masking for further testing and improvements
+=x11-libs/qtscriptgenerator-0.1.0
