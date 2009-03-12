@@ -3,5 +3,6 @@
 # Make sure the atoms you add are valid!
 
 # Markos Chandras <hwoarang@gentoo.org> (12 Mar 2009)
-# Masking for further testing and improvements
+# Broken by upstream
 =x11-libs/qtscriptgenerator-0.1.0
+=x11-libs/qtscriptgenerator-9999
