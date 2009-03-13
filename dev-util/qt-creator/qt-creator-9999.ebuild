@@ -7,7 +7,7 @@ EAPI="2"
 inherit qt4-edge multilib git
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
-HOMEPAGE="http://trolltech.com/developer/qt-creator"
+HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
 
 EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 

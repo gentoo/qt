@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  12 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Updating homepage
+
   09 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Adding doc use flag for proper doc installation
 
