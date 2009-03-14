@@ -7,11 +7,11 @@ inherit versionator distutils
 MY_PN="${PN/p/P}"
 MY_P="${MY_PN}-$(replace_version_separator 2 '')1"
 
-DESCRIPTION="Pythonn-based scripting tool"
+DESCRIPTION="Python-based scripting tool"
 HOMEPAGE="http://www.blueskyonmars.com/projects/paver/"
 SRC_URI="http://pypi.python.org/packages/source/P/${MY_PN}/${MY_P}.tar.gz"
 
-LICENSE="LICENSE-PAVER.txt"
+LICENSE="PAVER"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
