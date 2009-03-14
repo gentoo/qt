@@ -67,7 +67,7 @@ pkg_setup() {
 	ewarn
 	ewarn "Qt-embedded is using only a small part of configure options. This"
 	ewarn "might not fit your embedded linux setup. In this case, you need "
-	ewarn "to add your custom configure options on ${myconf} variable. Use"
+	ewarn "to add your custom configure options on "myconf" variable. Use"
 	ewarn "./configure --help to see all the available options."
 	ewarn
 }
@@ -101,13 +101,10 @@ src_configure() {
 	use postgres && myconf="${myconf} -plugin-sql-psql" || myconf="${myconf} -no-sql-psql"
 	use sqlite && myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
 	# choose arch
-	if use x86; then
-		if use embedded; then
-			myconf="${myconf} -xplatform qws/linux-x86-g++ \ 
-			-platfrom linux-x86-g++ -embedded x86"
+	if use embedded; then
+			myconf="${myconf} -xplatform qws/linux-${ARCH}-g++ \ 
+			-platfrom linux-${ARCH}-g++ -embedded ${ARCH}"
 		fi
-	# WARNING: Add here the same stuff as above for arm arch 
-	fi
 	echo ${myconf}
 	./configure ${myconf} || die "configure failed"
 }
