@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4
+inherit multilib qt4
 
 MY_PN="Kognite"
 MY_P="${MY_PN}_source_${PV}"
@@ -16,18 +16,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND="
-	x11-libs/qt-gui:4
+DEPEND="x11-libs/qt-gui:4
 	dev-libs/xapian
-	app-text/poppler-bindings[qt4]
-	"
+	app-text/poppler-bindings[qt4]"
 RDEPEND="$DEPEND"
 
 S="${WORKDIR}/${MY_PN}"
 
 src_configure() {
 	qmake -project -norecursive "INCPATH+=-I/usr/include /usr/include/poppler/qt4
-		LIBS+=-L/usr/lib -lxapian -lpoppler-qt4 -lz"
+		LIBS+=-L/usr/$(get_libdir) -lxapian -lpoppler-qt4 -lz"
 	eqmake4 "${MY_PN}".pro
 }
 
