@@ -25,7 +25,7 @@ S="${WORKDIR}/${PN}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	sed -i -e "/^CFLAGS.*/s:-pipe -O2:${CXXFLAGS}:" \
+	sed -i -e "/^CFLAGS.*/s:-pipe -O2:${CFLAGS}:" \
 		Makefile || die "sed failed on Makefile"
 	sed -i -e "/^CXXFLAGS.*/s:-pipe -fpermissive -O3:${CXXFLAGS}:" \
 		Makefile || die "sed failed on Makefile"
