@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="1"
-inherit eutils qt4
+EAPI="2"
+inherit eutils qt4-edge
 
 MY_P="${P/-/_}"
 DESCRIPTION="BSCommander is a Qt based file manager"
@@ -15,27 +15,17 @@ SLOT="0"
 IUSE=""
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="x11-libs/qt-gui:4
-	x11-libs/libX11
-	x11-libs/libXext"
+DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
+src_prepare() {
 	sed -i -e "/^CFLAGS.*/s:-pipe -O2:${CFLAGS}:" \
-		Makefile || die "sed failed on Makefile"
-	sed -i -e "/^CXXFLAGS.*/s:-pipe -fpermissive -O3:${CXXFLAGS}:" \
+		-e "/^CXXFLAGS.*/s:-pipe -fpermissive -O3:${CXXFLAGS}:" \
 		Makefile || die "sed failed on Makefile"
 	sed -i -e "/^QMAKE_CXXFLAGS_RELEASE.*/s:-O3:${CXXFLAGS}:" \
 		${PN}.pro || die "sed failed on ${PN}.pro"
-}
-
-src_compile() {
-	eqmake4 bsc.pro
-	emake || die "make failed"
 }
 
 src_install() {
