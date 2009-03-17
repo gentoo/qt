@@ -1,0 +1,11 @@
+# ChangeLog for x11-misc/okindd
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*okindd-0.5.7 (17 Mar 2009)
+
+  17 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  +files/okindd_install.patch, +metadata.xml, +okindd-0.5.7.ebuild:
+  new ebuild. app description is misguiding, app is qt-based and doesn't
+  need KDE
+
