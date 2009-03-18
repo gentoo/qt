@@ -23,3 +23,14 @@
 -shortcut.path = ~/.kde/Autostart/
 -shortcut.files += ../okindd.desktop
 -
+--- src/okindadapter.cpp	2009-02-24 22:44:59.000000000 +0200
++++ src/okindadapter.cpp	2009-03-18 13:48:52.954121009 +0200
+@@ -88,7 +88,7 @@
+ // Выбор файла конфигурации и загрузка массива из файла конфигурации
+ void OkindAdapter::setConfigFile (QString confFile){
+ 	configFile=confFile;
+-	if (confFile=="") configFile=HomeDir+"/.okind/okinddrc";
++	if (confFile=="") configFile=HomeDir+"/.okindd/okinddrc";
+ 	QSettings cfg (configFile, QSettings::NativeFormat);
+ 	QStringList groups = cfg.childGroups();
+ 	profiles.clear();

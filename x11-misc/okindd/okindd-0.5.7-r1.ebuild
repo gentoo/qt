@@ -20,7 +20,7 @@ DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-dbus:4"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/okindd_install.patch" )
+PATCHES=( "${FILESDIR}/okindd_home_and_naming.patch" )
 
 S="${WORKDIR}/${PN}"
 
@@ -41,5 +41,5 @@ src_install() {
 
 	elog "You can find an example configuration file at"
 	elog "	/usr/share/doc/okindd/okinddrc.example"
-	elog "It should be placed in \${HOME}/.okind/"
+	elog "It should be placed in \${HOME}/.okindd/"
 }
