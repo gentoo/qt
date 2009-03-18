@@ -1,21 +1,21 @@
 --- src/src.pro	2009-02-24 22:44:59.000000000 +0200
-+++ src/src.pro.new	2009-03-17 22:11:15.580885471 +0200
++++ src/src.pro	2009-03-17 22:11:15.580885471 +0200
 @@ -6,19 +6,15 @@
  TARGET = okindd
  DESTDIR = ../bin
  HEADERS += okindadapter.h
 -INSTALLS += target  pics examples config shortcut
 +INSTALLS += target  pics examples config
- 
+
  target.path = /usr/bin/
- 
+
  pics.path = /usr/share/okindd/
  pics.files += ../pics/*
- 
+
 -examples.path = /usr/share/doc/okind/examples/
 +examples.path = /usr/share/doc/okindd/examples/
  examples.files += ../scripts/*
- 
+
 -config.path = ~/.okind/
 +config.path = /usr/share/doc/okindd/
  config.files += ../conf/okinddrc.example

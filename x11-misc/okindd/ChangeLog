@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  files/okindd_home_and_naming.patch:
+  patch fix
+
 *okindd-0.5.7-r1 (18 Mar 2009)
 
   18 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
