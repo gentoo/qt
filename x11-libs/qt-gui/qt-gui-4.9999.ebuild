@@ -45,7 +45,9 @@ tools/designer
 tools/linguist
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
-src/plugins/imageformats/jpeg"
+src/plugins/imageformats/jpeg
+src/plugins/inputmethods"
+
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 
 src_unpack() {
