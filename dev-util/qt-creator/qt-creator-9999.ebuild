@@ -1,20 +1,22 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/qt-creator/qt-creator-1.0.0.ebuild,v 1.4 2009/03/12 17:02:51 hwoarang Exp $
 
 EAPI="2"
 
-inherit qt4-edge multilib git
+inherit qt4 multilib git
+
+MY_PN="${PN/-/}"
+MY_P="${P}-src"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
-
 EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
-IUSE="debug doc"
+KEYWORDS="~amd64 ~x86"
+IUSE="+cmake debug doc debugger git subversion fakevim "
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-core-4.5.0_rc1
@@ -25,27 +27,46 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-sql-4.5.0_rc1
 	>=x11-libs/qt-svg-4.5.0_rc1
 	>=x11-libs/qt-test-4.5.0_rc1
-	>=x11-libs/qt-webkit-4.5.0_rc1"
+	>=x11-libs/qt-webkit-4.5.0_rc1
+	cmake? ( dev-util/cmake )
+	debugger? ( sys-devel/gdb )
+	git? ( dev-util/git )
+	subversion? ( dev-util/subversion )"
 
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_rc1 )"
+
+PLUGINS="cmake debugger fakevim git subversion"
 
 PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
 )
 
+S="${WORKDIR}/${MY_P}"
+
 src_prepare() {
+	epatch "${FILESDIR}/docs_gen.patch"
 	# bug #261448
 	for target in src/qworkbench.pri src/qworkbenchlibrary.pri src/qworkbenchplugin.pri;do
 		einfo "Fixing ${target}"
 		sed -i "s/lib\/qtcreator/$(get_libdir)\/qtcreator/" \
 			${target} || die "seding ${target} failed"
 	done
-	qt4-edge_src_prepare
+
+	# bug 263087
+	for plugin in ${PLUGINS};do
+		if ! use ${plugin};then
+			einfo "Disabling ${plugin} support"
+			if [[ ${plugin} == "cmake" ]];then
+				plugin="cmakeprojectmanager"
+			fi
+			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro
+		fi
+	done
 }
 
 src_configure() {
-	eqmake4 qtcreator.pro || die "eqmake4 failed"
+	eqmake4 ${MY_PN}.pro
 }
 
 src_install() {
