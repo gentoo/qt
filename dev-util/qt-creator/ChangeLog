@@ -5,6 +5,9 @@
  *qt-creator-1.0.0 (03 Mar 2009)
 
   20 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Dropping keywords
+
+  20 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Split build system using use flags ( bug #263087 )
 
   16 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
