@@ -62,8 +62,6 @@ src_unpack() {
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
 
-	# fixing hardcoded fonts, bug #252312
-	epatch ${FILESDIR}/hardcoded_fonts.patch
 }
 
 src_configure() {
