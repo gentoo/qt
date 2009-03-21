@@ -2,6 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (21 Mar 2009)
+# Masking for clean up,more fixes,see bug #263086
+=dev-util/qt-creator-1.0.0-r1
+
 # Markos Chandras <hwoarang@gentoo.org> (13 Mar 2009)
 # Masking for testing
 =dev-python/paver-1.0b
