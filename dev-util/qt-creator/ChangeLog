@@ -4,6 +4,10 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  21 Mar 2009; Markos Chandras <hwoarang@gentoo.org> metadata.xml,
+  qt-creator-1.0.0-r1.ebuild, qt-creator-9999.ebuild:
+  Adding perforce use flag for perforce plugin support
+
   21 Mar 2009; Markos Chandras <hwoarang@gentoo.org> ChangeLog:
   New revbump for qt-creator. More ebuild fixes and modularity
 

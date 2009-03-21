@@ -16,7 +16,7 @@ EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="+cmake debug +debugger +designer doc git subversion fakevim "
+IUSE="+cmake debug +debugger +designer doc fakevim git perforce subversion "
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-core-4.5.0_rc1
@@ -31,12 +31,13 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	cmake? ( dev-util/cmake )
 	debugger? ( sys-devel/gdb )
 	git? ( dev-util/git )
+	perforce? ( dev-util/perforce-cli )
 	subversion? ( dev-util/subversion )"
 
 RDEPEND="${DEPEND}
 	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_rc1 )"
 
-PLUGINS="cmake debugger designer fakevim git subversion"
+PLUGINS="cmake debugger designer fakevim git perforce subversion"
 
 PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
@@ -56,14 +57,6 @@ src_prepare() {
 
 	# bug 263087
 
-	# build designer plugin
-	if use designer;then
-		sed -i '/plugin_fakevim/s:$: \\:' src/plugins/plugins.pro \
-			|| die "sed failed"
-		sed -i '/plugin_fakevim/a\		plugin_designer' \
-			src/plugins/plugins.pro || die "sed failed"
-	fi
-	
 	for plugin in ${PLUGINS};do
 		if ! use ${plugin};then
 			einfo "Disabling ${plugin} support"
