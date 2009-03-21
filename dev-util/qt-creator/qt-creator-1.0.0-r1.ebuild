@@ -31,7 +31,6 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	cmake? ( dev-util/cmake )
 	debugger? ( sys-devel/gdb )
 	git? ( dev-util/git )
-	perforce? ( dev-util/perforce-cli )
 	subversion? ( dev-util/subversion )"
 
 RDEPEND="${DEPEND}
@@ -74,6 +73,14 @@ src_prepare() {
 				|| die "Failed to disabled ${plugin} plugin"
 		fi
 	done
+
+	if use perforce;then
+		elog
+		elog "You have enabled perforce plugin."
+		elog "In order to use it, you need to manually"
+		elog "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
+		elog 
+	fi
 }
 
 src_configure() {

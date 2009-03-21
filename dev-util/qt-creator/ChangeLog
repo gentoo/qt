@@ -4,6 +4,11 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  21 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-creator-1.0.0-r1.ebuild, qt-creator-9999.ebuild:
+  Dropping perforce ebuild dependency due to unresolved licensing issues. Use
+  ewarn message for now
+
   21 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Fixing desktop file
 
