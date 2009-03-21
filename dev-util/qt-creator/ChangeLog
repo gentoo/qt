@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  21 Mar 2009; Markos Chandras <hwoarang@gentoo.org> ChangeLog:
+  New revbump for qt-creator. More ebuild fixes and modularity
+
   20 Mar 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Dropping keywords
 
