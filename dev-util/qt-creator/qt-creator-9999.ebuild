@@ -80,6 +80,6 @@ src_install() {
 		doins "${S}"/share/doc/qtcreator/qtcreator.qch || die "Installing documentation failed"
 		doins -r "${S}"/doc/html || die "Installing html documentation  failed"
 	fi
-	make_desktop_entry qtcreator QtCreator qtcreator_logo_48 \
+	make_desktop_entry qtcreator.bin QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 }
