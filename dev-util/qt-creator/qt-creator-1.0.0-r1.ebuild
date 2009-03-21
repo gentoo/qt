@@ -75,11 +75,12 @@ src_prepare() {
 	done
 
 	if use perforce;then
-		elog
-		elog "You have enabled perforce plugin."
-		elog "In order to use it, you need to manually"
-		elog "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
-		elog 
+		ewarn
+		ewarn "You have enabled perforce plugin."
+		ewarn "In order to use it, you need to manually"
+		ewarn "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
+		ewarn
+		ebeep 5
 	fi
 }
 
