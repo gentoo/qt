@@ -4,18 +4,18 @@
 
 EAPI="2"
 
-inherit qt4-edge multilib git
+inherit qt4 multilib
 
 MY_PN="${PN/-/}"
 MY_P="${P}-src"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
-EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
+SRC_URI="http://download.qtsoftware.com/${MY_PN}/${MY_P}.zip"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="+cmake debug +debugger +designer doc git subversion fakevim "
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
@@ -44,9 +44,8 @@ PATCHES=(
 
 S="${WORKDIR}/${MY_P}"
 
-
 src_prepare() {
-	qt4-edge_src_prepare
+	qt4_src_prepare
 	# bug #261448
 	for target in src/qworkbench.pri src/qworkbenchlibrary.pri src/qworkbenchplugin.pri;do
 		einfo "Fixing ${target}"
