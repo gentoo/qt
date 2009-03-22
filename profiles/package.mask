@@ -10,8 +10,3 @@
 # Masking for testing
 =dev-python/paver-1.0b
 =net-news/urssus-0.2.13
-
-# Markos Chandras <hwoarang@gentoo.org> (12 Mar 2009)
-# Broken by upstream
-=x11-libs/qtscriptgenerator-0.1.0
-=x11-libs/qtscriptgenerator-9999

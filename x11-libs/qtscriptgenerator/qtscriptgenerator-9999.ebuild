@@ -15,15 +15,21 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND=">=x11-libs/qt-dbus-4.5.0
-	>=x11-libs/qt-gui-4.5.0
-	>=x11-libs/qt-opengl-4.5.0
-	|| ( >=x11-libs/qt-phonon-4.5.0 media-sound/phonon )
-	>=x11-libs/qt-script-4.5.0
-	>=x11-libs/qt-sql-4.5.0
-	>=x11-libs/qt-svg-4.5.0
-	>=x11-libs/qt-xmlpatterns-4.5.0"
-RDEPEND="${RDEPEND}"
+DEPEND="x11-libs/qt-dbus:4
+	x11-libs/qt-gui:4
+	x11-libs/qt-opengl:4
+	|| ( x11-libs/qt-phonon:4 media-sound/phonon )
+	x11-libs/qt-script:4
+	x11-libs/qt-sql:4
+	x11-libs/qt-svg:4
+	x11-libs/qt-xmlpatterns:4"
+RDEPEND="${DEPEND}"
+
+PATCHES=(
+	"${FILESDIR}/disable_phonon.patch"
+)
+
+PLUGINS="core gui network opengl sql svg webkit xml xmlpatterns"
 
 pkg_setup(){
 	QTDIR="/usr/include/qt4"
@@ -40,13 +46,19 @@ src_configure() {
 src_compile() {
 	cd "${S}"/generator
 	emake || die "emake generator failed"
-	./generator --include-paths="/usr/include/qt4" 	|| die "running generator failed"
+	./generator --include-paths="/usr/include/qt4/" || die "running generator failed"
 	cd "${S}"/qtbindings
 	make || die "make qtbindings failed" # TODO: fix emake
 }
 
 src_install() {
 	insinto "${QTLIBDIR}"/plugins/script/
-	doins -r "${S}"/plugins/script/* || die "installing libraries failed"
+	insopts -m0755
+	for plugin in ${PLUGINS};do
+		doins "${S}"/plugins/script/libqtscript_${plugin}.so.1.0.0 || die "doins failed"
+		cd "${D}${QTLIBDIR}"/plugins/script/
+		ln -s libqtscript_${plugin}.so.1.0.0 libqtscript_${plugin}.so.1.0
+		ln -s libqtscript_${plugin}.so.1.0.0 libqtscript_${plugin}.so.1
+		ln -s libqtscript_${plugin}.so.1.0.0 libqtscript_${plugin}.so
+	done
 }
-		
