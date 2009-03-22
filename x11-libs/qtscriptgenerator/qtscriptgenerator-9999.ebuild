@@ -29,7 +29,7 @@ PATCHES=(
 	"${FILESDIR}/disable_phonon.patch"
 )
 
-PLUGINS="core gui network opengl sql svg webkit xml xmlpatterns"
+PLUGINS="core gui network opengl sql svg uitools webkit xml xmlpatterns"
 
 pkg_setup(){
 	QTDIR="/usr/include/qt4"

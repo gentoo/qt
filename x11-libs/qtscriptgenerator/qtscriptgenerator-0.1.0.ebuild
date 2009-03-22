@@ -32,7 +32,7 @@ PATCHES=(
 	"${FILESDIR}/disable_phonon.patch"
 )
 
-PLUGINS="core gui network opengl sql svg webkit xml xmlpatterns"
+PLUGINS="core gui network opengl sql svg uitools webkit xml xmlpatterns"
 
 S="${WORKDIR}/${MY_P}"
 
