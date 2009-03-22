@@ -40,6 +40,7 @@ PLUGINS="cmake debugger designer fakevim git perforce subversion"
 
 PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
+	"${FILESDIR}/add_missing_plugins.patch"
 )
 
 S="${WORKDIR}/${MY_P}"
@@ -54,15 +55,6 @@ src_prepare() {
 	done
 
 	# bug 263087
-
-	# build designer plugin
-	if use designer;then
-		sed -i '/plugin_fakevim/s:$: \\:' src/plugins/plugins.pro \
-			|| die "sed failed"
-		sed -i '/plugin_fakevim/a\		plugin_designer' \
-			src/plugins/plugins.pro || die "sed failed"
-	fi
-
 	for plugin in ${PLUGINS};do
 		if ! use ${plugin};then
 			einfo "Disabling ${plugin} support"
