@@ -4,6 +4,10 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  23 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
+  files/add_missing_plugins.patch:
+  Dropping obsolete rules from plugins.pro. Unmasking
+
   22 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
   +files/add_missing_plugins.patch, qt-creator-1.0.0-r1.ebuild:
   Use patch to add missing plugins
