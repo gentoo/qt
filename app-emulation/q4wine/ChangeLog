@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Mar 2009; Markos Chandras <hwoarang@gentoo.org> -q4wine-0.111.ebuild:
+  Removing as i added it on tree
+
 *q4wine-0.111 (21 Feb 2009)
 
   21 Feb 2009; Markos Chandras <hwoarang@gentoo.org> -q4wine-0.110.ebuild,
