@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Mar 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild:
+  Use default cmake-utils src_install , dropping make_desktop_entry
+
   25 Mar 2009; Markos Chandras <hwoarang@gentoo.org> -q4wine-0.111.ebuild:
   Removing as i added it on tree
 

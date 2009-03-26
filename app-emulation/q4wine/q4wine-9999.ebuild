@@ -25,9 +25,4 @@ RDEPEND="${DEPEND}
 
 S="${WORKDIR}/${PN}"
 
-src_install() {
-	cmake-utils_src_install
-	dodoc README || die "dodoc failed"
-	doicon src/data/wine16x16.png || die "doicon failed"
-	make_desktop_entry q4wine Q4Wine wine16x16 "Utility" || die "make_desktop_entry failed"
-}
+DOCS="README"
