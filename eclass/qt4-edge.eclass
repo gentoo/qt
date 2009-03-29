@@ -85,36 +85,70 @@ qt4-edge_src_compile() {
 # ${PN}.pro if eqmake4 was called with no argument).
 # Additional parameters are passed unmodified to qmake.
 eqmake4() {
-	local LOGFILE="${T}/qmake-$$.out"
-	local projprofile="${1}"
-	[[ -z ${projprofile} ]] && projprofile="${PN}.pro"
-	shift 1
+	local logfile="${T}/eqmake4-$$.log"
+	local projectfile="${1:-${PN}.pro}"
+	shift
 
-	ebegin "Processing qmake ${projprofile}"
-
-	# file exists?
-	if [[ ! -f ${projprofile} ]]; then
+	if [[ ! -f ${projectfile} ]]; then
 		echo
-		eerror "Project .pro file \"${projprofile}\" does not exists"
-		eerror "qmake cannot handle non-existing .pro files"
+		eerror "Project file '${projectfile}' does not exists!"
+		eerror "eqmake4 cannot handle non-existing project files."
+		eerror
+		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
 		echo
-		eerror "This shouldn't happen - please send a bug report to bugs.gentoo.org"
-		echo
-		die "Project file not found in ${PN} sources"
+		die "Project file not found in ${CATEGORY}/${PN} sources."
 	fi
 
-	echo >> ${LOGFILE}
-	echo "******  qmake ${projprofile}  ******" >> ${LOGFILE}
-	echo >> ${LOGFILE}
+	ebegin "Running qmake on ${projectfile}"
 
-	# as a workaround for broken qmake, put everything into file
+	echo >> "${logfile}"
+	echo "******  qmake ${projectfile}  ******" >> "${logfile}"
+	echo >> "${logfile}"
+
+	# make sure CONFIG variable is correctly set for both release and debug builds
+	local CONFIG_ADD="release"
+	local CONFIG_REMOVE="debug"
 	if has debug ${IUSE} && use debug; then
-		echo -e "\nCONFIG -= release\nCONFIG += no_fixpath debug" >> ${projprofile}
-	else
-		echo -e "\nCONFIG -= debug\nCONFIG += no_fixpath release" >> ${projprofile}
+		CONFIG_ADD="debug"
+		CONFIG_REMOVE="release"
 	fi
-	
-	/usr/bin/qmake ${projprofile} \
+	local awkscript='BEGIN {
+				fixed=0;
+			}
+			/^[[:blank:]]*CONFIG[[:blank:]]*[\+\*]?=/ {
+				for (i=1; i <= NF; i++) {
+					if ($i ~ rem || $i ~ /debug_and_release/)
+						{ $i=add; fixed=1; }
+				}
+			}
+			/^[[:blank:]]*CONFIG[[:blank:]]*-=/ {
+				for (i=1; i <= NF; i++) {
+					if ($i ~ add) { $i=rem; fixed=1; }
+				}
+			}
+			{
+				print >> file;
+			}
+			END {
+				printf "CONFIG -= debug_and_release %s\n", rem >> file;
+				printf "CONFIG += %s\n", add >> file;
+				print fixed;
+			}'
+	local file=
+	while read file; do
+		local retval=$({
+				rm -f "${file}"
+				awk -- "${awkscript}" file="${file}" add=${CONFIG_ADD} rem=${CONFIG_REMOVE} \
+					|| die "awk failed to process '${file}'."
+				} < "${file}")
+		if [[ ${retval} -eq 1 ]]; then
+			einfo "  Fixed CONFIG in ${file}"
+		elif [[ ${retval} -ne 0 ]]; then
+			ewarn "  An error occurred while processing ${file}: awk script returned ${retval}"
+		fi
+	done < <(find "$(dirname "${projectfile}")" -type f -name "*.pr[io]" -printf '%P\n' 2>/dev/null)
+
+	/usr/bin/qmake -makefile -nocache \
 		QTDIR=/usr/$(get_libdir) \
 		QMAKE=/usr/bin/qmake \
 		QMAKE_CC=$(tc-getCC) \
@@ -128,22 +162,23 @@ eqmake4() {
 		QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
 		QMAKE_RPATH= \
 		QMAKE_STRIP= \
-		"${@}" >> ${LOGFILE} 2>&1
+		"${projectfile}" \
+		"${@}" >> "${logfile}" 2>&1
 
-	local result=$?
-	eend ${result}
+	eend $?
 
 	# was qmake successful?
-	if [[ ${result} -ne 0 ]]; then
+	if [[ $? -ne 0 ]]; then
 		echo
-		eerror "Running qmake on \"${projprofile}\" has failed"
+		eerror "Running qmake on '${projectfile}' has failed!"
+		eerror
+		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
+		eerror "A complete log of qmake output is located at '${logfile}'."
 		echo
-		eerror "This shouldn't happen - please send a bug report to bugs.gentoo.org"
-		echo
-		die "qmake failed on ${projprofile}"
+		die "qmake failed on '${projectfile}'."
 	fi
 
-	return ${result}
+	return 0
 }
 
 case ${EAPI} in
