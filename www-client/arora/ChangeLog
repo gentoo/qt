@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
+*arora-0.6 (30 Mar 2009)
+
+  30 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  +arora-0.6.ebuild:
+  version bump [using tree ebuild]. removed en_US locale (file missing from
+  upstream).
+
   21 Feb 2009; Markos Chandras <hwoarang@gentoo.org> arora-9999-r2.ebuild:
   Dropping keywords
 
