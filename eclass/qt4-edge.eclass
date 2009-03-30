@@ -85,13 +85,12 @@ qt4-edge_src_compile() {
 # ${PN}.pro if eqmake4 was called with no argument).
 # Additional parameters are passed unmodified to qmake.
 eqmake4() {
-	local logfile="${T}/eqmake4-$$.log"
 	local projectfile="${1:-${PN}.pro}"
 	shift
 
 	if [[ ! -f ${projectfile} ]]; then
 		echo
-		eerror "Project file '${projectfile}' does not exists!"
+		eerror "Project file '${projectfile#${WORKDIR}/}' does not exists!"
 		eerror "eqmake4 cannot handle non-existing project files."
 		eerror
 		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
@@ -100,10 +99,6 @@ eqmake4() {
 	fi
 
 	ebegin "Running qmake on ${projectfile}"
-
-	echo >> "${logfile}"
-	echo "******  qmake ${projectfile}  ******" >> "${logfile}"
-	echo >> "${logfile}"
 
 	# make sure CONFIG variable is correctly set for both release and debug builds
 	local CONFIG_ADD="release"
@@ -137,14 +132,14 @@ eqmake4() {
 	local file=
 	while read file; do
 		local retval=$({
-				rm -f "${file}"
-				awk -- "${awkscript}" file="${file}" add=${CONFIG_ADD} rem=${CONFIG_REMOVE} \
-					|| die "awk failed to process '${file}'."
+				rm -f "${file}" || echo "FAILED"
+				awk -- "${awkscript}" file="${file}" add=${CONFIG_ADD} rem=${CONFIG_REMOVE} || echo "FAILED"
 				} < "${file}")
-		if [[ ${retval} -eq 1 ]]; then
+		if [[ ${retval} == 1 ]]; then
 			einfo "  Fixed CONFIG in ${file}"
-		elif [[ ${retval} -ne 0 ]]; then
-			ewarn "  An error occurred while processing ${file}: awk script returned ${retval}"
+		elif [[ ${retval} != 0 ]]; then
+			eerror "  An error occurred while processing ${file}"
+			die "eqmake4 failed to process '${file}'."
 		fi
 	done < <(find "$(dirname "${projectfile}")" -type f -name "*.pr[io]" -printf '%P\n' 2>/dev/null)
 
@@ -162,18 +157,15 @@ eqmake4() {
 		QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
 		QMAKE_RPATH= \
 		QMAKE_STRIP= \
-		"${projectfile}" \
-		"${@}" >> "${logfile}" 2>&1
+		"${projectfile}" "${@}"
 
 	eend $?
 
 	# was qmake successful?
 	if [[ $? -ne 0 ]]; then
 		echo
-		eerror "Running qmake on '${projectfile}' has failed!"
-		eerror
+		eerror "Running qmake on '${projectfile#${WORKDIR}/}' has failed!"
 		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
-		eerror "A complete log of qmake output is located at '${logfile}'."
 		echo
 		die "qmake failed on '${projectfile}'."
 	fi
