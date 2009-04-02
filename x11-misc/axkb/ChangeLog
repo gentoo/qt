@@ -1,0 +1,9 @@
+# ChangeLog for x11-misc/axkb
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*axkb-9999 (02 Apr 2009)
+
+  02 Apr 2009; Markos Chandras <hwoarang@gentoo.org> +axkb-9999.ebuild:
+  Initial commit for axkb
+
