@@ -207,6 +207,9 @@ qt4-build-edge_src_prepare() {
 			mkdir .svn
 			./apply_patches || die "Applying KDE patchset failed"
 			;;
+		4.?.9999 | 4.9999)
+			generate_include
+		;;
 	esac
 
 	if [[ ${PN} != qt-core ]]; then
@@ -294,6 +297,12 @@ standard_configure_options() {
 		$([[ ${PN} == qt-xmlpatterns ]] || echo -no-exceptions)
 		$(use x86-fbsd || echo -reduce-relocations)
 		-nomake examples -nomake demos"
+
+	case "${MY_PV_QTCOPY}" in
+		4.?.9999 | 4.9999)
+			myconf="${myconf} -opensource"
+			;;
+	esac
 
 	echo "${myconf}"
 }
@@ -443,6 +452,11 @@ symlink_binaries_to_buildtree() {
 	for bin in qmake moc uic rcc; do
 		ln -s ${QTBINDIR}/${bin} "${S}"/bin/ || die "Symlinking ${bin} to ${S}/bin failed."
 	done
+}
+
+# required for 9999, easier than sed'ing
+generate_include() {
+	QTDIR="." perl "bin/syncqt"
 }
 
 fix_library_files() {
