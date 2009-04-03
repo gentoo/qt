@@ -1,5 +1,5 @@
-# set for all Qt packages of KDE's qt-copy repository
-# qt-phonon is commented out, as you likely want media-sound/phonon instead
+# set for all packages from QtSoftware's 4.5 branch
+# qt-phonon is commented out, as you may want media-sound/phonon instead
 
 ~x11-libs/qt-assistant-4.5.9999[-qt-copy]
 ~x11-libs/qt-core-4.5.9999[-qt-copy]
