@@ -30,7 +30,7 @@ IUSE="${IUSE} -custom-cxxflags debug pch"
 
 case "${PV}" in
 	4.?.9999)
-		IUSE="${IUSE} qt-copy"
+		IUSE="${IUSE} +qt-copy"
 		if use qt-copy; then
 			MY_PV_QTCOPY="${PV}-qt-copy"
 		else
