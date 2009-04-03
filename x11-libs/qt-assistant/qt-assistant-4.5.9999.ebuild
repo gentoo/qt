@@ -11,9 +11,9 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-sql-${PV}[sqlite]
-	~x11-libs/qt-webkit-${PV}"
+DEPEND="~x11-libs/qt-gui-${PV}[qt-copy=]
+	~x11-libs/qt-sql-${PV}[sqlite,qt-copy=]
+	~x11-libs/qt-webkit-${PV}[qt-copy=]"
 
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
@@ -50,7 +50,7 @@ src_install() {
 	cd "${S}"
 	insinto ${QTDOCDIR}
 	doins -r "${S}"/doc/qch || die "doins qch documentation failed"
-	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"	
+	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"
 	#emake INSTALL_ROOT="${D}" install_qchdocs || die "emake install_qchdocs	failed"
 	domenu "${FILESDIR}"/Assistant.desktop || die "domenu failed"
 }

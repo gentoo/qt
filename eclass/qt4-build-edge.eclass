@@ -6,7 +6,7 @@
 # @MAINTAINER:
 # Ben de Groot <yngwin@gentoo.org>
 # Christian Franke <cfchris6@ts2server.com>
-# Markos Chandras <hwoarang@genoo.org>
+# Markos Chandras <hwoarang@gentoo.org>
 # @BLURB: Eclass for Qt4 split ebuilds in qting-edge overlay.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt4
@@ -16,19 +16,36 @@
 #
 # NOTES:
 #
-#	4.9999 stands for live ebuilds from qtsoftware's git repository
+#	4.9999 and 4.?.9999[-qt-copy]
+#			stands for live ebuilds from qtsoftware's git repository
 #			(that is nokia, previously trolltech)
-#	4.?.9999 stands for live ebuilds from kdesvn repository
-#	4.*.*_{beta,rc,}* and * are releases or snapshots from qtsoftware
+#	4.?.9999[qt-copy]
+#			stands for live ebuilds from kdesvn repository
+#	4.*.*_{beta,rc,}* and *
+#			are releases or snapshots from qtsoftware
 #
 
 IUSE="${IUSE} -custom-cxxflags debug pch"
 
 case "${PV}" in
 	4.?.9999)
+		IUSE="${IUSE} qt-copy"
+		if use qt-copy; then
+			MY_PV_QTCOPY="${PV}-qt-copy"
+		else
+			MY_PV_QTCOPY="${PV}"
+		fi
+		;;
+	*)
+		MY_PV_QTCOPY="${PV}"
+		;;
+esac
+
+case "${MY_PV_QTCOPY}" in
+	4.?.9999-qt-copy)
 		inherit eutils multilib toolchain-funcs flag-o-matic subversion versionator
 		;;
-	4.9999)
+	4.?.9999 | 4.9999)
 		inherit eutils multilib toolchain-funcs flag-o-matic git versionator
 		;;
 	*)
@@ -55,17 +72,24 @@ S=${WORKDIR}/${MY_P}
 
 SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
 
-case "${PV}" in
-	4.?.9999)
+case "${MY_PV_QTCOPY}" in
+	4.?.9999-qt-copy)
 		HOMEPAGE="http://websvn.kde.org/trunk/qt-copy/";;
 	*)
 		HOMEPAGE="http://www.qtsoftware.com/";;
 esac
 
-case "${PV}" in
-	4.?.9999)
+case "${MY_PV_QTCOPY}" in
+	4.?.9999-qt-copy)
 		ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/qt-copy"
 		ESVN_PROJECT="qt-copy"
+		SRC_URI=
+		;;
+	4.?.9999)
+		EGIT_REPO_URI="git://labs.trolltech.com/qt/all"
+		EGIT_PROJECT="qt-${PV}"
+		EGIT_BRANCH="4.5"
+		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
 	4.9999)
@@ -111,11 +135,11 @@ qt4-build-edge_pkg_setup() {
 
 	# Let users know what they are getting themselves into ;-)
 	echo
-	case "${PV}" in
-		4.?.9999)
-			ewarn "The ${PV} version ebuilds install qt-copy from KDE's subversion repo"
+	case "${MY_PV_QTCOPY}" in
+		4.?.9999-qt-copy)
+			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from KDE's subversion repo"
 			;;
-		4.9999)
+		4.?.9999 | 4.9999)
 			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software"
 			;;
 		4.*.*_*)
@@ -150,12 +174,12 @@ qt4-build-edge_src_unpack() {
 			targets="${targets} ${MY_P}/${target}"
 	done
 
-	case "${PV}" in
-		4.?.9999)
+	case "${MY_PV_QTCOPY}" in
+		4.?.9999-qt-copy)
 			ESVN_REPO_FREQ=${ESVN_UP_FREQ:-1}
 			subversion_src_unpack
 			;;
-		4.9999)
+		4.?.9999 | 4.9999)
 			git_src_unpack
 			;;
 		*)
@@ -165,7 +189,7 @@ qt4-build-edge_src_unpack() {
 	esac
 
 	# For 4.4.x releases we supply a prepackaged headers tarball
-	case "${PV}" in
+	case "${MY_PV_QTCOPY}" in
 		4.4.?)
 			echo tar xjpf "${DISTDIR}"/${MY_P}-headers.tar.bz2
 			tar xjpf "${DISTDIR}"/${MY_P}-headers.tar.bz2
@@ -174,8 +198,8 @@ qt4-build-edge_src_unpack() {
 }
 
 qt4-build-edge_src_prepare() {
-	case "${PV}" in
-		4.?.9999)
+	case "${MY_PV_QTCOPY}" in
+		4.?.9999-qt-copy)
 			# Apply KDE patchset
 			cd "${S}"
 			# Make autopatcher skip already applied patches - apply_patches scripts check for that.
@@ -209,7 +233,7 @@ qt4-build-edge_src_prepare() {
 }
 
 qt4-build-edge_src_configure() {
-	
+
 	myconf="$(standard_configure_options) ${myconf}"
 
 	echo ./configure ${myconf}

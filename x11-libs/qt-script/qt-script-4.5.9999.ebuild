@@ -11,7 +11,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}
+DEPEND="~x11-libs/qt-core-${PV}[qt-copy=]
 	"
 RDEPEND="${DEPEND}"
 

@@ -12,7 +12,7 @@ KEYWORDS=""
 
 IUSE="+accessibility cups +dbus debug +glib +gtkstyle mng nas nis tiff +qt3support raster xinerama ${IUSE_INPUT_DEVICES}"
 
-RDEPEND="	
+RDEPEND="
 	media-libs/fontconfig
 	>=media-libs/freetype-2
 	media-libs/jpeg
@@ -22,10 +22,10 @@ RDEPEND="
 	x11-libs/libXcursor
 	x11-libs/libXfont
 	x11-libs/libSM
-	~x11-libs/qt-core-${PV}[glib=,qt3support=]
-	~x11-libs/qt-script-${PV}
+	~x11-libs/qt-core-${PV}[glib=,qt3support=,qt-copy=]
+	~x11-libs/qt-script-${PV}[qt-copy=]
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV} )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[qt-copy=] )
 	gtkstyle? ( x11-libs/gtk+:2 )
 	input_devices_wacom? ( x11-libs/libXi x11-drivers/linuxwacom )
 	mng? ( >=media-libs/libmng-1.0.9 )
@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV} )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[qt-copy=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/gui

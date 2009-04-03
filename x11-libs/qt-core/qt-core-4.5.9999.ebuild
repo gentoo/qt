@@ -17,7 +17,7 @@ RDEPEND="sys-libs/zlib
 	"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV} )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt-copy=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap/
@@ -77,7 +77,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	if use doc; then 
+	if use doc; then
 	QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES}
 		doc/"
 	QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}

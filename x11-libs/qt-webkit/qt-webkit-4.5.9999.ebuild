@@ -11,9 +11,9 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-core-${PV}[ssl]
-	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-sound/phonon )"
+DEPEND="~x11-libs/qt-gui-${PV}[qt-copy=]
+	~x11-libs/qt-core-${PV}[ssl,qt-copy=]
+	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[qt-copy=] media-sound/phonon )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"

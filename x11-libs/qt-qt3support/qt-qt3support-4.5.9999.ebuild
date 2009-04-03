@@ -11,12 +11,12 @@ SLOT="4"
 KEYWORDS=""
 IUSE="+accessibility phonon"
 
-DEPEND="~x11-libs/qt-core-${PV}[qt3support]
-	~x11-libs/qt-gui-${PV}[qt3support,accessibility=]
-	~x11-libs/qt-sql-${PV}[qt3support]
+DEPEND="~x11-libs/qt-core-${PV}[qt3support,qt-copy=]
+	~x11-libs/qt-gui-${PV}[qt3support,accessibility=,qt-copy=]
+	~x11-libs/qt-sql-${PV}[qt3support,qt-copy=]
 	"
 RDEPEND="${DEPEND}"
-PDEPEND="phonon? ( || ( ~x11-libs/qt-phonon-${PV} media-sound/phonon ) )"
+PDEPEND="phonon? ( || ( ~x11-libs/qt-phonon-${PV}[qt-copy=] media-sound/phonon ) )"
 
 QT4_TARGET_DIRECTORIES="
 src/qt3support
@@ -28,7 +28,7 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 
 
 src_configure() {
-	myconf="${myconf} -qt3support 
+	myconf="${myconf} -qt3support
 		$(qt_use phonon gstreamer)
 		$(qt_use phonon)
 		$(qt_use accessibility)"

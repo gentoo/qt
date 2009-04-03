@@ -11,11 +11,11 @@ SLOT="4"
 KEYWORDS=""
 IUSE="+dbus"
 
-DEPEND="~x11-libs/qt-gui-${PV}[glib,qt3support]
+DEPEND="~x11-libs/qt-gui-${PV}[glib,qt3support,qt-copy=]
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-libs/gst-plugins-base
-	dbus? ( =x11-libs/qt-dbus-${PV} )"
+	dbus? ( =x11-libs/qt-dbus-${PV}[qt-copy=] )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="

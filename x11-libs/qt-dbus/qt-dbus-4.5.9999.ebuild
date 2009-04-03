@@ -14,7 +14,7 @@ IUSE=""
 # depend on gui instead of core.  There's a GUI based viewer that's built, and since it's a desktop
 # protocol I don't know if there's value trying to derive it out into a core build
 # The library itself, however, only depends on core and xml
-DEPEND="~x11-libs/qt-core-${PV}
+DEPEND="~x11-libs/qt-core-${PV}[qt-copy=]
 	>=sys-apps/dbus-1.0.2
 	"
 RDEPEND="${DEPEND}"

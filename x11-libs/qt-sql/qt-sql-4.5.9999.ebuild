@@ -13,7 +13,7 @@ KEYWORDS=""
 IUSE="firebird mysql odbc postgres +qt3support +sqlite"
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[qt3support=]
+	~x11-libs/qt-core-${PV}[qt3support=,qt-copy=]
 	firebird? ( dev-db/firebird )
 	sqlite? ( dev-db/sqlite:3 )
 	mysql? ( virtual/mysql )
@@ -55,6 +55,6 @@ src_configure() {
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility -no-fontconfig
 		-no-glib -no-opengl -no-svg"
-	
+
 	qt4-build-edge_src_configure
 }
