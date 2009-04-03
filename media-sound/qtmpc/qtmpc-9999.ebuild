@@ -12,7 +12,7 @@ ESVN_REPO_URI="http://qtmpc.lowblog.nl/svn/trunk"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug kde"
 
 DEPEND="x11-libs/qt-gui:4"
