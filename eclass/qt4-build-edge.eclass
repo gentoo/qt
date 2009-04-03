@@ -7,6 +7,7 @@
 # Ben de Groot <yngwin@gentoo.org>
 # Christian Franke <cfchris6@ts2server.com>
 # Markos Chandras <hwoarang@gentoo.org>
+# Alex Alexander <alex.alexander@gmail.com>
 # @BLURB: Eclass for Qt4 split ebuilds in qting-edge overlay.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt4
