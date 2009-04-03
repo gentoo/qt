@@ -83,6 +83,7 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
+	dobin bin/qtcreator.bin || die "dobin qtcreator.bin failed"
 	if use doc;then
 		insinto /usr/share/doc/qtcreator/
 		doins "${S}"/share/doc/qtcreator/qtcreator.qch || die "Installing documentation failed"

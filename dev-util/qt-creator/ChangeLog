@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  03 Apr 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Install qtcreator.bin
+
   24 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
   -files/add_missing_plugins.patch, -qt-creator-1.0.0-r1.ebuild:
   On tree now
