@@ -5,18 +5,17 @@
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The Qt3 support module for the Qt toolkit."
-LICENSE="|| ( GPL-3 GPL-2 )"
+DESCRIPTION="The Qt3 support module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
 IUSE="+accessibility phonon"
 
-DEPEND="~x11-libs/qt-core-${PV}[qt3support]
-	~x11-libs/qt-gui-${PV}[qt3support,accessibility=]
-	~x11-libs/qt-sql-${PV}[qt3support]
-	"
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support]
+	~x11-libs/qt-gui-${PV}[accessibility=,debug=,qt3support]
+	~x11-libs/qt-sql-${PV}[debug=,qt3support]"
 RDEPEND="${DEPEND}"
-PDEPEND="phonon? ( || ( ~x11-libs/qt-phonon-${PV} media-sound/phonon ) )"
+PDEPEND="phonon? (
+	|| ( ~x11-libs/qt-phonon-${PV}[debug=] media-sound/phonon[gstreamer] ) )"
 
 QT4_TARGET_DIRECTORIES="
 src/qt3support
@@ -24,11 +23,13 @@ src/tools/uic3
 tools/designer/src/plugins/widgets
 tools/qtconfig
 tools/porting"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
-
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+src/
+include/
+tools/"
 
 src_configure() {
-	myconf="${myconf} -qt3support 
+	myconf="${myconf} -qt3support
 		$(qt_use phonon gstreamer)
 		$(qt_use phonon)
 		$(qt_use accessibility)"

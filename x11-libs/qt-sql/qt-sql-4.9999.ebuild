@@ -1,27 +1,35 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The SQL module for the Qt toolkit."
-LICENSE="|| ( GPL-3 GPL-2 )"
+DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
+IUSE="firebird +iconv mysql odbc postgres +qt3support +sqlite"
 
-IUSE="firebird mysql odbc postgres +qt3support +sqlite"
-
-DEPEND="
-	~x11-libs/qt-core-${PV}[qt3support=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	firebird? ( dev-db/firebird )
 	sqlite? ( dev-db/sqlite:3 )
 	mysql? ( virtual/mysql )
 	postgres? ( virtual/postgresql-base )
 	odbc? ( dev-db/unixODBC )"
+RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+include/Qt/
+include/QtCore/
+include/QtSql/
+include/QtScript/
+src/src.pro
+src/corelib/
+src/plugins
+src/sql
+src/3rdparty
+src/tools"
 
 pkg_setup() {
 	if ! (use firebird || use mysql || use odbc || use postgres || use sqlite); then
@@ -49,12 +57,12 @@ src_configure() {
 		$(qt_use odbc sql-odbc plugin)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
-		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
+		-no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility -no-fontconfig
-		-no-glib -no-opengl -no-svg"
-	
+		-no-glib -no-opengl -no-svg -no-gtkstyle"
+
 	qt4-build-edge_src_configure
 }
