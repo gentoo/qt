@@ -5,27 +5,26 @@
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The Webkit module for the Qt toolkit"
+DESCRIPTION="The Webkit module for the Qt toolkit."
+LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl]
-	~x11-libs/qt-gui-${PV}[debug=]
-	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[debug=] media-sound/phonon )"
+DEPEND="~x11-libs/qt-gui-${PV}[qt-copy=]
+	~x11-libs/qt-core-${PV}[ssl,qt-copy=]
+	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[qt-copy=] media-sound/phonon )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"
-QT4_EXTRACT_DIRECTORIES="
-include/
-src/
-tools/"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 QCONFIG_ADD="webkit"
 QCONFIG_DEFINE="QT_WEBKIT"
 
-src_prepare() {
+src_unpack() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
-	qt4-build-edge_src_prepare
+
+	qt4-build-edge_src_unpack
 }
 
 src_configure() {

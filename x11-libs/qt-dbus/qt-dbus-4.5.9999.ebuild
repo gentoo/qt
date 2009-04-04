@@ -5,13 +5,18 @@
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The DBus module for the Qt toolkit"
+DESCRIPTION="The DBus module for the Qt toolkit."
+LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=]
-	>=sys-apps/dbus-1.0.2"
+# depend on gui instead of core.  There's a GUI based viewer that's built, and since it's a desktop
+# protocol I don't know if there's value trying to derive it out into a core build
+# The library itself, however, only depends on core and xml
+DEPEND="~x11-libs/qt-core-${PV}[qt-copy=]
+	>=sys-apps/dbus-1.0.2
+	"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
@@ -23,12 +28,7 @@ QCONFIG_ADD="dbus dbus-linked"
 QCONFIG_DEFINE="QT_DBUS"
 
 #FIXME: Check if these are still needed with the header package
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/QtCore
-include/QtDBus
-include/QtXml
-src/corelib
-src/xml"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 
 src_configure() {
 	myconf="${myconf} -dbus-linked"

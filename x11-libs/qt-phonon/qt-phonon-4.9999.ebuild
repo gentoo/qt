@@ -6,26 +6,24 @@ EAPI="2"
 inherit qt4-build-edge
 
 DESCRIPTION="The Phonon module for the Qt toolkit"
+LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE="+dbus"
 
-DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support]
-	!kde-base/phonon-kde
-	!kde-base/phonon-xine
+DEPEND="~x11-libs/qt-gui-${PV}[glib,qt3support]
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-libs/gst-plugins-base
-	dbus? ( =x11-libs/qt-dbus-${PV}[debug=] )"
+	dbus? ( =x11-libs/qt-dbus-${PV} )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
 src/phonon
 src/plugins/phonon"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/
-src"
-
+src/3rdparty/kdelibs/phonon/
+src/3rdparty/kdebase/runtime/phonon/"
 QCONFIG_ADD="phonon"
 QCONFIG_DEFINE="QT_GSTREAMER"
 

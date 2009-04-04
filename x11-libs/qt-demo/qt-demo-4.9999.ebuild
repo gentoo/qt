@@ -6,6 +6,7 @@ EAPI="2"
 inherit qt4-build-edge
 
 DESCRIPTION="Demonstration module of the Qt toolkit"
+LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE=""
@@ -24,15 +25,19 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 	~x11-libs/qt-webkit-${PV}:${SLOT}
 	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}"
 
-RDEPEND="${DEPEND}"
-
 QT4_TARGET_DIRECTORIES="demos
 	examples"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	doc/src/images
-	src/
-	include/
-	tools/"
+	doc/src/images"
+
+src_configure() {
+	# Doesn't find qt-gui and fails linking
+	sed -e '/QT_BUILD_TREE/ s:=:+=:' \
+		-i "${S}"/examples/tools/plugandpaint/plugandpaint.pro \
+		|| die "Fixing plugandpaint example failed."
+
+	qt4-build-edge_src_configure
+}
 
 src_install() {
 	insinto ${QTDOCDIR}/src

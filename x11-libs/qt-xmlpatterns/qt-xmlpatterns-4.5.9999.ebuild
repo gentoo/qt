@@ -5,21 +5,17 @@
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The patternist module for the Qt toolkit"
+DESCRIPTION="The patternist module for the Qt toolkit."
+LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=]"
-RDEPEND="${DEPEND}"
+DEPEND="~x11-libs/qt-core-${PV}[qt-copy=]
+	"
 
 QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/QtCore
-include/QtNetwork
-include/QtXmlPatterns
-src/network/
-src/corelib/"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
 
 QCONFIG_ADD="xmlpatterns"
 QCONFIG_DEFINE="QT_XMLPATTERNS"
