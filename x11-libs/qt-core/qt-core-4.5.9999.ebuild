@@ -5,22 +5,21 @@
 EAPI="2"
 inherit qt4-build-edge
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework."
-LICENSE="|| ( GPL-3 GPL-2 )"
+DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib +qt3support +ssl"
+IUSE="doc +glib +iconv +qt3support +ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
-	"
+	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt-copy=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support] )"
 
 QT4_TARGET_DIRECTORIES="
-src/tools/bootstrap/
+src/tools/bootstrap
 src/tools/moc/
 src/tools/rcc/
 src/tools/uic/
@@ -29,7 +28,24 @@ src/xml/
 src/network/
 src/plugins/codecs/"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
+# Most ebuilds inlude almost everything for testing
+# Will clear out unneeded directories after everything else works OK
+QT4_EXTRACT_DIRECTORIES="
+include/Qt/
+include/QtCore/
+include/QtNetwork/
+include/QtScript/
+include/QtXml/
+src/plugins/plugins.pro
+src/plugins/qpluginbase.pri
+src/src.pro
+src/3rdparty/des/
+src/3rdparty/harfbuzz/
+src/3rdparty/md4/
+src/3rdparty/md5/
+src/3rdparty/sha1/
+src/script/
+translations/"
 
 pkg_setup() {
 	qt4-build-edge_pkg_setup
@@ -60,7 +76,7 @@ pkg_setup() {
 			if [[ -n ${need_to_remove} ]]; then
 				die "You must first uninstall these packages before continuing: \n\t\t${need_to_remove}"
 			fi
-		elif ! use qt3support && built_with_use x11-libs/qt-core qt3support; then
+		elif ! use qt3support && built_with_use x11-libs/qt-core qt3support ; then
 			local need_to_remove
 			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
 			for x in sql opengl gui qt3support; do
@@ -78,59 +94,62 @@ pkg_setup() {
 
 src_unpack() {
 	if use doc; then
-	QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES}
+		QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES}
 		doc/"
-	QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	tools/qdoc3"
+		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		tools/qdoc3"
 	fi
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	${QT4_EXTRACT_DIRECTORIES}"
 
 	qt4-build-edge_src_unpack
+
+	# Don't pre-strip, bug 235026
+	for i in kr jp cn tw ; do
+		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
+	done
 }
 
-src_prepare() {
+src_prepare(){
 	qt4-build-edge_src_prepare
 	# bug #172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CXXFLAGS failed"
-	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS}:" \
+	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix LDFLAGS failed"
 }
 
 src_configure() {
 	unset QMAKESPEC
+
 	myconf="${myconf}
 		$(qt_use glib)
+		$(qt_use iconv)
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb  -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
-		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
+		-no-nas-sound -no-dbus -no-cups -no-gif -no-libpng
 		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
 		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
-		-no-svg"
+		-no-svg -no-gtkstyle"
 
 	if ! use doc; then
 		myconf="${myconf} -nomake docs"
 	fi
+
+	cp -f "${FILESDIR}"/moc.pro "${S}"/src/tools/moc/
+	cp -f "${FILESDIR}"/rcc.pro "${S}"/src/tools/rcc/
+	cp -f "${FILESDIR}"/uic.pro "${S}"/src/tools/uic/
+
 	qt4-build-edge_src_configure
-
-	#fixing pre-striping parts
-	for i in kr jp cn tw ; do
-		echo "CONFIG+=nostrip" >> "${S}/src/plugins/codecs/${i}/${i}.pro"
-	done
-
 }
 
 src_compile() {
+	# bug #259736
+	unset QMAKESPEC
 	qt4-build-edge_src_compile
-	if use doc;then
-		# yet another hack for docs generation
-		cd ${S}
-		make adp_docs || die "make docs failed"
-	fi
 }
 
 src_install() {
@@ -141,10 +160,7 @@ src_install() {
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
-		#emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
-		# due to unknown reason, make install_htmldocs fail
-		 insinto ${QTDOCDIR} || die "insinto html docs failed"
-		 doins -r ${S}/doc/html/ || die "doins html docs failed"
+		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
