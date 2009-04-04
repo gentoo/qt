@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qmpdclient-ne-1.1.0.ebuild, qmpdclient-ne-9999.ebuild:
+  Dropping 1.1.0 as I will add it to portage soon. Add block for 1.1.0
+  version until we fix the naming issue
+
 *qmpdclient-ne-1.1.0 (23 Mar 2009)
 
   23 Mar 2009; Markos Chandras <hwoarang@gentoo.org>
