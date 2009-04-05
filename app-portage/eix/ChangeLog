@@ -1,0 +1,9 @@
+# ChangeLog for app-portage/eix
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*eix-9999 (05 Apr 2009)
+
+  05 Apr 2009; Ben de Groot <yngwin@gentoo.org> +eix-9999.ebuild:
+  Initial commit. Ebuild based on the release version ebuild in portage.
+
