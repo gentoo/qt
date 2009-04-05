@@ -16,8 +16,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND="x11-libs/qt-gui:4[dbus]
-	!>=media-sound/qmpdclient-1.1.0"
+DEPEND="x11-libs/qt-gui:4[dbus]"
 RDEPEND="${DEPEND}"
 
 src_prepare() {

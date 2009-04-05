@@ -2,6 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (05 Apr 2009)
+# Package renamed to qmpclient-9999. Please use the new one.
+=media-sound/qmpdclient-ne-9999
+
 # Markos Chandras <hwoarang@gentoo.org> (13 Mar 2009)
 # Masking for testing
 =dev-python/paver-1.0b
