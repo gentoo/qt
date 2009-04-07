@@ -1,0 +1,10 @@
+# ChangeLog for app-office/qchartdiary
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qchartdiary-0.6.4.1 (07 Apr 2009)
+
+  07 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
+  +qchartdiary-0.6.4.1.ebuild:
+  Initial commit for QChartDiary
+
