@@ -10,7 +10,7 @@ MY_PN="QChartDiary"
 
 DESCRIPTION="Free Qt4 diary/agenda application"
 HOMEPAGE="http://qt-apps.org/content/show.php?content=99294"
-SRC_URI="mirror://sourceforge/${PN}/${MY_PN}-src.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_PN}-${PV}-src.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
