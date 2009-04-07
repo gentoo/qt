@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qchartdiary-9999 (07 Apr 2009)
+
+  07 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
+  +qchartdiary-9999.ebuild:
+  Adding live ebuild
+
 *qchartdiary-0.6.4.1 (07 Apr 2009)
 
   07 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
