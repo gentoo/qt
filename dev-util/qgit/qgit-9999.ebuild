@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit git qt4
+inherit qt4 git
 
 CPPUNIT_REQUIRED="optional"
 
@@ -23,10 +23,6 @@ DEPEND="
 RDEPEND="${DEPEND}
 	>=dev-util/git-1.5.3
 "
-
-src_unpack() {
-	git_src_unpack
-}
 
 src_compile() {
 	eqmake4 || die "eqmake failed"
