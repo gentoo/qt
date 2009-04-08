@@ -22,7 +22,7 @@ DEPEND="app-arch/unzip
 RDEPEND="x11-libs/qt-gui:4
 	media-video/ffmpeg"
 
-PATCHES="${FILESDIR}/gcc-4.3.patch"
+PATCHES=( "${FILESDIR}/gcc-4.3.patch" )
 
 S="${WORKDIR}"
 
