@@ -4,6 +4,10 @@
 
   08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
   q4wine-9999.ebuild:
+  Dropped cmake from RDEPEND
+
+  08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  q4wine-9999.ebuild:
   Override src_unpack explicitly
 
   26 Mar 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild:

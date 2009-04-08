@@ -20,8 +20,7 @@ RDEPEND="${DEPEND}
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
-	>=media-gfx/icoutils-0.26.0
-	dev-util/cmake[qt4]"
+	>=media-gfx/icoutils-0.26.0"
 
 S="${WORKDIR}/${PN}"
 
