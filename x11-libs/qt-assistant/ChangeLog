@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  qt-assistant-4.5.9999.ebuild, qt-assistant-4.9999.ebuild:
+  Fixed some underquoted variables, fixed implicit RDEPEND
+
   04 Mar 2009; Ben de Groot <yngwin@gentoo.org> -qt-assistant-4.5.0.ebuild:
   Cleaning out 4.5.0 ebuilds that are now in portage
 

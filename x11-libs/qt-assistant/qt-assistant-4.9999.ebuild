@@ -11,9 +11,12 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-gui-${PV}
+DEPEND="
+	~x11-libs/qt-gui-${PV}
 	~x11-libs/qt-sql-${PV}[sqlite]
-	~x11-libs/qt-webkit-${PV}"
+	~x11-libs/qt-webkit-${PV}
+"
+RDEPEND="${DEPEND}"
 
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
@@ -36,7 +39,7 @@ src_configure() {
 src_compile() {
 	qt4-build-edge_src_compile
 	# ugly hack to build docs
-	cd ${S}
+	cd "${S}"
 	export LD_LIBRARY_PATH="${S}/lib"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
 	emake qch_docs || die "emake docs failed"
@@ -48,9 +51,9 @@ src_install() {
 	# note that emake install_qchdocs fails for undefined reason so we use a
 	# workaround
 	cd "${S}"
-	insinto ${QTDOCDIR}
+	insinto "${QTDOCDIR}"
 	doins -r "${S}"/doc/qch || die "doins qch documentation failed"
-	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"	
+	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"
 	#emake INSTALL_ROOT="${D}" install_qchdocs || die "emake install_qchdocs	failed"
 	domenu "${FILESDIR}"/Assistant.desktop || die "domenu failed"
 }
