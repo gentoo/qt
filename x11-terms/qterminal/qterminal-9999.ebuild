@@ -27,11 +27,11 @@ src_unpack() {
 	ECVS_MODULE="qterminal"
 	cvs_src_unpack
 
-	sed -i "s/build_all/build_all dll/" \
-		"${S}"/qtermwidget_patches/qtermwidget_pro.patch
+#	sed -i "s/build_all/build_all dll/" \
+#		"${S}"/qtermwidget_patches/qtermwidget_pro.patch
 
-	cd "${WORKDIR}"/qtermwidget
-	epatch "${S}"/qtermwidget_patches/qtermwidget_pro.patch
+#	cd "${WORKDIR}"/qtermwidget
+#	epatch "${S}"/qtermwidget_patches/qtermwidget_pro.patch
 }
 
 src_compile() {
