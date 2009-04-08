@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  q4wine-9999.ebuild:
+  Override src_unpack explicitly
+
   26 Mar 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild:
   Use default cmake-utils src_install , dropping make_desktop_entry
 

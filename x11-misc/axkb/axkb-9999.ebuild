@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-edge git
+inherit git qt4-edge
 
 MY_PN="AXKB"
 
@@ -19,6 +19,10 @@ IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
+
+src_unpack() {
+	git_src_unpack
+}
 
 src_configure(){
 	eqmake4 ${MY_PN}.pro

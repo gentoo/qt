@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-edge git
+inherit git qt4-edge
 
 DESCRIPTION="A cross-platform Qt4 WebKit browser"
 HOMEPAGE="http://arora.googlecode.com/"
@@ -17,6 +17,10 @@ IUSE="debug"
 
 RDEPEND="x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
+
+src_unpack() {
+	git_src_unpack
+}
 
 src_configure() {
 	eqmake4 arora.pro PREFIX="${D}/usr"
