@@ -3,7 +3,7 @@
 # $Header: $
 
   08 Apr 2009; Ben de Groot <yngwin@gentoo.org> qmpdclient-9999.ebuild:
-  Update homepage, remove no longer needed src_configure
+  Update homepage, remove -ne from binary and desktop entry.
 
 *qmpdclient-9999 (05 Apr 2009)
 

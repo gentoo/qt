@@ -31,6 +31,10 @@ src_prepare() {
 		|| die "sed failed (nostrip)"
 }
 
+src_configure() {
+	eqmake4 qmpdclient.pro
+}
+
 src_install() {
 	dodoc README AUTHORS THANKSTO Changelog || die "Installing docs failed"
 	for res in 16 22 64 ; do
@@ -38,7 +42,7 @@ src_install() {
 		newins icons/qmpdclient${res}.png ${PN}.png || die "Installing icons failed"
 	done
 
-	newbin qmpdclient qmpdclient-ne || die "Installing binary failed"
-	make_desktop_entry qmpdclient-ne "QMPDClient-ne" ${PN} \
+	dobin qmpdclient || die "Installing binary failed"
+	make_desktop_entry qmpdclient "QMPDClient" ${PN} \
 		"Qt;AudioVideo;Audio;" || die "Installing desktop entry failed"
 }
