@@ -2,10 +2,6 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
-  08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
-  arora-9999.ebuild:
-  Override src_unpack explicitly
-
 *arora-0.6 (30 Mar 2009)
 
   30 Mar 2009; Alex Alexander (wired) <alex.alexander@gmail.com>

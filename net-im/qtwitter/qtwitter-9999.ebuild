@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit git qt4-edge
+inherit qt4-edge git
 
 DESCRIPTION="A Qt client for Twitter"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
@@ -19,10 +19,6 @@ DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
-
-src_unpack() {
-	git_src_unpack
-}
 
 src_prepare() {
 	qt4-edge_src_prepare

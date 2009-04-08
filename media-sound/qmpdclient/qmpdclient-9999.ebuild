@@ -6,7 +6,7 @@ EAPI="2"
 
 EGIT_REPO_URI="git://github.com/Voker57/qmpdclient-ne.git"
 
-inherit git qt4-edge
+inherit qt4-edge git
 
 DESCRIPTION="QMPDClient with NBL additions, such as lyrics' display"
 HOMEPAGE="http://github.com/Voker57/qmpdclient-ne/tree/master"
@@ -18,10 +18,6 @@ IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4[dbus]"
 RDEPEND="${DEPEND}"
-
-src_unpack() {
-	git_src_unpack
-}
 
 src_prepare() {
 	# Fix the install path

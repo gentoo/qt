@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit git qt4-edge multilib
+inherit qt4-edge multilib git
 
 MY_PN="${PN/-/}"
 MY_P="${P}-src"
@@ -44,9 +44,6 @@ PATCHES=(
 
 S="${WORKDIR}/${MY_P}"
 
-src_unpack() {
-	git_src_unpack
-}
 
 src_prepare() {
 	qt4-edge_src_prepare

@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit git qt4-edge cmake-utils
+inherit qt4-edge cmake-utils git
 
 DESCRIPTION="Qt4 GUI for wine"
 HOMEPAGE="http://sourceforge.net/projects/q4wine/"
@@ -25,7 +25,3 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/${PN}"
 
 DOCS="README"
-
-src_unpack() {
-	git_src_unpack
-}
