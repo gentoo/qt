@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit cvs qt4 eutils
 
 DESCRIPTION="Qt4-based multitab terminal emulator"
@@ -26,13 +28,15 @@ src_unpack() {
 	ECVS_SERVER="qterminal.cvs.sourceforge.net:/cvsroot/qterminal"
 	ECVS_MODULE="qterminal"
 	cvs_src_unpack
+}
 
+#src_prepare() {
 #	sed -i "s/build_all/build_all dll/" \
 #		"${S}"/qtermwidget_patches/qtermwidget_pro.patch
 
 #	cd "${WORKDIR}"/qtermwidget
 #	epatch "${S}"/qtermwidget_patches/qtermwidget_pro.patch
-}
+#}
 
 src_compile() {
 	eqmake4 || die "eqmake4 failed"
