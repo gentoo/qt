@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI="2"
-
 inherit qt4-edge git
 
 DESCRIPTION="A cross-platform Qt4 WebKit browser"
@@ -19,7 +18,7 @@ RDEPEND="x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
 
 src_configure() {
-	eqmake4 arora.pro PREFIX="${D}/usr"
+	eqmake4 arora.pro PREFIX="/usr"
 }
 
 src_compile() {
@@ -29,6 +28,6 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 	dodoc AUTHORS ChangeLog README
 }
