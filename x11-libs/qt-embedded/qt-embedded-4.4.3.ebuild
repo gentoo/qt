@@ -102,7 +102,7 @@ src_configure() {
 	use sqlite && myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
 	# choose arch
 	if use embedded; then
-			myconf="${myconf} -xplatform qws/linux-${ARCH}-g++ \ 
+			myconf="${myconf} -xplatform qws/linux-${ARCH}-g++ \
 			-platfrom linux-${ARCH}-g++ -embedded ${ARCH}"
 		fi
 	echo ${myconf}
@@ -111,7 +111,7 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	if use doc; then 
+	if use doc; then
 		insinto "${QTDOCDIR}" || die "insinto failed"
 		doins -r "${S}"/doc/qch || die "doins failed"
 		dohtml -r "${S}"/doc/html || die "dohtml failed"
