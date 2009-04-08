@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  qgit-9999.ebuild:
+  Override src_unpack explicitly
+
 *qgit-9999 (18 Mar 2009)
 
   18 Mar 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
