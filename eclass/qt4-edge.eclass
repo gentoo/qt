@@ -108,6 +108,7 @@ eqmake4() {
 		CONFIG_REMOVE="release"
 	fi
 	local awkscript='BEGIN {
+				printf "### eqmake4 was here ###\n" > file;
 				fixed=0;
 			}
 			/^[[:blank:]]*CONFIG[[:blank:]]*[\+\*]?=/ {
@@ -131,9 +132,10 @@ eqmake4() {
 			}'
 	local file=
 	while read file; do
+		grep -q '^### eqmake4 was here ###$' "${file}" && continue
 		local retval=$({
 				rm -f "${file}" || echo "FAILED"
-				awk -- "${awkscript}" file="${file}" add=${CONFIG_ADD} rem=${CONFIG_REMOVE} || echo "FAILED"
+				awk -v file="${file}" -- "${awkscript}" add=${CONFIG_ADD} rem=${CONFIG_REMOVE} || echo "FAILED"
 				} < "${file}")
 		if [[ ${retval} == 1 ]]; then
 			einfo "  Fixed CONFIG in ${file}"
