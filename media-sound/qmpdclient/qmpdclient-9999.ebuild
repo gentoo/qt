@@ -3,13 +3,12 @@
 # $Header: $
 
 EAPI="2"
-
 EGIT_REPO_URI="git://github.com/Voker57/qmpdclient-ne.git"
 
 inherit qt4-edge git
 
 DESCRIPTION="QMPDClient with NBL additions, such as lyrics' display"
-HOMEPAGE="http://github.com/Voker57/qmpdclient-ne/tree/master"
+HOMEPAGE="http://bitcheese.net/wiki/QMPDClient"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -30,10 +29,6 @@ src_prepare() {
 
 	sed -i -e "s:+= -O2 -g0 -s:+= -O2 -g0:" qmpdclient.pro \
 		|| die "sed failed (nostrip)"
-}
-
-src_configure() {
-	eqmake4 qmpdclient.pro
 }
 
 src_install() {
