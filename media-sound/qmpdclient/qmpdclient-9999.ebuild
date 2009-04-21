@@ -18,6 +18,12 @@ IUSE="debug"
 DEPEND="x11-libs/qt-gui:4[dbus]"
 RDEPEND="${DEPEND}"
 
+LANGS="de_DE fr_FR it_IT nl_NL nn_NO no_NO pt_BR ru_RU sv_SE tr_TR uk_UA zh_CN zh_TW"
+
+for X in ${LANGS}; do
+	IUSE="${IUSE} linguas_${X%_*}"
+done
+
 src_prepare() {
 	# Fix the install path
 	sed -i -e "s:PREFIX = /usr/local:PREFIX = /usr:" qmpdclient.pro \
@@ -53,5 +59,12 @@ src_install() {
 
 	#install translations
 	insinto /usr/share/QMPDClient/translations/
-	doins -r lang/*.qm || die "failed to install translations"
+	local LANG=
+	for LANG in ${LINGUAS};do
+		for X in ${LANGS};do
+			if [[ ${LANG} == ${X%_*} ]];then
+				doins -r lang/${X}.qm || die "failed to install translations"
+			fi
+		done
+	done
 }
