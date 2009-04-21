@@ -40,6 +40,10 @@ src_prepare() {
 
 	sed -i -e "s:+= -O2 -g0 -s:+= -O2 -g0:" qmpdclient.pro \
 		|| die "sed failed (nostrip)"
+	
+	# fix installation folder name
+	sed -i "s/share\/QMPDClient/share\/qmpdclient/" src/config.cpp \
+		|| die "failed to fix installation directory"
 }
 
 src_configure() {
