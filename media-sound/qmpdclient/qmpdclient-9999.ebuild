@@ -18,10 +18,15 @@ IUSE="debug"
 DEPEND="x11-libs/qt-gui:4[dbus]"
 RDEPEND="${DEPEND}"
 
-LANGS="de_DE fr_FR it_IT nl_NL nn_NO no_NO pt_BR ru_RU sv_SE tr_TR uk_UA zh_CN zh_TW"
+LANGS="de_DE fr_FR it_IT nl_NL nn_NO no_NO ru_RU sv_SE tr_TR uk_UA"
+LANGSLONG="zh_CN zh_TW pt_BR"
 
 for X in ${LANGS}; do
 	IUSE="${IUSE} linguas_${X%_*}"
+done
+
+for X in ${LANGSLONG};do
+	IUSE="${IUSE} linguas_${X}"
 done
 
 src_prepare() {
@@ -58,11 +63,16 @@ src_install() {
 		"Qt;AudioVideo;Audio;" || die "Installing desktop entry failed"
 
 	#install translations
-	insinto /usr/share/QMPDClient/translations/
+	insinto /usr/share/${PN}/translations/
 	local LANG=
 	for LANG in ${LINGUAS};do
 		for X in ${LANGS};do
 			if [[ ${LANG} == ${X%_*} ]];then
+				doins -r lang/${X}.qm || die "failed to install translations"
+			fi
+		done
+		for X in ${LANGSLONG};do
+			if [[ ${LANG} == ${X} ]]; then
 				doins -r lang/${X}.qm || die "failed to install translations"
 			fi
 		done
