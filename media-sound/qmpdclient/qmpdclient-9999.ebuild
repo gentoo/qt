@@ -35,6 +35,11 @@ src_configure() {
 	eqmake4 qmpdclient.pro
 }
 
+src_compile() {
+	emake || die "emake failed"
+	emake translate || die "failed to generate translations"
+}
+
 src_install() {
 	dodoc README AUTHORS THANKSTO Changelog || die "Installing docs failed"
 	for res in 16 22 64 ; do
@@ -45,4 +50,8 @@ src_install() {
 	dobin qmpdclient || die "Installing binary failed"
 	make_desktop_entry qmpdclient "QMPDClient" ${PN} \
 		"Qt;AudioVideo;Audio;" || die "Installing desktop entry failed"
+
+	#install translations
+	insinto /usr/share/QMPDClient/translations/
+	doins -r lang/*.qm || die "failed to install translations"
 }
