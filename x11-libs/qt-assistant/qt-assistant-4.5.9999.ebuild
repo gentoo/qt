@@ -55,5 +55,15 @@ src_install() {
 	doins -r "${S}"/doc/qch || die "doins qch documentation failed"
 	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"
 	#emake INSTALL_ROOT="${D}" install_qchdocs || die "emake install_qchdocs	failed"
-	domenu "${FILESDIR}"/Assistant.desktop || die "domenu failed"
+
+        # install correct assistant icon, bug 241208
+        dodir /usr/share/pixmaps/ || die "dodir failed"
+        insinto /usr/share/pixmaps/ || die "insinto failed"
+        doins tools/assistant/tools/assistant/images/assistant.png \
+                || die "doins failed"
+        # Note: absolute image path required here!
+         make_desktop_entry /usr/bin/assistant Assistant \
+                /usr/share/pixmaps/assistant.png 'Qt;Development;GUIDesigner' \
+                || die "make_desktop_entry failed"
+
 }
