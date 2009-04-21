@@ -56,13 +56,13 @@ src_compile() {
 }
 
 src_install() {
+	emake install INSTALL_ROOT="${D}" || die "emake install failed"
 	dodoc README AUTHORS THANKSTO Changelog || die "Installing docs failed"
 	for res in 16 22 64 ; do
 		insinto /usr/share/icons/hicolor/${res}x${res}/apps/
 		newins icons/qmpdclient${res}.png ${PN}.png || die "Installing icons failed"
 	done
 
-	dobin qmpdclient || die "Installing binary failed"
 	make_desktop_entry qmpdclient "QMPDClient" ${PN} \
 		"Qt;AudioVideo;Audio;" || die "Installing desktop entry failed"
 
