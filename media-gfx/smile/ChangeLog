@@ -1,0 +1,11 @@
+# ChangeLog for media-gfx/smile
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*smile-0.9.3 (22 Apr 2009)
+
+  22 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
+  +files/fix_docs-0.9.3.patch, +files/fix_installation.patch,
+  +smile-0.9.3.ebuild:
+  New ebuild for smile . Bug #267055
+

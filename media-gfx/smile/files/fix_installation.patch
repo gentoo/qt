@@ -1,0 +1,123 @@
+Index: smile/mainfrm.cpp
+===================================================================
+--- smile.orig/mainfrm.cpp
++++ smile/mainfrm.cpp
+@@ -181,14 +181,15 @@ mainfrm::mainfrm(QWidget *parent) : QMai
+ 		QString wlpack = QLocale::system().name();
+ 		qDebug() << "LOADING LANGUAGE ... smile_" + wlpack.left(2);
+ 		QTranslator *qtTranslator = new QTranslator(this);
+-		if (qtTranslator->load("smile_" + wlpack.left(2), qApp->applicationDirPath()) == true )
++		if (qtTranslator->load("/usr/share/smile/translations/smile_" + wlpack.left(2), qApp->applicationDirPath()) == true )
+ 		{
+ 			qApp->installTranslator(qtTranslator);
+ 		}
+ 		else
+ 		{
+-			if (qtTranslator->load("smile_en", qApp->applicationDirPath()) == true )
++			if (qtTranslator->load("/usr/share/smile/translations/smile_en", qApp->applicationDirPath()) == true )
+ 			{
++				qDebug() << "LOADING FALLBACK (EN) LANGUAGE...";
+ 				qApp->installTranslator(qtTranslator);
+ 			}
+ 		}
+@@ -1604,7 +1605,7 @@ void mainfrm::f_mblur(int valeur)
+ void mainfrm::f_splash_load()
+ {
+ 	QDir tmpdir;
+-	tmpdir.setPath(wg_library + "/BIB_ManSlide/Eff_sup/");
++	tmpdir.setPath("/usr/share/smile/BIB_ManSlide/Eff_sup/");
+ 	QStringList filters;
+ 	filters << "*.mng" << "*.MNG" << "*.gif" << "*.GIF" << "*.png" << "*.PNG";
+ 	tmpdir.setNameFilters(filters);
+@@ -1614,11 +1615,11 @@ void mainfrm::f_splash_load()
+ 	foreach (wlfile, tmpdir.entryList(QDir::Files))
+ 	{
+ 		comboeffets->insertItem(positem, wlfile);
+-		comboeffets->setItemIcon(positem, QIcon(wg_library + "/BIB_ManSlide/Eff_sup/" + wlfile));
++		comboeffets->setItemIcon(positem, QIcon("/usr/share/smile/BIB_ManSlide/Eff_sup/" + wlfile));
+ 		positem++;
+ 	}
+ 	//
+-	tmpdir.setPath(wg_library + "/BIB_ManSlide/Luma/");
++	tmpdir.setPath("/usr/share/smile/BIB_ManSlide/Luma/");
+ 	//filters << "MINI*.png";
+ 	//tmpdir.setNameFilters(filters);
+ 	positem = 2;
+@@ -1637,13 +1638,13 @@ void mainfrm::f_splash_load()
+ 			if ( wlfile != "crossfade.png" && wlfile.left(5) == "MINI_" )
+ 			{
+ 				nametra = wlfile.mid(5,wlfile.length() - 9);
+-				transpix.load(wg_library + "/BIB_ManSlide/Luma/" + wlfile);
++				transpix.load("/usr/share/smile/BIB_ManSlide/Luma/" + wlfile);
+     				lst_transitions->insertItem(positem,nametra);
+ 				lst_transitions->setItemIcon(positem, QIcon(transpix));
+     				lst_transitions_2->insertItem(positem+1,nametra);
+ 				lst_transitions_2->setItemIcon(positem+1, QIcon(transpix));
+-				table_transitions[positem] = wg_library + "/BIB_ManSlide/Luma/" + nametra + ".png";
+-				loadtra.load(wg_library + "/BIB_ManSlide/Luma/" + nametra + ".png");
++				table_transitions[positem] = "/usr/share/smile/BIB_ManSlide/Luma/" + nametra + ".png";
++				loadtra.load("/usr/share/smile/BIB_ManSlide/Luma/" + nametra + ".png");
+ 				table_image_transition[positem-2] = loadtra;
+ 				++positem;
+ 			}
+@@ -1858,9 +1859,9 @@ void mainfrm::f_remove_effet()
+ 		int result = QMessageBox::information(this, "SMILE", tr("Voulez vous vraiment supprimer cet effet : ") + comboeffets->currentText() , tr("Oui"), tr("Non"), 0, 1 );
+ 		if (result == 0)
+ 		{
+-			if ( QFile::remove(wg_library + "BIB_ManSlide/Eff_sup/" + comboeffets->currentText()) == false )
++			if ( QFile::remove("/usr/share/smile/BIB_ManSlide/Eff_sup/" + comboeffets->currentText()) == false )
+ 			{
+-				qDebug() << "ERROR REMOVING EFFECT FILE : " << wg_library + "BIB_ManSlide/Eff_sup/" + comboeffets->currentText();
++				qDebug() << "ERROR REMOVING EFFECT FILE : " << "/usr/share/smile/BIB_ManSlide/Eff_sup/" + comboeffets->currentText();
+ 			}
+ 			f_reload();
+ 			comboeffets->setCurrentIndex(0);
+@@ -1924,7 +1925,7 @@ void mainfrm::f_ajout_effet()
+         {
+ 		int i = wmyfic.lastIndexOf( '/' );
+ 		outfilename = wmyfic.mid(i + 1, wmyfic.length() - (i + 1));
+-		QFile::copy ( wmyfic, wg_library + "BIB_ManSlide/Eff_sup/" + outfilename );
++		QFile::copy ( wmyfic, "/usr/share/smile/BIB_ManSlide/Eff_sup/" + outfilename );
+ 		f_reload();
+ 	}
+ }
+@@ -1932,7 +1933,7 @@ void mainfrm::f_ajout_effet()
+ void mainfrm::f_reload()
+ {
+ 	QDir tmpdir;
+-	tmpdir.setPath(wg_library + "BIB_ManSlide/Eff_sup/");
++	tmpdir.setPath("/usr/share/smile/BIB_ManSlide/Eff_sup/");
+ 	QStringList filters;
+ 	filters << "*.mng" << "*.MNG" << "*.gif" << "*.GIF" << "*.png" << "*.PNG";
+ 	tmpdir.setNameFilters(filters);
+@@ -1943,7 +1944,7 @@ void mainfrm::f_reload()
+ 	foreach (wlfile, tmpdir.entryList(QDir::Files))
+ 	{
+ 		comboeffets->insertItem(positem, wlfile);
+-		comboeffets->setItemIcon(positem, QIcon(wg_library + "/BIB_ManSlide/Eff_sup/" + wlfile));
++		comboeffets->setItemIcon(positem, QIcon("/usr/share/smile/BIB_ManSlide/Eff_sup/" + wlfile));
+ 		positem++;
+ 	}
+ }
+Index: smile/tetrahedron.cpp
+===================================================================
+--- smile.orig/tetrahedron.cpp
++++ smile/tetrahedron.cpp
+@@ -344,7 +344,7 @@ void Tetrahedron::load_effet(QString nom
+ 	{
+ 		iseffect = 1;
+ 		delete movie;
+-		movie = new QMovie(wg_tet_library + "/BIB_ManSlide/Eff_sup/" + nomeffet);
++		movie = new QMovie("/usr/share/smile/BIB_ManSlide/Eff_sup/" + nomeffet);
+ 		if ( movie->isValid() == true )
+ 		{
+ 			movie->setCacheMode( QMovie::CacheAll );
+@@ -382,7 +382,7 @@ void Tetrahedron::load_effet(QString nom
+ 		}
+ 		else
+ 		{
+-			qDebug() << "ERROR LOADING EFFECT TEXTURE - INIT POSITION - " << wg_tet_library + "/BIB_ManSlide/Eff_sup/" + nomeffet;
++			qDebug() << "ERROR LOADING EFFECT TEXTURE - INIT POSITION - " << "/usr/share/smile/BIB_ManSlide/Eff_sup/" + nomeffet;
+ 		}
+ 	}
+ }
