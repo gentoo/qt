@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  23 Apr 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Fix library installation (again) due to upstream changes
+
   23 Apr 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
   -qt-creator-1.1.0_rc1.ebuild:
   1.1.0 in tree

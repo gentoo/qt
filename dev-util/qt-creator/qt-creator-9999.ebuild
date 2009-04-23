@@ -47,13 +47,11 @@ S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
 	qt4-edge_src_prepare
-	# bug #261448
-	for target in src/qworkbench.pri src/qworkbenchlibrary.pri src/qworkbenchplugin.pri;do
-		einfo "Fixing ${target}"
-		sed -i "s/lib\/qtcreator/$(get_libdir)\/qtcreator/" \
-			${target} || die "seding ${target} failed"
-	done
-
+	
+	# Ensure correct library installation
+	sed -i "s/IDE_LIBRARY_BASENAME\ =\lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
+		qtcreator.pri || die "failed to fix libraries installation"
+	
 	# bug 263087
 
 	for plugin in ${PLUGINS};do
