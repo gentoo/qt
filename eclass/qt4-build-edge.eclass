@@ -299,7 +299,7 @@ standard_configure_options() {
 		-nomake examples -nomake demos"
 
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999 | 4.9999)
+		4.?.9999 | 4.9999 | 4.?.9999-qt-copy)
 			myconf="${myconf} -opensource"
 			;;
 	esac
