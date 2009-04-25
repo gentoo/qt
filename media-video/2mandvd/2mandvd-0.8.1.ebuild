@@ -12,7 +12,7 @@ MY_PN="2ManDVD"
 
 DESCRIPTION="The successor of ManDVD"
 HOMEPAGE="http://kde-apps.org/content/show.php?content=99450"
-SRC_URI="http://download.tuxfamily.org/${PN}/${MY_PN}-0.8.0.tar.gz"
+SRC_URI="http://download.tuxfamily.org/${PN}/${MY_PN}-${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
