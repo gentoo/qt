@@ -203,6 +203,10 @@ qt4-build-edge_src_prepare() {
 		4.?.9999-qt-copy)
 			# Apply KDE patchset
 			cd "${S}"
+			# hwoarang ( 25 Apr 2009 )
+			# disable svg patch. Dont need that since the source files have been
+			# patched alreadh
+			echo "0279" >> "${S}"/patches/DISABLED
 			# Make autopatcher skip already applied patches - apply_patches scripts check for that.
 			mkdir .svn
 			./apply_patches || die "Applying KDE patchset failed"
