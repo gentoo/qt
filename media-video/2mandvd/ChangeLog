@@ -1,0 +1,9 @@
+# ChangeLog for media-video/2mandvd
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*2mandvd-0.8.0 (25 Apr 2009)
+
+  25 Apr 2009; Markos Chandras <hwoarang@gentoo.org> +2mandvd-0.8.0.ebuild:
+  New ebuild for 2ManDVD (bug #266949 )
+

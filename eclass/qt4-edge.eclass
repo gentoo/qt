@@ -4,17 +4,25 @@
 
 # @ECLASS: qt4.eclass
 # @MAINTAINER:
-# Caleb Tennis <caleb@gentoo.org>
+# Ben de Groot <yngwin@gentoo.org>,
+# Markos Chandras <hwoarang@gentoo.org>,
+# Caleb Tennis <caleb@gentoo.org>,
+# Przemyslaw Maciag <troll@gentoo.org>,
+# Davide Pesavento <davidepesa@gmail.com>
 # @BLURB: Eclass for Qt4 packages
 # @DESCRIPTION:
 # This eclass contains various functions that may be useful
 # when dealing with packages using Qt4 libraries.
 
-# 08.16.06 - Renamed qt_min_* to qt4_min_* to avoid conflicts with the qt3 eclass.
-#    - Caleb Tennis <caleb@gentoo.org>
-
 inherit eutils multilib toolchain-funcs base
 
+for X in ${LANGS}; do
+	IUSE="${IUSE} linguas_${X%_*}"
+done
+
+for X in ${LANGSLONG};do
+	IUSE="${IUSE} linguas_${X}"
+done
 
 qt4-edge_pkg_setup() {
 	case ${EAPI} in
@@ -34,6 +42,22 @@ qt4-edge_pkg_setup() {
 # example:
 # PATCHES="${FILESDIR}"/mypatch.patch
 # 	${FILESDIR}"/mypatch2.patch"
+#
+# @ECLASS-VARIABLE: LANGS
+# @DESCRIPTION:
+# In case your Qt4 provides various translations, use this variable to specify
+# them
+# example: LANG="en el de"
+#
+# @ECLASS-VARIABLE: LANGSLONG
+# @DESCRIPTION:
+# Same as above, but this variable is for LINGUAS that must be in long format
+# Look at ${PORTDIR}/profiles/desc/linguas.desc for details
+#
+# @ECLASS-VARIABLE: DOCS
+# @DESCRIPTION:
+# Use this variable if you want to install any documentation.
+# example: DOCS="README AUTHORS"
 #
 # @FUNCTION: qt4-edge_src_prepare
 # @DESCRIPTION:
@@ -75,11 +99,54 @@ qt4-edge_src_compile() {
 	esac
 }
 
+# @FUNCTION: qt4-edge_src_install
+# @DESCRIPTION:
+# Default src_install function for qt4-based packages. Installs compiled code,
+# documentation ( via DOCS variabled ) and translations ( via LANGS and
+# LANGSLONG ) variables
+
+qt4-edge_src_install() {
+	debug-print-functions $FUNCNAME "$@"
+
+	emake INSTALL_ROOT="${D}" install
+
+	# install documentation
+	[[ -n "${DOCS}" ]] && { dodoc ${DOCS} || die "dodoc failed" ; }
+
+	# install translations # hwoarang: Is this valid for every package???
+	prepare_translations
+}
+
+prepare_translations() {
+	local LANG=
+	local trans="${S}"
+	# Find translations directory
+	for directory in langs translations;do
+		if [[ -d ${directory} ]];then
+			trans="${directory}"
+		fi
+	done
+	if [[ ${trans} == ${S} ]];then	
+		insinto /usr/share/${PN}/
+	else
+		insinto /usr/share/${PN}/${trans}/
+	fi
+	for LANG in ${LINGUAS};do
+		for X in ${LANGS};do
+			if [[ ${LANG} == ${X%_*} ]];then
+				doins -r ${trans}/${PN}_${X}.qm || die "failed to install translations"
+			fi
+		done
+		for	X in ${LANGSLONG};do
+			if	[[ ${LANG} == ${X} ]];then
+				doins -r ${trans}/${PN}_${X}.qm || die "failed to	install translations"
+			fi
+		done
+	done
+}
+
 # @FUNCTION: eqmake4
 # @USAGE: [.pro file] [additional parameters to qmake]
-# @MAINTAINER:
-# Przemyslaw Maciag <troll@gentoo.org>
-# Davide Pesavento <davidepesa@gmail.com>
 # @DESCRIPTION:
 # Runs qmake on the specified .pro file (defaults to
 # ${PN}.pro if eqmake4 was called with no argument).
@@ -177,9 +244,9 @@ eqmake4() {
 
 case ${EAPI} in
 	2)
-		EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile
+		EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile src_install
 		;;
 	*)
-		EXPORT_FUNCTIONS pkg_setup src_compile
+		EXPORT_FUNCTIONS pkg_setup src_compile src_install
 		;;
 esac
