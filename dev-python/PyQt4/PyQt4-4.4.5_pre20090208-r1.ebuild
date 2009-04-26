@@ -22,6 +22,7 @@ IUSE="dbus debug doc examples opengl qt3support svg webkit X"
 
 RDEPEND=">=dev-python/sip-4.7.8
 	>=x11-libs/qt-core-4.4.2:4[qt3support=]
+	>=x11-libs/qt-xmlpatterns-4.4.2:4
 	dbus? (
 		dev-python/dbus-python
 		>=x11-libs/qt-dbus-4.4.2:4
