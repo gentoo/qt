@@ -46,12 +46,13 @@ qt4-edge_pkg_setup() {
 # @ECLASS-VARIABLE: LANGS
 # @DESCRIPTION:
 # In case your Qt4 provides various translations, use this variable to specify
-# them
+# them. Make sure to set this variable before inheriting qt4-edge eclass.
 # example: LANG="en el de"
 #
 # @ECLASS-VARIABLE: LANGSLONG
 # @DESCRIPTION:
-# Same as above, but this variable is for LINGUAS that must be in long format
+# Same as above, but this variable is for LINGUAS that must be in long format.
+# Remember to set this variable before inheriting qt4-edge eclass.
 # Look at ${PORTDIR}/profiles/desc/linguas.desc for details
 #
 # @ECLASS-VARIABLE: DOCS
