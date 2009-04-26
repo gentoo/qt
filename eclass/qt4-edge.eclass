@@ -1,15 +1,13 @@
-# Copyright 2005 Gentoo Foundation
+# Copyright 2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4.eclass,v 1.49 2008/09/21 01:21:09 yngwin Exp $
+# $Header: $
 
-# @ECLASS: qt4.eclass
+# @ECLASS: qt4-edge.eclass
 # @MAINTAINER:
 # Ben de Groot <yngwin@gentoo.org>,
 # Markos Chandras <hwoarang@gentoo.org>,
-# Caleb Tennis <caleb@gentoo.org>,
-# Przemyslaw Maciag <troll@gentoo.org>,
 # Davide Pesavento <davidepesa@gmail.com>
-# @BLURB: Eclass for Qt4 packages
+# @BLURB: Experimental eclass for Qt4 packages
 # @DESCRIPTION:
 # This eclass contains various functions that may be useful
 # when dealing with packages using Qt4 libraries.
@@ -20,25 +18,28 @@ for X in ${LANGS}; do
 	IUSE="${IUSE} linguas_${X%_*}"
 done
 
-for X in ${LANGSLONG};do
+for X in ${LANGSLONG}; do
 	IUSE="${IUSE} linguas_${X}"
 done
 
 qt4-edge_pkg_setup() {
 	case ${EAPI} in
-		2) : ;;
-		*) ewarn "The qt4-edge eclass requires EAPI=2, but this ebuild does not"
-	       ewarn "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
-	       ewarn "to be fixed. Using qt4-edge eclass without EAPI=2 will fail."
-	       die "qt4-edge eclass requires EAPI=2 set";;
-
+		2) ;;
+		*)
+			eerror
+			eerror "The ${ECLASS} eclass requires EAPI=2, but this ebuild does not"
+			eerror "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
+			eerror "to be fixed. Using ${ECLASS} eclass without EAPI=2 will fail."
+			eerror
+			die "${ECLASS} eclass requires EAPI=2"
+			;;
 	esac
 }
 
 # @ECLASS-VARIABLE: PATCHES
 # @DESCRIPTION:
-# In case you have pathes to apply , specify them on PATCHES variable. Make sure
-# to specify the full path, Thjs variable is necessary for src_prepare phase.
+# In case you have patches to apply, specify them in PATCHES variable. Make sure
+# to specify the full path. This variable is necessary for src_prepare phase.
 # example:
 # PATCHES="${FILESDIR}"/mypatch.patch
 # 	${FILESDIR}"/mypatch2.patch"
@@ -53,13 +54,13 @@ qt4-edge_pkg_setup() {
 # @DESCRIPTION:
 # Same as above, but this variable is for LINGUAS that must be in long format.
 # Remember to set this variable before inheriting qt4-edge eclass.
-# Look at ${PORTDIR}/profiles/desc/linguas.desc for details
+# Look at ${PORTDIR}/profiles/desc/linguas.desc for details.
 #
 # @ECLASS-VARIABLE: DOCS
 # @DESCRIPTION:
 # Use this variable if you want to install any documentation.
 # example: DOCS="README AUTHORS"
-#
+
 # @FUNCTION: qt4-edge_src_prepare
 # @DESCRIPTION:
 # Default src_prepare function for packages that depends on qt4. If you have to
@@ -103,13 +104,12 @@ qt4-edge_src_compile() {
 # @FUNCTION: qt4-edge_src_install
 # @DESCRIPTION:
 # Default src_install function for qt4-based packages. Installs compiled code,
-# documentation ( via DOCS variabled ) and translations ( via LANGS and
-# LANGSLONG ) variables
-
+# documentation (via DOCS variable) and translations (via LANGS and
+# LANGSLONG variables).
 qt4-edge_src_install() {
 	debug-print-functions $FUNCNAME "$@"
 
-	emake INSTALL_ROOT="${D}" install
+	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 
 	# install documentation
 	[[ -n "${DOCS}" ]] && { dodoc ${DOCS} || die "dodoc failed" ; }
@@ -120,27 +120,25 @@ qt4-edge_src_install() {
 
 prepare_translations() {
 	local LANG=
-	local trans="${S}"
+	local trans="${S}" dir=
 	# Find translations directory
-	for directory in langs translations;do
-		if [[ -d ${directory} ]];then
-			trans="${directory}"
-		fi
+	for dir in langs translations; do
+		[[ -d ${dir} ]] && trans="${dir}"
 	done
-	if [[ ${trans} == ${S} ]];then	
+	if [[ ${trans} == ${S} ]]; then
 		insinto /usr/share/${PN}/
 	else
 		insinto /usr/share/${PN}/${trans}/
 	fi
-	for LANG in ${LINGUAS};do
-		for X in ${LANGS};do
-			if [[ ${LANG} == ${X%_*} ]];then
-				doins -r ${trans}/${PN}_${X}.qm || die "failed to install translations"
+	for LANG in ${LINGUAS}; do
+		for X in ${LANGS}; do
+			if [[ ${LANG} == ${X%_*} ]]; then
+				doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
 			fi
 		done
-		for	X in ${LANGSLONG};do
-			if	[[ ${LANG} == ${X} ]];then
-				doins -r ${trans}/${PN}_${X}.qm || die "failed to	install translations"
+		for X in ${LANGSLONG}; do
+			if [[ ${LANG} == ${X} ]]; then
+				doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
 			fi
 		done
 	done
@@ -149,9 +147,14 @@ prepare_translations() {
 # @FUNCTION: eqmake4
 # @USAGE: [.pro file] [additional parameters to qmake]
 # @DESCRIPTION:
-# Runs qmake on the specified .pro file (defaults to
-# ${PN}.pro if eqmake4 was called with no argument).
-# Additional parameters are passed unmodified to qmake.
+# Runs qmake on the specified .pro file (defaults to ${PN}.pro if called
+# without arguments). Additional parameters are appended unmodified to
+# qmake command line. For recursive build systems, i.e. those based on
+# the subdirs template, you should run eqmake4 on the top-level project
+# file only, unless you have strong reasons to do things differently.
+# During the building, qmake will be automatically re-invoked with the
+# right arguments on every directory specified inside the top-level
+# project file by the SUBDIRS variable.
 eqmake4() {
 	local projectfile="${1:-${PN}.pro}"
 	shift
