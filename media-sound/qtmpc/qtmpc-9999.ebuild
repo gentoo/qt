@@ -4,6 +4,7 @@
 
 EAPI="2"
 
+KDE_REQUIRED="optional"
 inherit qt4-edge kde4-base subversion
 
 DESCRIPTION="Qt MPD client with a tree view music library interface"
@@ -20,10 +21,8 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/QtMPC"
 
-if use kde; then
-	KDE_MINIMAL="4.1"
-else
-	NEED_KDE="none"
+if ! use kde; then
+	KDE_MINIMAL="none"
 fi
 
 src_configure() {

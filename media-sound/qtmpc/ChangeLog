@@ -3,6 +3,10 @@
 # $Header: $
 
   28 Apr 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  qtmpc-9999.ebuild:
+  fixed kde useflag in live ebuild
+
+  28 Apr 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
   qtmpc-0.5.0.ebuild:
   fixed kde useflag
 
