@@ -8,9 +8,9 @@ inherit qt4-edge
 
 DESCRIPTION="A Qt client for Twitter"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
-SRC_URI="http://cloud.github.com/downloads/ayoy/${PN}/${P}-src.tar.gz"
+SRC_URI="http://files.ayoy.net/qtwitter/release/current/src/${P}-src.tar.gz"
 
-LICENSE="GPL-3"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
