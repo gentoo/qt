@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
+  -files/0279-svg-rendering-4.5.1-regression.diff, -qt-svg-4.5.1-r1.ebuild:
+  Remove 4.5.1. On tree now
+
   27 Apr 2009; Markos Chandras <hwoarang@gentoo.org> -qt-svg-4.5.1.ebuild:
   Remove old ebuild
 
