@@ -26,7 +26,7 @@
 #			are releases or snapshots from qtsoftware
 #
 
-IUSE="${IUSE} -custom-cxxflags debug pch"
+IUSE="${IUSE} debug pch"
 
 case "${PV}" in
 	4.?.9999)
@@ -156,15 +156,6 @@ qt4-build-edge_pkg_setup() {
 		echo
 	fi
 
-	if use custom-cxxflags; then
-		echo
-		ewarn "You have set USE=custom-cxxflags, which means Qt will be built with the"
-		ewarn "CXXFLAGS you have set in /etc/make.conf. This is not supported, and we"
-		ewarn "recommend to unset this useflag. But you are free to experiment with it."
-		ewarn "Just do not start crying if it breaks your system, or eats your kitten"
-		ewarn "for breakfast. ;-) "
-		echo
-	fi
 }
 
 qt4-build-edge_src_unpack() {
@@ -221,11 +212,6 @@ qt4-build-edge_src_prepare() {
 		skip_qmake_build_patch
 		skip_project_generation_patch
 		symlink_binaries_to_buildtree
-	fi
-
-	if ! use custom-cxxflags;then
-		strip-flags
-		replace-flags -O3 -O2
 	fi
 
 	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
