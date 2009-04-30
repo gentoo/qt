@@ -107,7 +107,7 @@ qt4-edge_src_compile() {
 # documentation (via DOCS variable) and translations (via LANGS and
 # LANGSLONG variables).
 qt4-edge_src_install() {
-	debug-print-functions $FUNCNAME "$@"
+	debug-print-function $FUNCNAME "$@"
 
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 
