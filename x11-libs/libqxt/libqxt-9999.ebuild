@@ -23,6 +23,8 @@ RDEPEND="x11-libs/qt-gui:4
 DEPEND="${DEPEND}
 	doc? ( app-doc/doxygen )"
 
+S="${WORKDIR}/${PN}"
+
 src_configure() {
 	local myconf
 	myconf="-prefix /usr \

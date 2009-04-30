@@ -1,6 +1,9 @@
 # ChangeLog for x11-libs/libqxt
 # Copyright 2006-2009 Berkano Overlay; distributed under the GPL version 2
 
+  30 Apr 2009; Markos Chandras <hwoarang@gentoo.org> libqxt-9999.ebuild:
+  Fixing live ebuild working directory
+
 *libqxt-0.5.0 (30 Apr 2009)
 
   30 Apr 2009; Markos Chandras <hwoarang@gentoo.org> +libqxt-0.5.0.ebuild,
