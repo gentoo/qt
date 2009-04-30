@@ -18,7 +18,3 @@ IUSE="debug"
 DEPEND="x11-libs/qt-svg:4
 	x11-libs/qt-webkit:4"
 RDEPEND="${DEPEND}"
-
-src_install(){
-	emake INSTALL_ROOT="${D}" install || die "install failed"
-}
