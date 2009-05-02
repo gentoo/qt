@@ -7,7 +7,7 @@ inherit qt4-edge versionator
 
 MY_PN="xVST"
 MY_PV="$(replace_all_version_separators '_')"
-MY_P="${MY_PN}_${MY_PV/_alpha/a}_src"
+MY_P="${MY_PN}_${MY_PV}a_src"
 
 DESCRIPTION="Download (and convert) videos from various Web Video Services"
 HOMEPAGE="http://xviservicethief.sourceforge.net/"
