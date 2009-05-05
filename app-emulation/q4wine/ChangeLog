@@ -4,6 +4,10 @@
 
   Dropped cmake from RDEPEND
 
+  05 May 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-0.112.ebuild,
+  q4wine-9999.ebuild:
+  Make icoutils dependency optional
+
 *q4wine-0.112 (05 May 2009)
 
   05 May 2009; Markos Chandras <hwoarang@gentoo.org> +q4wine-0.112.ebuild,

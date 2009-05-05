@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://github.com/brezerk/q4wine.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug icotools winetools development"
 
 DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql:4[sqlite]"
@@ -20,7 +20,7 @@ RDEPEND="${DEPEND}
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
-	>=media-gfx/icoutils-0.26.0"
+	icotools? ( >=media-gfx/icoutils-0.26.0 )"
 
 S="${WORKDIR}/${PN}"
 

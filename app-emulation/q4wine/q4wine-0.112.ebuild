@@ -22,7 +22,7 @@ RDEPEND="x11-libs/qt-gui:4
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
-	>=media-gfx/icoutils-0.26.0"
+	icotools? ( >=media-gfx/icoutils-0.26.0 )"
 
 DOCS="README"
 
