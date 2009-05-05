@@ -25,3 +25,12 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/${PN}"
 
 DOCS="README"
+
+src_configure() {
+	mycmakeargs="${mycmakeargs} \
+	$(cmake-utils_use_with icotools) \
+	$(cmake-utils_use_with winetools) \
+	$(cmake-utils_use_with development DEVELOP_STUFF)"
+	cmake-utils_src_configure
+}
+

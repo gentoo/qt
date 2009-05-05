@@ -4,6 +4,12 @@
 
   Dropped cmake from RDEPEND
 
+*q4wine-0.112 (05 May 2009)
+
+  05 May 2009; Markos Chandras <hwoarang@gentoo.org> +q4wine-0.112.ebuild,
+  q4wine-9999.ebuild:
+  Version bump, fix live ebuild accordingly
+
   08 Apr 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
   q4wine-9999.ebuild:
   26 Mar 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild:
