@@ -1,8 +1,7 @@
-Index: smile/mainfrm.cpp
-===================================================================
+diff -ru smile.ori/mainfrm.cpp smilei/mainfrm.cpp
 --- smile.orig/mainfrm.cpp
 +++ smile/mainfrm.cpp
-@@ -181,14 +181,15 @@ mainfrm::mainfrm(QWidget *parent) : QMai
+@@ -187,14 +187,15 @@
  		QString wlpack = QLocale::system().name();
  		qDebug() << "LOADING LANGUAGE ... smile_" + wlpack.left(2);
  		QTranslator *qtTranslator = new QTranslator(this);
@@ -20,7 +19,7 @@ Index: smile/mainfrm.cpp
  				qApp->installTranslator(qtTranslator);
  			}
  		}
-@@ -1604,7 +1605,7 @@ void mainfrm::f_mblur(int valeur)
+@@ -1639,7 +1640,7 @@
  void mainfrm::f_splash_load()
  {
  	QDir tmpdir;
@@ -29,7 +28,7 @@ Index: smile/mainfrm.cpp
  	QStringList filters;
  	filters << "*.mng" << "*.MNG" << "*.gif" << "*.GIF" << "*.png" << "*.PNG";
  	tmpdir.setNameFilters(filters);
-@@ -1614,11 +1615,11 @@ void mainfrm::f_splash_load()
+@@ -1649,11 +1650,11 @@
  	foreach (wlfile, tmpdir.entryList(QDir::Files))
  	{
  		comboeffets->insertItem(positem, wlfile);
@@ -43,12 +42,13 @@ Index: smile/mainfrm.cpp
  	//filters << "MINI*.png";
  	//tmpdir.setNameFilters(filters);
  	positem = 2;
-@@ -1637,13 +1638,13 @@ void mainfrm::f_splash_load()
- 			if ( wlfile != "crossfade.png" && wlfile.left(5) == "MINI_" )
+@@ -1672,14 +1673,14 @@
+ 			if ( wlfile != "crossfade.png" )
  			{
- 				nametra = wlfile.mid(5,wlfile.length() - 9);
+ 				nametra = wlfile.mid(0,wlfile.length() - 4);
 -				transpix.load(wg_library + "/BIB_ManSlide/Luma/" + wlfile);
 +				transpix.load("/usr/share/smile/BIB_ManSlide/Luma/" + wlfile);
+ 				transpix = transpix.scaledToWidth( 128, Qt::FastTransformation );
      				lst_transitions->insertItem(positem,nametra);
  				lst_transitions->setItemIcon(positem, QIcon(transpix));
      				lst_transitions_2->insertItem(positem+1,nametra);
@@ -60,7 +60,7 @@ Index: smile/mainfrm.cpp
  				table_image_transition[positem-2] = loadtra;
  				++positem;
  			}
-@@ -1858,9 +1859,9 @@ void mainfrm::f_remove_effet()
+@@ -1895,9 +1896,9 @@
  		int result = QMessageBox::information(this, "SMILE", tr("Voulez vous vraiment supprimer cet effet : ") + comboeffets->currentText() , tr("Oui"), tr("Non"), 0, 1 );
  		if (result == 0)
  		{
@@ -72,7 +72,7 @@ Index: smile/mainfrm.cpp
  			}
  			f_reload();
  			comboeffets->setCurrentIndex(0);
-@@ -1924,7 +1925,7 @@ void mainfrm::f_ajout_effet()
+@@ -1961,7 +1962,7 @@
          {
  		int i = wmyfic.lastIndexOf( '/' );
  		outfilename = wmyfic.mid(i + 1, wmyfic.length() - (i + 1));
@@ -81,7 +81,7 @@ Index: smile/mainfrm.cpp
  		f_reload();
  	}
  }
-@@ -1932,7 +1933,7 @@ void mainfrm::f_ajout_effet()
+@@ -1969,7 +1970,7 @@
  void mainfrm::f_reload()
  {
  	QDir tmpdir;
@@ -90,7 +90,7 @@ Index: smile/mainfrm.cpp
  	QStringList filters;
  	filters << "*.mng" << "*.MNG" << "*.gif" << "*.GIF" << "*.png" << "*.PNG";
  	tmpdir.setNameFilters(filters);
-@@ -1943,7 +1944,7 @@ void mainfrm::f_reload()
+@@ -1980,7 +1981,7 @@
  	foreach (wlfile, tmpdir.entryList(QDir::Files))
  	{
  		comboeffets->insertItem(positem, wlfile);
@@ -99,11 +99,10 @@ Index: smile/mainfrm.cpp
  		positem++;
  	}
  }
-Index: smile/tetrahedron.cpp
-===================================================================
+diff -ru smile.ori/tetrahedron.cpp smile/tetrahedron.cpp
 --- smile.orig/tetrahedron.cpp
 +++ smile/tetrahedron.cpp
-@@ -344,7 +344,7 @@ void Tetrahedron::load_effet(QString nom
+@@ -344,7 +344,7 @@
  	{
  		iseffect = 1;
  		delete movie;
@@ -112,7 +111,7 @@ Index: smile/tetrahedron.cpp
  		if ( movie->isValid() == true )
  		{
  			movie->setCacheMode( QMovie::CacheAll );
-@@ -382,7 +382,7 @@ void Tetrahedron::load_effet(QString nom
+@@ -382,7 +382,7 @@
  		}
  		else
  		{

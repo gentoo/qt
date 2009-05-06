@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*smile-0.9.7 (06 May 2009)
+
+  06 May 2009; Markos Chandras <hwoarang@gentoo.org> -smile-0.9.3.ebuild,
+  +smile-0.9.7.ebuild, files/fix_installation.patch:
+  Version bump. Thanks to Andreas Mielke <gentoo@amielke.de> for the
+  patches.
+
 *smile-0.9.3 (22 Apr 2009)
 
   22 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
