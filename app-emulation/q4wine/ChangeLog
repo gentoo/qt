@@ -4,6 +4,9 @@
 
   Dropped cmake from RDEPEND
 
+  07 May 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-0.112-r1.ebuild:
+  Fixed S variable
+
 *q4wine-0.112-r1 (06 May 2009)
 
   06 May 2009; Markos Chandras <hwoarang@gentoo.org> -q4wine-0.112.ebuild,

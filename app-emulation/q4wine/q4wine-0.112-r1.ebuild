@@ -26,6 +26,8 @@ RDEPEND="x11-libs/qt-gui:4
 
 DOCS="README"
 
+S="${WORKDIR}/${PF}"
+
 src_configure() {
 	mycmakeargs="${mycmakeargs} \
 		$(cmake-utils_use_with icotools) \
