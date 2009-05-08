@@ -115,7 +115,8 @@ qt4-edge_src_install() {
 	[[ -n "${DOCS}" ]] && { dodoc ${DOCS} || die "dodoc failed" ; }
 
 	# install translations # hwoarang: Is this valid for every package???
-	prepare_translations
+	# need to have specified LANG or LANGSLONG for this to work
+	[[ -n "${LANGS}" || -n ${LANGSLONG} ]] && prepare_translations
 }
 
 prepare_translations() {
