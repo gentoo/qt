@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 May 2009; Markos Chandras <hwoarang@gentoo.org>
+  -xvideoservicethief-2.0.0.ebuild, -files/gcc-4.3.patch:
+  On tree
+
 *xvideoservicethief-2.0.0 (02 May 2009)
 
   02 May 2009; Markos Chandras <hwoarang@gentoo.org>
