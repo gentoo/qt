@@ -27,6 +27,36 @@
 #
 
 IUSE="${IUSE} debug pch"
+RDEPEND="
+	!<x11-libs/qt-assistant-${PV}
+	!>x11-libs/qt-assistant-${PV}-r9999
+	!<x11-libs/qt-core-${PV}
+	!>x11-libs/qt-core-${PV}-r9999
+	!<x11-libs/qt-dbus-${PV}
+	!>x11-libs/qt-dbus-${PV}-r9999
+	!<x11-libs/qt-demo-${PV}
+	!>x11-libs/qt-demo-${PV}-r9999
+	!<x11-libs/qt-gui-${PV}
+	!>x11-libs/qt-gui-${PV}-r9999
+	!<x11-libs/qt-opengl-${PV}
+	!>x11-libs/qt-opengl-${PV}-r9999
+	!<x11-libs/qt-phonon-${PV}
+	!>x11-libs/qt-phonon-${PV}-r9999
+	!<x11-libs/qt-qt3support-${PV}
+	!>x11-libs/qt-qt3support-${PV}-r9999
+	!<x11-libs/qt-script-${PV}
+	!>x11-libs/qt-script-${PV}-r9999
+	!<x11-libs/qt-sql-${PV}
+	!>x11-libs/qt-sql-${PV}-r9999
+	!<x11-libs/qt-svg-${PV}
+	!>x11-libs/qt-svg-${PV}-r9999
+	!<x11-libs/qt-test-${PV}
+	!>x11-libs/qt-test-${PV}-r9999
+	!<x11-libs/qt-webkit-${PV}
+	!>x11-libs/qt-webkit-${PV}-r9999
+	!<x11-libs/qt-xmlpatterns-${PV}
+	!>x11-libs/qt-xmlpatterns-${PV}-r9999
+"
 
 case "${PV}" in
 	4.?.9999)
