@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The DBus module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="qt-copy"
+IUSE=""
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt-copy=]
 	>=sys-apps/dbus-1.0.2"
