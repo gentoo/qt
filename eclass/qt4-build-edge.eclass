@@ -117,14 +117,14 @@ case "${MY_PV_QTCOPY}" in
 		SRC_URI=
 		;;
 	4.?.9999)
-		EGIT_REPO_URI="git://labs.trolltech.com/qt-snapshot"
+		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 		EGIT_PROJECT="qt-${PV}"
 		EGIT_BRANCH="4.5"
 		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
 	4.9999)
-		EGIT_REPO_URI="git://labs.trolltech.com/qt-snapshot"
+		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 		EGIT_PROJECT="qt-${PV}"
 		SRC_URI=
 		;;
