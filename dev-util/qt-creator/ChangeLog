@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  12 May 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Update git repository link
+
   23 Apr 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Fix library installation (again) due to upstream changes
 

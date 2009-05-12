@@ -11,7 +11,7 @@ MY_P="${P}-src"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
-EGIT_REPO_URI="git://labs.trolltech.com/qt-creator/"
+EGIT_REPO_URI="git://gitorious.org/qt-creator/qt-creator.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
