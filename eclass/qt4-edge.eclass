@@ -202,8 +202,9 @@ eqmake4() {
 				printf "CONFIG += %s\n", add >> file;
 				print fixed;
 			}'
-	local file=
-	while read file; do
+	local filepath=
+	while read filepath; do
+		local file="${filepath#./}"
 		grep -q '^### eqmake4 was here ###$' "${file}" && continue
 		local retval=$({
 				rm -f "${file}" || echo "FAILED"
@@ -215,7 +216,7 @@ eqmake4() {
 			eerror "  An error occurred while processing ${file}"
 			die "eqmake4 failed to process '${file}'."
 		fi
-	done < <(find "$(dirname "${projectfile}")" -type f -name "*.pr[io]" -printf '%P\n' 2>/dev/null)
+	done < <(find "$(dirname "${projectfile}")" -type f -name "*.pr[io]" 2>/dev/null)
 
 	/usr/bin/qmake -makefile -nocache \
 		QTDIR=/usr/$(get_libdir) \
