@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-gui-4.5.1-r1 (12 May 2009)
+
+  12 May 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
+  +qt-gui-4.5.1-r1.ebuild,
+  +files/qt-gui-4.5.1-ppc-pixmap-fix-backport-196152.patch:
+  backported ppc fix from 4.5.2 - qt task 196152
+
   29 Apr 2009; Markos Chandras <hwoarang@gentoo.org> -qt-gui-4.5.1.ebuild:
   Remove 4.5.1. On tree now
 
