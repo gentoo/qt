@@ -1,0 +1,11 @@
+# ChangeLog for dev-python/qscintilla-python
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qscintilla-python-2.4_pre20090509 (13 May 2009)
+
+  13 May 2009; Ben de Groot <yngwin@gentoo.org>
+  +qscintilla-python-2.4_pre20090509.ebuild,
+  +files/qscintilla-python-2.4-nostrip.patch:
+  New snapshot
+

@@ -1,0 +1,11 @@
+# ChangeLog for x11-libs/qscintilla
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qscintilla-2.4_pre20090509 (13 May 2009)
+
+  13 May 2009; Ben de Groot <yngwin@gentoo.org>
+  +files/qscintilla-2.2-qt.patch, +files/qscintilla-2.2-qt4.patch,
+  +qscintilla-2.4_pre20090509.ebuild:
+  New snapshot
+
