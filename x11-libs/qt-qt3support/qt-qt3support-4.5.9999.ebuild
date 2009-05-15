@@ -12,10 +12,10 @@ IUSE="+accessibility phonon"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,qt-copy=]
 	~x11-libs/qt-gui-${PV}[accessibility=,debug=,qt3support,qt-copy=]
-	~x11-libs/qt-sql-${PV}[debug=,qt3support,qt-copy=]"
+	~x11-libs/qt-sql-${PV}[debug=,qt3support,qt-copy=]
+	phonon? ( || ( ~x11-libs/qt-phonon-${PV}[debug=,qt-copy=]
+		media-sound/phonon[gstreamer] ) )"
 RDEPEND="${DEPEND}"
-PDEPEND="phonon? (
-	|| ( ~x11-libs/qt-phonon-${PV}[debug=,qt-copy=] media-sound/phonon[gstreamer] ) )"
 
 QT4_TARGET_DIRECTORIES="
 src/qt3support
