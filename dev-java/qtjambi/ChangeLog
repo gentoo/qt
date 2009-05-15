@@ -1,0 +1,104 @@
+# ChangeLog for dev-java/qtjambi
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/qtjambi/ChangeLog,v 1.19 2009/03/07 14:32:47 betelgeuse Exp $
+
+*qtjambi-4.5.0_p1 (15 May 2009)
+
+  15 May 2009; Davide Pesavento <davidepesa@gmail.com>
+  +qtjambi-4.5.0_p1.ebuild, +files/configuration-4.5.0_p1.patch,
+  +files/generator-4.5.0_p1.patch, +metadata.xml:
+  Version bump (bug #260774). Greatly improved ebuild, mostly rewritten by
+  me. Also incorporated some nice additions by Kyle Cavin
+  <kyle.cavin@gmail.com>.
+
+  07 Mar 2009; Petteri Räty <betelgeuse@gentoo.org>
+  -qtjambi-4.3.3_p1.ebuild:
+  Remove old version.
+  
+  04 Mar 2009; Alistair Bush <ali_bush@gentoo.org>
+  files/configuration-4.4.3.patch:
+  Update to correct configuration patch. Old patch must have been applied
+  from bug #233840 instead of latest.
+
+  19 Jan 2009; Ben de Groot <yngwin@gentoo.org> qtjambi-4.4.3.ebuild:
+  Fix qt dependency (nothing should depend on the meta ebuild)
+
+  25 Dec 2008; Alistair Bush <ali_bush@gentoo.org>
+  +files/configuration-4.4.3.patch, +files/generator-4.4.3.patch:
+  Adding patches I missed.
+
+*qtjambi-4.4.3 (24 Dec 2008)
+
+  24 Dec 2008; Alistair Bush <ali_bush@gentoo.org> metadata.xml,
+  +qtjambi-4.4.3.ebuild:
+  Version Bump qtjambi. Thanks to all the good work done by Fabian Koster
+  <koesterreich@gmx.net> See #233840.
+
+  21 May 2008; Ingmar Vanhassel <ingmar@gentoo.org>
+  -files/generator-4.3.2.patch, -qtjambi-4.3.2_p1.ebuild:
+  Old.
+
+  25 Feb 2008; Caleb Tennis <caleb@gentoo.org> -files/generator-4.3.1.patch,
+  -qtjambi-4.3.1_p1.ebuild:
+  remove version no longer in portage
+
+  30 Dec 2007; Markus Ullmann <jokey@gentoo.org> qtjambi-4.3.3_p1.ebuild:
+  Fix quoting
+
+*qtjambi-4.3.3_p1 (19 Dec 2007)
+
+  19 Dec 2007; Caleb Tennis <caleb@gentoo.org> +files/generator-4.3.3.patch,
+  +qtjambi-4.3.3_p1.ebuild:
+  version bump
+
+  23 Nov 2007; Samuli Suominen <drac@gentoo.org> qtjambi-4.3.2_p1.ebuild:
+  Keyword ~amd64 wrt #197763.
+
+  23 Oct 2007; Caleb Tennis <caleb@gentoo.org> -files/generator.patch,
+  -files/jambipropertysheet.diff, -files/qdesigner_utils_p.h,
+  -files/shared_global_p.h, -qtjambi-4.3.0_p1-r2.ebuild:
+  remove old versions
+
+*qtjambi-4.3.2_p1 (23 Oct 2007)
+
+  23 Oct 2007; Caleb Tennis <caleb@gentoo.org> +files/generator-4.3.2.patch,
+  +qtjambi-4.3.2_p1.ebuild:
+  Version bump
+
+  11 Aug 2007; Caleb Tennis <caleb@gentoo.org> +files/generator-4.3.1.patch,
+  qtjambi-4.3.1_p1.ebuild:
+  add generator patch fix
+
+  09 Aug 2007; Caleb Tennis <caleb@gentoo.org> -qtjambi-4.3.0_p1.ebuild,
+  -qtjambi-4.3.0_p1-r1.ebuild:
+  remove old files
+
+*qtjambi-4.3.1_p1 (09 Aug 2007)
+
+  09 Aug 2007; Caleb Tennis <caleb@gentoo.org> +qtjambi-4.3.1_p1.ebuild:
+  Version bump
+
+*qtjambi-4.3.0_p1-r2 (18 Jun 2007)
+
+  18 Jun 2007; Caleb Tennis <caleb@gentoo.org> qtjambi-4.3.0_p1-r1.ebuild,
+  +qtjambi-4.3.0_p1-r2.ebuild:
+  Committing some ebuild fixes submitted by martin capitano.
+
+  08 Jun 2007; Caleb Tennis <caleb@gentoo.org> qtjambi-4.3.0_p1-r1.ebuild:
+  Some more fixes to put stuff in the right locations
+
+*qtjambi-4.3.0_p1-r1 (08 Jun 2007)
+
+  08 Jun 2007; Caleb Tennis <caleb@gentoo.org> +qtjambi-4.3.0_p1-r1.ebuild:
+  Bump, with some location changes
+
+*qtjambi-4.3.0_p1 (07 Jun 2007)
+
+  07 Jun 2007; Caleb Tennis <caleb@gentoo.org> +files/generator.patch,
+  +files/jambi.pri.diff, +files/jambipropertysheet.diff,
+  +files/java_files_remove_accessibility.diff,
+  +files/java_files_remove_ssl.diff, +files/qdesigner_utils_p.h,
+  +files/qtjambi_base.pri.diff, +files/shared_global_p.h, +metadata.xml,
+  +qtjambi-4.3.0_p1.ebuild:
+  Initial ebuild
+
