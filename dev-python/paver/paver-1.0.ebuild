@@ -5,7 +5,7 @@
 inherit versionator distutils
 
 MY_PN="${PN/p/P}"
-MY_P="${MY_PN}-$(replace_version_separator 2 '')1"
+MY_P="${MY_PN}-${PV}"
 
 DESCRIPTION="Python-based scripting tool"
 HOMEPAGE="http://www.blueskyonmars.com/projects/paver/"
@@ -23,8 +23,7 @@ S="${WORKDIR}/${MY_P}"
 src_install() {
 	# overriding default functions as --no_compile option is not supported
 	pylibdir="$(${python} -c 'from distutils.sysconfig import get_python_lib; print get_python_lib()')"
-	[ -n "${pylibdir}" ] && dodir "${pylibdir}"
-	${python} setup.py install --root="${D}" "$@" || \
-	die "python setup.py install failed"
+	[[ -n ${pylibdir} ]] && dodir "${pylibdir}"
+	${python} setup.py install --root="${D}" "$@" || die "install failed"
 	dodoc README.txt || die "dodoc failed"
 }

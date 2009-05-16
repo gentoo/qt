@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*paver-1.0 (16 May 2009)
+
+  16 May 2009; Ben de Groot <yngwin@gentoo.org> +paver-1.0.ebuild,
+  -paver-1.0b.ebuild:
+  Update to latest release, some small ebuild improvements, drop old
+
   14 Mar 2009; Ben de Groot <yngwin@gentoo.org> paver-1.0b.ebuild:
   Shorten paver license name, fix typo
 

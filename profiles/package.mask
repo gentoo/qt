@@ -15,5 +15,4 @@
 
 # Markos Chandras <hwoarang@gentoo.org> (13 Mar 2009)
 # Masking for testing
-=dev-python/paver-1.0b
-=net-news/urssus-0.2.13
+#=net-news/urssus-0.2.13
