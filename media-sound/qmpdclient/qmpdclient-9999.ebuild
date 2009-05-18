@@ -13,9 +13,9 @@ HOMEPAGE="http://bitcheese.net/wiki/QMPDClient"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug dbus"
 
-DEPEND="x11-libs/qt-gui:4[dbus]"
+DEPEND="x11-libs/qt-gui:4[dbus=]"
 RDEPEND="${DEPEND}"
 
 LANGS="de_DE fr_FR it_IT nl_NL nn_NO no_NO ru_RU sv_SE tr_TR uk_UA"
