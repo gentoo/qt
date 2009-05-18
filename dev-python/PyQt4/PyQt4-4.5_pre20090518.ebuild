@@ -10,7 +10,7 @@ MY_P=PyQt-x11-gpl-${MY_PV}
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/"
-SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${MY_P}.tar.gz"
+SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
