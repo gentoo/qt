@@ -1,0 +1,9 @@
+# ChangeLog for media-video/minitube
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*minitube-0.1 (19 May 2009)
+
+  19 May 2009; Markos Chandras <hwoarang@gentoo.org> +minitube-0.1.ebuild:
+  initial commit for minitube application
+
