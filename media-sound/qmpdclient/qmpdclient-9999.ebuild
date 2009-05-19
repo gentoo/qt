@@ -44,6 +44,14 @@ src_prepare() {
 	# fix installation folder name
 	sed -i "s/share\/QMPDClient/share\/qmpdclient/" src/config.cpp \
 		|| die "failed to fix installation directory"
+
+	# check dbus
+	if ! use dbus; then
+		sed -i -e "s/message(DBus notifier:\ enabled)/message(DBus notifier:\ disabled)/" \
+			-e "s/CONFIG\ +=\ nostrip\ qdbus//" \
+			-e "/SOURCES\ +=\ src\/notifications_dbus.cpp/SOURCES\ +=\ src\/notifications_nodbus.cpp" \
+				${PN}.pro || die "disabling dbus failed"
+	fi
 }
 
 src_configure() {
