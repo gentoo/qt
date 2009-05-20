@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI="2"
-
 inherit distutils qt4-edge
 
 MY_PV=${PV/_pre/-snapshot-}
@@ -18,7 +17,7 @@ SRC_URI="http://dl.liveforge.org/distfiles/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="dbus debug doc examples opengl qt3support svg webkit X"
+IUSE="+dbus debug doc examples +opengl +qt3support +svg +webkit +X"
 
 RDEPEND=">=dev-python/sip-4.7.8
 	>=x11-libs/qt-core-4.4.2:4[qt3support=]
