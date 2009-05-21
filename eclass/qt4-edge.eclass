@@ -159,7 +159,8 @@ prepare_translations() {
 # right arguments on every directory specified inside the top-level
 # project file by the SUBDIRS variable.
 eqmake4() {
-	local projectfile="${1:-${PN}.pro}"
+	local projectfull="$(find '.' -maxdepth 1 -type f -name "*.pro")"
+	local projectfile=${1:-${projectfull##*/}}
 	shift
 
 	if [[ ! -f ${projectfile} ]]; then
