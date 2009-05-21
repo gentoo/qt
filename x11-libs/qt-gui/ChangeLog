@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  21 May 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qt-gui-4.5.1-r1.ebuild,
+  -files/qt-gui-4.5.1-ppc-pixmap-fix-backport-196152.patch:
+  On tree
+
 *qt-gui-4.5.1-r1 (12 May 2009)
 
   12 May 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
