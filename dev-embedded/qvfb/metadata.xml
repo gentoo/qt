@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>qt</herd>
+<maintainer>
+<email>haavardw@ifi.uio.no</email>
+<name>Håvard Wall</name>
+<description>Proxy maintainer</description>
+</maintainer>
+<longdescription lang="en">
+</longdescription>
+</pkgmetadata>
+
