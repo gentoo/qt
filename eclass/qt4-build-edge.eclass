@@ -110,6 +110,10 @@ case "${MY_PV_QTCOPY}" in
 		HOMEPAGE="http://www.qtsoftware.com/";;
 esac
 
+if version_is_at_least 4.5 ${PV} ; then
+	LICENSE="|| ( LGPL-2.1 GPL-3 )"
+fi
+
 case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
 		ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/qt-copy"
