@@ -1,0 +1,10 @@
+# ChangeLog for dev-util/qct
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*qct-1.7 (23 May 2009)
+
+  23 May 2009; Dror Levin <spatz@gentoo.org>
+  +files/qct.rc, +qct-1.7.ebuild:
+  New ebuild, based on the one in bug #162963.
+
