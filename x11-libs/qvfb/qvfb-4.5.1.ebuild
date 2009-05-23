@@ -3,12 +3,12 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Qt Embedded Virtual Framebuffer emulator."
 HOMEPAGE="http://www.trolltech.com/"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE=""
 
 DEPEND="~x11-libs/qt-gui-${PV}"
@@ -31,5 +31,5 @@ src_configure() {
 		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility
 		-no-glib -no-opengl -no-qt3support -no-svg"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

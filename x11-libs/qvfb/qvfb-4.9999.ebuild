@@ -1,4 +1,4 @@
-# Copyright 2008-2009 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Qt Embedded Virtual Framebuffer emulator."
 HOMEPAGE="http://www.trolltech.com/"
 SLOT="4"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="~x11-libs/qt-gui-${PV}"
