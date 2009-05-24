@@ -25,6 +25,9 @@ QCONFIG_DEFINE="QT_WEBKIT"
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
+	if use sparc; then
+		epatch "${FILESDIR}"/sparc-qt-webkit-sigbus.patch
+	fi
 	qt4-build-edge_src_prepare
 }
 
