@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 May 2009; Markos Chandras <hwoarang@gentoo.org> qt-gui-4.5.9999.ebuild,
+  qt-gui-4.9999.ebuild, metadata.xml:
+  Add gtkstyle on metadata.xml, QA fixes 
+
   21 May 2009; Markos Chandras <hwoarang@gentoo.org>
   -qt-gui-4.5.1-r1.ebuild,
   -files/qt-gui-4.5.1-ppc-pixmap-fix-backport-196152.patch:

@@ -2,10 +2,4 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <herd>qt</herd>
-  <use>
-    <flag name='webkit'>
-      Enable <pkg>x11-libs/qt-webkit</pkg> support, for more
-      sophisticated online help display using webkit's HTML renderer.
-    </flag>
-  </use>
 </pkgmetadata>

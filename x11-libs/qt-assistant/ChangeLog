@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 May 2009; Markos Chandras <hwoarang@gentoo.org> metadata.xml:
+  Drop unsed use flag description, QA fixes
+
   29 Apr 2009; Markos Chandras <hwoarang@gentoo.org>
   -qt-assistant-4.5.1.ebuild:
   Remove 4.5.1. On tree now

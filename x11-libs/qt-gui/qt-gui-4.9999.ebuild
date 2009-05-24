@@ -140,16 +140,16 @@ src_install() {
 	doins "${S}"/tools/designer/src/lib/shared/*
 	doins "${S}"/tools/designer/src/lib/sdk/*
 
-        # install correct designer and linguist icons, bug 241208
-        dodir /usr/share/pixmaps/ || die "dodir failed"
-        insinto /usr/share/pixmaps/ || die "insinto failed"
-        doins tools/linguist/linguist/images/icons/linguist-128-32.png \
-                tools/designer/src/designer/images/designer.png || die "doins failed"
-        # Note: absolute image path required here!
-        make_desktop_entry /usr/bin/linguist Linguist \
-                /usr/share/pixmaps/linguist-128-32.png 'Qt;Development;GUIDesigner' \
-                || die "make_desktop_entry failed"
-        make_desktop_entry /usr/bin/designer Designer \
-                /usr/share/pixmaps/designer.png 'Qt;Development;GUIDesigner' \
-                || die "make_desktop_entry failed"
+	# install correct designer and linguist icons, bug 241208
+	dodir /usr/share/pixmaps/ || die "dodir failed"
+	insinto /usr/share/pixmaps/ || die "insinto failed"
+	doins tools/linguist/linguist/images/icons/linguist-128-32.png \
+		tools/designer/src/designer/images/designer.png || die "doins failed"
+	# Note: absolute image path required here!
+	make_desktop_entry /usr/bin/linguist Linguist \
+		/usr/share/pixmaps/linguist-128-32.png 'Qt;Development;GUIDesigner' \
+			|| die "make_desktop_entry failed"
+	make_desktop_entry /usr/bin/designer Designer \
+		/usr/share/pixmaps/designer.png 'Qt;Development;GUIDesigner' \
+			|| die "make_desktop_entry failed"
 }
