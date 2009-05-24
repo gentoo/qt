@@ -15,7 +15,7 @@ SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="+X assistant +dbus debug doc examples +opengl phonon +qt3support +sql +svg +webkit +xmlpatterns"
+IUSE="+X assistant +dbus debug doc examples +opengl -phonon +qt3support +sql +svg +webkit +xmlpatterns"
 
 RDEPEND=">=dev-python/sip-4.7.8
 	>=x11-libs/qt-core-4.4.2:4[qt3support?]
