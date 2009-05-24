@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit qt4
 
-MY_P="${P}-20090224"
+MY_P="${P}-20090410"
 DESCRIPTION="On Screen Display (OSD) for KDE 4.x - works on any qt desktop"
 HOMEPAGE="http://sites.kochkin.org/okindd/Home"
 SRC_URI="http://sites.kochkin.org/okindd/Home/source-code/${MY_P}.tar.bz2"
@@ -40,6 +40,6 @@ src_install() {
 	domenu "${S}"/okindd.desktop || die "domenu failed"
 
 	elog "You can find an example configuration file at"
-	elog "	/usr/share/doc/okindd/okinddrc.example"
+	elog "	/usr/share/doc/okindd/examples/okinddrc.example"
 	elog "It should be placed in \${HOME}/.okindd/"
 }
