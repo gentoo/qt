@@ -1,6 +1,9 @@
-# ChangeLog for x11-libs/qvfb
+# ChangeLog for dev-embedded/qvfb
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  26 May 2009; Markos Chandras <hwoarang@gentoo.org> -qvfb-4.5.1.ebuild:
+  On tree
 
 *qvfb-4.5.1 (23 May 2009)
 
