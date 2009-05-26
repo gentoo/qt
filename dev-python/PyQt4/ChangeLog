@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 May 2009; Markos Chandras <hwoarang@gentoo.org>
+  -PyQt4-4.5_pre20090518-r1.ebuild:
+  Drop old snapshot
+
 *PyQt4-4.5_pre20090525 (26 May 2009)
 
   26 May 2009; Markos Chandras <hwoarang@gentoo.org>
