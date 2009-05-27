@@ -43,6 +43,7 @@ S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	"${FILESDIR}/configure.py.patch"
+	"${FILESDIR}/fix_license.patch"
 )
 
 pyqt4_use_enable() {
