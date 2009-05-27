@@ -62,7 +62,12 @@ qt4-edge_pkg_setup() {
 # @DESCRIPTION:
 # Use this variable if you want to install any documentation.
 # example: DOCS="README AUTHORS"
-
+#
+# @ECLASS-VARIABLE: DOCSDIR
+# @DESCRIPTION:
+# Directory containing documentation. If not specified, ${S} will be used
+# instead.
+#
 # @FUNCTION: qt4-edge_src_prepare
 # @DESCRIPTION:
 # Default src_prepare function for packages that depends on qt4. If you have to
@@ -110,11 +115,16 @@ qt4-edge_src_compile() {
 # LANGSLONG variables).
 qt4-edge_src_install() {
 	debug-print-function $FUNCNAME "$@"
-
+	
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 
 	# install documentation
-	[[ -n "${DOCS}" ]] && { dodoc ${DOCS} || die "dodoc failed" ; }
+	local dir=${DOCSDIR:-${S}}
+	if [[ -n "${DOCS}" ]]; then
+		for doc in ${DOCS}; do
+			dodoc "${dir}/${doc}" || die "dodoc failed"
+		done
+	fi
 
 	# install translations # hwoarang: Is this valid for every package???
 	# need to have specified LANGS or LANGSLONG for this to work
