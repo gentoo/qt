@@ -27,9 +27,11 @@ DOCS="AUTHORS NEWS README TODO"
 src_prepare(){
 	# workaround for b0rked subversion eclass
 	S="${WORKDIR}/${P}/src"
-
 	# fix installation path
-	sed -i "s/\/opt/\/usr\/share/g" src/QXmlEdit.pro || \
+	sed -i "/^target.path/ s/\/opt\/${PN}/\/usr\/bin/" QXmlEdit.pro || \
 		die "failed to fix installation path"
+	# fix translations
+	sed -i "/^translations.path/ s/\/opt/\/usr\/share/" QXmlEdit.pro || \
+		die "failed to fix translations"
 	qt4-edge_src_prepare
 }

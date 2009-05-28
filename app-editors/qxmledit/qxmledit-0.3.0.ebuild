@@ -28,7 +28,10 @@ S="${WORKDIR}/${P}/src/"
 
 src_prepare(){
 	# fix installation path
-	sed -i "s/\/opt/\/usr\/share/g" QXmlEdit.pro || \
+	sed -i "/^target.path/ s/\/opt\/${PN}/\/usr\/bin/" QXmlEdit.pro || \
 		die "failed to fix installation path"
+	# fix translations
+	sed -i "/^translations.path/ s/\/opt/\/usr\/share/" QXmlEdit.pro || \
+		die "failed to fix translations"
 	qt4-edge_src_prepare
 }
