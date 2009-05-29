@@ -18,9 +18,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="debug"
 
-DEPEND="x11-libs/qt-gui:4 x11-libs/qt-phonon:4"
+DEPEND="x11-libs/qt-gui:4 || ( media-sound/phonon x11-libs/qt-phonon:4 )"
 RDEPEND="${DEPEND}"
-
+PATCHES=(
+	"${FILESDIR}/kde_phonon.patch"
+)
 S="${WORKDIR}/${PN}"
 
 src_install() {

@@ -1,0 +1,42 @@
+Index: minitube/src/MainWindow.h
+===================================================================
+--- minitube.orig/src/MainWindow.h
++++ minitube/src/MainWindow.h
+@@ -4,7 +4,10 @@
+ #include <QtGui>
+ #include "faderwidget/FaderWidget.h"
+ #include "searchlineedit.h"
+-#include <phonon>
++#include <phonon/audiooutput.h>
++#include <phonon/volumeslider.h>
++#include <phonon/mediaobject.h>
++#include <phonon/seekslider.h>
+ #include "View.h"
+ #include "SearchView.h"
+ #include "MediaView.h"
+Index: minitube/src/MediaView.h
+===================================================================
+--- minitube.orig/src/MediaView.h
++++ minitube/src/MediaView.h
+@@ -3,7 +3,8 @@
+ 
+ #include <QtGui>
+ #include <QtNetwork>
+-#include <phonon>
++#include <phonon/mediaobject.h>
++#include <phonon/videowidget.h>
+ #include "View.h"
+ #include "ListModel.h"
+ 
+Index: minitube/minitube.pro
+===================================================================
+--- minitube.orig/minitube.pro
++++ minitube/minitube.pro
+@@ -3,6 +3,7 @@ TEMPLATE = app
+ QT += network \
+     xml \
+     phonon
++INCLUDEPATH += /usr/include/phonon
+ CONFIG += release
+ HEADERS += src/MainWindow.h \
+     src/SearchView.h \
