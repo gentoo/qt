@@ -74,13 +74,13 @@ esac
 
 case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
-		inherit eutils multilib toolchain-funcs flag-o-matic subversion versionator
+		inherit base eutils multilib toolchain-funcs flag-o-matic subversion versionator
 		;;
 	4.?.9999 | 4.9999)
-		inherit eutils multilib toolchain-funcs flag-o-matic git versionator
+		inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
 		;;
 	*)
-		inherit eutils multilib toolchain-funcs flag-o-matic versionator
+		inherit base eutils multilib toolchain-funcs flag-o-matic versionator
 		;;
 esac
 
@@ -254,6 +254,8 @@ qt4-build-edge_src_prepare() {
 		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
 		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
 		-i "${S}"/mkspecs/common/g++.conf || die "sed ${S}/mkspecs/common/g++.conf failed"
+
+		base_src_prepare
 }
 
 qt4-build-edge_src_configure() {
