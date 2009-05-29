@@ -16,18 +16,13 @@ IUSE="debug"
 
 RDEPEND="x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
+DOCS="AUTHORS ChangeLog README"
 
 src_configure() {
 	eqmake4 arora.pro PREFIX="/usr"
 }
 
 src_compile() {
-	emake || die "emake failed"
-	# don't pre-strip
-	sed -i "/strip/d" src/Makefile || die 'sed failed'
-}
-
-src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	dodoc AUTHORS ChangeLog README
+	# workaround. Pending upstream fix
+	emake -j1 || die "emake failed"
 }

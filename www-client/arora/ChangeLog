@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
+  29 May 2009; Markos Chandras <hwoarang@gentoo.org> arora-9999.ebuild:
+  Ebuild clean up, use -j1 as compilation workaround
+
   08 Apr 2009; Ben de Groot <yngwin@gentoo.org> -arora-0.6.ebuild,
   arora-9999.ebuild:
   Remove 0.6 which is in portage. Add changes proposed by Davide Pesavento
