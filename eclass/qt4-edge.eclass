@@ -135,7 +135,7 @@ prepare_translations() {
 	local LANG=
 	local trans="${S}" dir=
 	# Find translations directory
-	for dir in langs translations; do
+	for dir in lang langs translations; do
 		[[ -d ${dir} ]] && trans="${dir}"
 	done
 	if [[ ${trans} == ${S} ]]; then
@@ -146,12 +146,30 @@ prepare_translations() {
 	for LANG in ${LINGUAS}; do
 		for X in ${LANGS}; do
 			if [[ ${LANG} == ${X%_*} ]]; then
-				doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
+				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then	
+					doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
+				elif [[ -e "${trans}"/${X}.qm ]]; then
+					doins "${trans}"/${X}.qm || die "failed to install translations"
+				else
+					eerror
+					eerror "Failed to find translations. Contact eclass maintainer"
+					eerror
+					die
+				fi
 			fi
 		done
 		for X in ${LANGSLONG}; do
 			if [[ ${LANG} == ${X} ]]; then
-				doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
+				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then	
+					doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
+				elif [[ -e "${trans}"/${X}.qm ]]; then
+					doins "${trans}"/${X}.qm || die "failed to install translations"
+				else
+					eerror
+					eerror "Failed to find translations. Contact eclass maintainer"
+					eerror
+					die
+				fi
 			fi
 		done
 	done
