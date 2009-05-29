@@ -49,13 +49,13 @@ qt4-edge_pkg_setup() {
 # @ECLASS-VARIABLE: LANGS
 # @DESCRIPTION:
 # In case your Qt4 provides various translations, use this variable to specify
-# them. Make sure to set this variable before inheriting qt4-edge eclass.
+# them. Make sure to set this variable BEFORE inheriting qt4-edge eclass.
 # example: LANG="en el de"
 #
 # @ECLASS-VARIABLE: LANGSLONG
 # @DESCRIPTION:
 # Same as above, but this variable is for LINGUAS that must be in long format.
-# Remember to set this variable before inheriting qt4-edge eclass.
+# Remember to set this variable BEFORE inheriting qt4-edge eclass.
 # Look at ${PORTDIR}/profiles/desc/linguas.desc for details.
 #
 # @ECLASS-VARIABLE: DOCS
@@ -131,6 +131,10 @@ qt4-edge_src_install() {
 	[[ -n "${LANGS}" || -n ${LANGSLONG} ]] && prepare_translations
 }
 
+# @FUNCTION: prepare_translations
+# @DESCRIPTION:
+# Choose and install translation files. Normally you don't need
+# to call it directly at it is called from src_install function.
 prepare_translations() {
 	local LANG=
 	local trans="${S}" dir=
