@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI="2"
+LANGS="de en it pl pt ru"
 
 inherit qt4-edge
 
@@ -14,11 +15,6 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
-LANGS="de en it pl pt ru"
-
-for X in ${LANGS};do
-	IUSE="${IUSE} linguas_${X}"
-done
 
 DEPEND="media-sound/sox
 	media-video/mplayer
@@ -45,13 +41,5 @@ src_install() {
 	doins -r BIB_ManSlide/Help/images
 	doins -r BIB_ManSlide/Help/images_en
 	doins -r BIB_ManSlide/Help/images_fr
-
-	# install translations
-	insinto /usr/share/${PN}/translations/
-	local LANG=
-	for LANG in ${LINGUAS};do
-		if has ${LANG} ${LANGS}; then
-			doins smile_${LANG}.qm || die "failed to install translation"
-		fi
-	done
+	prepare_translations
 }

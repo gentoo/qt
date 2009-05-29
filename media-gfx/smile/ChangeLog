@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 May 2009; Markos Chandras <hwoarang@gentoo.org> smile-0.9.7.ebuild:
+  Ebuild clean up, use default qt4-edge translation function
+
 *smile-0.9.7 (06 May 2009)
 
   06 May 2009; Markos Chandras <hwoarang@gentoo.org> -smile-0.9.3.ebuild,
