@@ -16,7 +16,7 @@ SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="+X assistant +dbus debug doc examples kde +opengl -phonon +qt3support +sql +svg +webkit +xmlpatterns"
+IUSE="X assistant dbus debug doc examples kde opengl phonon qt3support sql svg webkit xmlpatterns"
 
 RDEPEND=">=dev-python/sip-4.8_pre20090430
 	>=x11-libs/qt-core-4.5.1:4[qt3support?]
@@ -49,13 +49,17 @@ pyqt4_use_enable() {
 	use $1 && echo "--enable=${2:-$1}"
 }
 
-src_configure() {
-	distutils_python_version
-
+src_prepare() {
 	if ! use dbus; then
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
 			"${S}"/configure.py || die
 	fi
+	qt4-edge_src_prepare
+}
+
+
+src_configure() {
+	distutils_python_version
 
 	local myconf="--confirm-license
 			--bindir=/usr/bin
@@ -67,6 +71,7 @@ src_configure() {
 			--enable=QtScript
 			--enable=QtTest
 			--enable=QtXml
+			$(pyqt4_use_enable dbus)
 			$(pyqt4_use_enable X QtGui)
 			$(pyqt4_use_enable X QtDesigner)
 			$(pyqt4_use_enable assistant QtAssistant)

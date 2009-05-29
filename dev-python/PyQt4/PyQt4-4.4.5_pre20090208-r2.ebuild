@@ -18,7 +18,7 @@ SRC_URI="http://dl.liveforge.org/distfiles/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="+X assistant +dbus debug doc examples +opengl -phonon +qt3support +sql +svg +webkit +xmlpatterns"
+IUSE="X assistant dbus debug doc examples opengl phonon qt3support sql svg webkit xmlpatterns"
 
 RDEPEND=">=dev-python/sip-4.7.8
 	>=x11-libs/qt-core-4.4.2:4[qt3support?]
@@ -31,7 +31,7 @@ RDEPEND=">=dev-python/sip-4.7.8
 		>=x11-libs/qt-dbus-4.4.2:4
 	)
 	opengl? ( >=x11-libs/qt-opengl-4.4.2:4[qt3support?] )
-	phonon? ( >=x11-libs/qt-phonon-4.4.2:4 )
+	phonon? ( || ( >=x11-libs/qt-phonon-4.4.2:4 media-sound/phonon ) )
 	qt3support? ( >=x11-libs/qt-qt3support-4.4.2:4 )
 	sql? ( >=x11-libs/qt-sql-4.4.2:4 )
 	svg? ( >=x11-libs/qt-svg-4.4.2:4 )
@@ -50,13 +50,16 @@ pyqt4_use_enable() {
 	use $1 && echo "--enable=${2:-$1}"
 }
 
-src_configure() {
-	distutils_python_version
-
+src_prepare() {
 	if ! use dbus; then
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
 			"${S}"/configure.py || die
 	fi
+	qt4-edge_src_prepare
+}
+
+src_configure() {
+	distutils_python_version
 
 	local myconf="--confirm-license
 			--bindir=/usr/bin

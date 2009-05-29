@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <herd>qt</herd>
+<herd>python</herd>
+<herd>qt</herd>
+<use>
+	<flag name='assistant'>enable Assistant support</flag>
+	<flag name='phonon'>enable phonon module support</flag>
+	<flag name='sql'>enable sql module support</flag>
+	<flag name='qt3support'>enable the Qt3Support libraries for Qt4</flag>
+	<flag name='webkit'>enable WebKit support</flag>
+	<flag name='xmlpatterns'>enable xmlpatterns support</flag>
+</use>
 </pkgmetadata>

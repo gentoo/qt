@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 May 2009; Markos Chandras <hwoarang@gentoo.org> PyQt4-4.4.4-r5.ebuild,
+  PyQt4-4.4.5_pre20090208-r2.ebuild, -PyQt4-4.5_pre20090525.ebuild,
+  PyQt4-4.5_pre20090525-r1.ebuild, metadata.xml:
+  Drop default use flags, use src_prepare for dbus hack, update metadata.xml
+  to make repoman
+  happy
+
 *PyQt4-4.5_pre20090525-r1 (29 May 2009)
 
   29 May 2009; Ben de Groot <yngwin@gentoo.org>
