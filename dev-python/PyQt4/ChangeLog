@@ -3,6 +3,10 @@
 # $Header: $
 
   30 May 2009; Markos Chandras <hwoarang@gentoo.org> PyQt4-4.4.4-r5.ebuild,
+  PyQt4-4.4.5_pre20090208-r2.ebuild, PyQt4-4.5_pre20090525-r1.ebuild:
+  Enable dbus and qt3support use flags by default
+
+  30 May 2009; Markos Chandras <hwoarang@gentoo.org> PyQt4-4.4.4-r5.ebuild,
   PyQt4-4.4.5_pre20090208-r2.ebuild:
   Apply license patch on the rest of PyQt4 ebuilds
 

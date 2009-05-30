@@ -16,7 +16,7 @@ SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="X assistant dbus debug doc examples kde opengl phonon qt3support sql svg webkit xmlpatterns"
+IUSE="X assistant +dbus debug doc examples kde opengl phonon +qt3support sql svg webkit xmlpatterns"
 
 RDEPEND=">=dev-python/sip-4.8_pre20090430
 	>=x11-libs/qt-core-4.5.1:4[qt3support?]
