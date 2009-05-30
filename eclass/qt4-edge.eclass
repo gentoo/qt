@@ -9,19 +9,19 @@
 # Davide Pesavento <davidepesa@gmail.com>
 # @BLURB: Experimental eclass for Qt4 packages
 # @DESCRIPTION:
-# This eclass contains various functions that may be useful
-# when dealing with packages using Qt4 libraries.
+# This eclass contains various functions that may be useful when
+# dealing with packages using Qt4 libraries. Requires EAPI=2.
 
-inherit eutils multilib toolchain-funcs base
+inherit base eutils multilib toolchain-funcs
 
 export XDG_CONFIG_HOME="${T}"
 
-for X in ${LANGS}; do
-	IUSE="${IUSE} linguas_${X%_*}"
+for x in ${LANGS}; do
+	IUSE="${IUSE} linguas_${x%_*}"
 done
 
-for X in ${LANGSLONG}; do
-	IUSE="${IUSE} linguas_${X}"
+for x in ${LANGSLONG}; do
+	IUSE="${IUSE} linguas_${x}"
 done
 
 qt4-edge_pkg_setup() {
@@ -70,8 +70,8 @@ qt4-edge_pkg_setup() {
 #
 # @FUNCTION: qt4-edge_src_prepare
 # @DESCRIPTION:
-# Default src_prepare function for packages that depends on qt4. If you have to
-# override src_prepare in your ebuild, you should call qt4_src_prepare in it,
+# Default src_prepare function for packages that depend on qt4. If you have to
+# override src_prepare in your ebuild, you should call qt4-edge_src_prepare in it,
 # otherwise autopatcher will not work!
 qt4-edge_src_prepare() {
 	debug-print-function $FUNCNAME "$@"
@@ -82,7 +82,7 @@ qt4-edge_src_prepare() {
 # @FUNCTION: qt4-edge_src_configure
 # @DESCRIPTION:
 # Default src_configure function for packages that depends on qt4. If you have to
-# override src_configure in your ebuild, call qt4_src_configure in it.
+# override src_configure in your ebuild, call qt4-edge_src_configure in it.
 qt4-edge_src_configure() {
 	debug-print-function $FUNCNAME "$@"
 
@@ -93,19 +93,11 @@ qt4-edge_src_configure() {
 # @DESCRIPTION:
 # Default src_compile function for packages that depends on qt4. If you have to
 # override src_compile in your ebuild (probably you don't need to), call
-# qt4_src_compile in it.
+# qt4-edge_src_compile in it.
 qt4-edge_src_compile() {
 	debug-print-function $FUNCNAME "$@"
 
-	case "${EAPI}" in
-		2)
-			emake || die "emake failed"
-			;;
-		*)
-			qt4_src_configure
-			emake || die "emake failed"
-			;;
-	esac
+	emake || die "emake failed"
 }
 
 # @FUNCTION: qt4-edge_src_install
@@ -115,12 +107,12 @@ qt4-edge_src_compile() {
 # LANGSLONG variables).
 qt4-edge_src_install() {
 	debug-print-function $FUNCNAME "$@"
-	
+
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 
 	# install documentation
-	local dir=${DOCSDIR:-${S}}
 	if [[ -n "${DOCS}" ]]; then
+		local dir=${DOCSDIR:-${S}}
 		for doc in ${DOCS}; do
 			dodoc "${dir}/${doc}" || die "dodoc failed"
 		done
@@ -128,13 +120,13 @@ qt4-edge_src_install() {
 
 	# install translations # hwoarang: Is this valid for every package???
 	# need to have specified LANGS or LANGSLONG for this to work
-	[[ -n "${LANGS}" || -n ${LANGSLONG} ]] && prepare_translations
+	[[ -n "${LANGS}" || -n "${LANGSLONG}" ]] && prepare_translations
 }
 
 # @FUNCTION: prepare_translations
 # @DESCRIPTION:
 # Choose and install translation files. Normally you don't need
-# to call it directly at it is called from src_install function.
+# to call this function directly as it is called from src_install.
 prepare_translations() {
 	local LANG=
 	local trans="${S}" dir=
@@ -150,7 +142,7 @@ prepare_translations() {
 	for LANG in ${LINGUAS}; do
 		for X in ${LANGS}; do
 			if [[ ${LANG} == ${X%_*} ]]; then
-				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then	
+				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then
 					doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
 				elif [[ -e "${trans}"/${X}.qm ]]; then
 					doins "${trans}"/${X}.qm || die "failed to install translations"
@@ -164,7 +156,7 @@ prepare_translations() {
 		done
 		for X in ${LANGSLONG}; do
 			if [[ ${LANG} == ${X} ]]; then
-				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then	
+				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then
 					doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
 				elif [[ -e "${trans}"/${X}.qm ]]; then
 					doins "${trans}"/${X}.qm || die "failed to install translations"
@@ -265,11 +257,4 @@ eqmake4() {
 	return 0
 }
 
-case ${EAPI} in
-	2)
-		EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile src_install
-		;;
-	*)
-		EXPORT_FUNCTIONS pkg_setup src_compile src_install
-		;;
-esac
+EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile src_install
