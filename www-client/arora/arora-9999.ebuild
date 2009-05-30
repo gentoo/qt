@@ -21,9 +21,3 @@ DOCS="AUTHORS ChangeLog README"
 src_configure() {
 	eqmake4 arora.pro PREFIX="/usr"
 }
-
-src_compile() {
-	# workaround. Pending upstream fix
-	# http://code.google.com/p/arora/issues/detail?id=457
-	emake -j1 || die "emake failed"
-}
