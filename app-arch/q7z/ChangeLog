@@ -1,0 +1,13 @@
+# ChangeLog for app-arch/q7z
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*q7z-0.8.0 (30 May 2009)
+
+  30 May 2009; Dror Levin <spatz@gentoo.org>
+  +files/0.8.0-fix_7z_flags.patch, +q7z-0.8.0.ebuild,
+  +files/0.8.0-fix_imports.patch, +files/0.8.0-fix_paths.patch,
+  +files/0.8.0-init.py:
+  Version bump of in-tree package. Modules are now installed in the python
+  site-packages directory and the binary is called 'q7z'.
+
