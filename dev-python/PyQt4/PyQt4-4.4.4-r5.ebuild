@@ -42,6 +42,7 @@ S="${WORKDIR}/${MY_P}"
 PATCHES=(
 	"${FILESDIR}/configure.py.patch"
 	"${FILESDIR}/${P}-qgraphicsproxywidget-avoid-event-callback-loop.patch"
+	"${FILESDIR}/fix_license_check.patch"
 )
 
 pyqt4_use_enable() {
