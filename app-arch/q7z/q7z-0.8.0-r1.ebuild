@@ -28,9 +28,18 @@ S="${WORKDIR}/${MY_PN}/Build"
 
 src_prepare() {
 	cd ..
+
+	# fix paths used at runtime
 	epatch "${FILESDIR}/${PV}-fix_paths.patch"
+	# remove '-r' flag from 7z as it's not supposed to be used
 	epatch "${FILESDIR}/${PV}-fix_7z_flags.patch"
+	# fix imports to reference the q7z package
 	epatch "${FILESDIR}/${PV}-fix_imports.patch"
+
+	# patch menu entry to have correct name
+	mv "Desktop/Menu/${MY_PN}.desktop" "Desktop/Menu/${PN}.desktop"
+	sed -i "s/${MY_PN}/${PN}/" "Desktop/Menu/${PN}.desktop" \
+		|| die "sed failed"
 
 	cd Source
 	mv "${MY_PN}.pyw" "${PN}.pyw"
@@ -42,16 +51,21 @@ src_install() {
 	cd ..
 
 	insinto "$(python_get_sitedir)/${PN}"
-	doins Source/*.py
-	newins "${FILESDIR}/${PV}-init.py" __init__.py
+	doins Source/*.py || die
+	newins "${FILESDIR}/${PV}-init.py" __init__.py || die
 
 	insinto "/usr/share/${PN}/Options"
-	doins Options/*
+	doins Options/* || die
 	insinto "/usr/share/${PN}/Profiles"
-	doins Desktop/Profiles/*
+	doins Desktop/Profiles/* || die
 
-	dobin "Source/${PN}.pyw"
-	dosym "/usr/bin/${PN}.pyw" "/usr/bin/${PN}"
+	dobin "Source/${PN}.pyw" || die
+	dosym "/usr/bin/${PN}.pyw" "/usr/bin/${PN}" || die
+
+	# install menu entry
+	insinto /usr/share/icons/hicolor/32x32/apps
+	newins "Image/apps/${MY_PN}.png" "${PN}.png" || die
+	domenu "Desktop/Menu/${PN}.desktop" || die
 }
 
 pkg_postinst() {
