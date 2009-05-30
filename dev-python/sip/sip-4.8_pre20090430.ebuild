@@ -10,7 +10,8 @@ MY_P=${P/_pre/-snapshot-}
 
 DESCRIPTION="A tool for generating bindings for C++ classes so that they can be used by Python"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro"
-SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip$(get_major_version)/${MY_P}.tar.gz"
+#SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip$(get_major_version)/${MY_P}.tar.gz"
+SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 LICENSE="sip"
 SLOT="0"

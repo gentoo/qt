@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*PyQt4-4.5_pre20090529 (30 May 2009)
+
+  30 May 2009; Markos Chandras <hwoarang@gentoo.org>
+  -PyQt4-4.5_pre20090525-r1.ebuild, +PyQt4-4.5_pre20090529.ebuild:
+  Automatic snapshot bump, remove old ebuild
+
   30 May 2009; Markos Chandras <hwoarang@gentoo.org> PyQt4-4.4.4-r5.ebuild,
   PyQt4-4.4.5_pre20090208-r2.ebuild, PyQt4-4.5_pre20090525-r1.ebuild:
   Enable dbus and qt3support use flags by default

@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qscintilla-python-2.4_pre20090527 (30 May 2009)
+
+  30 May 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qscintilla-python-2.4_pre20090519.ebuild,
+  +qscintilla-python-2.4_pre20090527.ebuild:
+  Automatic snapshot bump, remove old ebuild
+
   21 May 2009; Markos Chandras <hwoarang@gentoo.org>
   qscintilla-python-2.4_pre20090519.ebuild:
   Change SRC_URI because upstream deletes old snapshots once a while
