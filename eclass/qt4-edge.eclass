@@ -86,7 +86,11 @@ qt4-edge_src_prepare() {
 qt4-edge_src_configure() {
 	debug-print-function $FUNCNAME "$@"
 
-	eqmake4
+	if [[ -n "$(ls *.pro 2>/dev/null)" ]]; then
+		eqmake4
+	else
+		base_src_configure
+	fi
 }
 
 # @FUNCTION: qt4-edge_src_compile
