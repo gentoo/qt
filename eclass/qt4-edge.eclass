@@ -180,10 +180,9 @@ prepare_translations() {
 }
 
 # @FUNCTION: eqmake4
-# @USAGE: [.pro file] [additional parameters to qmake]
+# @USAGE: [parameters to qmake]
 # @DESCRIPTION:
-# Runs qmake on the specified .pro file (defaults to ${PN}.pro if called
-# without arguments). Additional parameters are appended unmodified to
+# Wrapper for Qt4's qmake. All the arguments are appended unmodified to
 # qmake command line. For recursive build systems, i.e. those based on
 # the subdirs template, you should run eqmake4 on the top-level project
 # file only, unless you have strong reasons to do things differently.
@@ -191,21 +190,7 @@ prepare_translations() {
 # right arguments on every directory specified inside the top-level
 # project file by the SUBDIRS variable.
 eqmake4() {
-	local projectfull="$(find '.' -maxdepth 1 -type f -name "*.pro")"
-	local projectfile=${1:-${projectfull##*/}}
-	shift
-
-	if [[ ! -f ${projectfile} ]]; then
-		echo
-		eerror "Project file '${projectfile#${WORKDIR}/}' does not exists!"
-		eerror "eqmake4 cannot handle non-existing project files."
-		eerror
-		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
-		echo
-		die "Project file not found in ${CATEGORY}/${PN} sources."
-	fi
-
-	ebegin "Running qmake on ${projectfile}"
+	ebegin "Running qmake"
 
 	# make sure CONFIG variable is correctly set for both release and debug builds
 	local CONFIG_ADD="release"
@@ -237,21 +222,20 @@ eqmake4() {
 				printf "CONFIG += %s\n", add >> file;
 				print fixed;
 			}'
-	local filepath=
-	while read filepath; do
-		local file="${filepath#./}"
+	local file=
+	while read file; do
 		grep -q '^### eqmake4 was here ###$' "${file}" && continue
 		local retval=$({
 				rm -f "${file}" || echo "FAILED"
 				awk -v file="${file}" -- "${awkscript}" add=${CONFIG_ADD} rem=${CONFIG_REMOVE} || echo "FAILED"
 				} < "${file}")
 		if [[ ${retval} == 1 ]]; then
-			einfo "  Fixed CONFIG in ${file}"
+			einfo " - fixed CONFIG in ${file}"
 		elif [[ ${retval} != 0 ]]; then
-			eerror "  An error occurred while processing ${file}"
-			die "eqmake4 failed to process '${file}'."
+			eerror "An error occurred while processing ${file}"
+			die "eqmake4 failed to process '${file}'"
 		fi
-	done < <(find "$(dirname "${projectfile}")" -type f -name "*.pr[io]" 2>/dev/null)
+	done < <(find . -type f -name "*.pr[io]" -printf '%P\n' 2>/dev/null)
 
 	/usr/bin/qmake -makefile -nocache \
 		QTDIR=/usr/$(get_libdir) \
@@ -267,17 +251,15 @@ eqmake4() {
 		QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
 		QMAKE_RPATH= \
 		QMAKE_STRIP= \
-		"${projectfile}" "${@}"
-
-	eend $?
+		"${@}"
 
 	# was qmake successful?
-	if [[ $? -ne 0 ]]; then
+	if ! eend $? ; then
 		echo
-		eerror "Running qmake on '${projectfile#${WORKDIR}/}' has failed!"
+		eerror "Running qmake has failed! (see above for details)"
 		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
 		echo
-		die "qmake failed on '${projectfile}'."
+		die "qmake failed"
 	fi
 
 	return 0
