@@ -7,12 +7,12 @@ Index: smile/helpfrm.cpp
  			if ( wlpack.left(2) == "fr" )
  			{
 -				webhelp->load(QUrl(wg_tmp_002 + "/BIB_ManSlide/Help/doc_fr.html"));
-+				webhelp->load(QUrl("/usr/share/doc/smile-0.9.3/doc_fr.html"));
++				webhelp->load(QUrl("/usr/share/doc/smile-0.9.10/doc_fr.html"));
  			}
  			else
  			{
 -				webhelp->load(QUrl(wg_tmp_002 + "/BIB_ManSlide/Help/doc_en.html"));
-+				webhelp->load(QUrl("/usr/share/doc/smile-0.9.3/doc_en.html"));
++				webhelp->load(QUrl("/usr/share/doc/smile-0.9.10/doc_en.html"));
  			}
  		}
  		configfile.close();

@@ -25,7 +25,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/fix_installation.patch"
-	"${FILESDIR}/fix_docs-0.9.3.patch"
+	"${FILESDIR}/fix_docs-${PV}.patch"
 )
 
 S="${WORKDIR}/${PN}"
