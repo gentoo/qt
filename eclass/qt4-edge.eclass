@@ -50,7 +50,7 @@ qt4-edge_pkg_setup() {
 # @DESCRIPTION:
 # In case your Qt4 provides various translations, use this variable to specify
 # them. Make sure to set this variable BEFORE inheriting qt4-edge eclass.
-# example: LANG="en el de"
+# example: LANGS="en el de"
 #
 # @ECLASS-VARIABLE: LANGSLONG
 # @DESCRIPTION:
@@ -127,50 +127,48 @@ qt4-edge_src_install() {
 	[[ -n "${LANGS}" || -n "${LANGSLONG}" ]] && prepare_translations
 }
 
+# Internal function
+_doqm() {
+	debug-print-function $FUNCNAME "$@"
+
+	[[ $# -ne 2 ]] && die "$FUNCNAME requires exactly 2 arguments!"
+
+	if [[ -e ${1}/${PN}_${2}.qm ]]; then
+		INSDESTTREE="/usr/share/${PN}/${1#${S}}" \
+			doins "${1}/${PN}_${2}.qm" \
+			|| die "failed to install $2 translation"
+	elif [[ -e ${1}/${2}.qm ]]; then
+		INSDESTTREE="/usr/share/${PN}/${1#${S}}" \
+			doins "${1}/${2}.qm" \
+			|| die "failed to install $2 translation"
+	else
+		eerror
+		eerror "Failed to find $2 translation. Contact ${ECLASS} eclass maintainer."
+		eerror
+		die
+	fi
+}
+
 # @FUNCTION: prepare_translations
 # @DESCRIPTION:
 # Choose and install translation files. Normally you don't need
 # to call this function directly as it is called from src_install.
 prepare_translations() {
-	local LANG=
-	local trans="${S}" dir=
+	debug-print-function $FUNCNAME "$@"
+
 	# Find translations directory
+	local trdir="${S}" dir=
 	for dir in lang langs translations; do
-		[[ -d ${dir} ]] && trans="${dir}"
+		[[ -d ${dir} ]] && trdir="${dir}"
 	done
-	if [[ ${trans} == ${S} ]]; then
-		insinto /usr/share/${PN}/
-	else
-		insinto /usr/share/${PN}/${trans}/
-	fi
-	for LANG in ${LINGUAS}; do
-		for X in ${LANGS}; do
-			if [[ ${LANG} == ${X%_*} ]]; then
-				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then
-					doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
-				elif [[ -e "${trans}"/${X}.qm ]]; then
-					doins "${trans}"/${X}.qm || die "failed to install translations"
-				else
-					eerror
-					eerror "Failed to find translations. Contact eclass maintainer"
-					eerror
-					die
-				fi
-			fi
+
+	local lang=
+	for lang in ${LINGUAS}; do
+		for x in ${LANGS}; do
+			[[ ${lang} == ${x%_*} ]] && _do_qm "${trdir}" ${x}
 		done
-		for X in ${LANGSLONG}; do
-			if [[ ${LANG} == ${X} ]]; then
-				if [[ -e "${trans}"/${PN}_${X}.qm ]]; then
-					doins "${trans}"/${PN}_${X}.qm || die "failed to install translations"
-				elif [[ -e "${trans}"/${X}.qm ]]; then
-					doins "${trans}"/${X}.qm || die "failed to install translations"
-				else
-					eerror
-					eerror "Failed to find translations. Contact eclass maintainer"
-					eerror
-					die
-				fi
-			fi
+		for x in ${LANGSLONG}; do
+			[[ ${lang} == ${x} ]] && _do_qm "${trdir}" ${x}
 		done
 	done
 }
