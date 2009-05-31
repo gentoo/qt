@@ -7,6 +7,7 @@ EAPI="2"
 inherit distutils qt4
 
 MY_P=PyQt-x11-gpl-${PV}
+QTVER="4.4.2"
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/"
@@ -17,25 +18,24 @@ LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples opengl phonon +qt3support sql svg webkit xmlpatterns"
 
-RDEPEND=">=dev-python/sip-4.7.8
-	>=x11-libs/qt-core-4.4.2:4[qt3support?]
-	>=x11-libs/qt-script-4.4.2:4
-	>=x11-libs/qt-test-4.4.2:4
-	X? ( >=x11-libs/qt-gui-4.4.2:4[dbus?,qt3support?] )
-	assistant? ( >=x11-libs/qt-assistant-4.4.2:4 )
+DEPEND=">=dev-python/sip-4.7.8
+	>=x11-libs/qt-core-${QTVER}:4[qt3support?]
+	>=x11-libs/qt-script-${QTVER}:4
+	>=x11-libs/qt-test-${QTVER}:4
+	X? ( >=x11-libs/qt-gui-${QTVER}:4[dbus?,qt3support?] )
+	assistant? ( >=x11-libs/qt-assistant-${QTVER}:4 )
 	dbus? (
-		dev-python/dbus-python
-		>=x11-libs/qt-dbus-4.4.2:4
+		>=dev-python/dbus-python-0.80
+		>=x11-libs/qt-dbus-${QTVER}:4
 	)
-	opengl? ( >=x11-libs/qt-opengl-4.4.2:4[qt3support?] )
-	phonon? ( || ( >=x11-libs/qt-phonon-4.4.2:4 media-sound/phonon ) )
-	qt3support? ( >=x11-libs/qt-qt3support-4.4.2:4 )
-	sql? ( >=x11-libs/qt-sql-4.4.2:4 )
-	svg? ( >=x11-libs/qt-svg-4.4.2:4 )
-	webkit? ( >=x11-libs/qt-webkit-4.4.2:4 )
-	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-4.4.2:4 )"
-DEPEND="${RDEPEND}
-	sys-devel/libtool"
+	opengl? ( >=x11-libs/qt-opengl-${QTVER}:4[qt3support?] )
+	phonon? ( || ( >=x11-libs/qt-phonon-${QTVER}:4 media-sound/phonon ) )
+	qt3support? ( >=x11-libs/qt-qt3support-${QTVER}:4 )
+	sql? ( >=x11-libs/qt-sql-${QTVER}:4 )
+	svg? ( >=x11-libs/qt-svg-${QTVER}:4 )
+	webkit? ( >=x11-libs/qt-webkit-${QTVER}:4 )
+	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QTVER}:4 )"
+RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -60,7 +60,8 @@ src_prepare() {
 src_configure() {
 	distutils_python_version
 
-	local myconf="--confirm-license
+	local myconf="${python} configure.py
+			--confirm-license
 			--bindir=/usr/bin
 			--destdir=/usr/$(get_libdir)/python${PYVER}/site-packages
 			--sipdir=/usr/share/sip
@@ -70,7 +71,6 @@ src_configure() {
 			--enable=QtScript
 			--enable=QtTest
 			--enable=QtXml
-			$(pyqt4_use_enable dbus)
 			$(pyqt4_use_enable X QtGui)
 			$(pyqt4_use_enable X QtDesigner)
 			$(pyqt4_use_enable assistant QtAssistant)
@@ -81,8 +81,12 @@ src_configure() {
 			$(pyqt4_use_enable svg QtSvg)
 			$(pyqt4_use_enable webkit QtWebKit)
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
-	echo "${python}" configure.py ${myconf}
-	"${python}" configure.py ${myconf} || die "configuration failed"
+	echo ${myconf}
+	${myconf} || die "configuration failed"
+
+	# Fix insecure runpath
+	sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/QtDesigner::" \
+		"${S}"/QtDesigner/Makefile || die
 }
 
 src_install() {

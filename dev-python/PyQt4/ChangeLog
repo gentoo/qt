@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 May 2009; Davide Pesavento <davidepesa@gmail.com>
+  PyQt4-4.4.4-r5.ebuild, metadata.xml:
+  Fixed insecure runpath issue (bug #235819 and #271870). Improved
+  description of USE flags in metadata.xml.
+
 *PyQt4-4.5_pre20090529 (30 May 2009)
 
   30 May 2009; Markos Chandras <hwoarang@gentoo.org>
