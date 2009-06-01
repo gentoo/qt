@@ -21,7 +21,7 @@ IUSE=""
 RESTRICT="test"
 
 DEPEND="app-arch/p7zip
-	dev-python/PyQt4"
+	dev-python/PyQt4[X]"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_PN}/Build"

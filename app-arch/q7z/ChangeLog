@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Jun 2009; Dror Levin <spatz@gentoo.org> q7z-0.8.0-r1.ebuild:
+  Fix PyQt4 useflag dependency wrt bug #272136.
+
 *q7z-0.8.0-r1 (30 May 2009)
 
   30 May 2009; Dror Levin <spatz@gentoo.org> -q7z-0.8.0.ebuild,
