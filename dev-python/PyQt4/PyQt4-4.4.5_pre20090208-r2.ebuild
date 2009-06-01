@@ -84,6 +84,10 @@ src_configure() {
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
 	echo "${python}" configure.py ${myconf}
 	"${python}" configure.py ${myconf} || die "configuration failed"
+
+	# Fix insecure runpath
+	sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/QtDesigner::" \
+		"${S}"/QtDesigner/Makefile || die
 }
 
 src_install() {
