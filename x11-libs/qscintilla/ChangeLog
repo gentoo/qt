@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Jun 2009; Ben de Groot <yngwin@gentoo.org>
+  qscintilla-2.4_pre20090530.ebuild:
+  Add use dep
+
 *qscintilla-2.4_pre20090530 (01 Jun 2009)
 
   01 Jun 2009; Markos Chandras <hwoarang@gentoo.org>

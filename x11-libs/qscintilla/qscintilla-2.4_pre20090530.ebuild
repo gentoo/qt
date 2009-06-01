@@ -22,7 +22,7 @@ RDEPEND="qt4? ( x11-libs/qt-gui:4 )
 DEPEND="${RDEPEND}"
 # dev-python/PyQt needs qscintilla to build and qscintilla's python bindings
 # need dev-python/PyQt, bug 199543
-PDEPEND="python? ( ~dev-python/qscintilla-python-${PV} )"
+PDEPEND="python? ( ~dev-python/qscintilla-python-${PV}[qt4=] )"
 
 src_configure() {
 	local myqmake myqtdir
