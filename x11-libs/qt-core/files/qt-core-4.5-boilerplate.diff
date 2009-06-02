@@ -1,0 +1,40 @@
+
+--- src/corelib/global/qlibraryinfo.cpp
++++ src/corelib/global/qlibraryinfo.cpp
+@@ -525,35 +525,6 @@ void qt_core_init_boilerplate() __attrib
+     asm ("syscall\n"                            \
+          : : "a" (SYS_exit), "D" (0)); _exit(c)
+ 
+-#  elif defined(QT_ARCH_IA64)
+-#define sysinit()                                               \
+-    asm volatile ("{.mlx\n"                                     \
+-                  "      nop.m  0\n"                            \
+-                  "      movl   r2  = @pcrel(boilerplate);;"    \
+-                  "}\n"                                         \
+-                  "{.mii\n"                                     \
+-                  "      mov   r10 = @ltoffx(boilerplate)\n"    \
+-                  "      mov   r1  = ip\n"                      \
+-                  "      adds  r2  = -16, r2\n;;\n"             \
+-                  "}\n"                                         \
+-                  "      add   r1  = r2, r1;;\n"                \
+-                  "      sub   r1  = r1, r10;;\n"               \
+-                  : : : "r2", "r10")
+-#define syswrite(msg, len)                                              \
+-    ({ const char *_msg = msg;                                          \
+-        asm ("mov    out0=%1\n"                                         \
+-             "mov    out1=%2\n"                                         \
+-             "mov    out2=%3\n"                                         \
+-             ";;\n"                                                     \
+-             "mov    r15=%0\n"                                          \
+-             "break  0x100000;;\n"                                      \
+-             : : "I" (SYS_write), "I" (1), "r" (_msg), "r" (len)); })
+-#define sysexit(c)                                                      \
+-    asm ("mov    out0=%1\n"                                             \
+-         ";;\n"                                                         \
+-         "mov    r15=%0\n"                                              \
+-         "break  0x100000;;\n"                                          \
+-         : : "I" (SYS_exit), "O" (0)); write(1, 0, 0); _exit(c)
+ # else
+ #define sysinit() (void)0
+ #define syswrite(msg, len) (msg); (len)
+
