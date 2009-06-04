@@ -1,0 +1,13 @@
+# ChangeLog for app-emulation/qtemu
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  04 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qtemu-1.0.5.ebuild,
+  metadata.xml:
+  Moved from sunrise. Thanks to spatz for the ebuild clean up
+
+  22 Feb 2008; Tiziano Müller <dev-zero@gentoo.org>
+  +files/1.0.5-help_and_translation_paths.patch, +metadata.xml,
+  +qtemu-1.0.5.ebuild:
+  New ebuild for bug #184112 (rewritten by me).
+
