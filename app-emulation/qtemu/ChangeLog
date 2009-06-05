@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qtemu-9999 (05 Jun 2009)
+
+  05 Jun 2009; Markos Chandras <hwoarang@gentoo.org> +qtemu-9999.ebuild:
+  Live ebuild. Thanks to Alexey Charkov <alchark@gmail.com> for the ebuild
+
   04 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qtemu-1.0.5.ebuild,
   metadata.xml:
   Moved from sunrise. Thanks to spatz for the ebuild clean up
