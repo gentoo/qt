@@ -16,10 +16,10 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="qt4"
 
-DEPEND=">=dev-python/sip-4.7
+DEPEND=">=dev-python/sip-4.8
 	~x11-libs/qscintilla-${PV}[qt4=]
-	qt4? ( >=dev-python/PyQt4-4.4 )
-	!qt4? ( >=dev-python/PyQt-3.17.6 )"
+	qt4? ( >=dev-python/PyQt4-4.5 )
+	!qt4? ( >=dev-python/PyQt-3.18 )"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}/Python
