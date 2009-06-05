@@ -2,9 +2,12 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (23 May 2009)
-# Changing category
-x11-libs/qvfb
+# Markos Chandras <hwoarang@gentoo.org> (05 Jun 2009)
+# Masking temporary for testing
+=dev-python/PyQt4-4.5
+=dev-python/sip-4.8
+=dev-python/qscintilla-python-2.4
+=x11-libs/qscintilla-2.4
 
 # Ben de Groot <yngwin@gentoo.org> (14 Apr 2009)
 # Snapshots that not everyone may want. May break apps.

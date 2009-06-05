@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qscintilla-python-2.4 (05 Jun 2009)
+
+  05 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  +qscintilla-python-2.4.ebuild:
+  Version bump
+
 *qscintilla-python-2.4_pre20090603 (04 Jun 2009)
 
   04 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
