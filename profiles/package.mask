@@ -4,6 +4,7 @@
 
 # Markos Chandras <hwoarang@gentoo.org> (05 Jun 2009)
 # Masking temporary for testing
+=dev-python/PyQt-3.18
 =dev-python/PyQt4-4.5
 =dev-python/sip-4.8
 =dev-python/qscintilla-python-2.4

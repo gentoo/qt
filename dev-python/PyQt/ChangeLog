@@ -1,0 +1,10 @@
+# ChangeLog for dev-python/PyQt
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*PyQt-3.18 (05 Jun 2009)
+
+  05 Jun 2009; Ben de Groot <yngwin@gentoo.org> +PyQt-3.18.ebuild:
+  Initial import. Ebuild based on 3.17.x in official tree. EAPI-2-ified,
+  deps brought up to date.
+
