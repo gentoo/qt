@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Jun 2009; Davide Pesavento <davidepesa@gmail.com> sip-4.8.ebuild:
+  Add doc USE flag. Minor cleanup.
+
 *sip-4.8 (05 Jun 2009)
 
   05 Jun 2009; Markos Chandras <hwoarang@gentoo.org> +sip-4.8.ebuild:

@@ -3,54 +3,56 @@
 # $Header: $
 
 EAPI="2"
-NEED_PYTHON=2.3
-inherit python toolchain-funcs versionator multilib
+NEED_PYTHON="2.3"
+
+inherit python toolchain-funcs
 
 MY_P=${P/_pre/-snapshot-}
 
 DESCRIPTION="A tool for generating bindings for C++ classes so that they can be used by Python"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro"
-SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip$(get_major_version)/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}${PV%%.*}/${MY_P}.tar.gz"
 
 LICENSE="sip"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="debug"
+IUSE="debug doc"
 
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}/${MY_P}"
 
 DEPEND=""
 RDEPEND=""
 
-src_configure(){
+src_configure() {
 	python_version
 
-	local myconf
-	use debug && myconf="${myconf} -u"
-
-	"${python}" configure.py \
-		-b "/usr/bin" \
-		-d "/usr/$(get_libdir)/python${PYVER}/site-packages" \
-		-e "/usr/include/python${PYVER}" \
-		-v "/usr/share/sip" \
-		${myconf} \
-		CXXFLAGS_RELEASE="" CFLAGS_RELEASE="" LFLAGS_RELEASE="" \
-		CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LFLAGS="${LDFLAGS}" \
-		CC=$(tc-getCC) CXX=$(tc-getCXX) \
-		LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX) \
-		STRIP="true" || die "configure failed"
+	local myconf="${python} configure.py
+			--bindir=/usr/bin
+			--destdir=$(python_get_sitedir)
+			--incdir=/usr/include/python${PYVER}
+			--sipdir=/usr/share/sip
+			$(use debug && echo '--debug')
+			CC=$(tc-getCC) CXX=$(tc-getCXX)
+			LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
+			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
+			LFLAGS='${LDFLAGS}'
+			STRIP=true"
+	echo ${myconf}
+	eval ${myconf} || die "configuration failed"
 }
 
 src_install() {
-	python_need_rebuild
 	emake DESTDIR="${D}" install || die "emake install failed"
-	dodoc ChangeLog NEWS README TODO doc/sipref.txt
-	dohtml doc/*
+	dodoc ChangeLog NEWS || die
+
+	if use doc; then
+		dohtml -r doc/html/* || die
+	fi
 }
 
 pkg_postinst() {
-	python_version
-	python_mod_compile "$(python_get_sitedir)"/sip*.py
+	python_need_rebuild
+	python_mod_optimize "$(python_get_sitedir)"/sip*.py
 }
 
 pkg_postrm() {
