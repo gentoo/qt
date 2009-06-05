@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Jun 2009; Ben de Groot <yngwin@gentoo.org> qmmp-9999.ebuild:
+  Add musepack-tools to be in sync with portage, and drop qt:4 dep.
+  Add metadata.xml file.
+
 *qmmp-9999 (21 Feb 2009)
 
   21 Feb 2009; Markos Chandras <hwoarang@gentoo.org> +qmmp-9999.ebuild:

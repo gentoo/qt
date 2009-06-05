@@ -16,14 +16,15 @@ KEYWORDS=""
 IUSE="+alsa +dbus ffmpeg flac jack libsamplerate +mad modplug musepack oss
 	pulseaudio scrobbler sndfile +vorbis wavpack"
 
-RDEPEND="|| ( x11-libs/qt-gui:4 =x11-libs/qt-4.3*:4 )
+RDEPEND="x11-libs/qt-gui:4
 	media-libs/taglib
 	alsa? ( media-libs/alsa-lib )
 	dbus? ( sys-apps/dbus )
 	flac? ( media-libs/flac )
 	libsamplerate? ( media-libs/libsamplerate )
 	mad? ( media-libs/libmad )
-	musepack? ( >=media-libs/libmpcdec-1.2.5 )
+	musepack? ( >=media-libs/libmpcdec-1.2.5
+		media-sound/musepack-tools )
 	modplug? ( >=media-libs/libmodplug-0.8.4 )
 	vorbis? ( media-libs/libvorbis
 		media-libs/libogg )
