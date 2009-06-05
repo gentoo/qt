@@ -1,39 +1,43 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.4.4-r5.ebuild,v 1.4 2009/06/05 10:41:17 yngwin Exp $
 
 EAPI="2"
-inherit distutils qt4-edge
 
-MY_PV=${PV/_pre/-snapshot-}
-MY_P=PyQt-x11-gpl-${MY_PV}
+inherit distutils qt4
+
+MY_P=PyQt-x11-gpl-${PV}
+QTVER="4.5.1"
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/"
-SRC_URI="http://www.riverbankcomputing.com/static/Downloads/PyQt4/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples kde opengl phonon +qt3support sql svg webkit xmlpatterns"
 
-RDEPEND=">=dev-python/sip-4.8_pre20090430
-	>=x11-libs/qt-core-4.5.1:4[qt3support?]
-	>=x11-libs/qt-script-4.5.1:4
-	>=x11-libs/qt-test-4.5.1:4
-	X? ( >=x11-libs/qt-gui-4.5.1:4[dbus?,qt3support?] )
-	assistant? ( >=x11-libs/qt-assistant-4.5.1:4 )
-	dbus? (	dev-python/dbus-python
-		>=x11-libs/qt-dbus-4.5.1:4 )
-	opengl? ( >=x11-libs/qt-opengl-4.5.1:4[qt3support?] )
-	phonon? ( || ( >=x11-libs/qt-phonon-4.5.1:4
-			media-sound/phonon )
-		kde? ( media-sound/phonon ) )
-	qt3support? ( >=x11-libs/qt-qt3support-4.5.1:4 )
-	sql? ( >=x11-libs/qt-sql-4.5.1:4 )
-	svg? ( >=x11-libs/qt-svg-4.5.1:4 )
-	webkit? ( >=x11-libs/qt-webkit-4.5.1:4 )
-	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-4.5.1:4 )"
+RDEPEND=">=dev-python/sip-4.8
+	>=x11-libs/qt-core-${QTVER}:4[qt3support?]
+	>=x11-libs/qt-script-${QTVER}:4
+	>=x11-libs/qt-test-${QTVER}:4
+	X? ( >=x11-libs/qt-gui-${QTVER}:4[dbus?,qt3support?] )
+	assistant? ( >=x11-libs/qt-assistant-${QTVER}:4 )
+	dbus? (
+		>=dev-python/dbus-python-0.80
+		>=x11-libs/qt-dbus-${QTVER}:4
+	)
+	opengl? ( >=x11-libs/qt-opengl-${QTVER}:4[qt3support?] )
+	phonon? (
+		!kde? ( || ( >=x11-libs/qt-phonon-${QTVER}:4 media-sound/phonon ) )
+		kde? ( media-sound/phonon )
+	)
+	qt3support? ( >=x11-libs/qt-qt3support-${QTVER}:4 )
+	sql? ( >=x11-libs/qt-sql-${QTVER}:4 )
+	svg? ( >=x11-libs/qt-svg-${QTVER}:4 )
+	webkit? ( >=x11-libs/qt-webkit-${QTVER}:4 )
+	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QTVER}:4 )"
 DEPEND="${RDEPEND}
 	sys-devel/libtool"
 
@@ -53,9 +57,8 @@ src_prepare() {
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
 			"${S}"/configure.py || die
 	fi
-	qt4-edge_src_prepare
+	qt4_src_prepare
 }
-
 
 src_configure() {
 	distutils_python_version
@@ -85,8 +88,10 @@ src_configure() {
 	"${python}" configure.py ${myconf} || die "configuration failed"
 
 	# Fix insecure runpath
-	sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/QtDesigner::" \
-		"${S}"/QtDesigner/Makefile || die
+	if use X ; then
+		sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/QtDesigner::" \
+			"${S}"/QtDesigner/Makefile || die
+	fi
 }
 
 src_install() {
