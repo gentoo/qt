@@ -13,7 +13,7 @@ HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
 SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P}.tar.gz"
 
 SLOT="0"
-LICENSE="GPL-2"
+LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="+qt4 +python doc examples debug"
 

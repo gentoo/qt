@@ -14,7 +14,7 @@ HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/"
 SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
 
 SLOT="0"
-LICENSE="GPL-2"
+LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples kde opengl phonon +qt3support sql svg webkit xmlpatterns"
 

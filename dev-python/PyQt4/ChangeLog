@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  -PyQt4-4.5_pre20090603.ebuild, PyQt4-4.5.ebuild:
+  Drop snapshot, fix licenses
+
   05 Jun 2009; Ben de Groot <yngwin@gentoo.org>
   -PyQt4-4.4.5_pre20090208-r2.ebuild:
   Remove obsolete snapshot

@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  -files/4.2.3-no-interactive.patch, -eric-4.3_pre20090201.ebuild,
+  +metadata.xml:
+  Drop old snapshot, import metadata.xml
+
   07 Feb 2009; Markos Chandras <hwoarang@gentoo.org>
   eric-4.3_pre20090201.ebuild:
   Add svg use dependency on PyQt4 ( see bug #257976 )

@@ -11,7 +11,7 @@ DESCRIPTION="Python bindings for Qscintilla"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
 SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="qt4"
