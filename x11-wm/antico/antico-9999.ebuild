@@ -7,7 +7,7 @@ EAPI="2"
 inherit qt4-edge git
 
 DESCRIPTION="A simple Qt4/X11 window manager"
-HOMEPAGE="http://antico.wordpress.com/introduction/"
+HOMEPAGE="http://www.antico.netsons.org/"
 EGIT_REPO_URI="git://github.com/antico/antico.git"
 
 LICENSE="GPL-2"
@@ -28,12 +28,16 @@ src_prepare() {
 }
 
 src_install() {
-	dodir /usr/share/${P} || die "dodir failed"
-	exeinto /usr/share/${P} || die "exeinto failed"
+	dodir /usr/share/${P}
+	exeinto /usr/share/${P}
 	doexe antico || die "Installing antico binary failed"
-	insinto /usr/share/${P} || die "insinto failed"
+
+	insinto /usr/share/${P}
 	doins -r theme || die "Installing default theme failed"
 	dodoc README CHANGELOG || die "dodoc failed"
+
+	insinto /usr/share/xsessions
+	newins antico-kdm.desktop antico.desktop || die "Installing desktop file failed"
 
 	echo "#!/bin/bash" > antico.sh
 	echo "pushd /usr/share/${P}" >> antico.sh
