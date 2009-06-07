@@ -8,11 +8,12 @@ inherit qt4-build-edge
 DESCRIPTION="The Webkit module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE=""
+IUSE="kde"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl]
 	~x11-libs/qt-gui-${PV}[debug=]
-	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[debug=] media-sound/phonon )"
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[debug=] media-sound/phonon ) )
+	kde? ( media-sound/phonon )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/3rdparty/webkit/WebCore tools/designer/src/plugins/qwebview"

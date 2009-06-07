@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>qt</herd> 
+  <herd>qt</herd>
+  <use>
+    <flag name='phonon'>
+      Enable phonon configuration dialog in qtconfig
+    </flag>
+    <flag name='kde'>
+      Select <pkg>media-sound/phonon</pkg> as phonon variant needed for kde
+    </flag>
+  </use>
 </pkgmetadata>

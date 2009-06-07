@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-webkit-4.5.9999.ebuild, qt-webkit-4.9999.ebuild:
+  Backport phonon use flag fixes from portage
+
   24 May 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-webkit-4.5.9999.ebuild, qt-webkit-4.9999.ebuild,
   +files/sparc-qt-webkit-sigbus.patch:
