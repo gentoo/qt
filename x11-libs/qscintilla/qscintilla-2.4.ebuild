@@ -6,7 +6,6 @@ EAPI="2"
 inherit eutils toolchain-funcs multilib qt4-edge
 
 MY_P="${PN/qs/QS}-gpl-${PV/_pre/-snapshot-}"
-S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="A Qt port of Neil Hodgson's Scintilla C++ editor class"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
@@ -15,7 +14,7 @@ SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="+qt4 +python doc examples debug"
+IUSE="debug doc examples +python +qt4"
 
 RDEPEND="qt4? ( x11-libs/qt-gui:4 )
 	!qt4? ( x11-libs/qt:3 )"
@@ -23,6 +22,8 @@ DEPEND="${RDEPEND}"
 # dev-python/PyQt needs qscintilla to build and qscintilla's python bindings
 # need dev-python/PyQt, bug 199543
 PDEPEND="python? ( ~dev-python/qscintilla-python-${PV}[qt4=] )"
+
+S="${WORKDIR}/${MY_P}"
 
 src_configure() {
 	local myqmake myqtdir
@@ -47,13 +48,12 @@ src_configure() {
 	EOF
 
 	${myqmake} qscintilla.pro -o Makefile
-	cd "${S}/designer-${myqtdir}"
 
+	cd "${S}/designer-${myqtdir}"
 	if use qt4; then
 		epatch "${FILESDIR}/${PN}-2.2-qt4.patch"
 	else
 		epatch "${FILESDIR}/${PN}-2.2-qt.patch"
-
 		sed -i \
 			-e "s:DESTDIR = \$(QTDIR)/plugins/designer:DESTDIR = .:" \
 			designer.pro || die "sed in designer.pro failed"
@@ -89,41 +89,43 @@ src_compile() {
 }
 
 src_install() {
-	dodoc ChangeLog NEWS README*
+	dodoc ChangeLog NEWS README
 	dodir /usr/{include,$(get_libdir),share/qscintilla/translations}
 	if use qt4; then
 		cd "${S}"/Qt4
 	else
 		cd "${S}"/Qt3
 	fi
-	cp -r Qsci "${D}/usr/include"
-	#cp qextscintilla*.h "${D}/usr/include"
-	cp qscintilla*.qm "${D}/usr/share/qscintilla/translations"
-	cp libqscintilla2.a* "${D}/usr/$(get_libdir)"
-	cp -d libqscintilla2.so.* "${D}/usr/$(get_libdir)"
+	cp -r Qsci "${D}"/usr/include
+	#cp qextscintilla*.h "${D}"/usr/include
+	cp qscintilla*.qm "${D}"/usr/share/qscintilla/translations
+	cp libqscintilla2.a* "${D}"/usr/$(get_libdir)
+	cp -d libqscintilla2.so.* "${D}"/usr/$(get_libdir)
 	if use qt4; then
-		dodir /usr/share/qt4/translations/
-		for I in $(ls -1 qscintilla*.qm) ; do
+		dodir /usr/share/qt4/translations
+		for I in $(ls -1 qscintilla*.qm); do
 			dosym "/usr/share/qscintilla/translations/${I}" "/usr/share/qt4/translations/${I}"
 		done
 	else
-		dodir ${QTDIR}/translations/
-		for I in $(ls -1 qscintilla*.qm) ; do
+		dodir ${QTDIR}/translations
+		for I in $(ls -1 qscintilla*.qm); do
 			dosym "/usr/share/qscintilla/translations/${I}" "${QTDIR}/translations/${I}"
 		done
 	fi
-	if use doc ; then
+
+	if use doc; then
 		dohtml "${S}"/doc/html/*
 		insinto /usr/share/doc/${PF}/Scintilla
 		doins "${S}"/doc/Scintilla/*
 	fi
+
 	if use qt4; then
 		insinto /usr/$(get_libdir)/qt4/plugins/designer
-		insopts  -m0755
+		insopts -m0755
 		doins "${S}"/designer-Qt4/libqscintillaplugin.so
 	else
 		insinto ${QTDIR}/plugins/designer
-		insopts  -m0755
+		insopts -m0755
 		doins "${S}"/designer-Qt3/libqscintillaplugin.so
 	fi
 }
