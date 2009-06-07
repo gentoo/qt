@@ -212,7 +212,7 @@ eqmake4() {
 				print >> file;
 			}
 			END {
-				printf "CONFIG -= debug_and_release %s\n", rem >> file;
+				printf "\nCONFIG -= debug_and_release %s\n", rem >> file;
 				printf "CONFIG += %s\n", add >> file;
 				print fixed;
 			}'
