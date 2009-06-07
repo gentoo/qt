@@ -3,7 +3,8 @@
 # $Header: $
 
 EAPI="2"
-inherit eutils toolchain-funcs multilib qt4-edge
+
+inherit eutils multilib qt3 qt4-edge
 
 MY_P="${PN/qs/QS}-gpl-${PV/_pre/-snapshot-}"
 
@@ -14,7 +15,7 @@ SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="debug doc examples +python +qt4"
+IUSE="doc +python +qt4"
 
 RDEPEND="qt4? ( x11-libs/qt-gui:4 )
 	!qt4? ( x11-libs/qt:3 )"
@@ -25,116 +26,67 @@ PDEPEND="python? ( ~dev-python/qscintilla-python-${PV}[qt4=] )"
 
 S="${WORKDIR}/${MY_P}"
 
+PATCHES=( "${FILESDIR}/${PN}-2.4-designer.patch" )
+
 src_configure() {
-	local myqmake myqtdir
 	if use qt4; then
-		myqmake=eqmake4
-		myqtdir=Qt4
+		myqtver=4
+		myqtdir=/usr/share/qt4
 	else
-		myqmake="${QTDIR}/bin/qmake"
-		myqtdir=Qt3
+		myqtver=3
+		myqtdir=${QTDIR}
 	fi
 
-	cd "${S}/${myqtdir}"
-	sed -i \
-		-e "s:DESTDIR = \$(QTDIR)/lib:DESTDIR = lib:" \
-		-e "s:DESTDIR = \$\$\[QT_INSTALL_LIBS\]:DESTDIR = lib:"\
-		qscintilla.pro || die "sed in qscintilla.pro failed"
+	cd "${S}"/Qt${myqtver}
+	eqmake${myqtver} qscintilla.pro
 
-	cat <<- EOF >> qscintilla.pro
-	QMAKE_CFLAGS_RELEASE=${CFLAGS} -w
-	QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS} -w
-	QMAKE_LFLAGS_RELEASE=${LDFLAGS}
-	EOF
-
-	${myqmake} qscintilla.pro -o Makefile
-
-	cd "${S}/designer-${myqtdir}"
-	if use qt4; then
-		epatch "${FILESDIR}/${PN}-2.2-qt4.patch"
-	else
-		epatch "${FILESDIR}/${PN}-2.2-qt.patch"
-		sed -i \
-			-e "s:DESTDIR = \$(QTDIR)/plugins/designer:DESTDIR = .:" \
-			designer.pro || die "sed in designer.pro failed"
-	fi
-
-	cat <<- EOF >> designer.pro
-	QMAKE_CFLAGS_RELEASE=${CFLAGS} -w
-	QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS} -w
-	QMAKE_LFLAGS_RELEASE=${LDFLAGS}
-	EOF
-
-	${myqmake} designer.pro -o Makefile
+	cd "${S}"/designer-Qt${myqtver}
+	eqmake${myqtver} designer.pro
 }
 
 src_compile() {
-	if use qt4; then
-		cd "${S}"/Qt4
-	else
-		cd "${S}"/Qt3
-	fi
-	make all staticlib CC="$(tc-getCC)" CXX="$(tc-getCXX)" LINK="$(tc-getCXX)" || die "make failed"
+	cd "${S}"/Qt${myqtver}
+	emake all staticlib || die "emake failed"
 
-	if use qt4; then
-		cd "${S}"/designer-Qt4
-		make DESTDIR="${D}"/usr/lib/qt4/plugins/designer || die "make failed"
-		dodir /usr/lib/qt4/plugins/designer
-	else
-		cd "${S}"/designer-Qt3
-		make DESTDIR="${D}"/${QTDIR}/plugins/designer || die "make failed"
-		dodir ${QTDIR}/plugins/designer
-	fi
-	make
+	cd "${S}"/designer-Qt${myqtver}
+	emake || die "failed to build designer plugin"
 }
 
 src_install() {
-	dodoc ChangeLog NEWS README
-	dodir /usr/{include,$(get_libdir),share/qscintilla/translations}
-	if use qt4; then
-		cd "${S}"/Qt4
-	else
-		cd "${S}"/Qt3
-	fi
-	cp -r Qsci "${D}"/usr/include
-	#cp qextscintilla*.h "${D}"/usr/include
-	cp qscintilla*.qm "${D}"/usr/share/qscintilla/translations
-	cp libqscintilla2.a* "${D}"/usr/$(get_libdir)
-	cp -d libqscintilla2.so.* "${D}"/usr/$(get_libdir)
-	if use qt4; then
-		dodir /usr/share/qt4/translations
-		for I in $(ls -1 qscintilla*.qm); do
-			dosym "/usr/share/qscintilla/translations/${I}" "/usr/share/qt4/translations/${I}"
-		done
-	else
-		dodir ${QTDIR}/translations
-		for I in $(ls -1 qscintilla*.qm); do
-			dosym "/usr/share/qscintilla/translations/${I}" "${QTDIR}/translations/${I}"
-		done
-	fi
+	cd "${S}"/Qt${myqtver}
+	# header files
+	insinto /usr/include/Qsci
+	doins Qsci/*.h || die
+	# libraries
+	dolib.so libqscintilla2.so* || die
+	dolib.a libqscintilla2.a || die
+	# translations
+	insinto /usr/share/${PN}/translations
+	doins qscintilla_*.qm || die
+	for trans in $(ls -1 qscintilla_*.qm); do
+		dosym /usr/share/${PN}/translations/${trans} \
+			${myqtdir}/translations/${trans} || die
+	done
 
+	# designer plugin
+	cd "${S}"/designer-Qt${myqtver}
+	emake INSTALL_ROOT="${D}" install || die "designer plugin installation failed"
+
+	# documentation
+	cd "${S}"
+	dodoc ChangeLog NEWS
 	if use doc; then
-		dohtml "${S}"/doc/html/*
+		dohtml doc/html-Qt${myqtver}/* || die
 		insinto /usr/share/doc/${PF}/Scintilla
-		doins "${S}"/doc/Scintilla/*
-	fi
-
-	if use qt4; then
-		insinto /usr/$(get_libdir)/qt4/plugins/designer
-		insopts -m0755
-		doins "${S}"/designer-Qt4/libqscintillaplugin.so
-	else
-		insinto ${QTDIR}/plugins/designer
-		insopts -m0755
-		doins "${S}"/designer-Qt3/libqscintillaplugin.so
+		doins doc/Scintilla/* || die
 	fi
 }
 
 pkg_postinst() {
 	if use qt4; then
-		ewarn "Please remerge dev-python/PyQt4 if you have problems with eric4"
+		ewarn "Please remerge dev-python/PyQt4 if you have problems with eric or other"
 	else
-		ewarn "Please remerge dev-python/PyQt if you have problems with eric3"
+		ewarn "Please remerge dev-python/PyQt if you have problems with"
 	fi
-	ewarn "or other qscintilla related packages before submitting bug reports."
+	ewarn "qscintilla related packages before submitting bug reports."
 }
