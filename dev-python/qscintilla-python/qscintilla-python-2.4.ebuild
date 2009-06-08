@@ -3,7 +3,8 @@
 # $Header: $
 
 EAPI="2"
-inherit eutils python
+
+inherit eutils multilib python
 
 MY_P="QScintilla-gpl-${PV/_pre/-snapshot-}"
 
@@ -14,7 +15,7 @@ SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="qt4"
+IUSE="debug +qt4"
 
 DEPEND=">=dev-python/sip-4.8
 	~x11-libs/qscintilla-${PV}[qt4=]
@@ -22,26 +23,21 @@ DEPEND=">=dev-python/sip-4.8
 	!qt4? ( >=dev-python/PyQt-3.18 )"
 RDEPEND="${DEPEND}"
 
-S=${WORKDIR}/${MY_P}/Python
+S="${WORKDIR}"/${MY_P}/Python
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-2.4-nostrip.patch
 }
 
 src_configure() {
-	local myconf="-o /usr/lib -n /usr/include"
-	if use qt4; then
-		myconf="${myconf} -p 4"
-	else
-		myconf="${myconf} -p 3"
-	fi
-
-	python_version
-	${python} configure.py ${myconf} || die "configure.py failed"
-}
-
-src_compile() {
-	emake || die "emake failed"
+	local myconf="${python} configure.py
+			--destdir=$(python_get_sitedir)/PyQt4
+			-n /usr/include
+			-o /usr/$(get_libdir)
+			-p $(use qt4 && echo 4 || echo 3)
+			$(use debug && echo '--debug')"
+	echo ${myconf}
+	eval ${myconf} || die "configuration failed"
 }
 
 src_install() {
