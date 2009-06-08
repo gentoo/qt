@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
+  qscintilla-2.4.ebuild:
+  inherit qt4 instead of qt4-edge, in preparation for upcoming move to the
+  tree.
+
   07 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
   -files/qscintilla-2.2-qt.patch, -files/qscintilla-2.2-qt4.patch,
   qscintilla-2.4.ebuild, +files/qscintilla-2.4-designer.patch:

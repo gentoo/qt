@@ -4,18 +4,18 @@
 
 EAPI="2"
 
-inherit eutils multilib qt3 qt4-edge
+inherit eutils multilib qt3 qt4
 
-MY_P="${PN/qs/QS}-gpl-${PV/_pre/-snapshot-}"
+MY_P="QScintilla-gpl-${PV/_pre/-snapshot-}"
 
 DESCRIPTION="A Qt port of Neil Hodgson's Scintilla C++ editor class"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
 SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P}.tar.gz"
 
-SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
+SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="doc +python +qt4"
+IUSE="doc python +qt4"
 
 RDEPEND="qt4? ( x11-libs/qt-gui:4 )
 	!qt4? ( x11-libs/qt:3 )"
@@ -24,7 +24,7 @@ DEPEND="${RDEPEND}"
 # need dev-python/PyQt, bug 199543
 PDEPEND="python? ( ~dev-python/qscintilla-python-${PV}[qt4=] )"
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}"/${MY_P}
 
 PATCHES=( "${FILESDIR}/${PN}-2.4-designer.patch" )
 
