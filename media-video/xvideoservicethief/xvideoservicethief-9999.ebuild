@@ -3,6 +3,9 @@
 # $Header: $
 
 EAPI="2"
+
+LANGS="br ca cs da de es fr gl hu it pl ro sv"
+
 inherit qt4-edge versionator subversion
 
 MY_PV=$(replace_all_version_separators '_')
@@ -15,7 +18,7 @@ ESVN_REPO_URI="http://xviservicethief.svn.sourceforge.net/svnroot/xviservicethie
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="debug"
 
 DEPEND="app-arch/unzip
 	x11-libs/qt-gui:4"
@@ -25,11 +28,27 @@ RDEPEND="x11-libs/qt-gui:4
 PATCHES=( "${FILESDIR}/gcc-4.3.patch" )
 
 S="${WORKDIR}"
+TRANSLATIONSDIR="${S}/resources"
 
-# TODO: translations, documentation
+
+src_prepare() {
+	# fix checz translation
+	mv "${S}"/resources/translations/xVST_cz.ts "${S}"/resources/translations/xVST_cs.ts
+	# fix plugins, language path
+	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
+	"${S}"/src/options.cpp || die "failed to fix paths"
+}
 
 src_configure() {
 	eqmake4 xVideoServiceThief.pro
+}
+
+src_compile() {
+	local lang=
+	emake || die "emake failed"
+	for lang in "${S}"/resources/translations/*.ts; do
+		lrelease ${lang}
+	done
 }
 
 src_install() {
@@ -39,4 +58,12 @@ src_install() {
 	newins resources/images/InformationLogo.png xvst.png || die "newins failed"
 	make_desktop_entry /usr/bin/xvst xVideoServiceThief xvst 'Qt;AudioVideo;Video' \
 		|| die "make_desktop_entry failed"
+
+	#install plugins
+	local dest=/usr/share/${PN}/plugins
+	dodir ${dest}
+	find resources/services -name '*.js' -exec cp -dpR {} "${D}"${dest} \;
+
+	#install translations
+	prepare_translations
 }
