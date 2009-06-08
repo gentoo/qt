@@ -18,7 +18,7 @@ LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples kde opengl phonon +qt3support sql svg webkit xmlpatterns"
 
-RDEPEND=">=dev-python/sip-4.8
+DEPEND=">=dev-python/sip-4.8
 	>=x11-libs/qt-core-${QTVER}:4[qt3support?]
 	>=x11-libs/qt-script-${QTVER}:4
 	>=x11-libs/qt-test-${QTVER}:4
@@ -38,8 +38,7 @@ RDEPEND=">=dev-python/sip-4.8
 	svg? ( >=x11-libs/qt-svg-${QTVER}:4 )
 	webkit? ( >=x11-libs/qt-webkit-${QTVER}:4 )
 	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QTVER}:4 )"
-DEPEND="${RDEPEND}
-	sys-devel/libtool"
+RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -63,7 +62,8 @@ src_prepare() {
 src_configure() {
 	distutils_python_version
 
-	local myconf="--confirm-license
+	local myconf="${python} configure.py
+			--confirm-license
 			--bindir=/usr/bin
 			--destdir=/usr/$(get_libdir)/python${PYVER}/site-packages
 			--sipdir=/usr/share/sip
@@ -73,7 +73,6 @@ src_configure() {
 			--enable=QtScript
 			--enable=QtTest
 			--enable=QtXml
-			$(pyqt4_use_enable dbus)
 			$(pyqt4_use_enable X QtGui)
 			$(pyqt4_use_enable X QtDesigner)
 			$(pyqt4_use_enable assistant QtAssistant)
@@ -84,8 +83,8 @@ src_configure() {
 			$(pyqt4_use_enable svg QtSvg)
 			$(pyqt4_use_enable webkit QtWebKit)
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
-	echo "${python}" configure.py ${myconf}
-	"${python}" configure.py ${myconf} || die "configuration failed"
+	echo ${myconf}
+	${myconf} || die "configuration failed"
 
 	# Fix insecure runpath
 	if use X ; then
