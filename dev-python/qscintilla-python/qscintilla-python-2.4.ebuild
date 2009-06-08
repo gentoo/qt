@@ -30,6 +30,8 @@ src_prepare() {
 }
 
 src_configure() {
+	python_version
+
 	local myconf="${python} configure.py
 			--destdir=$(python_get_sitedir)/PyQt4
 			-n /usr/include
@@ -37,7 +39,7 @@ src_configure() {
 			-p $(use qt4 && echo 4 || echo 3)
 			$(use debug && echo '--debug')"
 	echo ${myconf}
-	eval ${myconf} || die "configuration failed"
+	${myconf} || die "configuration failed"
 }
 
 src_install() {
