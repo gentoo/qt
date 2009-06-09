@@ -82,8 +82,8 @@ src_configure() {
 			$(pyqt4_use_enable svg QtSvg)
 			$(pyqt4_use_enable webkit QtWebKit)
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
-	echo "${python}" configure.py ${myconf}
-	"${python}" configure.py ${myconf} || die "configuration failed"
+	echo ${python} configure.py ${myconf}
+	${python} configure.py ${myconf} || die "configuration failed"
 
 	# Fix insecure runpath
 	if use X ; then

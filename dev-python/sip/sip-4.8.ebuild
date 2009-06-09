@@ -26,18 +26,18 @@ RDEPEND=""
 src_configure() {
 	python_version
 
-	local myconf="--bindir=/usr/bin \
-			--destdir=$(python_get_sitedir) \
-			--incdir=/usr/include/python${PYVER} \
-			--sipdir=/usr/share/sip \
-			$(use debug && echo '--debug') \
-			CC=$(tc-getCC) CXX=$(tc-getCXX) \
-			LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX) \
-			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' \
-			LFLAGS='${LDFLAGS}' \
+	local myconf="--bindir=/usr/bin
+			--destdir=$(python_get_sitedir)
+			--incdir=/usr/include/python${PYVER}
+			--sipdir=/usr/share/sip
+			$(use debug && echo '--debug')
+			CC=$(tc-getCC) CXX=$(tc-getCXX)
+			LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
+			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
+			LFLAGS='${LDFLAGS}'
 			STRIP=true"
-	echo "${python} configure.py ${myconf}"
-	"${python}" configure.py "${myconf}" || die "configuration failed"
+	echo ${python} configure.py ${myconf}
+	${python} configure.py ${myconf} || die "configuration failed"
 }
 
 src_install() {

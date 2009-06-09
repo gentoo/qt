@@ -2,9 +2,6 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  09 Jun 2009; Ben de Groot <yngwin@gentoo.org> sip-4.8.ebuild:
-  Fix quoting
-
   08 Jun 2009; Ben de Groot <yngwin@gentoo.org> sip-4.8.ebuild:
   Minor fix
 
