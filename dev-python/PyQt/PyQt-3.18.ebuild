@@ -31,7 +31,7 @@ src_configure() {
 	distutils_python_version
 	addpredict ${QTDIR}/etc/settings
 
-	local myconf="-d /usr/$(get_libdir)/python${PYVER}/site-packages \
+	local myconf="-d $(python_get_sitedir) \
 			-b /usr/bin \
 			-v /usr/share/sip \
 			-n /usr/include \
@@ -47,6 +47,7 @@ src_compile() {
 }
 
 src_install() {
+	python_need_rebuild
 	make DESTDIR="${D}" install || die "install failed"
 	dodoc ChangeLog NEWS README THANKS
 	use doc && dohtml doc/PyQt.html
