@@ -16,11 +16,11 @@ inherit base eutils multilib toolchain-funcs
 
 export XDG_CONFIG_HOME="${T}"
 
-for x in ${LANGS}; do
+for x in ${LANGSLONG}; do
 	IUSE="${IUSE} linguas_${x%_*}"
 done
 
-for x in ${LANGSLONG}; do
+for x in ${LANGS}; do
 	IUSE="${IUSE} linguas_${x}"
 done
 
