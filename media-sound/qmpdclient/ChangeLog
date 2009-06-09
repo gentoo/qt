@@ -3,6 +3,9 @@
 # $Header: $
 
   09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
+  Fix zh_*, no_NO linguas
+
+  09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
   Fix linguas
 
   09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
