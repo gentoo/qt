@@ -26,7 +26,8 @@ RDEPEND=""
 src_configure() {
 	python_version
 
-	local myconf="--bindir=/usr/bin
+	local myconf="${python} configure.py
+			--bindir=/usr/bin
 			--destdir=$(python_get_sitedir)
 			--incdir=/usr/include/python${PYVER}
 			--sipdir=/usr/share/sip
@@ -36,8 +37,8 @@ src_configure() {
 			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
 			LFLAGS='${LDFLAGS}'
 			STRIP=true"
-	echo ${python} configure.py ${myconf}
-	${python} configure.py ${myconf} || die "configuration failed"
+	echo ${myconf}
+	eval ${myconf} || die "configuration failed"
 }
 
 src_install() {
