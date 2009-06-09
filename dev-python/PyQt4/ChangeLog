@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Jun 2009; Ben de Groot <yngwin@gentoo.org> PyQt4-4.5.ebuild:
+  Fix quoting
+
   08 Jun 2009; Ben de Groot <yngwin@gentoo.org> PyQt4-4.5.ebuild:
   Improve python eclass usage. Minor fixes.
 
