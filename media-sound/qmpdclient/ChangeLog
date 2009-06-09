@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
+  Drop make_desktop_entry. Upstream fixed it
+
   29 May 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
   Ebuild clean up . Make it compatible with qt4-edge eclass
 

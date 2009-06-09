@@ -57,7 +57,4 @@ src_install() {
 		insinto /usr/share/icons/hicolor/${res}x${res}/apps/
 		newins icons/qmpdclient${res}.png ${PN}.png || die "Installing icons failed"
 	done
-
-	make_desktop_entry qmpdclient "QMPDClient" ${PN} \
-		"Qt;AudioVideo;Audio;" || die "Installing desktop entry failed"
 }
