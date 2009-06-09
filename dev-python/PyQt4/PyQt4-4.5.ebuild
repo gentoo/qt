@@ -62,10 +62,9 @@ src_prepare() {
 src_configure() {
 	distutils_python_version
 
-	local myconf="${python} configure.py
-			--confirm-license
+	local myconf="--confirm-license
 			--bindir=/usr/bin
-			--destdir=/usr/$(get_libdir)/python${PYVER}/site-packages
+			--destdir=$(python_get_sitedir)
 			--sipdir=/usr/share/sip
 			$(use debug && echo '--debug')
 			--enable=QtCore
@@ -83,17 +82,19 @@ src_configure() {
 			$(pyqt4_use_enable svg QtSvg)
 			$(pyqt4_use_enable webkit QtWebKit)
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
-	echo ${myconf}
-	${myconf} || die "configuration failed"
+	echo ${python} configure.py ${myconf}
+	${python} configure.py ${myconf} || die "configuration failed"
 
 	# Fix insecure runpath
 	if use X ; then
 		sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/QtDesigner::" \
-			"${S}"/QtDesigner/Makefile || die
+			"${S}"/QtDesigner/Makefile || die 'sed failed'
 	fi
 }
 
 src_install() {
+	python_need_rebuild
+
 	# INSTALL_ROOT is needed for the QtDesigner module,
 	# the other Makefiles use DESTDIR.
 	emake DESTDIR="${D}" INSTALL_ROOT="${D}" install || die "installation failed"

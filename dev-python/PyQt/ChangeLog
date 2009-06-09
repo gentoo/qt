@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Jun 2009; Ben de Groot <yngwin@gentoo.org> PyQt-3.18.ebuild:
+  Some minor improvements wrt python eclass usage
+
 *PyQt-3.18 (05 Jun 2009)
 
   05 Jun 2009; Ben de Groot <yngwin@gentoo.org> +PyQt-3.18.ebuild:
