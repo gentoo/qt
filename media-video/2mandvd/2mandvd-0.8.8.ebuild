@@ -47,10 +47,6 @@ src_prepare() {
 	qt4-edge_src_prepare
 }
 
-src_configure() {
-	eqmake4 ${MY_PN}.pro
-}
-
 src_install() {
 	dobin 2ManDVD || die "dobin failed"
 	insinto /usr/share/${PN}/
