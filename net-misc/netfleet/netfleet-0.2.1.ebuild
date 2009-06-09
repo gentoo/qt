@@ -4,8 +4,7 @@
 
 EAPI="2"
 
-LANGS="de"
-LANGSLONG="en_US zh_CN zh_TW"
+LANGS="de en_US zh_CN zh_TW"
 
 inherit qt4-edge versionator
 
@@ -16,7 +15,7 @@ DESCRIPTION="Qt4 cross-platform multi-threaded download utility"
 HOMEPAGE="http://qt-apps.org/content/show.php/?content=103312"
 SRC_URI="http://netfleet.googlecode.com/files/${MY_P}.tar.bz2"
 
-LICENSE=""
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
