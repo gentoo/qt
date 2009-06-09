@@ -3,6 +3,9 @@
 # $Header: $
 
   09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
+  Fix linguas
+
+  09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
   Drop make_desktop_entry. Upstream fixed it
 
   29 May 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:

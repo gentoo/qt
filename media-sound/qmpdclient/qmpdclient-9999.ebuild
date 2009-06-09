@@ -4,8 +4,8 @@
 
 EAPI="2"
 EGIT_REPO_URI="git://github.com/Voker57/qmpdclient-ne.git"
-LANGS="de_DE fr_FR it_IT nl_NL nn_NO no_NO ru_RU sv_SE tr_TR uk_UA"
-LANGSLONG="zh_CN zh_TW pt_BR"
+LANGS="pt_BR"
+LANGSLONG="de_DE fr_FR it_IT nl_NL nn_NO zh_CN zh_TW pt_BR ru_RU sv_SE tr_TR uk_UA"
 
 inherit qt4-edge git
 
@@ -32,7 +32,7 @@ src_prepare() {
 
 	sed -i -e "s:+= -O2 -g0 -s:+= -O2 -g0:" qmpdclient.pro \
 		|| die "sed failed (nostrip)"
-	
+
 	# fix installation folder name
 	sed -i "s/share\/QMPDClient/share\/qmpdclient/" src/config.cpp \
 		|| die "failed to fix installation directory"
