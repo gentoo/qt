@@ -65,7 +65,7 @@ src_configure() {
 	local myconf="${python} configure.py
 			--confirm-license
 			--bindir=/usr/bin
-			--destdir=/usr/$(get_libdir)/python${PYVER}/site-packages
+			--destdir=$(python_get_sitedir)
 			--sipdir=/usr/share/sip
 			$(use debug && echo '--debug')
 			--enable=QtCore
@@ -88,12 +88,15 @@ src_configure() {
 
 	# Fix insecure runpath
 	if use X ; then
-		sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/QtDesigner::" \
-			"${S}"/QtDesigner/Makefile || die
+		for pkg in QtDesigner QtGui QtCore; do
+			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/${pkg}::" \
+				"${S}"/${pkg}/Makefile || die "failed to fix rpath issues"
+		done
 	fi
 }
 
 src_install() {
+	python_need_rebuild
 	# INSTALL_ROOT is needed for the QtDesigner module,
 	# the other Makefiles use DESTDIR.
 	emake DESTDIR="${D}" INSTALL_ROOT="${D}" install || die "installation failed"
