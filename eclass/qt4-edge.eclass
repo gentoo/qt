@@ -114,7 +114,7 @@ qt4-edge_src_install() {
 
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
 
-	 install documentation
+	# install documentation
 	if [[ -n "${DOCS}" ]]; then
 		local dir=${DOCSDIR:-${S}}
 		for doc in ${DOCS}; do
@@ -130,16 +130,16 @@ qt4-edge_src_install() {
 # Internal function
 _do_qm() {
 	debug-print-function $FUNCNAME "$@"
-	local transfile=
 	[[ $# -ne 2 ]] && die "$FUNCNAME requires exactly 2 arguments!"
-	INSDESTTREE="/usr/share/${PN}/${1#${S}}" \
-	transfile="$(find "${1}" -name "*${2}".qm)"
+
+	local transfile="$(find "${1}" -type f -name "*${2}".qm)"
 	if [[ -e ${transfile} ]]; then
-		doins "${transfile}" \
+		INSDESTTREE="/usr/share/${PN}/${1#${S}}" \
+			doins "${transfile}" \
 			|| die "failed to install ${2} translation"
 	else
 		eerror
-		eerror "Failed to install ${2} translation. Contact eclass maintainer"
+		eerror "Failed to install ${2} translation. Contact eclass maintainer."
 		eerror
 		die "Failed to install translations"
 	fi
@@ -150,13 +150,13 @@ _do_qm() {
 
 # @FUNCTION: prepare_translations
 # @DESCRIPTION:
-# Choose and install translation files. Normally you don't need
-# to call this function directly as it is called from src_install.
+# Choose and install translation files. Normally you don't need to call
+# this function directly as it is called from qt4-edge_src_install.
 prepare_translations() {
 	debug-print-function $FUNCNAME "$@"
 
 	# Find translations directory
-	local roottrdir="${TRANSLATIONSDIR:-${S}}" dir=
+	local roottrdir="${TRANSLATIONSDIR:-${S}}" trdir=
 	for dir in lang langs translations; do
 		[[ -d ${roottrdir}/${dir} ]] && trdir="${roottrdir}/${dir}"
 	done
@@ -164,7 +164,7 @@ prepare_translations() {
 	local lang=
 	for lang in ${LINGUAS}; do
 		for x in ${LANGS}; do
-		[[ ${lang} == ${x%_*} ]] && _do_qm "${trdir}" ${x}
+			[[ ${lang} == ${x%_*} ]] && _do_qm "${trdir}" ${x}
 		done
 		for x in ${LANGSLONG}; do
 			[[ ${lang} == ${x} ]] && _do_qm "${trdir}" ${x}
