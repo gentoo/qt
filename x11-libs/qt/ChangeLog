@@ -2,6 +2,22 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-3.3.8b-r2 (11 Jun 2009)
+
+  11 Jun 2009; Dror Levin <spatz@psybear.com>
+  +files/0001-dnd_optimization.patch, +files/qt-3.3.8-mips.patch,
+  +files/0002-dnd_active_window_fix.patch,
+  +files/qt-3.3.8-seli-xinerama.patch,
+  +files/0038-dragobject-dont-prefer-unknown.patch,
+  +files/qt-3.3.8-uic-fix.patch,
+  +files/0044-qscrollview-windowactivate-fix.diff,
+  +files/qt-3.3.8-visibility.patch, +files/0047-fix-kmenu-widget.diff,
+  +files/qt-3.3.8-fix-compiler-detection.patch, +qt-3.3.8b-r2.ebuild,
+  +files/0048-qclipboard_hack_80072.patch,
+  +files/qt-3.3.8-immqt+gcc-4.3.patch, +files/qt-3.3.8b-cjk-fix.patch,
+  +files/qt-ulibc.patch:
+  Revbump, fix pkgconfig file install location and the env.d entry, wrt bug
+
   29 Apr 2009; Markos Chandras <hwoarang@gentoo.org> -qt-4.5.1.ebuild:
   Remove 4.5.1. On tree now
 

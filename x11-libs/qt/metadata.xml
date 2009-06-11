@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>qt</herd>
+<use>
+	<flag name='immqt-bc'>Enable binary compatible version of immodule for
+		Qt</flag>
+	<flag name='immqt'>Enable binary incompatible version of immodule for
+		Qt</flag>
+</use>
+</pkgmetadata>
