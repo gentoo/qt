@@ -4,11 +4,13 @@
 
 EAPI="2"
 NEED_PYTHON=2.4
+
 inherit python versionator eutils
 
 MY_PN="${PN}4"
 MY_PV="$(get_version_component_range 1-2)-snapshot-${PV##*_pre}"
 MY_P="${MY_PN}-${MY_PV}"
+
 DESCRIPTION="A full featured Python IDE that is written in PyQt4 using the QScintilla editor widget"
 HOMEPAGE="http://eric-ide.python-projects.org/index.html"
 SRC_URI="mirror://sourceforge/eric-ide/${MY_P}.tar.gz
@@ -25,12 +27,12 @@ LICENSE="GPL-2"
 KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 IUSE="linguas_cs linguas_de linguas_es linguas_fr linguas_ru linguas_tr"
 
-DEPEND="dev-python/PyQt4[svg]
+DEPEND="dev-python/PyQt4[X,assistant,svg,webkit]
 	>=dev-python/qscintilla-python-2.2[qt4]"
 RDEPEND="${DEPEND}"
 RESTRICT="mirror"
 
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}"/${MY_P}
 
 LANGS="cs de es fr ru tr"
 
@@ -43,7 +45,7 @@ src_prepare() {
 
 src_install() {
 	# Change qt dir to be located in ${D}
-	dodir /usr/share/qt4/
+	dodir /usr/share/qt4
 	${python} install.py \
 		-z \
 		-b "/usr/bin" \
