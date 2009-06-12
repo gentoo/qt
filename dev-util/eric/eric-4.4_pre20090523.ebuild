@@ -5,10 +5,10 @@
 EAPI="2"
 NEED_PYTHON=2.4
 
-inherit python versionator eutils
+inherit python eutils
 
 MY_PN="${PN}4"
-MY_PV="$(get_version_component_range 1-2)-snapshot-${PV##*_pre}"
+MY_PV="${PV/_pre/-snapshot-}"
 MY_P="${MY_PN}-${MY_PV}"
 
 DESCRIPTION="A full featured Python IDE that is written in PyQt4 using the QScintilla editor widget"
@@ -21,22 +21,21 @@ SRC_URI="mirror://sourceforge/eric-ide/${MY_P}.tar.gz
 	linguas_ru? ( mirror://sourceforge/eric-ide/${MY_PN}-i18n-ru-${MY_PV}.tar.gz )
 	linguas_tr? ( mirror://sourceforge/eric-ide/${MY_PN}-i18n-tr-${MY_PV}.tar.gz )
 	linguas_zh_CN? ( mirror://sourceforge/eric-ide/${MY_PN}-i18n-zh_CN.GB2312-${MY_PV}.tar.gz )"
+RESTRICT="mirror"
 
 SLOT="4"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
-IUSE="linguas_cs linguas_de linguas_es linguas_fr linguas_ru linguas_tr"
+IUSE="linguas_cs linguas_de linguas_es linguas_fr linguas_ru linguas_tr spell"
 
 DEPEND="dev-python/PyQt4[X,assistant,svg,webkit]
 	>=dev-python/qscintilla-python-2.2[qt4]"
 RDEPEND="${DEPEND}"
-RESTRICT="mirror"
+PDEPEND="spell? ( dev-python/pyenchant )"
 
 S="${WORKDIR}"/${MY_P}
 
 LANGS="cs de es fr ru tr"
-
-python_version
 
 src_prepare() {
 	#epatch "${FILESDIR}"/4.3.0-paths.patch
@@ -44,34 +43,36 @@ src_prepare() {
 }
 
 src_install() {
+	python_version
+
 	# Change qt dir to be located in ${D}
 	dodir /usr/share/qt4
 	${python} install.py \
 		-z \
 		-b "/usr/bin" \
+		-d "$(python_get_sitedir)" \
 		-i "${D}" \
-		-d "/usr/$(get_libdir)/python${PYVER}/site-packages" \
-		-c || die "python install.py failed"
+		-c || die "installation failed"
 
 	make_desktop_entry "eric4" \
 			eric4 \
-			"/usr/$(get_libdir)/python${PYVER}/site-packages/eric4/icons/default/eric.png" \
+			"$(python_get_sitedir)/eric4/icons/default/eric.png" \
 			"Development;IDE;Qt"
 }
 
 pkg_postinst() {
-	python_version
-	python_mod_optimize /usr/$(get_libdir)/python${PYVER}/site-packages/eric4{,plugins}
+	python_mod_optimize "$(python_get_sitedir)"/eric4{,plugins}
+
 	elog "If you want to use eric4 with mod_python, have a look at"
-	elog "\"${ROOT}usr/$(get_libdir)/python${PYVER}/site-packages/eric4/patch_modpython.py\"."
+	elog "'${ROOT%/}$(python_get_sitedir)/eric4/patch_modpython.py'."
 	elog
-	elog "The following packages will give eric extended functionality."
+	elog "The following packages will give eric extended functionality:"
 	elog
 	elog "dev-python/pylint"
 	elog "dev-python/pysvn            (in sunrise overlay atm)"
 	elog
 	elog "This version has a plugin interface with plugin-autofetch from"
-	elog "the App itself. You may want to check those as well."
+	elog "the application itself. You may want to check those as well."
 }
 
 pkg_postrm() {

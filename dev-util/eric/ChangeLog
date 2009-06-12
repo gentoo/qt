@@ -4,6 +4,10 @@
 
   12 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
   eric-4.4_pre20090523.ebuild:
+  Added spell USE flag, improved python eclass usage.
+
+  12 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
+  eric-4.4_pre20090523.ebuild:
   Fix PyQt4 USE deps and quoting.
 
 *eric-4.4_pre20090523 (07 Jun 2009)
