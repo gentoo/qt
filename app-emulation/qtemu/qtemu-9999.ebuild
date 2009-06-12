@@ -13,12 +13,13 @@ ESVN_REPO_URI="http://qtemu.svn.sourceforge.net/svnroot/qtemu/trunk/qtemu"
 LICENSE="GPL-2 LGPL-2.1 CCPL-Attribution-3.0"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="kvm +qemu"
 
 DEPEND="net-libs/libvncserver
 	x11-libs/qt-gui:4
 	x11-libs/qt-webkit:4"
 RDEPEND="${DEPEND}
-	app-emulation/qemu"
+	qemu? ( app-emulation/qemu )
+	kvm? ( app-emulation/kvm )"
 
 DOCS="CHANGELOG README TODO"

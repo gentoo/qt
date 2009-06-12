@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qtemu-9999.ebuild,
+  metadata.xml:
+  Update ebuild. Added kvm,qemu use flags
+
   12 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
   -files/1.0.5-help_and_translation_paths.patch:
   Remove obsolete patch
