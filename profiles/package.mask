@@ -2,17 +2,11 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Ben de Groot <yngwin@gentoo.org> (14 Apr 2009)
+# Ben de Groot <yngwin@gentoo.org> (14 Jun 2009)
 # Snapshots that not everyone may want. May break apps.
-=dev-python/PyQt4-4.5_pre*
+=dev-python/PyQt4-4.5.1_pre*
 =dev-python/qscintilla-python-2.4_pre*
-=dev-python/sip-4.8_pre*
+=dev-python/sip-4.8.1_pre*
 =x11-libs/qscintilla-2.4_pre*
+=dev-util/eric-4.4_pre*
 
-# Markos Chandras <hwoarang@gentoo.org> (05 Apr 2009)
-# Package renamed to qmpclient-9999. Please use the new one.
-=media-sound/qmpdclient-ne-9999
-
-# Markos Chandras <hwoarang@gentoo.org> (13 Mar 2009)
-# Masking for testing
-#=net-news/urssus-0.2.13
