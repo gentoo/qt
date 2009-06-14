@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*PyQt-3.18.1_pre20090610 (14 Jun 2009)
+
+  14 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  +PyQt-3.18.1_pre20090610.ebuild:
+  New snapshot
+
   09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> PyQt-3.18.ebuild:
   Code fixes
 
