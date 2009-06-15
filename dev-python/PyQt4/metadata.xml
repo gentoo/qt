@@ -8,7 +8,6 @@
 	<flag name='assistant'>Build the QtHelp and QtAssistant modules</flag>
 	<flag name='opengl'>Build the QtOpenGL module</flag>
 	<flag name='phonon'>Build the phonon module</flag>
-	<flag name='qt3support'>Enable the Qt3Support libraries for Qt4</flag>
 	<flag name='sql'>Build the QtSql module</flag>
 	<flag name='svg'>Build the QtSvg module</flag>
 	<flag name='webkit'>Build the QtWebKit module</flag>
