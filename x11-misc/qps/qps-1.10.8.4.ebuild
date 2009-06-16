@@ -12,26 +12,26 @@ SRC_URI="http://kldp.net/frs/download.php/5253/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="-amd64"
 IUSE=""
 
 DEPEND="x11-libs/qt-core:4
 	x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+	sed -i -e '/strip/d' ${PN}.pro
+}
+
 src_configure() {
 	eqmake4
 }
 
-src_compile() {
-	emake "${PN}"
-}
-
 src_install() {
-	dobin "${PN}" || die
-	doman "${PN}.1" || die
+	dobin ${PN} || die
+	doman ${PN}.1 || die
 	dodoc CHANGES || die
 
-	newicon "icon/icon.xpm" "${PN}.xpm" || die
-	domenu "${PN}.desktop" || die
+	newicon icon/icon.xpm ${PN}.xpm || die
+	domenu ${PN}.desktop || die
 }
