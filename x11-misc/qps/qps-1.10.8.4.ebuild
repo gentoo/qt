@@ -13,7 +13,7 @@ SRC_URI="http://kldp.net/frs/download.php/5253/${P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="-amd64"
-IUSE=""
+IUSE="debug"
 
 DEPEND="x11-libs/qt-core:4
 	x11-libs/qt-gui:4"
