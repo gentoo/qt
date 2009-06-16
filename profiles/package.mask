@@ -2,6 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Dror Levin <spatz@psybear.com> (16 Jun 2009)
+# Crashes when started, needs more testing.
+x11-misc/qps
+
 # Ben de Groot <yngwin@gentoo.org> (14 Jun 2009)
 # Snapshots that not everyone may want. May break apps.
 =dev-python/PyQt-3.18.1_pre*
