@@ -119,7 +119,7 @@ eend $?
 
 # commit
 ebegin "Commiting..."
-git commit -a -m "PyQt4/sip/qscintilla{,python}: Automatic Version bump, remove old" || exit "Failed to commit"
+git commit -a -m "PyQt4/sip/qscintilla{,-python}: Automatic Version bump, remove old" || exit "Failed to commit"
 git push || exit "Failed to push"
 eend $?
 
