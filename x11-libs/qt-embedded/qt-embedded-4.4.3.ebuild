@@ -15,7 +15,7 @@ SRC_URI="ftp://ftp.trolltech.no/qt/source/${MY_PN}-${PV}.tar.gz"
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="4"
 KEYWORDS="-* ~x86"
-IUSE="debug doc cups embedded firebird +glib gif mysql nis openssl pch phonon
+IUSE="debug doc cups firebird +glib gif mysql nis ssl pch phonon
 postgres qt3support sqlite svg webkit xmlpatterns"
 
 DEPEND="media-libs/libpng
@@ -27,7 +27,7 @@ DEPEND="media-libs/libpng
 	firebird? ( dev-db/firebird )
 	gif? ( media-libs/giflib )
 	mysql? ( virtual/mysql )
-	openssl? ( dev-libs/openssl )
+	ssl? ( dev-libs/openssl )
 	postgres? ( virtual/postgresql-server )
 	sqlite? ( dev-db/sqlite )
 	!x11-libs/qt-assistant:4
@@ -100,11 +100,9 @@ src_configure() {
 	use mysql && myconf="${myconf} -plugin-sql-mysql" || myconf="${myconf} -no-sql-mysql"
 	use postgres && myconf="${myconf} -plugin-sql-psql" || myconf="${myconf} -no-sql-psql"
 	use sqlite && myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
-	# choose arch
-	if use embedded; then
-			myconf="${myconf} -xplatform qws/linux-${ARCH}-g++ \
-			-platfrom linux-${ARCH}-g++ -embedded ${ARCH}"
-		fi
+
+	# TODO: choose arch (-platform, -xplatform)
+
 	echo ${myconf}
 	./configure ${myconf} || die "configure failed"
 }
