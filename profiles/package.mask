@@ -2,10 +2,6 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (17 Jun 2009)
-# Alpha version. It might work but it is still in early stages
-=sys-apps/qdiskusage-0.1_alpha
-
 # Dror Levin <spatz@psybear.com> (16 Jun 2009)
 # Crashes when started, needs more testing.
 x11-misc/qps
