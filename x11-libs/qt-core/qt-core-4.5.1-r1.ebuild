@@ -28,7 +28,7 @@ src/xml/
 src/network/
 src/plugins/codecs/"
 
-# Most ebuilds inlude almost everything for testing
+# Most ebuilds include almost everything for testing
 # Will clear out unneeded directories after everything else works OK
 QT4_EXTRACT_DIRECTORIES="
 include/Qt/
@@ -47,12 +47,16 @@ src/3rdparty/sha1/
 src/script/
 translations/"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-4.5-boilerplate.diff" # patch for ia64 requested by armin76
+	"${FILESDIR}/qt-4.5-nolibx11.diff" # remove unneeded Xlib test to build without libX11
+)
+
 pkg_setup() {
 	qt4-build_pkg_setup
 
 	if has_version x11-libs/qt-core; then
 		# Check to see if they've changed the glib flag since the last time installing this package.
-
 		if use glib && ! built_with_use x11-libs/qt-core glib && has_version x11-libs/qt-gui; then
 			ewarn "You have changed the \"glib\" use flag since the last time you have emerged this package."
 			ewarn "You should also re-emerge x11-libs/qt-gui in order for it to pick up this change."
@@ -63,7 +67,6 @@ pkg_setup() {
 
 		# Check to see if they've changed the qt3support flag since the last time installing this package.
 		# If so, give a list of packages they need to uninstall first.
-
 		if use qt3support && ! built_with_use x11-libs/qt-core qt3support; then
 			local need_to_remove
 			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
@@ -110,17 +113,14 @@ src_unpack() {
 	done
 }
 
-src_prepare(){
+src_prepare() {
 	qt4-build_src_prepare
+
 	# bug #172219
-	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
-		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CXXFLAGS failed"
-	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
-		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix LDFLAGS failed"
-	#patch for ia64 requested from armin76
-	epatch "${FILESDIR}/${PN}-4.5-boilerplate.diff"
-	# remove unneeded Xlib test to build without libX11
-	epatch "${FILESDIR}/${PN}-4.5-nolibx11.diff"
+	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" "${S}"/qmake/Makefile.unix \
+		|| die "sed qmake/Makefile.unix CXXFLAGS failed"
+	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" "${S}"/qmake/Makefile.unix \
+		|| die "sed qmake/Makefile.unix LDFLAGS failed"
 }
 
 src_configure() {
@@ -157,14 +157,14 @@ src_compile() {
 }
 
 src_install() {
-	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed."
+	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed"
 
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
+		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
@@ -183,12 +183,13 @@ src_install() {
 	doenvd "${T}/44qt4"
 
 	dodir /${QTDATADIR}/mkspecs/gentoo
-	mv "${D}"/${QTDATADIR}/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo || \
-		die "Failed to move qconfig.pri"
+	mv "${D}"/${QTDATADIR}/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo \
+		|| die "Failed to move qconfig.pri"
 
 	sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
 		"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
-		"${D}${QTHEADERDIR}"/Qt/qconfig.h || die "sed for qconfig.h failed."
+		"${D}${QTHEADERDIR}"/Qt/qconfig.h \
+		|| die "sed for qconfig.h failed"
 
 	if use glib; then
 		QCONFIG_DEFINE="$(use glib && echo QT_GLIB)
