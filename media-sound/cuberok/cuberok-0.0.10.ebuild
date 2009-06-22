@@ -21,22 +21,16 @@ DEPEND="media-libs/gstreamer
 RDEPEND="${DEPEND}
 	media-libs/taglib"
 
-src_prepare(){
-	#fixing multilib issues
-	for target in cuberok_style/cuberok_style.pro player_gst/player_gst.pro;do
-		einfo "fixing ${target}"
-		sed -i "s/lib\/cuberok/$(get_libdir)\/cuberok/" \
-		"${S}"/plugins/${target} || die "seding ${target} failed"
+src_prepare() {
+	# fix multilib issues
+	for target in cuberok_style/cuberok_style.pro player_gst/player_gst.pro; do
+		sed -i -e "s:lib/cuberok:$(get_libdir)/cuberok:" \
+			"${S}"/plugins/${target} || die "sed failed on ${target}"
 	done
-}
-
-src_configure(){
-	eqmake4 Cuberok.pro
 }
 
 src_install() {
 	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	doicon images/${PN}.png
-	make_desktop_entry cuberok Cuberok ${PN}.png 'Qt;AudioVideo;Audio' \
-		die || "make_desktop_entry_failed"
+	doicon images/${PN}.png || die
+	domenu ${PN}.desktop || die
 }
