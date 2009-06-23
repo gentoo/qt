@@ -1,0 +1,10 @@
+# ChangeLog for media-gfx/gsalbumer
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*gsalbumer-1.1 (23 Jun 2009)
+
+  23 Jun 2009; Markos Chandras <hwoarang@gentoo.org> +gsalbumer-1.1.ebuild,
+  +metadata.xml:
+  Initial commit
+
