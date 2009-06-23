@@ -16,7 +16,7 @@ EGIT_REPO_URI="git://gitorious.org/qt-creator/qt-creator.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="+cmake debug +debugger +designer doc fakevim git perforce subversion "
+IUSE="+cmake debug +debugger +designer doc fakevim git kde perforce subversion "
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-core-4.5.0_rc1
@@ -34,7 +34,8 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	subversion? ( dev-util/subversion )"
 
 RDEPEND="${DEPEND}
-	|| ( media-sound/phonon >=x11-libs/qt-phonon-4.5.0_rc1 )"
+	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0_rc1 media-sound/phonon ) )
+	kde? ( media-sound/phonon )"
 
 PLUGINS="cmake debugger designer fakevim git perforce subversion"
 
@@ -47,11 +48,11 @@ S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
 	qt4-edge_src_prepare
-	
+
 	# Ensure correct library installation
 	sed -i "s/IDE_LIBRARY_BASENAME\ =\ lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
 		qtcreator.pri || die "failed to fix libraries installation"
-	
+
 	# bug 263087
 
 	for plugin in ${PLUGINS};do
