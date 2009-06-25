@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-gui-4.5.2 (25 Jun 2009)
+
+  25 Jun 2009; Markos Chandras <hwoarang@gentoo.org> +qt-gui-4.5.2.ebuild:
+  Version bump to 4.5.2
+
   24 May 2009; Markos Chandras <hwoarang@gentoo.org> qt-gui-4.5.9999.ebuild,
   qt-gui-4.9999.ebuild, metadata.xml:
   Add gtkstyle on metadata.xml, QA fixes 
