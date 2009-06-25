@@ -3,6 +3,9 @@
 # $Header: $
 
   25 Jun 2009; Davide Pesavento <davidepesa@gmail.com> qt-gui-4.5.2.ebuild:
+  Use doicon instead of opencoding icons installation.
+
+  25 Jun 2009; Davide Pesavento <davidepesa@gmail.com> qt-gui-4.5.2.ebuild:
   Rename gtkstyle flag to gtk. Drop redundant IUSE defaults.
 
   25 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-gui-4.5.2.ebuild:
