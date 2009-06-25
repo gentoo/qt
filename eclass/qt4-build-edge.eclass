@@ -191,7 +191,6 @@ qt4-build-edge_src_unpack() {
 		${QT4_EXTRACT_DIRECTORIES}; do
 			targets="${targets} ${MY_P}/${target}"
 	done
-	ewarn "${MY_PV_QTCOPY}"
 	case "${MY_PV_QTCOPY}" in
 		4.?.9999-qt-copy | 4.?.9999 |4.9999)
 			git_src_unpack
