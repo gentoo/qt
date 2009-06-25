@@ -4,6 +4,10 @@
 
   25 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-core-4.5.9999.ebuild, qt-core-4.9999.ebuild:
+  Restore translation installation
+
+  25 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-core-4.5.9999.ebuild, qt-core-4.9999.ebuild:
   Fix broken manifests
 
 *qt-core-4.5.2 (25 Jun 2009)
