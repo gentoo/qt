@@ -95,7 +95,7 @@ SRC_URI="ftp://ftp.trolltech.com/qt/source/${MY_P}.tar.bz2"
 
 case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
-		HOMEPAGE="http://websvn.kde.org/trunk/qt-copy/";;
+		HOMEPAGE="http://qt.gitorious.org/+kde-developers/qt/kde-qt/";;
 	*)
 		HOMEPAGE="http://www.qtsoftware.com/";;
 esac
