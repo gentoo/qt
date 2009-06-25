@@ -72,17 +72,7 @@ case "${PV}" in
 		;;
 esac
 
-case "${MY_PV_QTCOPY}" in
-	4.?.9999-qt-copy)
-		inherit base eutils multilib toolchain-funcs flag-o-matic subversion versionator
-		;;
-	4.?.9999 | 4.9999)
-		inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
-		;;
-	*)
-		inherit base eutils multilib toolchain-funcs flag-o-matic versionator
-		;;
-esac
+inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
 
 case "${PV}" in
 	4.*.*_beta*)
@@ -116,8 +106,10 @@ fi
 
 case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
-		ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/qt-copy"
-		ESVN_PROJECT="qt-copy"
+		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
+		EGIT_PROJECT="qt-${PV}"
+		EGIT_BRANCH="4.5.2-patched"
+		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
 	4.?.9999)
@@ -172,7 +164,7 @@ qt4-build-edge_pkg_setup() {
 	echo
 	case "${MY_PV_QTCOPY}" in
 		4.?.9999-qt-copy)
-			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from KDE's subversion repo"
+			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository"
 			;;
 		4.?.9999 | 4.9999)
 			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software"
@@ -199,13 +191,9 @@ qt4-build-edge_src_unpack() {
 		${QT4_EXTRACT_DIRECTORIES}; do
 			targets="${targets} ${MY_P}/${target}"
 	done
-
+	ewarn "${MY_PV_QTCOPY}"
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999-qt-copy)
-			ESVN_REPO_FREQ=${ESVN_UP_FREQ:-1}
-			subversion_src_unpack
-			;;
-		4.?.9999 | 4.9999)
+		4.?.9999-qt-copy | 4.?.9999 |4.9999)
 			git_src_unpack
 			;;
 		*)
@@ -225,14 +213,7 @@ qt4-build-edge_src_unpack() {
 
 qt4-build-edge_src_prepare() {
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999-qt-copy)
-			# Apply KDE patchset
-			cd "${S}"
-			# Make autopatcher skip already applied patches - apply_patches scripts check for that.
-			mkdir .svn
-			./apply_patches || die "Applying KDE patchset failed"
-			;;
-		4.?.9999 | 4.9999)
+		4.?.9999-qt-copy | 4.?.9999 | 4.9999)
 			generate_include
 		;;
 	esac
