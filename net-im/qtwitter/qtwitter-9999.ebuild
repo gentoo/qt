@@ -5,20 +5,21 @@
 EAPI="2"
 
 LANGS="pt_BR"
-LANGSLONG="ca_ES de_DE es_ES fr_FR ja_JP pl_PL"
+LANGSLONG="ca_ES de_DE es_ES fr_FR it_IT ja_JP pl_PL"
 
 inherit qt4-edge git
 
-DESCRIPTION="A Qt client for Twitter"
+DESCRIPTION="A Qt-based client for Twitter and Identi.ca"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
 EGIT_REPO_URI="git://github.com/ayoy/qtwitter.git"
 
-LICENSE="GPL-3"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug +oauth"
 
-DEPEND="x11-libs/qt-gui:4"
+DEPEND="x11-libs/qt-gui:4[debug?]
+	oauth? ( dev-libs/qoauth[debug?] )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
@@ -50,9 +51,10 @@ src_prepare() {
 		-e '/doc \\/d' \
 		qtwitter-app/qtwitter-app.pro || die "sed failed"
 
-	sed -i "s/\$\${INSTALL_PREFIX}\/lib/\$\${INSTALL_PREFIX}\/$(get_libdir)/" \
+	sed -i "s!\(\$\${INSTALL_PREFIX}\)/lib!\1/$(get_libdir)!" \
 		twitterapi/twitterapi.pro urlshortener/urlshortener.pro || die "sed failed"
 
+	use oauth || sed -i '/DEFINES += OAUTH/d' ${PN}.pri
 }
 
 src_install() {
