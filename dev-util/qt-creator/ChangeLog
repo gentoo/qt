@@ -4,6 +4,10 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  25 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-creator-1.2.0.ebuild:
+  Fix menu icon
+
 *qt-creator-1.2.0 (25 Jun 2009)
 
   25 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
