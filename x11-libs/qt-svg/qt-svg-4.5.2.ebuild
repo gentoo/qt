@@ -31,12 +31,6 @@ src/plugins/
 src/xml
 src/3rdparty"
 
-src_prepare() {
-	qt4-build_src_prepare
-	epatch "${FILESDIR}/0279-svg-rendering-4.5.1-regression.diff"
-
-}
-
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -svg -no-xkb  -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
