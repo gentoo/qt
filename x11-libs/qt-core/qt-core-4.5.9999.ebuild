@@ -163,8 +163,6 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
 	fi
 
-	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
-
 	fix_library_files
 
 	# List all the multilib libdirs
