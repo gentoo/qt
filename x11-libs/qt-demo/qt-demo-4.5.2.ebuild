@@ -7,7 +7,7 @@ inherit qt4-build
 
 DESCRIPTION="Demonstration module of the Qt toolkit"
 SLOT="4"
-KEYWORDS="amd64 ~hppa ppc ~ppc64 x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~x86 ~x86-fbsd"
 IUSE="kde"
 
 DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
