@@ -11,8 +11,6 @@ KEYWORDS="alpha amd64 arm hppa ~ia64 ~mips ppc ~ppc64 ~sparc x86 ~x86-fbsd"
 IUSE="doc +glib +iconv +qt3support +ssl"
 
 RDEPEND="sys-libs/zlib
-	x11-libs/libX11
-	x11-libs/libXext
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
 	!<x11-libs/qt-4.4.0:4"
@@ -50,7 +48,6 @@ src/script/
 translations/"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.5-boilerplate.diff"
 	"${FILESDIR}/qt-4.5-nolibx11.diff"
 )
 
