@@ -15,6 +15,8 @@ RDEPEND="media-libs/fontconfig
 	media-libs/jpeg
 	media-libs/libpng
 	sys-libs/zlib
+	x11-libs/libX11
+	x11-libs/libXext
 	x11-libs/libXrandr
 	x11-libs/libXcursor
 	x11-libs/libXfont
