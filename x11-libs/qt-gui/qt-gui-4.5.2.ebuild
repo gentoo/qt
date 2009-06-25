@@ -8,7 +8,7 @@ inherit eutils qt4-build
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="+accessibility cups +dbus +glib +gtkstyle mng nas nis raster tiff +qt3support xinerama"
+IUSE="+accessibility cups dbus +glib gtk mng nas nis raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
@@ -26,7 +26,7 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-script-${PV}[debug=]
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
-	gtkstyle? ( x11-libs/gtk+:2 )
+	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
@@ -98,7 +98,7 @@ src_configure() {
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
 		$(qt_use qt3support)
-		$(qt_use gtkstyle)
+		$(qt_use gtk gtkstyle)
 		$(qt_use xinerama)"
 
 	use nas	&& myconf="${myconf} -system-nas-sound"
@@ -108,7 +108,7 @@ src_configure() {
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-xrender -xrandr -xkb -xshape -sm  -no-svg"
 
-	# Explictly don't compile these packages.
+	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
 	myconf="${myconf} -no-webkit -no-phonon -no-dbus -no-opengl"
 
@@ -119,14 +119,16 @@ src_install() {
 	QCONFIG_ADD="x11sm xshape xcursor xfixes xrandr xrender xkb fontconfig
 		$(usev accessibility) $(usev xinerama) $(usev cups) $(usev nas)
 		gif png system-png system-jpeg
-		$(use mng && echo system-mng) $(use tiff && echo system-tiff)"
+		$(use mng && echo system-mng)
+		$(use tiff && echo system-tiff)"
 	QCONFIG_REMOVE="no-gif no-png"
 	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY)
-	$(use cups && echo QT_CUPS) QT_FONTCONFIG QT_IMAGEFORMAT_JPEG
-	$(use mng && echo QT_IMAGEFORMAT_MNG) $(use nas && echo QT_NAS)
-	$(use nis && echo QT_NIS) QT_IMAGEFORMAT_PNG QT_SESSIONMANAGER QT_SHAPE
-	$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
-	$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
+			$(use cups && echo QT_CUPS) QT_FONTCONFIG QT_IMAGEFORMAT_JPEG
+			$(use mng && echo QT_IMAGEFORMAT_MNG)
+			$(use nas && echo QT_NAS)
+			$(use nis && echo QT_NIS) QT_IMAGEFORMAT_PNG QT_SESSIONMANAGER QT_SHAPE
+			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
+			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
 	qt4-build_src_install
 

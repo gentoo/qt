@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Jun 2009; Davide Pesavento <davidepesa@gmail.com> qt-svg-4.5.2.ebuild:
+  Drop redundant IUSE defaults
+
   25 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-svg-4.5.2.ebuild:
   Remove unused patch from ebuild
 

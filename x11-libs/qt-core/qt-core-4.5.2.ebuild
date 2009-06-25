@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="doc +glib +iconv +qt3support +ssl"
+IUSE="doc +glib iconv qt3support ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
@@ -28,7 +28,7 @@ src/xml/
 src/network/
 src/plugins/codecs/"
 
-# Most ebuilds inlude almost everything for testing
+# Most ebuilds include almost everything for testing
 # Will clear out unneeded directories after everything else works OK
 QT4_EXTRACT_DIRECTORIES="
 include/Qt/
@@ -56,7 +56,6 @@ pkg_setup() {
 
 	if has_version x11-libs/qt-core; then
 		# Check to see if they've changed the glib flag since the last time installing this package.
-
 		if use glib && ! built_with_use x11-libs/qt-core glib && has_version x11-libs/qt-gui; then
 			ewarn "You have changed the \"glib\" use flag since the last time you have emerged this package."
 			ewarn "You should also re-emerge x11-libs/qt-gui in order for it to pick up this change."
@@ -67,7 +66,6 @@ pkg_setup() {
 
 		# Check to see if they've changed the qt3support flag since the last time installing this package.
 		# If so, give a list of packages they need to uninstall first.
-
 		if use qt3support && ! built_with_use x11-libs/qt-core qt3support; then
 			local need_to_remove
 			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
@@ -99,12 +97,12 @@ pkg_setup() {
 src_unpack() {
 	if use doc; then
 		QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES}
-		doc/"
+					doc/"
 		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		tools/qdoc3"
+					tools/qdoc3"
 	fi
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	${QT4_EXTRACT_DIRECTORIES}"
+				${QT4_EXTRACT_DIRECTORIES}"
 
 	qt4-build_src_unpack
 
@@ -114,9 +112,10 @@ src_unpack() {
 	done
 }
 
-src_prepare(){
+src_prepare() {
 	qt4-build_src_prepare
-	# bug #172219
+
+	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CXXFLAGS failed"
 	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
@@ -151,20 +150,20 @@ src_configure() {
 }
 
 src_compile() {
-	# bug #259736
+	# bug 259736
 	unset QMAKESPEC
 	qt4-build_src_compile
 }
 
 src_install() {
-	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed."
+	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed"
 
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
 	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
+		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
 	emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
@@ -172,7 +171,7 @@ src_install() {
 	fix_library_files
 
 	# List all the multilib libdirs
-	local libdirs
+	local libdirs=
 	for libdir in $(get_all_libdirs); do
 		libdirs="${libdirs}:/usr/${libdir}/qt4"
 	done
@@ -183,16 +182,17 @@ src_install() {
 	doenvd "${T}/44qt4"
 
 	dodir /${QTDATADIR}/mkspecs/gentoo
-	mv "${D}"/${QTDATADIR}/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo || \
-		die "Failed to move qconfig.pri"
+	mv "${D}"/${QTDATADIR}/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo \
+		|| die "Failed to move qconfig.pri"
 
 	sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
-		"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
-		"${D}${QTHEADERDIR}"/Qt/qconfig.h || die "sed for qconfig.h failed."
+			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
+			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
+		|| die "sed for qconfig.h failed"
 
 	if use glib; then
 		QCONFIG_DEFINE="$(use glib && echo QT_GLIB)
-		$(use ssl && echo QT_OPENSSL)"
+				$(use ssl && echo QT_OPENSSL)"
 		install_qconfigs
 	fi
 
