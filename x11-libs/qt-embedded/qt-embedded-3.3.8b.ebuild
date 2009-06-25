@@ -63,6 +63,9 @@ src_unpack() {
 	# avoid using -rpath
 	find mkspecs/ -name qmake.conf -exec sed -i -e "s:QMAKE_RPATH.*:QMAKE_RPATH =:" {} \;
 
+	# avoid stripping binaries that portage will strip for us
+	find mkspecs/ -maxdepth 2 -name qmake.conf -exec sed -i -e "s:QMAKE_STRIP .*:QMAKE_STRIP = echo:" {} \;
+
 	# patch to fix invalid type casts with gcc-4 on amd64 (bug 164113)
 	epatch "${FILESDIR}"/${PN}-3.3.8-castfix.patch
 }
