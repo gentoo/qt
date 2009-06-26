@@ -7,11 +7,5 @@
 x11-misc/qps
 
 # Ben de Groot <yngwin@gentoo.org> (14 Jun 2009)
-# Snapshots that not everyone may want. May break apps.
-=dev-python/PyQt-3.18.1_pre*
-=dev-python/PyQt4-4.5.1_pre*
-=dev-python/qscintilla-python-2.4_pre*
-=dev-python/sip-4.8.1_pre*
-=x11-libs/qscintilla-2.4_pre*
+# Snapshots that not everyone may want.
 =dev-util/eric-4.4_pre*
-
