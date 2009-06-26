@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>qt</herd>
+<maintainer>
+	<email>hwoarang@gentoo.org</email>
+	<name>Markos Chandras</name>
+</maintainer>
+<longdescription>QTM is a desktop application for interacting with blogging
+and other content management systems. It is presently compatible with
+Wordpress, Movable Type, Drupal and Textpattern (but not with Blogger).
+It is used to write content for this website.</longdescription>
+</pkgmetadata>
