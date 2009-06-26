@@ -8,13 +8,15 @@ inherit eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups +dbus +glib +gtkstyle mng nas nis raster tiff +qt3support xinerama"
+IUSE="+accessibility cups dbus +glib gtk mng nas nis raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
 	media-libs/jpeg
 	media-libs/libpng
 	sys-libs/zlib
+	x11-libs/libX11
+	x11-libs/libXext
 	x11-libs/libXrandr
 	x11-libs/libXcursor
 	x11-libs/libXfont
@@ -24,7 +26,7 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-script-${PV}[debug=,qt-copy=]
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,qt-copy=] )
-	gtkstyle? ( x11-libs/gtk+:2 )
+	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
@@ -92,7 +94,7 @@ src_configure() {
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
 		$(qt_use qt3support)
-		$(qt_use gtkstyle)
+		$(qt_use gtk gtkstyle)
 		$(qt_use xinerama)"
 
 	use nas	&& myconf="${myconf} -system-nas-sound"
@@ -102,7 +104,7 @@ src_configure() {
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-xrender -xrandr -xkb -xshape -sm  -no-svg"
 
-	# Explictly don't compile these packages.
+	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
 	myconf="${myconf} -no-webkit -no-phonon -no-dbus -no-opengl"
 
@@ -113,14 +115,16 @@ src_install() {
 	QCONFIG_ADD="x11sm xshape xcursor xfixes xrandr xrender xkb fontconfig
 		$(usev accessibility) $(usev xinerama) $(usev cups) $(usev nas)
 		gif png system-png system-jpeg
-		$(use mng && echo system-mng) $(use tiff && echo system-tiff)"
+		$(use mng && echo system-mng)
+		$(use tiff && echo system-tiff)"
 	QCONFIG_REMOVE="no-gif no-png"
 	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY)
-	$(use cups && echo QT_CUPS) QT_FONTCONFIG QT_IMAGEFORMAT_JPEG
-	$(use mng && echo QT_IMAGEFORMAT_MNG) $(use nas && echo QT_NAS)
-	$(use nis && echo QT_NIS) QT_IMAGEFORMAT_PNG QT_SESSIONMANAGER QT_SHAPE
-	$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
-	$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
+			$(use cups && echo QT_CUPS) QT_FONTCONFIG QT_IMAGEFORMAT_JPEG
+			$(use mng && echo QT_IMAGEFORMAT_MNG)
+			$(use nas && echo QT_NAS)
+			$(use nis && echo QT_NIS) QT_IMAGEFORMAT_PNG QT_SESSIONMANAGER QT_SHAPE
+			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
+			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
 	qt4-build-edge_src_install
 
@@ -141,15 +145,16 @@ src_install() {
 	doins "${S}"/tools/designer/src/lib/sdk/*
 
 	# install correct designer and linguist icons, bug 241208
-	dodir /usr/share/pixmaps/ || die "dodir failed"
-	insinto /usr/share/pixmaps/ || die "insinto failed"
-	doins tools/linguist/linguist/images/icons/linguist-128-32.png \
-		tools/designer/src/designer/images/designer.png || die "doins failed"
+	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \
+		tools/designer/src/designer/images/designer.png \
+		|| die "doicon failed"
 	# Note: absolute image path required here!
 	make_desktop_entry /usr/bin/linguist Linguist \
-		/usr/share/pixmaps/linguist-128-32.png 'Qt;Development;GUIDesigner' \
-			|| die "make_desktop_entry failed"
+			/usr/share/pixmaps/linguist-128-32.png \
+			'Qt;Development;GUIDesigner' \
+			|| die "linguist make_desktop_entry failed"
 	make_desktop_entry /usr/bin/designer Designer \
-		/usr/share/pixmaps/designer.png 'Qt;Development;GUIDesigner' \
-			|| die "make_desktop_entry failed"
+			/usr/share/pixmaps/designer.png \
+			'Qt;Development;GUIDesigner' \
+			|| die "designer make_desktop_entry failed"
 }

@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Jun 2009; Davide <davide@gentoo.org> qt-core-4.5.9999.ebuild,
+  qt-core-4.9999.ebuild:
+  Cleanup IUSE in live ebuilds too.
+
   26 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-core-4.5.9999.ebuild, qt-core-4.9999.ebuild:
   Fix translations again *sigh*

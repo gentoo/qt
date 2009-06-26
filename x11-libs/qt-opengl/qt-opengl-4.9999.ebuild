@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+qt3support"
+IUSE="qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	~x11-libs/qt-gui-${PV}[debug=,qt3support=]

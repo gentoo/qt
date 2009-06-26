@@ -8,13 +8,11 @@ inherit qt4-build-edge
 DESCRIPTION="The SVG module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+iconv"
+IUSE="iconv"
 
 DEPEND="~x11-libs/qt-gui-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
-QCONFIG_ADD="svg"
-QCONFIG_DEFINE="QT_SVG"
 QT4_TARGET_DIRECTORIES="
 src/svg
 src/plugins/imageformats/svg
@@ -30,6 +28,9 @@ src/gui/
 src/plugins/
 src/xml
 src/3rdparty"
+
+QCONFIG_ADD="svg"
+QCONFIG_DEFINE="QT_SVG"
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -svg -no-xkb  -no-fontconfig -no-xrender -no-xrandr

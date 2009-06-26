@@ -8,14 +8,14 @@ inherit qt4-build-edge
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="firebird +iconv mysql odbc postgres +qt3support +sqlite"
+IUSE="firebird iconv mysql odbc postgres qt3support +sqlite"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	firebird? ( dev-db/firebird )
-	sqlite? ( dev-db/sqlite:3 )
 	mysql? ( virtual/mysql )
+	odbc? ( dev-db/unixODBC )
 	postgres? ( virtual/postgresql-base )
-	odbc? ( dev-db/unixODBC )"
+	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
@@ -41,11 +41,11 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
-src_unpack() {
-	qt4-build-edge_src_unpack
+src_prepare() {
+	qt4-build-edge_src_prepare
 
 	sed -e '/pg_config --libs/d' -i "${S}"/configure \
-		|| die 'Sed to fix postgresql usage in ./configure failed.'
+		|| die "sed to fix postgresql usage in ./configure failed"
 }
 
 src_configure() {

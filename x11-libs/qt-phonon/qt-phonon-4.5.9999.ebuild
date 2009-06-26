@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Phonon module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+dbus"
+IUSE="dbus"
 
 DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support,qt-copy=]
 	!kde-base/phonon-kde

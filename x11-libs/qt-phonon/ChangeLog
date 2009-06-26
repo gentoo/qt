@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Jun 2009; Davide <davide@gentoo.org> qt-phonon-4.5.9999.ebuild,
+  qt-phonon-4.9999.ebuild:
+  Propagate previous changeset to live ebuilds.
+
   25 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
   qt-phonon-4.5.2.ebuild:
   Drop redundant IUSE defaults
