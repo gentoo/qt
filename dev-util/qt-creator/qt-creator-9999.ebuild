@@ -47,6 +47,8 @@ PATCHES=(
 S="${WORKDIR}/${MY_P}"
 
 
+LANGS="de es it ja ru"
+
 src_prepare() {
 	qt4-edge_src_prepare
 
@@ -92,4 +94,14 @@ src_install() {
 	fi
 	make_desktop_entry qtcreator.bin QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
+
+	# install translations
+	insinto /usr/share/${MY_PN}/translations/
+	for x in ${LINGUAS};do
+		for lang in ${LANGS};do
+			if [[ ${x} == ${lang} ]];then
+				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm
+			fi
+		done
+	done
 }
