@@ -16,7 +16,7 @@ EGIT_REPO_URI="git://gitorious.org/qt-creator/qt-creator.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="+cmake debug +debugger +designer doc fakevim git kde perforce subversion "
+IUSE="bookmarks bineditor +cmake debug +debugger +designer doc fakevim git kde perforce qtscripteditor subversion "
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-core-4.5.0_rc1
@@ -30,6 +30,7 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-webkit-4.5.0_rc1
 	cmake? ( dev-util/cmake )
 	debugger? ( sys-devel/gdb )
+	examples? ( >=x11-libs/qt-demo-4.5.0_rc1 )
 	git? ( dev-util/git )
 	subversion? ( dev-util/subversion )"
 
@@ -37,7 +38,7 @@ RDEPEND="${DEPEND}
 	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0_rc1 media-sound/phonon ) )
 	kde? ( media-sound/phonon )"
 
-PLUGINS="cmake debugger designer fakevim git perforce subversion"
+PLUGINS="bookmarks bineditor cmake debugger designer fakevim git perforce qtscripteditor subversion"
 
 PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
@@ -52,6 +53,9 @@ src_prepare() {
 	# Ensure correct library installation
 	sed -i "s/IDE_LIBRARY_BASENAME\ =\ lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
 		qtcreator.pri || die "failed to fix libraries installation"
+	# fix share path
+	sed -i "/SHARE_PATH/s:/../share:/usr/share:" src/app/main.cpp || \
+		die "failed to fix share path"
 
 	# bug 263087
 
@@ -81,12 +85,10 @@ src_configure() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
 	dobin bin/qtcreator.bin || die "dobin qtcreator.bin failed"
 	if use doc;then
-		insinto /usr/share/doc/qtcreator/
-		doins "${S}"/share/doc/qtcreator/qtcreator.qch || die "Installing documentation failed"
-		doins -r "${S}"/doc/html || die "Installing html documentation  failed"
+		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install_qch_docs failed"
 	fi
 	make_desktop_entry qtcreator.bin QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"

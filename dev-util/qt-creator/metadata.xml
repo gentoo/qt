@@ -7,12 +7,15 @@
 <name>Markos Chandras</name>
 </maintainer>
 <use>
+	<flag name="bineditor">enable bineditor plugin</flag>
+	<flag name="bookmarks">enable bookmarks plugin</flag>
 	<flag name="cmake">enable cmake project manager plugin</flag>
 	<flag name="debugger">enable debugger plugin</flag>
 	<flag name="designer">enable designer plugin</flag>
 	<flag name="fakevim">enable vim-like key bindings plugin</flag>
 	<flag name="git">enable git plugin</flag>
 	<flag name="perforce">enable perforce software configuration manager plugin</flag>
+	<flag name="qtscripteditor">enable qt script editor plugin</flag>
 	<flag name="subversion">enable subersion plugin</flag>
 </use>
 <longdescription lang="en">

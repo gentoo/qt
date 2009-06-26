@@ -16,7 +16,7 @@ SRC_URI="http://download.qtsoftware.com/${MY_PN}/${MY_P}.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-IUSE="+cmake debug +debugger +designer doc fakevim git kde perforce subversion"
+IUSE="bineditor bookmarks +cmake debug +debugger +designer doc examples fakevim git kde perforce qtscripteditor subversion"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-core-4.5.0_rc1
@@ -30,6 +30,7 @@ DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
 	>=x11-libs/qt-webkit-4.5.0_rc1
 	cmake? ( dev-util/cmake )
 	debugger? ( sys-devel/gdb )
+	examples? ( >=x11-libs/qt-demo-4.5.0_rc1 )
 	git? ( dev-util/git )
 	subversion? ( dev-util/subversion )"
 
@@ -37,7 +38,7 @@ RDEPEND="${DEPEND}
 	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0_rc1 media-sound/phonon ) )
 	kde? ( media-sound/phonon )"
 
-PLUGINS="cmake debugger designer fakevim git perforce subversion"
+PLUGINS="bookmarks bineditor cmake debugger designer fakevim git perforce qtscripteditor subversion"
 
 PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
@@ -45,12 +46,22 @@ PATCHES=(
 
 S="${WORKDIR}/${MY_P}"
 
+LANGS="de es it ja ru"
+
+for x in ${LANGS}; do
+	IUSE="${IUSE} linguas_${x}"
+done
+
 src_prepare() {
 	qt4_src_prepare
 
 	# Ensure correct library installation
 	sed -i "s/IDE_LIBRARY_BASENAME\ =\ lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
 		qtcreator.pri || die "failed to fix libraries installation"
+
+	# fix share path
+	sed -i "/SHARE_PATH/s:/../share:/usr/share:" src/app/main.cpp || \
+		die "failed to fix share path"
 
 	# bug 263087
 	for plugin in ${PLUGINS};do
@@ -79,12 +90,20 @@ src_configure() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
 	if use doc;then
-		insinto /usr/share/doc/qtcreator/
-		doins "${S}"/share/doc/qtcreator/qtcreator.qch || die "Installing documentation failed"
-		doins -r "${S}"/doc/html || die "Installing html documentation  failed"
+		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
 	make_desktop_entry qtcreator.bin QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
+
+	# install translations
+	insinto /usr/share/${MY_PN}/translations/
+	for x in ${LINGUAS};do
+		for lang in ${LANGS};do
+			if [[ ${x} == ${lang} ]];then
+				doins src/${MY_PN}/translations/${MY_PN}_${x}.qm
+			fi
+		done
+	done
 }

@@ -162,8 +162,10 @@ src_install() {
 	if use doc; then
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed."
 	fi
-
-	emake install_translations || die "emake install translations failed"
+	
+	if use qt-copy;then
+		emake INSTALL_ROOT="${D}" install_translations || die "emake install translations failed"
+	fi
 	fix_library_files
 
 	# List all the multilib libdirs
