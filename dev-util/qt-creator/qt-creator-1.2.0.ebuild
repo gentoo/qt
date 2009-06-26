@@ -102,7 +102,7 @@ src_install() {
 	for x in ${LINGUAS};do
 		for lang in ${LANGS};do
 			if [[ ${x} == ${lang} ]];then
-				doins src/${MY_PN}/translations/${MY_PN}_${x}.qm
+				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm
 			fi
 		done
 	done
