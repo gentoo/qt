@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND="x11-libs/qt-gui:4"
+DEPEND="x11-libs/qt-gui:4[debug?]"
 RDEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_PN}"
