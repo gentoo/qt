@@ -6,12 +6,11 @@ EAPI="2"
 
 inherit qt4
 
-MY_PV="${PV/_/}"
-MY_P="${PN}-${MY_PV}-src"
+MY_P="${PN}-${PV}-src"
 
 DESCRIPTION="Qt4 application to design electric diagrams"
 HOMEPAGE="http://www.qt-apps.org/content/show.php?content=90198"
-SRC_URI="http://download.tuxfamily.org/qet/tags/20090613/${MY_P}.tar.gz"
+SRC_URI="http://download.tuxfamily.org/qet/tags/20090627/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
