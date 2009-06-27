@@ -16,29 +16,26 @@ SRC_URI="http://download.qtsoftware.com/${MY_PN}/${MY_P}.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-IUSE="bineditor bookmarks +cmake debug +debugger +designer doc examples fakevim git kde perforce qtscripteditor subversion"
+IUSE="bineditor bookmarks +cmake debug +debugger +designer doc examples fakevim git kde perforce qtscript subversion"
 
 DEPEND=">=x11-libs/qt-assistant-4.5.0_rc1
-	>=x11-libs/qt-core-4.5.0_rc1
-	>=x11-libs/qt-dbus-4.5.0_rc1
-	>=x11-libs/qt-gui-4.5.0_rc1
-	>=x11-libs/qt-qt3support-4.5.0_rc1
-	>=x11-libs/qt-script-4.5.0_rc1
+	>=x11-libs/qt-gui-4.5.0_rc1[dbus,qt3support]"
+
+RDEPEND="${DEPEND}
 	>=x11-libs/qt-sql-4.5.0_rc1
 	>=x11-libs/qt-svg-4.5.0_rc1
 	>=x11-libs/qt-test-4.5.0_rc1
 	>=x11-libs/qt-webkit-4.5.0_rc1
+	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0_rc1 media-sound/phonon ) )
+	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
 	debugger? ( sys-devel/gdb )
 	examples? ( >=x11-libs/qt-demo-4.5.0_rc1 )
 	git? ( dev-util/git )
+	qtscript? ( >=x11-libs/qt-script-4.5.0_rc1 )
 	subversion? ( dev-util/subversion )"
 
-RDEPEND="${DEPEND}
-	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0_rc1 media-sound/phonon ) )
-	kde? ( media-sound/phonon )"
-
-PLUGINS="bookmarks bineditor cmake debugger designer fakevim git perforce qtscripteditor subversion"
+PLUGINS="bookmarks bineditor cmake debugger designer fakevim git perforce qtscript subversion"
 
 PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
@@ -69,6 +66,8 @@ src_prepare() {
 			einfo "Disabling ${plugin} support"
 			if [[ ${plugin} == "cmake" ]];then
 				plugin="cmakeprojectmanager"
+			elif [[ ${plugin} == "qtscript" ]];then
+				plugin="qtscripteditor"
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disabled ${plugin} plugin"

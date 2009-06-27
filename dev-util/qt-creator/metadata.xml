@@ -15,7 +15,7 @@
 	<flag name="fakevim">enable vim-like key bindings plugin</flag>
 	<flag name="git">enable git plugin</flag>
 	<flag name="perforce">enable perforce software configuration manager plugin</flag>
-	<flag name="qtscripteditor">enable qt script editor plugin</flag>
+	<flag name="qtscript">enable qt script editor plugin</flag>
 	<flag name="subversion">enable subersion plugin</flag>
 </use>
 <longdescription lang="en">
