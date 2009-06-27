@@ -47,7 +47,7 @@ for x in ${LANGS}; do
 done
 
 src_prepare() {
-	qt4_src_prepare
+	qt4-edge_src_prepare
 
 	# Ensure correct library installation
 	sed -i "s/IDE_LIBRARY_BASENAME\ =\ lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
