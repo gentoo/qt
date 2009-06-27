@@ -1,0 +1,39 @@
+#!/bin/bash
+# custom script for bumping Qt release ebuilds
+# use at your own risk!
+# make sure you take care of any new patches before running this script
+# this does not include the qt meta ebuild
+
+EdgeDir="~/overlay/qting-edge"
+RelVer="4.5.2"
+
+echo
+echo "[bump-qt-release] Copying Qt ${RelVer} ebuilds from ${EdgeDir} to gentoo-x86"
+echo "[bump-qt-release] and running cvs add, echangelog and repoman manifest"
+echo
+for i in qt-{assistant,core,dbus,demo,gui,opengl,phonon,qt3support,script,sql,svg,test,webkit,xmlpatterns} ; do
+	pushd ${i} || exit 'cannot pushd'
+	cp ${EdgeDir}/x11-libs/${i}/${i}-${RelVer}.ebuild .
+	cvs add ${i}-${RelVer}.ebuild || exit 'cannot cvs add'
+	echangelog 'Version bump' || exit 'cannot echangelog'
+	repoman manifest || exit 'cannot manifest'
+	popd
+done
+
+echo
+echo "[bump-qt-release] Checking ebuilds with repoman full - abort if needed"
+echo
+for i in qt-{assistant,core,dbus,demo,gui,opengl,phonon,qt3support,script,sql,svg,test,webkit,xmlpatterns} ; do
+	pushd ${i} || exit 'cannot pushd'
+	repoman full
+	popd
+done
+
+echo
+echo "[bump-qt-release] Doing the actual commit of Qt ${RelVer} ebuilds"
+echo
+for i in qt-{assistant,core,dbus,demo,gui,opengl,phonon,qt3support,script,sql,svg,test,webkit,xmlpatterns} ; do
+	pushd ${i} || exit 'cannot pushd'
+	repoman commit -m "Qt ${RelVer} release version bump"
+	popd
+done
