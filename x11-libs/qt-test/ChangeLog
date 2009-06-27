@@ -6,7 +6,7 @@
   -qt-test-4.5.1-r1.ebuild:
   Drop old.
 
-  26 Jun 2009; Davide <davide@gentoo.org> qt-test-4.5.9999.ebuild,
+  26 Jun 2009; Davide Pesavento <davidepesa@gmail.com> qt-test-4.5.9999.ebuild,
   qt-test-4.9999.ebuild:
   Propagate previous changeset to live ebuilds.
 
