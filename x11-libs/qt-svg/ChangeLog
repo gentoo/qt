@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  27 Jun 2009; Dror Levin <spatz@psybear.com> -qt-svg-4.5.2.ebuild:
+  Moved to tree.
+
   26 Jun 2009; Davide Pesavento <davidepesa@gmail.com> qt-svg-4.5.9999.ebuild,
   qt-svg-4.9999.ebuild:
   Propagate previous changeset to live ebuilds.
