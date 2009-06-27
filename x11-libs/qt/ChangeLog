@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  27 Jun 2009; Ben de Groot <yngwin@gentoo.org> qt-4.5.2.ebuild:
+  Do not enable useflags by default that are in desktop profile
+
 *qt-4.5.2 (25 Jun 2009)
 
   25 Jun 2009; Markos Chandras <hwoarang@gentoo.org> +qt-4.5.2.ebuild:

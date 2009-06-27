@@ -9,7 +9,7 @@ HOMEPAGE="http://www.qtsoftware.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="4"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86"
-IUSE="+dbus kde opengl +qt3support"
+IUSE="dbus kde opengl qt3support"
 
 DEPEND=""
 RDEPEND="~x11-libs/qt-core-${PV}
