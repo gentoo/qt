@@ -162,3 +162,12 @@ src_install() {
 			'Qt;Development;GUIDesigner' \
 			|| die "designer make_desktop_entry failed"
 }
+
+pkg_postinst() {
+	if use gtk ; then
+		ewarn 'If you get the following error when setting Qt to use the GTK style:'
+		ewarn '    "QGtkStyle cannot be used together with the GTK_Qt engine."'
+		ewarn 'make sure you have GTK configured to NOT use the GTK_Qt engine and'
+		ewarn 'export GTK2_RC_FILES="$HOME/.gtkrc-2.0" in your environment.'
+	fi
+}
