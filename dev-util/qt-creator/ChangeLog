@@ -4,6 +4,13 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  27 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Fix src_prepare
+
+  27 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-creator-1.2.0.ebuild, qt-creator-9999.ebuild, metadata.xml:
+  Synchronize ebuilds, and clean up
+
   26 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Apply translations code on live ebuild
 
