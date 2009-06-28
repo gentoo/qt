@@ -435,7 +435,7 @@ qt4-build-edge_pkg_postinst() {
 	ewarn "make sure all your Qt4 packages are up-to-date and built with the same"
 	ewarn "configuration."
 	ewarn
-	ewarn "For more information, see http://doc.trolltech.com/4.4/plugins-howto.html"
+	ewarn "For more information, see http://doc.trolltech.com/4.5/plugins-howto.html"
 	echo
 }
 
