@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eric-4.4_pre20090627 (28 Jun 2009)
+
+  28 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  +eric-4.4_pre20090627.ebuild:
+  Version bump
+
   12 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
   eric-4.4_pre20090523.ebuild:
   Added spell USE flag, improved python eclass usage.
