@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Jun 2009; Markos Chandras <hwoarang@gentoo.org> -qvfb-4.5.2.ebuild:
+  On tree
+
 *qvfb-4.5.2 (26 Jun 2009)
 
   26 Jun 2009; Håvard Wall <haavardw@ifi.uio.no> +qvfb-4.5.2.ebuild:
