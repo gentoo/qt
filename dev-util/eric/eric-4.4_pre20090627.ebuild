@@ -38,8 +38,7 @@ S="${WORKDIR}"/${MY_P}
 LANGS="cs de es fr ru tr"
 
 src_prepare() {
-	#epatch "${FILESDIR}"/4.3.0-paths.patch
-	epatch "${FILESDIR}"/${PN}-snapshot-no-interactive.patch
+	epatch "${FILESDIR}"/eric-snapshot-20090627-no-interactive.patch
 }
 
 src_install() {

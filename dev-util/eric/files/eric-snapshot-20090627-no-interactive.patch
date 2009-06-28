@@ -1,8 +1,8 @@
-Index: eric4-4.4-snapshot-20090523/install.py
+Index: eric4-4.4-snapshot-20090627/install.py
 ===================================================================
---- eric4-4.4-snapshot-20090523.orig/install.py
-+++ eric4-4.4-snapshot-20090523/install.py
-@@ -654,9 +654,6 @@ def main(argv):
+--- eric4-4.4-snapshot-20090627.orig/install.py
++++ eric4-4.4-snapshot-20090627/install.py
+@@ -668,16 +668,9 @@ def main(argv):
                      (v[0], v[1], v[2])
                  print "    with foreign characters. Please see 'README-PyXML.txt' for"
                  print "    details."
@@ -12,3 +12,10 @@ Index: eric4-4.4-snapshot-20090523/install.py
      except ImportError:
          pass
      
+-    print
+-    raw_input("Press enter to continue...")
+-    
+-    
+ if __name__ == "__main__":
+     try:
+         main(sys.argv)

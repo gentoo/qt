@@ -49,10 +49,6 @@ done
 src_prepare() {
 	qt4-edge_src_prepare
 
-	# Ensure correct library installation
-	sed -i "s/IDE_LIBRARY_BASENAME\ =\ lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
-		qtcreator.pri || die "failed to fix libraries installation"
-
 	# bug 263087
 	for plugin in ${PLUGINS};do
 		if ! use ${plugin};then
@@ -75,6 +71,10 @@ src_prepare() {
 		ewarn
 		ebeep 5
 	fi
+}
+
+src_configure() {
+	eqmake4 IDE_LIBRARY_BASENAME="$(get_libdir)"
 }
 
 src_install() {
