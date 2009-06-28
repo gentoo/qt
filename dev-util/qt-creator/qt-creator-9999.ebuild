@@ -53,10 +53,6 @@ src_prepare() {
 	sed -i "s/IDE_LIBRARY_BASENAME\ =\ lib$/IDE_LIBRARY_BASENAME=$(get_libdir)/" \
 		qtcreator.pri || die "failed to fix libraries installation"
 
-	# fix share path
-	sed -i "/SHARE_PATH/s:/../share:/usr/share:" src/app/main.cpp || \
-		die "failed to fix share path"
-
 	# bug 263087
 	for plugin in ${PLUGINS};do
 		if ! use ${plugin};then
