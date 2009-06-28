@@ -4,6 +4,10 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  28 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qt-creator-1.2.0.ebuild:
+  On tree
+
   27 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Fix src_prepare
 
