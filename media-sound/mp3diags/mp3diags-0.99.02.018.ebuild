@@ -2,19 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit qt4-edge
 
 MY_PN=${PN/mp3d/MP3D}
 MY_P=${MY_PN}-${PV}
 S=${WORKDIR}/${MY_P}
 
-EAPI="2"
-
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
-LICENSE="GPL"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="debug"

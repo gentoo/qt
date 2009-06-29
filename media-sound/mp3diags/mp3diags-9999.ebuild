@@ -2,19 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit qt4-edge subversion
+EAPI="2"
 
+inherit qt4-edge subversion
 
 MY_PN=${PN/mp3d/MP3D}
 S=${WORKDIR}/${PN}
-
-EAPI="2"
 
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
 ESVN_REPO_URI="https://mp3diags.svn.sourceforge.net/svnroot/mp3diags"
 
-LICENSE="GPL"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug doc"
