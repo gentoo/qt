@@ -15,13 +15,15 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug doc"
 
-DEPEND="app-crypt/qca-ossl:2[debug?]"
-RDEPEND="${DEPEND}"
+DEPEND="app-crypt/qca:2[debug?]"
+RDEPEND="${DEPEND}
+	app-crypt/qca-ossl:2[debug?]"
 
 src_prepare() {
 	qt4-edge_src_prepare
 	sed -i -e '/^ *docs \\$/d' \
 		   -e "s!\(\$\${INSTALL_PREFIX}\)/lib!\1/$(get_libdir)!" ${PN}.pro
+	sed -i -e "s/\(.*\)lib$/\1$(get_libdir)/" pcfile.sh
 }
 
 src_install() {
