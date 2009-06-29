@@ -79,10 +79,12 @@ src_configure() {
 
 src_install() {
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
+	# fix binary name bug 275859
+	mv "${D}"/usr/bin/${MY_PN}.bin "${D}"/usr/bin/${MY_PN} || die "failed to rename executable"
 	if use doc;then
 		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
-	make_desktop_entry qtcreator.bin QtCreator qtcreator_logo_48 \
+	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
 	# install translations
