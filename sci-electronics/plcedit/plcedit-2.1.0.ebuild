@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit versionator qt4-edge
+inherit versionator qt4
 
 MY_PN="PLCEdit"
 MY_PV="$(delete_all_version_separators)"
@@ -20,11 +20,15 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug doc"
 
-RDEPEND="x11-libs/qt-gui:4"
+RDEPEND="x11-libs/qt-gui:4[debug?]"
 DEPEND="${RDEPEND}
 	app-arch/unzip"
 
 S="${WORKDIR}/${MY_P}"
+
+src_configure(){
+	eqmake4 ${MY_PN}.pro
+}
 
 src_install(){
 	dobin release/${MY_PN} || die "dobin failed"
