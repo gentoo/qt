@@ -235,6 +235,12 @@ qt4-build-edge_src_prepare() {
 		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
 		-i "${S}"/mkspecs/common/g++.conf || die "sed ${S}/mkspecs/common/g++.conf failed"
 
+	# Bug 275710
+	# Avoid adding C[XX]FLAGS to .qmake.cache as this is used in addition
+	# to the mkspecs while building qt
+	sed -e "s:SYSTEM_VARIABLES=\"CC CXX CFLAGS CXXFLAGS LDFLAGS\":SYSTEM_VARIABLES=\"CC CXX\":" \
+		-i "${S}/configure" || die "sed ${S}/configure failed"
+
 		base_src_prepare
 }
 
