@@ -5,6 +5,7 @@
 EAPI="2"
 
 inherit qt4-edge git multilib
+MY_PN="${PN/-/}"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"

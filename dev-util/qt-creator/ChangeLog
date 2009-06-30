@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  30 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
+  Fix binary installation
+
   29 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Backport fix from bug 275859
 
