@@ -34,7 +34,3 @@ src_install() {
 		dohtml -r "${S}"/doc/html/* || die "Failed to install documentation"
 	fi
 }
-
-src_test() {
-	emake check || die "Make check failed. See above for details"
-}

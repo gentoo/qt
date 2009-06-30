@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Jun 2009; Dominik Kapusta <d@ayoy.net> qoauth-9999.ebuild:
+  Removed unnecessary src_test()
+
   29 Jun 2009; Dominik Kapusta <d@ayoy.net> qoauth-0.1.0.ebuild,
   qoauth-9999.ebuild:
   Fixed DEPENDS and RDEPENDS, added test IUSE
