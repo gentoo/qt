@@ -241,7 +241,7 @@ qt4-build-edge_src_prepare() {
 	sed -e "s:SYSTEM_VARIABLES=\"CC CXX CFLAGS CXXFLAGS LDFLAGS\":SYSTEM_VARIABLES=\"CC CXX\":" \
 		-i "${S}/configure" || die "sed ${S}/configure failed"
 
-		base_src_prepare
+	base_src_prepare
 }
 
 qt4-build-edge_src_configure() {
