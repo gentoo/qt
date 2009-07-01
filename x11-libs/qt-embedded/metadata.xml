@@ -10,6 +10,7 @@
       this does not mean you can compile pure Qt3 programs with Qt4.
     </flag>
     <flag name='phonon'>Enable Phonon support</flag>
+    <flag name='qvfb'>Enable <pkg>dev-embedded/qvfb</pkg> support</flag>
     <flag name='webkit'>Enable the webkit module</flag>
     <flag name='xmlpatterns'>Enable the XML patternist module</flag>
   </use>

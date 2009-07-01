@@ -15,8 +15,9 @@ SRC_URI="ftp://ftp.trolltech.no/qt/source/${MY_PN}-${PV}.tar.gz"
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="4"
 KEYWORDS="-* ~amd64 ~x86"
-IUSE="debug doc cups firebird +glib gif mysql nis ssl pch phonon
-postgres qt3support sqlite svg webkit xmlpatterns"
+
+IUSE="debug doc cups directfb fbcon firebird +glib gif mysql nis ssl pch phonon
+      postgres vnc qvfb qt3support sqlite svg svga vnc webkit xmlpatterns"
 
 DEPEND="media-libs/libpng
 	media-libs/jpeg
@@ -24,12 +25,14 @@ DEPEND="media-libs/libpng
 	media-libs/lcms
 	sys-libs/zlib
 	cups? ( net-print/cups )
+	directfb? ( dev-libs/DirectFB )
 	firebird? ( dev-db/firebird )
 	gif? ( media-libs/giflib )
 	mysql? ( virtual/mysql )
 	ssl? ( dev-libs/openssl )
 	postgres? ( virtual/postgresql-server )
 	sqlite? ( dev-db/sqlite )
+	svga? ( media-libs/svgalib )
 	!x11-libs/qt-assistant:4
 	!x11-libs/qt-demo:4
 	!x11-libs/qt-core:4
@@ -42,7 +45,8 @@ DEPEND="media-libs/libpng
 	!x11-libs/qt-script:4
 	!x11-libs/qt-webkit:4
 	!x11-libs/qt-xmlpatterns:4"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	qvfb? ( dev-embedded/qvfb )"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
@@ -100,6 +104,14 @@ src_configure() {
 	use mysql && myconf="${myconf} -plugin-sql-mysql" || myconf="${myconf} -no-sql-mysql"
 	use postgres && myconf="${myconf} -plugin-sql-psql" || myconf="${myconf} -no-sql-psql"
 	use sqlite && myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
+
+    # video drivers
+	use directfb && myconf="${myconf} -plugin-gfx-directfb" || myconf="${myconf} -no-gfx-directfb"
+	use fbcon && myconf="${myconf} -plugin-gfx-linuxfb" || myconf="${myconf} -no-gfx-linuxfb"
+	use vnc && myconf="${myconf} -plugin-gfx-vnc" || myconf="${myconf} -no-gfx-qvfb"
+	use qvfb && myconf="${myconf} -plugin-gfx-qvfb" || myconf="${myconf} -no-gfx-qvfb"
+	use svga && myconf="${myconf} -plugin-gfx-svgalib"
+	myconf="${myconf} -plugin-gfx-transformed -qt-gfx-multiscreen"
 
 	# TODO: choose arch (-platform, -xplatform)
 

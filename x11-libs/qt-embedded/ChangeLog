@@ -3,6 +3,9 @@
 # $Header: $
 
   03 Jul 2009; Håvard Wall <haavardw@ifi.uio.no> qt-embedded-4.4.3.ebuild:
+  Install video drivers
+
+  03 Jul 2009; Håvard Wall <haavardw@ifi.uio.no> qt-embedded-4.4.3.ebuild:
   add ~amd64
 
   25 Jun 2009; Håvard Wall <haavardw@ifi.uio.no> ChangeLog:
