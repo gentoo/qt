@@ -16,8 +16,9 @@ IUSE="debug"
 
 RDEPEND="x11-libs/qt-webkit:4"
 DEPEND="${RDEPEND}"
+
 DOCS="AUTHORS ChangeLog README"
 
 src_configure() {
-	eqmake4 arora.pro PREFIX="/usr"
+	eqmake4 PREFIX="/usr"
 }

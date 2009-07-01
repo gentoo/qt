@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
+  01 Jul 2009; Davide Pesavento <davidepesa@gmail.com> arora-9999.ebuild:
+  No need to specify .pro file name.
+
   30 May 2009; Markos Chandras <hwoarang@gentoo.org> arora-9999.ebuild:
   Use default src_compile. Upstream fixed parallel compilation :)
 
