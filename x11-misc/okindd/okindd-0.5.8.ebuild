@@ -4,9 +4,10 @@
 
 EAPI="2"
 
-inherit qt4
+inherit qt4-edge
 
 MY_P="${P}-20090410"
+
 DESCRIPTION="On Screen Display (OSD) for KDE 4.x - works on any qt desktop"
 HOMEPAGE="http://sites.kochkin.org/okindd/Home"
 SRC_URI="http://sites.kochkin.org/okindd/Home/source-code/${MY_P}.tar.bz2"
@@ -29,10 +30,6 @@ src_prepare() {
 		die "sed: fixing example paths failed"
 
 	qt4_src_prepare
-}
-
-src_configure() {
-	eqmake4 "${PN}".pro || die "Configure failed"
 }
 
 src_install() {
