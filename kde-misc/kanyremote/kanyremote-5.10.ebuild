@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="bluetooth"
 
 DEPEND=">=net-misc/anyremote-4.4[bluetooth?]
-	 dev-python/PyQt4
+	 dev-python/PyQt4[X]
 	 kde-base/pykde4
 	 bluetooth? ( dev-python/pybluez )"
 RDEPEND="${DEPEND}"
