@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Jul 2009; Håvard Wall <haavardw@ifi.uio.no> qt-embedded-4.4.3.ebuild:
+  add ~amd64
+
   25 Jun 2009; Håvard Wall <haavardw@ifi.uio.no> ChangeLog:
   Fix bug 252088, don't strip before installation
 

@@ -14,7 +14,7 @@ SRC_URI="ftp://ftp.trolltech.no/qt/source/${MY_PN}-${PV}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="4"
-KEYWORDS="-* ~x86"
+KEYWORDS="-* ~amd64 ~x86"
 IUSE="debug doc cups firebird +glib gif mysql nis ssl pch phonon
 postgres qt3support sqlite svg webkit xmlpatterns"
 
