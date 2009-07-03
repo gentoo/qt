@@ -1,0 +1,11 @@
+# ChangeLog for kde-misc/kanyremote
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*kanyremote-5.10 (03 Jul 2009)
+
+  03 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
+  +kanyremote-5.10.ebuild, +files/disable_bluetooth.patch:
+  Version bump. This version of kanyremote is the first PyQt4 version so it
+  needs more testing.
+
