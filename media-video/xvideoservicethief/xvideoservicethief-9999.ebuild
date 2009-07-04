@@ -32,7 +32,7 @@ TRANSLATIONSDIR="${S}/resources"
 
 
 src_prepare() {
-	# fix checz translation
+	# fix czech translation
 	mv "${S}"/resources/translations/xVST_cz.ts "${S}"/resources/translations/xVST_cs.ts
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \

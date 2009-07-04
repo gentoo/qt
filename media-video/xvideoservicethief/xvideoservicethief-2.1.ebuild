@@ -30,7 +30,7 @@ S="${WORKDIR}/${MY_PN}-src-1.2"
 LANGS="br ca cs da de es fr gl hu it pl ro sv"
 
 src_prepare() {
-	# fix checz translation
+	# fix czech translation
 	mv "${S}"/resources/translations/xVST_cz.ts	"${S}"/resources/translations/xVST_cs.ts
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
