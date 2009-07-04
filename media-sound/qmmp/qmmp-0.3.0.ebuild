@@ -4,15 +4,15 @@
 
 EAPI="2"
 
-inherit cmake-utils subversion
+inherit cmake-utils
 
 DESCRIPTION="Qt4-based audio player with winamp/xmms skins support"
 HOMEPAGE="http://qmmp.ylsoftware.com/index_en.php"
-ESVN_REPO_URI="http://qmmp.googlecode.com/svn/trunk/qmmp/"
+SRC_URI="http://qmmp.ylsoftware.com/files/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="+alsa +dbus bs2b ffmpeg flac jack libsamplerate +mad modplug musepack oss
 projectm pulseaudio scrobbler sndfile +vorbis wavpack"
 

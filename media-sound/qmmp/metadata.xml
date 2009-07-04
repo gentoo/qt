@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <herd>qt</herd>
+  <herd>sound</herd>
+  <maintainer>
+    <email>sound@gentoo.org</email>
+  </maintainer>
   <use>
+  	<flag name="bs2b">Enable Bauer stereophonic-to-binaural DSP library</flag>
+	<flag name="projectm">Enable projectm music visualization plugin</flag>
     <flag name="scrobbler">Enable audioscrobbler/last.fm support</flag>
   </use>
 </pkgmetadata>

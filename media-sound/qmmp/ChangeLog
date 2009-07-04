@@ -2,6 +2,16 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qmmp-0.3.0 (04 Jul 2009)
+
+  04 Jul 2009; Markos Chandras <hwoarang@gentoo.org> +qmmp-0.3.0.ebuild,
+  qmmp-9999.ebuild, metadata.xml:
+  Bump qmmp to 0.3.0 . Sync live ebuild
+  Note to developers: Please do not commit it to portage tree before you
+  test
+  the new use flags ( bs2b, projectm ). Upstream claims that this is a major
+  version bump so more testing is required. Thanks :)
+
   05 Jun 2009; Ben de Groot <yngwin@gentoo.org> qmmp-9999.ebuild:
   Add musepack-tools to be in sync with portage, and drop qt:4 dep.
   Add metadata.xml file.
