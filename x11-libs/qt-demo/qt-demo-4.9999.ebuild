@@ -16,7 +16,6 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 	~x11-libs/qt-gui-${PV}:${SLOT}
 	~x11-libs/qt-opengl-${PV}:${SLOT}
 	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-sound/phonon )
-	~x11-libs/qt-qt3support-${PV}:${SLOT}
 	~x11-libs/qt-script-${PV}:${SLOT}
 	~x11-libs/qt-sql-${PV}:${SLOT}
 	~x11-libs/qt-svg-${PV}:${SLOT}

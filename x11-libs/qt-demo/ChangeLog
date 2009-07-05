@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
+  qt-demo-4.5.9999.ebuild, qt-demo-4.9999.ebuild:
+  drop qt-qt3support dependency wrt bug #276131
+
   27 Jun 2009; Dror Levin <spatz@psybear.com> -qt-demo-4.5.2.ebuild:
   Moved to tree.
 
