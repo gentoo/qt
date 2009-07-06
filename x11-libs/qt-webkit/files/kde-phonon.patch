@@ -1,0 +1,30 @@
+Index: qt-x11-opensource-src-4.5.9999/src/3rdparty/webkit/WebCore/WebCore.pro
+===================================================================
+--- qt-x11-opensource-src-4.5.9999.orig/src/3rdparty/webkit/WebCore/WebCore.pro
++++ qt-x11-opensource-src-4.5.9999/src/3rdparty/webkit/WebCore/WebCore.pro
+@@ -2,6 +2,8 @@
+ CONFIG += building-libs
+ CONFIG += depend_includepath
+ include($$PWD/../WebKit.pri)
++# include media-sound/phonon headers
++INCLUDEPATH += /usr/include
+ 
+ TEMPLATE = lib
+ TARGET = QtWebKit
+Index: qt-x11-opensource-src-4.5.9999/src/3rdparty/webkit/WebCore/platform/graphics/qt/MediaPlayerPrivatePhonon.cpp
+===================================================================
+--- qt-x11-opensource-src-4.5.9999.orig/src/3rdparty/webkit/WebCore/platform/graphics/qt/MediaPlayerPrivatePhonon.cpp
++++ qt-x11-opensource-src-4.5.9999/src/3rdparty/webkit/WebCore/platform/graphics/qt/MediaPlayerPrivatePhonon.cpp
+@@ -35,7 +35,11 @@
+ #include <QMetaEnum>
+ #include <QUrl>
+ #include <QEvent>
+-#include <phonon>
++#include <phonon/mediaobject.h>
++#include <phonon/mediasource.h>
++#include <phonon/videowidget.h>
++#include <phonon/audiooutput.h>
++#include <phonon/medianode.h>
+ 
+ using namespace Phonon;
+ 

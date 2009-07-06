@@ -29,6 +29,7 @@ src_prepare() {
 	if use sparc; then
 		epatch "${FILESDIR}"/sparc-qt-webkit-sigbus.patch
 	fi
+	use kde && epatch "${FILESDIR}/kde-phonon.patch"
 	qt4-build-edge_src_prepare
 }
 
