@@ -2,5 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>qt</herd>
+<use>
+	<flag name="ffmpeg">Build the ffmpeg-based backend</flag>
+	<flag name="gstreamer">Build the gstreamer-based backend</flag>
+	<flag name="phonon">Build the phonon-based backend</flag>
+</use>
 </pkgmetadata>
-

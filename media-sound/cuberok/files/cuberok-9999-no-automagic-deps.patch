@@ -1,0 +1,90 @@
+diff -Naur cuberok-9999~orig/Cuberok.pro cuberok-9999/Cuberok.pro
+--- cuberok-9999~orig/Cuberok.pro	2009-07-06 16:15:56.000000000 +0200
++++ cuberok-9999/Cuberok.pro	2009-07-06 16:26:36.000000000 +0200
+@@ -9,11 +9,6 @@
+ #sources.path = $$[QT_INSTALL_EXAMPLES]/tools/plugandpaintplugins
+ INSTALLS += target
+ 
+-eval(QT_VERSION >= "4.5.0") {
+-    message($$[QT_VERSION])
+-    CONFIG += player_phonon
+-}
+-
+ player_phonon {
+     message(using phonon backend)
+     SUBDIRS += plugins/player_phonon
+@@ -37,19 +32,19 @@
+ }
+ unix {
+     CONFIG += link_pkgconfig
+-    system(pkg-config --modversion libavcodec 2>/dev/null) {
+-	system(pkg-config --modversion sdl 2>/dev/null) {
+-            message(using ffmpeg backend)
+-	    SUBDIRS += plugins/player_ffmpeg
++    player_ffmpeg {
++        system(pkg-config --modversion libavcodec 2>/dev/null) {
++            system(pkg-config --modversion sdl 2>/dev/null) {
++                message(using ffmpeg backend)
++                SUBDIRS += plugins/player_ffmpeg
++            }
+         }
+     }
+-    system(audiere-config --version) {
+-        message(using audiere backend)
+-        SUBDIRS += plugins/player_audiere
+-    }
+-    system(pkg-config --modversion gstreamer-0.10 2>/dev/null) {
+-        message(using gstreamer backend)
+-        SUBDIRS += plugins/player_gst
++    player_gstreamer {
++        system(pkg-config --modversion gstreamer-0.10 2>/dev/null) {
++            message(using gstreamer backend)
++            SUBDIRS += plugins/player_gst
++        }
+     }
+ #    pixmap.path = /share/pixmaps
+ #    pixmap.files = ../images/cuberok.xpm
+diff -Naur cuberok-9999~orig/src/src.pro cuberok-9999/src/src.pro
+--- cuberok-9999~orig/src/src.pro	2009-07-06 16:15:56.000000000 +0200
++++ cuberok-9999/src/src.pro	2009-07-06 16:59:01.000000000 +0200
+@@ -165,18 +165,6 @@
+     TARGET = cuberok
+     CONFIG += link_pkgconfig
+     PKGCONFIG += taglib
+-    system(audiere-config --version) {
+-	CONFIG += audiere
+-    }
+-    system(pkg-config --modversion gstreamer-0.10 2>/dev/null) {
+-	CONFIG += gstreamer
+-#	PKGCONFIG += gstreamer-0.10
+-    }
+-    # other engines
+-    audiere {
+-#	INCLUDEPATH += $$system(audiere-config --cxxflags)
+-#        LIBS += $$system(audiere-config --libs)
+-    }
+     target.path = /bin
+     documentation.path = /share/doc/cuberok
+     documentation.files = README ChangeLog
+@@ -192,19 +180,9 @@
+ 
+ LIBS += -L$${DESTDIR}/plugins -lplayer_void
+ 
+-audiere {
+-    DEFINES += AUDIERE
+-#    LIBS += -lplayer_audiere
+-#    message(using audiere backend)
+-#    HEADERS += player_audiere.h 
+-#    SOURCES += player_audiere.cpp
+-}
+-
+-gstreamer {
++player_gstreamer {
++    CONFIG += gstreamer
+     DEFINES += GSTREAMER
+-#    message(using gstreamer backend)
+-#    HEADERS += player_gst.h
+-#    SOURCES += player_gst.cpp
+ }
+ 
+ OBJECTS_DIR = $${DESTDIR}/obj

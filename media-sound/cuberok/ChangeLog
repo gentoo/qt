@@ -2,6 +2,20 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 Jul 2009; Davide Pesavento <davidepesa@gmail.com> cuberok-9999.ebuild,
+  +files/cuberok-9999-no-automagic-deps.patch,
+  +files/cuberok-ffmpeg-includes.patch, metadata.xml:
+  Mostly rewritten, lots of improvements and fixes:
+    - added several USE flags for the different player backends
+    - taglib is needed at build-time: moved to DEPEND
+    - avoid automagic deps
+    - apply a patch to fix ffmpeg's include path
+    - removed obsolete sed in src_prepare: libdir was fixed upstream
+    - install the package under /usr
+    - use upstream desktop file
+    - added USE descriptions to metadata.xml
+    - updated HOMEPAGE
+
   22 Jun 2009; Davide Pesavento <davidepesa@gmail.com>
   cuberok-0.0.10.ebuild:
   Install upstream desktop file. Style cleanup.

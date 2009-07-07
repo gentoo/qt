@@ -3,40 +3,68 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-edge subversion
+inherit eutils multilib qt4-edge subversion
 
 DESCRIPTION="Qt4 lightweight music player"
-HOMEPAGE="http://www.qt-apps.org/content/show.php/Cuberok?content=97885"
+HOMEPAGE="http://code.google.com/p/cuberok/"
 ESVN_REPO_URI="http://cuberok.googlecode.com/svn/trunk/"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug mp3"
+IUSE="debug ffmpeg gstreamer kde mp3 phonon"
 
-DEPEND="media-libs/gstreamer
+DEPEND="media-libs/taglib
 	x11-libs/qt-gui:4
 	x11-libs/qt-sql:4
-	 mp3? ( media-plugins/gst-plugins-mad )"
+	ffmpeg? (
+		media-libs/libsdl
+		>=media-video/ffmpeg-0.5[mp3?]
+	)
+	gstreamer? (
+		media-libs/gstreamer
+	)
+	phonon? (
+		kde? ( media-sound/phonon )
+		!kde? ( || ( >=x11-libs/qt-phonon-4.5:4 media-sound/phonon ) )
+	)"
 RDEPEND="${DEPEND}
-	media-libs/taglib"
+	gstreamer? ( mp3? ( media-plugins/gst-plugins-mad ) )"
 
-src_prepare(){
-	#fixing multilib issues
-	for target in cuberok_style/cuberok_style.pro player_gst/player_gst.pro;do
-		einfo "fixing ${target}"
-		sed -i "s/lib\/cuberok/$(get_libdir)\/cuberok/" \
-		"${S}"/plugins/${target} || die "seding ${target} failed"
-	done
+PATCHES=(
+	"${FILESDIR}/${P}-no-automagic-deps.patch"
+	"${FILESDIR}/${PN}-ffmpeg-includes.patch"
+)
+
+pkg_setup() {
+	qt4-edge_pkg_setup
+
+	if ! use ffmpeg && ! use gstreamer && ! use phonon; then
+		echo
+		ewarn "You didn't select any audio backend, cuberok won't be able"
+		ewarn "to play anything! This is probably not what you want."
+		ewarn
+		ewarn "The available backends (ffmpeg, gstreamer, phonon)"
+		ewarn "can be selected by enabling the corresponding USE flag."
+		echo
+		ebeep
+	fi
 }
 
-src_configure(){
-	eqmake4 Cuberok.pro
+src_prepare() {
+	qt4-edge_src_prepare
+}
+
+src_configure() {
+	player_use() { use $1 && echo "CONFIG+=player_$1"; }
+
+	eqmake4 $(player_use ffmpeg) \
+		$(player_use gstreamer) \
+		$(player_use phonon)
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	doicon images/${PN}.png
-	make_desktop_entry cuberok Cuberok ${PN}.png 'Qt;AudioVideo;Audio' \
-		die || "make_desktop_entry_failed"
+	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
+	dodoc ChangeLog || die
+	doicon images/cuberok.png || die
 }
