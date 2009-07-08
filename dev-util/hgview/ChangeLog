@@ -1,0 +1,10 @@
+# ChangeLog for dev-util/hgview
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*hgview-1.0.0 (08 Jul 2009)
+
+  08 Jul 2009; Dror Levin <spatz@psybear.com> +hgview-1.0.0.ebuild,
+  +metadata.xml:
+  Initial commit, bug 274562. Thanks to Martin Gysel for the ebuild.
+
