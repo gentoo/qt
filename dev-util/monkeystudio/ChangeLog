@@ -1,0 +1,13 @@
+# ChangeLog for dev-util/monkeystudio
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*monkeystudio-1.8.4.0_beta1 (08 Jul 2009)
+
+  08 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
+  +monkeystudio-1.8.4.0_beta1.ebuild, +files/qscintilla_headers.patch,
+  +metadata.xml:
+  Initial commit of monkeystudio. It is highly broken because upstream do
+  smart
+  things as always. Feel free to fix it and unmask it. bug 132029
+

@@ -1,0 +1,14 @@
+Index: version-1.8.4.0b1/monkey/monkey.pri
+===================================================================
+--- version-1.8.4.0b1.orig/monkey/monkey.pri
++++ version-1.8.4.0b1/monkey/monkey.pri
+@@ -3,6 +3,9 @@
+ 
+ # include path
+ INCLUDEPATH	*= $$PWD/sdk
++INCLUDEPATH     += $$PWD/qscintilla/sdk
++INCLUDEPATH     += /usr/include/Qsci/
++
+ DEPENDPATH	*= $$PWD/src
+ 
+ CONFIG -= debug_and_release debug
