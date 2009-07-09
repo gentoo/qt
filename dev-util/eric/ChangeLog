@@ -2,6 +2,14 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eric-4.3.5 (09 Jul 2009)
+
+  09 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
+  +files/4.2.3-no-interactive.patch, +eric-4.3.5.ebuild,
+  eric-4.4_pre20090627.ebuild:
+  Version bump to 4.3.5. Drop ~sparc keywords because webkit doesnt work on
+  sparc
+
   28 Jun 2009; Markos Chandras <hwoarang@gentoo.org>
   -eric-4.4_pre20090523.ebuild, eric-4.4_pre20090627.ebuild,
   +files/eric-snapshot-20090627-no-interactive.patch,

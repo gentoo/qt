@@ -25,7 +25,7 @@ RESTRICT="mirror"
 
 SLOT="4"
 LICENSE="GPL-2"
-KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~x86"
 IUSE="linguas_cs linguas_de linguas_es linguas_fr linguas_ru linguas_tr spell"
 
 DEPEND="dev-python/PyQt4[X,assistant,svg,webkit]
