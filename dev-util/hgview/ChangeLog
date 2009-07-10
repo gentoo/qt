@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  10 Jul 2009; Davide Pesavento <davidepesa@gmail.com> hgview-1.0.0.ebuild:
+  Slightly improve readability and efficiency by using bash builtins instead
+  of cut.
+
 *hgview-1.0.0 (08 Jul 2009)
 
   08 Jul 2009; Dror Levin <spatz@psybear.com> +hgview-1.0.0.ebuild,

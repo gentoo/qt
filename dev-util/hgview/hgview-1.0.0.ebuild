@@ -12,7 +12,7 @@ SRC_URI="http://ftp.logilab.org/pub/${PN}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-python/egenix-mx-base
@@ -22,12 +22,11 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	distutils_src_prepare
-	distutils_python_version
 
 	# fix mercurial extension install path
 	local origdir="share/python-support/mercurial-common/hgext"
-	local sitedir=$(python_get_sitedir | cut -d/ -f3-)
-	sed -i "s:${origdir}:${sitedir}/hgext:" \
+	local sitedir="$(python_get_sitedir)/hgext"
+	sed -i -e "s:${origdir}:${sitedir#/usr/}:" \
 		"${S}/hgviewlib/__pkginfo__.py" || die "sed failed"
 }
 
