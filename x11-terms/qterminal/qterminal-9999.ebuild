@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit cvs qt4 eutils
+inherit cvs qt4-edge
 
 DESCRIPTION="Qt4-based multitab terminal emulator"
 HOMEPAGE="http://qterminal.sourceforge.net/"
@@ -30,26 +30,19 @@ src_unpack() {
 	cvs_src_unpack
 }
 
-#src_prepare() {
-#	sed -i "s/build_all/build_all dll/" \
-#		"${S}"/qtermwidget_patches/qtermwidget_pro.patch
-
-#	cd "${WORKDIR}"/qtermwidget
-#	epatch "${S}"/qtermwidget_patches/qtermwidget_pro.patch
-#}
-
-src_compile() {
-	eqmake4 || die "eqmake4 failed"
-	emake -j1 || die "emake failed"
+src_prepare() {
+	qt4-edge_src_prepare
+	echo "CONFIG += ordered" >> qterminal.pro
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" DESTDIR="${D}" install || die "install failed"
+	qt4-edge_src_install
 
-	newicon src/icons/main.png qterminal.png
-	make_desktop_entry qterminal QTerminal qterminal "System;TerminalEmulator"
+	newicon src/icons/main.png qterminal.png || die
+	make_desktop_entry qterminal QTerminal qterminal \
+			"Qt;System;TerminalEmulator" || die
 
-	dodoc AUTHORS README TODO
+	dodoc AUTHORS || die
 	docinto qtermwidget
-	dodoc "${WORKDIR}"/qtermwidget/{AUTHORS,README,TODO}
+	dodoc "${WORKDIR}"/qtermwidget/{AUTHORS,Changelog,README} || die
 }
