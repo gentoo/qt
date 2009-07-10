@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  10 Jul 2009; Davide Pesavento <davidepesa@gmail.com>
+  goldendict-0.9.0.ebuild:
+  Fix typo in pkg_postinst.
+
 *goldendict-0.9.0 (10 Jul 2009)
 
   10 Jul 2009; Ben de Groot <yngwin@gentoo.org> +goldendict-0.9.0.ebuild,

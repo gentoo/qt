@@ -52,7 +52,7 @@ src_install() {
 	fi
 }
 
-pkg_postinstall() {
+pkg_postinst() {
 	elog 'The portage tree contains various stardict and dictd dictionaries, which'
 	elog 'GoldenDict can use. Also, check http://goldendict.berlios.de/dictionaries.php'
 	elog 'for more options. The myspell packages can also be useful.'
