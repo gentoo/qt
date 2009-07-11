@@ -1,0 +1,10 @@
+# ChangeLog for sci-mathematics/relational
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*relational-0.10 (11 Jul 2009)
+
+  11 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
+  +relational-0.10.ebuild, +metadata.xml:
+  Initial commit for relational package. Bug 264419
+
