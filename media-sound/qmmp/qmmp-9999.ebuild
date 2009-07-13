@@ -13,7 +13,7 @@ ESVN_REPO_URI="http://qmmp.googlecode.com/svn/trunk/qmmp/"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="+alsa +dbus bs2b ffmpeg flac jack libsamplerate +mad modplug musepack oss
+IUSE="aac +alsa +dbus bs2b ffmpeg flac jack libsamplerate +mad modplug musepack oss
 projectm pulseaudio scrobbler sndfile +vorbis wavpack"
 
 RDEPEND="x11-libs/qt-gui:4
@@ -21,7 +21,7 @@ RDEPEND="x11-libs/qt-gui:4
 	alsa? ( media-libs/alsa-lib )
 	bs2b? ( media-libs/libbs2b )
 	dbus? ( sys-apps/dbus )
-	faad2? ( media-libs/faad2 )
+	aac? ( media-libs/faad2 )
 	flac? ( media-libs/flac )
 	libsamplerate? ( media-libs/libsamplerate )
 	mad? ( media-libs/libmad )
@@ -54,6 +54,7 @@ qmmp_use_enable() {
 src_compile() {
 	mycmakeargs="${mycmakeargs}
 		$(qmmp_use_enable alsa ALSA)
+		$(qmmp_use_enable aac AAC)
 		$(qmmp_use_enable bs2b BS2B )
 		$(qmmp_use_enable dbus DBUS)
 		$(qmmp_use_enable ffmpeg FFMPEG)
