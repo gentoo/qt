@@ -1,6 +1,10 @@
 # ChangeLog for x11-libs/libqxt
 # Copyright 1999-2009 Berkano Overlay; distributed under the GPL version 2
 
+  13 Jul 2009; Håvard Wall <haavardw@ifi.uio.no> +libqxt-0.5.0.ebuild,
+  +files/libqxt-0.5.0-gcc4.4.patch:
+  Compile with gcc-4.4 (bug 277591)
+
   30 Apr 2009; Ben de Groot <yngwin@gentoo.org> -libqxt-0.5.0.ebuild:
   Moving 0.5.0 ebuild to portage
 
