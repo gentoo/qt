@@ -6,8 +6,8 @@ EAPI="2"
 
 inherit qt4-edge subversion
 
-DESCRIPTION="TODO"
-HOMEPAGE="http://www.alwins-world.de/wiki/programs/kdesvn"
+DESCRIPTION="Qt4 based GUI for unixODBC"
+HOMEPAGE="http://sourceforge.net/projects/unixodbc-gui-qt/"
 ESVN_REPO_URI="https://unixodbc-gui-qt.svn.sourceforge.net/svnroot/unixodbc-gui-qt/trunk"
 
 LICENSE="GPL-2"
