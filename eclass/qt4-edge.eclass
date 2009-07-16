@@ -38,6 +38,20 @@ qt4-edge_pkg_setup() {
 	esac
 }
 
+qt4-edge_src_unpack() {
+	base_src_unpack
+	# Fallback to ${MY_P} when ${WORKDIR}/${P} doesn't exist
+	# Feel free to re-implement this
+	if [[  "${S}" == "${WORKDIR}/${P}" ]]; then
+		if [[ ! -d "${WORKDIR}"/${P} ]]; then
+			ewarn "Falling back to ${WORKDIR}/${MY_P}"
+			if [[ -d "${WORKDIR}"/${MY_P} ]]; then
+				S="${WORKDIR}"/${MY_P}
+			fi
+		fi
+	fi
+}
+
 # @ECLASS-VARIABLE: PATCHES
 # @DESCRIPTION:
 # In case you have patches to apply, specify them in PATCHES variable. Make sure
@@ -258,4 +272,4 @@ eqmake4() {
 	return 0
 }
 
-EXPORT_FUNCTIONS pkg_setup src_prepare src_configure src_compile src_install
+EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install
