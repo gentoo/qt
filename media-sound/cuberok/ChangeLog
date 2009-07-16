@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*cuberok-0.0.11 (16 Jul 2009)
+
+  16 Jul 2009; Markos Chandras <hwoarang@gentoo.org> +cuberok-0.0.11.ebuild:
+  Version bump
+
 *cuberok-0.0.10-r1 (07 Jul 2009)
 
   07 Jul 2009; Davide Pesavento <davidepesa@gmail.com>
