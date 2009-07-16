@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  16 Jul 2009; <hwoarang@gentoo.org> qt-webkit-4.5.9999.ebuild:
+  Dont apply patch on Nokias' live ebuilds. Please test it with qt-webkit[qt-copy]
+
   06 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
   qt-webkit-4.5.9999.ebuild, +files/kde-phonon.patch:
   Apply patch to fix kde-phonon stuff
