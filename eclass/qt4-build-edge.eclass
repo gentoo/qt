@@ -131,47 +131,7 @@ case "${MY_PV_QTCOPY}" in
 		;;
 esac
 
-
-# @FUNCTION: setqtenv
-setqtenv() {
-# Set up installation directories
-QTBASEDIR=/usr/$(get_libdir)/qt4
-QTPREFIXDIR=/usr
-QTBINDIR=/usr/bin
-QTLIBDIR=/usr/$(get_libdir)/qt4
-QMAKE_LIBDIR_QT=${QTLIBDIR}
-QTPCDIR=/usr/$(get_libdir)/pkgconfig
-QTDATADIR=/usr/share/qt4
-QTDOCDIR=/usr/share/doc/qt-${PV}
-QTHEADERDIR=/usr/include/qt4
-QTPLUGINDIR=${QTLIBDIR}/plugins
-QTSYSCONFDIR=/etc/qt4
-QTTRANSDIR=${QTDATADIR}/translations
-QTEXAMPLESDIR=${QTDATADIR}/examples
-QTDEMOSDIR=${QTDATADIR}/demos
-QT_INSTALL_PREFIX=/usr/$(get_libdir)/qt4
-PLATFORM=$(qt_mkspecs_dir)
-unset QMAKESPEC
-}
-
 qt4-build-edge_pkg_setup() {
-	# Set up installation directories
-	QTBASEDIR=/usr/$(get_libdir)/qt4
-	QTPREFIXDIR=/usr
-	QTBINDIR=/usr/bin
-	QTLIBDIR=/usr/$(get_libdir)/qt4
-	QTPCDIR=/usr/$(get_libdir)/pkgconfig
-	QTDATADIR=/usr/share/qt4
-	QTDOCDIR=/usr/share/doc/qt-${PV}
-	QTHEADERDIR=/usr/include/qt4
-	QTPLUGINDIR=${QTLIBDIR}/plugins
-	QTSYSCONFDIR=/etc/qt4
-	QTTRANSDIR=${QTDATADIR}/translations
-	QTEXAMPLESDIR=${QTDATADIR}/examples
-	QTDEMOSDIR=${QTDATADIR}/demos
-
-	PLATFORM=$(qt_mkspecs_dir)
-
 	PATH="${S}/bin:${PATH}"
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
 
@@ -289,15 +249,39 @@ qt4-build-edge_src_install() {
 	fix_library_files
 }
 
+# @FUNCTION: setqtenv
+# @DESCRIPTION:
+# Prepares the environment. This function is called
+# at the beginning of each ebuild phase.
+setqtenv() {
+	QTBASEDIR=/usr/$(get_libdir)/qt4
+	QTPREFIXDIR=/usr
+	QTBINDIR=/usr/bin
+	QTLIBDIR=/usr/$(get_libdir)/qt4
+	QMAKE_LIBDIR_QT=${QTLIBDIR}
+	QTPCDIR=/usr/$(get_libdir)/pkgconfig
+	QTDATADIR=/usr/share/qt4
+	QTDOCDIR=/usr/share/doc/qt-${PV}
+	QTHEADERDIR=/usr/include/qt4
+	QTPLUGINDIR=${QTLIBDIR}/plugins
+	QTSYSCONFDIR=/etc/qt4
+	QTTRANSDIR=${QTDATADIR}/translations
+	QTEXAMPLESDIR=${QTDATADIR}/examples
+	QTDEMOSDIR=${QTDATADIR}/demos
+	QT_INSTALL_PREFIX=/usr/$(get_libdir)/qt4
+	PLATFORM=$(qt_mkspecs_dir)
+
+	unset QMAKESPEC
+}
+
+# @FUNCTION: standard_configure_options
+# @DESCRIPTION:
+# Sets up some standard configure options, like libdir (if necessary), whether
+# debug info is wanted or not.
 standard_configure_options() {
 	local myconf=""
 
 	[[ $(get_libdir) != "lib" ]] && myconf="${myconf} -L/usr/$(get_libdir)"
-
-	# Disable visibility explicitly if gcc version isn't 4
-#	if [[ "$(gcc-major-version)" -lt "4" ]]; then
-#		myconf="${myconf} -no-reduce-exports"
-#	fi
 
 	# precompiled headers doesn't work on hardened, where the flag is masked.
 	if use pch; then
@@ -313,7 +297,7 @@ standard_configure_options() {
 	fi
 
 	# ARCH is set on Gentoo. Qt now falls back to generic on an unsupported
-	# ${ARCH}. Therefore we convert it to supported values.
+	# $(tc-arch). Therefore we convert it to supported values.
 	case "$(tc-arch)" in
 		amd64) myconf="${myconf} -arch x86_64" ;;
 		ppc|ppc64) myconf="${myconf} -arch powerpc" ;;
@@ -342,15 +326,26 @@ standard_configure_options() {
 	echo "${myconf}"
 }
 
+# @FUNCTION: build_directories
+# @USAGE: < directories >
+# @DESCRIPTION:
+# Compiles the code in $QT4_TARGET_DIRECTORIES
 build_directories() {
 	local dirs="$@"
 	for x in ${dirs}; do
 		cd "${S}"/${x}
+		sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
+			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
+			|| die "failed to fix QT_INSTALL_LIBS"
 		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
 		emake || die "emake failed"
 	done
 }
 
+# @FUNCTION: install_directories
+# @USAGE: < directories >
+# @DESCRIPTION:
+# run emake install in the given directories, which are separated by spaces
 install_directories() {
 	local dirs="$@"
 	for x in ${dirs}; do
@@ -375,6 +370,8 @@ QCONFIG_REMOVE="${QCONFIG_REMOVE:-}"
 # List variables that should be defined at the top of QtCore/qconfig.h
 QCONFIG_DEFINE="${QCONFIG_DEFINE:-}"
 
+# @FUNCTION: install_qconfigs
+# @DESCRIPTION: Install gentoo-specific mkspecs configurations
 install_qconfigs() {
 	local x
 	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} ]]; then
@@ -394,6 +391,8 @@ install_qconfigs() {
 	fi
 }
 
+# @FUNCTION: generate_qconfigs
+# @DESCRIPTION: Generates gentoo-specific configurations
 generate_qconfigs() {
 	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} || ${CATEGORY}/${PN} == x11-libs/qt-core ]]; then
 		local x qconfig_add qconfig_remove qconfig_new
@@ -468,21 +467,28 @@ qt4-build-edge_pkg_postinst() {
 	ewarn "make sure all your Qt4 packages are up-to-date and built with the same"
 	ewarn "configuration."
 	ewarn
-	ewarn "For more information, see http://doc.trolltech.com/4.5/plugins-howto.html"
+	ewarn "For more information, see http://doc.trolltech.com/${PV%.*}/plugins-howto.html"
 	echo
 }
 
+# @FUNCTION: skip_qmake_build_patch
+# @DESCRIPTION:
+# Skip qmake build, as it's already installed by qt-core
 skip_qmake_build_patch() {
-	# Don't need to build qmake, as it's already installed from qt-core
 	sed -i -e "s:if true:if false:g" "${S}"/configure || die "Sed failed"
 }
 
+# @FUNCTION: skip_project_generation_patch
+# @DESCRIPTION:
+# Exit the script early by throwing in an exit before all of the .pro files are scanned
 skip_project_generation_patch() {
-	# Exit the script early by throwing in an exit before all of the .pro files are scanned
 	sed -e "s:echo \"Finding:exit 0\n\necho \"Finding:g" \
 		-i "${S}"/configure || die "Sed failed"
 }
 
+# @FUNCTION: symlink_binaries_to_buildtree
+# @DESCRIPTION:
+# Symlink generated binaries to buildtree so they can be used during compilation time
 symlink_binaries_to_buildtree() {
 	for bin in qmake moc uic rcc; do
 		ln -s ${QTBINDIR}/${bin} "${S}"/bin/ || die "Symlinking ${bin} to ${S}/bin failed."
@@ -494,6 +500,10 @@ generate_include() {
 	QTDIR="." perl "bin/syncqt"
 }
 
+# @FUNCTION: fix_library_files
+# @DESCRIPTION:
+# Fixes the pathes in *.la, *.prl, *.pc, as they are wrong due to sandbox and
+# moves the *.pc-files into the pkgconfig directory
 fix_library_files() {
 	for libfile in "${D}"/${QTLIBDIR}/{*.la,*.prl,pkgconfig/*.pc}; do
 		if [[ -e ${libfile} ]]; then
@@ -501,16 +511,14 @@ fix_library_files() {
 		fi
 	done
 
-	# pkgconfig files refer to WORKDIR/bin as the moc and uic locations.  Fix:
+	# pkgconfig files refer to WORKDIR/bin as the moc and uic locations. Fix:
 	for libfile in "${D}"/${QTLIBDIR}/pkgconfig/*.pc; do
 		if [[ -e ${libfile} ]]; then
 			sed -i -e "s:${S}/bin:${QTBINDIR}:g" ${libfile} || die "Sed failed"
-
-	# Move .pc files into the pkgconfig directory
-
-		dodir ${QTPCDIR}
-		mv ${libfile} "${D}"/${QTPCDIR}/ \
-			|| die "Moving ${libfile} to ${D}/${QTPCDIR}/ failed."
+			# Move .pc files into the pkgconfig directory
+			dodir ${QTPCDIR}
+			mv ${libfile} "${D}"/${QTPCDIR}/ \
+				|| die "Moving ${libfile} to ${D}/${QTPCDIR}/ failed."
 		fi
 	done
 
@@ -518,6 +526,13 @@ fix_library_files() {
 	rmdir "${D}"/${QTLIBDIR}/pkgconfig
 }
 
+# @FUNCTION: qt_use
+# @USAGE: < flag > [ feature ] [ enableval ]
+# @DESCRIPTION:
+# This will echo "${enableval}-${feature}" if <flag> is enabled, or
+# "-no-${feature} if the flag is disabled. If [feature] is not specified <flag>
+# will be used for that. If [enableval] is not specified, it omits the
+# assignment-part
 qt_use() {
 	local flag="${1}"
 	local feature="${1}"
@@ -533,6 +548,10 @@ qt_use() {
 	fi
 }
 
+# @FUNCTION: qt_mkspecs_dir
+# @RETURN: the specs-directory w/o path
+# @DESCRIPTION:
+# Allows us to define which mkspecs dir we want to use.
 qt_mkspecs_dir() {
 	# Allows us to define which mkspecs dir we want to use.
 	local spec
