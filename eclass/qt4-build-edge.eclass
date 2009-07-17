@@ -131,6 +131,29 @@ case "${MY_PV_QTCOPY}" in
 		;;
 esac
 
+
+# @FUNCTION: setqtenv
+setqtenv() {
+# Set up installation directories
+QTBASEDIR=/usr/$(get_libdir)/qt4
+QTPREFIXDIR=/usr
+QTBINDIR=/usr/bin
+QTLIBDIR=/usr/$(get_libdir)/qt4
+QMAKE_LIBDIR_QT=${QTLIBDIR}
+QTPCDIR=/usr/$(get_libdir)/pkgconfig
+QTDATADIR=/usr/share/qt4
+QTDOCDIR=/usr/share/doc/qt-${PV}
+QTHEADERDIR=/usr/include/qt4
+QTPLUGINDIR=${QTLIBDIR}/plugins
+QTSYSCONFDIR=/etc/qt4
+QTTRANSDIR=${QTDATADIR}/translations
+QTEXAMPLESDIR=${QTDATADIR}/examples
+QTDEMOSDIR=${QTDATADIR}/demos
+QT_INSTALL_PREFIX=/usr/$(get_libdir)/qt4
+PLATFORM=$(qt_mkspecs_dir)
+unset QMAKESPEC
+}
+
 qt4-build-edge_pkg_setup() {
 	# Set up installation directories
 	QTBASEDIR=/usr/$(get_libdir)/qt4
@@ -185,6 +208,7 @@ qt4-build-edge_pkg_setup() {
 }
 
 qt4-build-edge_src_unpack() {
+	setqtenv
 	local target targets
 	for target in configure LICENSE.{GPL2,GPL3} projects.pro \
 		src/{qbase,qt_targets,qt_install}.pri bin config.tests mkspecs qmake \
@@ -211,6 +235,7 @@ qt4-build-edge_src_unpack() {
 }
 
 qt4-build-edge_src_prepare() {
+	setqtenv
 	case "${MY_PV_QTCOPY}" in
 		4.?.9999-qt-copy | 4.?.9999 | 4.9999)
 			generate_include
@@ -245,7 +270,7 @@ qt4-build-edge_src_prepare() {
 }
 
 qt4-build-edge_src_configure() {
-
+	setqtenv
 	myconf="$(standard_configure_options) ${myconf}"
 
 	echo ./configure ${myconf}
@@ -253,10 +278,12 @@ qt4-build-edge_src_configure() {
 }
 
 qt4-build-edge_src_compile() {
+	setqtenv
 	build_directories "${QT4_TARGET_DIRECTORIES}"
 }
 
 qt4-build-edge_src_install() {
+	setqtenv
 	install_directories "${QT4_TARGET_DIRECTORIES}"
 	install_qconfigs
 	fix_library_files
