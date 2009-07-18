@@ -167,7 +167,8 @@ prepare_translations() {
 	debug-print-function $FUNCNAME "$@"
 
 	# Find translations directory
-	local roottrdir="${TRANSLATIONSDIR:-${S}}" trdir=
+	# Changed default to . - crazy upstreams :)
+	local roottrdir="${TRANSLATIONSDIR:-${S}}" trdir=.
 	for dir in lang langs translations; do
 		[[ -d ${roottrdir}/${dir} ]] && trdir="${roottrdir}/${dir}"
 	done
