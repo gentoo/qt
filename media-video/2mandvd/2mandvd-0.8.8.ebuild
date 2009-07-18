@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-LANGS="de en es it pl pt ru"
+LANGS="de en ru"
 
 inherit qt4-edge
 
