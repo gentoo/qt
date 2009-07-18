@@ -7,14 +7,14 @@ and Qt4 related packages. For your convenience we provide some sets and
 package.keyword files.
 
 Please note that we use the following versioning scheme:
-- 4.5.x_beta, 4.5.x_rc are official pre-releases
+- 4.x.y_beta, 4.x.y_rc are official pre-releases
 - 4.9999 is "live" code from Nokia's Qt Software git repository
-- 4.x.9999 is "live" code from KDE's qt-copy subversion repository
+- 4.x.9999 is "live" code from KDE's qt-copy git repository
 
 The corresponding sets we defined are:
 - qt-all-4.5 			the latest official pre-release
 - qt-all-live-nokia		"live" code from Nokia's Qt Software git repo
-- qt-all-live-kde 		"live" code from KDE's qt-copy svn repo
+- qt-all-live-kde 		"live" code from KDE's qt-copy git repo
 
 If you want to use qt-copy, you should mask the official pre-releases.
 
@@ -40,4 +40,3 @@ Happy Qting!
 
 				The Gentoo Qt team
 
-look i've found it
