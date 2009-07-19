@@ -7,7 +7,7 @@ EAPI="2"
 JAVA_PKG_IUSE="doc source"
 WANT_ANT_TASKS="ant-trax"
 
-inherit eutils qt4 java-pkg-2 java-ant-2
+inherit eutils qt4 java-pkg-2 java-ant-2 toolchain-funcs
 
 QTVER="${PV%%_p*}"
 MY_PV="${PV/p/0}"
@@ -41,6 +41,10 @@ S="${WORKDIR}/${MY_P}"
 src_prepare() {
 	epatch "${FILESDIR}/generator-${PV}.patch"
 	epatch "${FILESDIR}/configuration-${PV}.patch"
+
+	if [[ $(gcc-version) == "4.4" ]] ; then
+		epatch "${FILESDIR}/gcc4.4-${PV}.patch"
+	fi
 
 	# Respect MAKEOPTS
 	sed -i -e "/String arguments =/s|=.*|=\" ${MAKEOPTS}\";|" \
