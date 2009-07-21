@@ -24,7 +24,7 @@ DEPEND="x11-libs/qt-gui:4
 RDEPEND="${DEPENDS}"
 
 src_install() {
-	dobin bin/${MY_PN}
+	dobin bin/${MY_PN} || die "dobin failed"
 	dodoc changelog.txt || die "dodoc failed"
 
 	insinto /usr/share/applications
