@@ -4,6 +4,8 @@
 
 EAPI="2"
 
+LANGS="fr"
+
 inherit qt4-edge
 
 MY_PN="KontrolPack"
@@ -25,9 +27,18 @@ DEPEND="app-arch/zip
 S="${WORKDIR}/${MY_P}-src"
 
 src_prepare() {
-	mv icons/cmd2.PNG icons/cmd2.png
+	mv -f icons/cmd2.PNG icons/cmd2.png || die "renaming failed"
+	sed -i -e "s!\(${MY_PN}_\)!/usr/share/${PN}/locale/\1!" main/main.cpp \
+		|| die "sed failed"
 }
 
 src_install() {
 	dobin ${MY_PN/P/p} || die "dobin failed"
+
+	for lingua in ${LINGUAS}; do
+		if has ${lingua} ${LANGS}; then
+			insinto /usr/share/${PN}/locale
+			doins ${MY_PN}_${lingua}.qm || die "doins failed"
+		fi
+	done
 }
