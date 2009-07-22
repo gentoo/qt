@@ -17,7 +17,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}-src.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE="debug"
 
 RDEPEND="x11-libs/qt-gui:4"
