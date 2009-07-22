@@ -12,13 +12,12 @@ SRC_URI="http://arora.googlecode.com/files/${P}.tar.gz"
 LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug doc"
+IUSE="debug"
 
 RDEPEND="x11-libs/qt-gui
 	x11-libs/qt-sql
 	x11-libs/qt-webkit"
-DEPEND="$RDEPEND
-	doc? ( app-doc/doxygen )"
+DEPEND="$RDEPEND"
 
 ARORA_LANGS="ast ca es es_CR et_EE fr_CA gl ms nb_NO pt_BR sr@latin sr_CS uk
 zh_CN zh_TW"
