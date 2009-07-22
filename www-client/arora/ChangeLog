@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
+  22 Jul 2009; Ben de Groot <yngwin@gentoo.org> -arora-0.8.0.ebuild:
+  0.8.0 release ebuild moved to portage
+
   22 Jul 2009; Ben de Groot <yngwin@gentoo.org> arora-0.8.0.ebuild:
   Remove doc useflag - doesnt do anything
 
