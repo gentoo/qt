@@ -2,14 +2,14 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
+# Alpha versions are not for everybody :)
+=app-emulation/qtemu-2.0_alpha*
+
 # Markos Chandras <hwoarang@gentoo.org> (08 Jul 2009)
 # Highly broken because of bundled qscintilla. Feel free
 # to fix it and unmask it.
 =dev-util/monkeystudio-1.8.4.0_beta1
-
-# Markos Chandras <hwoarang@gentoo.org> (28 Jun 2009)
-# Masking PyQt4 pre-releases
-=dev-python/PyQt4-4.5.2_pre*
 
 # Ben de Groot <yngwin@gentoo.org> (27 Jun 2009)
 # Needs Qt 4.4, while 4.5.1 is stable. Use qt-script instead.
