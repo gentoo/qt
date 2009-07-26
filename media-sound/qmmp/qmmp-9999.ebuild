@@ -13,8 +13,8 @@ ESVN_REPO_URI="http://qmmp.googlecode.com/svn/trunk/qmmp/"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="aac +alsa +dbus bs2b ffmpeg flac jack libsamplerate +mad modplug musepack oss
-projectm pulseaudio scrobbler sndfile +vorbis wavpack"
+IUSE="aac +alsa +dbus bs2b ffmpeg flac jack libsamplerate +mad modplug musepack
+oss projectm pulseaudio scrobbler sndfile +vorbis wavpack"
 
 RDEPEND="x11-libs/qt-gui:4
 	media-libs/taglib
@@ -25,8 +25,8 @@ RDEPEND="x11-libs/qt-gui:4
 	flac? ( media-libs/flac )
 	libsamplerate? ( media-libs/libsamplerate )
 	mad? ( media-libs/libmad )
-	musepack? ( >=media-libs/libmpcdec-1.2.5
-		media-sound/musepack-tools )
+	musepack? (	|| ( >=media-sound/musepack-tools-444
+		media-libs/libmpcdec ) )
 	modplug? ( >=media-libs/libmodplug-0.8.4 )
 	vorbis? ( media-libs/libvorbis
 		media-libs/libogg )
