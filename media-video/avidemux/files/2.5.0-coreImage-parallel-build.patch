@@ -1,0 +1,12 @@
+diff --git a/avidemux/ADM_coreImage/src/CMakeLists.txt b/avidemux/ADM_coreImage/src/CMakeLists.txt
+index fab38a3..4fc236a 100644
+--- a/avidemux/ADM_coreImage/src/CMakeLists.txt
++++ b/avidemux/ADM_coreImage/src/CMakeLists.txt
+@@ -20,6 +20,7 @@ SET(ADM_coreImage_SRCS
+ )
+ 
+ ADD_LIBRARY(ADM_coreImage SHARED ${ADM_coreImage_SRCS})
++ADD_DEPENDENCIES(ADM_coreImage ffmpeg)
+ ADD_SOURCE_CFLAGS(DIA_flyDialog.cpp " -DADM_UI_TYPE_BUILD=99")
+ IF (APPLE)
+ 	TARGET_LINK_LIBRARIES(ADM_coreImage -Wl,-read_only_relocs,suppress)

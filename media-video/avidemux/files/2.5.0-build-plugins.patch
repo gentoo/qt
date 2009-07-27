@@ -1,0 +1,82 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8bc1697..99e709e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -200,6 +200,7 @@ MESSAGE("")
+ ADD_SUBDIRECTORY(avidemux)
+ ADD_SUBDIRECTORY(po)
+ ADD_SUBDIRECTORY(scripts)
++ADD_SUBDIRECTORY(plugins)
+ 
+ ########################################
+ # Config Summary
+diff --git a/cmake/ad_plugin.cmake b/cmake/ad_plugin.cmake
+index 5070e18..3602026 100644
+--- a/cmake/ad_plugin.cmake
++++ b/cmake/ad_plugin.cmake
+@@ -6,9 +6,9 @@ ENDIF (WIN32)
+ 
+ MACRO(INIT_AUDIO_PLUGIN _lib)
+ 	INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/config")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_core/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_coreAudio/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_audiocodec")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_core/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_coreAudio/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_audiocodec")
+ ENDMACRO(INIT_AUDIO_PLUGIN)
+ 
+ MACRO(INSTALL_AUDIODECODER _lib)
+diff --git a/cmake/admPluginVideoEncoder.cmake b/cmake/admPluginVideoEncoder.cmake
+index e839054..c0ef241 100644
+--- a/cmake/admPluginVideoEncoder.cmake
++++ b/cmake/admPluginVideoEncoder.cmake
+@@ -6,9 +6,9 @@ ENDIF (WIN32)
+ 
+ MACRO(INIT_VIDEO_ENCODER_PLUGIN _lib)
+ 	INCLUDE_DIRECTORIES("${CMAKE_BINARY_DIR}/config")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_core/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_coreUI/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_plugin")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_core/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_coreUI/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_plugin")
+ ENDMACRO(INIT_VIDEO_ENCODER_PLUGIN)
+ 
+ MACRO(INSTALL_VIDEO_ENCODER _lib)
+diff --git a/cmake/ae_plugin.cmake b/cmake/ae_plugin.cmake
+index 83ba00b..b9da302 100644
+--- a/cmake/ae_plugin.cmake
++++ b/cmake/ae_plugin.cmake
+@@ -5,10 +5,10 @@ ELSE (WIN32)
+ ENDIF (WIN32)
+ 
+ MACRO(INIT_AUDIO_ENCODER _lib)
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_core/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_coreAudio/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_coreUI/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_audiofilter")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_core/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_coreAudio/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_coreUI/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_audiofilter")
+         ADD_DEFINITIONS("-DADM_MINIMAL_UI_INTERFACE")
+ ENDMACRO(INIT_AUDIO_ENCODER)
+ 
+diff --git a/cmake/av_plugin.cmake b/cmake/av_plugin.cmake
+index 61c3a40..2c18b01 100644
+--- a/cmake/av_plugin.cmake
++++ b/cmake/av_plugin.cmake
+@@ -5,9 +5,9 @@ ELSE (WIN32)
+ ENDIF (WIN32)
+ 
+ MACRO(INIT_AUDIO_DEVICE _lib)
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_core/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_coreAudio/include")
+-	INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/../avidemux/ADM_audiodevice/")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_core/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_coreAudio/include")
++	INCLUDE_DIRECTORIES("${AVIDEMUX_SOURCE_DIR}/avidemux/ADM_audiodevice/")
+ ENDMACRO(INIT_AUDIO_DEVICE)
+ 
+ MACRO(INSTALL_AUDIODEVICE _lib)
