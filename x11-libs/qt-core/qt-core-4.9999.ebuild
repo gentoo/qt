@@ -138,10 +138,6 @@ src_configure() {
 		myconf="${myconf} -nomake docs"
 	fi
 
-	cp -f "${FILESDIR}"/moc.pro "${S}"/src/tools/moc/
-	cp -f "${FILESDIR}"/rcc.pro "${S}"/src/tools/rcc/
-	cp -f "${FILESDIR}"/uic.pro "${S}"/src/tools/uic/
-
 	qt4-build-edge_src_configure
 }
 
