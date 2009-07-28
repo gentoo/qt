@@ -131,8 +131,19 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
+src_compile() {
+	# first build the application
+	cmake-utils_src_compile
+	# and then go on with plugins
+	emake -C "${CMAKE_BUILD_DIR}/plugins" || die "building plugins failed"
+}
+
 src_install() {
+	# install the application
 	cmake-utils_src_install
+	# install plugins
+	emake -C "${CMAKE_BUILD_DIR}/plugins" DESTDIR="${D}" install \
+		|| die "installing plugins failed"
 
 	dodoc AUTHORS || die "dodoc failed"
 	newicon avidemux_icon.png avidemux.png || die "installing icon failed"

@@ -6,7 +6,7 @@ index 8bc1697..99e709e 100644
  ADD_SUBDIRECTORY(avidemux)
  ADD_SUBDIRECTORY(po)
  ADD_SUBDIRECTORY(scripts)
-+ADD_SUBDIRECTORY(plugins)
++ADD_SUBDIRECTORY(plugins EXCLUDE_FROM_ALL)
  
  ########################################
  # Config Summary

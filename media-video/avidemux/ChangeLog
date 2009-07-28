@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Jul 2009; Dominik Kapusta <d@ayoy.net> files/2.5.0-build-plugins.patch,
+  avidemux-2.5.0.ebuild:
+  Made plugins compile separately, after the whole application, to fix
+  parallel
+  building issues.
+
 *avidemux-2.5.0 (27 Jul 2009)
 
   27 Jul 2009; Dominik Kapusta <d@ayoy.net>
