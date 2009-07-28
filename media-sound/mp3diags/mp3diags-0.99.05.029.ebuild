@@ -12,27 +12,32 @@ S=${WORKDIR}/${MY_P}
 
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+SRC_URI="doc? ( http://web.clicknet.ro/mciobanu/${PN}/${MY_PN}_Src+Doc-${PV}.tar.gz )
+	!doc? ( mirror://sourceforge/${PN}/${MY_P}.tar.gz )"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="debug"
+IUSE="debug doc"
 
 DEPEND="x11-libs/qt-gui:4
 	dev-libs/boost"
 RDEPEND="${DEPENDS}"
 
 src_install() {
-	dobin bin/${MY_PN} || die "dobin failed"
+	dobin "bin/${MY_PN}" || die "installing binary failed"
 	dodoc changelog.txt || die "dodoc failed"
 
-	insinto /usr/share/applications
-	doins desktop/${MY_PN}.desktop || die "doins failed"
+	domenu "desktop/${MY_PN}.desktop" || die "installing dekstop file failed"
 
 	local icon_sizes="16 22 24 32 36 48"
 	for size in ${icon_sizes}; do
-		insinto /usr/share/icons/hicolor/${size}x${size}/apps
-		newins desktop/${MY_PN}${size}.png ${MY_PN}.png || die "doins failed"
+		insinto "/usr/share/icons/hicolor/${size}x${size}/apps"
+		newins "desktop/${MY_PN}${size}.png" "${MY_PN}.png" \
+			|| die "installing icons failed"
 	done
+
+	if use doc; then
+		dohtml doc/* || die "installing documentation failed"
+	fi
 }

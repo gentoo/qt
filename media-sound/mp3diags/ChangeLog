@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*mp3diags-0.99.05.029 (28 Jul 2009)
+
+  28 Jul 2009; Dominik Kapusta <d@ayoy.net> -mp3diags-0.99.04.026.ebuild,
+  +mp3diags-0.99.05.029.ebuild, mp3diags-9999.ebuild:
+  Version bump, remove old. Added doc USE flag to non-live ebuild.
+
 *mp3diags-0.99.04.026 (21 Jul 2009)
 
   21 Jul 2009; Dominik Kapusta <d@ayoy.net> -mp3diags-0.99.03.022.ebuild,

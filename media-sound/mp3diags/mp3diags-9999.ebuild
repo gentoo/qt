@@ -22,12 +22,17 @@ DEPEND="x11-libs/qt-gui:4
 	dev-libs/boost"
 RDEPEND="${DEPENDS}"
 
+src_prepare() {
+	if use doc; then
+		sed -i -e "s/QQQVERQQQ/${PV}/" src/Helpers.cpp || die "sed failed"
+	fi
+}
+
 src_install() {
-	dobin bin/${MY_PN}
+	dobin bin/${MY_PN} || die "installing binary failed"
 	dodoc changelog.txt || die "dodoc failed"
 
-	insinto /usr/share/applications
-	doins desktop/${MY_PN}.desktop || die "doins failed"
+	domenu desktop/${MY_PN}.desktop || die "installing desktop file failed"
 
 	local icon_sizes="16 22 24 32 36 48"
 	for size in ${icon_sizes}; do
@@ -36,6 +41,6 @@ src_install() {
 	done
 
 	if use doc; then
-		dohtml doc/html/* || die "Failed to install documentation"
+		dohtml doc/html/* || die "installing documentation failed"
 	fi
 }
