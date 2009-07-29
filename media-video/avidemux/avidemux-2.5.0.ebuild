@@ -59,7 +59,8 @@ PATCHES=( "${FILESDIR}/${PV}-i18n.patch"
 	# adds plugins as a build target and adjusts include paths
 	"${FILESDIR}/${PV}-build-plugins.patch"
 	# creates a lib dir in a build dir to allow correct plugins linking
-	"${FILESDIR}/${PV}-fake-inst-dir.patch" )
+	"${FILESDIR}/${PV}-fake-inst-dir.patch"
+	"${FILESDIR}/${PV}-xv.patch" )
 
 src_prepare() {
 	base_src_prepare
