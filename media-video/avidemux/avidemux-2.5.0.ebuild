@@ -19,7 +19,6 @@ IUSE="+aac +aften +alsa amrnb +dts esd jack libsamplerate +mp3 nls oss
 	pulseaudio +sdl +truetype +vorbis +x264 +xv +xvid gtk +qt4"
 
 RDEPEND="dev-libs/libxml2
-	sdl? ( media-libs/libsdl )
 	aac? ( media-libs/faac
 		media-libs/faad2 )
 	aften? ( media-libs/aften )
@@ -32,16 +31,17 @@ RDEPEND="dev-libs/libxml2
 	libsamplerate? ( media-libs/libsamplerate )
 	oss? ( media-libs/alsa-oss )
 	pulseaudio? ( media-sound/pulseaudio )
+	sdl? ( media-libs/libsdl )
 	truetype? ( media-libs/freetype:2
 		media-libs/fontconfig )
 	vorbis? ( media-libs/libvorbis )
 	x264? ( media-libs/x264 )
 	xv? ( x11-libs/libXv )
-	xvid? ( media-libs/xvid )"
+	xvid? ( media-libs/xvid )
+	gtk? ( x11-libs/gtk+:2 )
+	qt4? ( >=x11-libs/qt-gui-4.5.1:4 )"
 DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
-	gtk? ( x11-libs/gtk+:2 )
-	qt4? ( >=x11-libs/qt-gui-4.5.1:4 )
 	dev-util/pkgconfig"
 
 S=${WORKDIR}/${MY_P}
