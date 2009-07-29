@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit distutils python qt4
+inherit distutils python qt4 toolchain-funcs
 
 MY_PN="PyQt-x11-gpl"
 MY_PV="${PV/_pre/-snapshot-}"
@@ -48,10 +48,6 @@ PATCHES=(
 	"${FILESDIR}/configure.py.patch"
 )
 
-pyqt4_use_enable() {
-	use $1 && echo "--enable=${2:-$1}"
-}
-
 src_prepare() {
 	if ! use dbus; then
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
@@ -68,8 +64,12 @@ src_prepare() {
 	fi
 }
 
+pyqt4_use_enable() {
+	use $1 && echo "--enable=${2:-$1}"
+}
+
 src_configure() {
-	distutils_python_version
+	python_version
 
 	local myconf="${python} configure.py
 			--confirm-license
@@ -91,21 +91,23 @@ src_configure() {
 			$(pyqt4_use_enable sql QtSql)
 			$(pyqt4_use_enable svg QtSvg)
 			$(pyqt4_use_enable webkit QtWebKit)
-			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
+			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
+			CC=$(tc-getCC) CXX=$(tc-getCXX)
+			LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
+			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LFLAGS='${LDFLAGS}'"
 	echo ${myconf}
-	${myconf} || die "configuration failed"
+	eval ${myconf} || die "configuration failed"
 
-	# Fix insecure runpath
-	if use X ; then
-		for pkg in QtDesigner QtGui QtCore; do
-			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/${pkg}::" \
-				"${S}"/${pkg}/Makefile || die "failed to fix rpath issues"
-		done
-	fi
+	# Fix insecure runpaths
+	for mod in QtCore $(use X && echo "QtDesigner QtGui"); do
+		sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/${mod}::" \
+			"${S}"/${mod}/Makefile || die "failed to fix rpath issues"
+	done
 }
 
 src_install() {
 	python_need_rebuild
+
 	# INSTALL_ROOT is needed for the QtDesigner module,
 	# the other Makefiles use DESTDIR.
 	emake DESTDIR="${D}" INSTALL_ROOT="${D}" install || die "installation failed"
