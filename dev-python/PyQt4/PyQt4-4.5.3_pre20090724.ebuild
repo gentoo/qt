@@ -98,8 +98,13 @@ src_configure() {
 	echo ${myconf}
 	eval ${myconf} || die "configuration failed"
 
-	# Fix insecure runpaths
 	for mod in QtCore $(use X && echo "QtDesigner QtGui"); do
+		# Run eqmake4 inside the qpy subdirs to prevent
+		# stripping and many other QA issues
+		cd "${S}"/qpy/${mod}
+		eqmake4 $(ls w_qpy*.pro)
+
+		# Fix insecure runpaths
 		sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/${mod}::" \
 			"${S}"/${mod}/Makefile || die "failed to fix rpath issues"
 	done

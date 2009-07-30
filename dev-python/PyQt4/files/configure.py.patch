@@ -1,7 +1,7 @@
-diff -Naur PyQt-x11-gpl-4.4.4~orig/configure.py PyQt-x11-gpl-4.4.4/configure.py
---- PyQt-x11-gpl-4.4.4~orig/configure.py	2009-06-01 01:54:27.000000000 +0200
-+++ PyQt-x11-gpl-4.4.4/configure.py	2009-06-01 01:55:57.000000000 +0200
-@@ -300,7 +300,8 @@
+diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4.5.3-snapshot-20090724/configure.py
+--- PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py	2009-07-30 22:36:10.000000000 +0200
++++ PyQt-x11-gpl-4.5.3-snapshot-20090724/configure.py	2009-07-30 22:37:50.000000000 +0200
+@@ -337,7 +337,8 @@
          check_module("QtWebKit", "qwebpage.h", "new QWebPage()")
          check_module("QtXml", "qdom.h", "new QDomDocument()")
          check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
@@ -11,7 +11,7 @@ diff -Naur PyQt-x11-gpl-4.4.4~orig/configure.py PyQt-x11-gpl-4.4.4/configure.py
          check_module("QtAssistant", "qassistantclient.h",
                  "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
                  extra_libs=ass_libs)
-@@ -394,7 +395,7 @@
+@@ -446,7 +447,7 @@
              generate_code("QtXmlPatterns")
  
          if "phonon" in pyqt_modules:
@@ -20,7 +20,7 @@ diff -Naur PyQt-x11-gpl-4.4.4~orig/configure.py PyQt-x11-gpl-4.4.4/configure.py
  
          if "QtAssistant" in pyqt_modules:
              generate_code("QtAssistant")
-@@ -666,6 +667,7 @@
+@@ -756,6 +757,7 @@
                  install_dir=pydbusmoddir,
                  qt=["QtCore"],
                  debug=opts.debug,
@@ -28,7 +28,7 @@ diff -Naur PyQt-x11-gpl-4.4.4~orig/configure.py PyQt-x11-gpl-4.4.4/configure.py
                  universal=sipcfg.universal
              )
  
-@@ -1350,6 +1352,7 @@
+@@ -1438,6 +1440,7 @@
          warnings=1,
          static=opts.static,
          debug=opts.debug,
@@ -36,12 +36,3 @@ diff -Naur PyQt-x11-gpl-4.4.4~orig/configure.py PyQt-x11-gpl-4.4.4/configure.py
          universal=sipcfg.universal
      )
  
-@@ -1510,7 +1513,7 @@
-         # The Qt binary installer has macx-xcode as the default.
-         args = "-spec macx-g++ " + args
- 
--    return args
-+    return " QMAKE_STRIP= " + args
- 
- 
- def get_qt_configuration():
