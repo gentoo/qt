@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*sip-4.8.3_pre20090729 (31 Jul 2009)
+
+  31 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
+  -sip-4.8.2_pre20090725.ebuild, +sip-4.8.3_pre20090729.ebuild:
+  New snapshot
+
 *sip-4.8.2_pre20090725 (26 Jul 2009)
 
   26 Jul 2009; Markos Chandras <hwoarang@gentoo.org>

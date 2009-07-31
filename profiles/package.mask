@@ -4,8 +4,8 @@
 
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Snapshots are not for everybody :)
-=dev-python/sip-4.8.2_pre*
-=dev-python/PyQt4-4.5.3_pre*
+=dev-python/sip-4.8.3_pre*
+=dev-python/PyQt4-4.5.5_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
