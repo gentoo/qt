@@ -331,13 +331,18 @@ standard_configure_options() {
 # @DESCRIPTION:
 # Compiles the code in $QT4_TARGET_DIRECTORIES
 build_directories() {
-	local dirs="$@"
-	for x in ${dirs}; do
+	sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
+		$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
+		|| die "failed to fix QT_INSTALL_LIBS"
+
+	for x in "$@"; do
 		cd "${S}"/${x}
-		sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
-			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
-			|| die "failed to fix QT_INSTALL_LIBS"
-		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
+		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" \
+			QMAKE_CC=$(tc-getCC) \
+			QMAKE_CXX=$(tc-getCXX) \
+			QMAKE_LINK=$(tc-getCXX) \
+			QMAKE_STRIP= \
+			|| die "qmake failed"
 		emake || die "emake failed"
 	done
 }
