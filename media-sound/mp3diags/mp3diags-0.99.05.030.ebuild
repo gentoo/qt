@@ -13,7 +13,7 @@ S=${WORKDIR}/${MY_P}
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
 SRC_URI="doc? ( http://web.clicknet.ro/mciobanu/${PN}/${MY_PN}_Src+Doc-${PV}.tar.gz )
-	!doc? ( mirror://sourceforge/${PN}/${MY_P}.tar.gz )"
+	!doc? ( http://web.clicknet.ro/mciobanu/${PN}/${MY_PN}-${PV}.tar.gz )"
 
 LICENSE="GPL-2"
 SLOT="0"
