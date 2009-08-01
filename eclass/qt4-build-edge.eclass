@@ -337,12 +337,11 @@ build_directories() {
 
 	for x in "$@"; do
 		cd "${S}"/${x}
-		"${S}"/bin/qmake \
-			"CONFIG+=nostrip" \
-			"LIBS+=-L${QTLIBDIR}" \
+		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" \
 			QMAKE_CC=$(tc-getCC) \
 			QMAKE_CXX=$(tc-getCXX) \
 			QMAKE_LINK=$(tc-getCXX) \
+			QMAKE_STRIP= \
 			|| die "qmake failed"
 		emake || die "emake failed"
 	done
