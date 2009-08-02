@@ -338,7 +338,7 @@ build_directories() {
 			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
 			|| die "failed to fix QT_INSTALL_LIBS"
 		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
-		emake || die "emake failed"
+		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake failed"
 	done
 }
 
