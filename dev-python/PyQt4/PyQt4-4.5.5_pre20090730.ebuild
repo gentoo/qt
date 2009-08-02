@@ -1,10 +1,11 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.5.2.ebuild,v 1.1 2009/07/14 19:29:14 hwoarang Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.5.4.ebuild,v 1.3 2009/08/02 05:19:41 arfrever Exp $
 
 EAPI="2"
+SUPPORT_PYTHON_ABIS="1"
 
-inherit distutils python qt4 toolchain-funcs
+inherit python qt4
 
 MY_PN="PyQt-x11-gpl"
 MY_PV="${PV/_pre/-snapshot-}"
@@ -48,6 +49,10 @@ PATCHES=(
 	"${FILESDIR}/configure.py.patch"
 )
 
+pyqt4_use_enable() {
+	use $1 && echo "--enable=${2:-$1}"
+}
+
 src_prepare() {
 	if ! use dbus; then
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
@@ -55,67 +60,70 @@ src_prepare() {
 	fi
 	qt4_src_prepare
 
-	# Remove this code after removing Python 2 from the tree.
-	python_version
-	if [[ "${PYVER:0:1}" == "3" ]]; then
-		rm -fr pyuic/uic/port_v2
-	else
-		rm -fr pyuic/uic/port_v3
-	fi
-}
+	python_copy_sources
 
-pyqt4_use_enable() {
-	use $1 && echo "--enable=${2:-$1}"
+	prepare_package() {
+		if [[ "${PYTHON_ABI:0:1}" == "3" ]]; then
+			rm -fr pyuic/uic/port_v2
+		else
+			rm -fr pyuic/uic/port_v3
+		fi
+	}
+	python_execute_function -s prepare_package
 }
 
 src_configure() {
-	python_version
+	configure_package() {
+		local myconf="$(get_python) configure.py
+				--confirm-license
+				--bindir=/usr/bin
+				--destdir=$(python_get_sitedir)
+				--sipdir=/usr/share/sip
+				$(use debug && echo '--debug')
+				--enable=QtCore
+				--enable=QtNetwork
+				--enable=QtScript
+				--enable=QtTest
+				--enable=QtXml
+				$(pyqt4_use_enable X QtGui)
+				$(pyqt4_use_enable X QtDesigner)
+				$(pyqt4_use_enable assistant QtAssistant)
+				$(pyqt4_use_enable assistant QtHelp)
+				$(pyqt4_use_enable opengl QtOpenGL)
+				$(pyqt4_use_enable phonon)
+				$(pyqt4_use_enable sql QtSql)
+				$(pyqt4_use_enable svg QtSvg)
+				$(pyqt4_use_enable webkit QtWebKit)
+				$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
+		echo ${myconf}
+		${myconf} || return 1
 
-	local myconf="${python} configure.py
-			--confirm-license
-			--bindir=/usr/bin
-			--destdir=$(python_get_sitedir)
-			--sipdir=/usr/share/sip
-			$(use debug && echo '--debug')
-			--enable=QtCore
-			--enable=QtNetwork
-			--enable=QtScript
-			--enable=QtTest
-			--enable=QtXml
-			$(pyqt4_use_enable X QtGui)
-			$(pyqt4_use_enable X QtDesigner)
-			$(pyqt4_use_enable assistant QtAssistant)
-			$(pyqt4_use_enable assistant QtHelp)
-			$(pyqt4_use_enable opengl QtOpenGL)
-			$(pyqt4_use_enable phonon)
-			$(pyqt4_use_enable sql QtSql)
-			$(pyqt4_use_enable svg QtSvg)
-			$(pyqt4_use_enable webkit QtWebKit)
-			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
-			CC=$(tc-getCC) CXX=$(tc-getCXX)
-			LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
-			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LFLAGS='${LDFLAGS}'"
-	echo ${myconf}
-	eval ${myconf} || die "configuration failed"
+		# Fix insecure runpath.
+		if use X ; then
+			for pkg in QtDesigner QtGui QtCore; do
+				sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}-${PYTHON_ABI}/qpy/${pkg}::" ${pkg}/Makefile || die "failed to fix rpath issues"
+			done
+		fi
+	}
+	python_execute_function -s configure_package
+}
 
-	for mod in QtCore $(use X && echo "QtDesigner QtGui"); do
-		# Run eqmake4 inside the qpy subdirs to prevent
-		# stripping and many other QA issues
-		cd "${S}"/qpy/${mod}
-		eqmake4 $(ls w_qpy*.pro)
-
-		# Fix insecure runpaths
-		sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}/qpy/${mod}::" \
-			"${S}"/${mod}/Makefile || die "failed to fix rpath issues"
-	done
+src_compile() {
+	build_package() {
+		emake
+	}
+	python_execute_function -s build_package
 }
 
 src_install() {
 	python_need_rebuild
 
-	# INSTALL_ROOT is needed for the QtDesigner module,
-	# the other Makefiles use DESTDIR.
-	emake DESTDIR="${D}" INSTALL_ROOT="${D}" install || die "installation failed"
+	install_package() {
+		# INSTALL_ROOT is needed for the QtDesigner module,
+		# the other Makefiles use DESTDIR.
+		emake DESTDIR="${D}" INSTALL_ROOT="${D}" install
+	}
+	python_execute_function -s install_package
 
 	dodoc ChangeLog NEWS THANKS || die
 
@@ -127,4 +135,12 @@ src_install() {
 		insinto /usr/share/doc/${PF}
 		doins -r examples || die
 	fi
+}
+
+pkg_postinst() {
+	python_mod_optimize PyQt4
+}
+
+pkg_postrm() {
+	python_mod_cleanup PyQt4
 }
