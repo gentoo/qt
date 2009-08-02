@@ -99,12 +99,11 @@ src_configure() {
 		${myconf} || return 1
 
 		# Fix insecure runpath.
-		for pkg in QtCore $(use X && echo "QtDesigner QtGui"); do
-			# Run eqmake4 to fix stripping and many QA issues
-			cd "${S}"/qpy/${pkg}
-			eqmake4 $(ls *.pro)
-			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}-${PYTHON_ABI}/qpy/${pkg}::" "${S}"-${PYTHON_ABI}/${pkg}/Makefile || die "failed to fix rpath issues"
-		done
+		if use X ; then
+			for pkg in QtDesigner QtGui QtCore; do
+				sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}-${PYTHON_ABI}/qpy/${pkg}::" ${pkg}/Makefile || die "failed to fix rpath issues"
+			done
+		fi
 	}
 	python_execute_function -s configure_package
 }

@@ -2,10 +2,6 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  02 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
-  PyQt4-4.5.5_pre20090730.ebuild:
-  Use eqmake4 to fix several QA issues. Fix QtCore rpath without checking X use flag
-
 *PyQt4-4.5.5_pre20090730 (31 Jul 2009)
 
   31 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
