@@ -1,9 +1,10 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/sip/sip-4.8.1.ebuild,v 1.1 2009/06/16 15:07:22 hwoarang Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/sip/sip-4.8.2.ebuild,v 1.2 2009/08/01 23:31:41 arfrever Exp $
 
 EAPI="2"
 NEED_PYTHON="2.3"
+SUPPORT_PYTHON_ABIS="1"
 
 inherit python toolchain-funcs
 
@@ -23,26 +24,44 @@ S="${WORKDIR}/${MY_P}"
 DEPEND=""
 RDEPEND=""
 
-src_configure() {
-	python_version
+src_prepare() {
+	python_copy_sources
+}
 
-	local myconf="${python} configure.py
-			--bindir=/usr/bin
-			--destdir=$(python_get_sitedir)
-			--incdir=/usr/include/python${PYVER}
-			--sipdir=/usr/share/sip
-			$(use debug && echo '--debug')
-			CC=$(tc-getCC) CXX=$(tc-getCXX)
-			LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
-			CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
-			LFLAGS='${LDFLAGS}'
-			STRIP=true"
-	echo ${myconf}
-	eval ${myconf} || die "configuration failed"
+src_configure() {
+	configure_package() {
+		local myconf="$(get_python) configure.py
+				--bindir=/usr/bin
+				--destdir=$(python_get_sitedir)
+				--incdir=$(python_get_includedir)
+				--sipdir=/usr/share/sip
+				$(use debug && echo '--debug')
+				CC=$(tc-getCC) CXX=$(tc-getCXX)
+				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
+				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
+				LFLAGS='${LDFLAGS}'
+				STRIP=true"
+		echo ${myconf}
+		eval ${myconf}
+	}
+	python_execute_function -s configure_package
+}
+
+src_compile() {
+	build_package() {
+		emake
+	}
+	python_execute_function -s build_package
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+	python_need_rebuild
+
+	install_package() {
+		emake DESTDIR="${D}" install
+	}
+	python_execute_function -s install_package
+
 	dodoc ChangeLog NEWS || die
 
 	if use doc; then
@@ -51,8 +70,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	python_need_rebuild
-	python_mod_optimize "$(python_get_sitedir)"/sip*.py
+	python_mod_optimize sipconfig.py sipdistutils.py
 }
 
 pkg_postrm() {
