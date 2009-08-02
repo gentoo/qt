@@ -1,7 +1,8 @@
-diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4.5.3-snapshot-20090724/configure.py
---- PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py	2009-07-30 22:36:10.000000000 +0200
-+++ PyQt-x11-gpl-4.5.3-snapshot-20090724/configure.py	2009-07-30 22:37:50.000000000 +0200
-@@ -337,7 +337,8 @@
+Index: PyQt-x11-gpl-4.5.5-snapshot-20090730/configure.py
+===================================================================
+--- PyQt-x11-gpl-4.5.5-snapshot-20090730.orig/configure.py
++++ PyQt-x11-gpl-4.5.5-snapshot-20090730/configure.py
+@@ -337,7 +337,8 @@ class ConfigurePyQt4:
          check_module("QtWebKit", "qwebpage.h", "new QWebPage()")
          check_module("QtXml", "qdom.h", "new QDomDocument()")
          check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
@@ -11,7 +12,7 @@ diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4
          check_module("QtAssistant", "qassistantclient.h",
                  "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
                  extra_libs=ass_libs)
-@@ -446,7 +447,7 @@
+@@ -446,7 +447,7 @@ class ConfigurePyQt4:
              generate_code("QtXmlPatterns")
  
          if "phonon" in pyqt_modules:
@@ -20,7 +21,7 @@ diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4
  
          if "QtAssistant" in pyqt_modules:
              generate_code("QtAssistant")
-@@ -756,6 +757,7 @@
+@@ -756,6 +757,7 @@ include(%s)
                  install_dir=pydbusmoddir,
                  qt=["QtCore"],
                  debug=opts.debug,
@@ -28,7 +29,16 @@ diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4
                  universal=sipcfg.universal
              )
  
-@@ -1438,6 +1440,7 @@
+@@ -878,7 +880,7 @@ include(%s)
+ 
+                 fout.write(prj)
+                 fout.close()
+-
++		qmake_args = qmake_args + "QMAKE_STRIP=''"
+                 run_command("%s %s" % (opts.qmake, qmake_args))
+                 os.chdir(cwd)
+ 
+@@ -1438,6 +1440,7 @@ def generate_code(mname, extra_include_d
          warnings=1,
          static=opts.static,
          debug=opts.debug,
