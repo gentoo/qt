@@ -5,7 +5,7 @@
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python qt4
+inherit python qt4 toolchain-funcs
 
 MY_PN="PyQt-x11-gpl"
 MY_PV="${PV/_pre/-snapshot-}"
@@ -22,7 +22,7 @@ LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples kde opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">dev-python/sip-4.8.1
+DEPEND=">=dev-python/sip-4.8.2
 	>=x11-libs/qt-core-${QTVER}:4
 	>=x11-libs/qt-script-${QTVER}:4
 	>=x11-libs/qt-test-${QTVER}:4
@@ -49,10 +49,6 @@ PATCHES=(
 	"${FILESDIR}/configure.py.patch"
 )
 
-pyqt4_use_enable() {
-	use $1 && echo "--enable=${2:-$1}"
-}
-
 src_prepare() {
 	if ! use dbus; then
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
@@ -70,6 +66,10 @@ src_prepare() {
 		fi
 	}
 	python_execute_function -s prepare_package
+}
+
+pyqt4_use_enable() {
+	use $1 && echo "--enable=${2:-$1}"
 }
 
 src_configure() {
@@ -94,15 +94,29 @@ src_configure() {
 				$(pyqt4_use_enable sql QtSql)
 				$(pyqt4_use_enable svg QtSvg)
 				$(pyqt4_use_enable webkit QtWebKit)
-				$(pyqt4_use_enable xmlpatterns QtXmlPatterns)"
+				$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
+				CC=$(tc-getCC) CXX=$(tc-getCXX)
+				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
+				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LFLAGS='${LDFLAGS}'"
 		echo ${myconf}
-		${myconf} || return 1
+		eval ${myconf} || die "configuration failed"
 
-		# Fix insecure runpath.
-		if use X ; then
-			for pkg in QtDesigner QtGui QtCore; do
-				sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}-${PYTHON_ABI}/qpy/${pkg}::" ${pkg}/Makefile || die "failed to fix rpath issues"
-			done
+		for mod in QtCore $(use X && echo 'QtDesigner QtGui'); do
+			# Run eqmake4 inside the qpy subdirs to prevent
+			# stripping and many other QA issues
+			pushd qpy/${mod} > /dev/null || die
+			eqmake4 $(ls w_qpy*.pro)
+			popd > /dev/null || die
+
+			# Fix insecure runpaths
+			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}-${PYTHON_ABI}/qpy/${mod}::" \
+				${mod}/Makefile || die "failed to fix rpath issues"
+		done
+
+		# Fix pre-stripping of libpythonplugin.so
+		if use X; then
+			cd "${S}-${PYTHON_ABI}"/designer
+			eqmake4 python.pro
 		fi
 	}
 	python_execute_function -s configure_package
@@ -125,7 +139,7 @@ src_install() {
 	}
 	python_execute_function -s install_package
 
-	dodoc ChangeLog NEWS THANKS || die
+	dodoc ChangeLog doc/pyqt4ref.txt THANKS || die
 
 	if use doc; then
 		dohtml -r doc/html/* || die
