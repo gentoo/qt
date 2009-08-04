@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
+  PyQt4-4.5.5_pre20090730.ebuild:
+  Install full html documentation ( bug #280055 )
+
   04 Aug 2009; Davide Pesavento <davidepesa@gmail.com>
   PyQt4-4.5.5_pre20090730.ebuild:
   Re-apply my recent QA fixes that got lost when syncing with Portage

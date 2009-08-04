@@ -142,7 +142,7 @@ src_install() {
 	dodoc ChangeLog doc/pyqt4ref.txt THANKS || die
 
 	if use doc; then
-		dohtml -r doc/html/* || die
+		dohtml -r doc/* || die
 	fi
 
 	if use examples; then
