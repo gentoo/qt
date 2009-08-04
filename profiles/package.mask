@@ -2,6 +2,11 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandars <hwoarang@gentoo.org> (04 Aug 2009)
+# Portage fails to merge it due to unicode names on folders.
+# Awaitting patch from zmedico
+=media-video/2mandvd-0.9
+
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Snapshots are not for everybody :)
 =dev-python/sip-4.8.3_pre*
