@@ -1,0 +1,13 @@
+Index: sip-4.8.3-snapshot-20090729/sipdistutils.py
+===================================================================
+--- sip-4.8.3-snapshot-20090729.orig/sipdistutils.py
++++ sip-4.8.3-snapshot-20090729/sipdistutils.py
+@@ -29,7 +29,7 @@ class build_ext (distutils.command.build
+                     out.append(os.path.join(self.build_temp, o))
+                 return out
+ 
+-        raise RuntimeError, "cannot parse SIP-generated '%s'" % sbf
++        raise RuntimeError("cannot parse SIP-generated '%s'" % sbf)
+ 
+     def _find_sip(self):
+         import sipconfig

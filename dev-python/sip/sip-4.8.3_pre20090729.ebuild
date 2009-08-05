@@ -6,7 +6,7 @@ EAPI="2"
 NEED_PYTHON="2.3"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python toolchain-funcs
+inherit eutils python toolchain-funcs
 
 MY_P=${P/_pre/-snapshot-}
 
@@ -25,12 +25,13 @@ DEPEND=""
 RDEPEND=""
 
 src_prepare() {
+	epatch "${FILESDIR}"/syntax_error_python31.patch
 	python_copy_sources
 }
 
 src_configure() {
 	configure_package() {
-		local myconf="$(get_python) configure.py
+		local myconf="$(PYTHON) configure.py
 				--bindir=/usr/bin
 				--destdir=$(python_get_sitedir)
 				--incdir=$(python_get_includedir)
@@ -48,19 +49,13 @@ src_configure() {
 }
 
 src_compile() {
-	build_package() {
-		emake
-	}
-	python_execute_function -s build_package
+	python_execute_function -d -s
 }
 
 src_install() {
 	python_need_rebuild
 
-	install_package() {
-		emake DESTDIR="${D}" install
-	}
-	python_execute_function -s install_package
+	python_execute_function -d -s
 
 	dodoc ChangeLog NEWS || die
 
