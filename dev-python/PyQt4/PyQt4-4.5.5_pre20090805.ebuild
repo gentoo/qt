@@ -1,15 +1,14 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.5.4.ebuild,v 1.3 2009/08/02 05:19:41 arfrever Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.5.4-r1.ebuild,v 1.1 2009/08/05 22:27:25 hwoarang Exp $
 
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python qt4 toolchain-funcs
-
-MY_PN="PyQt-x11-gpl"
-MY_PV="${PV/_pre/-snapshot-}"
-MY_P="${MY_PN}-${MY_PV}"
+inherit python qt4                                                                                                                                           
+MY_PN="PyQt-x11-gpl"                                                                                                                        
+MY_PV="${PV/_pre/-snapshot-}"                                                                                                               
+MY_P="${MY_PN}-${MY_PV}" 
 
 QTVER="4.5.1"
 
@@ -58,14 +57,14 @@ src_prepare() {
 
 	python_copy_sources
 
-	prepare_package() {
+	preparation() {
 		if [[ "${PYTHON_ABI:0:1}" == "3" ]]; then
 			rm -fr pyuic/uic/port_v2
 		else
 			rm -fr pyuic/uic/port_v3
 		fi
 	}
-	python_execute_function -s prepare_package
+	python_execute_function -s preparation
 }
 
 pyqt4_use_enable() {
@@ -73,8 +72,8 @@ pyqt4_use_enable() {
 }
 
 src_configure() {
-	configure_package() {
-		local myconf="$(get_python) configure.py
+	configuration() {
+		local myconf="$(PYTHON) configure.py
 				--confirm-license
 				--bindir=/usr/bin
 				--destdir=$(python_get_sitedir)
@@ -96,50 +95,44 @@ src_configure() {
 				$(pyqt4_use_enable webkit QtWebKit)
 				$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
 				CC=$(tc-getCC) CXX=$(tc-getCXX)
-				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
 				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LFLAGS='${LDFLAGS}'"
 		echo ${myconf}
-		eval ${myconf} || die "configuration failed"
+		eval ${myconf} || return 1
 
-		for mod in QtCore $(use X && echo 'QtDesigner QtGui'); do
-			# Run eqmake4 inside the qpy subdirs to prevent
-			# stripping and many other QA issues
+		# Fix insecure runpath.
+		for mod in QtCore $(use X && echo "QtDesigner QtGui"); do
+			# Run eqmake4 to inside the qpy subdirs to prevent
+			# stripping and many QA issues
 			pushd qpy/${mod} > /dev/null || die
 			eqmake4 $(ls w_qpy*.pro)
 			popd > /dev/null || die
-
-			# Fix insecure runpaths
-			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${S}-${PYTHON_ABI}/qpy/${mod}::" \
-				${mod}/Makefile || die "failed to fix rpath issues"
+			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" ${mod}/Makefile || die "Failed to fix rpath issues"
 		done
 
 		# Fix pre-stripping of libpythonplugin.so
 		if use X; then
-			cd "${S}-${PYTHON_ABI}"/designer
+			cd "${BUILDDIR}"/designer
 			eqmake4 python.pro
 		fi
 	}
-	python_execute_function -s configure_package
+	python_execute_function -s configuration
 }
 
 src_compile() {
-	build_package() {
-		emake
-	}
-	python_execute_function -s build_package
+	python_execute_function -d -s
 }
 
 src_install() {
 	python_need_rebuild
 
-	install_package() {
+	installation() {
 		# INSTALL_ROOT is needed for the QtDesigner module,
 		# the other Makefiles use DESTDIR.
 		emake DESTDIR="${D}" INSTALL_ROOT="${D}" install
 	}
-	python_execute_function -s install_package
+	python_execute_function -s installation
 
-	dodoc ChangeLog doc/pyqt4ref.txt THANKS || die
+	dodoc ChangeLog doc/pyqt4ref.txt NEWS THANKS || die
 
 	if use doc; then
 		dohtml -r doc/* || die
