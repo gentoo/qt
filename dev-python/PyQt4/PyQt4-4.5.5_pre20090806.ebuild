@@ -5,10 +5,10 @@
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python qt4                                                                                                                                           
-MY_PN="PyQt-x11-gpl"                                                                                                                        
-MY_PV="${PV/_pre/-snapshot-}"                                                                                                               
-MY_P="${MY_PN}-${MY_PV}" 
+inherit python qt4
+MY_PN="PyQt-x11-gpl"
+MY_PV="${PV/_pre/-snapshot-}"
+MY_P="${MY_PN}-${MY_PV}"
 
 QTVER="4.5.1"
 

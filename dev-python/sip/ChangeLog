@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*sip-4.8.3_pre20090806 (07 Aug 2009)
+
+  07 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
+  -sip-4.8.3_pre20090729.ebuild, +sip-4.8.3_pre20090806.ebuild:
+  New snapshot
+
   05 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
   +files/syntax_error_python31.patch, sip-4.8.3_pre20090729.ebuild:
   Patch which fixes syntax errors on python 3.1. Thanks to Arfrever

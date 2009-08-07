@@ -25,7 +25,6 @@ DEPEND=""
 RDEPEND=""
 
 src_prepare() {
-	epatch "${FILESDIR}"/syntax_error_python31.patch
 	python_copy_sources
 }
 
