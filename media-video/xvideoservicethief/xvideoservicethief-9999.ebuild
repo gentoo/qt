@@ -4,10 +4,11 @@
 
 EAPI="2"
 
-LANGS="br ca cs da de es fr gl hu it pl ro sv"
+LANGS="br ca cs da de es fr gl hu it ja nl pl ro sv"
 
 inherit qt4-edge versionator subversion
 
+MY_PN="xVST"
 MY_PV=$(replace_all_version_separators '_')
 
 DESCRIPTION="Download (and convert) videos from various Web Video Services"
@@ -23,24 +24,20 @@ IUSE="debug"
 DEPEND="app-arch/unzip
 	x11-libs/qt-gui:4"
 RDEPEND="x11-libs/qt-gui:4
-	media-video/ffmpeg"
-
-PATCHES=( "${FILESDIR}/gcc-4.3.patch" )
+	media-video/ffmpeg
+	media-video/flvstreamer"
 
 S="${WORKDIR}"
 TRANSLATIONSDIR="${S}/resources"
 
-
 src_prepare() {
-	# fix czech translation
-	mv "${S}"/resources/translations/xVST_cz.ts "${S}"/resources/translations/xVST_cs.ts
+	# fix translations
+	mv "${S}"/resources/translations/${MY_PN}_cz.ts	"${S}"/resources/translations/${MY_PN}_cs.ts
+	mv "${S}"/resources/translations/${MY_PN}_jp.ts	"${S}"/resources/translations/${MY_PN}_ja.ts
+	mv "${S}"/resources/translations/${MY_PN}_du.ts	"${S}"/resources/translations/${MY_PN}_nl.ts
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
 	"${S}"/src/options.cpp || die "failed to fix paths"
-}
-
-src_configure() {
-	eqmake4 xVideoServiceThief.pro
 }
 
 src_compile() {
