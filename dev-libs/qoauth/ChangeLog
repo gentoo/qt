@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Aug 2009; Markos Chandras <hwoarang@gentoo.org> -qoauth-1.0.ebuild:
+  On tree
+
 *qoauth-1.0 (08 Aug 2009)
 
   08 Aug 2009; Dominik Kapusta <d@ayoy.net> +qoauth-1.0.ebuild,
