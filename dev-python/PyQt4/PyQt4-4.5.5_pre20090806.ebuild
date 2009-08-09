@@ -5,7 +5,8 @@
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python qt4
+inherit python qt4 toolchain-funcs
+
 MY_PN="PyQt-x11-gpl"
 MY_PV="${PV/_pre/-snapshot-}"
 MY_P="${MY_PN}-${MY_PV}"
@@ -95,18 +96,21 @@ src_configure() {
 				$(pyqt4_use_enable webkit QtWebKit)
 				$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
 				CC=$(tc-getCC) CXX=$(tc-getCXX)
+				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
 				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LFLAGS='${LDFLAGS}'"
 		echo ${myconf}
 		eval ${myconf} || return 1
 
-		# Fix insecure runpath.
-		for mod in QtCore $(use X && echo "QtDesigner QtGui"); do
-			# Run eqmake4 to inside the qpy subdirs to prevent
-			# stripping and many QA issues
+		for mod in QtCore $(use X && echo 'QtDesigner QtGui'); do
+			# Run eqmake4 inside the qpy subdirs to prevent
+			# stripping and many other QA issues
 			pushd qpy/${mod} > /dev/null || die
 			eqmake4 $(ls w_qpy*.pro)
 			popd > /dev/null || die
-			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" ${mod}/Makefile || die "Failed to fix rpath issues"
+
+			# Fix insecure runpaths
+			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
+				${mod}/Makefile || die "failed to fix rpath issues"
 		done
 
 		# Fix pre-stripping of libpythonplugin.so
@@ -132,7 +136,7 @@ src_install() {
 	}
 	python_execute_function -s installation
 
-	dodoc ChangeLog doc/pyqt4ref.txt NEWS THANKS || die
+	dodoc ChangeLog doc/pyqt4ref.txt THANKS || die
 
 	if use doc; then
 		dohtml -r doc/* || die

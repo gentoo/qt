@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Aug 2009; Davide Pesavento <davidepesa@gmail.com>
+  PyQt4-4.5.5_pre20090806.ebuild:
+  Respect LINK, add missing inherit and fix a couple of comments.
+
 *PyQt4-4.5.5_pre20090806 (07 Aug 2009)
 
   07 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
