@@ -27,6 +27,8 @@
 #
 
 IUSE="${IUSE} debug pch"
+[[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE="${IUSE} exceptions"
+
 RDEPEND="
 	!<x11-libs/qt-assistant-${PV}
 	!>x11-libs/qt-assistant-${PV}-r9999
@@ -313,7 +315,7 @@ standard_configure_options() {
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
 		-translationdir ${QTTRANSDIR} -examplesdir ${QTEXAMPLESDIR}
 		-demosdir ${QTDEMOSDIR} -silent -fast
-		$([[ ${PN} == qt-xmlpatterns ]] || echo -no-exceptions)
+		$(has exceptions ${IUSE} && ! use exceptions && echo -no-exceptions)
 		$(use x86-fbsd || echo -reduce-relocations)
 		-nomake examples -nomake demos"
 
