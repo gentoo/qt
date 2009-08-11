@@ -162,6 +162,7 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_translations || die "emake install translations failed"
 	fi
 
+	setqtenv
 	fix_library_files
 
 	# List all the multilib libdirs
