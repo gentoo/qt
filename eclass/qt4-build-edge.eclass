@@ -309,13 +309,22 @@ standard_configure_options() {
 		*) die "$(tc-arch) is unsupported by this eclass. Please file a bug." ;;
 	esac
 
+	local exceptions=""
+	if has exceptions "${IUSE}"; then
+		if use exceptions;  then
+			exceptions="-exceptions"
+		else
+			exceptions="-no-exceptions"
+		fi
+	fi
+
 	myconf="${myconf} -platform $(qt_mkspecs_dir) -stl -verbose -largefile -confirm-license -no-rpath
 		-prefix ${QTPREFIXDIR} -bindir ${QTBINDIR} -libdir ${QTLIBDIR}
 		-datadir ${QTDATADIR} -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
 		-translationdir ${QTTRANSDIR} -examplesdir ${QTEXAMPLESDIR}
 		-demosdir ${QTDEMOSDIR} -silent -fast
-		$(has exceptions ${IUSE} && ! use exceptions && echo -no-exceptions)
+		${exceptions}
 		$(use x86-fbsd || echo -reduce-relocations)
 		-nomake examples -nomake demos"
 
