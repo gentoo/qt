@@ -99,7 +99,7 @@ case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
 		HOMEPAGE="http://qt.gitorious.org/+kde-developers/qt/kde-qt/";;
 	*)
-		HOMEPAGE="http://www.qtsoftware.com/";;
+		HOMEPAGE="http://qt.nokia.com/";;
 esac
 
 if version_is_at_least 4.5 ${PV} ; then
