@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Aug 2009; Markos Chandras <hwoarang@gentoo.org> qmmp-9999.ebuild:
+  Add CMAKE_IN_SOURCE_BUILD="1" on ebuild. Thanks to Leonid Popov <me@tuupic.org.ru> for reporting this
+
   26 Jul 2009; Ben de Groot <yngwin@gentoo.org> qmmp-9999.ebuild:
   Update musepack deps
 

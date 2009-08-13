@@ -42,6 +42,8 @@ DEPEND="${RDEPEND}"
 
 DOCS="AUTHORS ChangeLog README"
 
+CMAKE_IN_SOURCE_BUILD="1"
+
 qmmp_use_enable() {
 	# uses completely non standard cmake options...
 	if use ${1}; then
