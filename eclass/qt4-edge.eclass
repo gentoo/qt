@@ -25,6 +25,13 @@ for x in ${LANGS}; do
 done
 
 qt4-edge_pkg_setup() {
+	ewarn
+	ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
+	ewarn "[qting-edge]. Alternatively, contact qt@gentoo.org."
+	ewarn "Thank you for using qting-edge overlay."
+	ewarn
+	ebeep 5
+
 	case ${EAPI} in
 		2) ;;
 		*)
