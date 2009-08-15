@@ -50,7 +50,6 @@ src_compile() {
 
 src_install() {
 	dobin bin/xvst || die "dobin failed"
-	dodoc changelog.txt || die "dodoc failed"
 	insinto /usr/share/pixmaps/
 	newins resources/images/InformationLogo.png xvst.png || die "newins failed"
 	make_desktop_entry /usr/bin/xvst xVideoServiceThief xvst 'Qt;AudioVideo;Video' \
