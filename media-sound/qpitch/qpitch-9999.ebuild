@@ -7,7 +7,7 @@ EAPI="2"
 inherit cmake-utils subversion
 
 DESCRIPTION="A program to tune musical instruments using Qt4"
-HOMEPAGE="http://www.webalice.it/wspinelli/qpitch/"
+HOMEPAGE="http://wspinell.altervista.org/qpitch/"
 ESVN_REPO_URI="svn://svn.gna.org/svn/qpitch/trunk"
 
 LICENSE="GPL-2"
