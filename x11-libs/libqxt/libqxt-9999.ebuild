@@ -25,6 +25,10 @@ DEPEND="${DEPEND}
 
 S="${WORKDIR}/${PN}"
 
+PATCHES=(
+	"${FILESDIR}"/${P}-gcc4.4.patch
+)
+
 src_configure() {
 	local myconf
 	myconf="-prefix /usr \
