@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Aug 2009; Markos Chandras <hwoarang@gentoo.org> mp3diags-9999.ebuild:
+  Don't use https for svn checkout
+
 *mp3diags-0.99.05.030 (31 Jul 2009)
 
   31 Jul 2009; Dominik Kapusta <d@ayoy.net> -mp3diags-0.99.05.029.ebuild,
