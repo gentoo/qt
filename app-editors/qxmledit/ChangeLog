@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Aug 2009; Markos Chandras <hwoarang@gentoo.org> qxmledit-9999.ebuild:
+  Dont override subversion_src_prepare
+
   09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> -qxmledit-0.3.0.ebuild:
   On tree
 

@@ -25,6 +25,7 @@ DOCSDIR="${WORKDIR}/${P}"
 DOCS="AUTHORS NEWS README TODO"
 
 src_prepare(){
+	subversion_src_prepare
 	# workaround for b0rked subversion eclass
 	S="${WORKDIR}/${P}/src"
 	# fix installation path
