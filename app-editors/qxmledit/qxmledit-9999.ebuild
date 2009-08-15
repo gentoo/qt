@@ -26,7 +26,7 @@ DOCS="AUTHORS NEWS README TODO"
 
 src_prepare(){
 	# workaround for b0rked subversion eclass
-	S="${WORKDIR}/${PN}/src"
+	S="${WORKDIR}/${P}/src"
 	# fix installation path
 	sed -i "/^target.path/ s/\/opt\/${PN}/\/usr\/bin/" QXmlEdit.pro || \
 		die "failed to fix installation path"
