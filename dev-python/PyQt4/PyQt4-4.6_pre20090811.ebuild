@@ -87,6 +87,7 @@ src_configure() {
 				--enable=QtXml
 				$(pyqt4_use_enable X QtGui)
 				$(pyqt4_use_enable X QtDesigner)
+				$(pyqt4_use_enable X QtScriptTools)
 				$(pyqt4_use_enable assistant QtAssistant)
 				$(pyqt4_use_enable assistant QtHelp)
 				$(pyqt4_use_enable opengl QtOpenGL)

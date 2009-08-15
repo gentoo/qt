@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Aug 2009; Davide Pesavento <davidepesa@gmail.com>
+  PyQt4-4.6_pre20090811.ebuild:
+  Enable QtScriptTools bindings (bug #279945).
+
   15 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
   -PyQt4-4.6_pre20090810.ebuild:
   Remove old snapshot
