@@ -31,6 +31,7 @@ S="${WORKDIR}"
 TRANSLATIONSDIR="${S}/resources"
 
 src_prepare() {
+	subversion_src_prepare
 	# fix translations
 	mv "${S}"/resources/translations/${MY_PN}_cz.ts	"${S}"/resources/translations/${MY_PN}_cs.ts
 	mv "${S}"/resources/translations/${MY_PN}_jp.ts	"${S}"/resources/translations/${MY_PN}_ja.ts
@@ -38,6 +39,7 @@ src_prepare() {
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
 	"${S}"/src/options.cpp || die "failed to fix paths"
+	qt4-edge_src_prepare
 }
 
 src_compile() {

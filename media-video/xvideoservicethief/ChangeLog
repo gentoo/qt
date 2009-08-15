@@ -4,6 +4,10 @@
 
   15 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
   xvideoservicethief-9999.ebuild:
+  Dont override qt4-edge and subversion src_prepare functions
+
+  15 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
+  xvideoservicethief-9999.ebuild:
   Remove obsolete dodoc line
 
   08 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
