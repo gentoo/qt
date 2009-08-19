@@ -5,7 +5,7 @@
 EAPI="2"
 
 LANGS="pt_BR"
-LANGSLONG="ca_ES de_DE es_ES fr_FR it_IT ja_JP pl_PL"
+LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
 
 inherit qt4-edge git
 
