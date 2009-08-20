@@ -20,7 +20,8 @@ IUSE="debug doc"
 
 DEPEND="x11-libs/qt-gui:4
 	dev-libs/boost"
-RDEPEND="${DEPENDS}"
+RDEPEND="${DEPEND}
+	x11-libs/qt-svg:4"
 
 src_prepare() {
 	if use doc; then

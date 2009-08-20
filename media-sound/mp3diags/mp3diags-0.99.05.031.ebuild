@@ -22,7 +22,8 @@ IUSE="debug doc"
 
 DEPEND="x11-libs/qt-gui:4
 	dev-libs/boost"
-RDEPEND="${DEPENDS}"
+RDEPEND="${DEPEND}
+	x11-libs/qt-svg:4"
 
 src_install() {
 	dobin "bin/${MY_PN}" || die "installing binary failed"
