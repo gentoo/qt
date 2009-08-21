@@ -37,10 +37,6 @@ src_configure() {
 		$(use_enable doc html)
 }
 
-src_compile() {
-	emake || die "emake failed"
-}
-
 src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
 	dodoc AUTHORS NEWS README || die "dodoc failed"
