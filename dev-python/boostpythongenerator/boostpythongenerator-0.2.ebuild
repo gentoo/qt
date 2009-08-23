@@ -8,11 +8,11 @@ inherit cmake-utils
 
 DESCRIPTION="A tool for creating Python bindings for C++ libraries"
 HOMEPAGE="http://www.pyside.org/"
-SRC_URI="http://www.pyside.org/files/${PN}-${PV}.tar.gz"
+SRC_URI="http://www.pyside.org/files/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 DEPEND="dev-python/apiextractor
