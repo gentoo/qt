@@ -1,0 +1,10 @@
+# ChangeLog for dev-python/pyside
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*pyside-0.1.4.5 (18 Aug 2009)
+
+  18 Aug 2009; Dror Levin <spatz@psybear.com> +pyside-0.1.4.5.ebuild,
+  +metadata.xml:
+  Initial commit.
+
