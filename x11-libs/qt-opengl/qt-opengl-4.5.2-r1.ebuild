@@ -1,17 +1,17 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-opengl/qt-opengl-4.5.2.ebuild,v 1.1 2009/06/27 19:19:21 yngwin Exp $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="qt3support"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,qt-copy=]
-	~x11-libs/qt-gui-${PV}[debug=,qt3support=,qt-copy=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[debug=,qt3support=]
 	virtual/opengl
 	virtual/glu"
 RDEPEND="${DEPEND}"
@@ -37,7 +37,7 @@ src_configure() {
 	myconf="${myconf} -opengl
 		$(qt_use qt3support)"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 
 	# Not building tools/designer/src/plugins/tools/view3d as it's
 	# commented out of the build in the source

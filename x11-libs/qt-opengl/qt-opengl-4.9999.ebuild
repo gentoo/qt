@@ -16,13 +16,18 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	virtual/glu"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/opengl"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+QT4_TARGET_DIRECTORIES="
+src/opengl
+src/plugins/graphicssystems/opengl"
+
+QT4_EXTRACT_DIRECTORIES="
 include/QtCore
 include/QtGui
 include/QtOpenGL
 src/corelib
 src/gui
+src/opengl
+src/plugins
 src/3rdparty"
 
 QCONFIG_ADD="opengl"
