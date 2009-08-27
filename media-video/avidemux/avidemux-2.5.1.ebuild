@@ -119,7 +119,7 @@ src_configure() {
 	# plugins/ADM_audioDecoders
 	use aac || mycmakeargs="${mycmakeargs} -DFAAD=0"
 	use dts || mycmakeargs="${mycmakeargs} -DLIBDCA=0"
-	
+
 	# opencore
 	use amrnb || mycmakeargs="${mycmakeargs} -DOPENCORE_AMRNB=0"
 	use amrwb || mycmakeargs="${mycmakeargs} -DOPENCORE_AMRWB=0"

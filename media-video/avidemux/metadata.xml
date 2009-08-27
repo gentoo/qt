@@ -9,6 +9,6 @@
   <use>
     <flag name="aften">Enable A/52 (AC-3) audio encoder support</flag>
     <flag name="amrnb">Enable Narrow Band Adaptive Multi-Rate Audio support</flag>
-	<flag name="amrwb">Enable Wide Band Adaptive Multi-Rate Audio support</flag>
+    <flag name="amrwb">Enable Wide Band Adaptive Multi-Rate Audio support</flag>
   </use>
 </pkgmetadata>
