@@ -2,6 +2,16 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*avidemux-2.5.1 (27 Aug 2009)
+
+  27 Aug 2009; Dominik Kapusta <d@ayoy.net>
+  +files/2.5.1-build-plugins.patch,
+  +files/2.5.1-coreImage-parallel-build.patch,
+  +files/2.5.1-fake-inst-dir.patch, +files/2.5.1-i18n.patch,
+  +files/2.5.1-multilib.patch, +avidemux-2.5.1.ebuild,
+  +files/2.5.1-opencore.patch, metadata.xml:
+  Version bump
+
   29 Jul 2009; Ben de Groot <yngwin@gentoo.org> +files/2.5.0-xv.patch,
   avidemux-2.5.0.ebuild:
   Adding patch from ayoy to fix linking with libXv
