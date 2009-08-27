@@ -1,3 +1,20 @@
+diff --git a/avidemux/CMakeLists.txt b/avidemux/CMakeLists.txt
+index eda6cff..ae3a349 100644
+--- a/avidemux/CMakeLists.txt
++++ b/avidemux/CMakeLists.txt
+@@ -501,3 +501,12 @@ IF (APPLE)
+ ELSE (APPLE)
+ 	INSTALL(TARGETS ${ADM_EXES} RUNTIME DESTINATION ${BIN_DIR} LIBRARY DESTINATION lib)
+ ENDIF (APPLE)
++
++IF (UNIX AND NOT APPLE)
++  ADD_CUSTOM_COMMAND(TARGET ffmpeg
++                     POST_BUILD
++                     COMMAND mkdir -p ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}
++                     COMMAND find ${CMAKE_BINARY_DIR}/avidemux -name '*.so*' | xargs ln -sft ${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}
++                     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
++                     COMMENT "Creating temporary lib directory for proper plugins linking")
++ENDIF (UNIX AND NOT APPLE)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 8bc1697..99e709e 100644
 --- a/CMakeLists.txt

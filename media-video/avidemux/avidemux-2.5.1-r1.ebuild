@@ -15,7 +15,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="2"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="+aac +aften +alsa amrnb amrwb +dts esd jack libsamplerate +mp3 nls oss
+IUSE="+aac +aften +alsa +dts esd jack libsamplerate +mp3 nls opencore-amr oss
 	pulseaudio +sdl +truetype +vorbis +x264 +xv +xvid gtk +qt4"
 
 RDEPEND="dev-libs/libxml2
@@ -23,8 +23,7 @@ RDEPEND="dev-libs/libxml2
 		media-libs/faad2 )
 	aften? ( media-libs/aften )
 	alsa? ( media-libs/alsa-lib )
-	amrnb? ( media-libs/amrnb )
-	amrwb? ( media-libs/amrwb )
+	opencore-amr? ( media-libs/opencore-amr )
 	dts? ( media-libs/libdca )
 	mp3? ( media-sound/lame )
 	esd? ( media-sound/esound )
@@ -55,11 +54,8 @@ done
 PATCHES=( "${FILESDIR}/${PV}-i18n.patch"
 	"${FILESDIR}/${PV}-multilib.patch"
 	"${FILESDIR}/${PV}-coreImage-parallel-build.patch"
-	"${FILESDIR}/${PV}-opencore.patch"
 	# adds plugins as a build target and adjusts include paths
-	"${FILESDIR}/${PV}-build-plugins.patch"
-	# creates a lib dir in a build dir to allow correct plugins linking
-	"${FILESDIR}/${PV}-fake-inst-dir.patch" )
+	"${FILESDIR}/${PV}-build-plugins.patch" )
 
 src_prepare() {
 	base_src_prepare
@@ -121,8 +117,8 @@ src_configure() {
 	use dts || mycmakeargs="${mycmakeargs} -DLIBDCA=0"
 
 	# opencore
-	use amrnb || mycmakeargs="${mycmakeargs} -DOPENCORE_AMRNB=0"
-	use amrwb || mycmakeargs="${mycmakeargs} -DOPENCORE_AMRWB=0"
+	use opencore-amr || mycmakeargs="${mycmakeargs} -DOPENCORE_AMRNB=0
+	                                                -DOPENCORE_AMRWB=0"
 
 	# plugins/ADM_videoFilters
 	use truetype || mycmakeargs="${mycmakeargs} -DFREETYPE2=0 -DFONTCONFIG=0"
