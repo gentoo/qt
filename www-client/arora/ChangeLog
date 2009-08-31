@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; distributed under the GPL version 2
 # Copyright 2006-2008 Berkano Overlay; distributed under the GPL version 2
 
+*arora-0.9.0 (31 Aug 2009)
+
+  31 Aug 2009; Alex Alexander <wired@gentoo.org> +arora-0.9.0.ebuild:
+  version bump, added doc in IUSE
+
   22 Jul 2009; Ben de Groot <yngwin@gentoo.org> -arora-0.8.0.ebuild:
   0.8.0 release ebuild moved to portage
 
