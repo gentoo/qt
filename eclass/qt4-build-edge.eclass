@@ -19,11 +19,11 @@
 #
 #	4.9999 and 4.?.9999[-qt-copy]
 #			stands for live ebuilds from qtsoftware's git repository
-#			(that is nokia, previously trolltech)
+#			(that is Nokia, previously trolltech)
 #	4.?.9999[qt-copy]
-#			stands for live ebuilds from kdesvn repository
+#			stands for live ebuilds from kde-qt git repository
 #	4.*.*_{beta,rc,}* and *
-#			are releases or snapshots from qtsoftware
+#			are official releases or snapshots from Nokia
 #
 
 IUSE="${IUSE} debug pch"
