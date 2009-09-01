@@ -4,6 +4,9 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  01 Sep 2009; Dror Levin <spatz@psybear.com> files/docs_gen.patch:
+  Update patch for docs generation following upstream code changes.
+
   30 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qt-creator-9999.ebuild:
   Fix binary installation
 

@@ -1,13 +1,26 @@
-Index: qt-creator-9999/doc/doc.pri
-===================================================================
---- qt-creator-9999.orig/doc/doc.pri
-+++ qt-creator-9999/doc/doc.pri
-@@ -1,6 +1,6 @@
+diff --git a/doc/doc.pri b/doc/doc.pri
+index 0deac0f..02488c5 100644
+--- a/doc/doc.pri
++++ b/doc/doc.pri
+@@ -1,10 +1,10 @@
+-unix:QDOC_BIN = $$(QTDIR)/bin/qdoc3
++unix:QDOC_BIN = /usr/bin/qdoc3
+ win32:QDOC_BIN = $$(QTDIR)/bin/qdoc3.exe
+ win32:QDOC_BIN = $$replace(QDOC_BIN, "/", "\\")
+ 
+ # legacy branch, can be dropped as soon as we depend on Qt 4.6
+ !exists( $$QDOC_BIN ) {
+-    unix:QDOC_BIN = $$(QTDIR)/tools/qdoc3/qdoc3
++    unix:QDOC_BIN = /usr/bin/qdoc3
+     win32 { 
+         QDOC_BIN = $$(QTDIR)/tools/qdoc3/release/qdoc3.exe
+         QDOC_BIN = $$replace(QDOC_BIN, "/", "\\")
+@@ -17,7 +17,7 @@ win32:QDOC_BIN = $$replace(QDOC_BIN, "/", "\\")
+ 
  unix {
--    QDOC = SRCDIR=$$PWD OUTDIR=$$OUT_PWD/doc/html $$(QTDIR)/tools/qdoc3/qdoc3
+     QDOC = SRCDIR=$$PWD OUTDIR=$$OUT_PWD/doc/html $$QDOC_BIN 
 -    HELPGENERATOR = $$(QTDIR)/bin/qhelpgenerator
-+    QDOC = SRCDIR=$$PWD OUTDIR=$$OUT_PWD/doc/html /usr/bin/qdoc3
 +    HELPGENERATOR = /usr/bin/qhelpgenerator
  } else {
-     QDOC = set SRCDIR=$$PWD&& set OUTDIR=$$OUT_PWD/doc/html&& $$(QTDIR)\tools\qdoc3\release\qdoc3.exe
+     QDOC = set SRCDIR=$$PWD&& set OUTDIR=$$OUT_PWD/doc/html&& $$QDOC_BIN 
      HELPGENERATOR = $$(QTDIR)\bin\qhelpgenerator.exe
