@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-LANGS="de en it ru"
+LANGS="de en he it pl pt ru"
 
 inherit qt4-edge
 
@@ -35,25 +35,26 @@ S="${WORKDIR}/${MY_PN}"
 
 src_prepare() {
 	# fix installation path
-	for file in media_browser.cpp rendering.cpp;do
-		sed -i "s/qApp->applicationDirPath()+\"/\"\/usr\/share\/${PN}\//" \
+	for file in mainfrm.cpp media_browser.cpp rendering.cpp; do
+		sed -i "s:qApp->applicationDirPath().\?+.\?\":\"/usr/share/${PN}/:" \
 			${file} || die "sed failed"
 	done
-	sed -i "s/qApp->applicationDirPath()+\"/\"\/usr\/share\/${PN}\//" \
+
+	sed -i "s:qApp->applicationDirPath():\"/usr/share/${PN}/\":" \
 		mainfrm.cpp || die "sed failed"
-	sed -i "s/qApp->applicationDirPath()/\"\/usr\/share\/${PN}\/\"/" \
-		mainfrm.cpp || die "sed failed"
+
 	qt4-edge_src_prepare
 }
 
 src_install() {
 	dobin 2ManDVD || die "dobin failed"
+	dodoc README.txt || die "dodoc failed"
 	insinto /usr/share/${PN}/
 	doins -r Bibliotheque || die "failed to install Bibliotheque"
 	doins -r Interface || die "failed to install Interface"
-	doicon Interface/mandvdico.png
+	doicon Interface/mandvdico.png || die "doicon failed"
 	# Desktop icon
 	make_desktop_entry 2ManDVD 2ManDVD mandvdico "Qt;AudioVideo;Video" \
-		die "make_desktop_entry failed"
+		|| die "make_desktop_entry failed"
 	prepare_translations
 }
