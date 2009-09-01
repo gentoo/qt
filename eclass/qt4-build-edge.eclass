@@ -90,10 +90,11 @@ case "${PV}" in
 		MY_PV="${PV}"
 		;;
 esac
-MY_P=qt-x11-${SRCTYPE}-${MY_PV}
-S=${WORKDIR}/${MY_P}
 
-SRC_URI="http://get.qtsoftware.com/qt/source/${MY_P}.tar.bz2"
+MY_P=qt-x11-${SRCTYPE}-${MY_PV}
+S="${WORKDIR}/${MY_P}"
+
+SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
 
 case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
