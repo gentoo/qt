@@ -238,6 +238,8 @@ qt4-build-edge_src_configure() {
 
 	echo ./configure ${myconf}
 	./configure ${myconf} || die "configure failed"
+
+	unset myconf
 }
 
 qt4-build-edge_src_compile() {
