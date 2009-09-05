@@ -66,29 +66,29 @@ case "${PV}" in
 	4.9999)
 		IUSE="${IUSE} stable-branch"
 		if use stable-branch; then
-			MY_PV_QTCOPY="${PV}-stable"
+			MY_PV_EXTRA="${PV}-stable"
 		else
-			MY_PV_QTCOPY="${PV}"
+			MY_PV_EXTRA="${PV}"
 		fi
 		;;
 	4.6.9999)
 		IUSE="${IUSE} stable-branch"
 		if use stable-branch; then
-			MY_PV_QTCOPY="${PV}-stable"
+			MY_PV_EXTRA="${PV}-stable"
 		else
-			MY_PV_QTCOPY="${PV}"
+			MY_PV_EXTRA="${PV}"
 		fi
 		;;
 	4.5.9999)
 		IUSE="${IUSE} +qt-copy"
 		if use qt-copy; then
-			MY_PV_QTCOPY="${PV}-qt-copy"
+			MY_PV_EXTRA="${PV}-qt-copy"
 		else
-			MY_PV_QTCOPY="${PV}"
+			MY_PV_EXTRA="${PV}"
 		fi
 		;;
 	*)
-		MY_PV_QTCOPY="${PV}"
+		MY_PV_EXTRA="${PV}"
 		;;
 esac
 
@@ -107,7 +107,7 @@ case "${PV}" in
 		;;
 esac
 
-case "${MY_PV_QTCOPY}" in
+case "${MY_PV_EXTRA}" in
 	4.?.9999-qt-copy)
 		HOMEPAGE="http://qt.gitorious.org/+kde-developers/qt/kde-qt/";;
 	*)
@@ -123,7 +123,7 @@ if version_is_at_least 4.5 ${PV} ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
 fi
 
-case "${MY_PV_QTCOPY}" in
+case "${MY_PV_EXTRA}" in
 	4.?.9999-qt-copy)
 		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 		EGIT_PROJECT="qt-${PV}"
@@ -134,7 +134,7 @@ case "${MY_PV_QTCOPY}" in
 	4.?.9999 | 4.?.9999-stable)
 		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="${MY_PV_QTCOPY/.9999}"
+		EGIT_BRANCH="${MY_PV_EXTRA/.9999}"
 		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
@@ -171,7 +171,7 @@ qt4-build-edge_pkg_setup() {
 
 	# Let users know what they are getting themselves into ;-)
 	echo
-	case "${MY_PV_QTCOPY}" in
+	case "${MY_PV_EXTRA}" in
 		4.?.9999-qt-copy)
 			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
 			;;
@@ -203,7 +203,7 @@ qt4-build-edge_src_unpack() {
 			${QT4_EXTRACT_DIRECTORIES}; do
 		targets="${targets} ${MY_P}/${target}"
 	done
-	case "${MY_PV_QTCOPY}" in
+	case "${MY_PV_EXTRA}" in
 		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			git_src_unpack
 			;;
@@ -214,7 +214,7 @@ qt4-build-edge_src_unpack() {
 	esac
 
 	# For 4.4.x releases we supply a prepackaged headers tarball
-	case "${MY_PV_QTCOPY}" in
+	case "${MY_PV_EXTRA}" in
 		4.4.?)
 			echo tar xjpf "${DISTDIR}"/${MY_P}-headers.tar.bz2
 			tar xjpf "${DISTDIR}"/${MY_P}-headers.tar.bz2
@@ -225,7 +225,7 @@ qt4-build-edge_src_unpack() {
 qt4-build-edge_src_prepare() {
 	setqtenv
 
-	case "${MY_PV_QTCOPY}" in
+	case "${MY_PV_EXTRA}" in
 		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			generate_include
 		;;
@@ -350,7 +350,7 @@ standard_configure_options() {
 		$(use x86-fbsd || echo -reduce-relocations)
 		-nomake examples -nomake demos"
 
-	case "${MY_PV_QTCOPY}" in
+	case "${MY_PV_EXTRA}" in
 		4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy)
 			myconf="${myconf} -opensource"
 			;;
