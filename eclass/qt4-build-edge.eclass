@@ -63,15 +63,7 @@ RDEPEND="
 "
 
 case "${PV}" in
-	4.9999)
-		IUSE="${IUSE} +stable-branch"
-		if use stable-branch; then
-			MY_PV_EXTRA="${PV}-stable"
-		else
-			MY_PV_EXTRA="${PV}"
-		fi
-		;;
-	4.6.9999)
+	4.9999 | 4.6.9999)
 		IUSE="${IUSE} +stable-branch"
 		if use stable-branch; then
 			MY_PV_EXTRA="${PV}-stable"
