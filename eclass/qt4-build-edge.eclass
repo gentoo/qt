@@ -26,6 +26,8 @@
 #			are official releases or snapshots from Nokia
 #
 
+inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
+
 IUSE="${IUSE} debug pch"
 [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE="${IUSE} exceptions"
 
@@ -90,8 +92,6 @@ case "${PV}" in
 		;;
 esac
 
-inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
-
 case "${PV}" in
 	4.*.*_beta*)
 		SRCTYPE="${SRCTYPE:-opensource-src}"
@@ -107,17 +107,17 @@ case "${PV}" in
 		;;
 esac
 
-MY_P=qt-x11-${SRCTYPE}-${MY_PV}
-S="${WORKDIR}/${MY_P}"
-
-SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
-
 case "${MY_PV_QTCOPY}" in
 	4.?.9999-qt-copy)
 		HOMEPAGE="http://qt.gitorious.org/+kde-developers/qt/kde-qt/";;
 	*)
 		HOMEPAGE="http://qt.nokia.com/";;
 esac
+
+MY_P=qt-x11-${SRCTYPE}-${MY_PV}
+S="${WORKDIR}/${MY_P}"
+
+SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
 
 if version_is_at_least 4.5 ${PV} ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
@@ -134,7 +134,7 @@ case "${MY_PV_QTCOPY}" in
 	4.?.9999 | 4.?.9999-stable)
 		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="${MY_PV_QTCOPY/.9999/}"
+		EGIT_BRANCH="${MY_PV_QTCOPY/.9999}"
 		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
@@ -163,36 +163,30 @@ qt4-build-edge_pkg_setup() {
 
 	# Make sure ebuilds use the required EAPI
 	if [[ ${EAPI} != 2 ]]; then
-		ewarn "The qt4-build-edge eclass requires EAPI=2, but this ebuild does not"
-		ewarn "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
-		ewarn "to be fixed. Using qt4-build-edge eclass without EAPI=2 will fail."
+		eerror "The qt4-build-edge eclass requires EAPI=2, but this ebuild does not"
+		eerror "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
+		eerror "to be fixed. Using qt4-build-edge eclass without EAPI=2 will fail."
 		die "qt4-build-edge eclass requires EAPI=2"
 	fi
 
 	# Let users know what they are getting themselves into ;-)
-	local warnmsg=
+	echo
 	case "${MY_PV_QTCOPY}" in
 		4.?.9999-qt-copy)
-			warnmsg="The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
+			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
 			;;
 		4.?.9999-stable | 4.9999-stable)
-			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch"
-			ewarn "http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
+			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch."
+			ewarn "See http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
 			;;
 		4.?.9999 | 4.9999)
-			warnmsg="The ${PV} version ebuilds install live git code from Nokia Qt Software."
+			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software."
 			;;
 		4.*.*_*)
-			warnmsg="The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
-			;;
-		*)
+			ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
 			;;
 	esac
-	if [[ -n ${warnmsg} ]]; then
-		echo
-		ewarn ${warnmsg}
-		echo
-	fi
+	echo
 	if ! version_is_at_least 4.1 $(gcc-version); then
 		ewarn "Using a GCC version lower than 4.1 is not supported!"
 		echo
@@ -604,16 +598,16 @@ qt_mkspecs_dir() {
 		*-linux-*|*-linux)
 			spec="linux" ;;
 		*)
-			die "Unknown CHOST, no platform chosen."
+			die "Unknown CHOST '${CHOST}', no platform chosen."
 	esac
 
-	CXX=$(tc-getCXX)
-	if [[ ${CXX/g++/} != ${CXX} ]]; then
+	local CXX=$(tc-getCXX)
+	if [[ ${CXX/g++} != ${CXX} ]]; then
 		spec="${spec}-g++"
-	elif [[ ${CXX/icpc/} != ${CXX} ]]; then
+	elif [[ ${CXX/icpc} != ${CXX} ]]; then
 		spec="${spec}-icc"
 	else
-		die "Unknown compiler ${CXX}."
+		die "Unknown compiler '${CXX}'."
 	fi
 
 	echo "${spec}"
