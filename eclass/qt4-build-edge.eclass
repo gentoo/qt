@@ -61,7 +61,23 @@ RDEPEND="
 "
 
 case "${PV}" in
-	4.?.9999)
+	4.9999)
+		IUSE="${IUSE} stable-branch"
+		if use stable-branch; then
+			MY_PV_QTCOPY="${PV}-stable"
+		else
+			MY_PV_QTCOPY="${PV}"
+		fi
+		;;
+	4.6.9999)
+		IUSE="${IUSE} stable-branch"
+		if use stable-branch; then
+			MY_PV_QTCOPY="${PV}-stable"
+		else
+			MY_PV_QTCOPY="${PV}"
+		fi
+		;;
+	4.5.9999)
 		IUSE="${IUSE} +qt-copy"
 		if use qt-copy; then
 			MY_PV_QTCOPY="${PV}-qt-copy"
@@ -115,10 +131,17 @@ case "${MY_PV_QTCOPY}" in
 		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
-	4.?.9999)
+	4.?.9999 | 4.?.9999-stable)
 		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="4.5"
+		EGIT_BRANCH="${MY_PV_QTCOPY/.9999/}"
+		EGIT_TREE="${EGIT_BRANCH}"
+		SRC_URI=
+		;;
+	4.9999-stable)
+		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
+		EGIT_PROJECT="qt-${PV}"
+		EGIT_BRANCH="master-stable"
 		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
@@ -152,6 +175,10 @@ qt4-build-edge_pkg_setup() {
 		4.?.9999-qt-copy)
 			warnmsg="The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
 			;;
+		4.?.9999-stable | 4.9999-stable)
+			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch"
+			ewarn "http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
+			;;
 		4.?.9999 | 4.9999)
 			warnmsg="The ${PV} version ebuilds install live git code from Nokia Qt Software."
 			;;
@@ -183,7 +210,7 @@ qt4-build-edge_src_unpack() {
 		targets="${targets} ${MY_P}/${target}"
 	done
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999-qt-copy | 4.?.9999 | 4.9999)
+		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			git_src_unpack
 			;;
 		*)
@@ -205,7 +232,7 @@ qt4-build-edge_src_prepare() {
 	setqtenv
 
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999-qt-copy | 4.?.9999 | 4.9999)
+		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			generate_include
 		;;
 	esac
@@ -330,7 +357,7 @@ standard_configure_options() {
 		-nomake examples -nomake demos"
 
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999 | 4.9999 | 4.?.9999-qt-copy)
+		4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy)
 			myconf="${myconf} -opensource"
 			;;
 	esac
