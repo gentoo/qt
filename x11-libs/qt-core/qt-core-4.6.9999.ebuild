@@ -16,7 +16,7 @@ RDEPEND="sys-libs/zlib
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,qt-copy=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap
@@ -138,10 +138,6 @@ src_configure() {
 		myconf="${myconf} -nomake docs"
 	fi
 
-	cp -f "${FILESDIR}"/moc.pro "${S}"/src/tools/moc/
-	cp -f "${FILESDIR}"/rcc.pro "${S}"/src/tools/rcc/
-	cp -f "${FILESDIR}"/uic.pro "${S}"/src/tools/uic/
-
 	qt4-build-edge_src_configure
 }
 
@@ -162,8 +158,8 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
-	if use qt-copy; then
-		emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
+	if use qt-copy;then
+		emake INSTALL_ROOT="${D}" install_translations || die "emake install translations failed"
 	fi
 
 	setqtenv

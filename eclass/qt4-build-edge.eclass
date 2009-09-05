@@ -69,22 +69,20 @@ case "${PV}" in
 			MY_PV_QTCOPY="${PV}"
 		fi
 		;;
-	4.?.9999)
-		IUSE="${IUSE} +qt-copy stable-branch"
-		if use qt-copy && use stable-branch; then
-			eerror
-			eerror "stable-branch is only available for -qt-copy"
-			eerror
-			die "you can't mix stable-branch with qt-copy"
+	4.6.9999)
+		IUSE="${IUSE} stable-branch"
+		if use stable-branch; then
+			MY_PV_QTCOPY="${PV}-stable"
+		else
+			MY_PV_QTCOPY="${PV}"
 		fi
+		;;
+	4.5.9999)
+		IUSE="${IUSE} +qt-copy"
 		if use qt-copy; then
 			MY_PV_QTCOPY="${PV}-qt-copy"
 		else
-			if use stable-branch; then
-				MY_PV_QTCOPY="${PV}-stable"
-			else
-				MY_PV_QTCOPY="${PV}"
-			fi
+			MY_PV_QTCOPY="${PV}"
 		fi
 		;;
 	*)

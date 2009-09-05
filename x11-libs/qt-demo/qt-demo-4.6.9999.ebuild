@@ -10,18 +10,18 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-core-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-dbus-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-gui-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-opengl-${PV}:${SLOT}[qt-copy=]
-	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[qt-copy=] media-sound/phonon )
-	~x11-libs/qt-script-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-sql-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-svg-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-test-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-webkit-${PV}:${SLOT}[qt-copy=]
-	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[qt-copy=]"
+DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
+	~x11-libs/qt-core-${PV}:${SLOT}
+	~x11-libs/qt-dbus-${PV}:${SLOT}
+	~x11-libs/qt-gui-${PV}:${SLOT}
+	~x11-libs/qt-opengl-${PV}:${SLOT}
+	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-sound/phonon )
+	~x11-libs/qt-script-${PV}:${SLOT}
+	~x11-libs/qt-sql-${PV}:${SLOT}
+	~x11-libs/qt-svg-${PV}:${SLOT}
+	~x11-libs/qt-test-${PV}:${SLOT}
+	~x11-libs/qt-webkit-${PV}:${SLOT}
+	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}"
 
 RDEPEND="${DEPEND}"
 

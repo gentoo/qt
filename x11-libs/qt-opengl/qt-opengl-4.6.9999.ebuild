@@ -10,8 +10,8 @@ SLOT="4"
 KEYWORDS=""
 IUSE="qt3support"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,qt-copy=]
-	~x11-libs/qt-gui-${PV}[debug=,qt3support=,qt-copy=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[debug=,qt3support=]
 	virtual/opengl
 	virtual/glu"
 RDEPEND="${DEPEND}"
