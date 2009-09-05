@@ -139,47 +139,51 @@ qt4-build-edge_pkg_setup() {
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
 
 	# Make sure ebuilds use the required EAPI
-	if [[ $EAPI != 2 ]]; then
+	if [[ ${EAPI} != 2 ]]; then
 		ewarn "The qt4-build-edge eclass requires EAPI=2, but this ebuild does not"
 		ewarn "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
 		ewarn "to be fixed. Using qt4-build-edge eclass without EAPI=2 will fail."
-		die "qt4-build-edge eclass requires EAPI=2 set"
+		die "qt4-build-edge eclass requires EAPI=2"
 	fi
 
 	# Let users know what they are getting themselves into ;-)
-	echo
+	local warnmsg=
 	case "${MY_PV_QTCOPY}" in
 		4.?.9999-qt-copy)
-			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository"
+			warnmsg="The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
 			;;
 		4.?.9999 | 4.9999)
-			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software"
+			warnmsg="The ${PV} version ebuilds install live git code from Nokia Qt Software."
 			;;
 		4.*.*_*)
-			ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software"
+			warnmsg="The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
 			;;
 		*)
 			;;
 	esac
-	echo
-
-	if ! version_is_at_least 4.1 $(gcc-version) ; then
+	if [[ -n ${warnmsg} ]]; then
+		echo
+		ewarn ${warnmsg}
+		echo
+	fi
+	if ! version_is_at_least 4.1 $(gcc-version); then
 		ewarn "Using a GCC version lower than 4.1 is not supported!"
 		echo
 	fi
-
 }
 
 qt4-build-edge_src_unpack() {
 	setqtenv
-	local target targets
+
+	local target= targets=
 	for target in configure LICENSE.{GPL2,GPL3} projects.pro \
-		src/{qbase,qt_targets,qt_install}.pri bin config.tests mkspecs qmake \
-		${QT4_EXTRACT_DIRECTORIES}; do
-			targets="${targets} ${MY_P}/${target}"
+			src/{qbase,qt_targets,qt_install}.pri \
+			bin config.tests mkspecs qmake \
+			${QT4_EXTRACT_DIRECTORIES}; do
+		targets="${targets} ${MY_P}/${target}"
 	done
 	case "${MY_PV_QTCOPY}" in
-		4.?.9999-qt-copy | 4.?.9999 |4.9999)
+		4.?.9999-qt-copy | 4.?.9999 | 4.9999)
 			git_src_unpack
 			;;
 		*)
@@ -199,6 +203,7 @@ qt4-build-edge_src_unpack() {
 
 qt4-build-edge_src_prepare() {
 	setqtenv
+
 	case "${MY_PV_QTCOPY}" in
 		4.?.9999-qt-copy | 4.?.9999 | 4.9999)
 			generate_include
@@ -207,8 +212,8 @@ qt4-build-edge_src_prepare() {
 
 	if [[ ${PN} != qt-core ]]; then
 		cd "${S}"
-		skip_qmake_build_patch
-		skip_project_generation_patch
+		skip_qmake_build
+		skip_project_generation
 		symlink_binaries_to_buildtree
 	fi
 
@@ -216,12 +221,14 @@ qt4-build-edge_src_prepare() {
 		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
 		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
 		-e "s:X11R6/::" \
-		-i "${S}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf || die "sed ${S}/mkspecs/$(qt_mkspecs_dir)/qmake.conf failed"
+		-i "${S}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf \
+		|| die "sed ${S}/mkspecs/$(qt_mkspecs_dir)/qmake.conf failed"
 
 	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
 		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
 		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-		-i "${S}"/mkspecs/common/g++.conf || die "sed ${S}/mkspecs/common/g++.conf failed"
+		-i "${S}"/mkspecs/common/g++.conf \
+		|| die "sed ${S}/mkspecs/common/g++.conf failed"
 
 	# Bug 275710
 	# Avoid adding C[XX]FLAGS to .qmake.cache as this is used in addition
@@ -234,8 +241,8 @@ qt4-build-edge_src_prepare() {
 
 qt4-build-edge_src_configure() {
 	setqtenv
-	myconf="$(standard_configure_options) ${myconf}"
 
+	myconf="$(standard_configure_options) ${myconf}"
 	echo ./configure ${myconf}
 	./configure ${myconf} || die "configure failed"
 
@@ -284,16 +291,12 @@ setqtenv() {
 # Sets up some standard configure options, like libdir (if necessary), whether
 # debug info is wanted or not.
 standard_configure_options() {
-	local myconf=""
+	local myconf=
 
 	[[ $(get_libdir) != "lib" ]] && myconf="${myconf} -L/usr/$(get_libdir)"
 
-	# precompiled headers doesn't work on hardened, where the flag is masked.
-	if use pch; then
-		myconf="${myconf} -pch"
-	else
-		myconf="${myconf} -no-pch"
-	fi
+	# precompiled headers don't work on hardened, where the flag is masked.
+	myconf="${myconf} $(qt_use pch)"
 
 	if use debug; then
 		myconf="${myconf} -debug -no-separate-debug-info"
@@ -312,16 +315,11 @@ standard_configure_options() {
 		*) die "$(tc-arch) is unsupported by this eclass. Please file a bug." ;;
 	esac
 
-	local exceptions=""
-	if has exceptions "${IUSE}"; then
-		if use exceptions;  then
-			exceptions="-exceptions"
-		else
-			exceptions="-no-exceptions"
-		fi
-	fi
+	local exceptions=
+	has exceptions "${IUSE}" && exceptions="$(qt_use exceptions)"
 
-	myconf="${myconf} -platform $(qt_mkspecs_dir) -stl -verbose -largefile -confirm-license -no-rpath
+	myconf="${myconf} -platform $(qt_mkspecs_dir)
+		-stl -verbose -largefile -confirm-license -no-rpath
 		-prefix ${QTPREFIXDIR} -bindir ${QTBINDIR} -libdir ${QTLIBDIR}
 		-datadir ${QTDATADIR} -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
@@ -343,16 +341,17 @@ standard_configure_options() {
 # @FUNCTION: build_directories
 # @USAGE: < directories >
 # @DESCRIPTION:
-# Compiles the code in $QT4_TARGET_DIRECTORIES
+# Compiles the code in ${QT4_TARGET_DIRECTORIES}
 build_directories() {
-	local dirs="$@"
-	for x in ${dirs}; do
-		cd "${S}"/${x}
-		sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
-			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
-			|| die "failed to fix QT_INSTALL_LIBS"
-		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
-		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake failed"
+	sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
+		$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
+		|| die "failed to fix QT_INSTALL_LIBS"
+
+	for x in "$@"; do
+		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
+		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake in ${x} failed"
+		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake in ${x} failed"
+		popd > /dev/null || die "can't popd from ${S}/${x}"
 	done
 }
 
@@ -361,11 +360,10 @@ build_directories() {
 # @DESCRIPTION:
 # run emake install in the given directories, which are separated by spaces
 install_directories() {
-	local dirs="$@"
-	for x in ${dirs}; do
-		pushd "${S}"/${x} >/dev/null || die "Can't pushd ${S}/${x}"
-		emake INSTALL_ROOT="${D}" install || die "emake install failed"
-		popd >/dev/null || die "Can't popd from ${S}/${x}"
+	for x in "$@"; do
+		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
+		emake INSTALL_ROOT="${D}" install || die "emake install in ${x} failed"
+		popd > /dev/null || die "can't popd from ${S}/${x}"
 	done
 }
 
@@ -387,7 +385,7 @@ QCONFIG_DEFINE="${QCONFIG_DEFINE:-}"
 # @FUNCTION: install_qconfigs
 # @DESCRIPTION: Install gentoo-specific mkspecs configurations
 install_qconfigs() {
-	local x
+	local x=
 	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} ]]; then
 		for x in QCONFIG_ADD QCONFIG_REMOVE; do
 			[[ -n ${!x} ]] && echo ${x}=${!x} >> "${T}"/${PN}-qconfig.pri
@@ -401,7 +399,7 @@ install_qconfigs() {
 			echo "#define ${x}" >> "${T}"/gentoo-${PN}-qconfig.h
 		done
 		insinto ${QTHEADERDIR}/Gentoo
-		doins "${T}"/gentoo-${PN}-qconfig.h || die "installing ${PN}-qconfig.h failed"
+		doins "${T}"/gentoo-${PN}-qconfig.h || die "installing gentoo-${PN}-qconfig.h failed"
 	fi
 }
 
@@ -422,21 +420,22 @@ generate_qconfigs() {
 			# start with the qconfig.pri that qt-core installed
 			if ! cp "${ROOT}${QTDATADIR}"/mkspecs/gentoo/qconfig.pri \
 				"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri; then
-				eerror "cp qconfig failed."
+				eerror "cp qconfig.pri failed!"
 				return 1
 			fi
 
 			# generate list of QT_CONFIG entries from the existing list
 			# including qconfig_add and excluding qconfig_remove
 			for x in $(sed -n 's/^QT_CONFIG +=//p' \
-				"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri) ${qconfig_add}; do
-					hasq ${x} ${qconfig_remove} || qconfig_new="${qconfig_new} ${x}"
+					"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri) \
+					${qconfig_add}; do
+				hasq ${x} ${qconfig_remove} || qconfig_new="${qconfig_new} ${x}"
 			done
 
 			# replace the existing QT_CONFIG list with qconfig_new
 			if ! sed -i -e "s/QT_CONFIG +=.*/QT_CONFIG += ${qconfig_new}/" \
-				"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri; then
-				eerror "Sed for QT_CONFIG failed"
+					"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri; then
+				eerror "Sed for QT_CONFIG failed!"
 				return 1
 			fi
 
@@ -485,19 +484,18 @@ qt4-build-edge_pkg_postinst() {
 	echo
 }
 
-# @FUNCTION: skip_qmake_build_patch
+# @FUNCTION: skip_qmake_build
 # @DESCRIPTION:
 # Skip qmake build, as it's already installed by qt-core
-skip_qmake_build_patch() {
-	sed -i -e "s:if true:if false:g" "${S}"/configure || die "Sed failed"
+skip_qmake_build() {
+	sed -i -e 's:if true:if false:g' "${S}"/configure || die "${FUNCNAME}: sed failed."
 }
 
-# @FUNCTION: skip_project_generation_patch
+# @FUNCTION: skip_project_generation
 # @DESCRIPTION:
 # Exit the script early by throwing in an exit before all of the .pro files are scanned
-skip_project_generation_patch() {
-	sed -e "s:echo \"Finding:exit 0\n\necho \"Finding:g" \
-		-i "${S}"/configure || die "Sed failed"
+skip_project_generation() {
+	sed -i -e 's:echo "Finding:exit 0\n\necho "Finding:g' "${S}"/configure || die "${FUNCNAME}: sed failed."
 }
 
 # @FUNCTION: symlink_binaries_to_buildtree
@@ -505,7 +503,7 @@ skip_project_generation_patch() {
 # Symlink generated binaries to buildtree so they can be used during compilation time
 symlink_binaries_to_buildtree() {
 	for bin in qmake moc uic rcc; do
-		ln -s ${QTBINDIR}/${bin} "${S}"/bin/ || die "Symlinking ${bin} to ${S}/bin failed."
+		ln -s ${QTBINDIR}/${bin} "${S}"/bin/ || die "${FUNCNAME}: symlinking ${bin} to ${S}/bin failed."
 	done
 }
 
@@ -519,20 +517,21 @@ generate_include() {
 # Fixes the pathes in *.la, *.prl, *.pc, as they are wrong due to sandbox and
 # moves the *.pc-files into the pkgconfig directory
 fix_library_files() {
+	local libfile=
 	for libfile in "${D}"/${QTLIBDIR}/{*.la,*.prl,pkgconfig/*.pc}; do
 		if [[ -e ${libfile} ]]; then
-			sed -i -e "s:${S}/lib:${QTLIBDIR}:g" ${libfile} || die "Sed on ${libfile} failed."
+			sed -i -e "s:${S}/lib:${QTLIBDIR}:g" ${libfile} || die "${FUNCNAME}: sed on ${libfile} failed."
 		fi
 	done
 
-	# pkgconfig files refer to WORKDIR/bin as the moc and uic locations. Fix:
+	# pkgconfig files refer to ${WORKDIR}/bin, as the moc and uic locations. Fix them.
 	for libfile in "${D}"/${QTLIBDIR}/pkgconfig/*.pc; do
 		if [[ -e ${libfile} ]]; then
-			sed -i -e "s:${S}/bin:${QTBINDIR}:g" ${libfile} || die "Sed failed"
+			sed -i -e "s:${S}/bin:${QTBINDIR}:g" ${libfile} || die "${FUNCNAME}: sed on ${libfile} failed."
 			# Move .pc files into the pkgconfig directory
 			dodir ${QTPCDIR}
 			mv ${libfile} "${D}"/${QTPCDIR}/ \
-				|| die "Moving ${libfile} to ${D}/${QTPCDIR}/ failed."
+				|| die "${FUNCNAME}: moving ${libfile} to ${D}/${QTPCDIR}/ failed."
 		fi
 	done
 
@@ -546,16 +545,14 @@ fix_library_files() {
 # This will echo "${enableval}-${feature}" if <flag> is enabled, or
 # "-no-${feature} if the flag is disabled. If [feature] is not specified <flag>
 # will be used for that. If [enableval] is not specified, it omits the
-# assignment-part
+# assignment-part.
 qt_use() {
-	local flag="${1}"
-	local feature="${1}"
+	local feature="${2:-$1}"
 	local enableval=
 
-	[[ -n ${2} ]] && feature=${2}
 	[[ -n ${3} ]] && enableval="-${3}"
 
-	if use ${flag}; then
+	if use ${1}; then
 		echo "${enableval}-${feature}"
 	else
 		echo "-no-${feature}"
@@ -567,9 +564,7 @@ qt_use() {
 # @DESCRIPTION:
 # Allows us to define which mkspecs dir we want to use.
 qt_mkspecs_dir() {
-	# Allows us to define which mkspecs dir we want to use.
-	local spec
-
+	local spec=
 	case ${CHOST} in
 		*-freebsd*|*-dragonfly*)
 			spec="freebsd" ;;
@@ -582,7 +577,7 @@ qt_mkspecs_dir() {
 		*-linux-*|*-linux)
 			spec="linux" ;;
 		*)
-			die "Unknown CHOST, no platform choosen."
+			die "Unknown CHOST, no platform chosen."
 	esac
 
 	CXX=$(tc-getCXX)
