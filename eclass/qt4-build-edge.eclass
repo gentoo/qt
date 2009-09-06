@@ -356,15 +356,14 @@ standard_configure_options() {
 # @DESCRIPTION:
 # Compiles the code in ${QT4_TARGET_DIRECTORIES}
 build_directories() {
-	sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
-		$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
-		|| die "failed to fix QT_INSTALL_LIBS"
-
-	for x in "$@"; do
-		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
-		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake in ${x} failed"
-		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake in ${x} failed"
-		popd > /dev/null || die "can't popd from ${S}/${x}"
+	local dirs="$@"
+	for x in ${dirs}; do
+		cd "${S}"/${x}
+		sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
+			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
+			|| die "failed to fix QT_INSTALL_LIBS"
+		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
+		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake failed"
 	done
 }
 
