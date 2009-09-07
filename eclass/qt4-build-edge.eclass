@@ -354,16 +354,19 @@ standard_configure_options() {
 # @FUNCTION: build_directories
 # @USAGE: < directories >
 # @DESCRIPTION:
-# Compiles the code in ${QT4_TARGET_DIRECTORIES}
+# Compiles the code in the given directories.
 build_directories() {
-	# if you put $@ in double quotes ("$@") qt-core will fail...
+	local x=
+	# Do NOT put double quotes around $@ here, otherwise the
+	# positional parameters won't be expanded correctly.
 	for x in $@; do
 		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
+		# FIXME: investigate whether this sed can be moved outside of the for loop
 		sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
 			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
 			|| die "failed to fix QT_INSTALL_LIBS"
-		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
-		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake failed"
+		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake in ${x} failed"
+		emake CC=$(tc-getCC) CXX=$(tc-getCXX) LINK=$(tc-getCXX) || die "emake in ${x} failed"
 		popd > /dev/null || die "can't popd from ${S}/${x}"
 	done
 }
@@ -371,8 +374,11 @@ build_directories() {
 # @FUNCTION: install_directories
 # @USAGE: < directories >
 # @DESCRIPTION:
-# run emake install in the given directories, which are separated by spaces
+# Runs emake install in the given directories, which are separated by spaces.
 install_directories() {
+	local x=
+	# Do NOT put double quotes around $@ here, otherwise the
+	# positional parameters won't be expanded correctly.
 	for x in $@; do
 		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
 		emake INSTALL_ROOT="${D}" install || die "emake install in ${x} failed"
