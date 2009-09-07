@@ -20,21 +20,21 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="debug doc"
 
-DEPEND="x11-libs/qt-gui:4
+DEPEND="x11-libs/qt-gui:4[debug?]
 	dev-libs/boost"
 RDEPEND="${DEPEND}
-	x11-libs/qt-svg:4"
+	x11-libs/qt-svg:4[debug?]"
 
 src_install() {
-	dobin "bin/${MY_PN}" || die "installing binary failed"
+	dobin bin/${MY_PN} || die "installing binary failed"
 	dodoc changelog.txt || die "dodoc failed"
 
-	domenu "desktop/${MY_PN}.desktop" || die "installing dekstop file failed"
+	domenu desktop/${MY_PN}.desktop || die "installing dekstop file failed"
 
 	local icon_sizes="16 22 24 32 36 48"
 	for size in ${icon_sizes}; do
-		insinto "/usr/share/icons/hicolor/${size}x${size}/apps"
-		newins "desktop/${MY_PN}${size}.png" "${MY_PN}.png" \
+		insinto /usr/share/icons/hicolor/${size}x${size}/apps
+		newins desktop/${MY_PN}${size}.png ${MY_PN}.png \
 			|| die "installing icons failed"
 	done
 

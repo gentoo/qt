@@ -11,17 +11,17 @@ S=${WORKDIR}/${PN}
 
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
-ESVN_REPO_URI="http://mp3diags.svn.sourceforge.net/svnroot/mp3diags"
+ESVN_REPO_URI="http://${PN}.svn.sourceforge.net/svnroot/${PN}"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug doc"
 
-DEPEND="x11-libs/qt-gui:4
+DEPEND="x11-libs/qt-gui:4[debug?]
 	dev-libs/boost"
 RDEPEND="${DEPEND}
-	x11-libs/qt-svg:4"
+	x11-libs/qt-svg:4[debug?]"
 
 src_prepare() {
 	if use doc; then
@@ -38,7 +38,8 @@ src_install() {
 	local icon_sizes="16 22 24 32 36 48"
 	for size in ${icon_sizes}; do
 		insinto /usr/share/icons/hicolor/${size}x${size}/apps
-		newins desktop/${MY_PN}${size}.png ${MY_PN}.png || die "doins failed"
+		newins desktop/${MY_PN}${size}.png ${MY_PN}.png \
+			|| die "installing icons failed"
 	done
 
 	if use doc; then
