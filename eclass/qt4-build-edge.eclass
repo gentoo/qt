@@ -29,7 +29,16 @@
 inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
 
 IUSE="${IUSE} debug pch"
-[[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE="${IUSE} exceptions"
+if [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]]; then
+	if [[ ${CATEGORY}/${PN} == x11-libs/qt-core ]]; then
+		# >=qt-xmlpatterns-4.6 needs this enabled in qt-core
+		# so lets enable it by default and save some users
+		# the trouble of remerging it
+		IUSE="${IUSE} +exceptions"
+	else
+		IUSE="${IUSE} exceptions"
+	fi
+fi
 
 RDEPEND="
 	!<x11-libs/qt-assistant-${PV}
