@@ -36,11 +36,11 @@ src_prepare() {
 			ts="${ts} ts/${PN}_${lingua}.ts"
 		fi
 	done
-	
+
 	if [[ -n ${ts} ]]; then
 		echo "TRANSLATIONS = ${ts}" >> ${MY_PN}.pro || die "echo failed"
+		lrelease ${MY_PN}.pro || die "Generating translations failed"
 	fi
-	lrelease ${MY_PN}.pro || die "Generating translations failed"
 }
 
 src_install() {
