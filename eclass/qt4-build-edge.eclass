@@ -85,6 +85,10 @@ case "${PV}" in
 esac
 
 case "${PV}" in
+	4.*.*_alpha_pre*)
+		SRCTYPE="${SRCTYPE:-opensource-src}"
+		MY_PV="${PV/_alpha_pre/-tp}"
+		;;
 	4.*.*_beta*)
 		SRCTYPE="${SRCTYPE:-opensource-src}"
 		MY_PV="${PV/_beta/-beta}"
@@ -106,10 +110,18 @@ case "${MY_PV_EXTRA}" in
 		HOMEPAGE="http://qt.nokia.com/";;
 esac
 
-MY_P=qt-x11-${SRCTYPE}-${MY_PV}
-S="${WORKDIR}/${MY_P}"
+case "${PV}" in
+	4.6.?_*)
+		MY_P=qt-everywhere-${SRCTYPE}-${MY_PV}
+		SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
+		;;
+	*)
+		MY_P=qt-x11-${SRCTYPE}-${MY_PV}
+		SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
+		;;
+esac
 
-SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
+S="${WORKDIR}/${MY_P}"
 
 if version_is_at_least 4.5 ${PV} ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
@@ -174,6 +186,10 @@ qt4-build-edge_pkg_setup() {
 		4.?.9999 | 4.9999)
 			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software."
 			;;
+		4.6.0_alpha_pre*)
+			ewarn "The ${PV} version ebuilds install a technical preview from Nokia Qt Software."
+			ewarn "See http://labs.trolltech.com/blogs/2009/09/09/qt-460-tech-preview-1/"
+			;;
 		4.*.*_*)
 			ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
 			;;
@@ -198,6 +214,10 @@ qt4-build-edge_src_unpack() {
 	case "${MY_PV_EXTRA}" in
 		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			git_src_unpack
+			;;
+		4.6.?_*)
+			echo tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
+			tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
 			;;
 		*)
 			echo tar xjpf "${DISTDIR}"/${MY_P}.tar.bz2 ${targets}
@@ -343,7 +363,7 @@ standard_configure_options() {
 		-nomake examples -nomake demos"
 
 	case "${MY_PV_EXTRA}" in
-		4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy)
+		4.6.* | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy)
 			myconf="${myconf} -opensource"
 			;;
 	esac
