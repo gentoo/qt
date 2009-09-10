@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  10 Sep 2009; Davide Pesavento <davidepesa@gmail.com>
+  -eric-4.4_pre20090627.ebuild:
+  Remove old snapshot.
+
 *eric-4.4_pre20090726 (03 Aug 2009)
 
   03 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
