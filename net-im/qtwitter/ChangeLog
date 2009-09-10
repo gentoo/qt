@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qtwitter-0.9.0 (10 Sep 2009)
+
+  10 Sep 2009; Dominik Kapusta <d@ayoy.net> +qtwitter-0.9.0.ebuild,
+  qtwitter-9999.ebuild:
+  Version bump
+
   19 Aug 2009; Dominik Kapusta <d@ayoy.net> qtwitter-9999.ebuild:
   Added Czech translation.
 

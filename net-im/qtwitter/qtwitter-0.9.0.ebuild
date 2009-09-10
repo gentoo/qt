@@ -1,39 +1,44 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/net-im/qtwitter/qtwitter-0.8.3.ebuild,v 1.1 2009/08/08 17:42:03 hwoarang Exp $
 
 EAPI="2"
 
-LANGS="pt_BR"
-LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
-
-inherit qt4-edge git
+inherit qt4
 
 DESCRIPTION="A Qt-based client for Twitter and Identi.ca"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
-EGIT_REPO_URI="git://github.com/ayoy/qtwitter.git"
+SRC_URI="http://files.ayoy.net/qtwitter/release/${PV}/src/${P}-src.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="debug +oauth"
 
 DEPEND="x11-libs/qt-gui:4
 	oauth? ( >=dev-libs/qoauth-1.0 )"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}"
+QTWITTER_LANGS="pt_BR"
+QTWITTER_NOLONGLANGS="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
+
+for L in $QTWITTER_LANGS; do
+	IUSE="$IUSE linguas_$L"
+done
+for L in $QTWITTER_NOLONGLANGS; do
+	IUSE="$IUSE linguas_${L%_*}"
+done
 
 src_prepare() {
-	qt4-edge_src_prepare
+	qt4_src_prepare
 	echo "CONFIG += nostrip" >> "${S}"/${PN}.pro
 
 	local langs=
 	for lingua in $LINGUAS; do
-		if has $lingua $LANGS; then
+		if has $lingua $QTWITTER_LANGS; then
 			langs="$langs loc/${PN}_${lingua}.ts"
 		else
-			for a in $LANGSLONG; do
+			for a in $QTWITTER_NOLONGLANGS; do
 				if [[ $lingua == ${a%_*} ]]; then
 					langs="$langs loc/${PN}_${a}.ts"
 				fi
@@ -43,11 +48,11 @@ src_prepare() {
 
 	# remove translations and add only the selected ones
 	sed -i -e '/^ *loc.*\.ts/d' \
-		-e "/^TRANSLATIONS/s:loc.*:${langs}:" \
-			qtwitter-app/qtwitter-app.pro || die "sed failed"
+	    -e "/^TRANSLATIONS/s:loc.*:${langs}:" \
+	        qtwitter-app/qtwitter-app.pro || die "sed failed"
 	# fix unsecure runpaths
 	sed -i -e '/-Wl,-rpath,\$\${TOP}/d' \
-		qtwitter-app/qtwitter-app.pro || die "sed failed"
+	    qtwitter-app/qtwitter-app.pro || die "sed failed"
 
 	sed -i "s!\(\$\${INSTALL_PREFIX}\)/lib!\1/$(get_libdir)!" \
 		twitterapi/twitterapi.pro urlshortener/urlshortener.pro || die "sed failed"
@@ -55,6 +60,10 @@ src_prepare() {
 	if ! use oauth; then
 		sed -i '/DEFINES += OAUTH/d' ${PN}.pri || die "sed failed"
 	fi
+}
+
+src_configure() {
+	eqmake4
 }
 
 src_install() {
