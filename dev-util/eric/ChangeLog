@@ -2,6 +2,14 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eric-4.4_pre20090821 (11 Sep 2009)
+
+  11 Sep 2009; Davide Pesavento <davidepesa@gmail.com>
+  -eric-4.4_pre20090726.ebuild, +eric-4.4_pre20090821.ebuild:
+  New snapshot with some ebuild improvements: added italian and chinese
+  translations, synced with portage ebuild, fixed bug #283148. Dropped some
+  keywords because of new deps.
+
   10 Sep 2009; Davide Pesavento <davidepesa@gmail.com>
   -eric-4.4_pre20090627.ebuild:
   Remove old snapshot.
