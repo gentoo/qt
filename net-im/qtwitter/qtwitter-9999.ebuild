@@ -11,15 +11,15 @@ inherit qt4-edge git
 
 DESCRIPTION="A Qt-based client for Twitter and Identi.ca"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
-EGIT_REPO_URI="git://github.com/ayoy/qtwitter.git"
+EGIT_REPO_URI="git://github.com/ayoy/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug +oauth"
+IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4
-	oauth? ( >=dev-libs/qoauth-1.0 )"
+	>=dev-libs/qoauth-1.0"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
@@ -52,9 +52,6 @@ src_prepare() {
 	sed -i "s!\(\$\${INSTALL_PREFIX}\)/lib!\1/$(get_libdir)!" \
 		twitterapi/twitterapi.pro urlshortener/urlshortener.pro || die "sed failed"
 
-	if ! use oauth; then
-		sed -i '/DEFINES += OAUTH/d' ${PN}.pri || die "sed failed"
-	fi
 }
 
 src_install() {
