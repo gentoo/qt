@@ -17,7 +17,7 @@ SLOT="4"
 KEYWORDS="-* ~amd64 ~x86"
 
 IUSE="debug doc cups directfb fbcon firebird +glib gif mysql nis ssl pch phonon
-      postgres vnc qvfb qt3support sqlite svg svga vnc webkit xmlpatterns"
+	postgres vnc qvfb qt3support sqlite svg svga vnc webkit xmlpatterns"
 
 DEPEND="media-libs/libpng
 	media-libs/jpeg
@@ -105,7 +105,7 @@ src_configure() {
 	use postgres && myconf="${myconf} -plugin-sql-psql" || myconf="${myconf} -no-sql-psql"
 	use sqlite && myconf="${myconf} -plugin-sql-sqlite" || myconf="${myconf} -no-sql-sqlite"
 
-    # video drivers
+	# video drivers
 	use directfb && myconf="${myconf} -plugin-gfx-directfb" || myconf="${myconf} -no-gfx-directfb"
 	use fbcon && myconf="${myconf} -plugin-gfx-linuxfb" || myconf="${myconf} -no-gfx-linuxfb"
 	use vnc && myconf="${myconf} -plugin-gfx-vnc" || myconf="${myconf} -no-gfx-qvfb"

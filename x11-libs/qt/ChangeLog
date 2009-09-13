@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Sep 2009; Dominik Kapusta <d@ayoy.net> metadata.xml:
+  Added qt3support flag description.
+
   27 Jun 2009; Ben de Groot <yngwin@gentoo.org> qt-4.5.2.ebuild:
   Do not enable useflags by default that are in desktop profile
 

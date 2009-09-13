@@ -3,6 +3,9 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
+		<flag name='exceptions'>
+			Build with support for exceptions
+		</flag>
 		<flag name='phonon'>
 			Enable phonon configuration dialog in qtconfig
 		</flag>

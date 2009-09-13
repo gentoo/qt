@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Sep 2009; Dominik Kapusta <d@ayoy.net> metadata.xml:
+  Added exceptions flag description.
+
   27 Jun 2009; Dror Levin <spatz@psybear.com> -qt-dbus-4.5.2.ebuild:
   Moved to tree.
 

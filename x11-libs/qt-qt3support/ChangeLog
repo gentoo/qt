@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Sep 2009; Dominik Kapusta <d@ayoy.net> metadata.xml:
+  Added exceptions flag description.
+
 *qt-qt3support-4.9999 (13 Sep 2009)
 *qt-qt3support-4.6.9999 (13 Sep 2009)
 *qt-qt3support-4.6.0_alpha_pre1-r2 (13 Sep 2009)

@@ -3,6 +3,7 @@
 <pkgmetadata>
 	<herd>qt</herd> 
 	<use>
+		<flag name='exceptions'>Build with support for exceptions</flag>
 		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
 			master but guaranteed by Nokia to compile</flag>
 	</use>
