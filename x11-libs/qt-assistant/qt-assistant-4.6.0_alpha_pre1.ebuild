@@ -18,21 +18,27 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PV}-tools.patch" )
+
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
 QT4_TARGET_DIRECTORIES="
 tools/assistant
 tools/pixeltool
 tools/qdoc3"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}"
-
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+tools/tools.pro
+tools/shared/fontpanel
+src/
+include/
+doc/"
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-glib -no-opengl -no-qt3support -no-svg"
+		-no-fontconfig -no-glib -no-multimedia -no-qt3support -no-svg"
 	qt4-build-edge_src_configure
 }
 
@@ -53,7 +59,7 @@ src_install() {
 	cd "${S}"
 	insinto "${QTDOCDIR}"
 	doins -r "${S}"/doc/qch || die "doins qch documentation failed"
-	dobin "${S}"/tools/qdoc3/qdoc3 || die "Installing qdoc3 failed"
+	dobin "${S}"/bin/qdoc3 || die "Installing qdoc3 failed"
 	#emake INSTALL_ROOT="${D}" install_qchdocs || die "emake install_qchdocs	failed"
 	# install correct assistant icon, bug 241208
 	dodir /usr/share/pixmaps/ || die "dodir failed"
