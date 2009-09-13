@@ -171,6 +171,13 @@ case "${MY_PV_EXTRA}" in
 esac
 
 qt4-build-edge_pkg_setup() {
+	ewarn         
+	ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
+	ewarn "[qting-edge]. Alternatively, contact	qt@gentoo.org."             
+	ewarn "Thank you for using qting-edge overlay."                         
+	ewarn                                                                   
+	ebeep 5
+
 	PATH="${S}/bin:${PATH}"
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
 
@@ -214,7 +221,7 @@ qt4-build-edge_src_unpack() {
 	setqtenv
 
 	local target= targets=
-	for target in configure LICENSE.{GPL2,GPL3} projects.pro \
+	for target in configure LICENSE.{GPL3,LGPL} projects.pro \
 			src/{qbase,qt_targets,qt_install}.pri \
 			bin config.tests mkspecs qmake \
 			${QT4_EXTRACT_DIRECTORIES}; do
