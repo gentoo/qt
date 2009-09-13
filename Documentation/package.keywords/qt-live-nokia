@@ -3,6 +3,7 @@
 ~x11-libs/qt-dbus-4.9999 **
 ~x11-libs/qt-demo-4.9999 **
 ~x11-libs/qt-gui-4.9999 **
+~x11-libs/qt-multimedia-4.9999 **
 ~x11-libs/qt-opengl-4.9999 **
 ~x11-libs/qt-phonon-4.9999 **
 ~x11-libs/qt-qt3support-4.9999 **
