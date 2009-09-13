@@ -6,7 +6,6 @@ EAPI="2"
 inherit qt4-build-edge
 
 DESCRIPTION="The assistant help module for the Qt toolkit."
-LICENSE="|| ( GPL-3 GPL-2 )"
 SLOT="4"
 KEYWORDS=""
 IUSE=""
