@@ -16,9 +16,11 @@ RDEPEND="${DEPEND}"
 QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 include/QtCore
+include/QtXml
 include/QtNetwork
 include/QtXmlPatterns
 src/network/
+src/xml/
 src/corelib/"
 
 QCONFIG_ADD="xmlpatterns"
