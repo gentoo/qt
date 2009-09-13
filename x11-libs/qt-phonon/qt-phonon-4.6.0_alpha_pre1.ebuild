@@ -30,7 +30,7 @@ QCONFIG_ADD="phonon"
 QCONFIG_DEFINE="QT_GSTREAMER"
 
 src_configure() {
-	myconf="${myconf} -phonon -no-opengl -no-svg
+	myconf="${myconf} -phonon -phonon-backend -no-opengl -no-svg
 		$(qt_use dbus qdbus)"
 
 	qt4-build-edge_src_configure

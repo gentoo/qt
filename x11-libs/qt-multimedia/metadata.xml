@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>qt</herd> 
+	<use>
+		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
+			master but guaranteed by Nokia to compile</flag>
+	</use>
+</pkgmetadata>

@@ -4,6 +4,7 @@
 	<herd>qt</herd>
 	<use>
 		<flag name='glib'>Enable <pkg>dev-libs/glib</pkg> eventloop support</flag>
+		<flag name='optimized-qmake'>Enable qmake optimization</flag>
 		<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name='stable-branch'>Use the stable git branch - it is slightly behind

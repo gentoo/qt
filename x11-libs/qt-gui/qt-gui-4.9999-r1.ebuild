@@ -22,26 +22,29 @@ RDEPEND="media-libs/fontconfig
 	x11-libs/libXfont
 	x11-libs/libSM
 	x11-libs/libXi
-	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=,qt-copy=]
-	~x11-libs/qt-script-${PV}[debug=,qt-copy=]
+	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=]
+	~x11-libs/qt-script-${PV}[debug=]
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,qt-copy=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
 	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
-	xinerama? ( x11-libs/libXinerama )"
+	xinerama? ( x11-libs/libXinerama )
+	!=x11-libs/qt-qt3support-${PV}
+	"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,qt-copy=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/gui
 src/scripttools/
 tools/designer
 tools/linguist
+tools/qtconfig
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
@@ -102,7 +105,7 @@ src_configure() {
 
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
-		-xrender -xrandr -xkb -xshape -sm  -no-svg"
+		-xrender -xrandr -xkb -xshape -sm -no-svg"
 
 	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.

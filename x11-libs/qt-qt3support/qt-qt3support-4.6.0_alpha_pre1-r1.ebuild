@@ -7,7 +7,7 @@ inherit qt4-build-edge
 
 DESCRIPTION="The Qt3 support module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility kde phonon"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support]
@@ -24,7 +24,6 @@ QT4_TARGET_DIRECTORIES="
 src/qt3support
 src/tools/uic3
 tools/designer/src/plugins/widgets
-tools/qtconfig
 tools/porting"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 src/

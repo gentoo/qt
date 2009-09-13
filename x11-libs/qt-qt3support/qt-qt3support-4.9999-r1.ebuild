@@ -24,7 +24,6 @@ QT4_TARGET_DIRECTORIES="
 src/qt3support
 src/tools/uic3
 tools/designer/src/plugins/widgets
-tools/qtconfig
 tools/porting"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 src/

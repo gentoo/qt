@@ -7,12 +7,12 @@ inherit qt4-build-edge
 
 DESCRIPTION="The Qt3 support module for the Qt toolkit"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="+accessibility kde phonon"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support]
-	~x11-libs/qt-gui-${PV}[accessibility=,debug=,qt3support]
-	~x11-libs/qt-sql-${PV}[debug=,qt3support]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,qt-copy=]
+	~x11-libs/qt-gui-${PV}[accessibility=,debug=,qt3support,qt-copy=]
+	~x11-libs/qt-sql-${PV}[debug=,qt3support,qt-copy=]
 	phonon? (
 		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[debug=]
 			media-sound/phonon[gstreamer] ) )
@@ -24,7 +24,6 @@ QT4_TARGET_DIRECTORIES="
 src/qt3support
 src/tools/uic3
 tools/designer/src/plugins/widgets
-tools/qtconfig
 tools/porting"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 src/

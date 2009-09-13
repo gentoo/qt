@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib iconv qt3support ssl"
+IUSE="doc +glib iconv optimized-qmake qt3support ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
@@ -44,6 +44,7 @@ src/3rdparty/harfbuzz/
 src/3rdparty/md4/
 src/3rdparty/md5/
 src/3rdparty/sha1/
+src/3rdparty/easing/
 src/script/
 translations/"
 
@@ -124,6 +125,7 @@ src_configure() {
 	myconf="${myconf}
 		$(qt_use glib)
 		$(qt_use iconv)
+		$(qt_use optimized-qmake)
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
@@ -132,7 +134,8 @@ src_configure() {
 		-no-nas-sound -no-dbus -no-cups -no-gif -no-libpng
 		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
 		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
-		-no-svg -no-gtkstyle"
+		-no-svg -no-gtkstyle -no-phonon-backend -no-script -no-scripttools
+		-no-cups -no-xsync -no-xinput -no-multimedia"
 
 	if ! use doc; then
 		myconf="${myconf} -nomake docs"
@@ -156,10 +159,6 @@ src_install() {
 
 	if use doc; then
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
-	fi
-
-	if use qt-copy;then
-		emake INSTALL_ROOT="${D}" install_translations || die "emake install translations failed"
 	fi
 
 	setqtenv
