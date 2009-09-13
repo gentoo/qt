@@ -44,7 +44,6 @@ src/gui
 src/scripttools/
 tools/designer
 tools/linguist
-tools/qtconfig
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
@@ -56,6 +55,11 @@ src/
 tools/shared/"
 
 pkg_setup() {
+	if ! use qt3support; then
+		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
+		ebeep 5
+	fi
+
 	if use raster; then
 		ewarn "WARNING: You have enabled raster backend rendering engine."
 		ewarn "This is a new feature and may lead to composite problems"

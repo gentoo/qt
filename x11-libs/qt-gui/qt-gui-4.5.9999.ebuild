@@ -31,7 +31,6 @@ RDEPEND="media-libs/fontconfig
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
 	xinerama? ( x11-libs/libXinerama )
-	!=x11-libs/qt-qt3support-${PV}
 	"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
@@ -44,7 +43,6 @@ src/gui
 src/scripttools/
 tools/designer
 tools/linguist
-tools/qtconfig
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
@@ -56,6 +54,11 @@ src/
 tools/shared/"
 
 pkg_setup() {
+	if ! use qt3support; then
+		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
+		ebeep 5
+	fi
+
 	if use raster; then
 		ewarn "WARNING: You have enabled raster backend rendering engine."
 		ewarn "This is a new feature and may lead to composite problems"

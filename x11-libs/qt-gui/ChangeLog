@@ -2,6 +2,17 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-gui-4.9999 (13 Sep 2009)
+*qt-gui-4.6.9999 (13 Sep 2009)
+*qt-gui-4.6.0_alpha_pre1-r2 (13 Sep 2009)
+
+  13 Sep 2009; Alex Alexander <wired@gentoo.org> -qt-gui-4.5.2-r3.ebuild,
+  +qt-gui-4.5.9999.ebuild, -qt-gui-4.5.9999-r1.ebuild,
+  -qt-gui-4.6.0_alpha_pre1-r1.ebuild, +qt-gui-4.6.0_alpha_pre1-r2.ebuild,
+  +qt-gui-4.6.9999.ebuild, -qt-gui-4.6.9999-r1.ebuild,
+  +qt-gui-4.9999.ebuild, -qt-gui-4.9999-r1.ebuild:
+  moved qtconfig back to qt3support, added ewarn
+
 *qt-gui-4.5.2-r3 (13 Sep 2009)
 
   13 Sep 2009; Alex Alexander <wired@gentoo.org> +qt-gui-4.5.2-r3.ebuild:

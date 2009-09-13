@@ -18,12 +18,15 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support]
 			media-sound/phonon[gstreamer] ) )
 		kde? ( media-sound/phonon[gstreamer] ) )"
 
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!=x11-libs/qt-gui-${PV}-r1
+"
 
 QT4_TARGET_DIRECTORIES="
 src/qt3support
 src/tools/uic3
 tools/designer/src/plugins/widgets
+tools/qtconfig
 tools/porting"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 src/

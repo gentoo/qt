@@ -1,13 +1,13 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-gui/qt-gui-4.5.2-r2.ebuild,v 1.1 2009/07/23 20:44:16 yngwin Exp $
+# $Header: $
 
 EAPI="2"
-inherit eutils qt4-build
+inherit eutils qt4-build-edge
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~x86"
 IUSE="+accessibility cups dbus +glib gtk mng nas nis raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
@@ -44,7 +44,6 @@ src/gui
 src/scripttools/
 tools/designer
 tools/linguist
-tools/qtconfig
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
@@ -56,6 +55,11 @@ src/
 tools/shared/"
 
 pkg_setup() {
+	if ! use qt3support; then
+		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
+		ebeep 5
+	fi
+
 	if use raster; then
 		ewarn "WARNING: You have enabled raster backend rendering engine."
 		ewarn "This is a new feature and may lead to composite problems"
@@ -65,7 +69,7 @@ pkg_setup() {
 		ewarn "filling a bug on gentoo bugzilla."
 		ebeep 5
 	fi
-	qt4-build_pkg_setup
+	qt4-build-edge_pkg_setup
 }
 
 src_unpack() {
@@ -75,21 +79,14 @@ src_unpack() {
 	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build_src_unpack
+	qt4-build-edge_src_unpack
 }
 
 src_prepare() {
-	qt4-build_src_prepare
+	qt4-build-edge_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
-
-	# fixing hardcoded fonts, bug #252312
-	EPATCH_OPTS="--ignore-whitespace"
-	epatch "${FILESDIR}"/hardcoded_fonts.patch
-
-	# fix bug with messed up timestamps, bug 276527 (upstream patch)
-	epatch "${FILESDIR}"/${P}-x11-timestamp.patch
 }
 
 src_configure() {
@@ -112,13 +109,13 @@ src_configure() {
 
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
-		-xrender -xrandr -xkb -xshape -sm  -no-svg"
+		-xrender -xrandr -xkb -xshape -sm -no-svg"
 
 	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
 	myconf="${myconf} -no-webkit -no-phonon -no-dbus -no-opengl"
 
-	qt4-build_src_configure
+	qt4-build-edge_src_configure
 }
 
 src_install() {
@@ -136,7 +133,7 @@ src_install() {
 			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
 			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
-	qt4-build_src_install
+	qt4-build-edge_src_install
 
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtGui}/{qmacstyle_mac.h,qwindowdefs_win.h} \
@@ -167,14 +164,4 @@ src_install() {
 			/usr/share/pixmaps/designer.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "designer make_desktop_entry failed"
-}
-
-pkg_postinst() {
-	if use gtk ; then
-		ewarn 'If you get the following error when setting Qt to use the GTK style:'
-		ewarn '    "QGtkStyle cannot be used together with the GTK_Qt engine."'
-		ewarn 'make sure you have GTK configured to NOT use the GTK_Qt engine and'
-		ewarn 'export GTK2_RC_FILES="$HOME/.gtkrc-2.0" in your environment.'
-	fi
-	qt4-build_pkg_postinst
 }
