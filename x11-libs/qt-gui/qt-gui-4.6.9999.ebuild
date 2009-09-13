@@ -31,7 +31,6 @@ RDEPEND="media-libs/fontconfig
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
 	xinerama? ( x11-libs/libXinerama )
-	!=x11-libs/qt-qt3support-${PV}
 	"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
