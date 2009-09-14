@@ -17,7 +17,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-4.6-tools.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-4.6-tools.patch"
+	"${FILESDIR}/${PN}-4.6-qdocconf.patch"
+)
 
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
@@ -26,8 +29,9 @@ tools/assistant
 tools/pixeltool
 tools/qdoc3"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-tools/tools.pro
-tools/shared/fontpanel
+tools/
+demos/
+examples/
 src/
 include/
 doc/"
