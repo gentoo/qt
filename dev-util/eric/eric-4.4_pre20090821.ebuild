@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-NEED_PYTHON="2.4"
+NEED_PYTHON="2.6"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit eutils python
@@ -34,8 +34,7 @@ DEPEND=">=dev-python/PyQt4-4.4[assistant,svg,webkit,X]
 	>=dev-python/qscintilla-python-2.2[qt4]"
 RDEPEND="${DEPEND}
 	>=dev-python/chardet-1.0.1
-	>=dev-python/pygments-1.0
-	>=dev-python/simplejson-2.0.9"
+	>=dev-python/pygments-1.0"
 PDEPEND="spell? ( dev-python/pyenchant )"
 
 S="${WORKDIR}"/${MY_P}
