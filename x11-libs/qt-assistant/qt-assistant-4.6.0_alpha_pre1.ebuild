@@ -17,7 +17,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PV}-tools.patch" )
+PATCHES=( "${FILESDIR}/${PN}-4.6-tools.patch" )
 
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
