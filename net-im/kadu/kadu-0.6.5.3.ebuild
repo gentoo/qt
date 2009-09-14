@@ -15,7 +15,8 @@ KEYWORDS="~amd64 ~ppc ~x86"
 SLOT="0"
 IUSE="alsa ao +avatar config_wizard oss sms speech spell +ssl voice"
 
-DEPEND=">=app-crypt/qca-2.0.0-r2
+DEPEND="
+	>=app-crypt/qca-2.0.0-r2
 	>=media-libs/libsndfile-1.0
 	>=net-libs/libgadu-1.8[threads]
 	>=x11-libs/qt-dbus-4.4:4
@@ -23,11 +24,12 @@ DEPEND=">=app-crypt/qca-2.0.0-r2
 	>=x11-libs/qt-webkit-4.4:4
 	alsa? ( media-libs/alsa-lib )
 	ao? ( media-libs/libao )
-	spell? ( app-text/aspell )"
-
+	spell? ( app-text/aspell )
+"
 RDEPEND="${DEPEND}
 	speech? ( app-accessibility/powiedz )
-	ssl? ( app-crypt/qca-ossl:2 )"
+	ssl? ( app-crypt/qca-ossl:2 )
+"
 
 S="${WORKDIR}/${PN}"
 
