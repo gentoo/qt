@@ -13,7 +13,7 @@ SRC_URI="http://www.kadu.net/download/stable/${P}.tar.bz2"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~x86"
 SLOT="0"
-IUSE="alsa ao +avatar config_wizard oss sms speech spell +ssl voice"
+IUSE="alsa ao kde oss phonon speech spell +ssl"
 
 DEPEND="
 	>=app-crypt/qca-2.0.0-r2
@@ -24,6 +24,15 @@ DEPEND="
 	>=x11-libs/qt-webkit-4.4:4
 	alsa? ( media-libs/alsa-lib )
 	ao? ( media-libs/libao )
+	phonon? (
+		!kde? (
+			|| (
+				>=x11-libs/qt-phonon-4.4:4
+				media-sound/phonon
+			)
+		)
+		kde? ( media-sound/phonon )
+	)
 	spell? ( app-text/aspell )
 "
 RDEPEND="${DEPEND}
@@ -35,6 +44,7 @@ S="${WORKDIR}/${PN}"
 
 PATCHES=(
 	"${FILESDIR}/libgsm-ugly-code.patch"
+	"${FILESDIR}/${P}-linkage.patch"
 )
 
 # set given .config variable to =m or =y
@@ -60,7 +70,9 @@ src_prepare() {
 	config_enable module_autoresponder m
 	config_enable module_autostatus m
 	config_enable module_cenzor m
+	config_enable module_config_wizard m
 	config_enable module_dcc m
+	config_enable module_default_sms m
 	config_enable module_desktop_docking m
 	config_enable module_docking m
 	config_enable module_echo m
@@ -69,24 +81,30 @@ src_prepare() {
 	config_enable module_filedesc m
 	config_enable module_filtering m
 	config_enable module_firewall m
+	config_enable module_gg_avatars m
 	config_enable module_hints m
 	config_enable module_history m
+	config_enable module_idle m
 	config_enable module_last_seen m
 	config_enable module_notify m
 	config_enable module_parser_extender m
 	config_enable module_pcspeaker m
 	config_enable module_qt4_docking m
-	config_enable module_qt4_sound m
 	config_enable module_screenshot m
+	config_enable module_sms m
 	config_enable module_sound m
+	config_enable module_voice m
+	config_enable module_waather m
 	config_enable module_window_notify m
 	config_enable module_word_fix m
+
+	# Autodownloaded modules
 	config_enable module_nextinfo m
-	config_enable module_idle m
 	config_enable module_tabs m
 	config_enable module_plus_pl_sms m
 
-	# Enable support for all media players since then don't require any build time dependencies
+	# Media players - no build time deps so build them all
+	# bmpx_mediaplayer
 	config_enable module_mediaplayer m
 	config_enable module_amarok1_mediaplayer m
 	config_enable module_amarok2_mediaplayer m
@@ -102,22 +120,14 @@ src_prepare() {
 	use alsa && config_enable module_alsa_sound m
 	use ao && config_enable module_ao_sound m
 	use oss && config_enable module_dsp_sound m
+	use phonon && config_enable module_phonon_sound m
 
 	# Misc stuff
-	use avatar && config_enable module_gg_avatars m
-	use config_wizard && config_enable module_config_wizard m
-	# Disable kde notify - doesn't work
-	# use kde && config_enable module_kde_notify n
+	# Broken QtDBus link import, disabling
+	# use kde && config_enable module_kde_notify m
 	use speech && config_enable module_speech m
 	use spell && config_enable module_spellchecker m
 	use ssl && config_enable module_encryption m
-	use voice && config_enable module_voice m
-
-	# SMS related modules
-	if use sms; then
-		config_enable module_default_sms m
-		config_enable module_sms m
-	fi
 
 	# Icons
 	config_enable icons_default y
