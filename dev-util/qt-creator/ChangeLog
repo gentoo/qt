@@ -4,6 +4,13 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+*qt-creator-1.2.90 (16 Sep 2009)
+
+  16 Sep 2009; Dominik Kapusta <ayoy@gentoo.org> +qt-creator-1.2.90.ebuild,
+  qt-creator-9999.ebuild, files/docs_gen.patch:
+  Added 1.2.90 Technology Snapshot: new cvs plugin and French translation.
+  Live ebuild dependent on Qt 4.6.
+
   01 Sep 2009; Dror Levin <spatz@psybear.com> files/docs_gen.patch:
   Update patch for docs generation following upstream code changes.
 

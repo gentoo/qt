@@ -4,34 +4,34 @@
 
 EAPI="2"
 
-inherit qt4-edge git multilib
+inherit qt4-edge multilib
 MY_PN="${PN/-/}"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
+SRC_URI="ftp://ftp.qt.nokia.com/${MY_PN}/${P}-src.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE="bineditor bookmarks +cmake cvs debug +debugger +designer doc examples fakevim git kde perforce qtscript subversion"
 
-DEPEND=">=x11-libs/qt-assistant-4.6.0_alpha_pre1:4
-	>=x11-libs/qt-gui-4.6.0_alpha_pre1:4[dbus,qt3support]"
+DEPEND=">=x11-libs/qt-assistant-4.5.0:4
+	>=x11-libs/qt-gui-4.5.0:4[dbus,qt3support]"
 
 RDEPEND="${DEPEND}
-	>=x11-libs/qt-sql-4.6.0_alpha_pre1:4
-	>=x11-libs/qt-svg-4.6.0_alpha_pre1:4
-	>=x11-libs/qt-test-4.6.0_alpha_pre1:4
-	>=x11-libs/qt-webkit-4.6.0_alpha_pre1:4
-	!kde? ( || ( >=x11-libs/qt-phonon-4.6.0_alpha_pre1:4 media-sound/phonon ) )
+	>=x11-libs/qt-sql-4.5.0:4
+	>=x11-libs/qt-svg-4.5.0:4
+	>=x11-libs/qt-test-4.5.0:4
+	>=x11-libs/qt-webkit-4.5.0:4
+	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0:4 media-sound/phonon ) )
 	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-util/cvs )
 	debugger? ( sys-devel/gdb )
-	examples? ( >=x11-libs/qt-demo-4.6.0_alpha_pre1:4 )
+	examples? ( >=x11-libs/qt-demo-4.5.0:4 )
 	git? ( dev-util/git )
-	qtscript? ( >=x11-libs/qt-script-4.6.0_alpha_pre1:4 )
+	qtscript? ( >=x11-libs/qt-script-4.5.0:4 )
 	subversion? ( dev-util/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git perforce qtscript subversion"
@@ -40,7 +40,7 @@ PATCHES=(
 	"${FILESDIR}/docs_gen.patch"
 )
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${P}-src"
 
 LANGS="de es fr it ja ru"
 
