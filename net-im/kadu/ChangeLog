@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  16 Sep 2009; Dominik Kapusta <ayoy@gentoo.org> -kadu-0.6.5.3-r1.ebuild,
+  -files/kadu-0.6.5.3-linkage.patch, metadata.xml:
+  on tree
+
 *kadu-0.6.5.3-r1 (15 Sep 2009)
 
   15 Sep 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
