@@ -19,7 +19,7 @@ KEYWORDS=""
 IUSE="debug doc"
 
 DEPEND="x11-libs/qt-gui:4[debug?]
-	dev-libs/boost"
+	>=dev-libs/boost-1.37"
 RDEPEND="${DEPEND}
 	x11-libs/qt-svg:4[debug?]"
 
