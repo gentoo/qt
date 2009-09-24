@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4
+inherit qt4 eutils
 
 DESCRIPTION="Feature-rich dictionary lookup program"
 HOMEPAGE="http://goldendict.berlios.de/"
@@ -25,6 +25,7 @@ RDEPEND=">=app-text/hunspell-1.2
 DEPEND="${RDEPEND}"
 
 src_prepare() {
+	epatch "${FILESDIR}/${P}-gcc4.4.patch"
 	# duplicates stuff into a directory we don't use
 	sed -i \
 		-e s/INSTALLS\ \+=\ desktops2//g \

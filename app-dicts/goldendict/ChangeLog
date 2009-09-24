@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 Sep 2009; Dominik Kapusta <ayoy@gentoo.org> goldendict-0.9.0.ebuild,
+  +files/goldendict-0.9.0-gcc4.4.patch:
+  Added a patch to fix compilation with gcc-4.4 - bug #264631
+
   10 Jul 2009; Davide Pesavento <davidepesa@gmail.com>
   goldendict-0.9.0.ebuild:
   Fix typo in pkg_postinst.
