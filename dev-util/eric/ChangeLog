@@ -2,6 +2,14 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eric-4.4_pre20090913 (25 Sep 2009)
+
+  25 Sep 2009; Davide Pesavento <davidepesa@gmail.com>
+  -eric-4.4_pre20090821.ebuild, +eric-4.4_pre20090913.ebuild,
+  -files/eric-snapshot-20090627-no-interactive.patch,
+  +files/eric-20090913-no-interactive.patch:
+  New 4.4 snapshot with updated patch.
+
   14 Sep 2009; Davide Pesavento <davidepesa@gmail.com>
   eric-4.4_pre20090821.ebuild:
   Raise python dep to >= 2.6, so we can use the json module instead of the
