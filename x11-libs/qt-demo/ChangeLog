@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Sep 2009; Dominik Kapusta <ayoy@gentoo.org>
+  qt-demo-4.6.0_alpha_pre1.ebuild, qt-demo-4.6.9999.ebuild,
+  +files/qt-demo-4.6-plugandpaint.patch, qt-demo-4.9999.ebuild:
+  Fixed 4.6.* compilation error.
+
   13 Sep 2009; Dominik Kapusta <d@ayoy.net> metadata.xml:
   Added exceptions flag description.
 

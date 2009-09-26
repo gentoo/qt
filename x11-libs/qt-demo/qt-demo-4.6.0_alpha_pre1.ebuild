@@ -33,6 +33,10 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include/
 	tools/"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-4.6-plugandpaint.patch"
+)
+
 src_install() {
 	insinto ${QTDOCDIR}/src
 	doins -r "${S}"/doc/src/images || die "Installing images failed."
