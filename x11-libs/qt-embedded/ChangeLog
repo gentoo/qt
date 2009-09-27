@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  27 Sep 2009; Dominik Kapusta <ayoy@gentoo.org>
+  -files/qt-embedded-3.3.8-castfix.patch, -qt-embedded-3.3.8b.ebuild:
+  Fixed 3.3.8b on tree
+
   13 Sep 2009; Dominik Kapusta <d@ayoy.net> qt-embedded-4.4.3.ebuild,
   metadata.xml:
   Removed unused stable-branch flag description
