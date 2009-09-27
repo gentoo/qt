@@ -4,8 +4,8 @@
 
 EAPI="2"
 
-LANGS="pt_BR"
-LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP nb_NO pl_PL"
+LANGS="nb_NO pt_BR"
+LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
 
 inherit qt4-edge git
 
@@ -18,7 +18,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND="x11-libs/qt-gui:4
+DEPEND=">=x11-libs/qt-gui-4.5:4
+	>=x11-libs/qt-dbus-4.5:4
 	>=dev-libs/qoauth-1.0"
 RDEPEND="${DEPEND}"
 

@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  27 Sep 2009; Dominik Kapusta <ayoy@gentoo.org> qtwitter-9999.ebuild:
+  Updated DEPENDS to require Qt 4.5 at least. Added new qt-dbus dependency.
+
   13 Sep 2009; Dominik Kapusta <d@ayoy.net> -qtwitter-0.9.0.ebuild,
   qtwitter-9999.ebuild, metadata.xml:
   0.9.0 on tree. Removed oauth from USE for the live ebuild.
