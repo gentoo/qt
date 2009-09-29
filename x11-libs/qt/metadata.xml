@@ -3,10 +3,6 @@
 <pkgmetadata>
 <herd>qt</herd>
 <use>
-	<flag name='immqt-bc'>Enable binary compatible version of immodule for
-		Qt</flag>
-	<flag name='immqt'>Enable binary incompatible version of immodule for
-		Qt</flag>
 	<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note
 		that this does not mean you can compile pure Qt3 programs with Qt4.
 	</flag>

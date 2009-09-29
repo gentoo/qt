@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-4.6.0_alpha_pre1 (29 Sep 2009)
+
+  29 Sep 2009; Dominik Kapusta <ayoy@gentoo.org> -qt-4.5.2.ebuild,
+  +qt-4.6.0_alpha_pre1.ebuild, metadata.xml:
+  Version bump, 4.5.2 on tree
+
   13 Sep 2009; Dominik Kapusta <d@ayoy.net> metadata.xml:
   Added qt3support flag description.
 
