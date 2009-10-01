@@ -1,22 +1,22 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/sip/sip-4.8.2.ebuild,v 1.2 2009/08/01 23:31:41 arfrever Exp $
+# $Header: $
 
 EAPI="2"
 NEED_PYTHON="2.3"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit eutils python toolchain-funcs
+inherit python toolchain-funcs
 
 MY_P=${P/_pre/-snapshot-}
 
 DESCRIPTION="A tool for generating bindings for C++ classes so that they can be used by Python"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}${PV%%.*}/${MY_P}.tar.gz"
 
-LICENSE="sip"
+LICENSE="|| ( GPL-2 GPL-3 sip )"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="debug doc"
 
 S="${WORKDIR}/${MY_P}"
@@ -29,7 +29,7 @@ src_prepare() {
 }
 
 src_configure() {
-	configure_package() {
+	configuration() {
 		local myconf="$(PYTHON) configure.py
 				--bindir=/usr/bin
 				--destdir=$(python_get_sitedir)
@@ -44,7 +44,7 @@ src_configure() {
 		echo ${myconf}
 		eval ${myconf}
 	}
-	python_execute_function -s configure_package
+	python_execute_function -s configuration
 }
 
 src_compile() {

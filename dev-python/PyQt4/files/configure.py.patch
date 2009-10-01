@@ -1,17 +1,17 @@
-diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4.5.3-snapshot-20090724/configure.py
---- PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py	2009-07-30 22:36:10.000000000 +0200
-+++ PyQt-x11-gpl-4.5.3-snapshot-20090724/configure.py	2009-07-30 22:37:50.000000000 +0200
-@@ -337,7 +337,8 @@
+diff -Naur PyQt-x11-gpl-4.6~orig/configure.py PyQt-x11-gpl-4.6/configure.py
+--- PyQt-x11-gpl-4.6~orig/configure.py	2009-10-01 15:47:37.000000000 +0200
++++ PyQt-x11-gpl-4.6/configure.py	2009-10-01 16:00:54.000000000 +0200
+@@ -341,7 +341,8 @@
          check_module("QtWebKit", "qwebpage.h", "new QWebPage()")
          check_module("QtXml", "qdom.h", "new QDomDocument()")
          check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
 -        check_module("phonon", "phonon", "new Phonon::VideoWidget()")
 +        check_module("phonon", "videowidget.h", "new Phonon::VideoWidget()",
-+			extra_include_dirs=["/usr/include/phonon"])
++                extra_include_dirs=["/usr/include/phonon"])
          check_module("QtAssistant", "qassistantclient.h",
                  "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
                  extra_libs=ass_libs)
-@@ -446,7 +447,7 @@
+@@ -450,7 +451,7 @@
              generate_code("QtXmlPatterns")
  
          if "phonon" in pyqt_modules:
@@ -20,19 +20,19 @@ diff -Naur PyQt-x11-gpl-4.5.3-snapshot-20090724~orig/configure.py PyQt-x11-gpl-4
  
          if "QtAssistant" in pyqt_modules:
              generate_code("QtAssistant")
-@@ -756,6 +757,7 @@
+@@ -758,6 +759,7 @@
                  install_dir=pydbusmoddir,
                  qt=["QtCore"],
                  debug=opts.debug,
 +                strip=0,
-                 universal=sipcfg.universal
+                 universal=sipcfg.universal,
+                 arch=sipcfg.arch
              )
- 
-@@ -1438,6 +1440,7 @@
+@@ -1465,6 +1467,7 @@
          warnings=1,
          static=opts.static,
          debug=opts.debug,
 +        strip=0,
-         universal=sipcfg.universal
+         universal=sipcfg.universal,
+         arch=sipcfg.arch
      )
- 

@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*PyQt4-4.6 (01 Oct 2009)
+
+  01 Oct 2009; Davide Pesavento <davidepesa@gmail.com>
+  -PyQt4-4.6_pre20090811.ebuild, +PyQt4-4.6.ebuild,
+  files/configure.py.patch, metadata.xml:
+  Version bump.
+
   15 Aug 2009; Davide Pesavento <davidepesa@gmail.com>
   PyQt4-4.6_pre20090811.ebuild:
   Enable QtScriptTools bindings (bug #279945).

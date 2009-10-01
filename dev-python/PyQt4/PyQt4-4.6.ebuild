@@ -1,28 +1,25 @@
 # Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.5.4-r1.ebuild,v 1.1 2009/08/05 22:27:25 hwoarang Exp $
+# $Header: $
 
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit python qt4 toolchain-funcs
 
-MY_PN="PyQt-x11-gpl"
-MY_PV="${PV/_pre/-snapshot-}"
-MY_P="${MY_PN}-${MY_PV}"
-
+MY_P="PyQt-x11-gpl-${PV/_pre/-snapshot-}"
 QTVER="4.5.1"
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples kde opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.8.2
+DEPEND=">=dev-python/sip-4.9
 	>=x11-libs/qt-core-${QTVER}:4
 	>=x11-libs/qt-script-${QTVER}:4
 	>=x11-libs/qt-test-${QTVER}:4
@@ -137,7 +134,7 @@ src_install() {
 	}
 	python_execute_function -s installation
 
-	dodoc ChangeLog doc/pyqt4ref.txt THANKS || die
+	dodoc ChangeLog doc/pyqt4ref.txt NEWS THANKS || die
 
 	if use doc; then
 		dohtml -r doc/* || die
