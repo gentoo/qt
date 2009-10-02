@@ -122,15 +122,18 @@ esac
 case "${PV}" in
 	4.6.?_*)
 		MY_P=qt-everywhere-${SRCTYPE}-${MY_PV}
-		SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
 		;;
 	*)
 		MY_P=qt-x11-${SRCTYPE}-${MY_PV}
-		SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
 		;;
 esac
 
-S="${WORKDIR}/${MY_P}"
+SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
+if version_is_at_least 4.5.3 ${PV} ; then
+	SRC_URI="${SRC_URI/bz2/gz}"
+fi
+
+s="${WORKDIR}/${MY_P}"
 
 if version_is_at_least 4.5 ${PV} ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
@@ -220,24 +223,27 @@ qt4-build-edge_pkg_setup() {
 qt4-build-edge_src_unpack() {
 	setqtenv
 
-	local target= targets=
+	local target= targets= tar_pkg= tar_args=
 	for target in configure LICENSE.{GPL3,LGPL} projects.pro \
 			src/{qbase,qt_targets,qt_install}.pri \
 			bin config.tests mkspecs qmake \
 			${QT4_EXTRACT_DIRECTORIES}; do
 		targets="${targets} ${MY_P}/${target}"
 	done
+
 	case "${MY_PV_EXTRA}" in
 		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			git_src_unpack
 			;;
-		4.6.?_*)
-			echo tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
-			tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
-			;;
 		*)
-			echo tar xjpf "${DISTDIR}"/${MY_P}.tar.bz2 ${targets}
-			tar xjpf "${DISTDIR}"/${MY_P}.tar.bz2 ${targets}
+			tar_pkg=${MY_P}.tar.bz2
+			tar_args="xjpf"
+			if version_is_at_least 4.5.3 ${PV} ; then
+				tar_pkg=${tar_pkg/bz2/gz}
+				tar_args="xzpf"
+			fi
+			echo tar ${tar_args} "${DISTDIR}"/${tar_pkg} ${targets}
+			tar ${tar_args} "${DISTDIR}"/${tar_pkg} ${targets}
 			;;
 	esac
 
