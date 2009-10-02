@@ -27,8 +27,6 @@ QCONFIG_DEFINE="QT_WEBKIT"
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
 	qt4-build_src_prepare
-	# Security patch from upstream, bug 281821
-	epatch "${FILESDIR}"/webkit-CVE-2009-1725.patch
 }
 
 src_configure() {

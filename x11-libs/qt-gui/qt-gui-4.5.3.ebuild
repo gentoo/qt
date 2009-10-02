@@ -84,9 +84,6 @@ src_prepare() {
 	# fixing hardcoded fonts, bug #252312
 	EPATCH_OPTS="--ignore-whitespace"
 	epatch "${FILESDIR}"/hardcoded_fonts.patch
-
-	# fix bug with messed up timestamps, bug 276527 (upstream patch)
-	epatch "${FILESDIR}"/${P}-x11-timestamp.patch
 }
 
 src_configure() {

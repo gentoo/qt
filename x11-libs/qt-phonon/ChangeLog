@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Oct 2009; Dominik Kapusta <ayoy@gentoo.org> qt-phonon-4.5.3.ebuild:
+  Includes' install directory fixed upstream
+
 *qt-phonon-4.5.3 (02 Oct 2009)
 
   02 Oct 2009; Alex Alexander <wired@gentoo.org> +qt-phonon-4.5.3.ebuild:
