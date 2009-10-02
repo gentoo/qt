@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qscintilla-2.4.1_pre20090819 (02 Oct 2009)
+
+  02 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qscintilla-2.4.1_pre20090809.ebuild,
+  +qscintilla-2.4.1_pre20090819.ebuild:
+  New snapshot, remove old
+
   12 Aug 2009; Markos Chandras <hwoarang@gentoo.org>
   +files/qscintilla-2.4-designer.patch:
   Add missing patch
