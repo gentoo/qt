@@ -7,7 +7,7 @@ inherit eutils qt4-build-edge
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="+accessibility cups dbus +glib gtk mng nas nis raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
@@ -31,7 +31,6 @@ RDEPEND="media-libs/fontconfig
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
 	xinerama? ( x11-libs/libXinerama )
-	!=x11-libs/qt-qt3support-${PV}
 	"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
@@ -43,16 +42,18 @@ QT4_TARGET_DIRECTORIES="
 src/gui
 src/scripttools/
 tools/designer
-tools/linguist
+tools/linguist/linguist
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
 src/plugins/inputmethods"
 
 QT4_EXTRACT_DIRECTORIES="
-include/
-src/
-tools/shared/"
+include
+src
+tools/linguist/phrasebooks
+tools/linguist/shared
+tools/shared"
 
 pkg_setup() {
 	if ! use qt3support; then

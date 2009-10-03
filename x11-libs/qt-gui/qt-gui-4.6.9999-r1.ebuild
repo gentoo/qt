@@ -40,18 +40,20 @@ PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/gui
-src/scripttools/
+src/scripttools
 tools/designer
-tools/linguist
+tools/linguist/linguist
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
 src/plugins/inputmethods"
 
 QT4_EXTRACT_DIRECTORIES="
-include/
-src/
-tools/shared/"
+include
+src
+tools/linguist/phrasebooks
+tools/linguist/shared
+tools/shared"
 
 pkg_setup() {
 	if ! use qt3support; then
