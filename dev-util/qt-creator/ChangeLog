@@ -4,6 +4,10 @@
 
  *qt-creator-1.0.0 (03 Mar 2009)
 
+  03 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
+  -qt-creator-1.2.90.ebuild:
+  On tree
+
 *qt-creator-1.2.90 (16 Sep 2009)
 
   16 Sep 2009; Dominik Kapusta <ayoy@gentoo.org> +qt-creator-1.2.90.ebuild,
