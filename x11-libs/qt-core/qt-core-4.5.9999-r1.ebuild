@@ -13,6 +13,7 @@ IUSE="doc +glib iconv qt3support ssl"
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
+	!<x11-libs/qt-gui-${PVR}
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
@@ -20,32 +21,36 @@ PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,qt-copy=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap
-src/tools/moc/
-src/tools/rcc/
-src/tools/uic/
-src/corelib/
-src/xml/
-src/network/
-src/plugins/codecs/"
+src/tools/moc
+src/tools/rcc
+src/tools/uic
+src/corelib
+src/xml
+src/network
+src/plugins/codecs
+tools/linguist/lconvert
+tools/linguist/lrelease
+tools/linguist/lupdate"
 
 # Most ebuilds include almost everything for testing
 # Will clear out unneeded directories after everything else works OK
 QT4_EXTRACT_DIRECTORIES="
-include/Qt/
-include/QtCore/
-include/QtNetwork/
-include/QtScript/
-include/QtXml/
+include/Qt
+include/QtCore
+include/QtNetwork
+include/QtScript
+include/QtXml
 src/plugins/plugins.pro
 src/plugins/qpluginbase.pri
 src/src.pro
-src/3rdparty/des/
-src/3rdparty/harfbuzz/
-src/3rdparty/md4/
-src/3rdparty/md5/
-src/3rdparty/sha1/
-src/script/
-translations/"
+src/3rdparty/des
+src/3rdparty/harfbuzz
+src/3rdparty/md4
+src/3rdparty/md5
+src/3rdparty/sha1
+src/script
+tools/linguist/shared
+translations"
 
 pkg_setup() {
 	qt4-build-edge_pkg_setup
@@ -152,7 +157,7 @@ src_compile() {
 }
 
 src_install() {
-	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed"
+	dobin "${S}"/bin/{qmake,moc,rcc,uic,lconvert,lrelease,lupdate} || die "dobin failed"
 
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
@@ -162,9 +167,9 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
-	if use qt-copy; then
-		emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
-	fi
+	"${S}"/bin/lrelease translations/*.ts || die "generating translations faied"
+	insinto ${QTTRANSDIR}
+	doins translations/*.qm || die "doins translations failed"
 
 	setqtenv
 	fix_library_files
