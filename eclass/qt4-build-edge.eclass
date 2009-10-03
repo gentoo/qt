@@ -72,12 +72,29 @@ RDEPEND="
 "
 
 case "${PV}" in
-	4.9999 | 4.6.9999)
+	4.9999)
 		IUSE="${IUSE} +stable-branch"
 		if use stable-branch; then
 			MY_PV_EXTRA="${PV}-stable"
 		else
 			MY_PV_EXTRA="${PV}"
+		fi
+		;;
+	4.6.9999)
+		IUSE="${IUSE} +stable-branch +qt-copy"
+		if use qt-copy; then
+			MY_PV_EXTRA="${PV}-qt-copy"
+			if ! use stable-branch; then
+				ewarn
+				ewarn "Please note that you have specified -stable-branch,"
+				ewarn "however +qt-copy uses the stable Qt branch."
+			fi
+		else
+			if use stable-branch; then
+				MY_PV_EXTRA="${PV}-stable"
+			else
+				MY_PV_EXTRA="${PV}"
+			fi
 		fi
 		;;
 	4.5.9999)
@@ -140,6 +157,13 @@ if version_is_at_least 4.5 ${PV} ; then
 fi
 
 case "${MY_PV_EXTRA}" in
+	4.6.9999-qt-copy)
+		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
+		EGIT_PROJECT="qt-${PV}"
+		EGIT_BRANCH="4.6-stable-patched"
+		EGIT_TREE="${EGIT_BRANCH}"
+		SRC_URI=
+		;;
 	4.5.9999-qt-copy)
 		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 		EGIT_PROJECT="qt-${PV}"
