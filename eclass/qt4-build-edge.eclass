@@ -140,10 +140,10 @@ if version_is_at_least 4.5 ${PV} ; then
 fi
 
 case "${MY_PV_EXTRA}" in
-	4.?.9999-qt-copy)
+	4.5.9999-qt-copy)
 		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="4.5.2-patched"
+		EGIT_BRANCH="4.5.3-patched"
 		EGIT_TREE="${EGIT_BRANCH}"
 		SRC_URI=
 		;;
