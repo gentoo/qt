@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-gui-4.5.3-r1 (02 Oct 2009)
+
+  02 Oct 2009; Dominik Kapusta <ayoy@gentoo.org> -qt-gui-4.5.3.ebuild,
+  +qt-gui-4.5.3-r1.ebuild:
+  Moved non-GUI linguist tools to qt-core
+
   02 Oct 2009; Dominik Kapusta <ayoy@gentoo.org>
   -files/qt-gui-4.5.2-x11-timestamp.patch, qt-gui-4.5.3.ebuild:
   Removed patch (applied upstream)

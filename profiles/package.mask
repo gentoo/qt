@@ -2,9 +2,25 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Alex Alexander <wired@gentoo.org> (02 Oct 2009)
+# Dominik Kapusta <ayoy@gentoo.org> (02 Oct 2009)
 # Qt 4.5.3
-# needs work
+#
+# Nokia stopped providing *.qm files with Qt.
+# install_translations target isn't generated because there are no *.qm files
+# at the configuration time (reading .pro file, to be specific).
+# I moved lconvert, lrelease and lupdate from qt-gui to qt-core, to be able to
+# use them to generate translations and install them manually.
+# It's maybe not the best idea ever, but other solutions are:
+# - moving translations to qt-gui (wtf?),
+# - moving translations to another package (wtf?),
+# - providing a separate package for linguist (Debian does so, maybe they have
+#   some point in it - if we do so, designer should follow I guess [1]), then
+#   translations can be provided by the linguist package.
+#
+# Feel free to revert my changes and propose something really good :)
+#
+# [1] this sounds a bit like heading towards the qt category in Portage ;-)
+#
 ~x11-libs/qt-4.5.3
 ~x11-libs/qt-assistant-4.5.3
 ~x11-libs/qt-core-4.5.3

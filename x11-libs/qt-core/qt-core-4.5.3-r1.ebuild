@@ -26,7 +26,10 @@ src/tools/uic/
 src/corelib/
 src/xml/
 src/network/
-src/plugins/codecs/"
+src/plugins/codecs/
+tools/linguist/lrelease
+tools/linguist/lupdate
+tools/linguist/lconvert"
 
 # Most ebuilds include almost everything for testing
 # Will clear out unneeded directories after everything else works OK
@@ -45,6 +48,7 @@ src/3rdparty/md4/
 src/3rdparty/md5/
 src/3rdparty/sha1/
 src/script/
+tools/linguist/shared
 translations/"
 
 PATCHES=(
@@ -156,7 +160,7 @@ src_compile() {
 }
 
 src_install() {
-	dobin "${S}"/bin/{qmake,moc,rcc,uic} || die "dobin failed"
+	dobin "${S}"/bin/{qmake,moc,rcc,uic,lconvert,lrelease,lupdate} || die "dobin failed"
 
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
@@ -166,8 +170,9 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
-	# TODO:
-	# emake INSTALL_ROOT="${D}" install_translations || die "emake install_translations failed"
+	"${S}"/bin/lrelease translations/*.ts || die "generating translations failed"
+	insinto ${QTTRANSDIR}
+	doins translations/*.qm || die "doins translations failed"
 
 	setqtenv
 	fix_library_files

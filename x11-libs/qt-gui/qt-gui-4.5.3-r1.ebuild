@@ -41,7 +41,7 @@ QT4_TARGET_DIRECTORIES="
 src/gui
 src/scripttools/
 tools/designer
-tools/linguist
+tools/linguist/linguist
 src/plugins/imageformats/gif
 src/plugins/imageformats/ico
 src/plugins/imageformats/jpeg
@@ -50,6 +50,8 @@ src/plugins/inputmethods"
 QT4_EXTRACT_DIRECTORIES="
 include/
 src/
+tools/linguist/shared
+tools/linguist/phrasebooks
 tools/shared/"
 
 pkg_setup() {
