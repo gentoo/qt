@@ -19,9 +19,12 @@ IUSE="doc sqlite"
 
 RDEPEND="sqlite? ( dev-db/sqlite:3 )
 	app-arch/bzip2
+	|| (
+		app-arch/lzma-utils
+		app-arch/xz-utils
+	)
 	dev-util/cvs"
 DEPEND="${RDEPEND}
-	app-arch/lzma-utils
 	doc? ( dev-python/docutils )"
 
 src_configure() {

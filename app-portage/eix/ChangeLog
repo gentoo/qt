@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Oct 2009; Maciej Mrozowski (reavertm) <reavertm@poczta.fm>
+  eix-9999.ebuild:
+  Moved lzma deps to RDEPEND and add alternative of xz-utils
+
   11 May 2009; Ben de Groot <yngwin@gentoo.org> eix-9999.ebuild:
   Add needed cvs dep
 
