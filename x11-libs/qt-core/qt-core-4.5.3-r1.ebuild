@@ -20,13 +20,13 @@ PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap
-src/tools/moc/
-src/tools/rcc/
-src/tools/uic/
-src/corelib/
-src/xml/
-src/network/
-src/plugins/codecs/
+src/tools/moc
+src/tools/rcc
+src/tools/uic
+src/corelib
+src/xml
+src/network
+src/plugins/codecs
 tools/linguist/lrelease
 tools/linguist/lupdate
 tools/linguist/lconvert"
@@ -34,22 +34,22 @@ tools/linguist/lconvert"
 # Most ebuilds include almost everything for testing
 # Will clear out unneeded directories after everything else works OK
 QT4_EXTRACT_DIRECTORIES="
-include/Qt/
-include/QtCore/
-include/QtNetwork/
-include/QtScript/
-include/QtXml/
+include/Qt
+include/QtCore
+include/QtNetwork
+include/QtScript
+include/QtXml
 src/plugins/plugins.pro
 src/plugins/qpluginbase.pri
 src/src.pro
-src/3rdparty/des/
-src/3rdparty/harfbuzz/
-src/3rdparty/md4/
-src/3rdparty/md5/
-src/3rdparty/sha1/
-src/script/
+src/3rdparty/des
+src/3rdparty/harfbuzz
+src/3rdparty/md4
+src/3rdparty/md5
+src/3rdparty/sha1
+src/script
 tools/linguist/shared
-translations/"
+translations"
 
 PATCHES=(
 	"${FILESDIR}/qt-4.5-nolibx11.diff"
@@ -170,7 +170,9 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
-	"${S}"/bin/lrelease translations/*.ts || die "generating translations failed"
+	# use freshly built libraries
+	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
+		|| die "generating translations failed"
 	insinto ${QTTRANSDIR}
 	doins translations/*.qm || die "doins translations failed"
 

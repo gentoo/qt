@@ -167,7 +167,9 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
 	fi
 
-	"${S}"/bin/lrelease translations/*.ts || die "generating translations faied"
+	# use freshly built libraries
+	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
+		|| die "generating translations faied"
 	insinto ${QTTRANSDIR}
 	doins translations/*.qm || die "doins translations failed"
 
