@@ -150,7 +150,7 @@ if version_is_at_least 4.5.3 ${PV} ; then
 	SRC_URI="${SRC_URI/bz2/gz}"
 fi
 
-s="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${MY_P}"
 
 if version_is_at_least 4.5 ${PV} ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
