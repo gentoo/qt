@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://github.com/brezerk/q4wine.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug icoutils winetriks embedded-fuseiso development"
+IUSE="debug icotools winetools embedded-fuseiso development"
 
 DEPEND="x11-libs/qt-gui:4[debug?]
 	x11-libs/qt-sql:4[debug?,sqlite]
@@ -32,8 +32,8 @@ S="${WORKDIR}/${PF}"
 
 src_configure() {
 	mycmakeargs="${mycmakeargs} \
-		$(cmake-utils_use_with icoutils ICOUTILS) \
-		$(cmake-utils_use_with winetriks WINETRIKS) \
+		$(cmake-utils_use_with icotools ICOUTILS) \
+		$(cmake-utils_use_with winetools WINETRIKS) \
 		$(cmake-utils_use_with embedded-fuseiso EMBEDDED_FUSEISO) \
 		$(cmake-utils_use_with development DEVELOP_STUFF)"
 

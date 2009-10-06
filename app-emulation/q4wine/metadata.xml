@@ -2,16 +2,16 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>qt</herd>
-<use>
-<flag name="icoutils"> Enable icotools support</flag>
-<flag name="winetriks"> Enable winetriks support</flag>
-<flag name="development"> Enable developer related stuff</flag>
-<flag name="embedded-fuseiso"> Enable q4wine-mount utility </flag>
-</use>
 <maintainer>
 <email>hwoarang@gentoo.org</email>
 <name>Markos Chandras</name>
 </maintainer>
+<use>
+<flag name="icotools"> Enable icotools support</flag>
+<flag name="winetools"> Enable winetools support</flag>
+<flag name="development"> Enable developer related stuff</flag>
+<flag name="embedded-fuseiso"> Enable q4wine-mount tools </flag>
+</use>
 <longdescription lang="en">
 </longdescription>
 </pkgmetadata>
