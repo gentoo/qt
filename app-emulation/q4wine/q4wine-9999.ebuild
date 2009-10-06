@@ -14,13 +14,13 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug icoutils winetriks embedded-fuseiso development"
 
-DEPEND="x11-libs/qt-gui:4
-	x11-libs/qt-sql:4[sqlite]
+DEPEND="x11-libs/qt-gui:4[debug?]
+	x11-libs/qt-sql:4[debug?,sqlite]
 	dev-util/cmake
 	embedded-fuseiso? ( dev-libs/libzip >=sys-fs/fuse-2.7.0 )"
 
-RDEPEND="x11-libs/qt-gui:4
-	x11-libs/qt-sql:4[sqlite]
+RDEPEND="x11-libs/qt-gui:4[debug?]
+	x11-libs/qt-sql:4[debug?,sqlite]
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
