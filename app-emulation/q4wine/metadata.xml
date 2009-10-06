@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>qt</herd>
+<use>
+<flag name="icoutils"> Enable icotools support</flag>
+<flag name="winetriks"> Enable winetriks support</flag>
+<flag name="development"> Enable developer related stuff</flag>
+<flag name="embedded-fuseiso"> Enable q4wine-mount utility </flag>
+</use>
+<maintainer>
+<email>hwoarang@gentoo.org</email>
+<name>Markos Chandras</name>
+</maintainer>
+<longdescription lang="en">
+</longdescription>
+</pkgmetadata>
+
