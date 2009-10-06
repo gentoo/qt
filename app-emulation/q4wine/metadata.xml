@@ -7,8 +7,8 @@
 <name>Markos Chandras</name>
 </maintainer>
 <use>
-<flag name="icotools"> Enable icotools support</flag>
-<flag name="winetools"> Enable winetools support</flag>
+<flag name="icoutils"> Enable icoutils support </flag>
+<flag name="winetriks"> Enable winetricks support </flag>
 <flag name="development"> Enable developer related stuff</flag>
 <flag name="embedded-fuseiso"> Enable q4wine-mount tools </flag>
 </use>

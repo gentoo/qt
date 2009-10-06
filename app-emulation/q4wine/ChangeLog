@@ -6,6 +6,10 @@
 
   06 Oct 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild,
   metadata.xml:
+  Fix use flags according to portage ebuild
+
+  06 Oct 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild,
+  metadata.xml:
   Syncing use flags with portage ebuild
 
   06 Oct 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild:
