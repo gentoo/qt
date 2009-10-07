@@ -4,6 +4,9 @@
 
   Dropped cmake from RDEPEND
 
+  07 Oct 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild:
+  Add x11-misc/xdg-utils on RDEPEND as suggested by upstream
+
   06 Oct 2009; Markos Chandras <hwoarang@gentoo.org> q4wine-9999.ebuild,
   metadata.xml:
   Fix use flags according to portage ebuild

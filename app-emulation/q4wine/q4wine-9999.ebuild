@@ -24,7 +24,8 @@ RDEPEND="x11-libs/qt-gui:4
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
-	icoutils? ( >=media-gfx/icoutils-0.26.0 )"
+	icoutils? ( >=media-gfx/icoutils-0.26.0 )
+	x11-misc/xdg-utils"
 
 DOCS="README"
 
