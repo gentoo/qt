@@ -198,12 +198,14 @@ case "${MY_PV_EXTRA}" in
 esac
 
 qt4-build-edge_pkg_setup() {
-	ewarn         
-	ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
-	ewarn "[qting-edge]. Alternatively, contact	qt@gentoo.org."             
-	ewarn "Thank you for using qting-edge overlay."                         
-	ewarn                                                                   
-	ebeep 5
+	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
+		ewarn
+		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
+		ewarn "[qting-edge]. Alternatively, contact	qt@gentoo.org."
+		ewarn "Thank you for using qting-edge overlay."
+		ewarn
+		ebeep 5
+	fi
 
 	PATH="${S}/bin:${PATH}"
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
