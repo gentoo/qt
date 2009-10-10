@@ -74,39 +74,12 @@ RDEPEND="
 case "${PV}" in
 	4.9999)
 		IUSE="${IUSE} +stable-branch"
-		if use stable-branch; then
-			MY_PV_EXTRA="${PV}-stable"
-		else
-			MY_PV_EXTRA="${PV}"
-		fi
 		;;
 	4.6.9999)
 		IUSE="${IUSE} +stable-branch +qt-copy"
-		if use qt-copy; then
-			MY_PV_EXTRA="${PV}-qt-copy"
-			if ! use stable-branch; then
-				ewarn
-				ewarn "Please note that you have specified -stable-branch,"
-				ewarn "however +qt-copy uses the stable Qt branch."
-			fi
-		else
-			if use stable-branch; then
-				MY_PV_EXTRA="${PV}-stable"
-			else
-				MY_PV_EXTRA="${PV}"
-			fi
-		fi
 		;;
 	4.5.9999)
 		IUSE="${IUSE} +qt-copy"
-		if use qt-copy; then
-			MY_PV_EXTRA="${PV}-qt-copy"
-		else
-			MY_PV_EXTRA="${PV}"
-		fi
-		;;
-	*)
-		MY_PV_EXTRA="${PV}"
 		;;
 esac
 
@@ -129,12 +102,7 @@ case "${PV}" in
 		;;
 esac
 
-case "${MY_PV_EXTRA}" in
-	4.?.9999-qt-copy)
-		HOMEPAGE="http://qt.gitorious.org/+kde-developers/qt/kde-qt/";;
-	*)
-		HOMEPAGE="http://qt.nokia.com/";;
-esac
+HOMEPAGE="http://qt.nokia.com/"
 
 case "${PV}" in
 	4.6.?_*)
@@ -156,48 +124,83 @@ if version_is_at_least 4.5 ${PV} ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
 fi
 
-case "${MY_PV_EXTRA}" in
-	4.6.9999-qt-copy)
-		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
-		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="4.6-stable-patched"
-		EGIT_TREE="${EGIT_BRANCH}"
-		SRC_URI=
-		;;
-	4.5.9999-qt-copy)
-		EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
-		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="4.5.3-patched"
-		EGIT_TREE="${EGIT_BRANCH}"
-		SRC_URI=
-		;;
-	4.?.9999 | 4.?.9999-stable)
-		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
-		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="${MY_PV_EXTRA/.9999}"
-		EGIT_TREE="${EGIT_BRANCH}"
-		SRC_URI=
-		;;
-	4.9999-stable)
-		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
-		EGIT_PROJECT="qt-${PV}"
-		EGIT_BRANCH="master-stable"
-		EGIT_TREE="${EGIT_BRANCH}"
-		SRC_URI=
-		;;
-	4.9999)
-		EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
-		EGIT_PROJECT="qt-${PV}"
+case "${PV}" in
+	*.9999)
 		SRC_URI=
 		;;
 	4.4.?)
 		SRC_URI="${SRC_URI} mirror://gentoo/${MY_P}-headers.tar.bz2"
 		;;
-	*)
-		;;
 esac
 
 qt4-build-edge_pkg_setup() {
+	case "${PV}" in
+		4.9999)
+			if use stable-branch; then
+				MY_PV_EXTRA="${PV}-stable"
+			else
+				MY_PV_EXTRA="${PV}"
+			fi
+			;;
+		4.6.9999)
+			if use qt-copy; then
+				MY_PV_EXTRA="${PV}-qt-copy"
+				if ! use stable-branch; then
+					ewarn
+					ewarn "Please note that you have specified -stable-branch,"
+					ewarn "however +qt-copy uses the stable Qt branch."
+				fi
+			else
+				if use stable-branch; then
+					MY_PV_EXTRA="${PV}-stable"
+				else
+					MY_PV_EXTRA="${PV}"
+				fi
+			fi
+			;;
+		4.5.9999)
+			if use qt-copy; then
+				MY_PV_EXTRA="${PV}-qt-copy"
+			else
+				MY_PV_EXTRA="${PV}"
+			fi
+			;;
+		*)
+			MY_PV_EXTRA="${PV}"
+			;;
+	esac
+
+	case "${MY_PV_EXTRA}" in
+		4.6.9999-qt-copy)
+			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
+			EGIT_PROJECT="qt-${PV}"
+			EGIT_BRANCH="4.6-stable-patched"
+			EGIT_TREE="${EGIT_BRANCH}"
+			;;
+		4.5.9999-qt-copy)
+			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
+			EGIT_PROJECT="qt-${PV}"
+			EGIT_BRANCH="4.5.3-patched"
+			EGIT_TREE="${EGIT_BRANCH}"
+			;;
+		4.?.9999 | 4.?.9999-stable)
+			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
+			EGIT_PROJECT="qt-${PV}"
+			EGIT_BRANCH="${MY_PV_EXTRA/.9999}"
+			EGIT_TREE="${EGIT_BRANCH}"
+			;;
+		4.9999-stable)
+			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
+			EGIT_PROJECT="qt-${PV}"
+			EGIT_BRANCH="master-stable"
+			EGIT_TREE="${EGIT_BRANCH}"
+			;;
+		4.9999)
+			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
+			EGIT_PROJECT="qt-${PV}"
+			;;
+	esac
+
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		ewarn
 		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
