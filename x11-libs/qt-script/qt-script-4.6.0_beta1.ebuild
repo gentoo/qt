@@ -19,11 +19,11 @@ include/Qt/
 include/QtCore/
 include/QtScript/
 src/corelib/
-src/3rdparty/webkit/
+src/3rdparty/javascriptcore/
 "
 
 src_configure() {
-	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} $(qt_use iconv) -script -no-xkb  -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon

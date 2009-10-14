@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-multimedia-4.6.0_beta1 (14 Oct 2009)
+
+  14 Oct 2009; Dror Levin <spatz@gentoo.org>
+  +qt-multimedia-4.6.0_beta1.ebuild, -qt-multimedia-4.6.0_alpha_pre1.ebuild:
+  Version bump.
+
   13 Sep 2009; Dominik Kapusta <d@ayoy.net> metadata.xml:
   Added exceptions flag description.
 

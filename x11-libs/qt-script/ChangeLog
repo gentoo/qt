@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*qt-script-4.6.0_beta1 (14 Oct 2009)
+
+  14 Oct 2009; Dror Levin <spatz@gentoo.org> +qt-script-4.6.0_beta1.ebuild,
+  -qt-script-4.6.0_alpha_pre1.ebuild:
+  Version bump.
+
   14 Oct 2009; Jonathan Callen <abcd@gentoo.org>
   -files/qt-4.5-nolibx11.diff:
   Drop old patch
