@@ -2,6 +2,25 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Jonathan Callen <abcd@gentoo.org> (14 Oct 2009)
+# Qt 4.6 Beta
+=x11-libs/qt-4.6.0_beta*
+=x11-libs/qt-assistant-4.6.0_beta*
+=x11-libs/qt-core-4.6.0_beta*
+=x11-libs/qt-dbus-4.6.0_beta*
+=x11-libs/qt-demo-4.6.0_beta*
+=x11-libs/qt-gui-4.6.0_beta*
+=x11-libs/qt-multimedia-4.6.0_beta*
+=x11-libs/qt-opengl-4.6.0_beta*
+=x11-libs/qt-phonon-4.6.0_beta*
+=x11-libs/qt-qt3support-4.6.0_beta*
+=x11-libs/qt-script-4.6.0_beta*
+=x11-libs/qt-sql-4.6.0_beta*
+=x11-libs/qt-svg-4.6.0_beta*
+=x11-libs/qt-test-4.6.0_beta*
+=x11-libs/qt-webkit-4.6.0_beta*
+=x11-libs/qt-xmlpatterns-4.6.0_beta*
+
 # Markos Chandras <hwoarang@gentoo.org> (14 Oct 2009)
 # Masking beta release. Unmask it when you are sure that it
 # works fine
@@ -13,25 +32,6 @@
 =dev-python/PyQt4-4.6.1_pre*
 =dev-python/qscintilla-python-2.4.1_pre*
 =x11-libs/qscintilla-2.4.1_pre*
-
-# Alex Alexander <wired@gentoo.org> (09 Sep 2009)
-# Qt 4.6 Tech Preview 1
-=x11-libs/qt-4.6.0_alpha_pre*
-=x11-libs/qt-assistant-4.6.0_alpha_pre*
-=x11-libs/qt-core-4.6.0_alpha_pre*
-=x11-libs/qt-dbus-4.6.0_alpha_pre*
-=x11-libs/qt-demo-4.6.0_alpha_pre*
-=x11-libs/qt-gui-4.6.0_alpha_pre*
-=x11-libs/qt-multimedia-4.6.0_alpha_pre*
-=x11-libs/qt-opengl-4.6.0_alpha_pre*
-=x11-libs/qt-phonon-4.6.0_alpha_pre*
-=x11-libs/qt-qt3support-4.6.0_alpha_pre*
-=x11-libs/qt-script-4.6.0_alpha_pre*
-=x11-libs/qt-sql-4.6.0_alpha_pre*
-=x11-libs/qt-svg-4.6.0_alpha_pre*
-=x11-libs/qt-test-4.6.0_alpha_pre*
-=x11-libs/qt-webkit-4.6.0_alpha_pre*
-=x11-libs/qt-xmlpatterns-4.6.0_alpha_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2009)
 # Upstream SVN repo seems dead
