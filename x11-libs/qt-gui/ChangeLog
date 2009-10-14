@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Oct 2009; Jonathan Callen <abcd@gentoo.org> -files/Designer.desktop,
+  -files/Linguist.desktop, -files/hardcoded_fonts.patch,
+  -files/libqt4-read-kde4-kdeglobals.patch:
+  Drop old patches
+
   04 Oct 2009; Alex Alexander <wired@gentoo.org> -qt-gui-4.5.3-r1.ebuild:
   in tree
 

@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Oct 2009; Jonathan Callen <abcd@gentoo.org> -files/Assistant.desktop:
+  Drop old .desktop file
+
   04 Oct 2009; Alex Alexander <wired@gentoo.org> -qt-assistant-4.5.3.ebuild:
   in tree
 

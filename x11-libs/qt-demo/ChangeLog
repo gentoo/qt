@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Oct 2009; Jonathan Callen <abcd@gentoo.org>
+  -files/qt-demo-4.5.0-fixes.patch:
+  Drop old patch
+
   09 Oct 2009; Alex Alexander <wired@gentoo.org>
   qt-demo-4.6.0_alpha_pre1.ebuild, qt-demo-4.6.9999.ebuild,
   qt-demo-4.9999.ebuild:
