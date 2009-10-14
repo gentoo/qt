@@ -2,7 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
- *qt-creator-1.0.0 (03 Mar 2009)
+*qt-creator-1.3.0_beta (14 Oct 2009)
+
+  14 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
+  +qt-creator-1.3.0_beta.ebuild:
+  Bump to 1.3.0_beta release
 
   03 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
   -qt-creator-1.2.90.ebuild:
