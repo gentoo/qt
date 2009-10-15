@@ -19,7 +19,6 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.6-tools.patch"
-	"${FILESDIR}/${PN}-4.6-qdocconf.patch"
 )
 
 # Pixeltool isn't really assistant related, but it relies on
