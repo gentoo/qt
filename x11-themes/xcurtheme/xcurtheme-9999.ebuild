@@ -10,7 +10,7 @@ DESCRIPTION="Qt utility to change Xcrusor themes without restarting X Server."
 HOMEPAGE="http://gitorious.org/qt-xcurtheme"
 EGIT_REPO_URI="git://gitorious.org/qt-xcurtheme/mainline.git"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2 WTFPL-2"
 SLOT="0"
 KEYWORDS=""
 IUSE="tools"
@@ -51,7 +51,7 @@ src_install() {
 	dobin "${PN}"
 	if use tools; then
 		pushd tools/cursorFXconvert/
-		dobin lcft	
+		dobin lcft
 		popd
 	fi
 }
