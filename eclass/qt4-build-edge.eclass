@@ -114,13 +114,13 @@ case "${PV}" in
 esac
 
 SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
-if version_is_at_least 4.5.3 ${PV} ; then
+if version_is_at_least 4.5.3 ; then
 	SRC_URI="${SRC_URI/bz2/gz}"
 fi
 
 S="${WORKDIR}/${MY_P}"
 
-if version_is_at_least 4.5 ${PV} ; then
+if version_is_at_least 4.5 ; then
 	LICENSE="|| ( LGPL-2.1 GPL-3 )"
 fi
 
@@ -267,7 +267,7 @@ qt4-build-edge_src_unpack() {
 		*)
 			tar_pkg=${MY_P}.tar.bz2
 			tar_args="xjpf"
-			if version_is_at_least 4.5.3 ${PV} ; then
+			if version_is_at_least 4.5.3 ; then
 				tar_pkg=${tar_pkg/bz2/gz}
 				tar_args="xzpf"
 			fi
