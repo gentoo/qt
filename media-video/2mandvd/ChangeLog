@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*2mandvd-1.0.2 (16 Oct 2009)
+
+  16 Oct 2009; Markos Chandras <hwoarang@gentoo.org> -2mandvd-1.0.ebuild,
+  +2mandvd-1.0.2.ebuild:
+  Version bump, remove old
+
 *2mandvd-1.0.1 (13 Oct 2009)
 
   13 Oct 2009; Markos Chandras <hwoarang@gentoo.org> -2mandvd-0.9.7.ebuild,
