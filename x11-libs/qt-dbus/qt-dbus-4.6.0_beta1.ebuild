@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The DBus module for the Qt toolkit"
 SLOT="4"
@@ -32,5 +32,5 @@ src/xml"
 
 src_configure() {
 	myconf="${myconf} -dbus-linked"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

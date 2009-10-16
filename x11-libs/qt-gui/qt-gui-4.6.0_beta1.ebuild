@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit eutils qt4-build-edge
+inherit eutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -70,7 +70,7 @@ pkg_setup() {
 		ewarn "filling a bug on gentoo bugzilla."
 		ebeep 5
 	fi
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_unpack() {
@@ -80,11 +80,11 @@ src_unpack() {
 	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_src_unpack
+	qt4-build_src_unpack
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
@@ -116,7 +116,7 @@ src_configure() {
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
 	myconf="${myconf} -no-webkit -no-phonon -no-dbus -no-opengl"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_install() {
@@ -134,7 +134,7 @@ src_install() {
 			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
 			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
-	qt4-build-edge_src_install
+	qt4-build_src_install
 
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtGui}/{qmacstyle_mac.h,qwindowdefs_win.h} \

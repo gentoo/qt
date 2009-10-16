@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The SVG module for the Qt toolkit"
 SLOT="4"
@@ -39,5 +39,5 @@ src_configure() {
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-v -no-fontconfig -no-glib -no-opengl -no-gtkstyle -continue"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

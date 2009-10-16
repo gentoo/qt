@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="Demonstration module of the Qt toolkit"
 SLOT="4"
@@ -42,5 +42,5 @@ src_install() {
 	insinto ${QTDOCDIR}/src
 	doins -r "${S}"/doc/src/images || die "Installing images failed."
 
-	qt4-build-edge_src_install
+	qt4-build_src_install
 }

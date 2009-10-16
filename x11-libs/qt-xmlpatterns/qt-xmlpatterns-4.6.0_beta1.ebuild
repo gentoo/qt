@@ -3,14 +3,14 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The patternist module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,exceptions]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
@@ -28,5 +28,5 @@ QCONFIG_DEFINE="QT_XMLPATTERNS"
 
 src_configure() {
 	myconf="${myconf} -xmlpatterns"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

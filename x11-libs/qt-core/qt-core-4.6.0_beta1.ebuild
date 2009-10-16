@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
@@ -54,7 +54,7 @@ tools/linguist/shared
 translations"
 
 pkg_setup() {
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 
 	if has_version x11-libs/qt-core; then
 		# Check to see if they've changed the glib flag since the last time installing this package.
@@ -106,7 +106,7 @@ src_unpack() {
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 				${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_src_unpack
+	qt4-build_src_unpack
 
 	# Don't pre-strip, bug 235026
 	for i in kr jp cn tw ; do
@@ -115,7 +115,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
@@ -146,13 +146,13 @@ src_configure() {
 		myconf="${myconf} -nomake docs"
 	fi
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_compile() {
 	# bug 259736
 	unset QMAKESPEC
-	qt4-build-edge_src_compile
+	qt4-build_src_compile
 }
 
 src_install() {

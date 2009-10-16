@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
@@ -41,11 +41,11 @@ src_configure() {
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-glib -no-multimedia -no-qt3support -no-svg"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_compile() {
-	qt4-build-edge_src_compile
+	qt4-build_src_compile
 	# ugly hack to build docs
 	cd "${S}"
 	export LD_LIBRARY_PATH="${S}/lib"
@@ -54,7 +54,7 @@ src_compile() {
 }
 
 src_install() {
-	qt4-build-edge_src_install
+	qt4-build_src_install
 	# install documentation
 	# note that emake install_qchdocs fails for undefined reason so we use a
 	# workaround

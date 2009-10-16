@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Qt multimedia module"
 SLOT="4"
@@ -38,5 +38,5 @@ src_configure() {
 		-no-sql-odbc -no-glib -no-opengl -no-svg -no-gtkstyle -no-phonon-backend -no-script
 		-no-scripttools -no-cups -no-xsync -no-xinput"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
