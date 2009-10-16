@@ -3,6 +3,10 @@
 # $Header: $
 
   16 Oct 2009; Alex Alexander <wired@gentoo.org>
+  -qt-phonon-4.6.0_beta1.ebuild:
+  moved to the tree
+
+  16 Oct 2009; Alex Alexander <wired@gentoo.org>
   qt-phonon-4.6.0_beta1.ebuild:
   switched to qt4-build.eclass
 
