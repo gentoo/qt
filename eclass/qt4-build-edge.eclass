@@ -222,27 +222,29 @@ qt4-build-edge_pkg_setup() {
 	fi
 
 	# Let users know what they are getting themselves into ;-)
-	echo
-	case "${MY_PV_EXTRA}" in
-		4.?.9999-qt-copy)
-			ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
-			;;
-		4.?.9999-stable | 4.9999-stable)
-			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch."
-			ewarn "See http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
-			;;
-		4.?.9999 | 4.9999)
-			ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software."
-			;;
-		4.6.0_alpha_pre*)
-			ewarn "The ${PV} version ebuilds install a technical preview from Nokia Qt Software."
-			ewarn "See http://labs.trolltech.com/blogs/2009/09/09/qt-460-tech-preview-1/"
-			;;
-		4.*.*_*)
-			ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
-			;;
-	esac
-	echo
+	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
+		echo
+		case "${MY_PV_EXTRA}" in
+			4.?.9999-qt-copy)
+				ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
+				;;
+			4.?.9999-stable | 4.9999-stable)
+				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch."
+				ewarn "See http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
+				;;
+			4.?.9999 | 4.9999)
+				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software."
+				;;
+			4.6.0_alpha_pre*)
+				ewarn "The ${PV} version ebuilds install a technical preview from Nokia Qt Software."
+				ewarn "See http://labs.trolltech.com/blogs/2009/09/09/qt-460-tech-preview-1/"
+				;;
+			4.*.*_*)
+				ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
+				;;
+		esac
+		echo
+	fi
 	if ! version_is_at_least 4.1 $(gcc-version); then
 		ewarn "Using a GCC version lower than 4.1 is not supported!"
 		echo
