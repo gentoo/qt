@@ -45,14 +45,10 @@ src_prepare() {
 	# remove translations and add only the selected ones
 	sed -i -e '/^ *loc.*\.ts/d' \
 		-e "/^TRANSLATIONS/s:loc.*:${langs}:" \
-			qtwitter-app/qtwitter-app.pro || die "sed failed"
-	# fix unsecure runpaths
-	sed -i -e '/-Wl,-rpath,\$\${TOP}/d' \
-		qtwitter-app/qtwitter-app.pro || die "sed failed"
-
-	sed -i "s!\(\$\${INSTALL_PREFIX}\)/lib!\1/$(get_libdir)!" \
-		twitterapi/twitterapi.pro urlshortener/urlshortener.pro || die "sed failed"
-
+			qtwitter-app/qtwitter-app.pro || die "sed translations failed"
+	# fix insecure runpaths
+	sed -i -e '/-Wl,-rpath,\$\${DESTDIR}/d' \
+		qtwitter-app/qtwitter-app.pro || die "sed rpath failed"
 }
 
 src_install() {
