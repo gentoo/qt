@@ -2,11 +2,6 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (14 Oct 2009)
-# Masking beta release. Unmask it when you are sure that it
-# works fine
-=dev-util/qt-creator-1.3.0_beta
-
 # Markos Chandras <hwoarang@gentoo.org> (02 Oct 2009)
 # Snapshots are not for everybody :)
 =dev-python/sip-4.9.1_pre*
