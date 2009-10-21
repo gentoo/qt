@@ -21,7 +21,8 @@ RDEPEND="x11-libs/qt-gui:4
 	crypt? ( >=dev-libs/openssl-0.9.8 x11-libs/qt-core:4[ssl] )
 	web? ( >=dev-libs/fcgi-2.4 )"
 DEPEND="${DEPEND}
-	doc? ( app-doc/doxygen )"
+	doc? ( app-doc/doxygen )
+	net-dns/avahi"
 
 S="${WORKDIR}/${PN}"
 

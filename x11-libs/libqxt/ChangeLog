@@ -1,6 +1,10 @@
 # ChangeLog for x11-libs/libqxt
 # Copyright 1999-2009 Berkano Overlay; distributed under the GPL version 2
 
+  21 Oct 2009; Markos Chandras <hwoarang@gentoo.org> libqxt-9999.ebuild,
+  +metadata.xml:
+  Add avahi as dependency. Add metadata.xml file
+
   15 Aug 2009; Markos Chandras <hwoarang@gentoo.org> libqxt-9999.ebuild,
   -files/libqxt-9999-gcc4.4.patch:
   Remove gcc-4.4 patch since it was applied by upstream
