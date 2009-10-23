@@ -1,17 +1,15 @@
-diff -Naur PyQt-x11-gpl-4.6~orig/configure.py PyQt-x11-gpl-4.6/configure.py
---- PyQt-x11-gpl-4.6~orig/configure.py	2009-10-01 15:47:37.000000000 +0200
-+++ PyQt-x11-gpl-4.6/configure.py	2009-10-01 16:00:54.000000000 +0200
-@@ -341,7 +341,8 @@
+--- PyQt-x11-gpl-4.6.1~orig/configure.py	2009-10-23 23:03:13.000000000 +0200
++++ PyQt-x11-gpl-4.6.1/configure.py	2009-10-23 23:33:06.000000000 +0200
+@@ -341,7 +341,7 @@
          check_module("QtWebKit", "qwebpage.h", "new QWebPage()")
          check_module("QtXml", "qdom.h", "new QDomDocument()")
          check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
--        check_module("phonon", "phonon", "new Phonon::VideoWidget()")
-+        check_module("phonon", "videowidget.h", "new Phonon::VideoWidget()",
-+                extra_include_dirs=["/usr/include/phonon"])
+-        check_module("phonon", "Phonon/VideoWidget",
++        check_module("phonon", "phonon/videowidget.h",
+                 "new Phonon::VideoWidget()")
          check_module("QtAssistant", "qassistantclient.h",
                  "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
-                 extra_libs=ass_libs)
-@@ -450,7 +451,7 @@
+@@ -451,7 +451,7 @@
              generate_code("QtXmlPatterns")
  
          if "phonon" in pyqt_modules:
@@ -20,7 +18,7 @@ diff -Naur PyQt-x11-gpl-4.6~orig/configure.py PyQt-x11-gpl-4.6/configure.py
  
          if "QtAssistant" in pyqt_modules:
              generate_code("QtAssistant")
-@@ -758,6 +759,7 @@
+@@ -759,6 +759,7 @@
                  install_dir=pydbusmoddir,
                  qt=["QtCore"],
                  debug=opts.debug,
@@ -28,7 +26,7 @@ diff -Naur PyQt-x11-gpl-4.6~orig/configure.py PyQt-x11-gpl-4.6/configure.py
                  universal=sipcfg.universal,
                  arch=sipcfg.arch
              )
-@@ -1465,6 +1467,7 @@
+@@ -1468,6 +1469,7 @@
          warnings=1,
          static=opts.static,
          debug=opts.debug,
