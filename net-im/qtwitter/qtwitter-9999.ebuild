@@ -32,23 +32,27 @@ src_prepare() {
 	local langs=
 	for lingua in $LINGUAS; do
 		if has $lingua $LANGS; then
-			langs="$langs loc/${PN}_${lingua}.ts"
+			langs="$langs ${lingua}"
 		else
 			for a in $LANGSLONG; do
 				if [[ $lingua == ${a%_*} ]]; then
-					langs="$langs loc/${PN}_${a}.ts"
+					langs="$langs ${a}"
 				fi
 			done
 		fi
 	done
 
 	# remove translations and add only the selected ones
-	sed -i -e '/^ *loc.*\.ts/d' \
-		-e "/^TRANSLATIONS/s:loc.*:${langs}:" \
-			qtwitter-app/qtwitter-app.pro || die "sed translations failed"
+	sed -i -e '/^ *LANGS/,/^$/s/^/#/' \
+		-e "/LANGS =/s/.*/LANGS = ${langs}/" \
+			translations/translations.pri || die "sed translations failed"
 	# fix insecure runpaths
 	sed -i -e '/-Wl,-rpath,\$\${DESTDIR}/d' \
 		qtwitter-app/qtwitter-app.pro || die "sed rpath failed"
+}
+
+src_configure() {
+	eqmake4 PREFIX="/usr"
 }
 
 src_install() {

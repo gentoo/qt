@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Oct 2009; Dominik Kapusta <ayoy@gentoo.org> qtwitter-9999.ebuild:
+  Fixing translations and prefix to reflect upstream changes.
+
   18 Oct 2009; Dominik Kapusta <ayoy@gentoo.org> qtwitter-9999.ebuild:
   Updating to comply with changes in buildsystem
 
