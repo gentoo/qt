@@ -21,18 +21,19 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/QtMPC"
 
-if ! use kde; then
-	KDE_MINIMAL="none"
-fi
-
 src_configure() {
 	if use kde; then
-		local mycmakeargs
-		mycmakeargs="${mycmakeargs}
-			-DCMAKE_INSTALL_PREFIX=${PREFIX}";
 		kde4-base_src_configure
 	else
 		eqmake4 QtMPC.pro
+	fi
+}
+
+src_compile() {
+	if use kde; then
+		kde4-base_src_compile
+	else
+		default
 	fi
 }
 
@@ -46,11 +47,5 @@ src_install() {
 		kde4-base_src_install
 	else
 		dobin QtMPC || die "Binary install failed"
-
-		if use kdeprefix; then
-			ewarn "You have installed QtMPC without the kde USE flag";
-			ewarn "but you have enabled kdeprefix, which has no effect";
-			ewarn "when kde support is disabled."
-		fi
 	fi
 }

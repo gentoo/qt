@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Oct 2009; Jonathan Callen <abcd@gentoo.org> qtmpc-0.5.0.ebuild,
+  qtmpc-9999.ebuild:
+  Cleanup KDE stuff
+
   26 Oct 2009; Jonathan Callen <abcd@gentoo.org> +metadata.xml:
   Add missing metadata.xml
 
