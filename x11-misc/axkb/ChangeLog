@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Oct 2009; Jonathan Callen <abcd@gentoo.org> +metadata.xml:
+  Add missing metadata.xml
+
   09 Aug 2009; Davide Pesavento <davidepesa@gmail.com> axkb-9999.ebuild:
   Simplify ebuild and fix deps.
 

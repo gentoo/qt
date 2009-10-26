@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Oct 2009; Jonathan Callen <abcd@gentoo.org> +metadata.xml:
+  Add missing metadata.xml
+
 *qsa-1.2.3 (05 Apr 2009)
 
   05 Apr 2009; Markos Chandras <hwoarang@gentoo.org> +qsa-1.2.3.ebuild:

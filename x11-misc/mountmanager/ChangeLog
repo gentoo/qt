@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Oct 2009; Jonathan Callen <abcd@gentoo.org> +metadata.xml:
+  Add missing metadata.xml
+
   01 Feb 2009; Ben de Groot <yngwin@gentoo.org> mountmanager-0.2.5.ebuild:
   Initial import from berkano overlay
 

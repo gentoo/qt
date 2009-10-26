@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Oct 2009; Jonathan Callen <abcd@gentoo.org> +metadata.xml:
+  Add missing metadata.xml
+
   28 Apr 2009; Alex Alexander (wired) <alex.alexander@gmail.com>
   qtmpc-9999.ebuild:
   fixed kde useflag in live ebuild
