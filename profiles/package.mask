@@ -9,8 +9,6 @@
 
 # Markos Chandras <hwoarang@gentoo.org> (02 Oct 2009)
 # Snapshots are not for everybody :)
-=dev-python/sip-4.9.1_pre*
-=dev-python/PyQt4-4.6.1_pre*
 =dev-python/qscintilla-python-2.4.1_pre*
 =x11-libs/qscintilla-2.4.1_pre*
 
