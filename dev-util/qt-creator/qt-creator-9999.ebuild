@@ -36,10 +36,6 @@ RDEPEND="${DEPEND}
 
 PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git perforce qtscript subversion"
 
-PATCHES=(
-	"${FILESDIR}/docs_gen.patch"
-)
-
 S="${WORKDIR}/${MY_P}"
 
 LANGS="de es fr it ja ru"
