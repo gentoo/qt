@@ -39,7 +39,7 @@ src_install() {
 	for lingua in ${LINGUAS}; do
 		if has ${lingua} ${LANGS}; then
 			insinto /usr/share/${PN}/locale
-			doins "lang/${MY_PN}_${lingua}.qm" || die "installing translations failed"
+			doins "langs/${MY_PN}_${lingua}.qm" || die "installing translations failed"
 		fi
 	done
 }
