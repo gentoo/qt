@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Oct 2009; Markos Chandras <hwoarang@gentoo.org> -sip-4.9.1.ebuild:
+  On tree
+
 *sip-4.10_pre20091026 (27 Oct 2009)
 
   27 Oct 2009; Markos Chandras <hwoarang@gentoo.org>

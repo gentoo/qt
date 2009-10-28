@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Oct 2009; Markos Chandras <hwoarang@gentoo.org> -PyQt4-4.6.1.ebuild:
+  On tree
+
 *PyQt4-4.7_pre20091026 (27 Oct 2009)
 
   27 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
