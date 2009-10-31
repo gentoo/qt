@@ -4,6 +4,10 @@
 
   31 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
   PyQt4-4.7_pre20091028.ebuild:
+  Fix compilation issue due to wrong popd usage
+
+  31 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
+  PyQt4-4.7_pre20091028.ebuild:
   Minor fix to handle new project names
 
 *PyQt4-4.7_pre20091028 (29 Oct 2009)

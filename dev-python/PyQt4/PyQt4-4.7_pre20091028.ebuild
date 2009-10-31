@@ -104,11 +104,10 @@ src_configure() {
 			# stripping and many other QA issues
 			pushd qpy/${mod} > /dev/null || die
 			eqmake4 $(ls *qpy*.pro)
-			popd > /dev/null || die
-
 			# Fix insecure runpaths
 			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
-				${mod}/Makefile || die "failed to fix rpath issues"
+				Makefile || die "failed to fix rpath issues"
+			popd > /dev/null || die
 		done
 
 		# Fix pre-stripping of libpythonplugin.so
