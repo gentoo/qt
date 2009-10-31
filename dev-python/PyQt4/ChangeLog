@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Oct 2009; Markos Chandras <hwoarang@gentoo.org>
+  PyQt4-4.7_pre20091028.ebuild:
+  Minor fix to handle new project names
+
 *PyQt4-4.7_pre20091028 (29 Oct 2009)
 
   29 Oct 2009; Markos Chandras <hwoarang@gentoo.org>

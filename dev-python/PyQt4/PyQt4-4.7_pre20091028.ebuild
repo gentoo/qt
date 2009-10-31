@@ -103,7 +103,7 @@ src_configure() {
 			# Run eqmake4 inside the qpy subdirs to prevent
 			# stripping and many other QA issues
 			pushd qpy/${mod} > /dev/null || die
-			eqmake4 $(ls w_qpy*.pro)
+			eqmake4 $(ls *qpy*.pro)
 			popd > /dev/null || die
 
 			# Fix insecure runpaths
