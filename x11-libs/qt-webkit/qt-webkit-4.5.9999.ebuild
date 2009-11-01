@@ -11,8 +11,10 @@ KEYWORDS=""
 IUSE="kde"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,qt-copy=]
-	~x11-libs/qt-gui-${PV}[debug=,qt-copy=]
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[debug=] media-sound/phonon ) )
+	~x11-libs/qt-dbus-${PV}[debug=]
+	~x11-libs/qt-gui-${PV}[dbus,debug=,qt-copy=]
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus,debug=]
+		media-sound/phonon ) )
 	kde? ( media-sound/phonon )"
 RDEPEND="${DEPEND}"
 
