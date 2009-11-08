@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*pyside-9999 (08 Nov 2009)
+
+  08 Nov 2009; Dominik Kapusta <ayoy@gentoo.org> pyside-0.2.1.ebuild,
+  -files/pyside-0.2.1-qtscripttools.patch, +pyside-9999.ebuild,
+  +files/pyside-qtscripttools.patch:
+  Adding live ebuild, compatible with Qt 4.6
+
 *pyside-0.2.1 (08 Nov 2009)
 
   08 Nov 2009; Dominik Kapusta <ayoy@gentoo.org> pyside-0.1.4.5.ebuild,

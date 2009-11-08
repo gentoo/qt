@@ -34,6 +34,6 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	epatch "${FILESDIR}/${P}-qtscripttools.patch"
+	epatch "${FILESDIR}/${PN}-qtscripttools.patch"
 	sed -e 's/-2.6//' -i data/CMakeLists.txt || die "sed failed"
 }
