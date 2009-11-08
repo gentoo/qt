@@ -1,0 +1,13 @@
+diff --git a/PySide/QtScriptTools/CMakeLists.txt b/PySide/QtScriptTools/CMakeLists.txt
+index bdba293..67af575 100644
+--- a/PySide/QtScriptTools/CMakeLists.txt
++++ b/PySide/QtScriptTools/CMakeLists.txt
+@@ -16,7 +16,7 @@ if(CMAKE_HOST_APPLE)
+   set(QT_QTSCRIPTTOOLS_LIBRARY "-framework QtScriptTools")
+ else(CMAKE_HOST_APPLE)
+   set(QT_QTSCRIPTTOOLS_INCLUDE_DIR ${QT_QTSCRIPT_INCLUDE_DIR}Tools)
+-  set(QT_QTSCRIPTTOOLS_LIBRARY -lQtScriptTools)
++  set(QT_QTSCRIPTTOOLS_LIBRARY ${QT_QTSCRIPT_LIBRARY}Tools)
+ endif(CMAKE_HOST_APPLE)
+ 
+ execute_generator(scripttools QtScriptTools_SRC)

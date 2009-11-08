@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 DEPEND=">=dev-libs/boost-1.38.0[python]
-	dev-python/boostpythongenerator
+	~dev-python/boostpythongenerator-0.2
 	>=x11-libs/qt-core-4.5.0
 	>=x11-libs/qt-assistant-4.5.0
 	>=x11-libs/qt-gui-4.5.0
@@ -28,4 +28,3 @@ DEPEND=">=dev-libs/boost-1.38.0[python]
 	>=x11-libs/qt-webkit-4.5.0
 	>=x11-libs/qt-xmlpatterns-4.5.0"
 RDEPEND="${DEPEND}"
-

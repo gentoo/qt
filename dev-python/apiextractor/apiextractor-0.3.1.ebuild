@@ -8,7 +8,7 @@ inherit cmake-utils
 
 DESCRIPTION="Library used to create an internal representation of an API in order to create Python bindings"
 HOMEPAGE="http://www.pyside.org/"
-SRC_URI="http://www.pyside.org/files/lib${P}.tar.gz"
+SRC_URI="http://www.pyside.org/files/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -23,8 +23,6 @@ RDEPEND=">=dev-libs/boost-1.38.0
 
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-
-S="${WORKDIR}/lib${P}"
 
 src_prepare() {
 	sed -e 's:share/cmake-2.6/Modules:share/cmake/Modules:' \
