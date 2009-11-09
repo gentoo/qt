@@ -2,6 +2,23 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*sip-4.9.2_pre20091108 (09 Nov 2009)
+
+  09 Nov 2009; Markos Chandras <hwoarang@gentoo.org>
+  +sip-4.9.2_pre20091108.ebuild:
+  Bug fixing snapshot with various bug fixes from 4.10 version. Quoting from
+  upstream:
+
+  Backported the following bug fixes from v4.10.
+  Fixed a bug where a default copy ctor might be added when there aleady was
+  one
+  when the class had a alternative mapped type implementation.
+  Fixed a regression in the monkey patching of instances.
+  Fixed a double delete bug with mapped types passed as references annotated
+  with
+  /Out/.
+  sipFindType() now handles references as well as pointers.
+
 *sip-4.10_pre20091107 (08 Nov 2009)
 
   08 Nov 2009; Markos Chandras <hwoarang@gentoo.org>

@@ -2,6 +2,28 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*PyQt4-4.6.2_pre20091108 (09 Nov 2009)
+
+  09 Nov 2009; Markos Chandras <hwoarang@gentoo.org>
+  +PyQt4-4.6.2_pre20091108.ebuild:
+  Bug fixing snapshots with various important fixes. Quoting from upstream
+  log:
+
+  Backported the following bug fixes from v4.7.
+  Fixed a pyuic bug handling non-translatable strings containing a
+  backslash.
+  Removed a use of basestring in pyuic.
+  Fixed QObject.findChild() and QObject.findChildren() which were doing bad
+  things with the ownership of objects they were finding.
+  Fixed a regression in the handling of QObject.destroyed() being connected
+  via
+  a proxy that meant that the proxied callable never got invoked because the
+  proxy was being destroyed too soon.
+  Specified v1 of the QVariant API for the QDataStream << and >> operators
+  which
+  were breaking the puzzle.py examples.
+  Fixed a bug in the handling of unknown Qt property or signal.
+
 *PyQt4-4.7_pre20091106 (08 Nov 2009)
 
   08 Nov 2009; Markos Chandras <hwoarang@gentoo.org>
