@@ -26,7 +26,6 @@ src_prepare() {
 	sed -i -e '/^ *docs \\$/d' \
 	       -e '/^ *build_all \\$/d' \
 	       -e 's/^\#\(!macx\)/\1/' \
-	       -e "s!\(\$\${INSTALL_PREFIX}\)/lib!\1/$(get_libdir)!" \
 	    src/src.pro || die "sed failed"
 
 	sed -i -e "s/\(.*\)lib$/\1$(get_libdir)/" src/pcfile.sh || die "sed failed"
