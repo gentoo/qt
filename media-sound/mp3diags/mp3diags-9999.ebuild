@@ -11,7 +11,7 @@ S=${WORKDIR}/${PN}
 
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
-ESVN_REPO_URI="http://${PN}.svn.sourceforge.net/svnroot/${PN}"
+ESVN_REPO_URI="http://${PN}.svn.sourceforge.net/svnroot/${PN}/trunk/${PN}"
 
 LICENSE="GPL-2"
 SLOT="0"
