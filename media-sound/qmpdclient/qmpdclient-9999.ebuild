@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-EGIT_REPO_URI="git://github.com/Voker57/qmpdclient-ne.git"
+EGIT_REPO_URI="git://github.com/Voker57/qmpdclient.git"
 LANGS="pt_BR zh_CN zh_TW"
 LANGSLONG="de_DE fr_FR it_IT nl_NL nn_NO no_NO ru_RU sv_SE tr_TR uk_UA"
 
