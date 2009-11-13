@@ -33,7 +33,6 @@ RDEPEND="${DEPEND}
 
 PATCHES=(
 	"${FILESDIR}/${P}-no-automagic-deps.patch"
-	"${FILESDIR}/${PN}-ffmpeg-includes.patch"
 )
 
 pkg_setup() {
