@@ -1,5 +1,5 @@
 --- Cuberok.pro	2009-11-13 21:06:26.343766134 +0200
-+++ Cuberok.pro1	2009-11-13 21:08:07.410636222 +0200
++++ Cuberok.pro	2009-11-13 21:08:07.410636222 +0200
 @@ -10,11 +10,6 @@
      CONFIG += disable_audiere disable_gst disable_phonon disable_ffmpeg
  }

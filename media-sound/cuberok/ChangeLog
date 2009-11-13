@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Nov 2009; Alex Alexander <wired@gentoo.org>
+  files/cuberok-9999-no-automagic-deps.patch:
+  cosmetic patch fix
+
 *cuberok-0.0.11 (16 Jul 2009)
 
   16 Jul 2009; Markos Chandras <hwoarang@gentoo.org> +cuberok-0.0.11.ebuild:
