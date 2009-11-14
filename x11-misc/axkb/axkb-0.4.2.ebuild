@@ -4,15 +4,15 @@
 
 EAPI="2"
 
-inherit qt4-edge git
+inherit qt4-edge 
 
 DESCRIPTION="Qt4 application to adjust layouts by xkb"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/Antico+XKB?content=101667"
-EGIT_REPO_URI="git://github.com/disels/axkb.git"
+SRC_URI="http://www.php-developer.com.ua/antico/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 LANGS="ru"

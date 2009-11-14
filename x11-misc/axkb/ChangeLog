@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*axkb-0.4.2 (14 Nov 2009)
+
+  14 Nov 2009; Alex Alexander <wired@gentoo.org> +axkb-0.4.2.ebuild,
+  axkb-9999.ebuild:
+  added 0.4.2 ebuild, updated live one
+
   26 Oct 2009; Jonathan Callen <abcd@gentoo.org> +metadata.xml:
   Add missing metadata.xml
 
