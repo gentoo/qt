@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Nov 2009; Dominik Kapusta <ayoy@gentoo.org>
+  qt-assistant-4.6.0_rc1.ebuild, +files/qt-assistant-4.6.0_rc1-tools.patch:
+  Updated tools patch for 4.6.0_rc1
+
   16 Oct 2009; Alex Alexander <wired@gentoo.org>
   -qt-assistant-4.6.0_beta1.ebuild:
   moved to the tree
