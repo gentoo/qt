@@ -76,7 +76,7 @@ case "${PV}" in
 		IUSE="${IUSE} +stable-branch"
 		;;
 	4.6.9999)
-		IUSE="${IUSE} +stable-branch +qt-copy"
+		IUSE="${IUSE} stable-branch +qt-copy"
 		;;
 	4.5.9999)
 		IUSE="${IUSE} +qt-copy"
@@ -145,11 +145,6 @@ qt4-build-edge_pkg_setup() {
 		4.6.9999)
 			if use qt-copy; then
 				MY_PV_EXTRA="${PV}-qt-copy"
-				if ! use stable-branch; then
-					ewarn
-					ewarn "Please note that you have specified -stable-branch,"
-					ewarn "however +qt-copy uses the stable Qt branch."
-				fi
 			else
 				if use stable-branch; then
 					MY_PV_EXTRA="${PV}-stable"
@@ -174,7 +169,7 @@ qt4-build-edge_pkg_setup() {
 		4.6.9999-qt-copy)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
-			EGIT_BRANCH="4.6-stable-patched"
+			EGIT_BRANCH="master"
 			EGIT_TREE="${EGIT_BRANCH}"
 			;;
 		4.5.9999-qt-copy)
