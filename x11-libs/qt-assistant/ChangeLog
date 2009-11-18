@@ -3,6 +3,10 @@
 # $Header: $
 
   18 Nov 2009; Alex Alexander <wired@gentoo.org>
+  qt-assistant-4.6.9999.ebuild:
+  different patching per USE
+
+  18 Nov 2009; Alex Alexander <wired@gentoo.org>
   -qt-assistant-4.6.0_rc1.ebuild:
   4.6.0_rc1 moved in tree
 

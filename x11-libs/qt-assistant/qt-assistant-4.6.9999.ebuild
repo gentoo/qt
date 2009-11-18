@@ -17,10 +17,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-4.6-tools.patch"
-)
-
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
 QT4_TARGET_DIRECTORIES="
@@ -50,6 +46,16 @@ src_compile() {
 	export LD_LIBRARY_PATH="${S}/lib"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
 	emake qch_docs || die "emake docs failed"
+}
+
+src_prepare() {
+	if use qt-copy || ! use stable-branch; then
+		epatch "${FILESDIR}/${PN}-4.6.0_rc1-tools.patch"
+	else
+		epatch "${FILESDIR}/${PN}-4.6-tools.patch"
+	fi
+
+	qt4-build-edge_src_prepare
 }
 
 src_install() {
