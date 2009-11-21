@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*sip-4.10_pre20091117 (21 Nov 2009)
+
+  21 Nov 2009; Markos Chandras <hwoarang@gentoo.org>
+  -sip-4.9.2_pre20091108.ebuild, -sip-4.10_pre20091107.ebuild,
+  +sip-4.10_pre20091117.ebuild:
+  Bump 4.10 snapshot. Remove 4.9.2 snapshot
+
 *sip-4.9.2_pre20091108 (09 Nov 2009)
 
   09 Nov 2009; Markos Chandras <hwoarang@gentoo.org>
