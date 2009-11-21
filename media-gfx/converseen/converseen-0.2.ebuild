@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-LANGSLONG="it_IT"
+LANGSLONG="it_IT pl_PL"
 
 inherit qt4-edge
 
@@ -44,7 +44,8 @@ src_prepare() {
 	done
 	local qm_files="${ts_files/.ts/.qm}"
 
-	sed -e "s!\(TRANSLATIONS += \).*!\1${ts_files}!" \
+	sed -e '/^ loc/d' \
+		-e "s!\(TRANSLATIONS += \).*!\1${ts_files}!" \
 		-e "s!\(translations\.files = \).*!\1${qm_files}!" \
 		-i ${PN}.pro || die "sed translations failed"
 }
