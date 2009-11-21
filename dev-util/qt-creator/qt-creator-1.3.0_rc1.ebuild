@@ -10,12 +10,12 @@ MY_PN="${PN/-/}"
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
 EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
-EGIT_BRANCH="1.3.0-beta"
+EGIT_TREE="de6551b"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-IUSE="bineditor bookmarks +cmake cvs debug +debugger +designer doc examples fakevim git kde perforce qtscript subversion"
+IUSE="bineditor bookmarks +cmake cvs debug +debugger +designer doc examples fakevim git kde mercurial perforce qtscript subversion"
 
 DEPEND=">=x11-libs/qt-assistant-4.6.0_alpha_pre1:4
 	>=x11-libs/qt-gui-4.6.0_alpha_pre1:4[dbus,qt3support]"
@@ -32,14 +32,15 @@ RDEPEND="${DEPEND}
 	debugger? ( sys-devel/gdb )
 	examples? ( >=x11-libs/qt-demo-4.6.0_alpha_pre1:4 )
 	git? ( dev-util/git )
+	mercurial? ( dev-util/mercurial )
 	qtscript? ( >=x11-libs/qt-script-4.6.0_alpha_pre1:4 )
 	subversion? ( dev-util/subversion )"
 
-PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git perforce qtscript subversion"
+PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git mercurial perforce qtscript subversion"
 
 S="${WORKDIR}/${MY_P}"
 
-LANGS="de es fr it ja ru"
+LANGS="de es fr it ja pl ru sl"
 
 for x in ${LANGS}; do
 	IUSE="${IUSE} linguas_${x}"

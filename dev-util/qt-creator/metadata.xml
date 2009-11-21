@@ -14,6 +14,7 @@
 	<flag name="designer">enable designer plugin</flag>
 	<flag name="fakevim">enable vim-like key bindings plugin</flag>
 	<flag name="git">enable git plugin</flag>
+	<flag name="mercurial">enable mercurial plugin</flag>
 	<flag name="perforce">enable perforce software configuration manager plugin</flag>
 	<flag name="qtscript">enable qt script editor plugin</flag>
 	<flag name="subversion">enable subersion plugin</flag>
