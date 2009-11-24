@@ -13,7 +13,7 @@ SRC_URI="ftp://ftp.coin3d.org/pub/coin/src/all/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug doc"
+IUSE="debug doc static-libs"
 
 RDEPEND="
 	>=media-libs/coin-3.0.0[javascript]
@@ -30,11 +30,12 @@ S="${WORKDIR}/${MY_P}"
 
 src_configure() {
 	econf \
-		htmldir="${ROOT}usr/share/doc/${PF}/html"	\
+		htmldir="${ROOT}usr/share/doc/${PF}/html" \
 		--enable-shared \
-		$(use_enable debug)	\
-		$(use_enable debug symbols)	\
-		$(use_enable doc html)
+		$(use_enable debug) \
+		$(use_enable debug symbols) \
+		$(use_enable doc html) \
+		$(use_enable static-libs static)
 }
 
 src_install() {
