@@ -139,6 +139,13 @@ qt4-r2_src_install() {
 }
 
 # Internal function, used by eqmake4 and qt4-r2_src_configure
+# Look for project files:
+#   0 *.pro files found - output null string
+#   1 *.pro file found - output its name
+#   2 or more *.pro files found - if ${PN}.pro or $(basename ${S}).pro
+#     are there, output any of them
+# Outputs a project file argument used by eqmake4. Sets nullglob locally
+# to avoid expanding *.pro as "*.pro" when there are no matching files.
 _find_project_file() {
 	shopt -s nullglob
 	local pro_files=(*.pro)
