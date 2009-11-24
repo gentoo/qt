@@ -99,8 +99,10 @@ qt4-r2_src_prepare() {
 qt4-r2_src_configure() {
 	debug-print-function $FUNCNAME "$@"
 
-	if [[ -n "$(ls *.pro 2>/dev/null)" ]]; then
-		eqmake4
+	local project_file="$(_find_project_file)"
+
+	if [[ -n ${project_file} ]]; then
+		eqmake4 ${project_file}
 	else
 		base_src_configure
 	fi
@@ -136,18 +138,62 @@ qt4-r2_src_install() {
 	fi
 }
 
+# Internal function, used by eqmake4 and qt4-r2_src_configure
+_find_project_file() {
+	shopt -s nullglob
+	local pro_files=(*.pro)
+	shopt -u nullglob
+	local dir_name="$(basename ${S})"
+
+	case ${#pro_files[@]} in
+	1)
+		echo "${pro_files[0]}"
+		;;
+	*)
+		for pro_file in "${pro_files[@]}"; do
+			if [[ "${pro_file}" == "${dir_name}" ||
+				  "${pro_file}" == "${PN}.pro" ]]; then
+				echo "${pro_file}"
+				break
+			fi
+		done
+		;;
+	esac
+}
+
 # @FUNCTION: eqmake4
-# @USAGE: [parameters to qmake]
+# @USAGE: [project file] [parameters to qmake]
 # @DESCRIPTION:
-# Wrapper for Qt4's qmake. All the arguments are appended unmodified to
-# qmake command line. For recursive build systems, i.e. those based on
-# the subdirs template, you should run eqmake4 on the top-level project
-# file only, unless you have strong reasons to do things differently.
-# During the building, qmake will be automatically re-invoked with the
-# right arguments on every directory specified inside the top-level
-# project file by the SUBDIRS variable.
+# Wrapper for Qt4's qmake. If project file isn't specified eqmake4 will
+# look for it in current directory (${S}, non-recursively). If more than
+# one project file is found, the ${PN}.pro is processed, provided that it
+# exists. Otherwise eqmake4 fails.
+# All the arguments are appended unmodified to qmake command line. For
+# recursive build systems, i.e. those based on the subdirs template, you
+# should run eqmake4 on the top-level project file only, unless you have
+# strong reasons to do things differently. During the building, qmake
+# will be automatically re-invoked with the right arguments on every
+# directory specified inside the top-level project file by the SUBDIRS
+# variable.
 eqmake4() {
 	ebegin "Running qmake"
+
+	local qmake_args="$@"
+
+	# check if project file was passed as a first argument
+	# if not, then search for it
+	local regexp='.*\.pro'
+	if ! [[ "${1}" =~ ${regexp} ]]; then
+		local project_file="$(_find_project_file)"
+		if [[ -z "${project_file}" ]]; then
+			echo
+			eerror "No project file found in ${S}!"
+			eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
+			echo
+			die "eqmake4 failed"
+		fi
+		qmake_args="${qmake_args} ${project_file}"
+	fi
 
 	# make sure CONFIG variable is correctly set for both release and debug builds
 	local CONFIG_ADD="release"
@@ -208,7 +254,7 @@ eqmake4() {
 		QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
 		QMAKE_RPATH= \
 		QMAKE_STRIP= \
-		"${@}"
+		"${qmake_args}"
 
 	# was qmake successful?
 	if ! eend $? ; then
@@ -216,7 +262,7 @@ eqmake4() {
 		eerror "Running qmake has failed! (see above for details)"
 		eerror "This shouldn't happen - please send a bug report to http://bugs.gentoo.org/"
 		echo
-		die "qmake failed"
+		die "eqmake4 failed"
 	fi
 
 	return 0
