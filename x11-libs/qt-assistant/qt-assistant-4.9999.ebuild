@@ -44,10 +44,11 @@ src_configure() {
 }
 
 src_compile() {
+	# help libQtHelp find freshly built libQtCLucene (bug #289811)
+	export LD_LIBRARY_PATH="${S}/lib"
 	qt4-build-edge_src_compile
 	# ugly hack to build docs
 	cd "${S}"
-	export LD_LIBRARY_PATH="${S}/lib"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
 	emake qch_docs || die "emake docs failed"
 }
