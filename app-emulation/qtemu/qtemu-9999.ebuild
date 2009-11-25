@@ -20,6 +20,6 @@ DEPEND="net-libs/libvncserver
 	x11-libs/qt-webkit:4"
 RDEPEND="${DEPEND}
 	qemu? ( app-emulation/qemu )
-	kvm? ( app-emulation/kvm )"
+	kvm? ( app-emulation/qemu-kvm )"
 
 DOCS="CHANGELOG README TODO"
