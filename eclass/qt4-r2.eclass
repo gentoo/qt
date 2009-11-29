@@ -261,7 +261,7 @@ eqmake4() {
 		QMAKE_LFLAGS_DEBUG="${LDFLAGS}" \
 		QMAKE_RPATH= \
 		QMAKE_STRIP= \
-		"${qmake_args}"
+		${qmake_args}
 
 	# was qmake successful?
 	if ! eend $? ; then
