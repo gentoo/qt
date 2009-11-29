@@ -17,10 +17,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-4.6-tools.patch"
-)
-
 # Pixeltool isn't really assistant related, but it relies on
 # the assistant libraries. doc/qch/
 QT4_TARGET_DIRECTORIES="
@@ -33,6 +29,17 @@ tools/shared/fontpanel
 src/
 include/
 doc/"
+
+src_prepare() {
+	if use stable-branch; then
+	    epatch "${FILESDIR}/${PN}-4.6-tools.patch"
+	else
+		epatch "${FILESDIR}/${PN}-4.6.0_rc1-tools.patch"
+	fi
+
+	qt4-build-edge_src_prepare
+}
+
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl

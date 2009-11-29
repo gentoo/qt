@@ -29,6 +29,17 @@ tools/shared/fontpanel
 src/
 include/
 doc/"
+
+src_prepare() {
+	if use qt-copy || ! use stable-branch; then
+		epatch "${FILESDIR}/${PN}-4.6.0_rc1-tools.patch"
+	else
+		epatch "${FILESDIR}/${PN}-4.6-tools.patch"
+	fi
+
+	qt4-build-edge_src_prepare
+}
+
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
@@ -47,16 +58,6 @@ src_compile() {
 	cd "${S}"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
 	emake qch_docs || die "emake docs failed"
-}
-
-src_prepare() {
-	if use qt-copy || ! use stable-branch; then
-		epatch "${FILESDIR}/${PN}-4.6.0_rc1-tools.patch"
-	else
-		epatch "${FILESDIR}/${PN}-4.6-tools.patch"
-	fi
-
-	qt4-build-edge_src_prepare
 }
 
 src_install() {
