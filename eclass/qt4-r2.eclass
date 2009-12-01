@@ -8,7 +8,7 @@
 # Markos Chandras <hwoarang@gentoo.org>,
 # Davide Pesavento <davidepesa@gmail.com>,
 # Dominik Kapusta <ayoy@gentoo.org>
-# @BLURB: Experimental eclass for Qt4 packages
+# @BLURB: Eclass for Qt4 packages, second edition
 # @DESCRIPTION:
 # This eclass contains various functions that may be useful when
 # dealing with packages using Qt4 libraries. Requires EAPI=2.
@@ -22,24 +22,24 @@ inherit base eutils multilib toolchain-funcs
 
 export XDG_CONFIG_HOME="${T}"
 
-for x in ${LANGSLONG}; do
-	IUSE="${IUSE} linguas_${x%_*}"
-done
-
+# @ECLASS-VARIABLE: LANGS
+# @DESCRIPTION:
+# In case your Qt4 application provides various translations, use this variable
+# to specify them in order to populate "linguas_*" IUSE automatically. Make sure
+# that you set this variable BEFORE inheriting qt4-r2 eclass.
+# example: LANGS="en el de"
 for x in ${LANGS}; do
 	IUSE="${IUSE} linguas_${x}"
 done
 
-qt4-r2_src_unpack() {
-	base_src_unpack
-
-	# Fallback to ${WORKDIR}/${MY_P} when ${WORKDIR}/${P} doesn't exist.
-	# Feel free to re-implement this
-	if [[ "${S}" == "${WORKDIR}/${P}" && ! -d ${S} && -d ${WORKDIR}/${MY_P} ]]; then
-		ewarn "Falling back to '${WORKDIR}/${MY_P}'"
-		S="${WORKDIR}/${MY_P}"
-	fi
-}
+# @ECLASS-VARIABLE: LANGSLONG
+# @DESCRIPTION:
+# Same as above, but this variable is for LINGUAS that must be in long format.
+# Remember to set this variable BEFORE inheriting qt4-r2 eclass.
+# Look at ${PORTDIR}/profiles/desc/linguas.desc for details.
+for x in ${LANGSLONG}; do
+	IUSE="${IUSE} linguas_${x%_*}"
+done
 
 # @ECLASS-VARIABLE: PATCHES
 # @DESCRIPTION:
@@ -49,29 +49,6 @@ qt4-r2_src_unpack() {
 # PATCHES=( "${FILESDIR}"/mypatch.patch
 # 	"${FILESDIR}"/mypatch2.patch )
 #
-# @ECLASS-VARIABLE: LANGS
-# @DESCRIPTION:
-# In case your Qt4 application provides various translations, use this variable
-# to specify them in order to populate "linguas_*" IUSE automatically. Make sure
-# that you set this variable BEFORE inheriting qt4-r2 eclass.
-# example: LANGS="en el de"
-#
-# @ECLASS-VARIABLE: LANGSLONG
-# @DESCRIPTION:
-# Same as above, but this variable is for LINGUAS that must be in long format.
-# Remember to set this variable BEFORE inheriting qt4-r2 eclass.
-# Look at ${PORTDIR}/profiles/desc/linguas.desc for details.
-#
-# @ECLASS-VARIABLE: DOCS
-# @DESCRIPTION:
-# Use this variable if you want to install any documentation.
-# example: DOCS="README AUTHORS"
-#
-# @ECLASS-VARIABLE: DOCSDIR
-# @DESCRIPTION:
-# Directory containing documentation. If not specified, ${S} will be used
-# instead.
-#
 # @FUNCTION: qt4-r2_src_prepare
 # @DESCRIPTION:
 # Default src_prepare function for packages that depend on qt4. If you have to
@@ -80,7 +57,7 @@ qt4-r2_src_unpack() {
 qt4-r2_src_prepare() {
 	debug-print-function $FUNCNAME "$@"
 
-	base_src_prepare
+	base_src_prepare "$@"
 }
 
 # @FUNCTION: qt4-r2_src_configure
@@ -95,7 +72,7 @@ qt4-r2_src_configure() {
 	if [[ -n ${project_file} ]]; then
 		eqmake4 ${project_file}
 	else
-		base_src_configure
+		base_src_configure "$@"
 	fi
 }
 
@@ -107,9 +84,19 @@ qt4-r2_src_configure() {
 qt4-r2_src_compile() {
 	debug-print-function $FUNCNAME "$@"
 
-	base_src_compile
+	base_src_compile "$@"
 }
 
+# @ECLASS-VARIABLE: DOCS
+# @DESCRIPTION:
+# Use this variable if you want to install any documentation.
+# example: DOCS="README AUTHORS"
+#
+# @ECLASS-VARIABLE: DOCSDIR
+# @DESCRIPTION:
+# Directory containing documentation. If not specified, ${S} will be used
+# instead.
+#
 # @FUNCTION: qt4-r2_src_install
 # @DESCRIPTION:
 # Default src_install function for qt4-based packages. Installs compiled code,
@@ -266,4 +253,4 @@ eqmake4() {
 	return 0
 }
 
-EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install
+EXPORT_FUNCTIONS src_prepare src_configure src_compile src_install
