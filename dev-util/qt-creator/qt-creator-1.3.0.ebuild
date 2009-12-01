@@ -4,13 +4,12 @@
 
 EAPI="2"
 
-inherit qt4-edge git multilib
+inherit qt4-edge multilib
 MY_PN="${PN/-/}"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
-EGIT_TREE="de6551b"
+SRC_URI="ftp://ftp.qt.nokia.com/${MY_PN}/${P}-src.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -37,8 +36,6 @@ RDEPEND="${DEPEND}
 	subversion? ( dev-util/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git mercurial perforce qtscript subversion"
-
-S="${WORKDIR}/${MY_P}"
 
 LANGS="de es fr it ja pl ru sl"
 
