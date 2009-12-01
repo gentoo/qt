@@ -49,6 +49,13 @@ done
 qt4-r2_src_unpack() {
 	debug-print-function $FUNCNAME "$@"
 
+	# Fallback to ${WORKDIR}/${MY_P} when ${WORKDIR}/${P} doesn't exist.
+	# Feel free to re-implement this
+	if [[ "${S}" == "${WORKDIR}/${P}" && ! -d ${S} && -d ${WORKDIR}/${MY_P} ]]; then
+		ewarn "Falling back to '${WORKDIR}/${MY_P}'"
+		S="${WORKDIR}/${MY_P}"
+	fi
+	
 	base_src_unpack "$@"
 }
 

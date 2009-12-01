@@ -29,14 +29,9 @@ qt4-edge_pkg_setup() {
 }
 
 qt4-edge_src_unpack() {
-	qt4-r2_src_unpack "$@"
+	debug-print-function $FUNCNAME "$@"
 
-	# Fallback to ${WORKDIR}/${MY_P} when ${WORKDIR}/${P} doesn't exist.
-	# Feel free to re-implement this
-	if [[ "${S}" == "${WORKDIR}/${P}" && ! -d ${S} && -d ${WORKDIR}/${MY_P} ]]; then
-		ewarn "Falling back to '${WORKDIR}/${MY_P}'"
-		S="${WORKDIR}/${MY_P}"
-	fi
+	qt4-r2_src_unpack "$@"
 }
 
 # @FUNCTION: qt4-edge_src_prepare
