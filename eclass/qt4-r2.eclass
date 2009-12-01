@@ -41,6 +41,17 @@ for x in ${LANGSLONG}; do
 	IUSE="${IUSE} linguas_${x%_*}"
 done
 
+# @FUNCTION: qt4-r2_src_unpack
+# @DESCRIPTION:
+# Default src_unpack function for packages that depend on qt4. If you have to
+# override src_unpack in your ebuild (probably you don't need to), call
+# qt4-r2_src_unpack in it.
+qt4-r2_src_unpack() {
+	debug-print-function $FUNCNAME "$@"
+
+	base_src_unpack "$@"
+}
+
 # @ECLASS-VARIABLE: PATCHES
 # @DESCRIPTION:
 # In case you have patches to apply, specify them in PATCHES variable. Make sure
@@ -78,7 +89,7 @@ qt4-r2_src_configure() {
 
 # @FUNCTION: qt4-r2_src_compile
 # @DESCRIPTION:
-# Default src_compile function for packages that depends on qt4. If you have to
+# Default src_compile function for packages that depend on qt4. If you have to
 # override src_compile in your ebuild (probably you don't need to), call
 # qt4-r2_src_compile in it.
 qt4-r2_src_compile() {
@@ -253,4 +264,4 @@ eqmake4() {
 	return 0
 }
 
-EXPORT_FUNCTIONS src_prepare src_configure src_compile src_install
+EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install

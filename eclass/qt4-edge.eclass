@@ -29,7 +29,7 @@ qt4-edge_pkg_setup() {
 }
 
 qt4-edge_src_unpack() {
-	base_src_unpack "$@"
+	qt4-r2_src_unpack "$@"
 
 	# Fallback to ${WORKDIR}/${MY_P} when ${WORKDIR}/${P} doesn't exist.
 	# Feel free to re-implement this
