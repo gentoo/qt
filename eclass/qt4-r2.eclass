@@ -13,6 +13,11 @@
 # This eclass contains various functions that may be useful when
 # dealing with packages using Qt4 libraries. Requires EAPI=2.
 
+case ${EAPI} in
+	2) : ;;
+	*) DEPEND="EAPI-TOO-OLD" ;;
+esac
+
 inherit base eutils multilib toolchain-funcs
 
 export XDG_CONFIG_HOME="${T}"
@@ -24,20 +29,6 @@ done
 for x in ${LANGS}; do
 	IUSE="${IUSE} linguas_${x}"
 done
-
-qt4-r2_pkg_setup() {
-	case ${EAPI} in
-		2) ;;
-		*)
-			eerror
-			eerror "The ${ECLASS} eclass requires EAPI=2, but this ebuild does not"
-			eerror "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
-			eerror "to be fixed. Using ${ECLASS} eclass without EAPI=2 will fail."
-			eerror
-			die "${ECLASS} eclass requires EAPI=2"
-			;;
-	esac
-}
 
 qt4-r2_src_unpack() {
 	base_src_unpack
@@ -116,7 +107,7 @@ qt4-r2_src_configure() {
 qt4-r2_src_compile() {
 	debug-print-function $FUNCNAME "$@"
 
-	emake || die "emake failed"
+	base_src_compile
 }
 
 # @FUNCTION: qt4-r2_src_install
@@ -127,7 +118,7 @@ qt4-r2_src_compile() {
 qt4-r2_src_install() {
 	debug-print-function $FUNCNAME "$@"
 
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
+	emake INSTALL_ROOT="${D}" DESTDIR="${D}" install || die "emake install failed"
 
 	# install documentation
 	if [[ -n "${DOCS}" ]]; then
@@ -275,4 +266,4 @@ eqmake4() {
 	return 0
 }
 
-EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install
+EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install
