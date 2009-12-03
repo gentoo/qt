@@ -16,10 +16,6 @@
 >=dev-python/boostpythongenerator-0.3.2a_p1
 >=dev-python/generatorrunner-0.3.2a_p1
 
-# Markos Chandras <hwoarang@gentoo.org> (15 Aug 2009)
-# Upstream SVN repo seems dead
-=media-sound/qtmpc-9999
-
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
