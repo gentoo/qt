@@ -15,7 +15,7 @@
 
 case ${EAPI} in
 	2) : ;;
-	*) DEPEND="EAPI-TOO-OLD" ;;
+	*) DEPEND="EAPI-INCOMPATIBLE" ;;
 esac
 
 inherit base eutils multilib toolchain-funcs
