@@ -6,10 +6,10 @@ EAPI="2"
 
 inherit cmake-utils
 
-MY_PV="${PV/_p}"
+MY_PV="${PV/_*/}"
 MY_P="${PN}-${MY_PV}"
 
-DESCRIPTION="A tool that controls bindings generation"
+DESCRIPTION="A tool for creating Python bindings for C++ libraries"
 HOMEPAGE="http://www.pyside.org/"
 SRC_URI="http://www.pyside.org/files/${MY_P}.tar.bz2"
 
@@ -18,12 +18,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND="~dev-python/apiextractor-0.3.1
+DEPEND="~dev-python/apiextractor-${MY_PV}
+	~dev-python/generatorrunner-${MY_PV}
 	>=x11-libs/qt-core-4.5.0"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	sed -e 's/-2.6//' -i CMakeLists.txt || die "sed failed"
+	epatch "${FILESDIR}/${P}.patch"
 }

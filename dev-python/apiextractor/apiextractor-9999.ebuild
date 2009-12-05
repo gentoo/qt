@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-RDEPEND=">=dev-libs/boost-1.38.0
+RDEPEND=">=dev-libs/boost-1.41.0[python]
 	dev-libs/libxml2
 	dev-libs/libxslt
 	>=x11-libs/qt-core-4.5.0

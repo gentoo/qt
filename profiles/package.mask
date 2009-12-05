@@ -9,13 +9,6 @@
 =dev-python/qscintilla-python-2.4.1_pre*
 =x11-libs/qscintilla-2.4.1_pre*
 
-# Dominik Kapusta <ayoy@gentoo.org> (08 Nov 2009)
-# Pyside starting from 0.2.1 needs boost-1.40.0 which is masked
->=dev-python/pyside-0.2.1
->=dev-python/apiextractor-0.3.1
->=dev-python/boostpythongenerator-0.3.2a_p1
->=dev-python/generatorrunner-0.3.2a_p1
-
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*

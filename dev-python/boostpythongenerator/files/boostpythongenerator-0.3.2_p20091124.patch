@@ -1,0 +1,94 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index c27f621..af10096 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -28,7 +28,7 @@ target_link_libraries(boostpython_generator
+                       ${QT_QTXML_LIBRARY})
+ 
+ 
+-install(TARGETS boostpython_generator DESTINATION ${GENERATORRUNNER_PLUGIN_DIR})
++install(TARGETS boostpython_generator DESTINATION "${GENERATORRUNNER_PLUGIN_DIR}")
+ install(TARGETS boostpythongenerator DESTINATION bin)
+ 
+ add_dependencies(boostpythongenerator boostpython_generator)
+diff --git a/src/convertergenerator.cpp b/src/convertergenerator.cpp
+index 23a5d36..ec4a1f9 100644
+--- a/src/convertergenerator.cpp
++++ b/src/convertergenerator.cpp
+@@ -56,7 +56,6 @@ void ConverterGenerator::finishGeneration()
+             continue;
+ 
+         if (fileOutPath.isNull()) {
+-            m_packageName = cls->package();
+             fileOutPath = outputDirectory() + '/' + subDirectoryForClass(cls)
+                           + "/converter_register_" + moduleName().toLower() + ".hpp";
+         }
+@@ -108,10 +107,6 @@ void ConverterGenerator::finishGeneration()
+     writeConverterRegistration(s, "register_multimap_converter", "QMultiMap", m_qmultiMapTypes);
+     s << "}\n\n";
+     s << "#endif\n\n";
+-
+-    m_numGeneratedWritten = m_qpairTypes.size() + m_qlistTypes.size() +
+-                              m_qvectorTypes.size() + m_qmapTypes.size() +
+-                              m_qhashTypes.size();
+ }
+ 
+ void ConverterGenerator::writeConverterRegistration(QTextStream& out,
+diff --git a/src/cppgenerator.cpp b/src/cppgenerator.cpp
+index e9d6939..ceb285a 100644
+--- a/src/cppgenerator.cpp
++++ b/src/cppgenerator.cpp
+@@ -1415,9 +1415,6 @@ void CppGenerator::finishGeneration()
+         if (!shouldGenerate(cls) || cls->enclosingClass())
+             continue;
+ 
+-        if (m_packageName.isEmpty())
+-            m_packageName = cls->package();
+-
+         QString wrapperName = getWrapperName(cls);
+         QString boostFilename;
+         boostFilename += wrapperName + ".hpp";
+@@ -1429,7 +1426,7 @@ void CppGenerator::finishGeneration()
+         sClassPythonDefines << INDENT << define_str << endl;
+     }
+ 
+-    QString moduleFileName(outputDirectory() + "/" + subDirectoryForPackage(m_packageName));
++    QString moduleFileName(outputDirectory() + "/" + subDirectoryForPackage(packageName()));
+     moduleFileName += "/" + moduleName().toLower() + "_module_wrapper.cpp";
+ 
+     QFile file(moduleFileName);
+@@ -1480,7 +1477,7 @@ void CppGenerator::writeGlobalFunctions()
+ {
+     QString fileName = moduleName().toLower() + "_globals_wrapper.cpp";
+ 
+-    FileOut fileOut(outputDirectory() + "/" + subDirectoryForPackage(m_packageName) + "/" + fileName);
++    FileOut fileOut(outputDirectory() + "/" + subDirectoryForPackage(packageName()) + "/" + fileName);
+ 
+     QSet<QString> includes;
+     QString defsStr;
+@@ -1526,7 +1523,7 @@ void CppGenerator::writeGlobalFunctions()
+ 
+     // Add module level code snippets to 'Global' class
+     TypeSystemTypeEntry *moduleEntry = dynamic_cast<TypeSystemTypeEntry *>(
+-                                            TypeDatabase::instance()->findType(m_packageName));
++                                            TypeDatabase::instance()->findType(packageName()));
+     QString sEnd;
+     QTextStream snipEnd(&sEnd);
+     if (moduleEntry && moduleEntry->codeSnips().size() > 0) {
+diff --git a/src/hppgenerator.cpp b/src/hppgenerator.cpp
+index 427add0..21a9bc9 100644
+--- a/src/hppgenerator.cpp
++++ b/src/hppgenerator.cpp
+@@ -191,7 +191,11 @@ void HppGenerator::writeDefaultImplementation(QTextStream& s, const AbstractMeta
+ {
+     QString returnValue;
+     if (func->type()) {
+-        if (func->type()->isObject() || func->type()->isQObject() || func->type()->name() == "void")
++        if (func->type()->isObject() ||
++            func->type()->isQObject()  ||
++            func->type()->isValuePointer() ||
++            func->type()->isNativePointer() ||
++            func->type()->name() == "void" )
+             returnValue = "0";
+         else
+             returnValue = functionReturnType(func) + "()";

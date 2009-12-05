@@ -15,8 +15,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND=">=dev-libs/boost-1.40.0[python]
-	~dev-python/boostpythongenerator-${PV}
+DEPEND=">=dev-libs/boost-1.41.0[python]
+	>=dev-python/boostpythongenerator-0.3.2
 	>=x11-libs/qt-core-4.5.0
 	>=x11-libs/qt-assistant-4.5.0
 	>=x11-libs/qt-gui-4.5.0
