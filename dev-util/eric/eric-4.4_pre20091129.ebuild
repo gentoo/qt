@@ -8,6 +8,8 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit eutils python
 
+RESTRICT_PYTHON_ABIS="3.*"
+
 MY_PN="${PN}4"
 MY_PV="${PV/_pre/-snapshot-}"
 MY_P="${MY_PN}-${MY_PV}"
