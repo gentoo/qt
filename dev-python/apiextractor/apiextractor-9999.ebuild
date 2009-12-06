@@ -31,3 +31,8 @@ src_prepare() {
 		-e '/^install/s/lib/lib${LIB_SUFFIX}/' \
 		-i "${S}/CMakeLists.txt" || die "sed failed"
 }
+
+src_install() {
+	cmake-utils_src_install
+	dodoc AUTHORS ChangeLog || die "dodoc failed"
+}
