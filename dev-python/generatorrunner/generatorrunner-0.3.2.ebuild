@@ -22,3 +22,8 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	sed -e 's/-2.6//' -i CMakeLists.txt || die "sed failed"
 }
+
+src_install() {
+	cmake-utils_src_install
+	dodoc AUTHORS ChangeLog || die "dodoc failed"
+}
