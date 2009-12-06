@@ -22,7 +22,7 @@ RESTRICT="mirror"
 SLOT="4"
 LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
-IUSE="spell"
+IUSE="spell kde"
 
 for L in ${LANGS}; do
 	SRC_URI="${SRC_URI}
@@ -41,12 +41,13 @@ S="${WORKDIR}"/${MY_P}
 
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-no-interactive.patch
-
+	! use kde && epatch "${FILESDIR}"/no-pykde.patch
 	# remove bundled copies, bug #283148
 	rm -rf "${S}"/eric/ThirdParty
 }
 
 src_install() {
+	python_version
 	installation() {
 		"$(PYTHON)" install.py \
 			-b "/usr/bin" \
