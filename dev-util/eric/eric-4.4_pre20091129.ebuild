@@ -40,7 +40,7 @@ PDEPEND="spell? ( dev-python/pyenchant )"
 S="${WORKDIR}"/${MY_P}
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-20090913-no-interactive.patch
+	epatch "${FILESDIR}"/${P}-no-interactive.patch
 
 	# remove bundled copies, bug #283148
 	rm -rf "${S}"/eric/ThirdParty

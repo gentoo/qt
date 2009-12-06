@@ -2,6 +2,14 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eric-4.4_pre20091129 (06 Dec 2009)
+
+  06 Dec 2009; <hwoarang@gentoo.org> -eric-4.4_pre20090913.ebuild,
+  +eric-4.4_pre20091129.ebuild,
+  +files/eric-4.4_pre20091129-no-interactive.patch,
+  -files/eric-20090913-no-interactive.patch:
+  New snapshot. Remove old. Update patch as well
+
 *eric-4.4_pre20090913 (25 Sep 2009)
 
   25 Sep 2009; Davide Pesavento <davidepesa@gmail.com>
