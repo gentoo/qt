@@ -298,9 +298,9 @@ qt4-build-edge_src_prepare() {
 		symlink_binaries_to_buildtree
 	fi
 
-	sed -e "s/\(^SYSTEM_VARIABLES\)/CC=$(tc-getCC)\nCXX=$(tc-getCXX)\n\1/" \
+	sed -e "s:\(^SYSTEM_VARIABLES\):CC=$(tc-getCC)\nCXX=$(tc-getCXX)\n\1:" \
 		-i configure || die "sed qmake compilers failed"
-	sed -e "s/\(\$MAKE\)/\1 CC=$(tc-getCC) CXX=$(tc-getCXX) LD=$(tc-getCXX)/" \
+	sed -e "s:\(\$MAKE\):\1 CC=$(tc-getCC) CXX=$(tc-getCXX) LD=$(tc-getCXX):" \
 		-i config.tests/unix/compile.test || die "sed configure tests compilers failed"
 
 	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
