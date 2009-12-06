@@ -3,6 +3,9 @@
 # $Header: $
 
   06 Dec 2009; <hwoarang@gentoo.org> eric-4.4_pre20091129.ebuild:
+  Add pykde4 as dependency
+
+  06 Dec 2009; <hwoarang@gentoo.org> eric-4.4_pre20091129.ebuild:
   Workaround to prevent compilation failure with Python-3
 
   06 Dec 2009; <hwoarang@gentoo.org> eric-4.4_pre20091129.ebuild,
