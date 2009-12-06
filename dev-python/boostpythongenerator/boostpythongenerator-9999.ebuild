@@ -21,3 +21,8 @@ DEPEND="~dev-python/apiextractor-${PV}
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
+
+src_install() {
+	cmake-utils_src_install
+	dodoc AUTHORS ChangeLog || die "dodc failed"
+}

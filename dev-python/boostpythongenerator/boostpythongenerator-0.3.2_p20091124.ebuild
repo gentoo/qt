@@ -28,3 +28,8 @@ S="${WORKDIR}/${MY_P}"
 src_prepare() {
 	epatch "${FILESDIR}/${P}.patch"
 }
+
+src_install() {
+	cmake-utils_src_install
+	dodoc AUTHORS ChangeLog || die "dodoc failed"
+}
