@@ -48,6 +48,7 @@ done
 # qt4-r2_src_unpack in it.
 qt4-r2_src_unpack() {
 	debug-print-function $FUNCNAME "$@"
+	base_src_unpack "$@"
 
 	# Fallback to ${WORKDIR}/${MY_P} when ${WORKDIR}/${P} doesn't exist.
 	# Feel free to re-implement this
@@ -55,8 +56,6 @@ qt4-r2_src_unpack() {
 		ewarn "Falling back to '${WORKDIR}/${MY_P}'"
 		S="${WORKDIR}/${MY_P}"
 	fi
-	
-	base_src_unpack "$@"
 }
 
 # @ECLASS-VARIABLE: PATCHES
