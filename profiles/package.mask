@@ -22,10 +22,6 @@
 # Needs Qt 4.4, while 4.5.1 is stable. Use qt-script instead.
 =dev-libs/qsa-1.2*
 
-# Dror Levin <spatz@psybear.com> (16 Jun 2009)
-# Crashes when started, needs more testing.
-x11-misc/qps
-
 # Ben de Groot <yngwin@gentoo.org> (14 Jun 2009)
 # Snapshots that not everyone may want.
 =dev-util/eric-4.4_pre*
