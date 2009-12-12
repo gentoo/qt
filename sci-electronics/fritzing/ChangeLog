@@ -1,0 +1,11 @@
+# ChangeLog for sci-electronics/fritzing
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*fritzing-0.3.13b (12 Dec 2009)
+
+  12 Dec 2009; steffen stramm <krytzz@soylent.eu> +fritzing-0.3.13b.ebuild:
+  added preliminary ebuild for fritzing,
+  translations, debug etc still missing but
+  works so far, upstream has no install script :(
+
