@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Dec 2009; Ben de Groot <yngwin@gentoo.org> qtemu-9999.ebuild:
+  Improve useflag logic, suggested by [Enrico].
+
 *qtemu-2.0_alpha1 (24 Jul 2009)
 
   24 Jul 2009; Markos Chandras <hwoarang@gentoo.org>
