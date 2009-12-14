@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Dec 2009; <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
+  Fix package version
+
   09 Jun 2009; Markos Chandras <hwoarang@gentoo.org> qmpdclient-9999.ebuild:
   Fix zh_*, no_NO linguas
 

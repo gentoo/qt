@@ -44,6 +44,10 @@ src_prepare() {
 			-e "/SOURCES\ +=\ src\/notifications_dbus.cpp/SOURCES\ +=\ src\/notifications_nodbus.cpp" \
 				${PN}.pro || die "disabling dbus failed"
 	fi
+
+	# Fix package version
+	sed -i -e "s:1.1.1:' - Live Build':" ${PN}.pro || die "failed to fix package version"
+
 }
 
 src_compile() {
