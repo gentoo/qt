@@ -3,14 +3,11 @@
 <pkgmetadata>
 	<herd>net-im</herd>
 	<maintainer>
-		<email>reavertm@poczta.fm</email>
+		<email>reavertm@gmail.com</email>
 		<name>Maciej Mrozowski</name>
 	</maintainer>
 	<use>
-		<flag name="avatar">Display Gadu Avatars in Kadu</flag>
-		<flag name="config_wizard">Enables configuration wizard module</flag>
-		<flag name="sms">Enables SMS sending plugin</flag>
+		<flag name="phonon">Enable phonon audio plugin</flag>
 		<flag name="speech">Enables speech module</flag>
-		<flag name="voice">Enables voice chat</flag>
 	</use>
 </pkgmetadata>
