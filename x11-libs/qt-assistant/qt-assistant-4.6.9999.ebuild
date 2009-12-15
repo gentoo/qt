@@ -31,10 +31,10 @@ include/
 doc/"
 
 src_prepare() {
-	if use qt-copy || ! use stable-branch; then
-		epatch "${FILESDIR}/${PN}-4.6.0_rc1-tools.patch"
+	if use qt-copy; then
+		epatch "${FILESDIR}/${P}-qt-copy-tools.patch"
 	else
-		epatch "${FILESDIR}/${PN}-4.6-tools.patch"
+		epatch "${FILESDIR}/${P}-tools.patch"
 	fi
 
 	qt4-build-edge_src_prepare

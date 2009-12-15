@@ -1,12 +1,11 @@
 diff --git a/tools/tools.pro b/tools/tools.pro
-index 4b36115..d3dd1a5 100644
+index 4cff507..7b01ae9 100644
 --- a/tools/tools.pro
 +++ b/tools/tools.pro
-@@ -4,31 +4,9 @@ no-png {
-     message("Some graphics-related tools are unavailable without PNG support")
+@@ -5,32 +5,8 @@ no-png {
  } else {
       SUBDIRS += assistant \
-		pixeltool \
+ 		pixeltool \
 -		porting \
 -                qtestlib \
 -                qttracereplay
@@ -20,7 +19,6 @@ index 4b36115..d3dd1a5 100644
 -     wince*: SUBDIRS = qtestlib designer
 -     unix:!mac:!embedded:contains(QT_CONFIG, qt3support):SUBDIRS += qtconfig
 -     win32:!wince*:SUBDIRS += activeqt
-+		qdoc3
  }
  
 -mac {
@@ -29,9 +27,11 @@ index 4b36115..d3dd1a5 100644
 -
 -embedded:SUBDIRS += kmap2qmap
 -
+-contains(QT_CONFIG, declarative):SUBDIRS += qmlviewer qmldebugger
 -contains(QT_CONFIG, dbus):SUBDIRS += qdbus
 -!wince*:contains(QT_CONFIG, xmlpatterns): SUBDIRS += xmlpatterns xmlpatternsvalidator
 -embedded: SUBDIRS += makeqpf
 -
+ !wince*:!cross_compile:SUBDIRS += qdoc3
+ 
  CONFIG+=ordered
- QTDIR_build:REQUIRES = "contains(QT_CONFIG, full-config)"

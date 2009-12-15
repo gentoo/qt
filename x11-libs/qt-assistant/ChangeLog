@@ -2,6 +2,14 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Dec 2009; Dominik Kapusta <ayoy@gentoo.org>
+  -files/qt-assistant-4.6.0_rc1-tools.patch, qt-assistant-4.6.9999.ebuild,
+  +files/qt-assistant-4.6.9999-qt-copy-tools.patch,
+  +files/qt-assistant-4.6.9999-tools.patch,
+  -files/qt-assistant-4.6-tools.patch, qt-assistant-4.9999.ebuild,
+  +files/qt-assistant-4.9999-tools.patch:
+  Fix patching in 4.6.9999 and 4.9999 (bug #296939)
+
   29 Nov 2009; Dominik Kapusta <ayoy@gentoo.org>
   qt-assistant-4.6.9999.ebuild, -files/qt-assistant-4.6-qdocconf.patch,
   qt-assistant-4.9999.ebuild:
