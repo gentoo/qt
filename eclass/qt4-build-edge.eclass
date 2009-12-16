@@ -144,7 +144,11 @@ qt4-build-edge_pkg_setup() {
 			;;
 		4.6.9999)
 			if use qt-copy; then
-				MY_PV_EXTRA="${PV}-qt-copy"
+				if use stable-branch; then
+					MY_PV_EXTRA="${PV}-qt-copy-stable"
+				else
+					MY_PV_EXTRA="${PV}-qt-copy"
+				fi
 			else
 				if use stable-branch; then
 					MY_PV_EXTRA="${PV}-stable"
@@ -166,6 +170,12 @@ qt4-build-edge_pkg_setup() {
 	esac
 
 	case "${MY_PV_EXTRA}" in
+		4.6.9999-qt-copy-stable)
+			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
+			EGIT_PROJECT="qt-${PV}"
+			EGIT_BRANCH="4.6-stable-patched"
+			EGIT_TREE="${EGIT_BRANCH}"
+			;;
 		4.6.9999-qt-copy)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
@@ -223,6 +233,10 @@ qt4-build-edge_pkg_setup() {
 			4.?.9999-qt-copy)
 				ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
 				;;
+			4.?.9999-qt-copy-stable)
+				ewarn "The ${PV} version ebuilds with qt-copy and stable-branch	USE flags install qt-copy from"
+				ewarn "gitorious kde-qt repository, '4.6-stable-patched' branch."
+				;;
 			4.?.9999-stable | 4.9999-stable)
 				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch."
 				ewarn "See http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
@@ -258,7 +272,7 @@ qt4-build-edge_src_unpack() {
 	done
 
 	case "${MY_PV_EXTRA}" in
-		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
+		4.?.9999-qt-copy | 4.?.9999-qt-copy-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			git_src_unpack
 			;;
 		*)
@@ -286,7 +300,7 @@ qt4-build-edge_src_prepare() {
 	setqtenv
 
 	case "${MY_PV_EXTRA}" in
-		4.?.9999-qt-copy | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
+		4.?.9999-qt-copy | 4.?.9999-qt-copy-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			generate_include
 		;;
 	esac
@@ -416,7 +430,7 @@ standard_configure_options() {
 		-nomake examples -nomake demos"
 
 	case "${MY_PV_EXTRA}" in
-		4.6.* | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy)
+		4.6.* | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy | 4.?.9999-qt-copy-stable )
 			myconf="${myconf} -opensource"
 			;;
 	esac
