@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  16 Dec 2009; Alex Alexander <wired@gentoo.org>
+  qt-xmlpatterns-4.5.9999.ebuild:
+  qt-copy -> kde-qt
+
   22 Nov 2009; steffen stramm <krytzz@soylent.eu>
   qt-xmlpatterns-4.9999.ebuild:
   also dropped exceptions dep from 4.9999

@@ -17,10 +17,10 @@
 #
 # NOTES:
 #
-#	4.9999 and 4.?.9999[-qt-copy]
+#	4.9999 and 4.?.9999[-kde-qt]
 #			stands for live ebuilds from qtsoftware's git repository
 #			(that is Nokia, previously trolltech)
-#	4.?.9999[qt-copy]
+#	4.?.9999[kde-qt]
 #			stands for live ebuilds from kde-qt git repository
 #	4.*.*_{beta,rc,}* and *
 #			are official releases or snapshots from Nokia
@@ -76,10 +76,10 @@ case "${PV}" in
 		IUSE="${IUSE} +stable-branch"
 		;;
 	4.6.9999)
-		IUSE="${IUSE} stable-branch +qt-copy"
+		IUSE="${IUSE} stable-branch +kde-qt"
 		;;
 	4.5.9999)
-		IUSE="${IUSE} +qt-copy"
+		IUSE="${IUSE} +kde-qt"
 		;;
 esac
 
@@ -143,11 +143,11 @@ qt4-build-edge_pkg_setup() {
 			fi
 			;;
 		4.6.9999)
-			if use qt-copy; then
+			if use kde-qt; then
 				if use stable-branch; then
-					MY_PV_EXTRA="${PV}-qt-copy-stable"
+					MY_PV_EXTRA="${PV}-kde-qt-stable"
 				else
-					MY_PV_EXTRA="${PV}-qt-copy"
+					MY_PV_EXTRA="${PV}-kde-qt"
 				fi
 			else
 				if use stable-branch; then
@@ -158,8 +158,8 @@ qt4-build-edge_pkg_setup() {
 			fi
 			;;
 		4.5.9999)
-			if use qt-copy; then
-				MY_PV_EXTRA="${PV}-qt-copy"
+			if use kde-qt; then
+				MY_PV_EXTRA="${PV}-kde-qt"
 			else
 				MY_PV_EXTRA="${PV}"
 			fi
@@ -170,19 +170,19 @@ qt4-build-edge_pkg_setup() {
 	esac
 
 	case "${MY_PV_EXTRA}" in
-		4.6.9999-qt-copy-stable)
+		4.6.9999-kde-qt-stable)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="4.6-stable-patched"
 			EGIT_TREE="${EGIT_BRANCH}"
 			;;
-		4.6.9999-qt-copy)
+		4.6.9999-kde-qt)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="master"
 			EGIT_TREE="${EGIT_BRANCH}"
 			;;
-		4.5.9999-qt-copy)
+		4.5.9999-kde-qt)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="4.5.3-patched"
@@ -230,11 +230,11 @@ qt4-build-edge_pkg_setup() {
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		echo
 		case "${MY_PV_EXTRA}" in
-			4.?.9999-qt-copy)
-				ewarn "The ${PV} version ebuilds with qt-copy USE flag install qt-copy from gitorious kde-qt repository."
+			4.?.9999-kde-qt)
+				ewarn "The ${PV} version ebuilds with kde-qt USE flag install kde-qt from gitorious kde-qt repository."
 				;;
-			4.?.9999-qt-copy-stable)
-				ewarn "The ${PV} version ebuilds with qt-copy and stable-branch	USE flags install qt-copy from"
+			4.?.9999-kde-qt-stable)
+				ewarn "The ${PV} version ebuilds with kde-qt and stable-branch	USE flags install kde-qt from"
 				ewarn "gitorious kde-qt repository, '4.6-stable-patched' branch."
 				;;
 			4.?.9999-stable | 4.9999-stable)
@@ -272,7 +272,7 @@ qt4-build-edge_src_unpack() {
 	done
 
 	case "${MY_PV_EXTRA}" in
-		4.?.9999-qt-copy | 4.?.9999-qt-copy-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
+		4.?.9999-kde-qt | 4.?.9999-kde-qt-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			git_src_unpack
 			;;
 		*)
@@ -300,7 +300,7 @@ qt4-build-edge_src_prepare() {
 	setqtenv
 
 	case "${MY_PV_EXTRA}" in
-		4.?.9999-qt-copy | 4.?.9999-qt-copy-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
+		4.?.9999-kde-qt | 4.?.9999-kde-qt-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
 			generate_include
 		;;
 	esac
@@ -430,7 +430,7 @@ standard_configure_options() {
 		-nomake examples -nomake demos"
 
 	case "${MY_PV_EXTRA}" in
-		4.6.* | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-qt-copy | 4.?.9999-qt-copy-stable )
+		4.6.* | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-kde-qt | 4.?.9999-kde-qt-stable )
 			myconf="${myconf} -opensource"
 			;;
 	esac

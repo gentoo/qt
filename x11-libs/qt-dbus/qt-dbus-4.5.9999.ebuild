@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt-copy=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=]
 	>=sys-apps/dbus-1.0.2"
 RDEPEND="${DEPEND}"
 

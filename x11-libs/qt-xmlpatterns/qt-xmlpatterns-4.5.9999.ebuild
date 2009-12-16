@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt-copy=]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"

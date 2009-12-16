@@ -2,5 +2,5 @@
 # Please keep alphabetically sorted
 
 custom-cxxflags - Allows building with user set CXXFLAGS
-qt-copy - Use KDE's QT repository with extra patches
+kde-qt - Use KDE's QT repository with extra patches
 raster - Use raster backend engine for Qt

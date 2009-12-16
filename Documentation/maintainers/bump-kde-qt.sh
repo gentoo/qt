@@ -1,12 +1,12 @@
 # Markos Chandras <hwoarang@gentoo.org>
-# Oneliner for bumping qt-copy ebuilds
+# Oneliner for bumping kde-qt ebuilds
 # use it like
-# bump-qt-copy <old version> <new version>
+# bump-kde-qt <old version> <new version>
 # This will copy the <old version> ebuilds to <new version>
 # New version is always using 4.9999 ebuilds 
 # Lets say you want to bump 4.4.9999 ebuilds to 4.5.9999 you have to write:
 #
-# ./bump-qt-copy 4.4.9999 4.5.9999
+# ./bump-kde-qt 4.4.9999 4.5.9999
 #
 source /etc/init.d/functions.sh
 #### VARIABLES ####

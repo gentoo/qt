@@ -10,9 +10,9 @@ SLOT="4"
 KEYWORDS=""
 IUSE="+accessibility kde phonon"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,qt-copy=]
-	~x11-libs/qt-gui-${PV}[accessibility=,debug=,qt3support,qt-copy=]
-	~x11-libs/qt-sql-${PV}[debug=,qt3support,qt-copy=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,kde-qt=]
+	~x11-libs/qt-gui-${PV}[accessibility=,debug=,qt3support,kde-qt=]
+	~x11-libs/qt-sql-${PV}[debug=,qt3support,kde-qt=]
 	phonon? (
 		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[debug=]
 			media-sound/phonon[gstreamer] ) )

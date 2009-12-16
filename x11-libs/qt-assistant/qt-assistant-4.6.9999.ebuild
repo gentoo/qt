@@ -31,8 +31,8 @@ include/
 doc/"
 
 src_prepare() {
-	if use qt-copy; then
-		epatch "${FILESDIR}/${P}-qt-copy-tools.patch"
+	if use kde-qt; then
+		epatch "${FILESDIR}/${P}-kde-qt-tools.patch"
 	else
 		epatch "${FILESDIR}/${P}-tools.patch"
 	fi

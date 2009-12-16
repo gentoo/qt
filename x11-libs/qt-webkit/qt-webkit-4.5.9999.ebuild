@@ -10,9 +10,9 @@ SLOT="4"
 KEYWORDS=""
 IUSE="kde"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,qt-copy=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,kde-qt=]
 	~x11-libs/qt-dbus-${PV}[debug=]
-	~x11-libs/qt-gui-${PV}[dbus,debug=,qt-copy=]
+	~x11-libs/qt-gui-${PV}[dbus,debug=,kde-qt=]
 	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus,debug=]
 		media-sound/phonon ) )
 	kde? ( media-sound/phonon )"
@@ -31,7 +31,7 @@ src_prepare() {
 	if use sparc; then
 		epatch "${FILESDIR}"/sparc-qt-webkit-sigbus.patch
 	fi
-	use kde && use qt-copy && epatch "${FILESDIR}/kde-phonon.patch"
+	use kde && use kde-qt && epatch "${FILESDIR}/kde-phonon.patch"
 	qt4-build-edge_src_prepare
 }
 
