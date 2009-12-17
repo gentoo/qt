@@ -1,9 +1,0 @@
-# ChangeLog for app-admin/keepassx
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*keepassx-9999 (23 May 2009)
-
-  23 May 2009; Dror Levin <spatz@gentoo.org> +keepassx-9999.ebuild:
-  New live ebuild based on the one in the tree.
-
