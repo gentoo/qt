@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE="iconv"
 
-DEPEND="~x11-libs/qt-gui-${PV}[debug=]"
+DEPEND="~x11-libs/qt-gui-${PV}[debug=,kde-qt=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="

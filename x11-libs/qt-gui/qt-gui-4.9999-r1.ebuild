@@ -22,8 +22,8 @@ RDEPEND="media-libs/fontconfig
 	x11-libs/libXfont
 	x11-libs/libSM
 	x11-libs/libXi
-	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=]
-	~x11-libs/qt-script-${PV}[debug=]
+	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=,stable-branch=]
+	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
 	gtk? ( x11-libs/gtk+:2 )
@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/gui

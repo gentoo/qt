@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE="firebird iconv mysql odbc postgres qt3support +sqlite"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
 	firebird? ( dev-db/firebird )
 	mysql? ( virtual/mysql )
 	odbc? ( dev-db/unixODBC )

@@ -11,9 +11,9 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-sql-${PV}[sqlite]
-	~x11-libs/qt-webkit-${PV}
+	~x11-libs/qt-gui-${PV}[kde-qt=]
+	~x11-libs/qt-sql-${PV}[sqlite,kde-qt=]
+	~x11-libs/qt-webkit-${PV}[kde-qt=]
 "
 RDEPEND="${DEPEND}"
 
