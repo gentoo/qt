@@ -53,6 +53,8 @@ src/script
 tools/linguist/shared
 translations"
 
+PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+
 pkg_setup() {
 	qt4-build-edge_pkg_setup
 

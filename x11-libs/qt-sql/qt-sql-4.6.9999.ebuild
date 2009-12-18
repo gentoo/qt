@@ -31,6 +31,8 @@ src/sql
 src/3rdparty
 src/tools"
 
+PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+
 pkg_setup() {
 	if ! (use firebird || use mysql || use odbc || use postgres || use sqlite); then
 		ewarn "You need to enable at least one SQL driver. Enable at least"

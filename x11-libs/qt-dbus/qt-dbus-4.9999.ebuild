@@ -30,6 +30,8 @@ include/QtXml
 src/corelib
 src/xml"
 
+PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+
 src_configure() {
 	myconf="${myconf} -dbus-linked"
 	qt4-build-edge_src_configure

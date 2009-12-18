@@ -24,6 +24,8 @@ src/corelib/"
 QCONFIG_ADD="xmlpatterns"
 QCONFIG_DEFINE="QT_XMLPATTERNS"
 
+PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+
 src_configure() {
 	myconf="${myconf} -xmlpatterns"
 	qt4-build-edge_src_configure

@@ -19,6 +19,8 @@ include/QtTest/
 include/QtCore/
 src/corelib/"
 
+PATCHES=( "${FILESDIR}/qt-4.5-nolibx11.diff" )
+
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
