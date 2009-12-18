@@ -174,31 +174,31 @@ qt4-build-edge_pkg_setup() {
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="4.6-stable-patched"
-			EGIT_TREE="${EGIT_BRANCH}"
+			EGIT_COMMIT="${EGIT_BRANCH}"
 			;;
 		4.6.9999-kde-qt)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="master"
-			EGIT_TREE="${EGIT_BRANCH}"
+			EGIT_COMMIT="${EGIT_BRANCH}"
 			;;
 		4.5.9999-kde-qt)
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="4.5.3-patched"
-			EGIT_TREE="${EGIT_BRANCH}"
+			EGIT_COMMIT="${EGIT_BRANCH}"
 			;;
 		4.?.9999 | 4.?.9999-stable)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="${MY_PV_EXTRA/.9999}"
-			EGIT_TREE="${EGIT_BRANCH}"
+			EGIT_COMMIT="${EGIT_BRANCH}"
 			;;
 		4.9999-stable)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="master-stable"
-			EGIT_TREE="${EGIT_BRANCH}"
+			EGIT_COMMIT="${EGIT_BRANCH}"
 			;;
 		4.9999)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
