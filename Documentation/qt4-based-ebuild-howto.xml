@@ -22,7 +22,7 @@ This guide is intented to give an overview of how to create a Qt4-based ebuild. 
 <license/>
 
 <version>0.5</version>
-<date>2009-12-15</date>
+<date>2009-12-20</date>
 
 <chapter>
 	<title>Purpose of this howto</title>
@@ -142,8 +142,7 @@ DOCS="Authors ChangeLog Readme"</pre>
 		<section>
 		<title>src_prepare function</title>
 		<body>
-		<p>EAPI2 introduced the src_prepare function which is executed right after src_unpack. The default implementation does nothing.
-		Most of the time, you wont need to use this function at all. Patches are applied automatically via autopatcher</p>
+		<p>EAPI2 introduced the src_prepare function which is executed right after src_unpack. The default implementation does nothing.</p>
 		</body>
 		</section>
 		<section>
