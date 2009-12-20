@@ -108,6 +108,24 @@ DEPEND="x11-libs/qt-gui:4
 	</section>
 
 	<section>
+	<title>Debug and Release scope</title>
+	<body>
+	<p>Qt offers you the ability to build your applications using two different modes:</p>
+	<ul>
+	<li>Release: Leads to smaller binaries, usefull for the production state.</li>
+	<li>Debug: Leads to bigger binaries, usefull for debugging during development process.</li>
+	</ul>
+	<p>Thus, qt4-r2 eclass can use the 'debug' use flag in order to build your application with debug symbols.</p> 
+	<pre caption="Add 'debug' use flag">
+IUSE="debug"</pre>
+	<impo>
+	'debug' use flag usage implies that you have already followed the <uri link="/proj/en/qa/backtraces.xml">
+	"How to get meaningful backtraces in Gentoo"</uri> tutorial.
+	</impo>
+	</body>
+	</section>
+
+	<section>
 	<title> Package documentation</title>
 	<body>
 	<p>There is a special variable to use in case your package provides document files. <b>DOCS</b> variable can be used by the <uri link="#doc_chap5_pre1">default src_install function</uri> to install those documents. Normally the documents are located on "${S}" directory. If not, set the <b>DOCSDIR</b> variable to match the documents path. If you don't need to use DOCSDIR variable, then "${S} will be used by default.</p>
