@@ -7,6 +7,7 @@
 # -h -> generate html instead of plain text
 # -u -> upload results to devspace ( d.g.o:~/public_html/checks/qt4.eclass.html )
 # -v -> open results with xdg-open
+# -c -> add ebuild count
 #
 # ./eclass-echecker -rhu is ran daily by wired:
 # http://dev.gentoo.org/~wired/checks/qt4.eclass.html
@@ -19,10 +20,11 @@ regen=0
 html=0
 upload=0
 view=0
+count=0
 
 dt=$(date +%Y-%m-%d\ %H:%M:%S)
 
-while getopts rhvu args
+while getopts rhvuc args
 do
 	opts=1
 	case $args in
@@ -30,6 +32,7 @@ do
 	h) html=1 ;;
 	v) view=1 ;;
 	u) upload=1 ;;
+	c) count=1 ;;
 	esac
 done
 
@@ -40,6 +43,10 @@ fi
 [[ $regen == 1 ]] && q -r
 
 function check() {
+	CNT=
+	if [[ $count == 1 ]]; then
+		CNT="(count: $(qgrep -H "inherit" | grep "qt4" | grep -v 'qt4-' | wc -l))"
+	fi
 	if [[ $html == 1 ]]; then
 		echo "  <HTML>
 			<HEAD>
@@ -65,13 +72,13 @@ function check() {
 			</HEAD>
 			<BODY>
 			<table cellspacing='0' cellpadding='0' id='mainTable'>
-			<tr><td style='background: #333; color: white;'>Last update: <strong>$dt</strong></td></tr>
+			<tr><td style='background: #333; color: white;'>Last update: <strong>$dt</strong> ${CNT}</td></tr>
 			<tr><td style='height: 5px'></td></tr>
 			<tr><td style='font-weight: bold'>The following <span style='color: yellow'>~testing</span> ebuilds are using the old, deprecated <span style='color:red'>qt4.eclass</span>.</td></tr>
 			<tr><td style='height: 5px'></td></tr>
 		"
 	else
-		echo "The following ~testing ebuilds are using the old, deprecated qt4.eclass"
+		echo "The following ~testing ebuilds are using the old, deprecated qt4.eclass. ${CNT}"
 	fi
 
 	CC=""
