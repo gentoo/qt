@@ -22,7 +22,7 @@ upload=0
 view=0
 count=0
 
-dt=$(date +%Y-%m-%d\ %H:%M:%S)
+dt="$(date --utc +%Y-%m-%d\ %H:%M:%S) UTC"
 
 while getopts rhvuc args
 do
