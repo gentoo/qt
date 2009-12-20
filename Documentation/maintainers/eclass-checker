@@ -1,0 +1,128 @@
+#!/bin/bash
+# this script requires portage-utils
+# check for ~testing ebuilds using old qt4.eclass
+#
+# arguments
+# -r -> regenerate q cache
+# -h -> generate html instead of plain text
+# -u -> upload results to devspace ( d.g.o:~/public_html/checks/qt4.eclass.html )
+# -v -> open results with xdg-open
+#
+# ./eclass-echecker -rhu is ran daily by wired:
+# http://dev.gentoo.org/~wired/checks/qt4.eclass.html
+
+PORTAGE_DIR="/usr/portage"
+
+args=$1
+opts=0
+regen=0
+html=0
+upload=0
+view=0
+
+dt=$(date +%Y-%m-%d\ %H:%M:%S)
+
+while getopts rhvu args
+do
+	opts=1
+	case $args in
+	r) regen=1 ;;
+	h) html=1 ;;
+	v) view=1 ;;
+	u) upload=1 ;;
+	esac
+done
+
+if [[ $opts == 0 ]]; then
+	regen=1
+fi
+
+[[ $regen == 1 ]] && q -r
+
+function check() {
+	if [[ $html == 1 ]]; then
+		echo "  <HTML>
+			<HEAD>
+				<TITLE>Qt4 ~testing ebuilds using old qt4.eclass</TITLE>
+				<STYLE>
+				body {
+					color: black;
+					background: #ccc;
+					font-family: Dejavu Sans Mono, Verdana;
+					font-size: 12px;
+				}
+				#mainTable td {
+					padding: 3px;
+					font-family: Dejavu Sans Mono, Verdana;
+					font-size: 12px;
+				}
+				#mainTable .splitter {
+					padding: 0px;
+					height: 1px;
+					background: #333;
+				}
+				</STYLE>		
+			</HEAD>
+			<BODY>
+			<table cellspacing='0' cellpadding='0' id='mainTable'>
+			<tr><td style='background: #333; color: white;'>Last update: <strong>$dt</strong></td></tr>
+			<tr><td style='height: 5px'></td></tr>
+			<tr><td style='font-weight: bold'>The following <span style='color: yellow'>~testing</span> ebuilds are using the old, deprecated <span style='color:red'>qt4.eclass</span>.</td></tr>
+			<tr><td style='height: 5px'></td></tr>
+		"
+	else
+		echo "The following ~testing ebuilds are using the old, deprecated qt4.eclass"
+	fi
+
+	CC=""
+
+	qgrep -H "inherit" | grep "qt4" | grep -v 'qt4-' | while read i;
+	do
+		E=$(echo ${i} | cut -d":" -f1)
+		stable=0
+		KW=`grep "^KEYWORDS" ${PORTAGE_DIR}/${E} | sed -r "s:.*\"(.*)\".*:\1:"`
+		for j in ${KW};
+		do
+			[[ ${j} == ${j/\~} ]] && stable=1 && break;
+		done
+
+		if [[ $stable == 0 ]]; then
+			C=${E%/*}
+			if [[ $C != $CC ]]; then
+				if [[ $html == 1 ]]; then
+					echo "<tr><td class='splitter'></td></tr>";
+				else
+					echo
+				fi
+			fi
+			if [[ $html == 1 ]]; then
+				echo "<tr><td>${E}</td></tr>"
+			else
+				echo ${E}
+			fi
+			CC=$C
+		fi
+	done
+
+	if [[ $html == 1 ]]; then
+		echo "	
+			</table>
+			</BODY>
+			</HTML>
+		"
+	fi
+}
+
+if [[ $upload == 1 ]] || [[ $view == 1 ]]; then
+	if [[ $html == 1 ]]; then
+		check > /tmp/qt4.eclass.html
+		[[ $upload == 1 ]] && scp /tmp/qt4.eclass.html dev.gentoo.org:public_html/checks/
+		[[ $view == 1 ]] && xdg-open /tmp/qt4.eclass.html
+	else
+		check > /tmp/qt4.eclass.txt
+		[[ $upload == 1 ]] && scp /tmp/qt4.eclass.txt dev.gentoo.org:public_html/checks/
+		[[ $view == 1 ]] && xdg-open /tmp/qt4.eclass.txt
+	fi
+else
+	check
+fi
