@@ -1,4 +1,4 @@
-# Copyright 2007-2009 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -113,23 +113,15 @@ case "${PV}" in
 		;;
 esac
 
-SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.bz2"
-if version_is_at_least 4.5.3 ; then
-	SRC_URI="${SRC_URI/bz2/gz}"
-fi
+SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
 
 S="${WORKDIR}/${MY_P}"
 
-if version_is_at_least 4.5 ; then
-	LICENSE="|| ( LGPL-2.1 GPL-3 )"
-fi
+LICENSE="|| ( LGPL-2.1 GPL-3 )"
 
 case "${PV}" in
 	*.9999)
 		SRC_URI=
-		;;
-	4.4.?)
-		SRC_URI="${SRC_URI} mirror://gentoo/${MY_P}-headers.tar.bz2"
 		;;
 esac
 
@@ -276,22 +268,10 @@ qt4-build-edge_src_unpack() {
 			git_src_unpack
 			;;
 		*)
-			tar_pkg=${MY_P}.tar.bz2
-			tar_args="xjpf"
-			if version_is_at_least 4.5.3 ; then
-				tar_pkg=${tar_pkg/bz2/gz}
-				tar_args="xzpf"
-			fi
+			tar_pkg=${MY_P}.tar.gz
+			tar_args="xzpf"
 			echo tar ${tar_args} "${DISTDIR}"/${tar_pkg} ${targets}
 			tar ${tar_args} "${DISTDIR}"/${tar_pkg} ${targets}
-			;;
-	esac
-
-	# For 4.4.x releases we supply a prepackaged headers tarball
-	case "${MY_PV_EXTRA}" in
-		4.4.?)
-			echo tar xjpf "${DISTDIR}"/${MY_P}-headers.tar.bz2
-			tar xjpf "${DISTDIR}"/${MY_P}-headers.tar.bz2
 			;;
 	esac
 }
