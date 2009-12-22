@@ -2,4 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<herd>qt</herd>
+	<use>
+		<flag name="lastfm">Enable Last.fm streaming services support through <pkg>media-libs/liblastfm</pkg></flag>
+	</use>
 </pkgmetadata>
