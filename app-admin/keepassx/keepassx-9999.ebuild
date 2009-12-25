@@ -4,12 +4,12 @@
 
 EAPI="2"
 
-LANGS="de_DE es_ES fi_FI fr_FR gl_ES it_IT nb_NO ru_RU tr_TR"
+LANGS="de_DE es_ES fi_FI fr_FR gl_ES hu_HU it_IT ja_JP nb_NO nl_NL pl_PL ru_RU tr_TR uk_UA zh_CN"
 inherit qt4-edge subversion
 
 DESCRIPTION="Qt password manager compatible with its Win32 and Pocket PC versions."
 HOMEPAGE="http://keepassx.sourceforge.net/"
-ESVN_REPO_URI="http://${PN}.svn.sourceforge.net/svnroot/${PN}/branches/0.4"
+ESVN_REPO_URI="http://${PN}.svn.sourceforge.net/svnroot/${PN}/trunk"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -38,22 +38,12 @@ src_prepare() {
 }
 
 src_configure() {
-	local conf_add
-
-	if use debug; then
-		conf_add="${conf_add} debug"
-	else
-		conf_add="${conf_add} release"
-	fi
-	if use pch; then
-		conf_add="${conf_add} PRECOMPILED=1"
-	else
-		conf_add="${conf_add} PRECOMPILED=0"
-	fi
+	local conf_pch
+	use pch && conf_pch="PRECOMPILED=1" || conf_pch="PRECOMPILED=0"
 
 	eqmake4 ${PN}.pro -recursive \
 		PREFIX="${D}/usr" \
-		CONFIG+="${conf_add}"
+		"${conf_pch}"
 }
 
 src_install() {
