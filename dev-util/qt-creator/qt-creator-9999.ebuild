@@ -37,8 +37,6 @@ RDEPEND="${DEPEND}
 
 PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git mercurial perforce qtscript subversion"
 
-S="${WORKDIR}/${MY_P}"
-
 LANGS="de es fr it ja pl ru sl"
 
 for x in ${LANGS}; do
