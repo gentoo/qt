@@ -5,7 +5,7 @@
 EAPI="2"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python toolchain-funcs
+inherit python toolchain-funcs eutils
 
 MY_P=${P/_pre/-snapshot-}
 
@@ -15,7 +15,7 @@ SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 sip )"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 IUSE="debug doc"
 
 S="${WORKDIR}/${MY_P}"
@@ -24,16 +24,17 @@ DEPEND=""
 RDEPEND=""
 
 src_prepare() {
+	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 	python_copy_sources
 }
 
 src_configure() {
 	configuration() {
 		local myconf="$(PYTHON) configure.py
-				--bindir=/usr/bin
-				--destdir=$(python_get_sitedir)
-				--incdir=$(python_get_includedir)
-				--sipdir=/usr/share/sip
+				--bindir=${EPREFIX}/usr/bin
+				--destdir=${EPREFIX}$(python_get_sitedir)
+				--incdir=${EPREFIX}$(python_get_includedir)
+				--sipdir=${EPREFIX}/usr/share/sip
 				$(use debug && echo '--debug')
 				CC=$(tc-getCC) CXX=$(tc-getCXX)
 				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
@@ -64,8 +65,13 @@ src_install() {
 
 pkg_postinst() {
 	python_mod_optimize sipconfig.py sipdistutils.py
+
+	ewarn 'When updating sip, you usually need to recompile packages that'
+	ewarn 'depend on sip, such as PyQt4 and qscintilla-python. If you have'
+	ewarn 'app-portage/gentoolkit installed you can find these packages with'
+	ewarn '`equery d sip` and `equery d PyQt4`.'
 }
 
 pkg_postrm() {
-	python_mod_cleanup
+	python_mod_cleanup sipconfig.py sipdistutils.py
 }
