@@ -3,9 +3,10 @@
 # $Header: $
 
 EAPI="2"
+PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python qt4 toolchain-funcs
+inherit qt4-r2 python toolchain-funcs
 
 MY_P="PyQt-x11-gpl-${PV/_pre/-snapshot-}"
 QTVER="4.5.3"
@@ -19,7 +20,7 @@ LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="X assistant +dbus debug doc examples kde opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.9
+DEPEND=">=dev-python/sip-4.10_pre
 	>=x11-libs/qt-core-${QTVER}:4
 	>=x11-libs/qt-script-${QTVER}:4
 	>=x11-libs/qt-test-${QTVER}:4
@@ -43,7 +44,8 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
-	"${FILESDIR}/configure.py.patch"
+	"${FILESDIR}/configure-4.6.1.py.patch"
+	"${FILESDIR}/${PN}-4.6.1-configure-multilib.patch"
 )
 
 src_prepare() {
@@ -51,9 +53,9 @@ src_prepare() {
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
 			"${S}"/configure.py || die
 	fi
-	qt4_src_prepare
 
-	python_copy_sources
+	qt4-r2_src_prepare
+	python_src_prepare
 
 	preparation() {
 		if [[ "${PYTHON_ABI:0:1}" == "3" ]]; then
@@ -103,11 +105,12 @@ src_configure() {
 			# Run eqmake4 inside the qpy subdirs to prevent
 			# stripping and many other QA issues
 			pushd qpy/${mod} > /dev/null || die
-			eqmake4 $(ls *qpy*.pro)
+			eqmake4 $(ls w_qpy*.pro)
+			popd > /dev/null || die
+
 			# Fix insecure runpaths
 			sed -i -e "/^LFLAGS/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
-				Makefile || die "failed to fix rpath issues"
-			popd > /dev/null || die
+				${mod}/Makefile || die "failed to fix rpath issues"
 		done
 
 		# Fix pre-stripping of libpythonplugin.so
@@ -117,10 +120,6 @@ src_configure() {
 		fi
 	}
 	python_execute_function -s configuration
-}
-
-src_compile() {
-	python_execute_function -d -s
 }
 
 src_install() {
