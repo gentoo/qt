@@ -29,7 +29,7 @@ for L in ${LANGS}; do
 done
 
 DEPEND=">=dev-python/PyQt4-4.4[assistant,svg,webkit,X]
-	>=dev-python/qscintilla-python-2.2[qt4]
+	>=dev-python/qscintilla-python-2.4
 	kde? ( kde-base/pykde4 )"
 RDEPEND="${DEPEND}
 	>=dev-python/chardet-1.0.1
