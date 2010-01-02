@@ -16,12 +16,11 @@ SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="debug +qt4"
+IUSE="debug"
 
 DEPEND=">=dev-python/sip-4.8
-	~x11-libs/qscintilla-${PV}[qt4=]
-	qt4? ( >=dev-python/PyQt4-4.5[X] )
-	!qt4? ( >=dev-python/PyQt-3.18 )"
+	~x11-libs/qscintilla-${PV}[qt4]
+	qt4? ( >=dev-python/PyQt4-4.5[X] )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}/Python"
@@ -35,10 +34,10 @@ src_prepare() {
 src_configure() {
 	configuration() {
 		local myconf="$(PYTHON) configure.py
-				--destdir=$(python_get_sitedir)/PyQt$(use qt4 && echo 4)
+				--destdir=$(python_get_sitedir)/PyQt4
 				-n /usr/include
 				-o /usr/$(get_libdir)
-				-p $(use qt4 && echo 4 || echo 3)
+				-p 4
 				$(use debug && echo '--debug')"
 		echo ${myconf}
 		${myconf}
