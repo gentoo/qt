@@ -33,6 +33,7 @@ S="${WORKDIR}/${PF}"
 
 src_configure() {
 	mycmakeargs="${mycmakeargs} \
+		$(cmake-utils_use debug DEBUG) \
 		$(cmake-utils_use_with icoutils ICOUTILS) \
 		$(cmake-utils_use_with winetriks WINETRIKS) \
 		$(cmake-utils_use_with embedded-fuseiso EMBEDDED_FUSEISO) \
