@@ -15,27 +15,19 @@ SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="doc python +qt4"
+IUSE="doc python"
 
-RDEPEND="qt4? ( x11-libs/qt-gui:4 )
-	!qt4? ( x11-libs/qt:3 )"
+RDEPEND="x11-libs/qt-gui:4"
 DEPEND="${RDEPEND}"
-# dev-python/PyQt needs qscintilla to build and qscintilla's python bindings
-# need dev-python/PyQt, bug 199543
-PDEPEND="python? ( ~dev-python/qscintilla-python-${PV}[qt4=] )"
+PDEPEND="python? ( ~dev-python/qscintilla-python-${PV} )"
 
 S="${WORKDIR}"/${MY_P}
 
 PATCHES=( "${FILESDIR}/${PN}-2.4-designer.patch" )
 
 src_configure() {
-	if use qt4; then
-		myqtver=4
-		myqtdir=/usr/share/qt4
-	else
-		myqtver=3
-		myqtdir=${QTDIR}
-	fi
+	myqtver=4
+	myqtdir=/usr/share/qt4
 
 	cd "${S}"/Qt${myqtver}
 	eqmake${myqtver} qscintilla.pro

@@ -19,7 +19,7 @@ KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="debug"
 
 DEPEND=">=dev-python/sip-4.8
-	~x11-libs/qscintilla-${PV}[qt4]
+	~x11-libs/qscintilla-${PV}
 	>=dev-python/PyQt4-4.5[X]"
 RDEPEND="${DEPEND}"
 
