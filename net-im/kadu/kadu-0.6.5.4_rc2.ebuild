@@ -96,6 +96,7 @@ src_prepare() {
 	config_enable module_qt4_docking m
 	config_enable module_qt4_docking_notify m
 	config_enable module_screenshot m
+	config_enable module_single_window m
 	config_enable module_sms m
 	config_enable module_sound m
 	config_enable module_split_messages m
