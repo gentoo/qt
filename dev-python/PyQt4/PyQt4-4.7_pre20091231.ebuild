@@ -5,7 +5,6 @@
 EAPI="2"
 PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.2" # does not work with python:3.2 (yet), bug 292419
 
 inherit qt4-r2 python toolchain-funcs
 
@@ -41,6 +40,7 @@ DEPEND=">=dev-python/sip-4.10_pre
 	webkit? ( >=x11-libs/qt-webkit-${QTVER}:4 )
 	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QTVER}:4 )"
 RDEPEND="${DEPEND}"
+RESTRICT_PYTHON_ABIS="3.2" # doesn't build with python:3.2 (yet), bug 292419
 
 S="${WORKDIR}/${MY_P}"
 
@@ -124,8 +124,6 @@ src_configure() {
 }
 
 src_install() {
-	python_need_rebuild
-
 	installation() {
 		# INSTALL_ROOT is needed for the QtDesigner module,
 		# the other Makefiles use DESTDIR.
