@@ -1,8 +1,9 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
+PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit python toolchain-funcs eutils
@@ -47,14 +48,8 @@ src_configure() {
 	python_execute_function -s configuration
 }
 
-src_compile() {
-	python_execute_function -d -s
-}
-
 src_install() {
-	python_need_rebuild
-
-	python_execute_function -d -s
+	python_src_install
 
 	dodoc ChangeLog NEWS || die
 

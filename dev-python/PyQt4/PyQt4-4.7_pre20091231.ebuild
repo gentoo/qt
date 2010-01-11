@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -56,7 +56,7 @@ src_prepare() {
 	fi
 
 	qt4-r2_src_prepare
-	python_src_prepare
+	python_copy_sources
 
 	preparation() {
 		if [[ "${PYTHON_ABI:0:1}" == "3" ]]; then
