@@ -21,7 +21,3 @@
 # Ben de Groot <yngwin@gentoo.org> (27 Jun 2009)
 # Needs Qt 4.4, while 4.5.1 is stable. Use qt-script instead.
 =dev-libs/qsa-1.2*
-
-# Ben de Groot <yngwin@gentoo.org> (14 Jun 2009)
-# Snapshots that not everyone may want.
-=dev-util/eric-4.4_pre*
