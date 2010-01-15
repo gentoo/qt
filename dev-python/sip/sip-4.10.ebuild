@@ -6,13 +6,13 @@ EAPI="2"
 PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit python toolchain-funcs eutils
+inherit eutils python toolchain-funcs
 
 MY_P=${P/_pre/-snapshot-}
 
 DESCRIPTION="A tool for generating bindings for C++ classes so that they can be used by Python"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}${PV%%.*}/${MY_P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 sip )"
 SLOT="0"

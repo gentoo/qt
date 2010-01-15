@@ -9,6 +9,7 @@
     <flag name='kde'>
       Select <pkg>media-sound/phonon</pkg> as phonon variant needed for kde
     </flag>
+    <flag name='multimedia'>Build the QtMultimedia module</flag>
     <flag name='opengl'>Build the QtOpenGL module</flag>
     <flag name='phonon'>Build the phonon module</flag>
     <flag name='sql'>Build the QtSql module</flag>
