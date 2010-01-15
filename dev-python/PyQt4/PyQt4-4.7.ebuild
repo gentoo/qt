@@ -80,6 +80,7 @@ src_configure() {
 				--bindir=/usr/bin
 				--destdir=$(python_get_sitedir)
 				--sipdir=/usr/share/sip
+				--qsci-api
 				$(use debug && echo '--debug')
 				--enable=QtCore
 				--enable=QtNetwork
