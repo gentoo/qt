@@ -13,14 +13,14 @@ QTVER="4.5.3"
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
-IUSE="X assistant +dbus debug doc examples kde opengl phonon sql svg webkit xmlpatterns"
+KEYWORDS="~amd64 ~x86"
+IUSE="X assistant +dbus debug doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.10_pre
+DEPEND=">=dev-python/sip-4.10
 	>=x11-libs/qt-core-${QTVER}:4
 	>=x11-libs/qt-script-${QTVER}:4
 	>=x11-libs/qt-test-${QTVER}:4
@@ -30,6 +30,7 @@ DEPEND=">=dev-python/sip-4.10_pre
 		>=dev-python/dbus-python-0.80
 		>=x11-libs/qt-dbus-${QTVER}:4
 	)
+	multimedia? ( x11-libs/qt-multimedia:4 )
 	opengl? ( >=x11-libs/qt-opengl-${QTVER}:4 )
 	phonon? (
 		!kde? ( || ( >=x11-libs/qt-phonon-${QTVER}:4 media-sound/phonon ) )
@@ -90,6 +91,7 @@ src_configure() {
 				$(pyqt4_use_enable X QtScriptTools)
 				$(pyqt4_use_enable assistant QtAssistant)
 				$(pyqt4_use_enable assistant QtHelp)
+				$(pyqt4_use_enable multimedia QtMultimedia)
 				$(pyqt4_use_enable opengl QtOpenGL)
 				$(pyqt4_use_enable phonon)
 				$(pyqt4_use_enable sql QtSql)
