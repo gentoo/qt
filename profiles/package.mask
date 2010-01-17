@@ -2,6 +2,11 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (17 Jan 2010)
+# Masking latest releases
+=dev-python/qscintilla-python-2.4.2_pre*
+=x11-libs/qscintilla-2.4.2_pre*
+
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
