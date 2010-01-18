@@ -31,12 +31,7 @@ include/
 doc/"
 
 src_prepare() {
-	if use kde-qt && ! use stable-branch; then
-		epatch "${FILESDIR}/${P}-kde-qt-tools.patch"
-	else
-		epatch "${FILESDIR}/${P}-tools.patch"
-	fi
-
+	epatch "${FILESDIR}/${P}-tools.patch"
 	qt4-build-edge_src_prepare
 }
 
