@@ -12,7 +12,7 @@
 =media-sound/qmmp-9999
 =media-sound/qmpdclient-9999
 =media-sound/qpitch-9999
-# =media-sound/qtmpc-9999 masked, upstream SVN repo seems dead
+=media-sound/qtmpc-9999
 =media-video/elltube-9999
 =media-video/xvideoservicethief-9999
 =net-im/qtwitter-9999
