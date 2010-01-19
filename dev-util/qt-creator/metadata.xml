@@ -16,6 +16,7 @@
 	<flag name="git">enable git plugin</flag>
 	<flag name="mercurial">enable mercurial plugin</flag>
 	<flag name="perforce">enable perforce software configuration manager plugin</flag>
+	<flag name="qml">Simple way of building UIs based on Qt Declarative module</flag>
 	<flag name="qtscript">enable qt script editor plugin</flag>
 	<flag name="subversion">enable subersion plugin</flag>
 </use>
