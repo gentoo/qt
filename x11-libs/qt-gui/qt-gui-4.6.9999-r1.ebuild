@@ -63,15 +63,6 @@ pkg_setup() {
 		ebeep 5
 	fi
 
-	if use raster; then
-		ewarn "WARNING: You have enabled raster backend rendering engine."
-		ewarn "This is a new feature and may lead to composite problems"
-		ewarn "screen corruption and broken qt4 or kde4 applications. "
-		ewarn "If you encounter such problems please"
-		ewarn "remove 'raster' use flag and re-compile qt-gui before"
-		ewarn "filling a bug on gentoo bugzilla."
-		ebeep 5
-	fi
 	qt4-build-edge_pkg_setup
 }
 
