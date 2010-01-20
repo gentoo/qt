@@ -1,0 +1,18 @@
+--- PyQt-x11-gpl-4.7~orig/configure.py	2010-01-20 23:27:28.000000000 +0100
++++ PyQt-x11-gpl-4.7/configure.py	2010-01-20 23:30:06.000000000 +0100
+@@ -792,6 +792,7 @@
+                 install_dir=pydbusmoddir,
+                 qt=["QtCore"],
+                 debug=opts.debug,
++                strip=0,
+                 universal=sipcfg.universal,
+                 arch=sipcfg.arch
+             )
+@@ -1539,6 +1540,7 @@
+         warnings=1,
+         static=opts.static,
+         debug=opts.debug,
++        strip=0,
+         universal=sipcfg.universal,
+         arch=sipcfg.arch,
+         prot_is_public=opts.prot_is_public

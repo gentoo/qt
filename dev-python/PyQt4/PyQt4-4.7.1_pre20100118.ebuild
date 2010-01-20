@@ -1,6 +1,6 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.7.ebuild,v 1.1 2010/01/15 15:15:44 yngwin Exp $
+# $Header: $
 
 EAPI="2"
 PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
@@ -17,7 +17,7 @@ SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz
 
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 IUSE="X assistant +dbus debug doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
 DEPEND="=dev-python/sip-4.10*
@@ -46,8 +46,9 @@ RESTRICT_PYTHON_ABIS="3.2" # doesn't build with python:3.2 (yet), bug 292419
 S=${WORKDIR}/${MY_P}
 
 PATCHES=(
-	"${FILESDIR}/configure-4.6.1.py.patch"
 	"${FILESDIR}/${PN}-4.6.1-configure-multilib.patch"
+	"${FILESDIR}/${PN}-4.7-disable-stripping.patch"
+	"${FILESDIR}/${PN}-4.7-fix-phonon-check.patch"
 )
 
 src_prepare() {
@@ -74,12 +75,14 @@ pyqt4_use_enable() {
 }
 
 src_configure() {
+	use prefix || EPREFIX=
+
 	configuration() {
 		local myconf="$(PYTHON) configure.py
 				--confirm-license
-				--bindir=/usr/bin
-				--destdir=$(python_get_sitedir)
-				--sipdir=/usr/share/sip
+				--bindir=${EPREFIX}/usr/bin
+				--destdir=${EPREFIX}$(python_get_sitedir)
+				--sipdir=${EPREFIX}/usr/share/sip
 				--qsci-api
 				$(use debug && echo '--debug')
 				--enable=QtCore
