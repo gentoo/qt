@@ -27,7 +27,6 @@ include/QtScript/
 src/src.pro
 src/corelib/
 src/plugins
-src/sql
 src/3rdparty
 src/tools"
 
