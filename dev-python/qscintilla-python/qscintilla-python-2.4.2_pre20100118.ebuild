@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI="2"
+PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
 inherit eutils multilib python toolchain-funcs
@@ -50,9 +51,4 @@ src_compile() {
 		emake CC="$(tc-getCC)" CXX="$(tc-getCXX)" LINK="$(tc-getCXX)"
 	}
 	python_execute_function -s building
-}
-
-src_install() {
-	python_need_rebuild
-	python_execute_function -d -s
 }
