@@ -21,11 +21,12 @@ DEPEND="
 	>=app-crypt/qca-2.0.0-r2
 	>=media-libs/libsndfile-1.0
 	>=net-libs/libgadu-1.9_rc2[threads]
-	>=x11-libs/qt-dbus-4.4:4
 	>=x11-libs/qt-gui-4.4:4[qt3support]
 	>=x11-libs/qt-webkit-4.4:4
 	alsa? ( media-libs/alsa-lib )
 	ao? ( media-libs/libao )
+	dbus? ( >=x11-libs/qt-dbus-4.4:4 )
+	kde? ( >=kde-base/kdelibs-4.3.3 )
 	phonon? (
 		!kde? (
 			|| (
@@ -109,20 +110,28 @@ src_prepare() {
 	config_enable module_nextinfo m
 	config_enable module_tabs m
 	config_enable module_plus_pl_sms m
-	use kde && config_enable module_kde_notify m
 
-	# Media players - no build time deps so build them all
-	# bmpx_mediaplayer
-	config_enable module_mediaplayer m
-	config_enable module_amarok1_mediaplayer m
-	config_enable module_amarok2_mediaplayer m
-	config_enable module_audacious_mediaplayer m
-	config_enable module_dragon_mediaplayer m
-	# falf_mediaplayer
-	# itunes_mediaplayer
-	config_enable module_vlc_mediaplayer m
-	# xmms2_mediaplayer
-	# xmms_mediaplayer
+	if use dbus; then
+		# Media players - no build time deps so build them all
+		# bmpx_mediaplayer
+		config_enable module_mediaplayer m
+		# amarok1_mediaplayer m
+		config_enable module_amarok2_mediaplayer m
+		config_enable module_audacious_mediaplayer m
+		config_enable module_dragon_mediaplayer m
+		config_enable module_mpris_mediaplayer m
+		# falf_mediaplayer
+		# itunes_mediaplayer
+		config_enable module_vlc_mediaplayer m
+		# xmms2_mediaplayer
+		# xmms_mediaplayer
+
+		# dbus interface for Kadu
+		config_enable module_dbus m
+
+		# Autodownloaded module
+		use kde && config_enable module_kde_notify m
+	fi
 
 	# Audio outputs
 	use alsa && config_enable module_alsa_sound m
@@ -131,7 +140,6 @@ src_prepare() {
 	use phonon && config_enable module_phonon_sound m
 
 	# Misc stuff
-	use dbus && config_enable module_dbus m
 	use speech && config_enable module_speech m
 	use spell && config_enable module_spellchecker m
 	use ssl && config_enable module_encryption m
@@ -183,5 +191,5 @@ src_install() {
 	cmake-utils_src_install
 
 	# delete unneeded .a files from modules directory
-	rm -f "${D}"/usr/lib*/kadu/modules/*.a
+	#rm -f "${D}"/usr/lib*/kadu/modules/*.a
 }
