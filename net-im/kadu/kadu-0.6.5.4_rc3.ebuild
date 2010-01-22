@@ -1,6 +1,6 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-im/kadu/kadu-0.6.5.3-r1.ebuild,v 1.3 2009/11/04 17:25:30 maekke Exp $
+# $Header: $
 
 EAPI="2"
 
@@ -15,7 +15,7 @@ SRC_URI="http://www.kadu.net/download/stable/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~x86"
 SLOT="0"
-IUSE="alsa ao kde oss phonon speech spell +ssl"
+IUSE="alsa ao dbus kde oss phonon speech spell +ssl"
 
 DEPEND="
 	>=app-crypt/qca-2.0.0-r2
@@ -131,6 +131,7 @@ src_prepare() {
 	use phonon && config_enable module_phonon_sound m
 
 	# Misc stuff
+	use dbus && config_enable module_dbus m
 	use speech && config_enable module_speech m
 	use spell && config_enable module_spellchecker m
 	use ssl && config_enable module_encryption m
