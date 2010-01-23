@@ -186,10 +186,3 @@ src_configure() {
 
 	cmake-utils_src_configure
 }
-
-src_install() {
-	cmake-utils_src_install
-
-	# delete unneeded .a files from modules directory
-	#rm -f "${D}"/usr/lib*/kadu/modules/*.a
-}
