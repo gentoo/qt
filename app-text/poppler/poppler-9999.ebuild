@@ -13,29 +13,39 @@ EGIT_REPO_URI="git://git.freedesktop.org/git/poppler/poppler"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="+abiword cairo cjk debug doc exceptions glib jpeg +lcms openjpeg png qt4 +utils xpdf-headers"
+IUSE="+abiword cairo cjk debug doc exceptions glib jpeg +lcms openjpeg png qt4 +utils +xpdf-headers"
 
-COMMON_DEPEND=">=media-libs/fontconfig-2.6.0
+COMMON_DEPEND="
+	>=media-libs/fontconfig-2.6.0
 	>=media-libs/freetype-2.3.9
 	sys-libs/zlib
 	abiword? ( dev-libs/libxml2:2 )
-	glib? ( >=dev-libs/glib-2.16
-		cairo? ( >=x11-libs/cairo-1.8.4
-			>=x11-libs/gtk+-2.14.0:2 ) )
+	glib? (
+		dev-libs/glib:2
+		cairo? (
+			>=x11-libs/cairo-1.8.4
+			>=x11-libs/gtk+-2.14.0:2
+		)
+	)
 	jpeg? ( >=media-libs/jpeg-7:0 )
 	openjpeg? ( media-libs/openjpeg )
 	png? ( media-libs/libpng )
-	qt4? ( x11-libs/qt-core:4
-		x11-libs/qt-gui:4 )"
+	qt4? (
+		x11-libs/qt-core:4
+		x11-libs/qt-gui:4
+	)
+"
 DEPEND="${COMMON_DEPEND}
-	dev-util/pkgconfig"
+	dev-util/pkgconfig
+"
 RDEPEND="${COMMON_DEPEND}
 	!virtual/poppler
 	!virtual/poppler-glib
 	!virtual/poppler-qt3
 	!virtual/poppler-qt4
 	!virtual/poppler-utils
-	cjk? ( >=app-text/poppler-data-0.2.1 )"
+	cjk? ( >=app-text/poppler-data-0.2.1 )
+"
 
 src_unpack() {
 	git_src_unpack
