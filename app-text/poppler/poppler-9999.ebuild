@@ -62,8 +62,8 @@ src_configure() {
 		-DENABLE_SPLASH=ON
 		-DENABLE_ZLIB=ON
 		$(cmake-utils_use_enable abiword)
+		$(cmake-utils_use_enable jpeg2k LIBOPENJPEG)
 		$(cmake-utils_use_enable lcms)
-		$(cmake-utils_use_enable openjpeg LIBOPENJPEG)
 		$(cmake-utils_use_enable utils)
 		$(cmake-utils_use_enable xpdf-headers XPDF_HEADERS)
 		$(cmake-utils_use_with cairo)
