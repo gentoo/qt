@@ -51,7 +51,6 @@ src_unpack() {
 
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-0.12.3-cmake-disable-tests.patch"
-	epatch "${FILESDIR}/${PN}-0.12.3-fix-headers-installation.patch"
 }
 
 src_configure() {

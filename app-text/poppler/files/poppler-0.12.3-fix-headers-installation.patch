@@ -14,16 +14,7 @@ index 0cd32df..070be33 100644
    install(FILES
      fofi/FoFiBase.h
      fofi/FoFiEncodings.h
-@@ -374,6 +379,9 @@ if(ENABLE_XPDF_HEADERS)
-     install(FILES
-       poppler/JPEG2000Stream.h
-       DESTINATION include/poppler)
-+    install(FILES
-+      poppler/goo/JpegWriter.h
-+      DESTINATION include/poppler/goo)
-   else(LIBOPENJPEG_FOUND)
-     install(FILES
-       poppler/JPXStream.h
+ 
 diff --git a/glib/CMakeLists.txt b/glib/CMakeLists.txt
 index 6ed9523..9f5d0e7 100644
 --- a/glib/CMakeLists.txt
