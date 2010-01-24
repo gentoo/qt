@@ -11,24 +11,22 @@ HOMEPAGE="http://poppler.freedesktop.org/"
 EGIT_REPO_URI="git://git.freedesktop.org/git/poppler/poppler"
 
 LICENSE="GPL-2"
-SLOT="0"
 KEYWORDS=""
-IUSE="+abiword cairo cjk debug doc exceptions +glib jpeg +lcms openjpeg png qt4 +utils +xpdf-headers"
+SLOT="0"
+IUSE="+abiword cairo cjk debug doc exceptions jpeg jpeg2k +lcms png qt4 +utils +xpdf-headers"
 
 COMMON_DEPEND="
 	>=media-libs/fontconfig-2.6.0
 	>=media-libs/freetype-2.3.9
 	sys-libs/zlib
 	abiword? ( dev-libs/libxml2:2 )
-	glib? (
+	cairo? (
 		dev-libs/glib:2
-		cairo? (
-			>=x11-libs/cairo-1.8.4
-			>=x11-libs/gtk+-2.14.0:2
-		)
+		>=x11-libs/cairo-1.8.4
+		>=x11-libs/gtk+-2.14.0:2
 	)
 	jpeg? ( >=media-libs/jpeg-7:0 )
-	openjpeg? ( media-libs/openjpeg )
+	jpeg2k? ( media-libs/openjpeg )
 	png? ( media-libs/libpng )
 	qt4? (
 		x11-libs/qt-core:4
@@ -69,7 +67,7 @@ src_configure() {
 		$(cmake-utils_use_enable utils)
 		$(cmake-utils_use_enable xpdf-headers XPDF_HEADERS)
 		$(cmake-utils_use_with cairo)
-		$(cmake-utils_use_with glib GTK)
+		$(cmake-utils_use_with cairo GTK)
 		$(cmake-utils_use_with jpeg)
 		$(cmake-utils_use_with png)
 		$(cmake-utils_use_with qt4)
@@ -83,7 +81,7 @@ src_install() {
 	cmake-utils_src_install
 
 	# For now install gtk-doc there
-	if use glib && use doc; then
+	if use cairo && use doc; then
 		insinto /usr/share/gtk-doc/html/poppler
 		doins -r "${S}"/glib/reference/html/* || die 'failed to install API documentation'
 	fi
