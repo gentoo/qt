@@ -10,7 +10,7 @@ MY_P="QScintilla-gpl-${PV/_pre/-snapshot-}"
 
 DESCRIPTION="A Qt port of Neil Hodgson's Scintilla C++ editor class"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
@@ -21,60 +21,45 @@ DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 PDEPEND="python? ( ~dev-python/qscintilla-python-${PV} )"
 
-S="${WORKDIR}"/${MY_P}
+S=${WORKDIR}/${MY_P}
 
 PATCHES=( "${FILESDIR}/${PN}-2.4-designer.patch" )
 
 src_configure() {
 	cd "${S}"/Qt4
+	einfo "Configuring qscintilla"
 	eqmake4 qscintilla.pro
 
 	cd "${S}"/designer-Qt4
+	einfo "Configuring designer plugin"
 	eqmake4 designer.pro
 }
 
 src_compile() {
 	cd "${S}"/Qt4
-	emake all staticlib || die "emake failed"
+	einfo "Building qscintilla"
+	emake || die "failed to build qscintilla"
 
 	cd "${S}"/designer-Qt4
+	einfo "Building designer plugin"
 	emake || die "failed to build designer plugin"
 }
 
 src_install() {
 	cd "${S}"/Qt4
+	einfo "Installing qscintilla"
+	emake INSTALL_ROOT="${D}" install || die "failed to install qscintilla"
 
-	# header files
-	insinto /usr/include/Qsci
-	doins Qsci/*.h || die
-
-	# libraries
-	dolib.so libqscintilla2.so* || die
-	dolib.a libqscintilla2.a || die
-
-	# translations
-	insinto /usr/share/${PN}/translations
-	for trans in qscintilla_*.qm; do
-		doins ${trans} || die
-		dosym /usr/share/${PN}/translations/${trans} \
-			/usr/share/qt4/translations/${trans} || die
-	done
-
-	# designer plugin
 	cd "${S}"/designer-Qt4
-	emake INSTALL_ROOT="${D}" install || die "designer plugin installation failed"
+	einfo "Installing designer plugin"
+	emake INSTALL_ROOT="${D}" install || die "failed to install designer plugin"
 
-	# documentation
 	cd "${S}"
 	dodoc ChangeLog NEWS
 	if use doc; then
+		einfo "Installing documentation"
 		dohtml doc/html-Qt4/* || die
 		insinto /usr/share/doc/${PF}/Scintilla
 		doins doc/Scintilla/* || die
 	fi
-}
-
-pkg_postinst() {
-	ewarn "Please remerge dev-python/PyQt4 if you have problems with eric or other"
-	ewarn "qscintilla related packages before submitting bug reports."
 }

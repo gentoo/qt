@@ -1,18 +1,18 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/qscintilla-python/qscintilla-python-2.4.2.ebuild,v 1.1 2010/01/21 21:14:04 hwoarang Exp $
 
 EAPI="2"
 PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
-inherit eutils multilib python toolchain-funcs
+inherit eutils python toolchain-funcs
 
 MY_P="QScintilla-gpl-${PV/_pre/-snapshot-}"
 
 DESCRIPTION="Python bindings for Qscintilla"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://www.riverbankcomputing.co.uk/static/Downloads/QScintilla2/${MY_P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
@@ -27,18 +27,15 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}/Python"
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-2.4-nostrip.patch"
+	epatch "${FILESDIR}"/${PN}-2.4-nostrip.patch
 
 	python_copy_sources
 }
 
 src_configure() {
 	configuration() {
-		local myconf="$(PYTHON) configure.py
+		local myconf="$(PYTHON) configure.py -p 4
 				--destdir=$(python_get_sitedir)/PyQt4
-				-n /usr/include
-				-o /usr/$(get_libdir)
-				-p 4
 				$(use debug && echo '--debug')"
 		echo ${myconf}
 		${myconf}
