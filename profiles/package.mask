@@ -2,7 +2,11 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (17 Jan 2010)
+# Markos Chandras <hwoarang@gentoo.org> (29 Jan 2010)
+# qt-declarative currently doesn't build 
+=x11-libs/qt-declarative-4.9999
+
+# Markos Chandras <hwoarang@gentoo.org> (29 Jan 2010)
 # Masking latest releases
 =dev-python/sip-4.10.1_pre*
 =dev-python/PyQt4-4.7.1_pre*
