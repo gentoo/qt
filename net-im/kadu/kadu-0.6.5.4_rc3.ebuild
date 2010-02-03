@@ -17,12 +17,13 @@ KEYWORDS="~amd64 ~ppc ~x86"
 SLOT="0"
 IUSE="alsa ao dbus kde oss phonon speech spell +ssl"
 
-DEPEND="
+COMMON_DEPEND="
 	>=app-crypt/qca-2.0.0-r2
 	>=media-libs/libsndfile-1.0
 	>=net-libs/libgadu-1.9_rc2[threads]
 	>=x11-libs/qt-gui-4.4:4[qt3support]
 	>=x11-libs/qt-webkit-4.4:4
+	x11-libs/libXScrnSaver
 	alsa? ( media-libs/alsa-lib )
 	ao? ( media-libs/libao )
 	dbus? ( >=x11-libs/qt-dbus-4.4:4 )
@@ -36,9 +37,12 @@ DEPEND="
 		)
 		kde? ( media-sound/phonon )
 	)
-	spell? ( app-text/aspell )
+	spell? ( app-text/enchant )
 "
-RDEPEND="${DEPEND}
+DEPEND="${COMMON_DEPEND}
+	x11-proto/scrnsaverproto
+"
+RDEPEND="${COMMON_DEPEND}
 	speech? ( app-accessibility/powiedz )
 	ssl? ( app-crypt/qca-ossl:2 )
 "
