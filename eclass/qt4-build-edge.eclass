@@ -184,7 +184,20 @@ qt4-build-edge_pkg_setup() {
 	[[ ${EAPI} == 2 ]] && use !prefix && EPREFIX=
 
 	PATH="${S}/bin${PATH:+:}${PATH}"
-	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
+	if [[ ${CHOST} != *-darwin* ]]; then
+		LD_LIBRARY_PATH="${S}/lib${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}"
+	else
+		DYLD_LIBRARY_PATH="${S}/lib${DYLD_LIBRARY_PATH:+:}${DYLD_LIBRARY_PATH}"
+		# on mac we *need* src/gui/kernel/qapplication_mac.cpp for platfrom
+		# detection since the x11-headers package b0rkens the header
+		# installation, we have to extract src/ and include/ completely on mac
+		# tools is needed for qt-demo and some others
+		QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES} src include"
+
+		if [[ ${PN} == qt-demo || ${PN} == qt-qt3support || ${PN} == qt-webkit ]]; then
+			QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES} tools"
+		fi
+	fi
 
 	# Make sure ebuilds use the required EAPI
 	if [[ ${EAPI} != [23] ]]; then
@@ -231,7 +244,7 @@ qt4-build-edge_pkg_setup() {
 qt4-build-edge_src_unpack() {
 	setqtenv
 
-	local target= targets= tar_pkg= tar_args=
+	local target= targets=
 	for target in configure LICENSE.{GPL3,LGPL} projects.pro \
 			src/{qbase,qt_targets,qt_install}.pri \
 			bin config.tests mkspecs qmake \
@@ -239,15 +252,13 @@ qt4-build-edge_src_unpack() {
 		targets="${targets} ${MY_P}/${target}"
 	done
 
-	case "${MY_PV_EXTRA}" in
-		4.?.9999-kde-qt | 4.?.9999-kde-qt-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
+	case "${PV}" in
+		*9999*)
 			git_src_unpack
 			;;
 		*)
-			tar_pkg=${MY_P}.tar.gz
-			tar_args="xzpf"
-			echo tar ${tar_args} "${DISTDIR}"/${tar_pkg} ${targets}
-			tar ${tar_args} "${DISTDIR}"/${tar_pkg} ${targets}
+			echo tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
+			tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets} || die
 			;;
 	esac
 }
@@ -255,42 +266,116 @@ qt4-build-edge_src_unpack() {
 qt4-build-edge_src_prepare() {
 	setqtenv
 
-	case "${MY_PV_EXTRA}" in
-		4.?.9999-kde-qt | 4.?.9999-kde-qt-stable | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable)
-			generate_include
-		;;
-	esac
+	[[ ${PV} == *9999* ]] && generate_include
 
 	if [[ ${PN} != qt-core ]]; then
-		cd "${S}"
 		skip_qmake_build
 		skip_project_generation
 		symlink_binaries_to_buildtree
 	fi
 
+	# qmake bus errors with -O2 but -O3 works
+	[[ ${CHOST} == *86*-apple-darwin* ]] && replace-flags -O2 -O3
+
+	# Bug 282984 && Bug 295530
 	sed -e "s:\(^SYSTEM_VARIABLES\):CC=$(tc-getCC)\nCXX=$(tc-getCXX)\n\1:" \
 		-i configure || die "sed qmake compilers failed"
 	sed -e "s:\(\$MAKE\):\1 CC=$(tc-getCC) CXX=$(tc-getCXX) LD=$(tc-getCXX):" \
 		-i config.tests/unix/compile.test || die "sed configure tests compilers failed"
 
+	# Bug 178652
+	if [[ $(gcc-major-version) == 3 ]] && use amd64; then
+		ewarn "Appending -fno-gcse to CFLAGS/CXXFLAGS"
+		append-flags -fno-gcse
+	fi
+
+	# Unsupported old gcc versions - hardened needs this :(
+	if [[ $(gcc-major-version) -lt 4 ]] ; then
+		ewarn "Appending -fno-stack-protector to CXXFLAGS"
+		append-cxxflags -fno-stack-protector
+		# Bug 253127
+		sed -e "/^QMAKE_CFLAGS\t/ s:$: -fno-stack-protector-all:" \
+			-i "${S}"/mkspecs/common/g++.conf \
+			|| die "sed mkspecs/common/g++.conf failed"
+	fi
+
+	# Bug 261632
+	if use ppc64; then
+		ewarn "Appending -mminimal-toc to CFLAGS/CXXFLAGS"
+		append-flags -mminimal-toc
+	fi
+
+	# Bug 172219
 	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
 		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
 		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
 		-e "s:X11R6/::" \
 		-i "${S}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf \
-		|| die "sed ${S}/mkspecs/$(qt_mkspecs_dir)/qmake.conf failed"
+		|| die "sed mkspecs/$(qt_mkspecs_dir)/qmake.conf failed"
 
-	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
-		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
-		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-		-i "${S}"/mkspecs/common/g++.conf \
-		|| die "sed ${S}/mkspecs/common/g++.conf failed"
+	if [[ ${CHOST} != *-darwin* ]]; then
+		sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
+			-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
+			-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
+			-i "${S}"/mkspecs/common/g++.conf \
+			|| die "sed mkspecs/common/g++.conf failed"
+	else
+		# Set FLAGS *and* remove -arch, since our gcc-apple is multilib
+		# crippled (by design) :/
+		sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
+			-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
+			-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=-headerpad_max_install_names ${LDFLAGS}:" \
+			-e "s:-arch\s\w*::g" \
+			-i "${S}"/mkspecs/common/mac-g++.conf \
+			|| die "sed mkspecs/common/mac-g++.conf failed"
+
+		# Fix configure's -arch settings that appear in qmake/Makefile and also
+		# fix arch handling (automagically duplicates our -arch arg and breaks
+		# pch). Additionally disable Xarch support.
+		sed \
+			-e "s:-arch i386::" \
+			-e "s:-arch ppc::" \
+			-e "s:-arch x86_64::" \
+			-e "s:-arch ppc64::" \
+			-e "s:-arch \$i::" \
+			-e "/if \[ ! -z \"\$NATIVE_64_ARCH\" \]; then/,/fi/ d" \
+			-e "s:CFG_MAC_XARCH=yes:CFG_MAC_XARCH=no:g" \
+			-e "s:-Xarch_x86_64::g" \
+			-e "s:-Xarch_ppc64::g" \
+			-i configure mkspecs/common/mac-g++.conf \
+			|| die "sed configure failed"
+
+		# On Snow Leopard don't fall back to 10.5 deployment target.
+		if [[ ${CHOST} == *-apple-darwin10 ]] ; then
+			sed -e "s:QMakeVar set QMAKE_MACOSX_DEPLOYMENT_TARGET.*:QMakeVar set QMAKE_MACOSX_DEPLOYMENT_TARGET 10.6:g" \
+				-e "s:-mmacosx-version-min=10.[0-9]:-mmacosx-version-min=10.6:g" \
+				-i configure mkspecs/common/mac-g++.conf || die "sed configure failed"
+		fi
+	fi
+
+	# this one is needed for all systems with a separate -liconv, apart from
+	# Darwin, for which the sources already cater for -liconv
+	if use !elibc_glibc && [[ ${CHOST} != *-darwin* ]] ; then
+		sed \
+			-e "s|mac:LIBS += -liconv|LIBS += -liconv|g" \
+			-i config.tests/unix/iconv/iconv.pro \
+			|| die "sed on iconv.pro failed"
+	fi
+
+	# Solaris support
+	sed -i -e '/^QMAKE_LFLAGS_THREAD/a\QMAKE_LFLAGS_DYNAMIC_LIST = -Wl,--dynamic-list,' \
+		mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
+	# use GCC over SunStudio
+	sed -i -e '/PLATFORM=solaris-cc/s/cc/g++/' configure || die
+	# don't flirt with non-Prefix stuff, we're quite possessive
+	sed -i -e '/^QMAKE_\(LIB\|INC\)DIR\(_X11\|_OPENGL\|\)\t/s/=.*$/=/' \
+		mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
 
 	# Bug 275710
 	# Avoid adding C[XX]FLAGS to .qmake.cache as this is used in addition
 	# to the mkspecs while building qt
 	sed -e "s:SYSTEM_VARIABLES=\"CC CXX CFLAGS CXXFLAGS LDFLAGS\":SYSTEM_VARIABLES=\"CC CXX\":" \
-		-i "${S}/configure" || die "sed ${S}/configure failed"
+		-i "${S}"/configure || die "sed configure failed"
 
 	base_src_prepare
 }
@@ -299,6 +384,43 @@ qt4-build-edge_src_configure() {
 	setqtenv
 
 	myconf="$(standard_configure_options) ${myconf}"
+
+	# This one is needed for all systems with a separate -liconv, apart from
+	# Darwin, for which the sources already cater for -liconv
+	use !elibc_glibc && [[ ${CHOST} != *-darwin* ]] && \
+		myconf="${myconf} -liconv"
+
+	if has glib ${IUSE//+} && use glib; then
+		# use -I, -L and -l from configure
+		local glibflags="$(pkg-config --cflags --libs glib-2.0 gthread-2.0)"
+		# avoid the -pthread argument
+		myconf="${myconf} ${glibflags//-pthread}"
+		unset glibflags
+	fi
+
+	if use aqua ; then
+		# On (snow) leopard use the new (frameworked) cocoa code.
+		if [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+			myconf="${myconf} -cocoa -framework"
+
+			# We are crazy and build cocoa + qt3support :-)
+			if use qt3support; then
+				sed -e "/case \"\$PLATFORM,\$CFG_MAC_COCOA\" in/,/;;/ s|CFG_QT3SUPPORT=\"no\"|CFG_QT3SUPPORT=\"yes\"|" \
+					-i configure || die
+			fi
+
+			# We need the source's headers, not the installed ones.
+			myconf="${myconf} -I${S}/include"
+
+			# Add hint for the framework location.
+			myconf="${myconf} -F${QTLIBDIR}"
+		fi
+	else
+		# freetype2 include dir is non-standard, thus include it on configure
+		# use -I from configure
+		myconf="${myconf} $(pkg-config --cflags freetype2)"
+	fi
+
 	echo ./configure ${myconf}
 	./configure ${myconf} || die "configure failed"
 
