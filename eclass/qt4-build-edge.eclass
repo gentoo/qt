@@ -1,19 +1,15 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 # @ECLASS: qt4-build-edge.eclass
 # @MAINTAINER:
-# Ben de Groot <yngwin@gentoo.org>
-# Christian Franke <cfchris6@ts2server.com>
-# Markos Chandras <hwoarang@gentoo.org>
-# Alex Alexander <alex.alexander@gmail.com>
+# Qt herd <qt@gentoo.org>
 # @BLURB: Eclass for Qt4 split ebuilds in qting-edge overlay.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt4
-# Based on the qt4-build eclass by Caleb Tennis <caleb@gentoo.org>
 
-# WARNING: This eclass now requires EAPI=2
+# WARNING: This eclass requires EAPI=2 or EAPI=3
 #
 # NOTES:
 #
@@ -28,7 +24,25 @@
 
 inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
 
-IUSE="${IUSE} debug pch"
+MY_PV=${PV/_/-}
+MY_PV=${MY_PV/alpha-pre/tp}
+if version_is_at_least 4.5.99999999; then
+	MY_P=qt-everywhere-opensource-src-${MY_PV}
+else
+	MY_P=qt-x11-opensource-src-${MY_PV}
+fi
+
+HOMEPAGE="http://qt.nokia.com/"
+SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
+case "${PV}" in
+	*.9999)
+		SRC_URI=
+		;;
+esac
+
+LICENSE="|| ( LGPL-2.1 GPL-3 )"
+
+IUSE="aqua debug pch"
 if [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]]; then
 	if [[ ${CATEGORY}/${PN} == x11-libs/qt-core ]]; then
 		# >=qt-xmlpatterns-4.6 needs this enabled in qt-core
@@ -39,6 +53,17 @@ if [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]]; then
 		IUSE="${IUSE} exceptions"
 	fi
 fi
+case "${PV}" in
+	4.9999)
+		IUSE="${IUSE} +stable-branch"
+		;;
+	4.6.9999)
+		IUSE="${IUSE} stable-branch +kde-qt"
+		;;
+	4.5.9999)
+		IUSE="${IUSE} +kde-qt"
+		;;
+esac
 
 RDEPEND="
 	!<x11-libs/qt-assistant-${PV}
@@ -51,6 +76,8 @@ RDEPEND="
 	!>x11-libs/qt-demo-${PV}-r9999
 	!<x11-libs/qt-gui-${PV}
 	!>x11-libs/qt-gui-${PV}-r9999
+	!<x11-libs/qt-multimedia-${PV}
+	!>x11-libs/qt-multimedia-${PV}-r9999
 	!<x11-libs/qt-opengl-${PV}
 	!>x11-libs/qt-opengl-${PV}-r9999
 	!<x11-libs/qt-phonon-${PV}
@@ -71,59 +98,7 @@ RDEPEND="
 	!>x11-libs/qt-xmlpatterns-${PV}-r9999
 "
 
-case "${PV}" in
-	4.9999)
-		IUSE="${IUSE} +stable-branch"
-		;;
-	4.6.9999)
-		IUSE="${IUSE} stable-branch +kde-qt"
-		;;
-	4.5.9999)
-		IUSE="${IUSE} +kde-qt"
-		;;
-esac
-
-case "${PV}" in
-	4.*.*_alpha_pre*)
-		SRCTYPE="${SRCTYPE:-opensource-src}"
-		MY_PV="${PV/_alpha_pre/-tp}"
-		;;
-	4.*.*_beta*)
-		SRCTYPE="${SRCTYPE:-opensource-src}"
-		MY_PV="${PV/_beta/-beta}"
-		;;
-	4.*.*_rc*)
-		SRCTYPE="${SRCTYPE:-opensource-src}"
-		MY_PV="${PV/_rc/-rc}"
-		;;
-	*)
-		SRCTYPE="${SRCTYPE:-opensource-src}"
-		MY_PV="${PV}"
-		;;
-esac
-
-HOMEPAGE="http://qt.nokia.com/"
-
-case "${PV}" in
-	4.6.?_*)
-		MY_P=qt-everywhere-${SRCTYPE}-${MY_PV}
-		;;
-	*)
-		MY_P=qt-x11-${SRCTYPE}-${MY_PV}
-		;;
-esac
-
-SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
-
-S="${WORKDIR}/${MY_P}"
-
-LICENSE="|| ( LGPL-2.1 GPL-3 )"
-
-case "${PV}" in
-	*.9999)
-		SRC_URI=
-		;;
-esac
+S=${WORKDIR}/${MY_P}
 
 qt4-build-edge_pkg_setup() {
 	case "${PV}" in
@@ -200,22 +175,22 @@ qt4-build-edge_pkg_setup() {
 
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		ewarn
-		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
-		ewarn "[qting-edge]. Alternatively, contact	qt@gentoo.org."
+		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary"
+		ewarn "with [qting-edge]. Alternatively, contact <qt@gentoo.org>."
 		ewarn "Thank you for using qting-edge overlay."
 		ewarn
-		ebeep 5
 	fi
 
-	PATH="${S}/bin:${PATH}"
+	[[ ${EAPI} == 2 ]] && use !prefix && EPREFIX=
+
+	PATH="${S}/bin${PATH:+:}${PATH}"
 	LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
 
 	# Make sure ebuilds use the required EAPI
-	if [[ ${EAPI} != 2 ]]; then
-		eerror "The qt4-build-edge eclass requires EAPI=2, but this ebuild does not"
-		eerror "have EAPI=2 set. The ebuild author or editor failed. This ebuild needs"
-		eerror "to be fixed. Using qt4-build-edge eclass without EAPI=2 will fail."
-		die "qt4-build-edge eclass requires EAPI=2"
+	if [[ ${EAPI} != [23] ]]; then
+		eerror "The ${ECLASS} eclass requires EAPI=2 or EAPI=3, but this ebuild is using EAPI=${EAPI:-0}."
+		eerror "The ebuild author or editor failed. This ebuild needs to be fixed."
+		die "${ECLASS} eclass requires EAPI=2 or EAPI=3"
 	fi
 
 	# Let users know what they are getting themselves into ;-)
@@ -246,6 +221,7 @@ qt4-build-edge_pkg_setup() {
 		esac
 		echo
 	fi
+
 	if ! version_is_at_least 4.1 $(gcc-version); then
 		ewarn "Using a GCC version lower than 4.1 is not supported!"
 		echo
