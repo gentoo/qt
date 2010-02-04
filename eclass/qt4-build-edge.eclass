@@ -432,11 +432,39 @@ qt4-build-edge_src_compile() {
 	build_directories "${QT4_TARGET_DIRECTORIES}"
 }
 
+# @FUNCTION: fix_includes
+# @DESCRIPTION:
+# For MacOSX we need to add some symlinks when frameworks are
+# being used, to avoid complications with some more or less stupid packages.
+fix_includes() {
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		# Some packages tend to include <Qt/...>
+		dodir "${QTHEADERDIR#${EPREFIX}}"/Qt
+
+		# Fake normal headers when frameworks are installed... eases life later on
+		local dest f
+		for frw in "${D}${QTLIBDIR}"/*.framework; do
+			[[ -e "${frw}"/Headers ]] || continue
+			f=$(basename ${frw})
+			dest="${QTHEADERDIR#${EPREFIX}}"/${f%.framework}
+			dosym "${QTLIBDIR#${EPREFIX}}"/${f}/Headers "${dest}"
+
+			# Link normal headers as well
+			for hdr in "${D}/${QTLIBDIR}/${f}"/Headers/*; do
+				h=$(basename ${hdr})
+				dosym "${QTLIBDIR#${EPREFIX}}"/${f}/Headers/${h} "${QTHEADERDIR#${EPREFIX}}"/Qt/${h}
+			done
+		done
+	fi
+}
+
 qt4-build-edge_src_install() {
+	[[ ${EAPI} == 2 ]] && use !prefix && ED=${D}
 	setqtenv
 	install_directories "${QT4_TARGET_DIRECTORIES}"
 	install_qconfigs
 	fix_library_files
+	fix_includes
 }
 
 # @FUNCTION: setqtenv
@@ -444,21 +472,21 @@ qt4-build-edge_src_install() {
 # Prepares the environment. This function is called
 # at the beginning of each ebuild phase.
 setqtenv() {
-	QTBASEDIR=/usr/$(get_libdir)/qt4
-	QTPREFIXDIR=/usr
-	QTBINDIR=/usr/bin
-	QTLIBDIR=/usr/$(get_libdir)/qt4
+	QTBASEDIR=${EPREFIX}/usr/$(get_libdir)/qt4
+	QTPREFIXDIR=${EPREFIX}/usr
+	QTBINDIR=${EPREFIX}/usr/bin
+	QTLIBDIR=${EPREFIX}/usr/$(get_libdir)/qt4
 	QMAKE_LIBDIR_QT=${QTLIBDIR}
-	QTPCDIR=/usr/$(get_libdir)/pkgconfig
-	QTDATADIR=/usr/share/qt4
-	QTDOCDIR=/usr/share/doc/qt-${PV}
-	QTHEADERDIR=/usr/include/qt4
+	QTPCDIR=${EPREFIX}/usr/$(get_libdir)/pkgconfig
+	QTDATADIR=${EPREFIX}/usr/share/qt4
+	QTDOCDIR=${EPREFIX}/usr/share/doc/qt-${PV}
+	QTHEADERDIR=${EPREFIX}/usr/include/qt4
 	QTPLUGINDIR=${QTLIBDIR}/plugins
-	QTSYSCONFDIR=/etc/qt4
+	QTSYSCONFDIR=${EPREFIX}/etc/qt4
 	QTTRANSDIR=${QTDATADIR}/translations
 	QTEXAMPLESDIR=${QTDATADIR}/examples
 	QTDEMOSDIR=${QTDATADIR}/demos
-	QT_INSTALL_PREFIX=/usr/$(get_libdir)/qt4
+	QT_INSTALL_PREFIX=${EPREFIX}/usr/$(get_libdir)/qt4
 	PLATFORM=$(qt_mkspecs_dir)
 
 	unset QMAKESPEC
@@ -471,22 +499,33 @@ setqtenv() {
 standard_configure_options() {
 	local myconf=
 
-	[[ $(get_libdir) != "lib" ]] && myconf="${myconf} -L/usr/$(get_libdir)"
+	[[ $(get_libdir) != lib ]] && myconf="${myconf} -L${EPREFIX}/usr/$(get_libdir)"
+
+	# Disable visibility explicitly if gcc version isn't 4
+	if [[ $(gcc-major-version) -lt 4 ]]; then
+		myconf="${myconf} -no-reduce-exports"
+	fi
 
 	# precompiled headers don't work on hardened, where the flag is masked.
 	myconf="${myconf} $(qt_use pch)"
 
 	if use debug; then
-		myconf="${myconf} -debug -no-separate-debug-info"
+		myconf="${myconf} -debug"
 	else
-		myconf="${myconf} -release -no-separate-debug-info"
+		myconf="${myconf} -release"
 	fi
+	myconf="${myconf} -no-separate-debug-info"
+
+	use aqua && myconf="${myconf} -no-framework"
 
 	# ARCH is set on Gentoo. Qt now falls back to generic on an unsupported
 	# $(tc-arch). Therefore we convert it to supported values.
 	case "$(tc-arch)" in
-		amd64) myconf="${myconf} -arch x86_64" ;;
-		ppc|ppc64) myconf="${myconf} -arch powerpc" ;;
+		amd64|x64-*) myconf="${myconf} -arch x86_64" ;;
+		ppc-macos) myconf="${myconf} -arch ppc" ;;
+		ppc|ppc64|ppc-*) myconf="${myconf} -arch powerpc" ;;
+		sparc|sparc-*) myconf="${myconf} -arch sparc" ;;
+		x86-macos) myconf="${myconf} -arch x86" ;;
 		x86|x86-*) myconf="${myconf} -arch i386" ;;
 		alpha|arm|ia64|mips|s390|sparc) myconf="${myconf} -arch $(tc-arch)" ;;
 		hppa|sh) myconf="${myconf} -arch generic" ;;
@@ -496,22 +535,19 @@ standard_configure_options() {
 	local exceptions=
 	has exceptions "${IUSE}" && exceptions="$(qt_use exceptions)"
 
+	# reduce-relocations seems to introduce major breakage to applications,
+	# mostly to be seen as a core dump with the message "QPixmap: Must
+	# construct a QApplication before a QPaintDevice" on Solaris
+	[[ ${CHOST} != *-solaris* ]] && myconf="${myconf} -reduce-relocations"
+
 	myconf="${myconf} -platform $(qt_mkspecs_dir)
-		-stl -verbose -largefile -confirm-license -no-rpath
+		-stl -verbose -largefile -confirm-license
 		-prefix ${QTPREFIXDIR} -bindir ${QTBINDIR} -libdir ${QTLIBDIR}
 		-datadir ${QTDATADIR} -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
 		-translationdir ${QTTRANSDIR} -examplesdir ${QTEXAMPLESDIR}
-		-demosdir ${QTDEMOSDIR} -silent -fast
-		${exceptions}
-		$(use x86-fbsd || echo -reduce-relocations)
-		-nomake examples -nomake demos"
-
-	case "${MY_PV_EXTRA}" in
-		4.6.* | 4.?.9999 | 4.9999 | 4.?.9999-stable | 4.9999-stable | 4.?.9999-kde-qt | 4.?.9999-kde-qt-stable )
-			myconf="${myconf} -opensource"
-			;;
-	esac
+		-demosdir ${QTDEMOSDIR} -silent -fast -opensource
+		${exceptions} -nomake examples -nomake demos"
 
 	echo "${myconf}"
 }
@@ -526,10 +562,12 @@ build_directories() {
 	# positional parameters won't be expanded correctly.
 	for x in $@; do
 		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
+		# avoid running over the maximum number of arguments, bug #299810
 		# FIXME: investigate whether this sed can be moved outside of the for loop
-		sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
-			$(find "${S}" -name '*.pr[io]') "${S}"/mkspecs/common/linux.conf \
-			|| die "failed to fix QT_INSTALL_LIBS"
+		{
+			echo "${S}"/mkspecs/common/*.conf
+			find "${S}" -name '*.pr[io]'
+		} | xargs sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" || die
 		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake in ${x} failed"
 		emake CC="@echo compiling \$< && $(tc-getCC)" \
 			CXX="@echo compiling \$< && $(tc-getCXX)" \
@@ -576,7 +614,7 @@ install_qconfigs() {
 		for x in QCONFIG_ADD QCONFIG_REMOVE; do
 			[[ -n ${!x} ]] && echo ${x}=${!x} >> "${T}"/${PN}-qconfig.pri
 		done
-		insinto ${QTDATADIR}/mkspecs/gentoo
+		insinto ${QTDATADIR#${EPREFIX}}/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri || die "installing ${PN}-qconfig.pri failed"
 	fi
 
@@ -584,7 +622,7 @@ install_qconfigs() {
 		for x in ${QCONFIG_DEFINE}; do
 			echo "#define ${x}" >> "${T}"/gentoo-${PN}-qconfig.h
 		done
-		insinto ${QTHEADERDIR}/Gentoo
+		insinto ${QTHEADERDIR#${EPREFIX}}/Gentoo
 		doins "${T}"/gentoo-${PN}-qconfig.h || die "installing gentoo-${PN}-qconfig.h failed"
 	fi
 }
@@ -654,20 +692,23 @@ qt4-build-edge_pkg_postrm() {
 
 qt4-build-edge_pkg_postinst() {
 	generate_qconfigs
-	echo
-	ewarn "After a rebuild or upgrade of Qt, it can happen that Qt plugins (such as Qt"
-	ewarn "and KDE styles and widgets) can no longer be loaded. In this situation you"
-	ewarn "should recompile the packages providing these plugins. Also, make sure you"
-	ewarn "compile the Qt packages, and the packages that depend on it, with the same"
-	ewarn "GCC version and the same USE flag settings (especially the debug flag)."
-	ewarn
-	ewarn "Packages that typically need to be recompiled are kdelibs from KDE4, any"
-	ewarn "additional KDE4/Qt4 styles, qscintilla and PyQt4. Before filing a bug report,"
-	ewarn "make sure all your Qt4 packages are up-to-date and built with the same"
-	ewarn "configuration."
-	ewarn
-	ewarn "For more information, see http://doc.trolltech.com/${PV%.*}/plugins-howto.html"
-	echo
+
+	if [[ ${PN} == qt-core ]]; then
+		echo
+		ewarn "After a rebuild or upgrade of Qt, it can happen that Qt plugins (such as Qt"
+		ewarn "and KDE styles and widgets) can no longer be loaded. In this situation you"
+		ewarn "should recompile the packages providing these plugins. Also, make sure you"
+		ewarn "compile the Qt packages, and the packages that depend on it, with the same"
+		ewarn "GCC version and the same USE flag settings (especially the debug flag)."
+		ewarn
+		ewarn "Packages that typically need to be recompiled are kdelibs from KDE4, any"
+		ewarn "additional KDE4/Qt4 styles, qscintilla and PyQt4. Before filing a bug report,"
+		ewarn "make sure all your Qt4 packages are up-to-date and built with the same"
+		ewarn "configuration."
+		ewarn
+		ewarn "For more information, see http://doc.trolltech.com/${PV%.*}/plugins-howto.html"
+		echo
+	fi
 }
 
 # @FUNCTION: skip_qmake_build
@@ -693,9 +734,9 @@ symlink_binaries_to_buildtree() {
 	done
 }
 
-# required for 9999, easier than sed'ing
+# required for live ebuilds, easier than sed'ing
 generate_include() {
-	QTDIR="." perl "bin/syncqt"
+	QTDIR="." perl bin/syncqt
 }
 
 # @FUNCTION: fix_library_files
@@ -715,7 +756,7 @@ fix_library_files() {
 		if [[ -e ${libfile} ]]; then
 			sed -i -e "s:${S}/bin:${QTBINDIR}:g" ${libfile} || die "${FUNCNAME}: sed on ${libfile} failed."
 			# Move .pc files into the pkgconfig directory
-			dodir ${QTPCDIR}
+			dodir ${QTPCDIR#${EPREFIX}}
 			mv ${libfile} "${D}"/${QTPCDIR}/ \
 				|| die "${FUNCNAME}: moving ${libfile} to ${D}/${QTPCDIR}/ failed."
 		fi
@@ -753,26 +794,49 @@ qt_mkspecs_dir() {
 	local spec=
 	case ${CHOST} in
 		*-freebsd*|*-dragonfly*)
-			spec="freebsd" ;;
+			spec=freebsd ;;
 		*-openbsd*)
-			spec="openbsd" ;;
+			spec=openbsd ;;
 		*-netbsd*)
-			spec="netbsd" ;;
+			spec=netbsd ;;
 		*-darwin*)
-			spec="darwin" ;;
+			if use aqua; then
+				# mac with carbon/cocoa
+				spec=macx
+			else
+				# darwin/mac with x11
+				spec=darwin
+			fi
+			;;
+		*-solaris*)
+			spec=solaris ;;
 		*-linux-*|*-linux)
-			spec="linux" ;;
+			spec=linux ;;
 		*)
 			die "Unknown CHOST '${CHOST}', no platform chosen."
 	esac
 
 	local CXX=$(tc-getCXX)
-	if [[ ${CXX/g++} != ${CXX} ]]; then
+	if [[ ${CXX} == *g++* ]]; then
 		spec="${spec}-g++"
-	elif [[ ${CXX/icpc} != ${CXX} ]]; then
+	elif [[ ${CXX} == *icpc* ]]; then
 		spec="${spec}-icc"
 	else
 		die "Unknown compiler '${CXX}'."
+	fi
+
+	if [[ -n ${LIBDIR/lib} ]]; then
+		spec="${spec}-${LIBDIR/lib}"
+	fi
+
+	# Add -64 for 64bit profiles
+	if use amd64-linux ||
+		use x64-freebsd ||
+		use x64-macos ||
+		use x64-solaris ||
+		use sparc64-solaris
+	then
+		spec="${spec}-64"
 	fi
 
 	echo "${spec}"
