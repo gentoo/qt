@@ -54,7 +54,7 @@ src_configure() {
 src_install() {
 	python_src_install
 
-	dodoc README NEWS || die
+	dodoc NEWS || die
 
 	if use doc; then
 		dohtml -r doc/html/* || die

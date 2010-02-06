@@ -22,7 +22,9 @@ IUSE="debug doc"
 
 S="${WORKDIR}/${PN}"
 
-DEPEND="dev-util/mercurial"
+DEPEND="dev-util/mercurial
+	sys-devel/bison
+	sys-devel/flex"
 RDEPEND=""
 
 src_prepare() {
@@ -53,7 +55,7 @@ src_configure() {
 src_install() {
 	python_src_install
 
-	dodoc ChangeLog NEWS || die
+	dodoc NEWS || die
 
 	if use doc; then
 		dohtml -r doc/html/* || die
