@@ -51,7 +51,6 @@ S=${WORKDIR}/${MY_P}
 PATCHES=(
 	"${FILESDIR}/${PN}-4.6.1-configure-multilib.patch"
 	"${FILESDIR}/${PN}-4.7-disable-stripping.patch"
-	"${FILESDIR}/${PN}-4.7-fix-phonon-check.patch"
 )
 
 src_prepare() {
@@ -144,7 +143,7 @@ src_install() {
 	}
 	python_execute_function -s installation
 
-	dodoc ChangeLog doc/pyqt4ref.txt NEWS THANKS || die
+	dodoc OPENSOURCE-NOTICE.TXT README doc/pyqt4ref.txt NEWS THANKS || die
 
 	if use doc; then
 		dohtml -r doc/* || die
