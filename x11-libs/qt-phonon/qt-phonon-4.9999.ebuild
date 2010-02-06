@@ -21,7 +21,8 @@ RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
 src/phonon
-src/plugins/phonon"
+src/plugins/phonon
+tools/designer/src/plugins/phononwidgets"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 include/
 src"
