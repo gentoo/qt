@@ -13,24 +13,6 @@
 =dev-python/qscintilla-python-2.4.2_pre*
 =x11-libs/qscintilla-2.4.2_pre*
 
-# Markos Chandras <hwoarang@gentoo.org> (18 Jan 2010)
-# Old 4.5 git branch should not be used anymore. Please
-# update to 4.6 branch instead
-~x11-libs/qt-assistant-4.5.9999
-~x11-libs/qt-core-4.5.9999
-~x11-libs/qt-dbus-4.5.9999
-~x11-libs/qt-demo-4.5.9999
-~x11-libs/qt-gui-4.5.9999
-~x11-libs/qt-multimedia-4.5.9999
-~x11-libs/qt-opengl-4.5.9999
-~x11-libs/qt-phonon-4.5.9999
-~x11-libs/qt-script-4.5.9999
-~x11-libs/qt-sql-4.5.9999
-~x11-libs/qt-svg-4.5.9999
-~x11-libs/qt-test-4.5.9999
-~x11-libs/qt-webkit-4.5.9999
-~x11-libs/qt-xmlpatterns-4.5.9999
-
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
