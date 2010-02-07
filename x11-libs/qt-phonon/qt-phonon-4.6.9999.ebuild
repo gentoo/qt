@@ -15,7 +15,7 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,kde-qt=,qt3support,stable-branch=]
 	!kde-base/phonon-xine
 	!media-sound/phonon
 	media-libs/gstreamer
-	media-libs/gst-plugins-base
+	media-libs/gst-plugins-meta
 	dbus? ( =x11-libs/qt-dbus-${PV}[debug=,kde-qt=,stable-branch=] )"
 RDEPEND="${DEPEND}"
 
@@ -25,7 +25,8 @@ src/plugins/phonon
 tools/designer/src/plugins/phononwidgets"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 include/
-src"
+src
+tools"
 
 QCONFIG_ADD="phonon"
 QCONFIG_DEFINE="QT_GSTREAMER"
