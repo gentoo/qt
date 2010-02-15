@@ -6,11 +6,11 @@ EAPI="2"
 
 inherit eutils qt4-r2
 
-MY_PN="FeelHome"
+MY_PN="FeelHome-src"
 
 DESCRIPTION="A client for remote data storage service"
 HOMEPAGE="http://nuxinov.com"
-SRC_URI="mirror://sourceforge/${PN}/${MY_PN}.tar.gz -> ${P}.tar.gz"
+SRC_URI="mirror://sourceforge/${PN}/${MY_PN}-src.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
