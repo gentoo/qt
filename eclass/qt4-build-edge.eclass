@@ -61,6 +61,7 @@ case "${PV}" in
 		;;
 esac
 
+[[ ${PV} == *.9999 ]] && DEPEND="dev-lang/perl"
 RDEPEND="
 	!<x11-libs/qt-assistant-${PV}
 	!>x11-libs/qt-assistant-${PV}-r9999
