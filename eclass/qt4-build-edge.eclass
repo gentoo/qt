@@ -727,23 +727,6 @@ qt4-build-edge_pkg_postrm() {
 # breakages and proposed solutions.
 qt4-build-edge_pkg_postinst() {
 	generate_qconfigs
-
-	if [[ ${PN} == qt-core ]]; then
-		echo
-		ewarn "After a rebuild or upgrade of Qt, it can happen that Qt plugins (such as Qt"
-		ewarn "and KDE styles and widgets) can no longer be loaded. In this situation you"
-		ewarn "should recompile the packages providing these plugins. Also, make sure you"
-		ewarn "compile the Qt packages, and the packages that depend on it, with the same"
-		ewarn "GCC version and the same USE flag settings (especially the debug flag)."
-		ewarn
-		ewarn "Packages that typically need to be recompiled are kdelibs from KDE4, any"
-		ewarn "additional KDE4/Qt4 styles, qscintilla and PyQt4. Before filing a bug report,"
-		ewarn "make sure all your Qt4 packages are up-to-date and built with the same"
-		ewarn "configuration."
-		ewarn
-		ewarn "For more information, see http://doc.trolltech.com/${PV%.*}/plugins-howto.html"
-		echo
-	fi
 }
 
 # @FUNCTION: skip_qmake_build
