@@ -34,11 +34,7 @@ fi
 
 HOMEPAGE="http://qt.nokia.com/"
 SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
-case "${PV}" in
-	*.9999)
-		SRC_URI=
-		;;
-esac
+[[ ${PV} == *.9999 ]] && SRC_URI=
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 
@@ -100,6 +96,9 @@ RDEPEND="
 
 S=${WORKDIR}/${MY_P}
 
+# @FUNCTION: qt4-build-edge_pkg_setup
+# @DESCRIPTION:
+# Sets up PATH, {,DY}LD_LIBRARY_PATH and EGIT_* variables.
 qt4-build-edge_pkg_setup() {
 	case "${PV}" in
 		4.9999)
@@ -237,6 +236,18 @@ qt4-build-edge_pkg_setup() {
 	fi
 }
 
+# @ECLASS-VARIABLE: QT4_TARGET_DIRECTORIES
+# @DESCRIPTION:
+# Arguments for build_target_directories. Takes the directories in which the
+# code should be compiled. This is a space-separated list of relative paths.
+
+# @ECLASS-VARIABLE: QT4_EXTRACT_DIRECTORIES
+# @DESCRIPTION:
+# Space-separated list of directories that will be extracted from Qt tarball.
+
+# @FUNCTION: qt4-build-edge_src_unpack
+# @DESCRIPTION:
+# Unpacks the sources.
 qt4-build-edge_src_unpack() {
 	setqtenv
 
@@ -249,7 +260,7 @@ qt4-build-edge_src_unpack() {
 	done
 
 	case "${PV}" in
-		*9999*)
+		*.9999)
 			git_src_unpack
 			;;
 		*)
@@ -259,10 +270,22 @@ qt4-build-edge_src_unpack() {
 	esac
 }
 
+# @ECLASS-VARIABLE: PATCHES
+# @DESCRIPTION:
+# In case you have patches to apply, specify them here. Make sure to specify
+# the full path. This variable is necessary for src_prepare phase.
+# Example:
+# PATCHES=( "${FILESDIR}"/mypatch.patch
+# "${FILESDIR}"/mypatch2.patch )
+
+# @FUNCTION: qt4-build-edge_src_prepare
+# @DESCRIPTION:
+# Prepares the sources before the configure phase. Strips C(XX)FLAGS if necessary, and fixes
+# source files in order to respect CFLAGS/CXXFLAGS/LDFLAGS specified on /etc/make.conf.
 qt4-build-edge_src_prepare() {
 	setqtenv
 
-	[[ ${PV} == *9999* ]] && generate_include
+	[[ ${PV} == *.9999 ]] && generate_include
 
 	if [[ ${PN} != qt-core ]]; then
 		skip_qmake_build
@@ -376,6 +399,10 @@ qt4-build-edge_src_prepare() {
 	base_src_prepare
 }
 
+# @FUNCTION: qt4-build-edge_src_configure
+# @DESCRIPTION:
+# Runs ./configure with appropriate arguments. You can use
+# the ${myconf} variable to pass additional arguments.
 qt4-build-edge_src_configure() {
 	setqtenv
 
@@ -423,9 +450,12 @@ qt4-build-edge_src_configure() {
 	unset myconf
 }
 
+# @FUNCTION: qt4-build-edge_src_compile
+# @DESCRIPTION:
+# Compiles the code in ${QT4_TARGET_DIRECTORIES}.
 qt4-build-edge_src_compile() {
 	setqtenv
-	build_directories "${QT4_TARGET_DIRECTORIES}"
+	build_directories ${QT4_TARGET_DIRECTORIES}
 }
 
 # @FUNCTION: fix_includes
@@ -454,10 +484,13 @@ fix_includes() {
 	fi
 }
 
+# @FUNCTION: qt4-build-edge_src_install
+# @DESCRIPTION:
+# Performs the actual installation including some library fixes.
 qt4-build-edge_src_install() {
 	[[ ${EAPI} == 2 ]] && use !prefix && ED=${D}
 	setqtenv
-	install_directories "${QT4_TARGET_DIRECTORIES}"
+	install_directories ${QT4_TARGET_DIRECTORIES}
 	install_qconfigs
 	fix_library_files
 	fix_includes
@@ -491,7 +524,7 @@ setqtenv() {
 # @FUNCTION: standard_configure_options
 # @DESCRIPTION:
 # Sets up some standard configure options, like libdir (if necessary), whether
-# debug info is wanted or not.
+# debug info is wanted or not, exceptions support, arch, etc...
 standard_configure_options() {
 	local myconf=
 
@@ -554,9 +587,7 @@ standard_configure_options() {
 # Compiles the code in the given directories.
 build_directories() {
 	local x=
-	# Do NOT put double quotes around $@ here, otherwise the
-	# positional parameters won't be expanded correctly.
-	for x in $@; do
+	for x in "$@"; do
 		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
 		# avoid running over the maximum number of arguments, bug #299810
 		# FIXME: investigate whether this sed can be moved outside of the for loop
@@ -578,9 +609,7 @@ build_directories() {
 # Runs emake install in the given directories, which are separated by spaces.
 install_directories() {
 	local x=
-	# Do NOT put double quotes around $@ here, otherwise the
-	# positional parameters won't be expanded correctly.
-	for x in $@; do
+	for x in "$@"; do
 		pushd "${S}"/${x} > /dev/null || die "can't pushd ${S}/${x}"
 		emake INSTALL_ROOT="${D}" install || die "emake install in ${x} failed"
 		popd > /dev/null || die "can't popd from ${S}/${x}"
@@ -603,7 +632,8 @@ QCONFIG_REMOVE="${QCONFIG_REMOVE:-}"
 QCONFIG_DEFINE="${QCONFIG_DEFINE:-}"
 
 # @FUNCTION: install_qconfigs
-# @DESCRIPTION: Install gentoo-specific mkspecs configurations
+# @DESCRIPTION:
+# Installs Gentoo-specific mkspecs configurations.
 install_qconfigs() {
 	local x=
 	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} ]]; then
@@ -624,7 +654,8 @@ install_qconfigs() {
 }
 
 # @FUNCTION: generate_qconfigs
-# @DESCRIPTION: Generates gentoo-specific configurations
+# @DESCRIPTION:
+# Generates Gentoo-specific configurations.
 generate_qconfigs() {
 	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} || ${CATEGORY}/${PN} == x11-libs/qt-core ]]; then
 		local x qconfig_add qconfig_remove qconfig_new
@@ -682,10 +713,17 @@ generate_qconfigs() {
 	fi
 }
 
+# @FUNCTION: qt4-build-edge_pkg_postrm
+# @DESCRIPTION:
+# Generates configuration when the package is completely removed.
 qt4-build-edge_pkg_postrm() {
 	generate_qconfigs
 }
 
+# @FUNCTION: qt4-build-edge_pkg_postinst
+# @DESCRIPTION:
+# Generates configuration, plus throws a message about possible
+# breakages and proposed solutions.
 qt4-build-edge_pkg_postinst() {
 	generate_qconfigs
 
@@ -730,7 +768,9 @@ symlink_binaries_to_buildtree() {
 	done
 }
 
-# required for live ebuilds, easier than sed'ing
+# @FUNCTION: generate_include
+# @DESCRIPTION:
+# Internal function, required for live ebuilds.
 generate_include() {
 	QTDIR="." perl bin/syncqt
 }
@@ -738,7 +778,7 @@ generate_include() {
 # @FUNCTION: fix_library_files
 # @DESCRIPTION:
 # Fixes the pathes in *.la, *.prl, *.pc, as they are wrong due to sandbox and
-# moves the *.pc-files into the pkgconfig directory
+# moves the *.pc files into the pkgconfig directory.
 fix_library_files() {
 	local libfile=
 	for libfile in "${D}"/${QTLIBDIR}/{*.la,*.prl,pkgconfig/*.pc}; do
@@ -766,9 +806,8 @@ fix_library_files() {
 # @USAGE: < flag > [ feature ] [ enableval ]
 # @DESCRIPTION:
 # This will echo "${enableval}-${feature}" if <flag> is enabled, or
-# "-no-${feature} if the flag is disabled. If [feature] is not specified <flag>
-# will be used for that. If [enableval] is not specified, it omits the
-# assignment-part.
+# "-no-${feature}" if the flag is disabled. If [feature] is not specified <flag>
+# will be used for that. If [enableval] is not specified, that part is omitted.
 qt_use() {
 	local feature="${2:-$1}"
 	local enableval=
