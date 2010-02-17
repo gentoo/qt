@@ -26,11 +26,7 @@ inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
 
 MY_PV=${PV/_/-}
 MY_PV=${MY_PV/alpha-pre/tp}
-if version_is_at_least 4.5.99999999; then
-	MY_P=qt-everywhere-opensource-src-${MY_PV}
-else
-	MY_P=qt-x11-opensource-src-${MY_PV}
-fi
+MY_P=qt-everywhere-opensource-src-${MY_PV}
 
 HOMEPAGE="http://qt.nokia.com/"
 SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
@@ -55,9 +51,6 @@ case "${PV}" in
 		;;
 	4.6.9999)
 		IUSE="${IUSE} stable-branch +kde-qt"
-		;;
-	4.5.9999)
-		IUSE="${IUSE} +kde-qt"
 		;;
 esac
 
@@ -124,13 +117,6 @@ qt4-build-edge_pkg_setup() {
 				fi
 			fi
 			;;
-		4.5.9999)
-			if use kde-qt; then
-				MY_PV_EXTRA="${PV}-kde-qt"
-			else
-				MY_PV_EXTRA="${PV}"
-			fi
-			;;
 		*)
 			MY_PV_EXTRA="${PV}"
 			;;
@@ -147,12 +133,6 @@ qt4-build-edge_pkg_setup() {
 			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="master"
-			EGIT_COMMIT="${EGIT_BRANCH}"
-			;;
-		4.5.9999-kde-qt)
-			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
-			EGIT_PROJECT="qt-${PV}"
-			EGIT_BRANCH="4.5.3-patched"
 			EGIT_COMMIT="${EGIT_BRANCH}"
 			;;
 		4.?.9999 | 4.?.9999-stable)
@@ -210,7 +190,7 @@ qt4-build-edge_pkg_setup() {
 				ewarn "The ${PV} version ebuilds with kde-qt USE flag install kde-qt from gitorious kde-qt repository."
 				;;
 			4.?.9999-kde-qt-stable)
-				ewarn "The ${PV} version ebuilds with kde-qt and stable-branch	USE flags install kde-qt from"
+				ewarn "The ${PV} version ebuilds with kde-qt and stable-branch USE flags install kde-qt from"
 				ewarn "gitorious kde-qt repository, '4.6-stable-patched' branch."
 				;;
 			4.?.9999-stable | 4.9999-stable)
