@@ -15,7 +15,7 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support,stable-branch=]
 	!kde-base/phonon-xine
 	!media-sound/phonon
 	media-libs/gstreamer
-	media-libs/gst-plugins-meta
+	media-plugins/gst-plugins-meta
 	dbus? ( =x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )"
 RDEPEND="${DEPEND}"
 
