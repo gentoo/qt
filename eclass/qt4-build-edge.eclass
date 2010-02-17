@@ -392,20 +392,20 @@ qt4-build-edge_src_configure() {
 	# This one is needed for all systems with a separate -liconv, apart from
 	# Darwin, for which the sources already cater for -liconv
 	use !elibc_glibc && [[ ${CHOST} != *-darwin* ]] && \
-		myconf="${myconf} -liconv"
+		myconf+=" -liconv"
 
 	if has glib ${IUSE//+} && use glib; then
 		# use -I, -L and -l from configure
 		local glibflags="$(pkg-config --cflags --libs glib-2.0 gthread-2.0)"
 		# avoid the -pthread argument
-		myconf="${myconf} ${glibflags//-pthread}"
+		myconf+=" ${glibflags//-pthread}"
 		unset glibflags
 	fi
 
 	if use aqua ; then
 		# On (snow) leopard use the new (frameworked) cocoa code.
 		if [[ ${CHOST##*-darwin} -ge 9 ]] ; then
-			myconf="${myconf} -cocoa -framework"
+			myconf+=" -cocoa -framework"
 
 			# We are crazy and build cocoa + qt3support :-)
 			if use qt3support; then
@@ -414,15 +414,15 @@ qt4-build-edge_src_configure() {
 			fi
 
 			# We need the source's headers, not the installed ones.
-			myconf="${myconf} -I${S}/include"
+			myconf+=" -I${S}/include"
 
 			# Add hint for the framework location.
-			myconf="${myconf} -F${QTLIBDIR}"
+			myconf+=" -F${QTLIBDIR}"
 		fi
 	else
 		# freetype2 include dir is non-standard, thus include it on configure
 		# use -I from configure
-		myconf="${myconf} $(pkg-config --cflags freetype2)"
+		myconf+=" $(pkg-config --cflags freetype2)"
 	fi
 
 	echo ./configure ${myconf}
@@ -509,36 +509,36 @@ setqtenv() {
 standard_configure_options() {
 	local myconf=
 
-	[[ $(get_libdir) != lib ]] && myconf="${myconf} -L${EPREFIX}/usr/$(get_libdir)"
+	[[ $(get_libdir) != lib ]] && myconf+=" -L${EPREFIX}/usr/$(get_libdir)"
 
 	# Disable visibility explicitly if gcc version isn't 4
 	if [[ $(gcc-major-version) -lt 4 ]]; then
-		myconf="${myconf} -no-reduce-exports"
+		myconf+=" -no-reduce-exports"
 	fi
 
 	# precompiled headers don't work on hardened, where the flag is masked.
-	myconf="${myconf} $(qt_use pch)"
+	myconf+=" $(qt_use pch)"
 
 	if use debug; then
-		myconf="${myconf} -debug"
+		myconf+=" -debug"
 	else
-		myconf="${myconf} -release"
+		myconf+=" -release"
 	fi
-	myconf="${myconf} -no-separate-debug-info"
+	myconf+=" -no-separate-debug-info"
 
-	use aqua && myconf="${myconf} -no-framework"
+	use aqua && myconf+=" -no-framework"
 
 	# ARCH is set on Gentoo. Qt now falls back to generic on an unsupported
 	# $(tc-arch). Therefore we convert it to supported values.
 	case "$(tc-arch)" in
-		amd64|x64-*) myconf="${myconf} -arch x86_64" ;;
-		ppc-macos) myconf="${myconf} -arch ppc" ;;
-		ppc|ppc64|ppc-*) myconf="${myconf} -arch powerpc" ;;
-		sparc|sparc-*) myconf="${myconf} -arch sparc" ;;
-		x86-macos) myconf="${myconf} -arch x86" ;;
-		x86|x86-*) myconf="${myconf} -arch i386" ;;
-		alpha|arm|ia64|mips|s390|sparc) myconf="${myconf} -arch $(tc-arch)" ;;
-		hppa|sh) myconf="${myconf} -arch generic" ;;
+		amd64|x64-*) myconf+=" -arch x86_64" ;;
+		ppc-macos) myconf+=" -arch ppc" ;;
+		ppc|ppc64|ppc-*) myconf+=" -arch powerpc" ;;
+		sparc|sparc-*) myconf+=" -arch sparc" ;;
+		x86-macos) myconf+=" -arch x86" ;;
+		x86|x86-*) myconf+=" -arch i386" ;;
+		alpha|arm|ia64|mips|s390|sparc) myconf+=" -arch $(tc-arch)" ;;
+		hppa|sh) myconf+=" -arch generic" ;;
 		*) die "$(tc-arch) is unsupported by this eclass. Please file a bug." ;;
 	esac
 
@@ -548,10 +548,9 @@ standard_configure_options() {
 	# reduce-relocations seems to introduce major breakage to applications,
 	# mostly to be seen as a core dump with the message "QPixmap: Must
 	# construct a QApplication before a QPaintDevice" on Solaris
-	[[ ${CHOST} != *-solaris* ]] && myconf="${myconf} -reduce-relocations"
+	[[ ${CHOST} != *-solaris* ]] && myconf+=" -reduce-relocations"
 
-	myconf="${myconf} -platform $(qt_mkspecs_dir)
-		-stl -verbose -largefile -confirm-license
+	myconf+=" -platform $(qt_mkspecs_dir) -stl -verbose -largefile -confirm-license
 		-prefix ${QTPREFIXDIR} -bindir ${QTBINDIR} -libdir ${QTLIBDIR}
 		-datadir ${QTDATADIR} -docdir ${QTDOCDIR} -headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR} -sysconfdir ${QTSYSCONFDIR}
@@ -642,8 +641,8 @@ generate_qconfigs() {
 		local x qconfig_add qconfig_remove qconfig_new
 		for x in "${ROOT}${QTDATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
 			[[ -f ${x} ]] || continue
-			qconfig_add="${qconfig_add} $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
-			qconfig_remove="${qconfig_remove} $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
+			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
+			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
 		done
 
 		# these error checks do not use die because dying in pkg_post{inst,rm}
@@ -703,8 +702,7 @@ qt4-build-edge_pkg_postrm() {
 
 # @FUNCTION: qt4-build-edge_pkg_postinst
 # @DESCRIPTION:
-# Generates configuration, plus throws a message about possible
-# breakages and proposed solutions.
+# Generates configuration after the package is installed.
 qt4-build-edge_pkg_postinst() {
 	generate_qconfigs
 }
@@ -817,15 +815,15 @@ qt_mkspecs_dir() {
 
 	local CXX=$(tc-getCXX)
 	if [[ ${CXX} == *g++* ]]; then
-		spec="${spec}-g++"
+		spec+=-g++
 	elif [[ ${CXX} == *icpc* ]]; then
-		spec="${spec}-icc"
+		spec+=-icc
 	else
 		die "Unknown compiler '${CXX}'."
 	fi
 
 	if [[ -n ${LIBDIR/lib} ]]; then
-		spec="${spec}-${LIBDIR/lib}"
+		spec+=-${LIBDIR/lib}
 	fi
 
 	# Add -64 for 64bit profiles
@@ -835,7 +833,7 @@ qt_mkspecs_dir() {
 		use x64-solaris ||
 		use sparc64-solaris
 	then
-		spec="${spec}-64"
+		spec+=-64
 	fi
 
 	echo "${spec}"
