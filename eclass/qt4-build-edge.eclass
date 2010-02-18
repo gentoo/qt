@@ -35,22 +35,13 @@ SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 
 IUSE="aqua debug pch"
-if [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]]; then
-	if [[ ${CATEGORY}/${PN} == x11-libs/qt-core ]]; then
-		# >=qt-xmlpatterns-4.6 needs this enabled in qt-core
-		# so lets enable it by default and save some users
-		# the trouble of remerging it
-		IUSE="${IUSE} +exceptions"
-	else
-		IUSE="${IUSE} exceptions"
-	fi
-fi
+[[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE+=" +exceptions"
 case "${PV}" in
 	4.9999)
-		IUSE="${IUSE} +stable-branch"
+		IUSE+=" +stable-branch"
 		;;
 	4.6.9999)
-		IUSE="${IUSE} stable-branch +kde-qt"
+		IUSE+=" stable-branch +kde-qt"
 		;;
 esac
 
@@ -268,6 +259,15 @@ qt4-build-edge_src_prepare() {
 
 	[[ ${PV} == *.9999 ]] && generate_include
 
+	if use aqua; then
+		# provide a proper macx-g++-64
+		use x64-macos && ln -s macx-g++ mkspecs/$(qt_mkspecs_dir)
+
+		sed -e '/^CONFIG/s:app_bundle::' \
+			-e '/^CONFIG/s:plugin_no_soname:plugin_with_soname absolute_library_soname:' \
+			-i mkspecs/$(qt_mkspecs_dir)/qmake.conf || die "sed qmake.conf failed"
+	fi
+
 	if [[ ${PN} != qt-core ]]; then
 		skip_qmake_build
 		skip_project_generation
@@ -281,7 +281,7 @@ qt4-build-edge_src_prepare() {
 	sed -e "s:\(^SYSTEM_VARIABLES\):CC=$(tc-getCC)\nCXX=$(tc-getCXX)\n\1:" \
 		-i configure || die "sed qmake compilers failed"
 	sed -e "s:\(\$MAKE\):\1 CC=$(tc-getCC) CXX=$(tc-getCXX) LD=$(tc-getCXX):" \
-		-i config.tests/unix/compile.test || die "sed configure tests compilers failed"
+		-i config.tests/unix/compile.test || die "sed compile.test failed"
 
 	# Bug 178652
 	if [[ $(gcc-major-version) == 3 ]] && use amd64; then
@@ -542,8 +542,9 @@ standard_configure_options() {
 		*) die "$(tc-arch) is unsupported by this eclass. Please file a bug." ;;
 	esac
 
-	local exceptions=
-	has exceptions "${IUSE}" && exceptions="$(qt_use exceptions)"
+	# 4.6: exceptions USE flag
+	local exceptions="-exceptions"
+	has exceptions "${IUSE//+}" && exceptions="$(qt_use exceptions)"
 
 	# reduce-relocations seems to introduce major breakage to applications,
 	# mostly to be seen as a core dump with the message "QPixmap: Must
