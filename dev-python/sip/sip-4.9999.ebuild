@@ -20,6 +20,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug doc"
 
+RESTRICT_PYTHON_ABIS="3.*"
+
 DEPEND=""
 RDEPEND=""
 
