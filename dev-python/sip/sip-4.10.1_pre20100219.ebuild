@@ -11,7 +11,7 @@ EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 
 inherit eutils python toolchain-funcs ${HG_ECLASS}
 
-HG_REVISION="724e4236428b"
+HG_REVISION="cb2c1ea78ed5"
 
 DESCRIPTION="Python bindings generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
@@ -35,7 +35,7 @@ elif [[ ${PV} == *_pre* ]]; then
 	DEPEND="${DEPEND}
 		sys-devel/bison
 		sys-devel/flex"
-	SRC_URI="${EHG_REPO_URI}/archive/${HG_REVISION}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}.tar.gz"
 	S=${WORKDIR}/${PN}-${HG_REVISION}
 else
 	# official stable release
