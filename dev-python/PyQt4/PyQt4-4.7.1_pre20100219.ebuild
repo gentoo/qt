@@ -44,7 +44,7 @@ DEPEND="=dev-python/sip-4.10*
 	webkit? ( >=x11-libs/qt-webkit-${QTVER}:4 )
 	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QTVER}:4 )"
 RDEPEND="${DEPEND}"
-RESTRICT_PYTHON_ABIS="3.2" # doesn't build with python:3.2 (yet), bug 292419
+RESTRICT_PYTHON_ABIS="3.*" # doesn't build with python:3.2 (yet), bug 292419
 
 S=${WORKDIR}/${MY_P}
 
