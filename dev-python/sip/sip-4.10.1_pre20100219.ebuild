@@ -36,7 +36,7 @@ elif [[ ${PV} == *_pre* ]]; then
 		sys-devel/bison
 		sys-devel/flex"
 	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}.tar.gz"
-	S=${WORKDIR}/${PN}-${HG_REVISION}
+	S=${WORKDIR}/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}
 else
 	# official stable release
 	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip${PV%%.*}/${P}.tar.gz"
@@ -45,13 +45,6 @@ fi
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 	python_copy_sources
-
-	if [[ ${PV} == *9999* || ${PV} == *_pre* ]]; then
-		preparation() {
-			"$(PYTHON)" build.py prepare
-		}
-		python_execute_function -s preparation
-	fi
 }
 
 src_configure() {
