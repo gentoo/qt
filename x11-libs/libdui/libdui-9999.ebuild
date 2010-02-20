@@ -76,7 +76,7 @@ src_prepare() {
 
 src_configure() {
 	# custom configure script
-	./configure -release -prefix "/usr" \
+	QTDIR=/usr ./configure -release -prefix "/usr" \
 		$(use_make benchmarks) \
 		$(use_make plainqt) \
 		$(use_make test tests) || die "configure failed"
