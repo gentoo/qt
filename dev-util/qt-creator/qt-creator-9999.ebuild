@@ -46,7 +46,6 @@ done
 
 src_prepare() {
 	qt4-edge_src_prepare
-
 	# bug 263087
 	for plugin in ${PLUGINS};do
 		if ! use ${plugin};then
@@ -93,6 +92,8 @@ src_install() {
 	if use doc;then
 		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
+	#install wrapper
+	dobin bin/${MY_PN} || die "failed to install wrapper"
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
