@@ -56,12 +56,6 @@ src_prepare() {
 			elif [[ ${plugin} == "qtscript" ]];then
 				plugin="qtscripteditor"
 			fi
-			if [[ ${plugin} == "qml" ]]; then
-				plugin="qmleditor"
-				einfo "Disabling qmlprojectmanager support"
-				sed -i "/plugin_qmlprojectmanager/s:^:#:" src/plugins/plugins.pro \
-					|| die "Failed to disable ${plugin} plugin"
-			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"
 		fi
@@ -78,10 +72,23 @@ src_prepare() {
 }
 
 src_configure() {
-	eqmake4 IDE_LIBRARY_BASENAME="$(get_libdir)"
+	mkdir ${WORKDIR}/build
+	cd "${WORKDIR}"/build
+	eqmake4 "${S}/${MY_PN}.pro" \
+		IDE_LIBRARY_BASENAME=$(get_libdir) \
+		IDE_LIBRARY_PATH=$(get_libdir)/${MY_PN} \
+		IDE_BUILD_TREE="${WORKDIR}/build" \
+		IDE_SOURCE_TREE=${S}
+
+}
+
+src_compile() {
+	cd "${WORKDIR}/build"
+	emake || die "emake failed"
 }
 
 src_install() {
+	cd "${WORKDIR}/build"
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
 	# fix binary name bug 275859
 	mv "${D}"/usr/bin/${MY_PN}.bin "${D}"/usr/bin/${MY_PN} || die "failed to rename executable"
