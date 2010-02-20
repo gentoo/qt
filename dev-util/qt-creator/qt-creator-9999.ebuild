@@ -90,8 +90,6 @@ src_compile() {
 src_install() {
 	cd "${WORKDIR}/build"
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
-	# fix binary name bug 275859
-	mv "${D}"/usr/bin/${MY_PN}.bin "${D}"/usr/bin/${MY_PN} || die "failed to rename executable"
 	if use doc;then
 		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
