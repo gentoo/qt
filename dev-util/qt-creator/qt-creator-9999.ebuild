@@ -77,7 +77,8 @@ src_configure() {
 		IDE_LIBRARY_BASENAME=$(get_libdir) \
 		IDE_LIBRARY_PATH=$(get_libdir)/${MY_PN} \
 		IDE_BUILD_TREE="${WORKDIR}/build" \
-		IDE_SOURCE_TREE=${S}
+		IDE_SOURCE_TREE=${S} \
+		QMAKE_RPATHDIR="/usr/$(get_libdir)/${MY_PN}"
 
 }
 
@@ -92,8 +93,10 @@ src_install() {
 	if use doc;then
 		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
-	#install wrapper
-	dobin bin/${MY_PN} || die "failed to install wrapper"
+	# fix binary name bug 275859
+	mv "${D}"/usr/bin/${MY_PN}.bin "${D}"/usr/bin/${MY_PN} || die "failed to
+		rename executable"
+
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
