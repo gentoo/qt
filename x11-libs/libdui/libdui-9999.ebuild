@@ -46,11 +46,6 @@ remove_dep() {
 	fi
 }
 
-pkg_setup() {
-	QTDIR=/usr
-	qt4-r2_pkg_setup
-}
-
 src_prepare() {
 	qt4-r2_src_prepare
 	sed -e "/^\$QMAKE_BIN/d" -i configure \
@@ -81,7 +76,7 @@ src_prepare() {
 
 src_configure() {
 	# custom configure script
-	./configure -release -prefix "/usr" \
+	QTDIR=/usr ./configure -release -prefix "/usr" \
 		$(use_make benchmarks) \
 		$(use_make plainqt) \
 		$(use_make test tests) || die "configure failed"
