@@ -9,7 +9,7 @@ inherit qt4-r2 git multilib toolchain-funcs
 DESCRIPTION="The Harmattan Application Framework library"
 HOMEPAGE="http://duiframework.wordpress.com"
 EGIT_REPO_URI="git://gitorious.org/maemo-6-ui-framework/libdui.git"
-EGIT_COMMIT="2bf893f0f014ce2f4631803c9403bcad3b74bbfd"
+EGIT_COMMIT="975a7787c0aa83830a7bd300f639bf16e2bbc69c"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -26,7 +26,7 @@ DEPEND="x11-libs/libXfixes
 	gstreamer? ( media-libs/gstreamer:0.10 )
 	icu? ( dev-libs/icu )"
 RDEPEND="${DEPEND}
-	~x11-themes/duitheme-${PV}"
+	>=x11-themes/duitheme-0.19.1"
 
 DOCS="README"
 
@@ -77,7 +77,7 @@ src_prepare() {
 
 src_configure() {
 	# custom configure script
-	./configure -release -prefix "/usr" \
+	QTDIR=/usr ./configure -release -prefix "/usr" \
 		$(use_make benchmarks) \
 		$(use_make plainqt) \
 		$(use_make test tests) || die "configure failed"

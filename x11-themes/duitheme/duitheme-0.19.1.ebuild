@@ -9,7 +9,7 @@ inherit qt4-r2 git
 DESCRIPTION="The Harmattan development theme"
 HOMEPAGE="http://duiframework.wordpress.com"
 EGIT_REPO_URI="git://gitorious.org/maemo-6-ui-framework/duitheme.git"
-EGIT_COMMIT="6bbdd123efd22d309d71f51178751200a3ff266e"
+EGIT_COMMIT="1f84bbcc1dae0286d0a4f16bc0bd8b375a23428c"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
