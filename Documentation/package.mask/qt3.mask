@@ -36,7 +36,6 @@ media-sound/quasar
 media-sound/radiomixer
 media-sound/squelch
 =media-tv/mythtv-0.21*
-media-video/dvbcut
 net-dialup/umtsmon
 net-im/openc6
 net-im/sim
