@@ -5,7 +5,7 @@ x11-libs/qt:3
 app-misc/chesstask
 app-office/indeview
 =app-office/scribus-1.3.3*
-<app-text/kchmviewer-4
+=app-text/kchmviewer-3*
 dev-db/qt-unixODBC
 dev-embedded/yapide
 dev-util/bouml
@@ -23,18 +23,6 @@ games-util/agistudio
 games-util/emilia-pinedit
 games-util/showeq
 media-gfx/engauge
-media-sound/cheesetracker
-media-sound/djplay
-media-sound/kaconnect
-media-sound/kmp
-media-sound/museseq
-media-sound/prokyon3
-media-sound/qjackconnect
-media-sound/qmbtagger
-media-sound/qmidiarp
-media-sound/quasar
-media-sound/radiomixer
-media-sound/squelch
 =media-tv/mythtv-0.21*
 net-dialup/umtsmon
 net-im/openc6
