@@ -14,35 +14,56 @@ EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="bineditor bookmarks +cmake cvs debug +debugger +designer doc examples fakevim git kde mercurial perforce qml qtscript subversion"
+IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples
+fakevim git inspector kde mercurial perforce qml qtscript subversion"
 
-DEPEND=">=x11-libs/qt-assistant-4.6.0_alpha_pre1:4
-	>=x11-libs/qt-gui-4.6.0_alpha_pre1:4[dbus,qt3support]"
+DEPEND=">=x11-libs/qt-assistant-4.6.2:4
+	>=x11-libs/qt-gui-4.6.2:4[dbus,qt3support]"
 
 RDEPEND="${DEPEND}
-	>=x11-libs/qt-sql-4.6.1:4
-	>=x11-libs/qt-svg-4.6.1:4
-	>=x11-libs/qt-test-4.6.1:4
-	>=x11-libs/qt-webkit-4.6.1:4
-	!kde? ( || ( >=x11-libs/qt-phonon-4.6.1:4 media-sound/phonon ) )
+	>=x11-libs/qt-sql-4.6.2:4
+	>=x11-libs/qt-svg-4.6.2:4
+	>=x11-libs/qt-test-4.6.2:4
+	>=x11-libs/qt-webkit-4.6.2:4
+	!kde? ( || ( >=x11-libs/qt-phonon-4.6.2:4 media-sound/phonon ) )
 	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-util/cvs )
-	debugger? ( sys-devel/gdb )
+	sys-devel/gdb
 	examples? ( >=x11-libs/qt-demo-4.6.1:4 )
 	git? ( dev-util/git )
+	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-util/mercurial )
 	qml? ( >=x11-libs/qt-declarative-4.6.1:4 )
 	qtscript? ( >=x11-libs/qt-script-4.6.1:4 )
 	subversion? ( dev-util/subversion )"
 
-PLUGINS="bookmarks bineditor cmake cvs debugger designer fakevim git mercurial perforce qml qtscript subversion"
+PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce qml qtscript subversion"
 
 LANGS="de es fr it ja pl ru sl"
 
 for x in ${LANGS}; do
 	IUSE="${IUSE} linguas_${x}"
 done
+
+pkg_setup() {
+	# change git repo uri if inspector use flag is enabled
+	if use inspector; then
+		elog
+		elog "You have enabled inspector plugin for qt-creator."
+		elog "Please note that this is a thrird-party ebuild hence"
+		elog "you should contact the upstream maintainer for inspector"
+		elog "plugin bugs. Do _NOT_ file bugs on gentoo bugzilla."
+		elog
+		elog "Upstream maintainer"
+		elog "Enrico Ros <enrico.ros_at_gmail.com>"
+		elog "Project page: http://gitorious.org/~enrico"
+		elog
+		EGIT_REPO_URI="git://gitorious.org/~enrico/${PN}/qt-creator-inspector.git"
+		EGIT_BRANCH="inspector-plugin"
+	fi
+	qt4-edge_pkg_setup
+}
 
 src_prepare() {
 	qt4-edge_src_prepare
@@ -71,6 +92,10 @@ src_prepare() {
 }
 
 src_configure() {
+	if use inspector; then
+		export QTCREATOR_WITH_INSPECTOR="true"
+		export QTCREATOR_WITH_INSPECTOR_VTK="true"
+	fi
 	mkdir ${WORKDIR}/build
 	cd "${WORKDIR}"/build
 	eqmake4 "${S}/${MY_PN}.pro" \
