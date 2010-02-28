@@ -61,12 +61,14 @@ pkg_setup() {
 		elog
 		EGIT_REPO_URI="git://gitorious.org/~enrico/${PN}/qt-creator-inspector.git"
 		EGIT_BRANCH="inspector-plugin"
+		EGIT_COMMIT="${EGIT_BRANCH}"
 	fi
 	qt4-edge_pkg_setup
 }
 
 src_prepare() {
 	qt4-edge_src_prepare
+	git_src_prepare
 	# bug 263087
 	for plugin in ${PLUGINS};do
 		if ! use ${plugin};then
