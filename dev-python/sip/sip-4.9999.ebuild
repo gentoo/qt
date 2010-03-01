@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-PYTHON_DEFINE_DEFAULT_FUNCTIONS="1"
+PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
 EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
