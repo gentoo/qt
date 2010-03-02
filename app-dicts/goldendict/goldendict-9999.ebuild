@@ -6,6 +6,8 @@ EAPI="2"
 
 EGIT_REPO_URI="git://git.berlios.de/goldendict/"
 
+LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
+
 inherit git qt4-r2
 
 DESCRIPTION="Feature-rich dictionary lookup program"
@@ -14,21 +16,6 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug kde"
-
-# LANGS="af bg ca cs cy da de el en eo es et fo fr ga gl he hr hu ia id it ku lt lv mi mk ms nb nl nn pl pt ro ru sk sl sv sw tn uk zu"
-# IUSE+="addons"
-# for i in ${LANGS}; do
-# 	IUSE="${IUSE} linguas_${i}"
-# done
-
-# let's have some dictionaries, english-pronouncing pack and updated morphology
-# RUPACK="enruen-content"
-# RUPACK_V="1.1"
-# MORPH_V="1.0"
-# SRC_URI+="addons? (
-# 		linguas_en? ( mirror://berlios//"${PN}/en_US_${MORPH_V}".zip -> morphology_dict-en_US_"${MORPH_V}".zip
-# 				linguas_ru? ( mirror://berlios//"${PN}/${RUPACK}-${RUPACK_V}".tar.bz2 ) )
-# 	)"
 
 RDEPEND=">=app-text/hunspell-1.2
 	media-libs/libogg
@@ -55,21 +42,6 @@ PATCHES=(
 src_unpack() {
 	S=${WORKDIR}/${P} git_src_unpack
 }
-# 	if use addons; then
-# 		[ -d addons ] || mkdir -p "${WORKDIR}"/addons/content/morphology
-# 		# get en<->ru funny pack
-# 		if use linguas_en && use linguas_ru; then
-# 			cd "${WORKDIR}"/addons
-# 			unpack "${RUPACK}-${RUPACK_V}.tar.bz2"
-# 		fi
-# 		# get updated morphology
-# 		cd "${WORKDIR}"/addons/content/morphology || die
-# 		for i in en de ru; do
-# 			local I=$(echo ${i}|tr a-z A-Z)
-# 			[ ${I} == "EN" ] && I="US"
-# 			use linguas_${i} && unpack morphology_dict-${i}_${I}_"${MORPH_V}".zip
-# 		done
-# 	fi
 
 src_prepare() {
 	qt4-r2_src_prepare
@@ -83,4 +55,16 @@ src_prepare() {
 
 	# add trailing semicolon
 	sed -i -e '/^Categories/s/$/;/' redist/${PN}.desktop || die
+}
+
+src_install() {
+	qt4-r2_src_install
+
+	# install translations
+	insinto /usr/share/apps/${PN}/locale
+	for lang in ${LANGSLONG}; do
+		if use linguas_${lang%_*}; then
+			doins locale/${lang}.qm || die
+		fi
+	done
 }
