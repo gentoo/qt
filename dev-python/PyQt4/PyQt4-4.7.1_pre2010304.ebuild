@@ -8,9 +8,9 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit qt4-r2 python toolchain-funcs
 
-REVISION="106919e3444b"
+REVISION="6633161a35bf"
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QTVER="4.5.3" # minimal Qt version this is supposed to work with
+QTVER="4.6.2" # minimal Qt version this is supposed to work with
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
