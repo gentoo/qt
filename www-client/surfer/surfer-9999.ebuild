@@ -4,7 +4,8 @@
 
 EAPI="2"
 
-LANGS="pt ru"
+LANGS="pt_BR"
+lANGSLONG="ru_RU"
 inherit qt4-edge git
 
 DESCRIPTION="QtWebkit browser focusing on usability"
@@ -16,14 +17,20 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-src_prepare(){
+DEPEND=">=x11-libs/qt-webkit-4.6.0"
+RDEPEND="${DEPEND}"
+
+src_prepare() {
+	epatch "${FILESDIR}"/fix_ptr_to_int_cast.patch
 	sed -i "s/QApplication::applicationDirPath() + \"/\"\/usr\/share\/surfer/" \
 		src/application.cpp || die "failed to fix translations path"
 	qt4-edge_src_prepare
 }
 
-DEPEND=">=x11-libs/qt-webkit-4.6.0"
-RDEPEND="${DEPEND}"
+src_configure() {
+	qt4-edge_src_configure
+	lrelease ${PN}.pro
+}
 
 src_install() {
 	dobin bin/${PN} || die "dobin failed"

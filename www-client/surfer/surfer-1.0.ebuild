@@ -4,7 +4,8 @@
 
 EAPI="2"
 
-LANGS="pt ru"
+LANGS="pt_BR"
+LANGSLONG="ru_RU"
 inherit qt4-r2
 
 DESCRIPTION="QtWebkit browser focusing on usability"
@@ -16,25 +17,34 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-src_prepare(){
-	sed -i "s/QApplication::applicationDirPath() + \"/\"\/usr\/share\/surfer/" \
-		src/application.cpp || die "failed to fix translations path"
-	qt4-r2_src_prepare
-}
-
 DEPEND=">=x11-libs/qt-webkit-4.6.0"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${PN}"
 
+src_prepare() {
+	epatch "${FILESDIR}"/fix_ptr_to_int_cast.patch
+	sed -i "s/QApplication::applicationDirPath() + \"/\"\/usr\/share\/surfer/" \
+		src/application.cpp || die "failed to fix translations path"
+	qt4-r2_src_prepare
+}
+
+src_configure() {
+	qt4-r2_src_configure
+	lrelease ${PN}.pro
+}
+
 src_install() {
 	dobin bin/${PN} || die "dobin failed"
-	domenu ${PN}.desktop || die "domenu failed"
+	make_desktop_entry ${PN} Surfer applications-internet "Qt;Network;WebBrowser"
 	#install translations
 	insinto /usr/share/${PN}/translations/
-	for x in ${LINGAS}; do
+	for x in ${LINGUAS}; do
 		for z in ${LANGS}; do
-			[[ ${x} == ${z} ]] && doins translations/${x}.ts
+			[[ ${x} == ${z} ]] && doins translations/${z}.qm
+		done
+		for y in ${LANGSLONG}; do
+			[[ ${x} == ${y%_*} ]] && doins translations/${y}.qm
 		done
 	done
 }
