@@ -37,7 +37,7 @@ LICENSE="|| ( LGPL-2.1 GPL-3 )"
 IUSE="aqua debug pch"
 [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE+=" +exceptions"
 case "${PV}" in
-	4.9999)
+	4.9999 | 4.7.9999)
 		IUSE+=" +stable-branch"
 		;;
 	4.6.9999)
@@ -86,7 +86,7 @@ S=${WORKDIR}/${MY_P}
 # Sets up PATH, {,DY}LD_LIBRARY_PATH and EGIT_* variables.
 qt4-build-edge_pkg_setup() {
 	case "${PV}" in
-		4.9999)
+		4.9999 | 4.7.9999)
 			if use stable-branch; then
 				MY_PV_EXTRA="${PV}-stable"
 			else
@@ -163,6 +163,7 @@ qt4-build-edge_pkg_setup() {
 		# platform detection. Note: needs to come before any directories to
 		# avoid extract failure.
 		[[ ${CHOST} == *-apple-darwin* ]] && \
+		M
 			QT4_EXTRACT_DIRECTORIES="src/gui/kernel/qapplication_mac.mm ${QT4_EXTRACT_DIRECTORIES}"
 	fi
 
@@ -172,6 +173,7 @@ qt4-build-edge_pkg_setup() {
 		eerror "The ebuild author or editor failed. This ebuild needs to be fixed."
 		die "${ECLASS} eclass requires EAPI=2 or EAPI=3"
 	fi
+	M
 
 	# Let users know what they are getting themselves into ;-)
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
