@@ -38,9 +38,9 @@ Index: mountmanager-0.2.6/configure
 -TRANSDIR="${prefix}"/lib/mountmanager/trans
 -ALL_ICONS="${prefix}"/share/icons
 -PLUGINS_DIR="${prefix}"/lib/mountmanager/plugins
-+OPTIONS="${SHAREDIR}/options"
-+ICONS="${SHAREDIR}/icons"
-+IMAGES="${SHAREDIR}/images"
++OPTIONS=\$(SHAREDIR)/options
++ICONS=\$(SHAREDIR)/icons
++IMAGES=\$(SHAREDIR)/images
 +DOC="${fake_root}/${prefix}/share/doc/MountManager"
 +APPLICATIONS="${fake_root}/${prefix}/share/applications"
 +MANS="${fake_root}/${prefix}/share/man/man1"
