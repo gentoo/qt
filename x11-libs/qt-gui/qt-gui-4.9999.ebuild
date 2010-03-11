@@ -8,7 +8,7 @@ inherit eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus +glib gtk mng nas nis raster tiff qt3support xinerama"
+IUSE="+accessibility cups dbus +glib gtk mng nas nis +raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
