@@ -1,0 +1,67 @@
+#!/bin/bash
+
+. /etc/init.d/functions.sh
+base="${1}"
+version="${2}"
+overlay="../../x11-libs/"
+RED=$'\033[31;01m'
+GREEN=$'\e[32;01m'
+moto(){
+	echo """
+		##############################################
+		# Tool for bumping live qt packages using ge #
+		# overlay packages as base. Version 0.0.1    #
+		# Usefull for bumping qt releases e.g.       #
+		# 4.6.9999 -> 4.7.9999 on overlay.           #
+		# Markos Chandras			     #
+		# hwoarang@gentoo.org			     #
+		# qting-edge overlay			     #
+		##############################################
+	"""
+}
+
+usage(){
+	echo """
+		##################### USAGE #####################
+		# E.g						#
+		# ./bump-qt-overlay 4.5.1 4.5.2 will copy 4.5.1 #
+		# packages from portage and bump them to 4.5.2  #
+		# on qting-edge overlay				#
+		#################################################
+	"""
+}
+if [[ ${1} == -h ]];then
+	moto
+	usage
+	exit 3
+fi
+
+if [[ $# != 2 ]]; then
+	eerror "Incorrect number of parameters"
+	usage
+	eerror "Exiting..."
+	exit 2
+fi
+
+
+pushd ${overlay}
+for pkg in qt-assistant qt-core qt-dbus qt-demo qt-gui qt-multimedia qt-opengl qt-phonon qt-qt3support qt-script qt-sql qt-svg qt-test qt-webkit qt-xmlpatterns; do
+	qtpkg=$(find . -type f -name "${pkg}-${base}*.ebuild")
+	cp ${qtpkg} ${pkg}/${pkg}-${version}.ebuild
+	cd ${pkg}
+	git add .
+	repoman manifest
+	cd ..
+done
+einfo "Packages are ready but I advice you to review them first. ${GREEN}Commit[C]${NORMAL}/${RED}Review[R]${NORMAL}" && read choice
+if [[ "${choice}" == "C" ]]; then
+	git commit -a -m "x11-libs/qt-*:bump to ${version}"
+	git pull --rebase
+	git push
+elif [[ "${choice}" == "R" ]]; then
+	einfo "Script ended for further review"
+else
+	eerror "No valid choice"
+	exit 1
+fi
+exit 0

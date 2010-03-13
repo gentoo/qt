@@ -10,8 +10,8 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,stable-branch=]
-	~x11-libs/qt-gui-${PV}[debug=,kde-qt=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]
+	~x11-libs/qt-gui-${PV}[debug=,stable-branch=]
 "
 RDEPEND="${DEPEND}"
 

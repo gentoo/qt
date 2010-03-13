@@ -11,9 +11,10 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[kde-qt=,stable-branch=]
-	~x11-libs/qt-sql-${PV}[sqlite,kde-qt=,stable-branch=]
-	~x11-libs/qt-webkit-${PV}[kde-qt=,stable-branch=]
+	~x11-libs/qt-gui-${PV}[stable-branch=]
+	~x11-libs/qt-sql-${PV}[sqlite,stable-branch=]
+	~x11-libs/qt-webkit-${PV}[stable-branch=]
+	~x11-libs/qt-declarative-${PV}[stable-branch=]
 "
 RDEPEND="${DEPEND}"
 
@@ -51,8 +52,10 @@ src_compile() {
 	qt4-build-edge_src_compile
 	# ugly hack to build docs
 	cd "${S}"
-	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
-	emake qch_docs || die "emake docs failed"
+	#qmake projects.pro "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake
+	#projects failed"
+	qmake projects.pro
+	emake docs || die "emake docs failed"
 }
 
 src_install() {

@@ -31,12 +31,7 @@ include/
 doc/"
 
 src_prepare() {
-	if use stable-branch; then
-		epatch "${FILESDIR}/${P}-tools.patch"
-	else
-	    epatch "${FILESDIR}/${PN}-4.6.9999-tools.patch"
-	fi
-
+	epatch "${FILESDIR}/${PN}-4.7.9999-tools.patch"
 	qt4-build-edge_src_prepare
 }
 

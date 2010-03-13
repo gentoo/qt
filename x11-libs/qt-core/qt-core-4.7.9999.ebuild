@@ -17,7 +17,7 @@ RDEPEND="sys-libs/zlib
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,kde-qt=,stable-branch=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,stable-branch=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap
@@ -53,7 +53,7 @@ src/script
 tools/linguist/shared
 translations"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 pkg_setup() {
 	qt4-build-edge_pkg_setup

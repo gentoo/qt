@@ -10,19 +10,19 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-core-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-dbus-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-gui-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-multimedia-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-opengl-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[kde-qt=,stable-branch=] media-sound/phonon )
-	~x11-libs/qt-script-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-sql-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-svg-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-test-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-webkit-${PV}:${SLOT}[kde-qt=,stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[kde-qt=,stable-branch=]"
+DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-core-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-dbus-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-gui-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-multimedia-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-opengl-${PV}:${SLOT}[stable-branch=]
+	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[stable-branch=] media-sound/phonon )
+	~x11-libs/qt-script-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-sql-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-svg-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-test-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-webkit-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[stable-branch=]"
 
 RDEPEND="${DEPEND}"
 

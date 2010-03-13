@@ -24,7 +24,7 @@ src/corelib/"
 QCONFIG_ADD="xmlpatterns"
 QCONFIG_DEFINE="QT_XMLPATTERNS"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 src_configure() {
 	myconf="${myconf} -xmlpatterns"

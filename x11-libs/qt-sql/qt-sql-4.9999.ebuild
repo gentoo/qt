@@ -30,7 +30,7 @@ src/plugins
 src/3rdparty
 src/tools"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 pkg_setup() {
 	if ! (use firebird || use mysql || use odbc || use postgres || use sqlite); then

@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE="iconv"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/script/"
@@ -20,7 +20,7 @@ include/QtCore/
 include/QtScript/
 src/corelib/"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr

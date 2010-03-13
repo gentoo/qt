@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]
 	>=sys-apps/dbus-1.0.2"
 RDEPEND="${DEPEND}"
 
@@ -30,7 +30,7 @@ include/QtXml
 src/corelib
 src/xml"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff")
+PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch")
 
 src_configure() {
 	myconf="${myconf} -dbus-linked"

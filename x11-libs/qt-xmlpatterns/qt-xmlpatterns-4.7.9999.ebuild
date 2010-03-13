@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
@@ -24,7 +24,7 @@ src/corelib/"
 QCONFIG_ADD="xmlpatterns"
 QCONFIG_DEFINE="QT_XMLPATTERNS"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 src_configure() {
 	myconf="${myconf} -xmlpatterns"
