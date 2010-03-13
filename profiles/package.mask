@@ -3,6 +3,7 @@
 # Make sure the atoms you add are valid!
 
 # Markos Chandras <hwoarang@gentoo.org> (13 Mar 2010)
+# Not ready for public consumption
 >x11-libs/qt-assistant-4.6.9999
 >x11-libs/qt-core-4.6.9999
 >x11-libs/qt-demo-4.6.9999
@@ -17,7 +18,7 @@
 >x11-libs/qt-test-4.6.9999
 >x11-libs/qt-webkit-4.6.9999
 >x11-libs/qt-xmlpatterns-4.6.9999
-
+=dev-util/qt-creator-9999
 # Ben de Groot <yngwin@gentoo.org> (13 Feb 2010)
 # fails to compile
 x11-misc/xqde

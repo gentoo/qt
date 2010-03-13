@@ -17,25 +17,26 @@ KEYWORDS=""
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples
 fakevim git inspector kde mercurial perforce qml qtscript subversion"
 
-DEPEND=">=x11-libs/qt-assistant-4.6.2:4
-	>=x11-libs/qt-gui-4.6.2:4[dbus,qt3support]"
+QTVER="4.7.0_pre9999"
+DEPEND=">=x11-libs/qt-assistant-${QTVER}:4
+	>=x11-libs/qt-gui-${QTVER}:4[dbus,qt3support]"
 
 RDEPEND="${DEPEND}
-	>=x11-libs/qt-sql-4.6.2:4
-	>=x11-libs/qt-svg-4.6.2:4
-	>=x11-libs/qt-test-4.6.2:4
-	>=x11-libs/qt-webkit-4.6.2:4
-	!kde? ( || ( >=x11-libs/qt-phonon-4.6.2:4 media-sound/phonon ) )
+	>=x11-libs/qt-sql-${QTVER}:4
+	>=x11-libs/qt-svg-${QTVER}:4
+	>=x11-libs/qt-test-${QTVER}:4
+	>=x11-libs/qt-webkit-${QTVER}:4
+	!kde? ( || ( >=x11-libs/qt-phonon-${QTVER}:4 media-sound/phonon ) )
 	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-util/cvs )
 	sys-devel/gdb
-	examples? ( >=x11-libs/qt-demo-4.6.1:4 )
+	examples? ( >=x11-libs/qt-demo-${QTVER}:4 )
 	git? ( dev-util/git )
 	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-util/mercurial )
-	qml? ( >=x11-libs/qt-declarative-4.6.1:4 )
-	qtscript? ( >=x11-libs/qt-script-4.6.1:4 )
+	qml? ( >=x11-libs/qt-declarative-${QTVER}:4 )
+	qtscript? ( >=x11-libs/qt-script-${QTVER}:4 )
 	subversion? ( dev-util/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce qml qtscript subversion"
