@@ -3,4 +3,11 @@
 <pkgmetadata>
 <herd>python</herd>
 <herd>qt</herd>
+<upstream>
+	<maintainer status="active">
+		<email>phil@riverbankcomputing.com</email>
+		<name>Phil Thompson</name>
+	</maintainer>
+	<bugs-to>mailto:pyqt@riverbankcomputing.com</bugs-to>
+</upstream>
 </pkgmetadata>
