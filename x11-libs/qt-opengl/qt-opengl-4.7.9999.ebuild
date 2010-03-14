@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,22 +16,26 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
 	virtual/glu"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-src/opengl
-src/plugins/graphicssystems/opengl"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="
+		src/opengl
+		src/plugins/graphicssystems/opengl"
 
-QT4_EXTRACT_DIRECTORIES="
-include/QtCore
-include/QtGui
-include/QtOpenGL
-src/corelib
-src/gui
-src/opengl
-src/plugins
-src/3rdparty"
+	QT4_EXTRACT_DIRECTORIES="
+		include/QtCore
+		include/QtGui
+		include/QtOpenGL
+		src/corelib
+		src/gui
+		src/opengl
+		src/plugins
+		src/3rdparty"
 
-QCONFIG_ADD="opengl"
-QCONFIG_DEFINE="QT_OPENGL"
+	QCONFIG_ADD="opengl"
+	QCONFIG_DEFINE="QT_OPENGL"
+
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -opengl

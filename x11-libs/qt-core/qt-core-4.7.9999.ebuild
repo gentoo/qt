@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -13,110 +13,64 @@ IUSE="doc +glib iconv optimized-qmake qt3support ssl"
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
-	!<x11-libs/qt-gui-${PVR}
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,stable-branch=] )"
 
-QT4_TARGET_DIRECTORIES="
-src/tools/bootstrap
-src/tools/moc
-src/tools/rcc
-src/tools/uic
-src/corelib
-src/xml
-src/network
-src/plugins/codecs
-tools/linguist/lconvert
-tools/linguist/lrelease
-tools/linguist/lupdate"
-
-# Most ebuilds include almost everything for testing
-# Will clear out unneeded directories after everything else works OK
-QT4_EXTRACT_DIRECTORIES="
-include/Qt
-include/QtCore
-include/QtNetwork
-include/QtScript
-include/QtXml
-src/plugins/plugins.pro
-src/plugins/qpluginbase.pri
-src/src.pro
-src/3rdparty/des
-src/3rdparty/harfbuzz
-src/3rdparty/md4
-src/3rdparty/md5
-src/3rdparty/sha1/
-src/3rdparty/easing
-src/script
-tools/linguist/shared
-translations"
-
 PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 pkg_setup() {
-	qt4-build-edge_pkg_setup
+	QT4_TARGET_DIRECTORIES="
+		src/tools/bootstrap
+		src/tools/moc
+		src/tools/rcc
+		src/tools/uic
+		src/corelib
+		src/xml
+		src/network
+		src/plugins/codecs
+		tools/linguist/lconvert
+		tools/linguist/lrelease
+		tools/linguist/lupdate"
 
-	if has_version x11-libs/qt-core; then
-		# Check to see if they've changed the glib flag since the last time installing this package.
-		if use glib && ! built_with_use x11-libs/qt-core glib && has_version x11-libs/qt-gui; then
-			ewarn "You have changed the \"glib\" use flag since the last time you have emerged this package."
-			ewarn "You should also re-emerge x11-libs/qt-gui in order for it to pick up this change."
-		elif ! use glib && built_with_use x11-libs/qt-core glib && has_version x11-libs/qt-gui; then
-			ewarn "You have changed the \"glib\" use flag since the last time you have emerged this package."
-			ewarn "You should also re-emerge x11-libs/qt-gui in order for it to pick up this change."
-		fi
+	QT4_EXTRACT_DIRECTORIES="
+		include/Qt
+		include/QtCore
+		include/QtNetwork
+		include/QtScript
+		include/QtXml
+		src/plugins/plugins.pro
+		src/plugins/qpluginbase.pri
+		src/src.pro
+		src/3rdparty/des
+		src/3rdparty/harfbuzz
+		src/3rdparty/md4
+		src/3rdparty/md5
+		src/3rdparty/sha1/
+		src/3rdparty/easing
+		src/script
+		tools/linguist/shared
+		translations"
 
-		# Check to see if they've changed the qt3support flag since the last time installing this package.
-		# If so, give a list of packages they need to uninstall first.
-		if use qt3support && ! built_with_use x11-libs/qt-core qt3support; then
-			local need_to_remove
-			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
-			for x in sql opengl gui qt3support; do
-				local pkg="x11-libs/qt-${x}"
-				if has_version $pkg; then
-					need_to_remove="${need_to_remove} ${pkg}"
-				fi
-			done
-			if [[ -n ${need_to_remove} ]]; then
-				die "You must first uninstall these packages before continuing: \n\t\t${need_to_remove}"
-			fi
-		elif ! use qt3support && built_with_use x11-libs/qt-core qt3support ; then
-			local need_to_remove
-			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
-			for x in sql opengl gui qt3support; do
-				local pkg="x11-libs/qt-${x}"
-				if has_version $pkg; then
-					need_to_remove="${need_to_remove} ${pkg}"
-				fi
-			done
-			if [[ -n ${need_to_remove} ]]; then
-				die "You must first uninstall these packages before continuing: \n\t\t${need_to_remove}"
-			fi
-		fi
-	fi
-}
-
-src_unpack() {
 	if use doc; then
 		QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES}
-					doc/"
+			doc/"
 		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-					tools/qdoc3"
+			tools/qdoc3"
 	fi
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 				${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_src_unpack
+	qt4-build-edge_pkg_setup
+}
 
+src_prepare() {
 	# Don't pre-strip, bug 235026
 	for i in kr jp cn tw ; do
 		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
 	done
-}
 
-src_prepare() {
 	qt4-build-edge_src_prepare
 
 	# bug 172219
@@ -158,21 +112,24 @@ src_compile() {
 }
 
 src_install() {
-	dobin "${S}"/bin/{qmake,moc,rcc,uic,lconvert,lrelease,lupdate} || die "dobin failed"
+	dobin "${S}"/bin/{qmake,moc,rcc,uic,lconvert,lrelease,lupdate} || die
 
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
-	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
+	emake INSTALL_ROOT="${D}" install_mkspecs || die
 
 	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
+		emake INSTALL_ROOT="${D}" install_htmldocs || die
 	fi
 
 	# use freshly built libraries
-	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
-		|| die "generating translations faied"
+	local DYLD_FPATH=
+	[[ -d "${S}"/lib/QtCore.framework ]] \
+		&& DYLD_FPATH=$(for x in "${S}/lib/"*.framework; do echo -n ":$x"; done)
+	DYLD_LIBRARY_PATH="${S}/lib${DYLD_FPATH}" \
+	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts || die
 	insinto ${QTTRANSDIR}
-	doins translations/*.qm || die "doins translations failed"
+	doins translations/*.qm || die
 
 	setqtenv
 	fix_library_files
@@ -190,16 +147,16 @@ src_install() {
 
 	dodir /${QTDATADIR}/mkspecs/gentoo
 	mv "${D}"/${QTDATADIR}/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo \
-		|| die "Failed to move qconfig.pri"
+		|| die
 
 	sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
 			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
-		|| die "sed for qconfig.h failed"
+		|| die
 
 	if use glib; then
 		QCONFIG_DEFINE="$(use glib && echo QT_GLIB)
-				$(use ssl && echo QT_OPENSSL)"
+			$(use ssl && echo QT_OPENSSL)"
 		install_qconfigs
 	fi
 

@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,21 +10,27 @@ SLOT="4"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=,exceptions,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/QtCore
-include/QtNetwork
-include/QtXmlPatterns
-src/network/
-src/corelib/"
-
-QCONFIG_ADD="xmlpatterns"
-QCONFIG_DEFINE="QT_XMLPATTERNS"
-
 PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
+
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/QtCore
+		include/QtNetwork
+		include/QtXml
+		include/QtXmlPatterns
+		src/network/
+		src/xml/
+		src/corelib/"
+
+	QCONFIG_ADD="xmlpatterns"
+	QCONFIG_DEFINE="QT_XMLPATTERNS"
+
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -xmlpatterns"

@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,19 +17,19 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,stable-branch=]
 		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[debug=,stable-branch=]
 			media-sound/phonon[gstreamer] ) )
 		kde? ( media-sound/phonon[gstreamer] ) )"
-
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-src/qt3support
-src/tools/uic3
-tools/designer/src/plugins/widgets
-tools/qtconfig
-tools/porting"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-src/
-include/
-tools/"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="
+		src/qt3support
+		src/tools/uic3
+		tools/designer/src/plugins/widgets
+		tools/qtconfig
+		tools/porting"
+	QT4_EXTRACT_DIRECTORIES="src include tools"
+
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -qt3support

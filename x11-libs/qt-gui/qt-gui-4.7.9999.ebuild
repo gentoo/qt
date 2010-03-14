@@ -1,9 +1,9 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
-inherit eutils qt4-build-edge
+inherit confutils eutils qt4-build-edge
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -11,8 +11,8 @@ KEYWORDS=""
 IUSE="+accessibility cups dbus +glib gtk mng nas nis +raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
-	>=media-libs/freetype-2
-	media-libs/jpeg
+	media-libs/freetype:2
+	media-libs/jpeg:0
 	media-libs/libpng
 	sys-libs/zlib
 	x11-libs/libX11
@@ -25,55 +25,49 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=,stable-branch=]
 	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=)
 	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
-	xinerama? ( x11-libs/libXinerama )
-	"
+	xinerama? ( x11-libs/libXinerama )"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? (
-			~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] 
-	)"
-
-QT4_TARGET_DIRECTORIES="
-src/gui
-src/scripttools
-tools/designer
-tools/linguist/linguist
-src/plugins/imageformats/gif
-src/plugins/imageformats/ico
-src/plugins/imageformats/jpeg
-src/plugins/inputmethods"
-
-QT4_EXTRACT_DIRECTORIES="
-include
-src
-tools/linguist/phrasebooks
-tools/linguist/shared
-tools/shared"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
 
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
-		ebeep 5
 	fi
 
-	qt4-build-edge_pkg_setup
-}
+	confutils_use_depend_all gtk glib
 
-src_unpack() {
+	QT4_TARGET_DIRECTORIES="
+		src/gui
+		src/scripttools
+		tools/designer
+		tools/linguist/linguist
+		src/plugins/imageformats/gif
+		src/plugins/imageformats/ico
+		src/plugins/imageformats/jpeg
+		src/plugins/inputmethods"
+
+	QT4_EXTRACT_DIRECTORIES="
+		include
+		src
+		tools/linguist/phrasebooks
+		tools/linguist/shared
+		tools/shared"
+
 	use dbus && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} tools/qdbus/qdbusviewer"
 	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/tiff"
 	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_src_unpack
+	qt4-build-edge_pkg_setup
 }
 
 src_prepare() {
@@ -102,12 +96,9 @@ src_configure() {
 	use raster && myconf="${myconf} -graphicssystem raster"
 
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
-		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
-		-xrender -xrandr -xkb -xshape -sm -no-svg"
-
-	# Explicitly don't compile these packages.
-	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
-	myconf="${myconf} -no-webkit -no-phonon -no-dbus -no-opengl"
+		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
+		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
+		-no-phonon -no-dbus -no-opengl"
 
 	qt4-build-edge_src_configure
 }
@@ -140,22 +131,19 @@ src_install() {
 	# which are located under tools/designer/src/lib/*
 	# So instead of installing both, we create the private folder
 	# and drop tools/designer/src/lib/* headers in it.
-	dodir /usr/include/qt4/QtDesigner/private/
+	dodir /usr/include/qt4/QtDesigner/private/ || die
 	insinto /usr/include/qt4/QtDesigner/private/
-	doins "${S}"/tools/designer/src/lib/shared/*
-	doins "${S}"/tools/designer/src/lib/sdk/*
+	doins "${S}"/tools/designer/src/lib/shared/* || die
+	doins "${S}"/tools/designer/src/lib/sdk/* || die
 
 	# install correct designer and linguist icons, bug 241208
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \
-		tools/designer/src/designer/images/designer.png \
-		|| die "doicon failed"
+		tools/designer/src/designer/images/designer.png || die
 	# Note: absolute image path required here!
 	make_desktop_entry /usr/bin/linguist Linguist \
 			/usr/share/pixmaps/linguist-128-32.png \
-			'Qt;Development;GUIDesigner' \
-			|| die "linguist make_desktop_entry failed"
+			'Qt;Development;GUIDesigner' || die
 	make_desktop_entry /usr/bin/designer Designer \
 			/usr/share/pixmaps/designer.png \
-			'Qt;Development;GUIDesigner' \
-			|| die "designer make_desktop_entry failed"
+			'Qt;Development;GUIDesigner' || die
 }

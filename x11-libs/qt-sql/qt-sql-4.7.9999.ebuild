@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -18,24 +18,25 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
 	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/Qt/
-include/QtCore/
-include/QtSql/
-include/QtScript/
-src/src.pro
-src/corelib/
-src/plugins
-src/3rdparty
-src/tools"
-
 PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 pkg_setup() {
-	if ! (use firebird || use mysql || use odbc || use postgres || use sqlite); then
+	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt/
+		include/QtCore/
+		include/QtSql/
+		include/QtScript/
+		src/src.pro
+		src/corelib/
+		src/plugins
+		src/3rdparty
+		src/tools"
+
+	if ! ( use firebird || use mysql || use odbc || use postgres || use sqlite );
+	then
 		ewarn "You need to enable at least one SQL driver. Enable at least"
-		ewarn "one of these USE flags: \"firebird mysql odbc postgres sqlite\""
+		ewarn "one of these USE flags: \"firebird mysql odbc postgres sqlite\"."
 		die "Enable at least one SQL driver."
 	fi
 
@@ -58,12 +59,12 @@ src_configure() {
 		$(qt_use odbc sql-odbc plugin)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
-		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
-		-no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
+	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender
+		-no-xrandr -no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm
+		-no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
-		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility -no-fontconfig
-		-no-glib -no-opengl -no-svg -no-gtkstyle"
+		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
+		-no-fontconfig -no-glib -no-opengl -no-svg -no-gtkstyle"
 
 	qt4-build-edge_src_configure
 }
