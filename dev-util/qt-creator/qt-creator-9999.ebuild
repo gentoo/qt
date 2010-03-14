@@ -34,7 +34,7 @@ RDEPEND="${DEPEND}
 	examples? ( >=x11-libs/qt-demo-${QTVER}:4 )
 	git? ( dev-util/git )
 	inspector? ( >=sci-libs/vtk-5.4[qt4] )
-	mercurial? ( dev-util/mercurial )
+	mercurial? ( dev-vcs/mercurial )
 	qml? ( >=x11-libs/qt-declarative-${QTVER}:4 )
 	qtscript? ( >=x11-libs/qt-script-${QTVER}:4 )
 	subversion? ( dev-util/subversion )"
