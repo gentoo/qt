@@ -31,7 +31,7 @@ pkg_setup() {
 		include/
 		doc/"
 
-	qt4444-build-edge_pkg_setup
+	qt4-build-edge_pkg_setup
 }
 
 src_prepare() {
