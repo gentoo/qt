@@ -30,10 +30,8 @@ src/
 include/
 doc/"
 
-src_prepare() {
-	epatch "${FILESDIR}/${PN}-4.7.9999-tools.patch"
-	qt4-build-edge_src_prepare
-}
+PATCHES=( "${FILESDIR}/${PN}-4.7.9999-tools.patch"
+	)
 
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr

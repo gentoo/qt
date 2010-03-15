@@ -1,0 +1,52 @@
+commit 9c44d272a924f4458a3f18ac13fd2e480042d481
+Author: Martin Smith <msmith@trolltech.com>
+Date:   Mon Mar 8 14:14:03 2010 +0100
+
+    qdoc: Clear a static multimap after each qdocconf file.
+    
+    Task: QTBUG-8804
+
+diff --git a/tools/qdoc3/generator.cpp b/tools/qdoc3/generator.cpp
+index c8a39ef..80f7e45 100644
+--- a/tools/qdoc3/generator.cpp
++++ b/tools/qdoc3/generator.cpp
+@@ -226,6 +226,7 @@ void Generator::terminate()
+     imageFiles.clear();
+     imageDirs.clear();
+     outDir = "";
++    QmlClassNode::clear();
+ }
+ 
+ Generator *Generator::generatorForFormat(const QString& format)
+diff --git a/tools/qdoc3/node.cpp b/tools/qdoc3/node.cpp
+index 1dec17e..d4e4196 100644
+--- a/tools/qdoc3/node.cpp
++++ b/tools/qdoc3/node.cpp
+@@ -1284,6 +1284,15 @@ QmlClassNode::~QmlClassNode()
+ }
+ 
+ /*!
++  Clear the multimap so that subsequent runs don't try to use
++  nodes from a previous run.
++ */
++void QmlClassNode::clear()
++{
++    inheritedBy.clear();
++}
++
++/*!
+   The base file name for this kind of node has "qml_"
+   prepended to it.
+ 
+diff --git a/tools/qdoc3/node.h b/tools/qdoc3/node.h
+index fd39698..1017813 100644
+--- a/tools/qdoc3/node.h
++++ b/tools/qdoc3/node.h
+@@ -385,6 +385,7 @@ class QmlClassNode : public FakeNode
+     virtual QString fileBase() const;
+     static void addInheritedBy(const QString& base, Node* sub);
+     static void subclasses(const QString& base, NodeList& subs);
++    static void clear();
+ 
+  public:
+     static bool qmlOnly;
