@@ -4,11 +4,11 @@
 
 EAPI="2"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
-SUPPORT_PYTHON_ABIS="1"
+SUPPORT_PYTHON_ABIS="2"
 
 inherit qt4-r2 python toolchain-funcs
 
-REVISION="6633161a35bf"
+REVISION="02f7e71246f9"
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
 QTVER="4.6.2" # minimal Qt version this is supposed to work with
 
@@ -44,7 +44,6 @@ DEPEND="=dev-python/sip-4.10*
 	webkit? ( >=x11-libs/qt-webkit-${QTVER}:4 )
 	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QTVER}:4 )"
 RDEPEND="${DEPEND}"
-RESTRICT_PYTHON_ABIS="3.*" # doesn't build with python:3.2 (yet), bug 292419
 
 S=${WORKDIR}/${MY_P}
 
