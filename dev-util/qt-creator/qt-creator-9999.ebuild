@@ -83,7 +83,7 @@ src_prepare() {
 		fi
 	done
 
-	if use perforce;then
+	if use perforce; then
 		ewarn
 		ewarn "You have enabled perforce plugin."
 		ewarn "In order to use it, you need to manually"
@@ -97,7 +97,7 @@ src_configure() {
 		export QTCREATOR_WITH_INSPECTOR="true"
 		export QTCREATOR_WITH_INSPECTOR_VTK="true"
 	fi
-	mkdir ${WORKDIR}/build
+	mkdir "${WORKDIR}"/build
 	cd "${WORKDIR}"/build
 	eqmake4 "${S}/${MY_PN}.pro" \
 		IDE_LIBRARY_BASENAME=$(get_libdir) \

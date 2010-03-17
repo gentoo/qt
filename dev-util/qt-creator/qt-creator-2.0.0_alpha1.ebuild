@@ -78,8 +78,7 @@ src_prepare() {
 	if ! use rss; then
 		einfo "Disabling RSS welcome news"
 		sed -i "/m_rssFetcher->fetch/s:^:\/\/:" \
-			src/plugins/welcome/communitywelcomepagewidget.cpp \
-			|| die "failed to disable rss"
+			src/plugins/welcome/communitywelcomepagewidget.cpp || die
 	fi
 }
 
@@ -88,23 +87,22 @@ src_configure() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_subtargets || die "emake install failed"
+	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_subtargets || die
 	# fix binary name bug 275859
 	mv "${D%/}${EPREFIX}"/usr/bin/${MY_PN}.bin \
-		"${D%/}${EPREFIX}"/usr/bin/${MY_PN} || die "failed to rename executable"
+		"${D%/}${EPREFIX}"/usr/bin/${MY_PN} || die
 	if use doc;then
-		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_qch_docs || die "emake install qch_docs failed"
+		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_qch_docs || die
 	fi
-	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
-		'Qt;Development;IDE' || die "make_desktop_entry failed"
+	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48
+		'Qt;Development;IDE' || die
 
 	# install translations
 	insinto /usr/share/${MY_PN}/translations/
-	for x in ${LINGUAS};do
-		for lang in ${LANGS};do
-			if [[ ${x} == ${lang} ]];then
-				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm \
-					|| die "failed to install translations"
+	for x in ${LINGUAS}; do
+		for lang in ${LANGS}; do
+			if [[ ${x} == ${lang} ]]; then
+				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm || die
 			fi
 		done
 	done
