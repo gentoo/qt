@@ -3,10 +3,9 @@
 # $Header: $
 
 EAPI="2"
-
 inherit qt4-edge git multilib
-MY_PN="${PN/-/}"
 
+MY_PN="${PN/-/}"
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
 EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
@@ -14,13 +13,12 @@ EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples
-fakevim git inspector kde mercurial perforce qml qtscript subversion"
+IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
+	inspector kde mercurial perforce qml qtscript subversion"
 
 QTVER="4.7.0_pre9999"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}:4
 	>=x11-libs/qt-gui-${QTVER}:4[dbus,qt3support]"
-
 RDEPEND="${DEPEND}
 	>=x11-libs/qt-sql-${QTVER}:4
 	>=x11-libs/qt-svg-${QTVER}:4
@@ -32,14 +30,15 @@ RDEPEND="${DEPEND}
 	cvs? ( dev-util/cvs )
 	sys-devel/gdb
 	examples? ( >=x11-libs/qt-demo-${QTVER}:4 )
-	git? ( dev-util/git )
+	git? ( dev-vcs/git )
 	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-vcs/mercurial )
 	qml? ( >=x11-libs/qt-declarative-${QTVER}:4 )
 	qtscript? ( >=x11-libs/qt-script-${QTVER}:4 )
 	subversion? ( dev-util/subversion )"
 
-PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce qml qtscript subversion"
+PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
+	qml qtscript subversion"
 
 LANGS="de es fr it ja pl ru sl"
 
@@ -71,12 +70,12 @@ src_prepare() {
 	qt4-edge_src_prepare
 	git_src_prepare
 	# bug 263087
-	for plugin in ${PLUGINS};do
-		if ! use ${plugin};then
+	for plugin in ${PLUGINS}; do
+		if ! use ${plugin}; then
 			einfo "Disabling ${plugin} support"
-			if [[ ${plugin} == "cmake" ]];then
+			if [[ ${plugin} == "cmake" ]]; then
 				plugin="cmakeprojectmanager"
-			elif [[ ${plugin} == "qtscript" ]];then
+			elif [[ ${plugin} == "qtscript" ]]; then
 				plugin="qtscripteditor"
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
@@ -90,7 +89,6 @@ src_prepare() {
 		ewarn "In order to use it, you need to manually"
 		ewarn "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
 		ewarn
-		ebeep 5
 	fi
 }
 
@@ -107,7 +105,6 @@ src_configure() {
 		IDE_BUILD_TREE="${WORKDIR}/build" \
 		IDE_SOURCE_TREE=${S} \
 		QMAKE_RPATHDIR="/usr/$(get_libdir)/${MY_PN}"
-
 }
 
 src_compile() {
@@ -118,7 +115,7 @@ src_compile() {
 src_install() {
 	cd "${WORKDIR}/build"
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
-	if use doc;then
+	if use doc; then
 		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
 	# fix binary name bug 275859
@@ -130,9 +127,9 @@ src_install() {
 
 	# install translations
 	insinto /usr/share/${MY_PN}/translations/
-	for x in ${LINGUAS};do
-		for lang in ${LANGS};do
-			if [[ ${x} == ${lang} ]];then
+	for x in ${LINGUAS}; do
+		for lang in ${LANGS}; do
+			if [[ ${x} == ${lang} ]]; then
 				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm \
 					|| die "failed to install translations"
 			fi

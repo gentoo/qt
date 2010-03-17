@@ -18,11 +18,10 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
-kde mercurial perforce qml qtscript rss subversion"
+	kde mercurial perforce qml qtscript rss subversion"
 
 DEPEND=">x11-libs/qt-assistant-4.6.9999:4
 	>x11-libs/qt-gui-4.6.9999:4[dbus,qt3support]"
-
 RDEPEND="${DEPEND}
 	>x11-libs/qt-sql-4.6.1:4
 	>x11-libs/qt-svg-4.6.1:4
@@ -33,14 +32,15 @@ RDEPEND="${DEPEND}
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-util/cvs )
 	sys-devel/gdb
-	examples? ( >=11-libs/qt-demo-4.6.9999:4 )
-	git? ( dev-util/git )
+	examples? ( >=x11-libs/qt-demo-4.6.9999:4 )
+	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
 	qml? ( >x11-libs/qt-declarative-4.6.9999:4 )
-	qtscript? ( >x11-libs/qt-script-4.6.1:4 )
+	qtscript? ( >x11-libs/qt-script-4.6.9999:4 )
 	subversion? ( dev-util/subversion )"
 
-PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce qml qtscript subversion"
+PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
+	qml qtscript subversion"
 
 S="${WORKDIR}"/"${MY_P}"-src
 
@@ -48,12 +48,12 @@ src_prepare() {
 	qt4-r2_src_prepare
 
 	# bug 263087
-	for plugin in ${PLUGINS};do
-		if ! use ${plugin};then
+	for plugin in ${PLUGINS}; do
+		if ! use ${plugin}; then
 			einfo "Disabling ${plugin} support"
-			if [[ ${plugin} == "cmake" ]];then
+			if [[ ${plugin} == "cmake" ]]; then
 				plugin="cmakeprojectmanager"
-			elif [[ ${plugin} == "qtscript" ]];then
+			elif [[ ${plugin} == "qtscript" ]]; then
 				plugin="qtscripteditor"
 			fi
 			if [[ ${plugin} == "qml" ]]; then
@@ -67,13 +67,12 @@ src_prepare() {
 		fi
 	done
 
-	if use perforce;then
+	if use perforce; then
 		ewarn
 		ewarn "You have enabled perforce plugin."
 		ewarn "In order to use it, you need to manually"
 		ewarn "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
 		ewarn
-		ebeep 5
 	fi
 	# disable rss news on startup ( bug #302978 )
 	if ! use rss; then

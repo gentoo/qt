@@ -17,7 +17,7 @@ IUSE=""
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}
-	>=dev-util/git-1.5.3"
+	>=dev-vcs/git-1.5.3"
 
 src_install() {
 	newbin bin/qgit qgit4
