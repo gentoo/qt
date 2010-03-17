@@ -22,8 +22,8 @@ RDEPEND="${DEPEND}"
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/declarative
-		src/plugins/qdeclarativemodules/
 		tools/qml"
+	use stable-branch && QT4_TARGET_DIRECTORIES+="src/plugins/qdeclarativemodules/"
 	QT4_EXTRACT_DIRECTORIES="
 		include/
 		src/

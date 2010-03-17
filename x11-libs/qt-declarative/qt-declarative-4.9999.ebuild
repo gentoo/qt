@@ -22,7 +22,6 @@ RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
 	src/declarative
-	src/plugins/qdeclarativemodules/
 	tools/qml"
 QT4_EXTRACT_DIRECTORIES="
 	include/
