@@ -514,6 +514,8 @@ standard_configure_options() {
 	# Disable visibility explicitly if gcc version isn't 4
 	if [[ $(gcc-major-version) -lt 4 ]]; then
 		myconf+=" -no-reduce-exports"
+	else
+		myconf+=" -reduce-exports"
 	fi
 
 	# precompiled headers don't work on hardened, where the flag is masked.
