@@ -40,6 +40,7 @@ Why do I get blockers when trying to emerge Qt?
 
 The most common causes are useflags that are not set correctly, or some but not
 all Qt modules added to package.keywords.
+
 .. (This section needs to be expanded.)
 
 
