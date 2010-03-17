@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -15,9 +15,11 @@ SLOT="2"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="x11-libs/qt-gui:4"
+DEPEND="
+	x11-libs/qt-gui:4
+"
 RDEPEND="${DEPEND}
-	>=dev-util/git-1.5.3"
+	>=dev-vcs/git-1.5.3"
 
 src_install() {
 	newbin bin/qgit qgit4

@@ -34,7 +34,7 @@ RDEPEND="${DEPEND}
 	cvs? ( dev-util/cvs )
 	sys-devel/gdb
 	examples? ( >=11-libs/qt-demo-4.6.9999:4 )
-	git? ( dev-util/git )
+	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
 	qml? ( >x11-libs/qt-declarative-4.6.9999:4 )
 	qtscript? ( >x11-libs/qt-script-4.6.1:4 )
@@ -67,7 +67,7 @@ src_prepare() {
 		fi
 	done
 
-	if use perforce;then
+	if use perforce; then
 		ewarn
 		ewarn "You have enabled perforce plugin."
 		ewarn "In order to use it, you need to manually"
