@@ -15,10 +15,7 @@ DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=]
 	~x11-libs/qt-webkit-${PV}[stable-branch=]
 	~x11-libs/qt-declarative-${PV}[stable-branch=]"
 RDEPEND="${DEPEND}"
-PATCHES=(
-	"${FILESDIR}/${P}_clear_static_multimap.patch"
-	"${FILESDIR}/${P}-tools.patch"
-	)
+
 pkg_setup() {
 	# Pixeltool isn't really assistant related, but it relies on
 	# the assistant libraries. doc/qch/
@@ -35,6 +32,13 @@ pkg_setup() {
 		doc/"
 
 	qt4-build-edge_pkg_setup
+}
+
+src_prepare() {
+	use stable-branch && epatch "${FILESDIR}"/${P}_clear_static_multimap.patch
+	epatch "${FILESDIR}"/${P}-tools.patch
+
+	qt4-build-edge_src_prepare
 }
 
 src_configure() {
