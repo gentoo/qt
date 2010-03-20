@@ -73,6 +73,8 @@ pkg_setup() {
 src_prepare() {
 	qt4-build-edge_src_prepare
 
+	use stable-branch && epatch "${FILESDIR}"/${P}-fix-egl-pointer.patch
+
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
 }

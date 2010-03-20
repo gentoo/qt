@@ -1,0 +1,110 @@
+From ed1f672efb19932fe279a3ebfedb973c02c4fee4 Mon Sep 17 00:00:00 2001
+From: Tom Cooksey <thomas.cooksey@nokia.com>
+Date: Thu, 4 Mar 2010 13:03:51 +0100
+Subject: [PATCH] Fix build on EGL implementations where EGLConfig is a pointer
+
+EGLConfig is an opaque type which we really shouldn't cast to an int.
+Instead, we get the config id for the EGLConfig.
+
+Reviewed-By: TrustMe
+---
+ src/gui/egl/qegl_x11.cpp  |   19 +++++++++++--------
+ src/opengl/qgl_x11egl.cpp |    5 ++---
+ 2 files changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/src/gui/egl/qegl_x11.cpp b/src/gui/egl/qegl_x11.cpp
+index 339bd57..483c01d 100644
+--- a/src/gui/egl/qegl_x11.cpp
++++ b/src/gui/egl/qegl_x11.cpp
+@@ -149,6 +149,9 @@ VisualID QEgl::getCompatibleVisualId(EGLConfig config)
+     eglGetConfigAttrib(display(), config, EGL_BUFFER_SIZE, &eglValue);
+     int configBitDepth = eglValue;
+ 
++    eglGetConfigAttrib(display(), config, EGL_CONFIG_ID, &eglValue);
++    int configId = eglValue;
++
+     // See if EGL provided a valid VisualID:
+     eglGetConfigAttrib(display(), config, EGL_NATIVE_VISUAL_ID, &eglValue);
+     visualId = (VisualID)eglValue;
+@@ -170,14 +173,14 @@ VisualID QEgl::getCompatibleVisualId(EGLConfig config)
+                     format = XRenderFindVisualFormat(X11->display, chosenVisualInfo->visual);
+                     if (!format || (format->type != PictTypeDirect) || (!format->direct.alphaMask)) {
+                         qWarning("Warning: EGL suggested using X visual ID %d for config %d, but this is not ARGB",
+-                                 (int)visualId, (int)config);
++                                 (int)visualId, configId);
+                         visualId = 0;
+                     }
+                 }
+ #endif
+             } else {
+                 qWarning("Warning: EGL suggested using X visual ID %d (%d bpp) for config %d (%d bpp), but the depths do not match!",
+-                         (int)visualId, chosenVisualInfo->depth, (int)config, configBitDepth);
++                         (int)visualId, chosenVisualInfo->depth, configId, configBitDepth);
+                 visualId = 0;
+             }
+         }
+@@ -187,9 +190,9 @@ VisualID QEgl::getCompatibleVisualId(EGLConfig config)
+     if (visualId) {
+ #ifdef QT_DEBUG_X11_VISUAL_SELECTION
+         if (configAlphaSize > 0)
+-            qDebug("Using ARGB Visual ID %d provided by EGL for config %d", (int)visualId, (int)config);
++            qDebug("Using ARGB Visual ID %d provided by EGL for config %d", (int)visualId, configId);
+         else
+-            qDebug("Using Opaque Visual ID %d provided by EGL for config %d", (int)visualId, (int)config);
++            qDebug("Using Opaque Visual ID %d provided by EGL for config %d", (int)visualId, configId);
+ #endif
+         return visualId;
+     }
+@@ -232,9 +235,9 @@ VisualID QEgl::getCompatibleVisualId(EGLConfig config)
+     if (visualId) {
+ # ifdef QT_DEBUG_X11_VISUAL_SELECTION
+         if (configAlphaSize > 0)
+-            qDebug("Using ARGB Visual ID %d provided by XRender for EGL config %d", (int)visualId, (int)config);
++            qDebug("Using ARGB Visual ID %d provided by XRender for EGL config %d", (int)visualId, configId);
+         else
+-            qDebug("Using Opaque Visual ID %d provided by XRender for EGL config %d", (int)visualId, (int)config);
++            qDebug("Using Opaque Visual ID %d provided by XRender for EGL config %d", (int)visualId, configId);
+ # endif // QT_DEBUG_X11_VISUAL_SELECTION
+         return visualId;
+     }
+@@ -263,12 +266,12 @@ VisualID QEgl::getCompatibleVisualId(EGLConfig config)
+ 
+     if (visualId) {
+ #ifdef QT_DEBUG_X11_VISUAL_SELECTION
+-        qDebug("Using Visual ID %d provided by XGetVisualInfo for EGL config %d", (int)visualId, (int)config);
++        qDebug("Using Visual ID %d provided by XGetVisualInfo for EGL config %d", (int)visualId, configId);
+ #endif
+         return visualId;
+     }
+ 
+-    qWarning("Unable to find an X11 visual which matches EGL config %d", (int)config);
++    qWarning("Unable to find an X11 visual which matches EGL config %d", configId);
+     return (VisualID)0;
+ }
+ 
+diff --git a/src/opengl/qgl_x11egl.cpp b/src/opengl/qgl_x11egl.cpp
+index ba05e72..123bbdd 100644
+--- a/src/opengl/qgl_x11egl.cpp
++++ b/src/opengl/qgl_x11egl.cpp
+@@ -404,7 +404,7 @@ EGLConfig Q_OPENGL_EXPORT qt_chooseEGLConfigForPixmap(bool hasAlpha, bool readOn
+             if (configCount > 0) {
+                 // Got one
+                 qDebug() << "Found an" << (hasAlpha ? "ARGB" : "RGB") << (readOnly ? "readonly" : "target" )
+-                         << "config (" << int(*targetConfig) << ") to create a pixmap surface:";
++                         << "config to create a pixmap surface:";
+ 
+ //                QEglProperties configProps(*targetConfig);
+ //                qDebug() << configProps.toString();
+@@ -446,8 +446,7 @@ bool Q_OPENGL_EXPORT qt_createEGLSurfaceForPixmap(QPixmapData* pmd, bool readOnl
+ //    qDebug("qt_createEGLSurfaceForPixmap() created surface 0x%x for pixmap 0x%x",
+ //           pixmapSurface, pixmapData->handle());
+     if (pixmapSurface == EGL_NO_SURFACE) {
+-        qWarning() << "Failed to create a pixmap surface using config" << (int)pixmapConfig
+-                   << ":" << QEgl::errorString();
++        qWarning() << "Failed to create a pixmap surface:" << QEgl::errorString();
+         return false;
+     }
+ 
+-- 
+1.6.1
+
