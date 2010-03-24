@@ -85,6 +85,18 @@ S=${WORKDIR}/${MY_P}
 # @DESCRIPTION:
 # Sets up PATH, {,DY}LD_LIBRARY_PATH and EGIT_* variables.
 qt4-build-edge_pkg_setup() {
+	# Protect users by not allowing downgrades between releases
+	# Downgrading revisions within the same release should be allowed
+	if has_version '>'${CATEGORY}/${P}-r9999 ; then
+		if [[ -z $I_KNOW_WHAT_I_AM_DOING ]] ; then
+			eerror "Sanity check to keep you from breaking your system:"
+			eerror "  Downgrading Qt is completely unsupported and will break your system!"
+			die "aborting to save your system"
+		else
+			ewarn "Downgrading Qt is completely unsupported and will break your system!"
+		fi
+	fi
+
 	case "${PV}" in
 		4.9999 | 4.7.9999)
 			if use stable-branch; then
