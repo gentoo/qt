@@ -1,0 +1,10 @@
+--- antico-deluxe.pro.orig	2010-03-25 21:07:44.000000000 +0100
++++ antico-deluxe.pro	2010-03-25 21:08:46.000000000 +0100
+@@ -4,6 +4,4 @@
+ 
+ SUBDIRS = amelib \
+ 	wm \
+-	runner \
+-        syspref \
+-        term \
++	syspref
