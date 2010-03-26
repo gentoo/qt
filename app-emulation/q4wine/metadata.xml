@@ -9,8 +9,7 @@
 <use>
 <flag name="icoutils"> Enable icoutils support </flag>
 <flag name="winetriks"> Enable winetricks support </flag>
-<flag name="development"> Enable developer related stuff</flag>
-<flag name="embedded-fuseiso"> Enable q4wine-mount tools </flag>
+<flag name="wineappdb"> Enable Win AppDB browser subsystem </flag>
 </use>
 <longdescription lang="en">
 </longdescription>

@@ -1,23 +1,22 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-emulation/q4wine/q4wine-0.112-r1.ebuild,v 1.2 2009/06/10 21:10:57 maekke Exp $
 
 EAPI="2"
 inherit qt4-edge cmake-utils git
 
-DESCRIPTION="Qt4 GUI for wine"
+DESCRIPTION="Qt4 GUI configuration tool for Wine"
 HOMEPAGE="http://q4wine.brezblock.org.ua/"
 EGIT_REPO_URI="git://github.com/brezerk/q4wine.git"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug icoutils winetriks embedded-fuseiso development"
+IUSE="debug +icoutils winetriks +wineappdb"
 
 DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql:4[sqlite]
-	dev-util/cmake
-	embedded-fuseiso? ( dev-libs/libzip >=sys-libs/glibc-2.0 >=sys-fs/fuse-2.7.0 )"
+	dev-util/cmake"
 
 RDEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql:4[sqlite]
@@ -25,9 +24,9 @@ RDEPEND="x11-libs/qt-gui:4
 	app-emulation/wine
 	>=sys-apps/which-2.19
 	icoutils? ( >=media-gfx/icoutils-0.26.0 )
-	x11-misc/xdg-utils"
+	sys-fs/fuseiso"
 
-DOCS="README"
+DOCS="README AUTHORS ChangeLog"
 
 S="${WORKDIR}/${PF}"
 
@@ -36,8 +35,7 @@ src_configure() {
 		$(cmake-utils_use debug DEBUG) \
 		$(cmake-utils_use_with icoutils ICOUTILS) \
 		$(cmake-utils_use_with winetriks WINETRIKS) \
-		$(cmake-utils_use_with embedded-fuseiso EMBEDDED_FUSEISO) \
-		$(cmake-utils_use_with development DEVELOP_STUFF)"
+		$(cmake-utils_use_with wineappdb WINEAPPDB)"
 
 	cmake-utils_src_configure
 }
