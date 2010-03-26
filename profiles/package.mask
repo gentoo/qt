@@ -2,12 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (15 Mar 2010)
+# Markos Chandras <hwoarang@gentoo.org> (26 Mar 2010)
 # Masking latest releases
-=dev-python/sip-4.10.1_pre*
-=dev-python/PyQt4-4.7.1_pre*
-=dev-python/qscintilla-python-2.4.3_pre*
-=x11-libs/qscintilla-2.4.3_pre*
+=dev-python/sip-4.10.2_pre*
+=dev-python/PyQt4-4.7.3_pre*
 
 # Ben de Groot <yngwin@gentoo.org> (13 Feb 2010)
 # fails to compile
