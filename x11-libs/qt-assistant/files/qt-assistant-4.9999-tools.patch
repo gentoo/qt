@@ -1,7 +1,7 @@
-Index: /var/tmp/portage/x11-libs/qt-assistant-4.9999/work/qt-everywhere-opensource-src-4.9999/tools/tools.pro
+Index: tools/tools.pro
 ===================================================================
---- .orig/var/tmp/portage/x11-libs/qt-assistant-4.9999/work/qt-everywhere-opensource-src-4.9999/tools/tools.pro
-+++ /var/tmp/portage/x11-libs/qt-assistant-4.9999/work/qt-everywhere-opensource-src-4.9999/tools/tools.pro
+--- tools/tools.pro
++++ tools/tools.pro
 @@ -5,30 +5,8 @@ no-png {
  } else {
       SUBDIRS += assistant \
