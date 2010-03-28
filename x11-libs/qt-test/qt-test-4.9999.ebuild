@@ -19,7 +19,7 @@ include/QtTest/
 include/QtCore/
 src/corelib/"
 
-PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
+PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr

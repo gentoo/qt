@@ -53,7 +53,7 @@ src/script
 tools/linguist/shared
 translations"
 
-PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
+PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
 
 pkg_setup() {
 	qt4-build-edge_pkg_setup
