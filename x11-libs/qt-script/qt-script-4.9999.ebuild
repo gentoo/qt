@@ -20,7 +20,7 @@ include/QtCore/
 include/QtScript/
 src/corelib/"
 
-PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.diff" )
+PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
