@@ -30,7 +30,7 @@ src/
 include/
 doc/"
 
-PATCHES=( "${FILESDIR}/${PN}-4.7.9999-tools.patch"
+PATCHES=( "${FILESDIR}/${P}-tools.patch"
 	)
 
 src_configure() {
