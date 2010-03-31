@@ -12,7 +12,7 @@
 # ./eclass-echecker -rhu is ran daily by wired:
 # http://dev.gentoo.org/~wired/checks/qt4.eclass.html
 
-PORTAGE_DIR="/usr/portage"
+PORTAGE_DIR="/usr/portage/tree/"
 
 args=$1
 opts=0
@@ -28,7 +28,6 @@ while getopts rhvuc args
 do
 	opts=1
 	case $args in
-	r) regen=1 ;;
 	h) html=1 ;;
 	v) view=1 ;;
 	u) upload=1 ;;
@@ -36,21 +35,15 @@ do
 	esac
 done
 
-if [[ $opts == 0 ]]; then
-	regen=1
-fi
-
-[[ $regen == 1 ]] && q -r
-
 function check() {
 	CNT=0
 	if [[ $count == 1 ]]; then
 		# this should be rewritten not to grep stuff twice
-		qgrep -H "inherit" | grep "qt4" | grep -v 'qt4-' | while read i;
+		grep --include="*ebuild" -r "inherit" ${PORTAGE_DIR}/* | grep "qt4" | grep -v 'qt4-' | while read i;
 		do
 			E=$(echo ${i} | cut -d":" -f1)
 			stable=0
-			KW=`grep "^KEYWORDS" ${PORTAGE_DIR}/${E} | sed -r "s:.*\"(.*)\".*:\1:"`
+			KW=`grep "^KEYWORDS" ${E} | sed -r "s:.*\"(.*)\".*:\1:"`
 			for j in ${KW};
 			do
 				[[ ${j} == ${j/\~} ]] && stable=1 && break;
@@ -97,11 +90,11 @@ function check() {
 
 	CC=""
 
-	qgrep -H "inherit" | grep "qt4" | grep -v 'qt4-' | while read i;
+	grep --include="*ebuild" -r "inherit" ${PORTAGE_DIR}/* | grep "qt4" | grep -v 'qt4-' | while read i;
 	do
 		E=$(echo ${i} | cut -d":" -f1)
 		stable=0
-		KW=`grep "^KEYWORDS" ${PORTAGE_DIR}/${E} | sed -r "s:.*\"(.*)\".*:\1:"`
+		KW=`grep "^KEYWORDS" ${E} | sed -r "s:.*\"(.*)\".*:\1:"`
 		for j in ${KW};
 		do
 			[[ ${j} == ${j/\~} ]] && stable=1 && break;
