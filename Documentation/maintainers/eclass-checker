@@ -12,7 +12,7 @@
 # ./eclass-echecker -rhu is ran daily by wired:
 # http://dev.gentoo.org/~wired/checks/qt4.eclass.html
 
-PORTAGE_DIR="/usr/portage/tree/"
+PORTAGE_DIR="/usr/portage/tree"
 
 args=$1
 opts=0
