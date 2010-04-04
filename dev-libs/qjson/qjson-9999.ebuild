@@ -4,11 +4,11 @@
 
 EAPI="2"
 
-inherit cmake-utils subversion
+inherit cmake-utils git
 
 DESCRIPTION="A library for mapping JSON data to QVariant objects"
 HOMEPAGE="http://qjson.sourceforge.net"
-ESVN_REPO_URI="svn://anonsvn.kde.org/home/kde/trunk/playground/libs/${PN}"
+EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
