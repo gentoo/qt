@@ -13,10 +13,6 @@
 			Build the Qt-GTK+ style, which integrates Qt4 apps with
 			the GTK+ theme.
 		</flag>
-		<flag name="hildon">
-			Enable support for hildon's inputmethod. You'll need this
-			if you're planning to run chrooted Qt apps on the N900.
-		</flag>
 		<flag name="qt3support">
 			Enable the Qt3Support libraries for Qt4. Note that this
 			does not mean you can compile pure Qt3 programs with Qt4.
