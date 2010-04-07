@@ -1,7 +1,9 @@
 #!/bin/bash
-
 source /etc/init.d/functions.sh
-
+eerror ""
+eerror "Deprecated script. Doesn't work with latest PyQt/sip snapshots"
+eerror ""
+exit 1
 #snapshots date
 DATE="${1:-$(date +%F|sed 's/-//g')}" 
 # date of qscintilla. Tends to have different snapshot releases than PyQt4/sip
