@@ -7,7 +7,7 @@ inherit qt4-edge git multilib
 
 MY_PN="${PN/-/}"
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
-HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
+HOMEPAGE="http://qt.nokia.com/products/developer-tools"
 EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
 
 LICENSE="LGPL-2.1"
