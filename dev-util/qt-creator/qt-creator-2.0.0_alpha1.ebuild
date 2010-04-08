@@ -11,7 +11,7 @@ MY_PV="${PV/_/-}"
 MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
-HOMEPAGE="http://labs.qtsoftware.com/page/Projects/Tools/QtCreator"
+HOMEPAGE="http://qt.nokia.com/products/developer-tools"
 SRC_URI="http://get.qt.nokia.com/${MY_PN}/${MY_P}-src.tar.gz"
 
 LICENSE="LGPL-2.1"
