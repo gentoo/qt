@@ -35,7 +35,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	use stable-branch && epatch "${FILESDIR}"/${P}_clear_static_multimap.patch
 	epatch "${FILESDIR}"/${P}-tools.patch
 
 	qt4-build-edge_src_prepare
