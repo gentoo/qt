@@ -8,12 +8,12 @@ inherit qt4-build-edge
 DESCRIPTION="The Webkit module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="kde"
+IUSE="dbus kde"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,ssl,stable-branch=]
-	~x11-libs/qt-dbus-${PV}[debug=,kde-qt=,stable-branch=]
-	~x11-libs/qt-gui-${PV}[dbus,debug=,kde-qt=,stable-branch=]
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus,debug=,kde-qt=,stable-branch=]
+	~x11-libs/qt-gui-${PV}[dbus?,debug=,kde-qt=,stable-branch=]
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,kde-qt=,stable-branch=] )
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=,kde-qt=,stable-branch=]
 		media-sound/phonon ) )
 	kde? ( media-sound/phonon )"
 RDEPEND="${DEPEND}"
@@ -28,13 +28,10 @@ QCONFIG_DEFINE="QT_WEBKIT"
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
-	if use sparc; then
-		epatch "${FILESDIR}"/sparc-qt-webkit-sigbus.patch
-	fi
 	qt4-build-edge_src_prepare
 }
 
 src_configure() {
-	myconf="${myconf} -webkit"
+	myconf="${myconf} -webkit $(qt_use dbus qdbus)"
 	qt4-build-edge_src_configure
 }
