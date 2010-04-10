@@ -34,10 +34,6 @@ DEPEND="${RDEPEND}
 
 S=${WORKDIR}/${P}/src
 
-PATCHES=(
-	"${FILESDIR}/phonon-headers.patch"
-)
-
 src_unpack() {
 	S=${WORKDIR}/${P} git_src_unpack
 }
