@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
 KEYWORDS=""
-IUSE="doc"
+IUSE="doc glib"
 
 DEPEND="
 	~x11-libs/qt-gui-${PV}[kde-qt=,stable-branch=]
@@ -41,7 +41,8 @@ src_configure() {
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-glib -no-multimedia -no-qt3support -no-svg"
+		-no-fontconfig -no-multimedia -no-qt3support -no-svg"
+	! use glib && myconf="${myconf} -no-glib"
 	qt4-build-edge_src_configure
 }
 
