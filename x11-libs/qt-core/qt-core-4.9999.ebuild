@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib iconv optimized-qmake qt3support ssl"
+IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
@@ -99,12 +99,6 @@ pkg_setup() {
 }
 
 src_unpack() {
-	if use doc; then
-		QT4_EXTRACT_DIRECTORIES="${QT4_EXTRACT_DIRECTORIES}
-					doc/"
-		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-					tools/qdoc3"
-	fi
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 				${QT4_EXTRACT_DIRECTORIES}"
 
@@ -144,10 +138,6 @@ src_configure() {
 		-no-svg -no-gtkstyle -no-phonon-backend -no-script -no-scripttools
 		-no-cups -no-xsync -no-xinput -no-multimedia"
 
-	if ! use doc; then
-		myconf="${myconf} -nomake docs"
-	fi
-
 	qt4-build-edge_src_configure
 }
 
@@ -163,10 +153,6 @@ src_install() {
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
-
-	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs || die "emake install_htmldocs failed"
-	fi
 
 	# use freshly built libraries
 	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \

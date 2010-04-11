@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
 KEYWORDS=""
-IUSE=""
+IUSE="doc"
 
 DEPEND="
 	~x11-libs/qt-gui-${PV}[stable-branch=]
@@ -49,8 +49,13 @@ src_compile() {
 	qt4-build-edge_src_compile
 	# ugly hack to build docs
 	cd "${S}"
+	emake qch_docs || die "emake qch_docs failed"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
-	emake qch_docs || die "emake docs failed"
+	if use doc; then
+		emake docs || die "emake docs failed"
+	fi
+	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake
+	projects failed"
 }
 
 src_install() {
@@ -59,10 +64,13 @@ src_install() {
 	# note that emake install_qchdocs fails for undefined reason so we use a
 	# workaround
 	cd "${S}"
-	insinto "${QTDOCDIR}"
-	doins -r "${S}"/doc/qch || die "doins qch documentation failed"
+	emake INSTALL_ROOT="${D}" install_qchdocs \
+		|| die "emake install_qchdocs failed"
 	dobin "${S}"/bin/qdoc3 || die "Installing qdoc3 failed"
-	#emake INSTALL_ROOT="${D}" install_qchdocs || die "emake install_qchdocs	failed"
+	if use doc; then
+		emake INSTALL_ROOT="${D}" install_qchdocs \
+			|| die "emake install_qchdocs	failed"
+	fi
 	# install correct assistant icon, bug 241208
 	dodir /usr/share/pixmaps/ || die "dodir failed"
 	insinto /usr/share/pixmaps/ || die "insinto failed"

@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE=""
+IUSE="doc"
 
 DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=]
 	~x11-libs/qt-sql-${PV}[sqlite,stable-branch=]
@@ -53,7 +53,7 @@ src_configure() {
 
 src_compile() {
 	# help libQtHelp find freshly built libQtCLucene (bug #289811)
-	export LD_LIBRARY_PATH="${S}/lib"
+	export LD_LIBRARY_PATH="${S}/lib:${QTLIBDIR}"
 	export DYLD_LIBRARY_PATH="${S}/lib:${S}/lib/QtHelp.framework"
 
 	qt4-build-edge_src_compile
@@ -61,20 +61,23 @@ src_compile() {
 	# ugly hack to build docs
 	cd "${S}"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die
-	emake docs || die
+	emake qch_docs || die "emake qch_docs failed"
+	if use doc; then
+		emake docs || die "emake docs failed"
+	fi
+	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die
 }
 
 src_install() {
 	qt4-build-edge_src_install
-
-	# install documentation
-	# note that emake install_qchdocs fails for undefined reason
-	# so we use a workaround
 	cd "${S}"
-	insinto "${QTDOCDIR}"
-	doins -r "${S}"/doc/qch || die
-	dobin "${S}"/bin/qdoc3 || die
-
+	emake INSTALL_ROOT="${D}" install_qchdocs \
+		|| die "failed to install qch docs"
+	if use doc; then
+		emake INSTALL_ROOT="${D}" install_htmldocs \
+			|| die "failed to install htmldocs"
+	fi
+	dobin "${S}"/bin/qdoc3 || die "Failed to install qdoc3"
 	# install correct assistant icon, bug 241208
 	dodir /usr/share/pixmaps/ || die
 	insinto /usr/share/pixmaps/
