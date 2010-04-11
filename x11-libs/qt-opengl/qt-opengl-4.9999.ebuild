@@ -13,7 +13,8 @@ IUSE="qt3support"
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
 	~x11-libs/qt-gui-${PV}[debug=,qt3support=,stable-branch=]
 	virtual/opengl
-	virtual/glu"
+	virtual/glu
+	!>=media-libs/mesa-7.8"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
