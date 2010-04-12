@@ -50,8 +50,8 @@ src_compile() {
 	qt4-build-edge_src_compile
 	# ugly hack to build docs
 	cd "${S}"
+	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die
 	emake qch_docs || die "emake qch_docs failed"
-	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake projects faied"
 	if use doc; then
 		emake docs || die "emake docs failed"
 	fi
