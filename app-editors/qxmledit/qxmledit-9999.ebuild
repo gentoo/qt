@@ -36,3 +36,9 @@ src_prepare(){
 		die "failed to fix translations"
 	qt4-edge_src_prepare
 }
+
+src_install(){
+	qt4-edge_src_install
+	newicon "${S}"/images/icon.png ${PN}.png
+	make_desktop_entry QXmlEdit QXmlEdit ${PN} "Qt;Utility;TextEditor;"
+}
