@@ -14,7 +14,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
-	inspector kde mercurial perforce qml qtscript subversion"
+	inspector kde mercurial perforce qml qtscript rss subversion"
 
 QTVER="4.7.0_pre9999"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}:4
@@ -90,21 +90,15 @@ src_prepare() {
 		ewarn "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
 		ewarn
 	fi
-}
 
-src_configure() {
-	if use inspector; then
-		export QTCREATOR_WITH_INSPECTOR="true"
-		export QTCREATOR_WITH_INSPECTOR_VTK="true"
+	
+	#disable rss news on startup ( bug #302978 )
+	if ! use rss; then
+		einfo "Disabling RSS welcome news"
+		sed -i "/m_rssFetcher->fetch/s:^:\/\/:" \
+			src/plugins/welcome/communitywelcomepagewidget.cpp \
+				|| die "failed to disable rss"
 	fi
-	mkdir "${WORKDIR}"/build
-	cd "${WORKDIR}"/build
-	eqmake4 "${S}/${MY_PN}.pro" \
-		IDE_LIBRARY_BASENAME=$(get_libdir) \
-		IDE_LIBRARY_PATH=$(get_libdir)/${MY_PN} \
-		IDE_BUILD_TREE="${WORKDIR}/build" \
-		IDE_SOURCE_TREE=${S} \
-		QMAKE_RPATHDIR="/usr/$(get_libdir)/${MY_PN}"
 }
 
 src_compile() {

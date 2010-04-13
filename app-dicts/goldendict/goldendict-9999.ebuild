@@ -3,15 +3,14 @@
 # $Header: $
 
 EAPI="2"
-
 EGIT_REPO_URI="git://git.berlios.de/goldendict/"
-
 LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
 
 inherit git qt4-r2
 
 DESCRIPTION="Feature-rich dictionary lookup program"
 HOMEPAGE="http://goldendict.berlios.de/"
+
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
@@ -25,19 +24,15 @@ RDEPEND=">=app-text/hunspell-1.2
 	>=x11-libs/qt-core-4.5:4[exceptions]
 	>=x11-libs/qt-gui-4.5:4[exceptions]
 	>=x11-libs/qt-webkit-4.5:4[exceptions]
-	kde? ( media-sound/phonon )
 	!kde? ( || (
-		media-sound/phonon
 		>=x11-libs/qt-phonon-4.5:4[exceptions]
-	) )"
+		media-sound/phonon
+	) )
+	kde? ( media-sound/phonon )"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
 S=${WORKDIR}/${P}/src
-
-PATCHES=(
-	"${FILESDIR}/phonon-headers.patch"
-)
 
 src_unpack() {
 	S=${WORKDIR}/${P} git_src_unpack

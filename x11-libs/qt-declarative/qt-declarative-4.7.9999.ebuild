@@ -13,6 +13,7 @@ IUSE=""
 DEPEND="~x11-libs/qt-core-${PV}[stable-branch=]
 	~x11-libs/qt-gui-${PV}[stable-branch=]
 	~x11-libs/qt-multimedia-${PV}[stable-branch=]
+	~x11-libs/qt-opengl-${PV}[stable-branch=]
 	~x11-libs/qt-script-${PV}[stable-branch=]
 	~x11-libs/qt-sql-${PV}[stable-branch=]
 	~x11-libs/qt-webkit-${PV}[stable-branch=]
@@ -23,7 +24,6 @@ pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/declarative
 		tools/qml"
-	use stable-branch && QT4_TARGET_DIRECTORIES+=" src/plugins/qdeclarativemodules/"
 	QT4_EXTRACT_DIRECTORIES="
 		include/
 		src/
