@@ -9,12 +9,12 @@ Qt4 related packages. For your convenience we provide some sets and
 Please note that we use the following versioning scheme:
 
 - 4.x.y_beta, 4.x.y_rc are official pre-releases
-- 4.9999 is "live" code from Nokia's Qt Software git repository
-- 4.x.9999 is "live" code from KDE's kde-qt git repository
+- 4.x.9999 is "live" code from Nokia's Qt Software git repository
+- 4.x.9999[kde-qt] is "live" code from KDE's kde-qt git repository
 
 The corresponding sets we defined are:
 
-qt-all-4.5
+qt-all-4.7
 	the latest official pre-release.
 qt-all-live-nokia
 	"live" code from Nokia's Qt Software git repo.
@@ -39,7 +39,7 @@ should result in a smoother KDE user experience.
 Non-KDE users should stick to the official Qt packages from Nokia Qt Software
 (previously Trolltech).
 
-If you have questions, you can find us on IRC in #gentoo-kde on Freenode or at
+If you have questions, you can find us on IRC in #gentoo-qt on Freenode or at
 qt@gentoo.org.
 
 Bugs should be reported on https://bugs.gentoo.org. Be sure to include
