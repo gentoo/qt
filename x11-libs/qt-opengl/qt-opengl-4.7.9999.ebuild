@@ -8,14 +8,18 @@ inherit qt4-build-edge
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="qt3support"
+IUSE="egl qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
 	~x11-libs/qt-gui-${PV}[debug=,qt3support=,stable-branch=]
 	virtual/opengl
-	virtual/glu
-	!>=media-libs/mesa-7.8"
+	virtual/glu"
 RDEPEND="${DEPEND}"
+
+PATCHES=(
+	"${FILESDIR}/qtbug-9691-egl.patch"
+	"${FILESDIR}/qtbug-9691-Xdefs.patch"
+)
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
@@ -40,6 +44,7 @@ pkg_setup() {
 
 src_configure() {
 	myconf="${myconf} -opengl
+		$(qt_use egl)
 		$(qt_use qt3support)"
 
 	qt4-build-edge_src_configure

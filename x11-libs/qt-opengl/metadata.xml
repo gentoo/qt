@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<herd>qt</herd> 
-	<use>
-		<flag name='exceptions'>Build with support for exceptions</flag>
-		<flag name='qt3support'>Enable the Qt3Support libraries for Qt4</flag>
-		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
-			master but guaranteed by Nokia to compile</flag>
-	</use>
+  <herd>qt</herd>
+  <use>
+    <flag name='egl'>Use EGL instead of default GLX to manage OpenGL
+      contexts on the desktop</flag>
+    <flag name='exceptions'>Build with support for exceptions</flag>
+    <flag name='qt3support'>Enable the Qt3Support libraries for Qt4</flag>
+    <flag name='stable-branch'>Use the stable git branch - it is slightly
+      behind master but guaranteed by Nokia to compile</flag>
+  </use>
 </pkgmetadata>
