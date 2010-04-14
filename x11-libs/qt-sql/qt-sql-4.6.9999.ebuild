@@ -30,8 +30,6 @@ src/plugins
 src/3rdparty
 src/tools"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
-
 pkg_setup() {
 	if ! (use firebird || use mysql || use odbc || use postgres || use sqlite); then
 		ewarn "You need to enable at least one SQL driver. Enable at least"
@@ -44,7 +42,11 @@ pkg_setup() {
 
 src_prepare() {
 	qt4-build-edge_src_prepare
-
+	if use stable-branch || use kde-qt; then
+		epatch "${FILESDIR}"/qt-4.6-nolibx11.diff
+	else
+		epatch "${FILESDIR}"/qt-4.6-master-nolibx11.patch
+	fi
 	sed -e '/pg_config --libs/d' -i "${S}"/configure \
 		|| die "sed to fix postgresql usage in ./configure failed"
 }

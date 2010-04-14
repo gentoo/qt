@@ -18,8 +18,14 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 include/QtTest/
 include/QtCore/
 src/corelib/"
-
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
+src_prepare() {
+	qt4-build-edge_src_prepare
+	if use stable-branch || use kde-qt; then
+		epatch "${FILESDIR}"/qt-4.6-nolibx11.diff
+	else
+		epatch "${FILESDIR}"/qt-4.6-master-nolibx11.patch
+	fi
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr

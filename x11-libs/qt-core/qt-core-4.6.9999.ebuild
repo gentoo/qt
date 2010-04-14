@@ -53,8 +53,6 @@ src/script
 tools/linguist/shared
 translations"
 
-PATCHES=( "${FILESDIR}/qt-4.6-nolibx11.diff" )
-
 pkg_setup() {
 	qt4-build-edge_pkg_setup
 
@@ -109,7 +107,11 @@ src_unpack() {
 
 src_prepare() {
 	qt4-build-edge_src_prepare
-
+	if use stable-branch || use kde-qt ; then
+		epatch "${FILESDIR}"/qt-4.6-nolibx11.diff
+	else
+		epatch "${FILESDIR}"/qt-4.6-master-nolibx11.patch
+	fi
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CXXFLAGS failed"

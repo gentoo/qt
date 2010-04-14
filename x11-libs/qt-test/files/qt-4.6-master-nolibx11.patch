@@ -1,0 +1,20 @@
+Index: qt-everywhere-opensource-src-4.6.9999/configure
+===================================================================
+--- qt-everywhere-opensource-src-4.6.9999.orig/configure
++++ qt-everywhere-opensource-src-4.6.9999/configure
+@@ -5243,15 +5243,6 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+         X11TESTS_FLAGS="$X11TESTS_FLAGS -fpermissive"
+     fi
+ 
+-    # Check we actually have X11 :-)
+-    "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/x11/xlib "XLib" $L_FLAGS $I_FLAGS $l_FLAGS $X11TESTS_FLAGS
+-    if [ $? != "0" ]; then
+-        echo "Basic XLib functionality test failed!"
+-        echo " You might need to modify the include and library search paths by editing"
+-        echo " QMAKE_INCDIR_X11 and QMAKE_LIBDIR_X11 in ${XQMAKESPEC}."
+-        exit 1
+-    fi
+-
+     # auto-detect OpenGL support (es1 = OpenGL ES 1.x Common, es2 = OpenGL ES 2.x)
+     if [ "$CFG_OPENGL" = "auto" ] || [ "$CFG_OPENGL" = "yes" ]; then
+         if "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/x11/opengl "OpenGL" $L_FLAGS $I_FLAGS $l_FLAGS $X11TESTS_FLAGS; then
