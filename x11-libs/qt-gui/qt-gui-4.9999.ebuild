@@ -101,7 +101,7 @@ src_configure() {
 
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
-		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-openvg"
+		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg"
 
 	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
