@@ -98,7 +98,7 @@ src_configure() {
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
 		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
-		-no-phonon -no-dbus -no-opengl"
+		-no-phonon -no-dbus -no-opengl -no-openvg"
 
 	qt4-build-edge_src_configure
 }

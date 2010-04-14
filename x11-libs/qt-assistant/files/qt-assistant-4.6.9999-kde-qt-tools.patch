@@ -1,8 +1,8 @@
-Index: qt-everywhere-opensource-src-4.6.9999/tools/tools.pro
-===================================================================
---- qt-everywhere-opensource-src-4.6.9999.orig/tools/tools.pro
-+++ qt-everywhere-opensource-src-4.6.9999/tools/tools.pro
-@@ -5,33 +5,9 @@ no-png {
+diff --git a/tools/tools.pro b/tools/tools.pro
+index 4cff507..7b01ae9 100644
+--- a/tools/tools.pro
++++ b/tools/tools.pro
+@@ -5,32 +5,8 @@ no-png {
  } else {
       SUBDIRS += assistant \
  		pixeltool \
@@ -19,7 +19,6 @@ Index: qt-everywhere-opensource-src-4.6.9999/tools/tools.pro
 -     wince*: SUBDIRS = qtestlib designer
 -     unix:!mac:!embedded:contains(QT_CONFIG, qt3support):SUBDIRS += qtconfig
 -     win32:!wince*:SUBDIRS += activeqt
-+		qdoc3
  }
  
 -mac {
@@ -30,8 +29,7 @@ Index: qt-everywhere-opensource-src-4.6.9999/tools/tools.pro
 -
 -contains(QT_CONFIG, declarative):SUBDIRS += qmlviewer qmldebugger
 -contains(QT_CONFIG, dbus):SUBDIRS += qdbus
--# We don't need these command line utilities on embedded platforms.
--!wince*:!symbian:contains(QT_CONFIG, xmlpatterns): SUBDIRS += xmlpatterns xmlpatternsvalidator
+-!wince*:contains(QT_CONFIG, xmlpatterns): SUBDIRS += xmlpatterns xmlpatternsvalidator
 -embedded: SUBDIRS += makeqpf
 -
  !wince*:!cross_compile:SUBDIRS += qdoc3

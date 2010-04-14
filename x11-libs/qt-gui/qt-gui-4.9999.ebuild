@@ -100,8 +100,8 @@ src_configure() {
 	use raster && myconf="${myconf} -graphicssystem raster"
 
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
-		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
-		-xrender -xrandr -xkb -xshape -sm -no-svg"
+		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
+		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-openvg"
 
 	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
