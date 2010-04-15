@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-LANGS="br ca cs da de es fr gl hu it ja nl pl ro sv"
+LANGS="br ca cs da de es fr gl hu it ja ko nl pl ro ru sv"
 
 inherit qt4-edge versionator subversion
 
@@ -36,6 +36,8 @@ src_prepare() {
 	mv "${S}"/resources/translations/${MY_PN}_cz.ts	"${S}"/resources/translations/${MY_PN}_cs.ts
 	mv "${S}"/resources/translations/${MY_PN}_jp.ts	"${S}"/resources/translations/${MY_PN}_ja.ts
 	mv "${S}"/resources/translations/${MY_PN}_du.ts	"${S}"/resources/translations/${MY_PN}_nl.ts
+	mv "${S}"/resources/translations/${MY_PN}_kr.ts	"${S}"/resources/translations/${MY_PN}_ko.ts
+
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
 	"${S}"/src/options.cpp || die "failed to fix paths"
