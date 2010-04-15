@@ -294,12 +294,6 @@ qt4-build-edge_src_prepare() {
 	# qmake bus errors with -O2 but -O3 works
 	[[ ${CHOST} == *86*-apple-darwin* ]] && replace-flags -O2 -O3
 
-	# Bug 282984 && Bug 295530
-	sed -e "s:\(^SYSTEM_VARIABLES\):CC=$(tc-getCC)\nCXX=$(tc-getCXX)\n\1:" \
-		-i configure || die "sed qmake compilers failed"
-	sed -e "s:\(\$MAKE\):\1 CC=$(tc-getCC) CXX=$(tc-getCXX) LD=$(tc-getCXX):" \
-		-i config.tests/unix/compile.test || die "sed compile.test failed"
-
 	# Bug 178652
 	if [[ $(gcc-major-version) == 3 ]] && use amd64; then
 		ewarn "Appending -fno-gcse to CFLAGS/CXXFLAGS"
@@ -322,21 +316,18 @@ qt4-build-edge_src_prepare() {
 		append-flags -mminimal-toc
 	fi
 
+	# Bug 282984 && Bug 295530
+	sed -e "s:\(^SYSTEM_VARIABLES\):CC=$(tc-getCC)\nCXX=$(tc-getCXX)\nCFLAGS=\"${CFLAGS}\"\nCXXFLAGS=\"${CXXFLAGS}\"\nLDFLAGS=\"${LDFLAGS}\"\n\1:" \
+		-i configure || die "sed qmake compilers failed"
+	sed -e "s:\(\$MAKE\):\1 CC=$(tc-getCC) CXX=$(tc-getCXX) LD=$(tc-getCXX):" \
+		-i config.tests/unix/compile.test || die "sed test compilers failed"
+
 	# Bug 172219
-	sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
-		-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
-		-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-		-e "s:X11R6/::" \
+	sed	-e "s:X11R6/::" \
 		-i "${S}"/mkspecs/$(qt_mkspecs_dir)/qmake.conf \
 		|| die "sed mkspecs/$(qt_mkspecs_dir)/qmake.conf failed"
 
-	if [[ ${CHOST} != *-darwin* ]]; then
-		sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
-			-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
-			-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=${LDFLAGS}:" \
-			-i "${S}"/mkspecs/common/g++.conf \
-			|| die "sed mkspecs/common/g++.conf failed"
-	else
+	if [[ ${CHOST} == *-darwin* ]]; then
 		# Set FLAGS *and* remove -arch, since our gcc-apple is multilib
 		# crippled (by design) :/
 		sed -e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
@@ -596,9 +587,9 @@ build_directories() {
 			find "${S}" -name '*.pr[io]'
 		} | xargs sed -i -e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" || die
 		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake in ${x} failed"
-		emake CC="@echo compiling \$< && $(tc-getCC)" \
-			CXX="@echo compiling \$< && $(tc-getCXX)" \
-			LINK="@echo linking \$@ && $(tc-getCXX)" || die "emake in ${x} failed"
+		emake CC="$(tc-getCC)" \
+			CXX="$(tc-getCXX)" \
+			LINK="$(tc-getCXX)" || die "emake in ${x} failed"
 		popd > /dev/null || die "can't popd from ${S}/${x}"
 	done
 }
