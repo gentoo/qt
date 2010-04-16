@@ -32,7 +32,11 @@ doc/"
 
 src_prepare() {
 	if ! use kde-qt; then
-		epatch "${FILESDIR}/${P}-tools.patch"
+		if use stable-branch; then
+			epatch "${FILESDIR}/${P}-tools.patch"
+		else
+			epatch "${FILESDIR}/${P}-master-tools.patch"
+		fi
 	else
 		epatch "${FILESDIR}/${P}-kde-qt-tools.patch"
 	fi
