@@ -2,7 +2,7 @@ Index: qt-everywhere-opensource-src-4.6.9999/configure
 ===================================================================
 --- qt-everywhere-opensource-src-4.6.9999.orig/configure
 +++ qt-everywhere-opensource-src-4.6.9999/configure
-@@ -5243,15 +5243,6 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+@@ -5069,15 +5069,6 @@ if [ "$PLATFORM_X11" = "yes" ]; then
          X11TESTS_FLAGS="$X11TESTS_FLAGS -fpermissive"
      fi
  
@@ -15,6 +15,6 @@ Index: qt-everywhere-opensource-src-4.6.9999/configure
 -        exit 1
 -    fi
 -
-     # auto-detect OpenGL support (es1 = OpenGL ES 1.x Common, es2 = OpenGL ES 2.x)
+     # auto-detect OpenGL support (es1 = OpenGL ES 1.x Common, es1cl = ES 1.x common lite, es2 = OpenGL ES 2.x)
      if [ "$CFG_OPENGL" = "auto" ] || [ "$CFG_OPENGL" = "yes" ]; then
          if "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/x11/opengl "OpenGL" $L_FLAGS $I_FLAGS $l_FLAGS $X11TESTS_FLAGS; then
