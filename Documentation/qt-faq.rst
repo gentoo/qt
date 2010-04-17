@@ -39,9 +39,10 @@ Why do I get blockers when trying to emerge Qt?
 -----------------------------------------------
 
 The most common causes are useflags that are not set correctly, or some but not
-all Qt modules added to package.keywords.
+all Qt modules added to package.keywords. 
+The former case is quite rare but in case you run into such problem please make sure that you have exactly the same use flags enabled to all of Qt modules that support them. Take qt-assistant as an example. If you build it with glib support then you have to enable glib use flag to every Qt module that makes use of it.
+The later case, is quite common and this is because you probably haven't added all of Qt modules on your /etc/package.keywords files. If don't know how to do that please grab the file that match your needs from our Documentation/package.keywords folder.
 
-.. (This section needs to be expanded.)
 
 
 What does the exceptions useflag do?
