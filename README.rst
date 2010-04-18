@@ -10,8 +10,11 @@ Please note that we use the following versioning scheme:
 
 - 4.x.y_beta, 4.x.y_rc are official pre-releases
 - 4.x.9999[-kde-qt] is "live" code from Nokia's Qt Software git repository
-        - 4.x.9999[stable-branch] is cloning the Nokia's stable-branch tree. This code is consider stable enough for everyday usage but it gets bumped quite rarely.
-        - 4.x.9999[-stable-branch] is cloning the Nokia's master tree. This code is highly experimental and gets a lots of daily updates.                
+        - 4.x.9999[stable-branch] is cloning the Nokia's stable-branch tree. 
+        This code is consider stable enough for everyday usage but it gets 
+        bumped quite rarely.
+        - 4.x.9999[-stable-branch] is cloning the Nokia's master tree. 
+        This code is highly experimental and gets a lots of daily updates.                
 - 4.6.9999[kde-qt] is "live" code from KDE's kde-qt git repository
 
 The corresponding sets we defined are:
@@ -25,7 +28,9 @@ qt-all-live-kde
 
 If you want to use kde-qt, you should mask the official pre-releases.
 
-Even though we are trying to do our best regarding that build status of live Qt packages, they may work all the time. You might want to consult our automatically generated page which lists the status of all Qt live ebuilds
+Even though we are trying to do our best regarding that build status 
+of live Qt packages, they may not work all the time. You might want to consult 
+our automatically generated page which lists the status of all Qt live ebuilds
 http://dev.gentoo.org/~hwoarang/qt/qt4-live-status.html
 
 You don't need to emerge the Qt ebuilds specifically, they are normally pulled

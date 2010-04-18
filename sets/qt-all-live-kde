@@ -1,1 +1,16 @@
-qt-all-4.6-live-kde
+# set for all Qt packages of KDE's kde-qt repository
+# qt-phonon is commented out, as you likely want media-sound/phonon instead
+
+~x11-libs/qt-assistant-4.6.9999[kde-qt]
+~x11-libs/qt-core-4.6.9999[kde-qt]
+~x11-libs/qt-dbus-4.6.9999[kde-qt]
+~x11-libs/qt-gui-4.6.9999[kde-qt]
+~x11-libs/qt-opengl-4.6.9999[kde-qt]
+#~x11-libs/qt-phonon-4.6.9999
+~x11-libs/qt-qt3support-4.6.9999[kde-qt]
+~x11-libs/qt-script-4.6.9999[kde-qt]
+~x11-libs/qt-sql-4.6.9999[kde-qt]
+~x11-libs/qt-svg-4.6.9999[kde-qt]
+~x11-libs/qt-test-4.6.9999[kde-qt]
+~x11-libs/qt-webkit-4.6.9999[kde-qt]
+~x11-libs/qt-xmlpatterns-4.6.9999[kde-qt]
