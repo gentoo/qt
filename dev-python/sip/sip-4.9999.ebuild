@@ -44,6 +44,7 @@ fi
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 	python_copy_sources
+	python build.py prepare
 }
 
 src_configure() {
