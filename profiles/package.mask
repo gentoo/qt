@@ -5,7 +5,7 @@
 # Markos Chandras <hwoarang@gentoo.org> (26 Mar 2010)
 # Masking latest releases
 =dev-python/sip-4.10.2_pre*
-=dev-python/PyQt4-4.7.3_pre*
+=dev-python/PyQt4-4.7.4_pre*
 
 # Ben de Groot <yngwin@gentoo.org> (13 Feb 2010)
 # fails to compile
