@@ -2,9 +2,9 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (26 Mar 2010)
+# Markos Chandras <hwoarang@gentoo.org> (24 Apr 2010)
 # Masking latest releases
-=dev-python/sip-4.10.2_pre*
+=dev-python/sip-4.10.3_pre*
 =dev-python/PyQt4-4.7.4_pre*
 
 # Ben de Groot <yngwin@gentoo.org> (13 Feb 2010)
