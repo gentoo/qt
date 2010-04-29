@@ -30,7 +30,11 @@ DEPEND="${COMMON_DEPEND}
 RDEPEND="${COMMON_DEPEND}
 	~x11-themes/duitheme-${PV}"
 
-PATCHES=( "${FILESDIR}/remove-automagic-deps.patch" )
+# disable installation of gconf schemas until we have a fix for
+# the sandbox violation
+PATCHES=( "${FILESDIR}/remove-automagic-deps.patch"
+	"${FILESDIR}/disable-gconf-schemas.patch" )
+
 DOCS="README"
 
 use_make() {
