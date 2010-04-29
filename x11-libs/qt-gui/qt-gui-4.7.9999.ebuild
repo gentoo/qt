@@ -39,7 +39,7 @@ PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
 
 PATCHES=(
 	"${FILESDIR}/qtbug-9691-egl.patch"
-	"${FILESDIR}/qtbug-9661-Xdefs.patch"
+	"${FILESDIR}/qtbug-9691-Xdefs.patch"
 )
 
 pkg_setup() {

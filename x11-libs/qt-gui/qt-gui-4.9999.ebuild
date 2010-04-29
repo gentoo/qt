@@ -56,8 +56,8 @@ tools/linguist/shared
 tools/shared"
 
 PATCHES=(
-	"${FILESDIR}"/qtbug-9661-egl.patch
-	"${FILESDIR}"/qtbug-9661-Xdefs.patch
+	"${FILESDIR}"/qtbug-9691-egl.patch
+	"${FILESDIR}"/qtbug-9691-Xdefs.patch
 )
 
 pkg_setup() {
