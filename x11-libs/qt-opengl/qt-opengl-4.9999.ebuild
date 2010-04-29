@@ -11,7 +11,7 @@ KEYWORDS=""
 IUSE="egl qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
-	~x11-libs/qt-gui-${PV}[debug=,qt3support=,stable-branch=]
+	~x11-libs/qt-gui-${PV}[debug=,egl=,qt3support=,stable-branch=]
 	virtual/opengl
 	virtual/glu"
 RDEPEND="${DEPEND}"

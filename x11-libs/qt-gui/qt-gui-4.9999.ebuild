@@ -8,7 +8,7 @@ inherit eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus +glib gtk mng nas nis +raster tiff qt3support xinerama"
+IUSE="+accessibility cups dbus egl +glib gtk mng nas nis +raster tiff qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
@@ -55,6 +55,11 @@ tools/linguist/phrasebooks
 tools/linguist/shared
 tools/shared"
 
+PATCHES=(
+	"${FILESDIR}"/qtbug-9661-egl.patch
+	"${FILESDIR}"/qtbug-9661-Xdefs.patch
+)
+
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
@@ -87,6 +92,7 @@ src_configure() {
 
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
+		$(qt_use egl)
 		$(qt_use glib)
 		$(qt_use mng libmng system)
 		$(qt_use nis)
