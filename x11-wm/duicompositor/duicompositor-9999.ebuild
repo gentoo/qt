@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND="~x11-libs/libdui-${PV}
+DEPEND="~x11-libs/libmeegotouch-${PV}
 	x11-libs/libXcomposite
 	x11-libs/libXdamage
 	x11-libs/libXfixes
