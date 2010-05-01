@@ -22,6 +22,8 @@
 #			are official releases or snapshots from Nokia
 #
 
+MY_EGIT_COMMIT=${EGIT_COMMIT:=}
+
 inherit base eutils multilib toolchain-funcs flag-o-matic git versionator
 
 MY_PV=${PV/_/-}
@@ -149,8 +151,11 @@ qt4-build-edge_pkg_setup() {
 		4.9999)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 			EGIT_PROJECT="qt-${PV}"
+			EGIT_BRANCH="master"
 			;;
 	esac
+
+	EGIT_COMMIT=${MY_EGIT_COMMIT:=${EGIT_BRANCH}}
 
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		ewarn
