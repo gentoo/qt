@@ -3,8 +3,11 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
-		<flag name='exceptions'>Build with support for exceptions</flag>
-		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
-			master but guaranteed by Nokia to compile</flag>
+		<flag name='exceptions'>Add support for exceptions - like catching them
+		inside the event loop (recommended by Nokia)</flag>
+	<flag name='trace'>
+		Build the qttracereplay utility which is required to play drawings
+		recorded with the trace graphicssystem engine
+	</flag>
 	</use>
 </pkgmetadata>

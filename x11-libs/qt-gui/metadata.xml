@@ -3,21 +3,21 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
-		<flag name='exceptions'>
-			Build with support for exceptions
+		<flag name='exceptions'>Add support for exceptions - like catching them
+			inside the event loop (recommended by Nokia)</flag>
+		<flag name='glib'>
+			Enable <pkg>dev-libs/glib</pkg> eventloop support
 		</flag>
-		<flag name="glib">
-			Enable <pkg>dev-libs/glib</pkg> eventloop support.
+		<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
+			this does not mean you can compile pure Qt3 programs with Qt4.
 		</flag>
-		<flag name="gtk">
-			Build the Qt-GTK+ style, which integrates Qt4 apps with
-			the GTK+ theme.
+		<flag name='raster'>
+			Use the alternative raster graphicssystem as default rendering engine
 		</flag>
-		<flag name="qt3support">
-			Enable the Qt3Support libraries for Qt4. Note that this
-			does not mean you can compile pure Qt3 programs with Qt4.
+		<flag name='trace'>
+			Build the new 'trace' graphicsssytem engine which allows to record
+			all drawing operations into a trace buffer. Later it can be replayed
+			with the qttracereplay utility
 		</flag>
-		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
-			master but guaranteed by Nokia to compile</flag>
 	</use>
 </pkgmetadata>

@@ -8,7 +8,7 @@ inherit confutils eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus egl +glib gtk mng nas nis +raster tiff qt3support xinerama"
+IUSE="+accessibility cups dbus egl +glib gtk mng nas nis +raster tiff trace qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	media-libs/freetype:2
@@ -70,6 +70,8 @@ pkg_setup() {
 	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/tiff"
 	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
+	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}	src/plugins/graphicssystems/trace"
+
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
 	qt4-build-edge_pkg_setup
@@ -81,7 +83,7 @@ src_prepare() {
 		epatch "${FILESDIR}"/qt-4.7-eglfix.patch
 	fi
 	qt4-build-edge_src_prepare
-	
+
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
 }

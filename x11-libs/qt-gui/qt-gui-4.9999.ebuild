@@ -8,7 +8,7 @@ inherit eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus egl +glib gtk mng nas nis +raster tiff qt3support xinerama"
+IUSE="+accessibility cups dbus egl +glib gtk mng nas nis +raster tiff trace qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
@@ -74,6 +74,8 @@ src_unpack() {
 	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/tiff"
 	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
+	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}	src/plugins/graphicssystems/trace"
+
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
 	qt4-build-edge_src_unpack

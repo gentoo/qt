@@ -8,9 +8,9 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib"
+IUSE="doc +glib trace"
 
-DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=,glib=]
+DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=,glib=,trace?]
 	~x11-libs/qt-sql-${PV}[sqlite,stable-branch=]
 	~x11-libs/qt-webkit-${PV}[stable-branch=]
 	~x11-libs/qt-declarative-${PV}[stable-branch=]"
@@ -31,6 +31,13 @@ pkg_setup() {
 		include/
 		doc/"
 
+	qt4-build-edge_pkg_setup
+}
+
+pkg_setup() {
+	use trace && QT4_TARGET_DIRECTORIES="tools/qttracereplay"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		${QT4_EXTRACT_DIRECTORIES}"
 	qt4-build-edge_pkg_setup
 }
 

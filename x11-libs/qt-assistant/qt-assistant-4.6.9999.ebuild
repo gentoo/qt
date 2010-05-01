@@ -8,10 +8,10 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib"
+IUSE="doc +glib trace"
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[kde-qt=,stable-branch=]
+	~x11-libs/qt-gui-${PV}[kde-qt=,stable-branch=,trace?]
 	~x11-libs/qt-sql-${PV}[sqlite,kde-qt=,stable-branch=]
 	~x11-libs/qt-webkit-${PV}[kde-qt=,stable-branch=]
 "
@@ -29,6 +29,13 @@ tools/shared/fontpanel
 src/
 include/
 doc/"
+
+pkg_setup() {
+	use trace && QT4_TARGET_DIRECTORIES="tools/qttracereplay"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		${QT4_EXTRACT_DIRECTORIES}"
+	qt4-build-edge_pkg_setup
+}
 
 src_prepare() {
 	if ! use kde-qt; then
