@@ -33,11 +33,6 @@ src/3rdparty"
 QCONFIG_ADD="opengl"
 QCONFIG_DEFINE="QT_OPENGL"
 
-PATCHES=(
-	"${FILESDIR}/qtbug-9691-egl.patch"
-	"${FILESDIR}/qtbug-9691-Xdefs.patch"
-)
-
 src_configure() {
 	myconf="${myconf} -opengl
 		$(qt_use egl)
