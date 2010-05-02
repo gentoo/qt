@@ -16,11 +16,6 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
 	virtual/glu"
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/qtbug-9691-egl.patch"
-	"${FILESDIR}/qtbug-9691-Xdefs.patch"
-)
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/opengl
@@ -40,6 +35,12 @@ pkg_setup() {
 	QCONFIG_DEFINE="QT_OPENGL"
 
 	qt4-build-edge_pkg_setup
+}
+
+src_prepare() {	
+	epatch "${FILESDIR}/qtbug-9691-egl.patch"
+	epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
+	qt4-build-edge_src_prepare
 }
 
 src_configure() {

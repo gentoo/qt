@@ -37,11 +37,6 @@ DEPEND="${RDEPEND}
 	x11-proto/inputproto"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
 
-PATCHES=(
-	"${FILESDIR}/qtbug-9691-egl.patch"
-	"${FILESDIR}/qtbug-9691-Xdefs.patch"
-)
-
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
@@ -80,6 +75,8 @@ pkg_setup() {
 src_prepare() {
 	# bug #313619
 	if use stable-branch; then
+		epatch "${FILESDIR}/qtbug-9691-egl.patch"
+		epatch"${FILESDIR}/qtbug-9691-Xdefs.patch"
 		epatch "${FILESDIR}"/qt-4.7-eglfix.patch
 	fi
 	qt4-build-edge_src_prepare
@@ -100,6 +97,7 @@ src_configure() {
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
+		$(qt_use_dbus)
 		$(qt_use qt3support)
 		$(qt_use gtk gtkstyle)
 		$(qt_use xinerama)"
@@ -110,7 +108,7 @@ src_configure() {
 	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
 		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
-		-no-phonon -no-dbus -no-opengl"
+		-no-phonon -no-opengl"
 
 	qt4-build-edge_src_configure
 }

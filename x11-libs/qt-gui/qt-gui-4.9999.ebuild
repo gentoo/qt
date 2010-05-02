@@ -55,11 +55,6 @@ tools/linguist/phrasebooks
 tools/linguist/shared
 tools/shared"
 
-PATCHES=(
-	"${FILESDIR}"/qtbug-9691-egl.patch
-	"${FILESDIR}"/qtbug-9691-Xdefs.patch
-)
-
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
@@ -100,6 +95,7 @@ src_configure() {
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
+		$(qt_use dbus)
 		$(qt_use qt3support)
 		$(qt_use gtk gtkstyle)
 		$(qt_use xinerama)"
@@ -113,7 +109,7 @@ src_configure() {
 
 	# Explicitly don't compile these packages.
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
-	myconf="${myconf} -no-webkit -no-phonon -no-dbus -no-opengl"
+	myconf="${myconf} -no-webkit -no-phonon -no-opengl"
 
 	qt4-build-edge_src_configure
 }
