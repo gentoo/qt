@@ -16,23 +16,19 @@ DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=,glib=,trace?]
 	~x11-libs/qt-declarative-${PV}[stable-branch=]"
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	# Pixeltool isn't really assistant related, but it relies on
-	# the assistant libraries. doc/qch/
-	QT4_TARGET_DIRECTORIES="
-		tools/assistant
-		tools/pixeltool
-		tools/qdoc3"
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		tools/
-		demos/
-		examples/
-		src/
-		include/
-		doc/"
-
-	qt4-build-edge_pkg_setup
-}
+# Pixeltool isn't really assistant related, but it relies on
+# the assistant libraries. doc/qch/
+QT4_TARGET_DIRECTORIES="
+	tools/assistant
+	tools/pixeltool
+	tools/qdoc3"
+QT4_EXTRACT_DIRECTORIES="
+	tools/
+	demos/
+	examples/
+	src/
+	include/
+	doc/"
 
 pkg_setup() {
 	use trace && QT4_TARGET_DIRECTORIES="tools/qttracereplay"

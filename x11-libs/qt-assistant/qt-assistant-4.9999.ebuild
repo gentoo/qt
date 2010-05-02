@@ -23,7 +23,7 @@ QT4_TARGET_DIRECTORIES="
 tools/assistant
 tools/pixeltool
 tools/qdoc3"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+QT4_EXTRACT_DIRECTORIES="
 tools/tools.pro
 tools/shared/fontpanel
 src/
