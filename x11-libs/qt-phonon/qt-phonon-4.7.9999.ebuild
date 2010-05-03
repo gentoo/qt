@@ -19,20 +19,23 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support,stable-branch=]
 	dbus? ( =x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )"
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/phonon
-		src/plugins/phonon
-		tools/designer/src/plugins/phononwidgets"
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include/
-		src
-		tools"
+QT4_TARGET_DIRECTORIES="
+	src/phonon
+	src/plugins/phonon
+	tools/designer/src/plugins/phononwidgets"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/
+	src
+	tools"
 
-	QCONFIG_ADD="phonon"
-	QCONFIG_DEFINE="QT_GSTREAMER"
+QCONFIG_ADD="phonon"
+QCONFIG_DEFINE="QT_GSTREAMER"
 
-	qt4-build-edge_pkg_setup
+src_prepare() {
+	if use stable-branch; then
+		epatch "${FILESDIR}"/qtbug-9691-egl.patch
+		epatch "${FILESDIR}"/qtbug-9691-Xdefs.patch
+	fi
 }
 
 src_configure() {

@@ -1,0 +1,97 @@
+--- qt/src/opengl/qglpaintdevice.cpp.ark	2010-04-12 17:10:24.569947561 +0200
++++ qt/src/opengl/qglpaintdevice.cpp	2010-04-12 17:17:02.170326744 +0200
+@@ -39,8 +39,15 @@
+ **
+ ****************************************************************************/
+ 
++#include <QtCore/qglobal.h>
++#ifdef Q_WS_X11
++#include <X11/Xdefs.h> // for Bool
++#endif
+ #include <private/qglpaintdevice_p.h>
+ #include <private/qgl_p.h>
++#if defined(Q_WS_X11) && !defined(Status)
++#define Status int
++#endif
+ #include <private/qglpixelbuffer_p.h>
+ #include <private/qglframebufferobject_p.h>
+ #include <private/qwindowsurface_gl_p.h>
+--- qt/src/opengl/qglpixelbuffer.cpp.ark	2010-04-12 17:11:21.820358541 +0200
++++ qt/src/opengl/qglpixelbuffer.cpp	2010-04-12 17:12:35.950561190 +0200
+@@ -82,6 +82,10 @@
+ #include <private/qpaintengineex_opengl2_p.h>
+ #endif
+ 
++#ifdef Q_WS_X11
++#include <X11/Xdefs.h> // for Bool, needed by GL/glx.h
++#define Status int
++#endif
+ #include <qglpixelbuffer.h>
+ #include <private/qglpixelbuffer_p.h>
+ #include <qimage.h>
+--- qt/src/opengl/qglpixelbuffer_x11.cpp.ark	2010-04-12 17:21:23.483840735 +0200
++++ qt/src/opengl/qglpixelbuffer_x11.cpp	2010-04-12 17:22:39.463626818 +0200
+@@ -40,11 +40,15 @@
+ ****************************************************************************/
+ #include <qlibrary.h>
+ #include <qdebug.h>
+-#include <private/qgl_p.h>
+ #include <private/qt_x11_p.h>
++#include <private/qgl_p.h>
+ #include <private/qpaintengine_opengl_p.h>
+ 
+ #include <qx11info_x11.h>
++#include <X11/Xdefs.h> // for Bool
++#ifndef Status
++#define Status int
++#endif
+ #include <GL/glx.h>
+ #include <qimage.h>
+ 
+--- qt/src/opengl/qgl_x11.cpp.ark	2010-04-12 17:20:07.366862655 +0200
++++ qt/src/opengl/qgl_x11.cpp	2010-04-12 17:21:02.240510982 +0200
+@@ -39,9 +39,6 @@
+ **
+ ****************************************************************************/
+ 
+-#include "qgl.h"
+-#include "qgl_p.h"
+-
+ #include "qmap.h"
+ #include "qapplication.h"
+ #include "qcolormap.h"
+@@ -82,6 +79,11 @@
+ #endif // Q_OS_VXWORKS
+ #include <X11/Xatom.h>
+ 
++#include "qgl.h"
++#include "qgl_p.h"
++
++#include <X11/Xdefs.h>
++
+ #if defined(Q_OS_LINUX) || defined(Q_OS_BSD4)
+ #include <dlfcn.h>
+ #endif
+--- qt/src/opengl/qpaintengine_opengl.cpp.ark	2010-04-12 17:17:13.883240412 +0200
++++ qt/src/opengl/qpaintengine_opengl.cpp	2010-04-12 17:18:26.056568593 +0200
+@@ -48,6 +48,10 @@
+ #include "qapplication.h"
+ #include "qbrush.h"
+ #include "qgl.h"
++#include <qglobal.h>
++#ifdef Q_WS_X11
++#include <X11/Xdefs.h> // Needed for Bool, needed by GL/glx.h
++#endif
+ #include <private/qgl_p.h>
+ #include <private/qglpaintdevice_p.h>
+ #include <private/qpainter_p.h>
+@@ -57,6 +61,9 @@
+ #include "qpen.h"
+ #include "qvarlengtharray.h"
+ #include <private/qpainter_p.h>
++#ifdef Q_WS_X11
++#define Status int
++#endif
+ #include <private/qglpixelbuffer_p.h>
+ #include <private/qbezier_p.h>
+ #include <qglframebufferobject.h>

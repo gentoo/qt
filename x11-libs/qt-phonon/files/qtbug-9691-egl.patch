@@ -1,0 +1,588 @@
+commit 9a53d9a35136ce274b7127832d042eb3473ff973
+Author: Tom Cooksey <tomcooksey@gmail.com>
+Date:   Wed Mar 24 13:58:00 2010 +0100
+
+    Support building with desktop OpenGL managed via EGL
+    
+    This mostly replaces lots of QT_OPENGL_ES defines with QT_NO_EGL
+    instead. It also switches off EGL auto-detection by default. This is
+    to make sure we default to using GLX on systems with both EGL and
+    desktop OpenGL. If -opengl es1|es2 or -openvg is specified, then
+    EGL auto-detection is switched back on (as a requirement. If
+    configure auto-detects OpenGL ES it also switches on EGL
+    auto-detection, but failue then just disables both EGL & OpenGL.
+    
+    Reviewed-by: Trond
+
+diff --git a/configure b/configure
+index 30bc564..841ee8c 100755
+--- a/configure
++++ b/configure
+@@ -936,7 +936,7 @@ while [ "$#" -gt 0 ]; do
+         VAL=no
+         ;;
+     #Qt style yes options
+-        -incremental|-qvfb|-profile|-shared|-static|-sm|-xinerama|-xshape|-xsync|-xinput|-reduce-exports|-pch|-separate-debug-info|-stl|-freetype|-xcursor|-xfixes|-xrandr|-xrender|-mitshm|-fontconfig|-xkb|-nis|-qdbus|-dbus|-dbus-linked|-glib|-gstreamer|-gtkstyle|-cups|-iconv|-largefile|-h|-help|-v|-verbose|-debug|-release|-fast|-accessibility|-confirm-license|-gnumake|-framework|-qt3support|-debug-and-release|-exceptions|-cocoa|-carbon|-universal|-prefix-install|-silent|-armfpa|-optimized-qmake|-dwarf2|-reduce-relocations|-sse|-openssl|-openssl-linked|-ptmalloc|-xmlpatterns|-phonon|-phonon-backend|-multimedia|-mediaservice|-audio-backend|-svg|-declarative|-webkit|-javascript-jit|-script|-scripttools|-rpath|-force-pkg-config|-s60|-usedeffiles)
++        -incremental|-qvfb|-profile|-shared|-static|-sm|-xinerama|-xshape|-xsync|-xinput|-egl|-reduce-exports|-pch|-separate-debug-info|-stl|-freetype|-xcursor|-xfixes|-xrandr|-xrender|-mitshm|-fontconfig|-xkb|-nis|-qdbus|-dbus|-dbus-linked|-glib|-gstreamer|-gtkstyle|-cups|-iconv|-largefile|-h|-help|-v|-verbose|-debug|-release|-fast|-accessibility|-confirm-license|-gnumake|-framework|-qt3support|-debug-and-release|-exceptions|-cocoa|-carbon|-universal|-prefix-install|-silent|-armfpa|-optimized-qmake|-dwarf2|-reduce-relocations|-sse|-openssl|-openssl-linked|-ptmalloc|-xmlpatterns|-phonon|-phonon-backend|-multimedia|-mediaservice|-audio-backend|-svg|-declarative|-webkit|-javascript-jit|-script|-scripttools|-rpath|-force-pkg-config|-s60|-usedeffiles)
+         VAR=`echo $1 | sed "s,^-\(.*\),\1,"`
+         VAL=yes
+         ;;
+@@ -1245,6 +1245,9 @@ while [ "$#" -gt 0 ]; do
+             [ "$VAL" = "yes" ] || [ "$VAL" = "no" ] ||
+             [ "$VAL" = "es1" ] || [ "$VAL" = "es2" ]; then
+             CFG_OPENGL="$VAL"
++            if  [ "$VAL" = "es1" ] || [ "$VAL" = "es2" ]; then
++                CFG_EGL="yes"
++            fi
+         else
+             UNKNOWN_OPT=yes
+         fi
+@@ -1252,6 +1255,7 @@ while [ "$#" -gt 0 ]; do
+     openvg)
+         if [ "$VAL" = "auto" ] || [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
+             CFG_OPENVG="$VAL"
++            CFG_EGL="auto"
+         else
+             UNKNOWN_OPT=yes
+         fi
+@@ -1568,6 +1572,13 @@ while [ "$#" -gt 0 ]; do
+             UNKNOWN_OPT=yes
+         fi
+         ;;
++    egl)
++        if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
++            CFG_EGL="$VAL"
++        else
++            UNKNOWN_OPT=yes
++        fi
++        ;;
+     stl)
+         if [ "$VAL" = "yes" ] || [ "$VAL" = "no" ]; then
+             CFG_STL="$VAL"
+@@ -3792,6 +3803,12 @@ Qt/X11 only:
+     -system-nas-sound .. Use NAS libaudio from the operating system.
+                          See http://radscan.com/nas.html
+ 
++    -egl ............... Use EGL instead of GLX to manage contexts.
++                         When building for desktop OpenGL, this option will
++                         make Qt use EGL to manage contexts rather than the
++                         GLX, which is the default. Note: For OpenGL ES, EGL
++                         is always used.
++
+     -no-opengl ......... Do not support OpenGL.
+  +  -opengl <api> ...... Enable OpenGL support.
+                          With no parameter, this will auto-detect the "best"
+@@ -3799,8 +3816,6 @@ Qt/X11 only:
+                          will be used. Use desktop, es1, or es2 for <api>
+                          to force the use of the Desktop (OpenGL 1.x or 2.x),
+                          OpenGL ES 1.x Common profile, or 2.x APIs instead.
+-                         On X11, the EGL API will be used to manage GL
+-                         contexts in the case of OpenGL ES
+ 
+      -no-openvg ........ Do not support OpenVG.
+  +   -openvg ........... Enable OpenVG support.
+@@ -5094,26 +5109,6 @@ fi
+ 
+ if [ "$PLATFORM_X11" = "yes" -o "$PLATFORM_QWS" = "yes" ]; then
+ 
+-    # detect EGL support
+-    if "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" "config.tests/unix/egl" "EGL (EGL/egl.h)" $L_FLAGS $I_FLAGS $l_FLAGS; then
+-        # EGL specified by QMAKE_*_EGL, included with <EGL/egl.h>
+-        CFG_EGL=yes
+-        CFG_EGL_GLES_INCLUDES=no
+-    elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" "config.tests/unix/egl4gles1" "EGL (GLES/egl.h)" $L_FLAGS $I_FLAGS $l_FLAGS; then
+-        # EGL specified by QMAKE_*_EGL, included with <GLES/egl.h>
+-        CFG_EGL=yes
+-        CFG_EGL_GLES_INCLUDES=yes
+-    fi
+-    if ( [ "$CFG_OPENGL" = "es1" ] || [ "$CFG_OPENGL" = "es2" ] ) && [ "$CFG_EGL" != "yes" ]; then
+-        echo "The EGL functionality test failed!"
+-        echo " EGL is required for OpenGL ES to manage contexts & surfaces."
+-        echo " You might need to modify the include and library search paths by editing"
+-        echo " QMAKE_INCDIR_EGL, QMAKE_LIBDIR_EGL and QMAKE_LIBS_EGL in"
+-        echo " ${XQMAKESPEC}."
+-        exit 1
+-    fi
+-
+-
+     # auto-detect Glib support
+     if [ "$CFG_GLIB" != "no" ]; then
+         if [ -n "$PKG_CONFIG" ]; then
+@@ -5267,8 +5262,14 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+             CFG_OPENGL=desktop
+         elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles2 "OpenGL ES 2.x" $L_FLAGS $I_FLAGS $l_FLAGS; then
+             CFG_OPENGL=es2
+-	elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS; then
++            if [ "$CFG_EGL" = "no" ]; then
++                CFG_EGL=auto
++            fi
++        elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS; then
+             CFG_OPENGL=es1
++            if [ "$CFG_EGL" = "no" ]; then
++                CFG_EGL=auto
++            fi
+         else
+             if [ "$CFG_OPENGL" = "yes" ]; then
+                 echo "All the OpenGL functionality tests failed!"
+@@ -5279,24 +5280,24 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+             fi
+             CFG_OPENGL=no
+         fi
+-       case "$PLATFORM" in
+-       hpux*)
+-           # HP-UX have buggy glx headers; check if we really need to define the GLXFBConfig struct.
+-           if [ "$CFG_OPENGL" = "desktop" ]; then
+-               "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/x11/glxfbconfig "OpenGL" $L_FLAGS $I_FLAGS $l_FLAGS $X11TESTS_FLAGS
+-               if [ $? != "0" ]; then
+-                   QMakeVar add DEFINES QT_DEFINE_GLXFBCONFIG_STRUCT
+-               fi
+-           fi
+-	   ;;
+-       *)
+-           ;;
+-       esac
++        case "$PLATFORM" in
++        hpux*)
++            # HP-UX have buggy glx headers; check if we really need to define the GLXFBConfig struct.
++            if [ "$CFG_OPENGL" = "desktop" ]; then
++                "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/x11/glxfbconfig "OpenGL" $L_FLAGS $I_FLAGS $l_FLAGS $X11TESTS_FLAGS
++                if [ $? != "0" ]; then
++                    QMakeVar add DEFINES QT_DEFINE_GLXFBCONFIG_STRUCT
++                fi
++            fi
++            ;;
++        *)
++            ;;
++        esac
+     elif [ "$CFG_OPENGL" = "es1" ]; then
+         # OpenGL ES 1.x
+-	"$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS
++        "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS
+         if [ $? != "0" ]; then
+-	    echo "The OpenGL ES 1.x functionality test failed!"
++            echo "The OpenGL ES 1.x functionality test failed!"
+             echo " You might need to modify the include and library search paths by editing"
+             echo " QMAKE_INCDIR_OPENGL_ES1, QMAKE_LIBDIR_OPENGL_ES1 and QMAKE_LIBS_OPENGL_ES1 in"
+             echo " ${XQMAKESPEC}."
+@@ -5304,9 +5305,9 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+         fi
+     elif [ "$CFG_OPENGL" = "es2" ]; then
+         #OpenGL ES 2.x
+-	"$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles2 "OpenGL ES 2.x" $L_FLAGS $I_FLAGS $l_FLAGS
++        "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles2 "OpenGL ES 2.x" $L_FLAGS $I_FLAGS $l_FLAGS
+         if [ $? != "0" ]; then
+-	    echo "The OpenGL ES 2.0 functionality test failed!"
++            echo "The OpenGL ES 2.0 functionality test failed!"
+             echo " You might need to modify the include and library search paths by editing"
+             echo " QMAKE_INCDIR_OPENGL_ES2, QMAKE_LIBDIR_OPENGL_ES2 and QMAKE_LIBS_OPENGL_ES2 in"
+             echo " ${XQMAKESPEC}."
+@@ -5316,7 +5317,7 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+         # Desktop OpenGL support
+         "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/x11/opengl "OpenGL" $L_FLAGS $I_FLAGS $l_FLAGS $X11TESTS_FLAGS
+         if [ $? != "0" ]; then
+-	    echo "The OpenGL functionality test failed!"
++            echo "The OpenGL functionality test failed!"
+             echo " You might need to modify the include and library search paths by editing"
+             echo " QMAKE_INCDIR_OPENGL, QMAKE_LIBDIR_OPENGL and QMAKE_LIBS_OPENGL in"
+             echo " ${XQMAKESPEC}."
+@@ -5329,7 +5330,7 @@ if [ "$PLATFORM_X11" = "yes" ]; then
+             if [ $? != "0" ]; then
+                 QMakeVar add DEFINES QT_DEFINE_GLXFBCONFIG_STRUCT
+             fi
+-	    ;;
++            ;;
+         *)
+             ;;
+         esac
+@@ -5628,9 +5629,10 @@ if [ "$PLATFORM_QWS" = "yes" ]; then
+ 
+     # auto-detect OpenGL support (es1 = OpenGL ES 1.x Common, es2 = OpenGL ES 2.x)
+     if [ "$CFG_OPENGL" = "yes" ]; then
++        CFG_EGL=auto
+         if "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles2 "OpenGL ES 2.x" $L_FLAGS $I_FLAGS $l_FLAGS; then
+             CFG_OPENGL=es2
+-	elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS; then
++        elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS; then
+             CFG_OPENGL=es1
+         else
+             echo "All the OpenGL ES functionality tests failed!"
+@@ -5641,24 +5643,26 @@ if [ "$PLATFORM_QWS" = "yes" ]; then
+         fi
+     elif [ "$CFG_OPENGL" = "es1" ]; then
+         # OpenGL ES 1.x
+-	"$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS
++        "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles1 "OpenGL ES 1.x" $L_FLAGS $I_FLAGS $l_FLAGS
+         if [ $? != "0" ]; then
+-	    echo "The OpenGL ES 1.x functionality test failed!"
++            echo "The OpenGL ES 1.x functionality test failed!"
+             echo " You might need to modify the include and library search paths by editing"
+-	    echo " QMAKE_INCDIR_OPENGL, QMAKE_LIBDIR_OPENGL and QMAKE_LIBS_OPENGL in"
+-	    echo " ${XQMAKESPEC}."
++            echo " QMAKE_INCDIR_OPENGL, QMAKE_LIBDIR_OPENGL and QMAKE_LIBS_OPENGL in"
++            echo " ${XQMAKESPEC}."
+             exit 1
+         fi
++        CFG_EGL=yes
+     elif [ "$CFG_OPENGL" = "es2" ]; then
+         #OpenGL ES 2.x
+-	"$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles2 "OpenGL ES 2.x" $L_FLAGS $I_FLAGS $l_FLAGS
++        "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" config.tests/unix/opengles2 "OpenGL ES 2.x" $L_FLAGS $I_FLAGS $l_FLAGS
+         if [ $? != "0" ]; then
+-	    echo "The OpenGL ES 2.0 functionality test failed!"
++            echo "The OpenGL ES 2.0 functionality test failed!"
+             echo " You might need to modify the include and library search paths by editing"
+-	    echo " QMAKE_INCDIR_OPENGL, QMAKE_LIBDIR_OPENGL and QMAKE_LIBS_OPENGL in"
+-	    echo " ${XQMAKESPEC}."
++            echo " QMAKE_INCDIR_OPENGL, QMAKE_LIBDIR_OPENGL and QMAKE_LIBS_OPENGL in"
++            echo " ${XQMAKESPEC}."
+             exit 1
+         fi
++        CFG_EGL=yes
+     elif [ "$CFG_OPENGL" = "desktop" ]; then
+         # Desktop OpenGL support
+         echo "Desktop OpenGL support is not avaliable on Qt for Embedded Linux"
+@@ -5745,6 +5749,36 @@ if [ "$PLATFORM_QWS" = "yes" ]; then
+ 
+ fi # QWS
+ 
++# EGL Support
++if [ "$PLATFORM_X11" = "yes" -o "$PLATFORM_QWS" = "yes" ]; then
++    if [ "$CFG_EGL" != "no" ]; then
++        # detect EGL support
++        if "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" "config.tests/unix/egl" "EGL (EGL/egl.h)" $L_FLAGS $I_FLAGS $l_FLAGS; then
++            # EGL specified by QMAKE_*_EGL, included with <EGL/egl.h>
++            CFG_EGL=yes
++            CFG_EGL_GLES_INCLUDES=no
++        elif "$unixtests/compile.test" "$XQMAKESPEC" "$QMAKE_CONFIG" $OPT_VERBOSE "$relpath" "$outpath" "config.tests/unix/egl4gles1" "EGL (GLES/egl.h)" $L_FLAGS $I_FLAGS $l_FLAGS; then
++            # EGL specified by QMAKE_*_EGL, included with <GLES/egl.h>
++            CFG_EGL=yes
++            CFG_EGL_GLES_INCLUDES=yes
++        else
++            if [ "$CFG_EGL" = "yes" ]; then
++                echo "The EGL functionality test failed!"
++                echo " EGL is required for OpenGL ES to manage contexts & surfaces."
++                echo " You might need to modify the include and library search paths by editing"
++                echo " QMAKE_INCDIR_EGL, QMAKE_LIBDIR_EGL and QMAKE_LIBS_EGL in"
++                echo " ${XQMAKESPEC}."
++                exit 1
++            fi
++            CFG_EGL=no
++            # If QtOpenGL would be built against OpenGL ES, disable it as we can't to that if EGL is missing
++            if [ "$CFG_OPENGL" = "es1" ||  "$CFG_OPENGL" = "es2" ]; then
++                CFG_OPENGL=no
++            fi
++        fi
++    fi
++fi
++
+ # freetype support
+ [ "x$CFG_EMBEDDED" != "xno" ] && CFG_LIBFREETYPE="$CFG_QWS_FREETYPE"
+ [ "x$PLATFORM_MAC" = "xyes" ] && CFG_LIBFREETYPE=no
+diff --git a/src/gui/egl/qegl.cpp b/src/gui/egl/qegl.cpp
+index 6f215cc..3b007d7 100644
+--- a/src/gui/egl/qegl.cpp
++++ b/src/gui/egl/qegl.cpp
+@@ -326,10 +326,17 @@ EGLSurface QEglContext::createSurface(QPaintDevice* device, const QEglProperties
+ bool QEglContext::createContext(QEglContext *shareContext, const QEglProperties *properties)
+ {
+     // We need to select the correct API before calling eglCreateContext().
++#ifdef QT_OPENGL_ES
+ #ifdef EGL_OPENGL_ES_API
+     if (apiType == QEgl::OpenGL)
+         eglBindAPI(EGL_OPENGL_ES_API);
+ #endif
++#else
++#ifdef EGL_OPENGL_API
++    if (apiType == QEgl::OpenGL)
++        eglBindAPI(EGL_OPENGL_API);
++#endif
++#endif //defined(QT_OPENGL_ES)
+ #ifdef EGL_OPENVG_API
+     if (apiType == QEgl::OpenVG)
+         eglBindAPI(EGL_OPENVG_API);
+@@ -339,7 +346,7 @@ bool QEglContext::createContext(QEglContext *shareContext, const QEglProperties
+     QEglProperties contextProps;
+     if (properties)
+         contextProps = *properties;
+-#if defined(QT_OPENGL_ES_2)
++#ifdef QT_OPENGL_ES_2
+     if (apiType == QEgl::OpenGL)
+         contextProps.setValue(EGL_CONTEXT_CLIENT_VERSION, 2);
+ #endif
+diff --git a/src/gui/egl/qeglproperties.cpp b/src/gui/egl/qeglproperties.cpp
+index b5d3103..b34d2c3 100644
+--- a/src/gui/egl/qeglproperties.cpp
++++ b/src/gui/egl/qeglproperties.cpp
+@@ -80,19 +80,19 @@ int QEglProperties::value(int name) const
+     case EGL_GREEN_SIZE: return 0;
+     case EGL_BLUE_SIZE: return 0;
+     case EGL_ALPHA_SIZE: return 0;
+-#if defined(EGL_LUMINANCE_SIZE)
++#ifdef EGL_LUMINANCE_SIZE
+     case EGL_LUMINANCE_SIZE: return 0;
+ #endif
+-#if defined(EGL_ALPHA_MASK_SIZE)
++#ifdef EGL_ALPHA_MASK_SIZE
+     case EGL_ALPHA_MASK_SIZE: return 0;
+ #endif
+-#if defined(EGL_BIND_TO_TEXTURE_RGB)
++#ifdef EGL_BIND_TO_TEXTURE_RGB
+     case EGL_BIND_TO_TEXTURE_RGB: return EGL_DONT_CARE;
+ #endif
+-#if defined(EGL_BIND_TO_TEXTURE_RGBA)
++#ifdef EGL_BIND_TO_TEXTURE_RGBA
+     case EGL_BIND_TO_TEXTURE_RGBA: return EGL_DONT_CARE;
+ #endif
+-#if defined(EGL_COLOR_BUFFER_TYPE)
++#ifdef EGL_COLOR_BUFFER_TYPE
+     case EGL_COLOR_BUFFER_TYPE: return EGL_RGB_BUFFER;
+ #endif
+     case EGL_CONFIG_CAVEAT: return EGL_DONT_CARE;
+@@ -103,7 +103,7 @@ int QEglProperties::value(int name) const
+     case EGL_NATIVE_VISUAL_TYPE: return EGL_DONT_CARE;
+     case EGL_MAX_SWAP_INTERVAL: return EGL_DONT_CARE;
+     case EGL_MIN_SWAP_INTERVAL: return EGL_DONT_CARE;
+-#if defined(EGL_RENDERABLE_TYPE)
++#ifdef EGL_RENDERABLE_TYPE
+     case EGL_RENDERABLE_TYPE: return EGL_OPENGL_ES_BIT;
+ #endif
+     case EGL_SAMPLE_BUFFERS: return 0;
+@@ -115,7 +115,7 @@ int QEglProperties::value(int name) const
+     case EGL_TRANSPARENT_GREEN_VALUE: return EGL_DONT_CARE;
+     case EGL_TRANSPARENT_BLUE_VALUE: return EGL_DONT_CARE;
+ 
+-#if defined(EGL_VERSION_1_3)
++#ifdef EGL_VERSION_1_3
+     case EGL_CONFORMANT: return 0;
+     case EGL_MATCH_NATIVE_PIXMAP: return EGL_NONE;
+ #endif
+@@ -215,15 +215,18 @@ void QEglProperties::setPixelFormat(QImage::Format pixelFormat)
+ 
+ void QEglProperties::setRenderableType(QEgl::API api)
+ {
+-#if defined(EGL_RENDERABLE_TYPE)
++#ifdef EGL_RENDERABLE_TYPE
+ #if defined(QT_OPENGL_ES_2)
+     if (api == QEgl::OpenGL)
+         setValue(EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT);
+ #elif defined(QT_OPENGL_ES)
+     if (api == QEgl::OpenGL)
+         setValue(EGL_RENDERABLE_TYPE, EGL_OPENGL_ES_BIT);
++#elif defined(EGL_OPENGL_BIT)
++    if (api == QEgl::OpenGL)
++        setValue(EGL_RENDERABLE_TYPE, EGL_OPENGL_BIT);
+ #endif
+-#if defined(EGL_OPENVG_BIT)
++#ifdef EGL_OPENVG_BIT
+     if (api == QEgl::OpenVG)
+         setValue(EGL_RENDERABLE_TYPE, EGL_OPENVG_BIT);
+ #endif
+@@ -272,7 +275,7 @@ bool QEglProperties::reduceConfiguration()
+         return true;
+     if (removeValue(EGL_DEPTH_SIZE))
+         return true;
+-#if defined(EGL_BIND_TO_TEXTURE_RGB)
++#ifdef EGL_BIND_TO_TEXTURE_RGB
+     if (removeValue(EGL_BIND_TO_TEXTURE_RGB))
+         return true;
+ #endif
+@@ -327,6 +330,10 @@ QString QEglProperties::toString() const
+         if ((val & EGL_OPENGL_ES2_BIT) != 0)
+             types += QLatin1String("es2");
+ #endif
++#ifdef EGL_OPENGL_BIT
++        if ((val & EGL_OPENGL_BIT) != 0)
++            types += QLatin1String("gl");
++#endif
+         if ((val & EGL_OPENVG_BIT) != 0)
+             types += QLatin1String("vg");
+         if ((val & ~7) != 0)
+diff --git a/src/opengl/opengl.pro b/src/opengl/opengl.pro
+index 9473343..15795d2 100644
+--- a/src/opengl/opengl.pro
++++ b/src/opengl/opengl.pro
+@@ -77,7 +77,7 @@ SOURCES	+= qgl.cpp \
+ }
+ 
+ x11 {
+-    contains(QT_CONFIG, opengles1)|contains(QT_CONFIG, opengles2) {
++    contains(QT_CONFIG, egl) {
+         SOURCES +=  qgl_x11egl.cpp \
+                     qglpixelbuffer_egl.cpp \
+                     qgl_egl.cpp \
+diff --git a/src/opengl/qgl.cpp b/src/opengl/qgl.cpp
+index 5595e02..4e1a63c 100644
+--- a/src/opengl/qgl.cpp
++++ b/src/opengl/qgl.cpp
+@@ -49,7 +49,7 @@
+ #include "private/qpixmap_x11_p.h"
+ #define INT32 dummy_INT32
+ #define INT8 dummy_INT8
+-#if !defined(QT_OPENGL_ES)
++#ifdef QT_NO_EGL
+ # include <GL/glx.h>
+ #endif
+ #undef INT32
+@@ -1582,7 +1582,7 @@ void QGLContextPrivate::init(QPaintDevice *dev, const QGLFormat &format)
+ #  endif
+     vi = 0;
+ #endif
+-#if defined(QT_OPENGL_ES)
++#ifndef QT_NO_EGL
+     ownsEglContext = false;
+     eglContext = 0;
+     eglSurface = EGL_NO_SURFACE;
+@@ -3950,7 +3950,7 @@ bool QGLWidget::event(QEvent *e)
+         }
+     }
+ 
+-#if defined(QT_OPENGL_ES)
++#ifndef QT_NO_EGL
+     // A re-parent is likely to destroy the X11 window and re-create it. It is important
+     // that we free the EGL surface _before_ the winID changes - otherwise we can leak.
+     if (e->type() == QEvent::ParentAboutToChange)
+@@ -4909,7 +4909,7 @@ void QGLWidget::drawTexture(const QPointF &point, QMacCompatGLuint textureId, QM
+ }
+ #endif
+ 
+-#if !defined(QT_OPENGL_ES_1)
++#ifndef QT_OPENGL_ES_1
+ Q_GLOBAL_STATIC(QGL2PaintEngineEx, qt_gl_2_engine)
+ #endif
+ 
+diff --git a/src/opengl/qgl.h b/src/opengl/qgl.h
+index 64f54a3..b1e2ede 100644
+--- a/src/opengl/qgl.h
++++ b/src/opengl/qgl.h
+@@ -376,7 +376,7 @@ protected:
+ #if defined(Q_WS_WIN)
+     virtual int choosePixelFormat(void* pfd, HDC pdc);
+ #endif
+-#if defined(Q_WS_X11) && !defined(QT_OPENGL_ES)
++#if defined(Q_WS_X11) && defined(QT_NO_EGL)
+     virtual void* tryVisual(const QGLFormat& f, int bufDepth = 1);
+     virtual void* chooseVisual();
+ #endif
+diff --git a/src/opengl/qgl_p.h b/src/opengl/qgl_p.h
+index 1f28b08..ee580a6 100644
+--- a/src/opengl/qgl_p.h
++++ b/src/opengl/qgl_p.h
+@@ -64,7 +64,7 @@
+ #include "qcache.h"
+ #include "qglpaintdevice_p.h"
+ 
+-#if defined(QT_OPENGL_ES) || defined(QT_OPENGL_ES_2)
++#ifndef QT_NO_EGL
+ #include <QtGui/private/qegl_p.h>
+ #endif
+ 
+@@ -96,7 +96,7 @@ class QMacWindowChangeEvent;
+ class QWSGLWindowSurface;
+ #endif
+ 
+-#if defined(QT_OPENGL_ES)
++#ifndef QT_NO_EGL
+ class QEglContext;
+ #endif
+ 
+@@ -164,7 +164,7 @@ public:
+ #ifdef Q_WS_QWS
+                        , wsurf(0)
+ #endif
+-#if defined(Q_WS_X11) && defined(QT_OPENGL_ES)
++#if defined(Q_WS_X11) && !defined(QT_NO_EGL)
+                        , eglSurfaceWindowId(0)
+ #endif
+     {
+@@ -194,7 +194,7 @@ public:
+     QGLContext *olcx;
+ #elif defined(Q_WS_X11)
+     QGLOverlayWidget *olw;
+-#if defined(QT_OPENGL_ES)
++#ifndef QT_NO_EGL
+     void recreateEglSurface(bool force);
+     WId eglSurfaceWindowId;
+ #endif
+@@ -344,7 +344,7 @@ public:
+     HBITMAP hbitmap;
+     HDC hbitmap_hdc;
+ #endif
+-#if defined(QT_OPENGL_ES)
++#ifndef QT_NO_EGL
+     bool ownsEglContext;
+     QEglContext *eglContext;
+     EGLSurface eglSurface;
+diff --git a/src/opengl/qglpixelbuffer.cpp b/src/opengl/qglpixelbuffer.cpp
+index eca9550..9a8b243 100644
+--- a/src/opengl/qglpixelbuffer.cpp
++++ b/src/opengl/qglpixelbuffer.cpp
+@@ -137,14 +137,14 @@ void QGLPixelBufferPrivate::common_init(const QSize &size, const QGLFormat &form
+ #if defined(Q_WS_WIN) && !defined(QT_OPENGL_ES)
+         qctx->d_func()->dc = dc;
+         qctx->d_func()->rc = ctx;
+-#elif (defined(Q_WS_X11) && !defined(QT_OPENGL_ES))
++#elif (defined(Q_WS_X11) && defined(QT_NO_EGL))
+         qctx->d_func()->cx = ctx;
+         qctx->d_func()->pbuf = (void *) pbuf;
+         qctx->d_func()->vi = 0;
+ #elif defined(Q_WS_MAC)
+         qctx->d_func()->cx = ctx;
+         qctx->d_func()->vi = 0;
+-#elif defined(QT_OPENGL_ES)
++#elif !defined(QT_NO_EGL)
+         qctx->d_func()->eglContext = ctx;
+         qctx->d_func()->eglSurface = pbuf;
+ #endif
+@@ -254,7 +254,7 @@ bool QGLPixelBuffer::doneCurrent()
+     \sa size()
+ */
+ 
+-#if (defined(Q_WS_X11) || defined(Q_WS_WIN)) && !defined(QT_OPENGL_ES)
++#if (defined(Q_WS_X11) || defined(Q_WS_WIN)) && defined(QT_NO_EGL)
+ GLuint QGLPixelBuffer::generateDynamicTexture() const
+ {
+     Q_D(const QGLPixelBuffer);
+diff --git a/src/opengl/qglpixelbuffer_p.h b/src/opengl/qglpixelbuffer_p.h
+index c85dc5a..2a1f671 100644
+--- a/src/opengl/qglpixelbuffer_p.h
++++ b/src/opengl/qglpixelbuffer_p.h
+@@ -60,7 +60,7 @@ QT_BEGIN_INCLUDE_NAMESPACE
+ #include <private/qgl_p.h>
+ #include <private/qglpaintdevice_p.h>
+ 
+-#if defined(Q_WS_X11) && !defined(QT_OPENGL_ES)
++#if defined(Q_WS_X11) && defined(QT_NO_EGL)
+ #include <GL/glx.h>
+ 
+ // The below is needed to for compilation on HPUX, due to broken GLX
+@@ -127,10 +127,8 @@ struct GLXFBConfig {
+ 
+ #elif defined(Q_WS_WIN)
+ DECLARE_HANDLE(HPBUFFERARB);
+-#elif defined(QT_OPENGL_ES_2)
+-#include <EGL/egl.h>
+-#elif defined(QT_OPENGL_ES)
+-#include <GLES/egl.h>
++#elif !defined(QT_NO_EGL)
++#include <QtGui/private/qegl_p.h>
+ #endif
+ QT_END_INCLUDE_NAMESPACE
+ 
+@@ -174,7 +172,7 @@ public:
+     QPointer<QGLWidget> req_shareWidget;
+     QSize req_size;
+ 
+-#if defined(Q_WS_X11) && !defined(QT_OPENGL_ES)
++#if defined(Q_WS_X11) && defined(QT_NO_EGL)
+     GLXPbuffer pbuf;
+     GLXContext ctx;
+ #elif defined(Q_WS_WIN)
+@@ -195,7 +193,7 @@ public:
+     AGLContext share_ctx;
+ #  endif
+ #endif
+-#if defined(QT_OPENGL_ES)
++#ifndef QT_NO_EGL
+     EGLSurface pbuf;
+     QEglContext *ctx;
+     int textureFormat;
