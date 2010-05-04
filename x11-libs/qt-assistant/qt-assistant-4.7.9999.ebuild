@@ -31,7 +31,8 @@ QT4_EXTRACT_DIRECTORIES="
 	doc/"
 
 pkg_setup() {
-	use trace && QT4_TARGET_DIRECTORIES="tools/qttracereplay"
+	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		tools/qttracereplay"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		${QT4_EXTRACT_DIRECTORIES}"
 	qt4-build-edge_pkg_setup
