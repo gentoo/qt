@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-r2 git multilib toolchain-funcs
+inherit qt4-r2 git multilib toolchain-funcs gnome2-utils
 
 DESCRIPTION="The Harmattan Application Framework library"
 HOMEPAGE="http://duiframework.wordpress.com"
@@ -22,7 +22,10 @@ COMMON_DEPEND="
 	>=x11-libs/qt-svg-4.6.0:4
 	>=x11-libs/qt-opengl-4.6.0:4
 	dbus? ( >=x11-libs/qt-dbus-4.6.0:4 )
-	gconf? ( gnome-base/gconf )
+	gconf? (
+		gnome-base/gconf
+		gnome-base/orbit:2
+	)
 	gstreamer? ( media-libs/gstreamer:0.10 )
 	icu? ( dev-libs/icu )"
 DEPEND="${COMMON_DEPEND}
@@ -37,6 +40,8 @@ PATCHES=( "${FILESDIR}/remove-automagic-deps.patch"
 	"${FILESDIR}/disable-gconf-schemas.patch" )
 
 DOCS="README"
+
+GNOME2_ECLASS_SCHEMAS="${D}/src/${PN#lib}.schemas"
 
 use_make() {
 	local arg=${2:-$1}
@@ -98,4 +103,14 @@ src_configure() {
 		$(use_make test tests) || die "configure failed"
 
 	eqmake4 M_BUILD_TREE="${S}" M_SOURCE_TREE="${S}"
+}
+
+pkg_postinst() {
+	if use gconf; then
+		gnome2_gconf_install
+	fi
+}
+
+pkg_postrm() {
+	gnome2_gconf_uninstall
 }
