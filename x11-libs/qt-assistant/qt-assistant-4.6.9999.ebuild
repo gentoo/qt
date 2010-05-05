@@ -38,19 +38,6 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
-src_prepare() {
-	if ! use kde-qt; then
-		if use stable-branch; then
-			epatch "${FILESDIR}/${P}-tools.patch"
-		else
-			epatch "${FILESDIR}/${P}-master-tools.patch"
-		fi
-	else
-		epatch "${FILESDIR}/${P}-kde-qt-tools.patch"
-	fi
-	qt4-build-edge_src_prepare
-}
-
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl

@@ -30,9 +30,6 @@ src/
 include/
 doc/"
 
-PATCHES=( "${FILESDIR}/${P}-tools.patch"
-	)
-
 pkg_setup() {
 	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		tools/qttracereplay"

@@ -270,6 +270,10 @@ qt4-build-edge_src_unpack() {
 qt4-build-edge_src_prepare() {
 	setqtenv
 
+	if [[ "${PN}" == "qt-assistant" ]] && [[ ${PV} == *.9999 ]]; then
+		qt_assistant_cleanup
+	fi
+
 	[[ ${PV} == *.9999 ]] && generate_include
 
 	if use aqua; then
@@ -853,6 +857,29 @@ qt_mkspecs_dir() {
 	fi
 
 	echo "${spec}"
+}
+
+# @FUNCTION: qt_assistant_cleanup
+# @RETURN: nothing
+# @DESCRIPTION:
+# Tries to clean up tools.pro for live qt-assistant ebuilds
+# Meant to be called in src_prepare
+qt_assistant_cleanup() {
+	# different versions (and branches...) may need different handling, 
+	# add a case if you need special handling
+	case "${MY_PV_EXTRA}" in
+		*kde-qt*)
+			sed -e "/^[ \t]*porting/,/^[ \t]*win32.*activeqt$/d" \
+				-e "/mac/,/^embedded.*makeqpf$/d" \
+				-i tools/tools.pro || die "patching tools.pro failed"
+		;;
+		*)
+			sed -e "/^[ \t]*porting/,/^[ \t]*win32.*activeqt$/d" \
+				-e "/mac/,/^embedded.*makeqpf$/d" \
+				-e "s/^\([ \t]*pixeltool\) /\1 qdoc3 /" \
+				-i tools/tools.pro || die "patching tools.pro failed"
+		;;
+	esac
 }
 
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install pkg_postrm pkg_postinst

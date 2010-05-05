@@ -38,12 +38,6 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
-src_prepare() {
-	epatch "${FILESDIR}"/${P}-tools.patch
-
-	qt4-build-edge_src_prepare
-}
-
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
