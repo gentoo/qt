@@ -17,7 +17,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug dbus"
 
-DEPEND="x11-libs/qt-gui:4[dbus?]"
+DEPEND="x11-libs/qt-gui:4[dbus?]
+	x11-libs/qt-xmlpatterns:4"
 RDEPEND="${DEPEND}"
 DOCS="README AUTHORS THANKSTO Changelog"
 
