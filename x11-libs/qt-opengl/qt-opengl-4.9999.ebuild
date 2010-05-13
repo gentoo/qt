@@ -8,10 +8,10 @@ inherit qt4-build-edge
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="egl qt3support"
+IUSE="qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
-	~x11-libs/qt-gui-${PV}[debug=,egl=,qt3support=,stable-branch=]
+	~x11-libs/qt-gui-${PV}[debug=,qt3support=,stable-branch=]
 	virtual/opengl
 	virtual/glu"
 RDEPEND="${DEPEND}"
@@ -35,7 +35,6 @@ QCONFIG_DEFINE="QT_OPENGL"
 
 src_configure() {
 	myconf="${myconf} -opengl
-		$(qt_use egl)
 		$(qt_use qt3support)"
 
 	qt4-build-edge_src_configure

@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib,trace"
+IUSE="doc +glib trace"
 
 DEPEND="
 	~x11-libs/qt-gui-${PV}[stable-branch=,glib=,trace?]
