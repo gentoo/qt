@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-EGIT_REPO_URI="git://git.berlios.de/goldendict/"
+EGIT_REPO_URI="git://gitorious.org/goldendict/goldendict.git"
 LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
 
 inherit git qt4-r2
