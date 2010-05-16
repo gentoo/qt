@@ -32,8 +32,6 @@ RDEPEND=">=app-text/hunspell-1.2
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
-S=${WORKDIR}/${P}/src
-
 src_unpack() {
 	S=${WORKDIR}/${P} git_src_unpack
 }
