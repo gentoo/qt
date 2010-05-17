@@ -27,6 +27,7 @@ COMMON_DEPEND="
 	)
 	jpeg? ( >=media-libs/jpeg-7:0 )
 	jpeg2k? ( media-libs/openjpeg )
+	lcms? ( media-libs/lcms )
 	png? ( media-libs/libpng )
 	qt4? (
 		x11-libs/qt-core:4
@@ -41,16 +42,14 @@ RDEPEND="${COMMON_DEPEND}
 	!dev-libs/poppler-glib
 	!dev-libs/poppler-qt3
 	!dev-libs/poppler-qt4
-	!dev-libs/poppler-utils
+	!app-text/poppler-utils
 	cjk? ( >=app-text/poppler-data-0.2.1 )
 "
 
+DOCS="AUTHORS ChangeLog NEWS README README-XPDF TODO"
+
 src_unpack() {
 	git_src_unpack
-}
-
-src_prepare() {
-	epatch "${FILESDIR}/${PN}-0.12.3-cmake-disable-tests.patch"
 }
 
 src_configure() {
@@ -79,9 +78,15 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	# For now install gtk-doc there
 	if use cairo && use doc; then
+		# For now install gtk-doc there
 		insinto /usr/share/gtk-doc/html/poppler
 		doins -r "${S}"/glib/reference/html/* || die 'failed to install API documentation'
 	fi
+}
+
+pkg_postinst() {
+	ewarn 'After upgrading app-text/poppler you may need to reinstall packages'
+	ewarn 'depending on it. If you have gentoolkit installed, you can find those'
+	ewarn 'with `equery d poppler`.'
 }
