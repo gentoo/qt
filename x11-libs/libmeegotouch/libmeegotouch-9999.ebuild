@@ -36,7 +36,6 @@ RDEPEND="${COMMON_DEPEND}
 # disable installation of gconf schemas until we have a fix for
 # the sandbox violation
 PATCHES=( "${FILESDIR}/remove-automagic-deps.patch"
-	"${FILESDIR}/demos-without-dbus.patch"
 	"${FILESDIR}/disable-gconf-schemas.patch" )
 
 DOCS="README"
