@@ -46,7 +46,7 @@ RDEPEND="${COMMON_DEPEND}
 	cjk? ( >=app-text/poppler-data-0.2.1 )
 "
 
-DOCS="AUTHORS ChangeLog NEWS README README-XPDF TODO"
+DOCS="AUTHORS NEWS README README-XPDF TODO"
 
 src_unpack() {
 	git_src_unpack
