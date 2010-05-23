@@ -94,7 +94,7 @@ src_configure() {
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
-		$(qt_use_dbus)
+		$(qt_use dbus)
 		$(qt_use qt3support)
 		$(qt_use gtk gtkstyle)
 		$(qt_use xinerama)"
