@@ -12,7 +12,7 @@ IUSE="dbus kde"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl]
 	~x11-libs/qt-gui-${PV}[dbus?,debug=]
-	~x11-libs/qt-xmlpatterns-${PV}[debug=]
+	~x11-libs/qt-multimedia-${PV}[debug=]
 	~x11-libs/qt-xmlpatterns-${PV}[debug=]
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
 	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=]

@@ -21,13 +21,16 @@ pkg_setup() {
 		include/Qt/
 		include/QtCore/
 		include/QtGui/
+		include/QtMediaServices/
 		include/QtMultimedia/
+		include/QtNetwork/
 		src/src.pro
+		src/3rdparty/
 		src/corelib/
 		src/gui/
-		src/plugins
-		src/3rdparty
-		src/tools"
+		src/network/
+		src/plugins/
+		src/tools/"
 
 	qt4-build_pkg_setup
 }
