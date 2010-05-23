@@ -191,14 +191,10 @@ qt4-build-edge_src_prepare() {
 		qt_assistant_cleanup
 	fi
 	[[ ${PV} == *.9999 ]] && generate_include
-	# Respect QMAKE_* FLAGS via mkspecs instead of passing them directly to configure
-	sed -e "s:SYSTEM_VARIABLES=\"CC CXX CFLAGS CXXFLAGS	LDFLAGS\":SYSTEM_VARIABLES=\"CC CXX\":" \
-		-i "${S}"/configure || die "sed configure failed"
-	
-	# fix QMAKE_C{XX}FLAGS no matter what our current build type is
-	sed -i -e /^QMAKE_CFLAGS[^_.*]/s:\+=.*:=\ "${CFLAGS}": \
-		-e /^QMAKE_CXXFLAGS[^_.*]/s:\+=.*:=\ "${CXXFLAGS}": \
-		-e /^QMAKE_LFLAGS[^_.*]/s:\+=.*:=\ "${LDFLAGS}": \
+	# We need to remove any specific hardcode compiler flag
+	sed -i -e /^QMAKE_CFLAGS[^_.*]/s:\+=.*:=: \
+		-e /^QMAKE_CXXFLAGS[^_.*]/s:\+=.*:=: \
+		-e /^QMAKE_LFLAGS[^_.*]/s:\+=.*:=: \
 		${S}/mkspecs/common/g++.conf
 	qt4-build_src_prepare
 }
