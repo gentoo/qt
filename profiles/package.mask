@@ -2,6 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (24 May 2010)
+# Masking Beta releases of Qtcreator. Needs more testing
+=dev-util/qt-creator-2.0.0_beta*
+
 # Dror Levin <spatz@gentoo.org> (23 May 2010)
 # Qt prereleases
 =x11-libs/qt-assistant-4.7.0_beta*

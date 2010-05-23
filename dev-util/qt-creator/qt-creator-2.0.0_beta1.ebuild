@@ -16,27 +16,28 @@ SRC_URI="http://get.qt.nokia.com/${MY_PN}/${MY_P}-src.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~amd64-linux ~ppc ~ppc64 ~x86"
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
 	kde mercurial perforce qml qtscript rss subversion"
 
-DEPEND=">x11-libs/qt-assistant-4.6.9999:4
-	>x11-libs/qt-gui-4.6.9999:4[dbus,qt3support]"
+QTVER="4.7.0_beta1:4"
+DEPEND=">x11-libs/qt-assistant-${QTVER}[doc?]
+	>x11-libs/qt-gui-${QTVER}[dbus,qt3support]"
 RDEPEND="${DEPEND}
-	>x11-libs/qt-sql-4.6.1:4
-	>x11-libs/qt-svg-4.6.1:4
-	>x11-libs/qt-test-4.6.1:4
-	>x11-libs/qt-webkit-4.6.1:4
-	!kde? ( || ( >x11-libs/qt-phonon-4.6.9999:4 media-sound/phonon ) )
+	>x11-libs/qt-sql-${QTVER}
+	>x11-libs/qt-svg-${QTVER}
+	>x11-libs/qt-test-${QTVER}
+	>x11-libs/qt-webkit-${QTVER}
+	!kde? ( || ( >x11-libs/qt-phonon-${QTVER} media-sound/phonon ) )
 	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-util/cvs )
 	sys-devel/gdb
-	examples? ( >=x11-libs/qt-demo-4.6.9999:4 )
+	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
-	qml? ( >x11-libs/qt-declarative-4.6.9999:4 )
-	qtscript? ( >x11-libs/qt-script-4.6.9999:4 )
+	qml? ( >x11-libs/qt-declarative-${QTVER}[private-headers] )
+	qtscript? ( >x11-libs/qt-script-${QTVER} )
 	subversion? ( dev-util/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
@@ -87,10 +88,9 @@ src_configure() {
 }
 
 src_install() {
+	#install wrapper
+	dobin bin/${MY_PN} || die "Failed to install launcher"
 	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_subtargets || die
-	# fix binary name bug 275859
-	mv "${D%/}${EPREFIX}"/usr/bin/${MY_PN}.bin \
-		"${D%/}${EPREFIX}"/usr/bin/${MY_PN} || die
 	if use doc;then
 		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_qch_docs || die
 	fi

@@ -16,25 +16,25 @@ KEYWORDS=""
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
 	inspector kde mercurial perforce qml qtscript rss subversion"
 
-QTVER="4.7.0_pre9999"
-DEPEND=">=x11-libs/qt-assistant-${QTVER}:4
-	>=x11-libs/qt-gui-${QTVER}:4[dbus,qt3support]"
+QTVER="4.7.0_beta1:4"
+DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
+	>=x11-libs/qt-gui-${QTVER}[dbus,qt3support]"
 RDEPEND="${DEPEND}
-	>=x11-libs/qt-sql-${QTVER}:4
-	>=x11-libs/qt-svg-${QTVER}:4
-	>=x11-libs/qt-test-${QTVER}:4
-	>=x11-libs/qt-webkit-${QTVER}:4
-	!kde? ( || ( >=x11-libs/qt-phonon-${QTVER}:4 media-sound/phonon ) )
+	>=x11-libs/qt-sql-${QTVER}
+	>=x11-libs/qt-svg-${QTVER}
+	>=x11-libs/qt-test-${QTVER}
+	>=x11-libs/qt-webkit-${QTVER}
+	!kde? ( || ( >=x11-libs/qt-phonon-${QTVER} media-sound/phonon ) )
 	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-util/cvs )
 	sys-devel/gdb
-	examples? ( >=x11-libs/qt-demo-${QTVER}:4 )
+	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
 	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-vcs/mercurial )
-	qml? ( >=x11-libs/qt-declarative-${QTVER}:4 )
-	qtscript? ( >=x11-libs/qt-script-${QTVER}:4 )
+	qml? ( >=x11-libs/qt-declarative-${QTVER}[private-headers] )
+	qtscript? ( >=x11-libs/qt-script-${QTVER} )
 	subversion? ( dev-util/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
@@ -101,20 +101,17 @@ src_prepare() {
 	fi
 }
 
-src_compile() {
-	cd "${WORKDIR}/build"
-	emake || die "emake failed"
+src_configure() {
+	eqmake4 ${MY_PN}.pro IDE_LIBRARY_BASENAME="$(get_libdir)"
 }
 
 src_install() {
-	cd "${WORKDIR}/build"
+	#install wrapper
+	dobin bin/${MY_PN} || die "failed to install launcher"
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
 	if use doc; then
 		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
 	fi
-	# fix binary name bug 275859
-	mv "${D}"/usr/bin/${MY_PN}.bin "${D}"/usr/bin/${MY_PN} || die "failed to
-		rename executable"
 
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
