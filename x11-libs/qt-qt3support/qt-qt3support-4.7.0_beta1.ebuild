@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Qt3 support module for the Qt toolkit"
 SLOT="4"
@@ -28,7 +28,7 @@ pkg_setup() {
 		tools/porting"
 	QT4_EXTRACT_DIRECTORIES="src include tools"
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_configure() {
@@ -36,5 +36,5 @@ src_configure() {
 		$(qt_use phonon gstreamer)
 		$(qt_use phonon)
 		$(qt_use accessibility)"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

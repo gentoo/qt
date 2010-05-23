@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
@@ -40,11 +40,11 @@ pkg_setup() {
 		die "Enable at least one SQL driver."
 	fi
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	sed -e '/pg_config --libs/d' -i "${S}"/configure \
 		|| die "sed to fix postgresql usage in ./configure failed"
@@ -66,5 +66,5 @@ src_configure() {
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-glib -no-opengl -no-svg -no-gtkstyle"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

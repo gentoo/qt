@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The ECMAScript module for the Qt toolkit"
 SLOT="4"
@@ -24,7 +24,7 @@ pkg_setup() {
 		src/3rdparty/javascriptcore/
 		src/corelib/"
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_configure() {
@@ -35,5 +35,5 @@ src_configure() {
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff
 		-no-accessibility -no-fontconfig -no-glib -no-opengl -no-svg
 		-no-gtkstyle"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

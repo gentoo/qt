@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
@@ -58,7 +58,7 @@ pkg_setup() {
 		tools/shared/symbian
 		tools/shared/windows
 		translations"
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		${QT4_EXTRACT_DIRECTORIES}"
 }
@@ -69,7 +69,7 @@ src_prepare() {
 		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
 	done
 
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
@@ -95,13 +95,13 @@ src_configure() {
 		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
 		-no-svg -no-gtkstyle -no-phonon-backend -no-script -no-scripttools
 		-no-cups -no-xsync -no-xinput -no-multimedia"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_compile() {
 	# bug 259736
 	unset QMAKESPEC
-	qt4-build-edge_src_compile
+	qt4-build_src_compile
 }
 
 src_install() {

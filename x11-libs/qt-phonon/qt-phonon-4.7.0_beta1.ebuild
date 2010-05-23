@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Phonon module for the Qt toolkit"
 SLOT="4"
@@ -33,12 +33,12 @@ QCONFIG_DEFINE="QT_GSTREAMER"
 
 src_prepare() {
 	epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 }
 
 src_configure() {
 	myconf="${myconf} -phonon -phonon-backend -no-opengl -no-svg
 		$(qt_use dbus qdbus)"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

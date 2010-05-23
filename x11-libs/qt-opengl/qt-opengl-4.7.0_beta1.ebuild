@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
@@ -34,19 +34,19 @@ pkg_setup() {
 	QCONFIG_ADD="opengl"
 	QCONFIG_DEFINE="QT_OPENGL"
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_prepare() {	
 	epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 }
 
 src_configure() {
 	myconf="${myconf} -opengl
 		$(qt_use qt3support)"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 
 	# Not building tools/designer/src/plugins/tools/view3d as it's
 	# commented out of the build in the source

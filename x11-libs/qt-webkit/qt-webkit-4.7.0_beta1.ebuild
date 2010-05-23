@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The Webkit module for the Qt toolkit"
 SLOT="4"
@@ -33,16 +33,16 @@ pkg_setup() {
 	QCONFIG_ADD="webkit"
 	QCONFIG_DEFINE="QT_WEBKIT"
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
 
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 }
 
 src_configure() {
 	myconf="${myconf} -webkit $(qt_use dbus qdbus)"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

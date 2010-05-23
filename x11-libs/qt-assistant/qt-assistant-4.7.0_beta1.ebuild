@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit qt4-build-edge
+inherit qt4-build
 
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
@@ -35,7 +35,7 @@ pkg_setup() {
 		tools/qttracereplay"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		${QT4_EXTRACT_DIRECTORIES}"
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_configure() {
@@ -46,7 +46,7 @@ src_configure() {
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-multimedia -no-qt3support -no-svg"
 	! use glib && myconf="${myconf} -no-glib"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_compile() {
@@ -54,7 +54,7 @@ src_compile() {
 	export LD_LIBRARY_PATH="${S}/lib:${QTLIBDIR}"
 	export DYLD_LIBRARY_PATH="${S}/lib:${S}/lib/QtHelp.framework"
 
-	qt4-build-edge_src_compile
+	qt4-build_src_compile
 
 	# ugly hack to build docs
 	cd "${S}"
@@ -67,7 +67,7 @@ src_compile() {
 }
 
 src_install() {
-	qt4-build-edge_src_install
+	qt4-build_src_install
 	cd "${S}"
 	emake INSTALL_ROOT="${D}" install_qchdocs \
 		|| die "failed to install qch docs"

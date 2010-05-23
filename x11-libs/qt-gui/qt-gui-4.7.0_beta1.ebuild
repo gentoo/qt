@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit confutils eutils qt4-build-edge
+inherit confutils eutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -69,13 +69,13 @@ pkg_setup() {
 
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_prepare() {
 	# bug #313619
 	epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
@@ -105,7 +105,7 @@ src_configure() {
 		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
 		-no-phonon -no-opengl"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_install() {
@@ -123,7 +123,7 @@ src_install() {
 			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
 			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
-	qt4-build-edge_src_install
+	qt4-build_src_install
 
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtGui}/{qmacstyle_mac.h,qwindowdefs_win.h} \
