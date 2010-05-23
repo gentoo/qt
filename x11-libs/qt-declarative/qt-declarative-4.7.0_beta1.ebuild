@@ -40,7 +40,8 @@ src_configure() {
 src_install() {
 	qt4-build-edge_src_install
 	if use private-headers; then
-		insinto ${QTHEADERDIR}
-		doins -r src/declarative/qml/*_p.h
+		insinto ${QTHEADERDIR}/QtDeclarative
+		doins -r include/QtDeclarative/private \
+			|| die "failed to install private headers"
 	fi
 }
