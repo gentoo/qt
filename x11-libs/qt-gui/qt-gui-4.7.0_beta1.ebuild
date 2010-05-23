@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit confutils eutils qt4-build
+inherit confutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -36,6 +36,10 @@ DEPEND="${RDEPEND}
 	x11-proto/xextproto
 	x11-proto/inputproto"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
+
+PATCHES=(
+	"${FILESDIR}/qtbug-9691-Xdefs.patch" # bug #313619
+)
 
 pkg_setup() {
 	if ! use qt3support; then
@@ -73,8 +77,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# bug #313619
-	epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
 	qt4-build_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib

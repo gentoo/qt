@@ -19,6 +19,10 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support]
 	dbus? ( =x11-libs/qt-dbus-${PV}[debug=] )"
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/qtbug-9691-Xdefs.patch"
+)
+
 QT4_TARGET_DIRECTORIES="
 	src/phonon
 	src/plugins/phonon
@@ -30,11 +34,6 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 
 QCONFIG_ADD="phonon"
 QCONFIG_DEFINE="QT_GSTREAMER"
-
-src_prepare() {
-	epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
-	qt4-build_src_prepare
-}
 
 src_configure() {
 	myconf="${myconf} -phonon -phonon-backend -no-opengl -no-svg
