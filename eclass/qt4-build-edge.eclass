@@ -23,9 +23,7 @@
 #
 
 MY_EGIT_COMMIT=${EGIT_COMMIT:=}
-
 inherit base eutils multilib toolchain-funcs flag-o-matic git versionator qt4-build
-
 
 [[ ${PV} == *.9999 ]] && SRC_URI=
 case "${PV}" in
@@ -193,6 +191,15 @@ qt4-build-edge_src_prepare() {
 		qt_assistant_cleanup
 	fi
 	[[ ${PV} == *.9999 ]] && generate_include
+	# Respect QMAKE_* FLAGS via mkspecs instead of passing them directly to configure
+	sed -e "s:SYSTEM_VARIABLES=\"CC CXX CFLAGS CXXFLAGS	LDFLAGS\":SYSTEM_VARIABLES=\"CC CXX\":" \
+		-i "${S}"/configure || die "sed configure failed"
+	
+	# fix QMAKE_C{XX}FLAGS no matter what our current build type is
+	sed -i -e /^QMAKE_CFLAGS[^_.*]/s:\+=.*:=\ "${CFLAGS}": \
+		-e /^QMAKE_CXXFLAGS[^_.*]/s:\+=.*:=\ "${CXXFLAGS}": \
+		-e /^QMAKE_LFLAGS[^_.*]/s:\+=.*:=\ "${LDFLAGS}": \
+		${S}/mkspecs/common/g++.conf
 	qt4-build_src_prepare
 }
 
