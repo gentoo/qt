@@ -379,12 +379,6 @@ qt4-build-edge_src_prepare() {
 	sed -i -e '/^QMAKE_\(LIB\|INC\)DIR\(_X11\|_OPENGL\|\)\t/s/=.*$/=/' \
 		mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
 
-	# Bug 275710
-	# Avoid adding C[XX]FLAGS to .qmake.cache as this is used in addition
-	# to the mkspecs while building qt
-	sed -e "s:SYSTEM_VARIABLES=\"CC CXX CFLAGS CXXFLAGS LDFLAGS\":SYSTEM_VARIABLES=\"CC CXX\":" \
-		-i "${S}"/configure || die "sed configure failed"
-
 	base_src_prepare
 }
 
