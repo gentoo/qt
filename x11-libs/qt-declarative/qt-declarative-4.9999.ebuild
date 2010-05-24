@@ -20,6 +20,8 @@ DEPEND="~x11-libs/qt-core-${PV}
 
 RDEPEND="${DEPEND}"
 
+QCONFIG_ADD="declarative"
+
 QT4_TARGET_DIRECTORIES="
 	src/declarative
 	tools/qml"

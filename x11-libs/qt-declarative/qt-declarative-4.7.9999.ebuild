@@ -20,17 +20,15 @@ DEPEND="~x11-libs/qt-core-${PV}[stable-branch=]
 	~x11-libs/qt-xmlpatterns-${PV}[stable-branch=]"
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/declarative
-		tools/qml"
-	QT4_EXTRACT_DIRECTORIES="
-		include/
-		src/
-		tools/"
+QCONFIG_ADD="declarative"
 
-	qt4-build-edge_pkg_setup
-}
+QT4_TARGET_DIRECTORIES="
+	src/declarative
+	tools/qml"
+QT4_EXTRACT_DIRECTORIES="
+	include/
+	src/
+	tools/"
 
 src_configure() {
 	myconf="${myconf} -declarative"
