@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS=""
-IUSE="+glib iconv optimized-qmake qt3support ssl"
+IUSE="+glib iconv optimized-qmake private-headers qt3support ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )

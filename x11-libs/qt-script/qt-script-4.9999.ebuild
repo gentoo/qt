@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The ECMAScript module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="iconv"
+IUSE="iconv private-headers"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"

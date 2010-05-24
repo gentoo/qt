@@ -8,7 +8,8 @@ inherit confutils qt4-build
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
-IUSE="+accessibility cups dbus +glib gtk mng nas nis +raster tiff trace qt3support xinerama"
+IUSE="+accessibility cups dbus +glib gtk mng nas nis +raster tiff trace
+private-headers qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	media-libs/freetype:2
