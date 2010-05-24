@@ -33,7 +33,13 @@ RDEPEND="${DEPEND}
 	git? ( dev-vcs/git )
 	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-vcs/mercurial )
-	qml? ( >=x11-libs/qt-declarative-${QTVER}[private-headers] )
+	!qml? ( >=x11-libs/qt-gui-${QTVER}[dbus,qt3support] )
+	qml? ( 
+		>=x11-libs/qt-declarative-${QTVER}[private-headers] 
+		>=x11-libs/qt-core-${QTVER}[private-headers]
+		>=x11-libs/qt-gui-${QTVER}[dbus,qt3support,private-headers] 
+		>=x11-libs/qt-script-${QTVER}[private-headers] 
+	)
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )
 	subversion? ( dev-util/subversion )"
 
@@ -77,6 +83,9 @@ src_prepare() {
 				plugin="cmakeprojectmanager"
 			elif [[ ${plugin} == "qtscript" ]]; then
 				plugin="qtscripteditor"
+			elif [[ ${plugin} == "qml" ]]; then
+				plugins="qmljseditor"
+				epatch "${FILESDIR}"/disable_qml_plugins
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"

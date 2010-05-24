@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -145,6 +145,11 @@ src_install() {
 	insinto /usr/include/qt4/QtDesigner/private/
 	doins "${S}"/tools/designer/src/lib/shared/*
 	doins "${S}"/tools/designer/src/lib/sdk/*
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtGui/private
+		find "${S}"/src/gui -type f -name "*_p.h" -exec doins {} \;
+	fi
 
 	# install correct designer and linguist icons, bug 241208
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \

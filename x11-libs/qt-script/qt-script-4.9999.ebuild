@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -30,4 +30,13 @@ src_configure() {
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-glib -no-opengl -no-svg -no-gtkstyle"
 	qt4-build-edge_src_configure
+}
+
+src_install() {
+	qt4-build-edge_src_install
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtScript/private
+		find "${S}"/src/script -type f -name "*_p.h" -exec doins {} \;
+	fi
 }

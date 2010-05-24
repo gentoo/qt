@@ -21,8 +21,7 @@ IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
 	kde mercurial perforce qml qtscript rss subversion"
 
 QTVER="4.7.0_beta1:4"
-DEPEND=">x11-libs/qt-assistant-${QTVER}[doc?]
-	>x11-libs/qt-gui-${QTVER}[dbus,qt3support]"
+DEPEND=">x11-libs/qt-assistant-${QTVER}[doc?]"
 RDEPEND="${DEPEND}
 	>x11-libs/qt-sql-${QTVER}
 	>x11-libs/qt-svg-${QTVER}
@@ -36,7 +35,13 @@ RDEPEND="${DEPEND}
 	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
-	qml? ( >x11-libs/qt-declarative-${QTVER}[private-headers] )
+	!qml? ( >=x11-libs/qt-gui-${QTVER}[dbus,qt3support] )
+	qml? ( 
+		>=x11-libs/qt-declarative-${QTVER}[private-headers] 
+		>=x11-libs/qt-core-${QTVER}[private-headers]
+		>=x11-libs/qt-gui-${QTVER}[dbus,qt3support,private-headers] 
+		>=x11-libs/qt-script-${QTVER}[private-headers] 
+	)
 	qtscript? ( >x11-libs/qt-script-${QTVER} )
 	subversion? ( dev-util/subversion )"
 
@@ -56,12 +61,9 @@ src_prepare() {
 				plugin="cmakeprojectmanager"
 			elif [[ ${plugin} == "qtscript" ]]; then
 				plugin="qtscripteditor"
-			fi
-			if [[ ${plugin} == "qml" ]]; then
-				plugin="qmleditor"
-				einfo "Disabling qmlprojectmanager support"
-				sed -i "/plugin_qmlprojectmanager/s:^:#:" src/plugins/plugins.pro \
-					|| die "Failed to disable qmlprojectmanager plugin"
+			elif [[ ${plugin} == "qml" ]]; then
+				plugins="qmljseditor"
+				epatch "${FILESDIR}"/disable_qml_plugins
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"

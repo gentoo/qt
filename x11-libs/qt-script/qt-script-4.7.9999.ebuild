@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The ECMAScript module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="iconv"
+IUSE="iconv private-headers"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
@@ -35,4 +35,13 @@ src_configure() {
 		-no-accessibility -no-fontconfig -no-glib -no-opengl -no-svg
 		-no-gtkstyle"
 	qt4-build-edge_src_configure
+}
+
+src_install() {
+	qt4-build-edge_src_install
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtScript/private
+		find "${S}"/src/script -type f -name "*_p.h" -exec doins {} \;
+	fi
 }

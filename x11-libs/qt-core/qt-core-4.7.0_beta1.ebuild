@@ -16,7 +16,7 @@ RDEPEND="sys-libs/zlib
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support] )"
 
 PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
@@ -110,7 +110,11 @@ src_install() {
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die
-
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtCore/private
+		find "${S}"/src/corelib -type f -name "*_p.h" -exec doins {} \;
+	fi
 	# use freshly built libraries
 	local DYLD_FPATH=
 	[[ -d "${S}"/lib/QtCore.framework ]] \

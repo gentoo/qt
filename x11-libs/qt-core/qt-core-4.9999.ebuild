@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,7 +17,7 @@ RDEPEND="sys-libs/zlib
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,stable-branch=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support,stable-branch=] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap
@@ -54,49 +54,6 @@ tools/linguist/shared
 translations"
 
 PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
-
-pkg_setup() {
-	qt4-build-edge_pkg_setup
-
-	if has_version x11-libs/qt-core; then
-		# Check to see if they've changed the glib flag since the last time installing this package.
-		if use glib && ! built_with_use x11-libs/qt-core glib && has_version x11-libs/qt-gui; then
-			ewarn "You have changed the \"glib\" use flag since the last time you have emerged this package."
-			ewarn "You should also re-emerge x11-libs/qt-gui in order for it to pick up this change."
-		elif ! use glib && built_with_use x11-libs/qt-core glib && has_version x11-libs/qt-gui; then
-			ewarn "You have changed the \"glib\" use flag since the last time you have emerged this package."
-			ewarn "You should also re-emerge x11-libs/qt-gui in order for it to pick up this change."
-		fi
-
-		# Check to see if they've changed the qt3support flag since the last time installing this package.
-		# If so, give a list of packages they need to uninstall first.
-		if use qt3support && ! built_with_use x11-libs/qt-core qt3support; then
-			local need_to_remove
-			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
-			for x in sql opengl gui qt3support; do
-				local pkg="x11-libs/qt-${x}"
-				if has_version $pkg; then
-					need_to_remove="${need_to_remove} ${pkg}"
-				fi
-			done
-			if [[ -n ${need_to_remove} ]]; then
-				die "You must first uninstall these packages before continuing: \n\t\t${need_to_remove}"
-			fi
-		elif ! use qt3support && built_with_use x11-libs/qt-core qt3support ; then
-			local need_to_remove
-			ewarn "You have changed the \"qt3support\" use flag since the last time you have emerged this package."
-			for x in sql opengl gui qt3support; do
-				local pkg="x11-libs/qt-${x}"
-				if has_version $pkg; then
-					need_to_remove="${need_to_remove} ${pkg}"
-				fi
-			done
-			if [[ -n ${need_to_remove} ]]; then
-				die "You must first uninstall these packages before continuing: \n\t\t${need_to_remove}"
-			fi
-		fi
-	fi
-}
 
 src_unpack() {
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
@@ -153,7 +110,11 @@ src_install() {
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
-
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtCore/private
+		find "${S}"/src/corelib -type f -name "*_p.h" -exec doins {} \;
+	fi
 	# use freshly built libraries
 	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
 		|| die "generating translations faied"

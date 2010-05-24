@@ -37,7 +37,7 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
-src_prepare() {	
+src_prepare() {
 	if use stable-branch; then
 		epatch "${FILESDIR}/qtbug-9691-egl.patch"
 		epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"

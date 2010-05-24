@@ -37,3 +37,12 @@ src_configure() {
 		-no-gtkstyle"
 	qt4-build_src_configure
 }
+
+src_install() {
+	qt4-build_src_install
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtScript/private
+		find "${S}"/src/script -type f -name "*_p.h" -exec doins {} \;
+	fi
+}

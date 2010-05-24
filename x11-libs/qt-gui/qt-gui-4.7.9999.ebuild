@@ -8,7 +8,7 @@ inherit confutils eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus egl +glib gtk mng nas nis +raster tiff trace qt3support xinerama"
+IUSE="+accessibility cups dbus egl +glib gtk mng nas nis private-headers +raster tiff trace qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	media-libs/freetype:2
@@ -145,6 +145,11 @@ src_install() {
 	insinto /usr/include/qt4/QtDesigner/private/
 	doins "${S}"/tools/designer/src/lib/shared/* || die
 	doins "${S}"/tools/designer/src/lib/sdk/* || die
+	#install private headers
+	if use private-headers; then
+		insinto ${QTHEADERDIR}/QtGui/private
+		find "${S}"/src/gui -type f -name "*_p.h" -exec doins {} \;
+	fi
 
 	# install correct designer and linguist icons, bug 241208
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \

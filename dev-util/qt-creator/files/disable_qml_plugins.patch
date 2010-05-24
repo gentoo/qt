@@ -1,0 +1,27 @@
+Index: qt-creator-9999/src/plugins/plugins.pro
+===================================================================
+--- qt-creator-9999.orig/src/plugins/plugins.pro
++++ qt-creator-9999/src/plugins/plugins.pro
+@@ -36,22 +36,6 @@ SUBDIRS   = plugin_coreplugin \
+ #            plugin_mercurial \
+             debugger/dumper.pro
+ 
+-contains(QT_CONFIG, declarative) {
+-
+-    SUBDIRS += plugin_qmlprojectmanager
+-
+-    include(private_headers.pri)
+-    exists($${QT_PRIVATE_HEADERS}/QtDeclarative/private/qdeclarativecontext_p.h) {
+-        SUBDIRS += plugin_qmldesigner \
+-                   plugin_qmlinspector
+-    } else {
+-        warning()
+-        warning("QmlDesigner and QmlInspector plugins have been disabled")
+-        warning("The plugins depend on on private headers from QtDeclarative module.")
+-        warning("To enable them, pass 'QT_PRIVATE_HEADERS=$QTDIR/include' to qmake, where $QTDIR is the source directory of qt.")
+-        warning()
+-    }
+-}
+ 
+ plugin_coreplugin.subdir = coreplugin
+ 
