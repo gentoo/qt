@@ -23,7 +23,7 @@
 #
 
 MY_EGIT_COMMIT=${EGIT_COMMIT:=}
-inherit base eutils multilib toolchain-funcs flag-o-matic git versionator qt4-build
+inherit git qt4-build
 
 [[ ${PV} == *.9999 ]] && SRC_URI=
 case "${PV}" in
