@@ -16,7 +16,7 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support]
 	!media-sound/phonon
 	media-libs/gstreamer
 	media-plugins/gst-plugins-meta
-	dbus? ( =x11-libs/qt-dbus-${PV}[debug=] )"
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
