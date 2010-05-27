@@ -168,8 +168,8 @@ qt4-build-edge_src_unpack() {
 			git_src_unpack
 			;;
 		*)
-			echo tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
-			tar xzpf "${DISTDIR}"/${MY_P}.tar.gz ${targets} || die
+			echo tar xzf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
+			tar xzf "${DISTDIR}"/${MY_P}.tar.gz ${targets} || die
 			;;
 	esac
 }
