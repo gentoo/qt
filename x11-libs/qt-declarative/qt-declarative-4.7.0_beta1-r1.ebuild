@@ -36,7 +36,7 @@ src_configure() {
 }
 
 src_install() {
-	qt4-build-edge_src_install
+	qt4-build_src_install
 	if use private-headers; then
 		insinto ${QTHEADERDIR}/QtDeclarative/private
 		find "${S}"/src/declarative/ -type f -name "*_p.h" -exec doins {} \;
