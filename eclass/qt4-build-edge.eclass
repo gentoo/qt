@@ -23,9 +23,11 @@
 #
 
 MY_EGIT_COMMIT=${EGIT_COMMIT:=}
+
 inherit git qt4-build
 
 [[ ${PV} == *.9999 ]] && SRC_URI=
+
 case "${PV}" in
 	4.9999 | 4.7.9999)
 		IUSE+=" +stable-branch"
@@ -42,6 +44,7 @@ esac
 # Sets up PATH, {,DY}LD_LIBRARY_PATH and EGIT_* variables.
 qt4-build-edge_pkg_setup() {
 	debug-print-function $FUNCNAME "$@"
+
 	case "${PV}" in
 		4.9999 | 4.7.9999)
 			if use stable-branch; then
@@ -100,17 +103,13 @@ qt4-build-edge_pkg_setup() {
 
 	EGIT_COMMIT=${MY_EGIT_COMMIT:=${EGIT_BRANCH}}
 
+	# Let users know what they are getting themselves into ;-)
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		ewarn
 		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary"
 		ewarn "with [qting-edge]. Alternatively, contact <qt@gentoo.org>."
 		ewarn "Thank you for using qting-edge overlay."
 		ewarn
-	fi
-
-	# Let users know what they are getting themselves into ;-)
-	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
-		echo
 		case "${MY_PV_EXTRA}" in
 			4.?.9999-kde-qt)
 				ewarn "The ${PV} version ebuilds with kde-qt USE flag install kde-qt from gitorious kde-qt repository."
@@ -134,8 +133,9 @@ qt4-build-edge_pkg_setup() {
 				ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
 				;;
 		esac
-		echo
+		ewarn
 	fi
+
 	qt4-build_pkg_setup
 }
 
@@ -152,6 +152,7 @@ qt4-build-edge_pkg_setup() {
 # @DESCRIPTION:
 # Unpacks the sources.
 qt4-build-edge_src_unpack() {
+	debug-print-function $FUNCNAME "$@"
 	setqtenv
 
 	local target= targets=
@@ -159,7 +160,7 @@ qt4-build-edge_src_unpack() {
 			src/{qbase,qt_targets,qt_install}.pri \
 			bin config.tests mkspecs qmake \
 			${QT4_EXTRACT_DIRECTORIES}; do
-		targets="${targets} ${MY_P}/${target}"
+		targets+=" ${MY_P}/${target}"
 	done
 
 	case "${PV}" in
@@ -187,15 +188,18 @@ qt4-build-edge_src_unpack() {
 # source files in order to respect CFLAGS/CXXFLAGS/LDFLAGS specified on /etc/make.conf.
 qt4-build-edge_src_prepare() {
 	debug-print-function $FUNCNAME "$@"
-	if [[ "${PN}" == "qt-assistant" ]] && [[ ${PV} == *.9999 ]]; then
-		qt_assistant_cleanup
+
+	if [[ ${PV} == *.9999 ]]; then
+		[[ ${PN} == qt-assistant ]] && qt_assistant_cleanup
+		generate_include
 	fi
-	[[ ${PV} == *.9999 ]] && generate_include
-	# We need to remove any specific hardcode compiler flag
-	sed -i -e /^QMAKE_CFLAGS[^_.*]/s:\+=.*:=: \
-		-e /^QMAKE_CXXFLAGS[^_.*]/s:\+=.*:=: \
-		-e /^QMAKE_LFLAGS[^_.*]/s:\+=.*:=: \
-		${S}/mkspecs/common/g++.conf
+
+	# We need to remove any specific hardcoded compiler flags
+	sed -i -e '/^QMAKE_CFLAGS[^_.*]/s:\+=.*:=:' \
+		-e '/^QMAKE_CXXFLAGS[^_.*]/s:\+=.*:=:' \
+		-e '/^QMAKE_LFLAGS[^_.*]/s:\+=.*:=:' \
+		"${S}"/mkspecs/common/g++.conf
+
 	qt4-build_src_prepare
 }
 
@@ -253,7 +257,7 @@ generate_include() {
 # Tries to clean up tools.pro for live qt-assistant ebuilds
 # Meant to be called in src_prepare
 qt_assistant_cleanup() {
-	# different versions (and branches...) may need different handling, 
+	# different versions (and branches...) may need different handling,
 	# add a case if you need special handling
 	case "${MY_PV_EXTRA}" in
 		*kde-qt*)
