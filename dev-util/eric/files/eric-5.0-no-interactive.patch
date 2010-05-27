@@ -1,0 +1,14 @@
+Index: eric5-5.0-snapshot-20100523/install.py
+===================================================================
+--- eric5-5.0-snapshot-20100523.orig/install.py
++++ eric5-5.0-snapshot-20100523/install.py
+@@ -778,9 +778,6 @@ def main(argv):
+                     (v[0], v[1], v[2]))
+                 print("    with foreign characters. Please see 'README-PyXML.txt' for")
+                 print("    details.")
+-                res = input("    Shall pyXML be patched now (y/n)? ")
+-                if res in ["Y", "y"]:
+-                    patchPyXML()
+     except ImportError:
+         pass
+     
