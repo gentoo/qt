@@ -113,6 +113,7 @@ pushd ${OVERLAY}/dev-python/sip/
 tomove=$(find '.' -type f -name "sip-${SVER}*.ebuild"|tail -1)
 einfo "Previous ebuild to use: ${tomove#./}"
 mv ${tomove#./} sip-${SVER}_pre${DATE}.ebuild || exit "Failed to bump sip"
+ebegin "Changing revision number to ${SREV}"
 sed -i "/^HG_REVISION/s:=.*:=${SREV}:" sip-${SVER}_pre${DATE}.ebuild
 eend $?
 repoman manifest
