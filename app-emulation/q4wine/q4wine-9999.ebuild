@@ -3,7 +3,8 @@
 # $Header: /var/cvsroot/gentoo-x86/app-emulation/q4wine/q4wine-0.112-r1.ebuild,v 1.2 2009/06/10 21:10:57 maekke Exp $
 
 EAPI="2"
-inherit qt4-edge cmake-utils git
+
+inherit git qt4-edge cmake-utils
 
 DESCRIPTION="Qt4 GUI configuration tool for Wine"
 HOMEPAGE="http://q4wine.brezblock.org.ua/"
@@ -26,16 +27,21 @@ RDEPEND="x11-libs/qt-gui:4
 	icoutils? ( >=media-gfx/icoutils-0.26.0 )
 	sys-fs/fuseiso"
 
-DOCS="README AUTHORS ChangeLog"
+DOCS=(AUTHORS ChangeLog README)
 
 S="${WORKDIR}/${PF}"
 
+src_unpack() {
+	git_src_unpack
+}
+
 src_configure() {
-	mycmakeargs="${mycmakeargs} \
-		$(cmake-utils_use debug DEBUG) \
-		$(cmake-utils_use_with icoutils ICOUTILS) \
-		$(cmake-utils_use_with winetriks WINETRIKS) \
-		$(cmake-utils_use_with wineappdb WINEAPPDB)"
+	mycmakeargs=(
+		$(cmake-utils_use debug)
+		$(cmake-utils_use_with icoutils)
+		$(cmake-utils_use_with winetriks)
+		$(cmake-utils_use_with wineappdb)
+	)
 
 	cmake-utils_src_configure
 }

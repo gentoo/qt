@@ -20,4 +20,4 @@ DEPEND="x11-libs/qt-gui:4
 	>=sci-libs/fftw-3.1.0"
 RDEPEND="${DEPEND}"
 
-DOCS="README changelog"
+DOCS=(README changelog)

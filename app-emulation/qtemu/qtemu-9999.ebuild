@@ -22,4 +22,4 @@ RDEPEND="${DEPEND}
 	!kvm? ( app-emulation/qemu )
 	kvm? ( app-emulation/qemu-kvm )"
 
-DOCS="CHANGELOG README TODO"
+DOCS=(CHANGELOG README TODO)

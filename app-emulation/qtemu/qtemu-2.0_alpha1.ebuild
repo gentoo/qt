@@ -24,6 +24,6 @@ RDEPEND="${DEPEND}
 	qemu? ( app-emulation/qemu )
 	kvm? ( app-emulation/kvm )"
 
-DOCS="CHANGELOG README TODO"
+DOCS=(CHANGELOG README TODO)
 
 S="${WORKDIR}/${MY_P}"
