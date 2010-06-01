@@ -96,7 +96,7 @@ src_install() {
 	if use doc;then
 		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_qch_docs || die
 	fi
-	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48
+	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die
 
 	# install translations
