@@ -26,13 +26,10 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${PN}"
 
+DOCS=(AUTHORS)
+
 src_prepare() {
 	sed -e 's:share/cmake-2.6/Modules:share/cmake/Modules:' \
 		-e '/^install/s/lib/lib${LIB_SUFFIX}/' \
 		-i "${S}/CMakeLists.txt" || die "sed failed"
-}
-
-src_install() {
-	cmake-utils_src_install
-	dodoc AUTHORS ChangeLog || die "dodoc failed"
 }
