@@ -3,14 +3,17 @@ source /etc/init.d/functions.sh
 
 usage() {
 	echo """
+
+./bump-python-revisions <PyQt4-rev> <sip-rev>
+
 Example: ./bump-python-revisions 11cc33 22bba4
 	
 This will bump PyQt4 ebuild to 11cc33 revision,
 and Sip ebuild to snapshot to 22bba4 revision
 
 Use -h option to display this message
-Use -c option to skip bumping operation and just 
-	directly to merge operation
+Use -c option to skip bumping operation and do 
+	directly the merge operation
 	"""
 }
 
