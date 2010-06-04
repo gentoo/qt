@@ -8,7 +8,7 @@ SUPPORT_PYTHON_ABIS="2"
 
 inherit qt4-r2 python toolchain-funcs
 
-REVISION=55d63b517349
+REVISION=36c5fbec9a15
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
 QTVER="4.6.2" # minimal Qt version this is supposed to work with
 
