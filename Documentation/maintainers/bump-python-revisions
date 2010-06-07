@@ -58,10 +58,10 @@ if [[ -z $1 ]]; then
 	eerror " "
 	usage
 	exit 1
-elif [[ $1 -eq "-h" ]]; then
+elif [[ $1 == "-h" ]]; then
 	usage
 	exit 0
-elif [[ $1 -eq "-c" ]];then
+elif [[ $1 == "-c" ]];then
 	commit
 fi
 
