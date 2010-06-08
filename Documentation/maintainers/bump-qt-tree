@@ -1,0 +1,83 @@
+#!/bin/bash
+# custom script for bumping Qt release ebuilds
+# use at your own risk!
+# make sure you take care of any new patches before running this script
+# this does not include the qt meta ebuild
+
+portdir=$(portageq envvar PORTDIR)
+RelVer="4.6.2"
+FinalVer="4.6.3"
+
+usage() {
+	echo
+	echo "[bump-qt-tree] Bumping Qt ebuilds to ${FinalVer} using ${RelVer} as referense"
+	echo "[bump-qt-tree] and running cvs add, echangelog and repoman manifest"
+	echo
+	echo "Options:"
+	echo " -h : displays this message "
+	echo " -f : Does a full bump "
+	echo " -b : Creates the new ebuilds but it doesn't commit them"
+	echo " -r : Runs repoman full only"
+	echo " -c : Run commit phase only"
+	echo 
+}
+
+bump() {
+	cd $portdir/x11-libs/
+	for i in qt-{assistant,core,dbus,demo,gui,multimedia,opengl,phonon,qt3support,script,sql,svg,test,webkit,xmlpatterns} ; do
+		pushd ${i} || exit 'cannot pushd'
+		tomove=$(find '.' -type f -name "${i}-${RelVer}*.ebuild"|head -1)
+		cp ${tomove} ${i}-${FinalVer}.ebuild
+		cvs add ${i}-${FinalVer}.ebuild || exit 'cannot cvs add'
+		echangelog 'Version bump' || exit 'cannot echangelog'
+		repoman manifest || exit 'cannot manifest'
+		popd
+	done
+}
+
+check() {
+	cd $portdir/x11-libs/
+	echo
+	echo "[bump-qt-release] Checking ebuilds with repoman full - abort if needed"
+	echo
+	for i in qt-{assistant,core,dbus,demo,gui,multimedia,opengl,phonon,qt3support,script,sql,svg,test,webkit,xmlpatterns} ; do
+		pushd ${i} || exit 'cannot pushd'
+		repoman full
+		popd
+	done
+}
+
+commit() {
+	cd $portdir/x11-libs/
+	echo
+	echo "[bump-qt-release] Doing the actual commit of Qt ${Final} ebuilds"
+	echo
+	echo "Press 'y' if you are sure about this or 'n' to abort"
+	read choice
+	case "$choice" in
+		y)for i in qt-{assistant,core,dbus,demo,gui,multimedia,opengl,phonon,qt3support,script,sql,svg,test,webkit,xmlpatterns} ; do
+			pushd ${i} || exit 'cannot pushd'
+			repoman commit -m "Qt ${Final} release version bump"
+			popd
+		done
+		;;
+		r|"") echo "aborted..."
+			;;
+
+	esac
+}
+
+if [[ "$1" == "-h" ]]; then
+	usage
+elif [[ "$1" == "-f" ]]; then
+	bump
+	check
+	commit
+elif [[ "$1" == "-r" ]]; then
+	check
+elif [[ "$1" == "-b" ]]; then
+	bump
+elif [[ "$1" == "-c" ]]; then
+	commit
+else usage
+fi
