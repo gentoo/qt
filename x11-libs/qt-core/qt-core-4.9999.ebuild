@@ -145,7 +145,7 @@ src_install() {
 		|| die "sed for qconfig.h failed"
 
 	if use glib; then
-		QCONFIG_DEFINE="$(use glib && echo QT_GLIB)
+		QCONFIG_DEFINE="QT_SHARED $(use glib && echo QT_GLIB)
 				$(use ssl && echo QT_OPENSSL)"
 		install_qconfigs
 	fi
