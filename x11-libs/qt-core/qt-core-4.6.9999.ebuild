@@ -137,7 +137,10 @@ src_install() {
 			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
 			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
 		|| die "sed for qconfig.h failed"
-
+	sed -i -e '48a#include <Gentoo/gentoo-qconfig.h>\n' \
+			"${D}${QTHEADERDIR}"/QtCore/qglobal.h \
+		|| die
+	QCONFIG_DEFINE = "QT_SHARED"
 	if use glib; then
 		QCONFIG_DEFINE="QT_SHARED $(use glib && echo QT_GLIB)
 				$(use ssl && echo QT_OPENSSL)"
