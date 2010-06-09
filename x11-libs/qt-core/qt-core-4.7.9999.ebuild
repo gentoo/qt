@@ -150,7 +150,6 @@ src_install() {
 			$(use ssl && echo QT_OPENSSL)"
 		install_qconfigs
 	fi
-
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtCore}/{\
 qatomic_macosx.h,\
