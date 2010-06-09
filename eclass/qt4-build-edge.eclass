@@ -135,7 +135,16 @@ qt4-build-edge_pkg_setup() {
 		esac
 		ewarn
 	fi
-
+	# stable-branch is outdated.Last commit on 4th of April. Adding warning
+	# wrt bug #313619
+	if use stable-branch && version_is_at_least "4.7.9999"; then
+		ewarn
+		ewarn				"!!! WARNING !!!"
+		ewarn "Qt-${PV/.9999} stable branch is outdated. If you are"
+		ewarn "seeking for bleeding edge code your are kindly advised"
+		ewarn "to disable 'stable-branch' use flag and rebuild all the Qt modules"
+		ewarn
+	fi
 	qt4-build_pkg_setup
 }
 
