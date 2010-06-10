@@ -130,6 +130,9 @@ ebegin "Cleaning up tarballs..."
 rm ${TEMP}/${SIPKG}.tar.gz || exit
 rm ${TEMP}/${PYPKG}.tar.gz || exit
 rm -r ${TEMP}
+dst=$(portageq envvar DISTDIR)
+rm ${dst}/${SIPKG}.tar.gz
+rm ${dst}/${PYPKG}.tar.gz
 eend $?
 
 exit 0
