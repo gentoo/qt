@@ -49,6 +49,7 @@ pkg_setup() {
 		src/3rdparty/md5
 		src/3rdparty/sha1/
 		src/3rdparty/easing
+		src/3rdparty/webkit/WebKit/qt/
 		src/script
 		tools/linguist/shared
 		translations"
@@ -141,14 +142,10 @@ src_install() {
 			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
 			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
 		|| die
-	sed -i -e '46a#include <Gentoo/gentoo-qconfig.h>\n' \
-			"${D}${QTHEADERDIR}"/QtCore/qglobal.h \
-		|| die
-	QCONFIG_DEFINE="QT_SHARED"
 	if use glib; then
-		QCONFIG_DEFINE+=" $(use glib && echo QT_GLIB)
+		QCONFIG_DEFINE=" $(use glib && echo QT_GLIB)
 			$(use ssl && echo QT_OPENSSL)"
-		install_qconfigs
+		isntall_qconfigs
 	fi
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtCore}/{\
