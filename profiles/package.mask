@@ -2,14 +2,15 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (24 May 2010)
+# Masking Beta and RC releases of Qtcreator. Needs more testing
+=dev-util/qt-creator-2.0.0_rc*
+=dev-util/qt-creator-2.0.0_beta*
+
 # Markos Chandras <hwoarang@gentoo.org> (27 May 2010)
 # Masking Snapshots
 =dev-util/eric-4.5_pre*
 =dev-util/eric-5.0_pre*
-
-# Markos Chandras <hwoarang@gentoo.org> (24 May 2010)
-# Masking Beta and RC releases of Qtcreator. Needs more testing
-=dev-util/qt-creator-2.0.0_*
 
 # Dror Levin <spatz@gentoo.org> (23 May 2010)
 # Qt prereleases
