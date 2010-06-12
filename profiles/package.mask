@@ -8,8 +8,8 @@
 =dev-util/eric-5.0_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (24 May 2010)
-# Masking Beta releases of Qtcreator. Needs more testing
-=dev-util/qt-creator-2.0.0_beta*
+# Masking Beta and RC releases of Qtcreator. Needs more testing
+=dev-util/qt-creator-2.0.0_*
 
 # Dror Levin <spatz@gentoo.org> (23 May 2010)
 # Qt prereleases
