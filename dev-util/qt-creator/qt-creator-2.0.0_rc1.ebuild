@@ -86,6 +86,7 @@ src_prepare() {
 }
 
 src_configure() {
+	use qml && QTCREATOR_WITH_QML="1"
 	eqmake4 ${MY_PN}.pro IDE_LIBRARY_BASENAME="$(get_libdir)"
 }
 
