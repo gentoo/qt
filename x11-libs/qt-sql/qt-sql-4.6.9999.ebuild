@@ -8,15 +8,15 @@ inherit qt4-build-edge
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="firebird iconv mysql odbc postgres qt3support +sqlite tds"
+IUSE="firebird freetds iconv mysql odbc postgres qt3support +sqlite"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,qt3support=,stable-branch=]
 	firebird? ( dev-db/firebird )
+	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
 	odbc? ( dev-db/unixODBC )
 	postgres? ( virtual/postgresql-base )
-	sqlite? ( dev-db/sqlite:3 )
-	tds? ( dev-db/freetds )"
+	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
@@ -32,9 +32,9 @@ src/3rdparty
 src/tools"
 
 pkg_setup() {
-	if ! (use firebird || use mysql || use odbc || use postgres || use sqlite || use tds ); then
+	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
 		ewarn "You need to enable at least one SQL driver. Enable at least"
-		ewarn "one of these USE flags: \"firebird mysql odbc postgres sqlite tds\""
+		ewarn "one of these USE flags: \"firebird freetds mysql odbc postgres sqlite \""
 		die "Enable at least one SQL driver."
 	fi
 
@@ -59,7 +59,7 @@ src_configure() {
 		$(qt_use postgres sql-psql plugin) $(use postgres && echo "-I/usr/include/postgresql/pgsql ")
 		$(qt_use sqlite sql-sqlite plugin) $(use sqlite && echo '-system-sqlite')
 		$(qt_use odbc sql-odbc plugin)
-		$(qt_use tds sql-tds plugin)
+		$(qt_use freetds sql-tds plugin)
 		$(qt_use qt3support)"
 
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
