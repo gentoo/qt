@@ -26,7 +26,7 @@ RDEPEND=">=virtual/ruby-1.8
 	qttest? ( x11-libs/qt-test )
 	webkit? ( x11-libs/qt-webkit )
 	xmlpatterns? ( x11-libs/qt-xmlpatterns )
-	qscintilla? ( =x11-libs/qscintilla-2*[qt4] )
+	qscintilla? ( =x11-libs/qscintilla-2* )
 	qwt? ( x11-libs/qwt:5 )"
 DEPEND="${RDEPEND}"
 

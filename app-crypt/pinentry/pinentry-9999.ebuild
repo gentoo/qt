@@ -13,7 +13,7 @@ ESVN_REPO_URI="svn://cvs.gnupg.org/pinentry/trunk"
 LICENSE="GPL-2"
 KEYWORDS=""
 SLOT="0"
-IUSE="caps gtk ncurses qt3 qt4 static"
+IUSE="caps gtk ncurses qt4 static"
 
 DEPEND="
 	caps? ( sys-libs/libcap )
@@ -26,7 +26,6 @@ DEPEND="
 			)
 		)
 		ncurses? ( sys-libs/ncurses )
-		qt3? ( x11-libs/qt:3 )
 		qt4? ( x11-libs/qt-gui:4 )
 	)
 "
@@ -35,9 +34,9 @@ RDEPEND="${DEPEND}"
 pkg_setup() {
 	if use static; then
 		append-ldflags -static
-		if use gtk || use qt3 || use qt4; then
+		if use gtk || use qt4; then
 			ewarn
-			ewarn "The static USE flag is only supported with the ncurses USE flags, disabling the gtk, qt3 and qt4 USE flags."
+			ewarn "The static USE flag is only supported with the ncurses USE flags, disabling the gtk and qt4 USE flags."
 			ewarn
 		fi
 	fi
@@ -51,16 +50,10 @@ src_prepare() {
 src_configure() {
 	local myconf=""
 
-	if use gtk || use ncurses || use qt3 || use qt4; then
+	if use gtk || use ncurses || use qt4; then
 		myconf="--enable-pinentry-curses --enable-fallback-curses"
 	elif use static; then
 		myconf="--enable-pinentry-curses --enable-fallback-curses --disable-pinentry-gtk2 --disable-pinentry-qt --disable-pinentry-qt4"
-	fi
-
-	if use qt3; then
-		# Issues finding qt on multilib systems
-		export QTDIR="/usr/qt/3"
-		export QTLIB="${QTDIR}/$(get_libdir)"
 	fi
 
 	econf \
@@ -68,7 +61,6 @@ src_configure() {
 		--enable-maintainer-mode \
 		--disable-pinentry-gtk \
 		$(use_enable gtk pinentry-gtk2) \
-		$(use_enable qt3 pinentry-qt) \
 		$(use_enable qt4 pinentry-qt4) \
 		$(use_enable ncurses pinentry-curses) \
 		$(use_enable ncurses fallback-curses) \

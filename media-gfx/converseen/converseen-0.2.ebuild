@@ -20,7 +20,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4
-	media-gfx/imagemagick[-nocxx]"
+	|| ( media-gfx/graphicsmagick[imagemagick] media-gfx/imagemagick )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"

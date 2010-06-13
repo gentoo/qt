@@ -15,14 +15,13 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
 LICENSE="GPL-2 LGPL-2.1 CCPL-Attribution-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="kvm +qemu"
+IUSE="qemu"
 
 DEPEND="net-libs/libvncserver
 	x11-libs/qt-gui:4
 	x11-libs/qt-webkit:4"
 RDEPEND="${DEPEND}
-	qemu? ( app-emulation/qemu )
-	kvm? ( app-emulation/kvm )"
+	qemu? ( app-emulation/qemu )"
 
 DOCS=(CHANGELOG README TODO)
 

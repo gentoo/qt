@@ -4,7 +4,6 @@
 
 inherit eutils subversion
 
-
 DESCRIPTION="A YouTube Downloader and Converter"
 HOMEPAGE="http://sourceforge.net/projects/elltube"
 ESVN_REPO_URI="http://elltube.svn.sourceforge.net/svnroot/elltube/trunk/"

@@ -3,4 +3,15 @@
 <pkgmetadata>
 <herd>ruby</herd>
 <herd>qt</herd>
+<use>
+<flag name="assistant">Enable Qt assistant module support</flag>
+<flag name="phonon">Enable Qt Phonon module support</flag>
+<flag name="qt3support">Enable Qt Qt3support module</flag>
+<flag name="qtscript">Enable Qt Script module support</flag>
+<flag name="qttest">Enable Qt Test module support</flag>
+<flag name="qwt">Enable qwt bindings</flag>
+<flag name="qscintilla">Enable bindings for qscintilla</flag>
+<flag name="webkit">Enable Qt Webkit support</flag>
+<flag name="xmlpatterns">Enable Qt Xmlpatters support</flag>
+</use>
 </pkgmetadata>

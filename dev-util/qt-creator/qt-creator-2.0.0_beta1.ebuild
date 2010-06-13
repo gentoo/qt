@@ -36,11 +36,11 @@ RDEPEND="${DEPEND}
 	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
 	!qml? ( >=x11-libs/qt-gui-${QTVER}[dbus,qt3support] )
-	qml? ( 
-		>=x11-libs/qt-declarative-${QTVER}[private-headers] 
+	qml? (
+		>=x11-libs/qt-declarative-${QTVER}[private-headers]
 		>=x11-libs/qt-core-${QTVER}[private-headers]
-		>=x11-libs/qt-gui-${QTVER}[dbus,qt3support,private-headers] 
-		>=x11-libs/qt-script-${QTVER}[private-headers] 
+		>=x11-libs/qt-gui-${QTVER}[dbus,qt3support,private-headers]
+		>=x11-libs/qt-script-${QTVER}[private-headers]
 	)
 	qtscript? ( >x11-libs/qt-script-${QTVER} )
 	subversion? ( dev-util/subversion )"

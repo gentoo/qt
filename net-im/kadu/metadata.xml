@@ -7,7 +7,10 @@
 		<name>Maciej Mrozowski</name>
 	</maintainer>
 	<use>
-		<flag name="phonon">Enable phonon audio plugin</flag>
 		<flag name="speech">Enables speech module</flag>
+		<flag name="avatar">Enable avatar support</flag>
+		<flag name="config_wizard">Enable configuration wizard</flag>
+		<flag name="sms">Enable sms support</flag>
+		<flag name="voice">Enable voice support</flag>
 	</use>
 </pkgmetadata>

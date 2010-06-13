@@ -13,11 +13,7 @@
 	<description>Proxy committer, CC bugs</description>
   </maintainer>
   <use>
-	  <flag name="bzip2">Support for parsing of environment.bz2 to guess repository name of packages installed with ancient portage versions (requires <pkg>app-arch/bbzip2</pkg>). This flag is safe to disable for portage users that have re-merged all packages since 2007. This flag will be phased out.</flag>
-	<flag name="deprecated">Installs wrapper scripts for all the previous executable names that will soon be going away. Enabled by default in 0.17.0, optional in 0.18.0, removed in next major release.</flag>
 	<flag name="doc">Create description of the eix cache file additionally in html format</flag>
-	<flag name="nls">Support foreign language messages (experimental; currently only de)</flag>
 	<flag name="sqlite">Compile in support for portage's sqlite backend; to actually use it you need additional configuration of portage and eix</flag>
-	<flag name="tools">Create separate binary for script helper tools (currently only: versionsort); useful if they are called extremely often</flag>
   </use>
 </pkgmetadata>

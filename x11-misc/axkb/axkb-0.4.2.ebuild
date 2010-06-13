@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-edge 
+inherit qt4-edge
 
 DESCRIPTION="Qt4 application to adjust layouts by xkb"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/Antico+XKB?content=101667"
