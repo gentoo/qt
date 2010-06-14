@@ -49,7 +49,6 @@ pkg_setup() {
 		src/3rdparty/md5
 		src/3rdparty/sha1/
 		src/3rdparty/easing
-		src/3rdparty/webkit/WebKit/qt/
 		src/script
 		tools/linguist/shared
 		translations"
