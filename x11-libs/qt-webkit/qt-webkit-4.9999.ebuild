@@ -38,7 +38,11 @@ pkg_setup() {
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
-
+	# drop qt_webkit_version.pri from installation files since qt-core
+	# installs it
+	sed -i "/INSTALLS += modfile/d" src/3rdparty/webkit/WebCore/WebCore.pro
+	sed -i "/INSTALLS += target headers modfile/s: modfile::" \
+		src/3rdparty/webkit/WebCore/WebCore.pro
 	qt4-build-edge_src_prepare
 }
 
