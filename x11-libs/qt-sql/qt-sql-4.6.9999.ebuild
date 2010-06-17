@@ -15,7 +15,7 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,qt3support=,stable-branch=]
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
 	odbc? ( dev-db/unixODBC )
-	postgres? ( virtual/postgresql-base )
+	postgres? ( dev-db/postgresql-base )
 	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
