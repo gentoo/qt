@@ -19,7 +19,7 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
+PATCHES=( "${FILESDIR}/qt-4.7-beta1-nolibx11.patch" )
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"

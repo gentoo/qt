@@ -14,7 +14,7 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=]
 	>=sys-apps/dbus-1.0.2"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch")
+PATCHES=( "${FILESDIR}/qt-4.7-beta1-nolibx11.patch")
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="

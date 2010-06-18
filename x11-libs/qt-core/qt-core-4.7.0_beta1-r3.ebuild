@@ -18,7 +18,7 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support] )"
 
-PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
+PATCHES=( "${FILESDIR}/qt-4.7-beta1-nolibx11.patch" )
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
