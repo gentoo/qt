@@ -23,7 +23,7 @@ RDEPEND="sqlite? ( dev-db/sqlite:3 )
 		app-arch/lzma-utils
 		app-arch/xz-utils
 	)
-	dev-util/cvs"
+	dev-vcs/cvs"
 DEPEND="${RDEPEND}
 	doc? ( dev-python/docutils )"
 
