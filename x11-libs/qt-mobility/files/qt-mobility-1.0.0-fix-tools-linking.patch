@@ -1,0 +1,18 @@
+diff -Naur qt-mobility-opensource-src-1.0.0~orig/tools/servicefw/servicefw.pro qt-mobility-opensource-src-1.0.0/tools/servicefw/servicefw.pro
+--- qt-mobility-opensource-src-1.0.0~orig/tools/servicefw/servicefw.pro	2010-06-20 19:51:25.000000000 +0200
++++ qt-mobility-opensource-src-1.0.0/tools/servicefw/servicefw.pro	2010-06-20 19:52:21.000000000 +0200
+@@ -10,3 +10,5 @@
+ include(../../common.pri)
+ 
+ include(../../features/deploy.pri)
++
++LIBS += -lQtServiceFramework
+diff -Naur qt-mobility-opensource-src-1.0.0~orig/tools/vsexplorer/vsexplorer.pro qt-mobility-opensource-src-1.0.0/tools/vsexplorer/vsexplorer.pro
+--- qt-mobility-opensource-src-1.0.0~orig/tools/vsexplorer/vsexplorer.pro	2010-06-20 19:51:25.000000000 +0200
++++ qt-mobility-opensource-src-1.0.0/tools/vsexplorer/vsexplorer.pro	2010-06-20 19:53:22.000000000 +0200
+@@ -19,3 +19,5 @@
+ MOBILITY = publishsubscribe
+ 
+ include(../../features/deploy.pri)
++
++LIBS += -lQtPublishSubscribe

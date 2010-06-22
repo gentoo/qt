@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>qt</herd>
+<use>
+	<flag name="bearer">Build the QtBearer module</flag>
+	<flag name="contacts">Build the QtContacts module</flag>
+	<flag name="multimedia">Build the QtMedia module (BETA)</flag>
+	<flag name="publishsubscribe">Build the QtPublishSubscribe module</flag>
+	<flag name="serviceframework">Build the QtServiceFramework module</flag>
+	<flag name="systeminfo">Build the QtSystemInfo module</flag>
+	<flag name="tools">Build various useful tools (e.g.: qcrmlgen, servicexmlgen, ...)</flag>
+	<flag name="versit">Build the QtVersit module</flag>
+</use>
+</pkgmetadata>
