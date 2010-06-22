@@ -43,7 +43,7 @@ RDEPEND="${DEPEND}
 		>=x11-libs/qt-script-${QTVER}[private-headers]
 	)
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )
-	subversion? ( dev-util/subversion )"
+	subversion? ( dev-vcs/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
 	qml qtscript subversion"
