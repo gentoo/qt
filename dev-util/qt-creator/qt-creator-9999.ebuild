@@ -3,6 +3,8 @@
 # $Header: $
 
 EAPI="2"
+LANGS="de es fr it ja pl ru sl"
+
 inherit qt4-edge git multilib
 
 MY_PN="${PN/-/}"
@@ -46,18 +48,11 @@ RDEPEND="${DEPEND}
 PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
 	qml qtscript subversion"
 
-LANGS="de es fr it ja pl ru sl"
-
-for x in ${LANGS}; do
-	IUSE="${IUSE} linguas_${x}"
-done
-
 pkg_setup() {
 	# change git repo uri if inspector use flag is enabled
 	if use inspector; then
 		elog
-		elog "You have enabled inspector plugin for qt-creator."
-		elog "Please note that this is a thrird-party ebuild hence"
+
 		elog "you should contact the upstream maintainer for inspector"
 		elog "plugin bugs. Do _NOT_ file bugs on gentoo bugzilla."
 		elog
@@ -107,6 +102,9 @@ src_prepare() {
 			src/plugins/welcome/communitywelcomepagewidget.cpp \
 				|| die "failed to disable rss"
 	fi
+	# fix translations
+	sed -i "/^LANGUAGES/s:=.*:= ${LANGS}:" \
+		share/${MY_PN}/translations/translations.pro
 }
 
 src_configure() {
@@ -124,14 +122,11 @@ src_install() {
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
-	# install translations
-	insinto /usr/share/${MY_PN}/translations/
-	for x in ${LINGUAS}; do
-		for lang in ${LANGS}; do
-			if [[ ${x} == ${lang} ]]; then
-				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm \
-					|| die "failed to install translations"
-			fi
-		done
+	# Remove unneeded translations
+	for lang in ${LANGS}; do
+		if ! hasq $lang ${LINGUAS}; then
+			rm ${D}/usr/share/${MY_PN}/translations/${MY_PN}_${lang}.qm \
+					|| die "failed to remove translations"
+		fi
 	done
 }
