@@ -13,7 +13,7 @@ EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug kde"
 
 DEPEND=">=dev-libs/boost-1.41.0[python]
 	>=dev-python/boostpythongenerator-0.3.2
@@ -21,7 +21,8 @@ DEPEND=">=dev-libs/boost-1.41.0[python]
 	>=x11-libs/qt-assistant-4.5.0
 	>=x11-libs/qt-gui-4.5.0
 	>=x11-libs/qt-opengl-4.5.0
-	|| ( >=x11-libs/qt-phonon-4.5.0 media-sound/phonon )
+	kde? ( media-sound/phonon )
+	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0 media-sound/phonon ) )
 	>=x11-libs/qt-script-4.5.0
 	>=x11-libs/qt-sql-4.5.0
 	>=x11-libs/qt-svg-4.5.0
