@@ -199,12 +199,12 @@ qt4-build-edge_src_prepare() {
 	debug-print-function $FUNCNAME "$@"
 	local NOLIBX11PKG="qt-core qt-dbus qt-script qt-sql qt-test qt-xmlpatterns"
 
+	hasq ${PN} ${NOLIBX11PKG} && qt_nolibx11
+
 	if [[ ${PV} == *.9999 ]]; then
 		[[ ${PN} == qt-assistant ]] && qt_assistant_cleanup
 		generate_include
 	fi
-
-	hasq ${PN} ${NOLIBX11PKG} && qt_nolibx11
 
 	# We need to remove any specific hardcoded compiler flags
 	sed -i -e '/^QMAKE_CFLAGS[^_.*]/s:\+=.*:=:' \
@@ -288,8 +288,8 @@ qt_assistant_cleanup() {
 
 qt_nolibx11() {
 	# delete any referense to X libraries for packages that dont use it
-	local num
-	num="$(grep -o -n "Check we actually have X11" configure|sed -e "s/:.*//")"
-	sed -i "${num},+11d" "${S}"/configure
+	einfo "removing X11 check to allow X-less compilation"
+	sed -i "/Check we actually have X11/,/fi$/d" "${S}"/configure ||
+		die "x11 check sed failed"
 }
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install pkg_postrm pkg_postinst
