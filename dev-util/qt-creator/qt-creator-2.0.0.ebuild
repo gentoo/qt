@@ -30,7 +30,7 @@ RDEPEND="${DEPEND}
 	!kde? ( || ( >x11-libs/qt-phonon-${QTVER} media-sound/phonon ) )
 	kde? ( media-sound/phonon )
 	cmake? ( dev-util/cmake )
-	cvs? ( dev-util/cvs )
+	cvs? ( dev-vcs/cvs )
 	sys-devel/gdb
 	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
