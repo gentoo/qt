@@ -15,8 +15,9 @@ SRC_URI="http://get.qt.nokia.com/qt/solutions/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+bearer contacts debug doc -multimedia opengl +publishsubscribe +serviceframework +systeminfo +tools versit"
+IUSE="+bearer contacts debug doc multimedia opengl +publishsubscribe +serviceframework +systeminfo +tools versit"
 # messaging and sensors APIs are not (yet) supported
+# TODO: translations (need >= Qt 4.6.3)
 
 DEPEND=">=x11-libs/qt-core-4.6.0:4
 	bearer? (
@@ -25,7 +26,11 @@ DEPEND=">=x11-libs/qt-core-4.6.0:4
 		>=x11-libs/qt-gui-4.6.0:4
 	)
 	multimedia? (
-		>=x11-libs/qt-multimedia-4.6.0:4
+		media-libs/alsa-lib
+		>=media-libs/gstreamer-0.10.19:0.10
+		>=media-libs/gst-plugins-base-0.10.19:0.10
+		x11-libs/libXv
+		>=x11-libs/qt-gui-4.6.0:4
 		opengl? ( >=x11-libs/qt-opengl-4.6.0:4 )
 	)
 	publishsubscribe? (
@@ -37,6 +42,8 @@ DEPEND=">=x11-libs/qt-core-4.6.0:4
 	)
 	systeminfo? (
 		net-misc/networkmanager
+		net-wireless/bluez
+		sys-kernel/linux-headers
 		>=x11-libs/qt-dbus-4.6.0:4
 		>=x11-libs/qt-gui-4.6.0:4
 	)
@@ -45,8 +52,8 @@ RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
 
+DOCS="changes-${PV}"
 PATCHES=(
-	"${FILESDIR}/${P}-fix-quoting.patch"
 	"${FILESDIR}/${P}-fix-tools-linking.patch"
 )
 
@@ -64,6 +71,7 @@ src_configure() {
 			-prefix '${EPREFIX}/usr'
 			-headerdir '${EPREFIX}/usr/include/qt4'
 			-libdir '${EPREFIX}/usr/$(get_libdir)/qt4'
+			-plugindir '${EPREFIX}/usr/$(get_libdir)/qt4/plugins'
 			$(use debug && echo -debug || echo -release)
 			$(use tools || echo -no-tools)
 			-modules '${modules}'
