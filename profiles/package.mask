@@ -2,6 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (24 Jun 2010)
+# Needs more testing. Masked dependencies ( 4.7.0_beta )
+=dev-util/qt-creator-2.0.0
+
 # Markos Chandras <hwoarang@gentoo.org> (14 Jun 2010)
 # Masking Snapshots and RC releases
 =dev-util/eric-4.5_pre*
@@ -11,11 +15,6 @@
 # Markos Chandras <hwoarang@gentoo.org> (14 Jun 2010)
 # Needs Qt-4.4.X. Removal in 30 days
 =dev-libs/qsa-1.2.3
-
-# Markos Chandras <hwoarang@gentoo.org> (24 May 2010)
-# Masking Beta and RC releases of Qtcreator. Needs more testing
-=dev-util/qt-creator-2.0.0_rc*
-=dev-util/qt-creator-2.0.0_beta*
 
 # Dror Levin <spatz@gentoo.org> (23 May 2010)
 # Qt prereleases
