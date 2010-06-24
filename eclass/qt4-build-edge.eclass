@@ -289,7 +289,7 @@ qt_assistant_cleanup() {
 qt_nolibx11() {
 	# delete any referense to X libraries for packages that dont use it
 	einfo "removing X11 check to allow X-less compilation"
-	sed -i "/Check we actually have X11/,/fi$/d" "${S}"/configure ||
+	sed -i "/unixtests\/compile.test.*config.tests\/x11\/xlib/,/fi$/d" "${S}"/configure ||
 		die "x11 check sed failed"
 }
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install pkg_postrm pkg_postinst
