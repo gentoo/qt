@@ -25,7 +25,6 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[stable-branch=]"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-4.6-plugandpaint.patch" )
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="demos

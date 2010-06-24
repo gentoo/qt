@@ -13,7 +13,6 @@ IUSE=""
 DEPEND="~x11-libs/qt-core-${PV}[debug=,exceptions,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/qt-4.7-nolibx11.patch" )
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
