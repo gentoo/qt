@@ -70,6 +70,7 @@ elif [[ "$1" == "-f" ]]; then
 	commit
 elif [[ "$1" == "-r" ]]; then
 	remove
+	check
 elif [[ "$1" == "-c" ]]; then
 	commit
 else usage
