@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit base cmake-utils flag-o-matic git
+inherit cmake-utils git
 
 DESCRIPTION="QT client for popular in Poland Gadu-Gadu instant messaging network"
 HOMEPAGE="http://www.kadu.net"
@@ -13,20 +13,34 @@ EGIT_REPO_URI="git://gitorious.org/kadu/kadu.git"
 LICENSE="GPL-2"
 KEYWORDS=""
 SLOT="0"
-IUSE="alsa ao +avatar config_wizard kde oss sms speech spell +ssl voice"
+IUSE="alsa ao dbus kde oss phonon speech spell +ssl"
 
-DEPEND="
+COMMON_DEPEND="
 	>=app-crypt/qca-2.0.0-r2
 	>=media-libs/libsndfile-1.0
-	>=net-libs/libgadu-1.8[threads]
-	>=x11-libs/qt-dbus-4.4:4
+	>=net-libs/libgadu-1.9_rc2[threads]
+	x11-libs/libXScrnSaver
 	>=x11-libs/qt-gui-4.4:4[qt3support]
 	>=x11-libs/qt-webkit-4.4:4
 	alsa? ( media-libs/alsa-lib )
 	ao? ( media-libs/libao )
-	spell? ( app-text/aspell )
+	dbus? ( >=x11-libs/qt-dbus-4.4:4 )
+	kde? ( >=kde-base/kdelibs-4.3.3 )
+	phonon? (
+		!kde? (
+			|| (
+				>=x11-libs/qt-phonon-4.4:4
+				media-sound/phonon
+			)
+		)
+		kde? ( media-sound/phonon )
+	)
+	spell? ( app-text/enchant )
 "
-RDEPEND="${DEPEND}
+DEPEND="${COMMON_DEPEND}
+	x11-proto/scrnsaverproto
+"
+RDEPEND="${COMMON_DEPEND}
 	speech? ( app-accessibility/powiedz )
 	ssl? ( app-crypt/qca-ossl:2 )
 "
@@ -54,13 +68,16 @@ src_prepare() {
 	# Common modules
 	config_enable module_account_management m
 	config_enable module_advanced_userlist m
+	config_enable module_agent m
 	config_enable module_antistring m
 	config_enable module_auto_hide m
 	config_enable module_autoaway m
 	config_enable module_autoresponder m
 	config_enable module_autostatus m
 	config_enable module_cenzor m
+	config_enable module_config_wizard m
 	config_enable module_dcc m
+	config_enable module_default_sms m
 	config_enable module_desktop_docking m
 	config_enable module_docking m
 	config_enable module_echo m
@@ -69,54 +86,65 @@ src_prepare() {
 	config_enable module_filedesc m
 	config_enable module_filtering m
 	config_enable module_firewall m
+	config_enable module_gg_avatars m
 	config_enable module_hints m
 	config_enable module_history m
+	config_enable module_idle m
 	config_enable module_last_seen m
 	config_enable module_notify m
 	config_enable module_parser_extender m
 	config_enable module_pcspeaker m
+	config_enable module_powerkadu m
+	config_enable module_profiles m
 	config_enable module_qt4_docking m
-	config_enable module_qt4_sound m
+	config_enable module_qt4_docking_notify m
 	config_enable module_screenshot m
+	config_enable module_single_window m
+	config_enable module_sms m
 	config_enable module_sound m
+	config_enable module_split_messages m
+	config_enable module_voice m
+	config_enable module_weather m
 	config_enable module_window_notify m
 	config_enable module_word_fix m
+
+	# Autodownloaded modules
 	config_enable module_nextinfo m
-	config_enable module_idle m
 	config_enable module_tabs m
 	config_enable module_plus_pl_sms m
 
-	# Enable support for all media players since then don't require any build time dependencies
-	config_enable module_mediaplayer m
-	config_enable module_amarok1_mediaplayer m
-	config_enable module_amarok2_mediaplayer m
-	config_enable module_audacious_mediaplayer m
-	config_enable module_dragon_mediaplayer m
-	# falf_mediaplayer
-	# itunes_mediaplayer
-	config_enable module_vlc_mediaplayer m
-	# xmms2_mediaplayer
-	# xmms_mediaplayer
+	if use dbus; then
+		# Media players - no build time deps so build them all
+		# bmpx_mediaplayer
+		config_enable module_mediaplayer m
+		# amarok1_mediaplayer m
+		config_enable module_amarok2_mediaplayer m
+		config_enable module_audacious_mediaplayer m
+		config_enable module_dragon_mediaplayer m
+		config_enable module_mpris_mediaplayer m
+		# falf_mediaplayer
+		# itunes_mediaplayer
+		config_enable module_vlc_mediaplayer m
+		# xmms2_mediaplayer
+		# xmms_mediaplayer
+
+		# dbus interface for Kadu
+		config_enable module_dbus m
+
+		# Autodownloaded module
+		use kde && config_enable module_kde_notify m
+	fi
 
 	# Audio outputs
 	use alsa && config_enable module_alsa_sound m
 	use ao && config_enable module_ao_sound m
 	use oss && config_enable module_dsp_sound m
+	use phonon && config_enable module_phonon_sound m
 
 	# Misc stuff
-	use avatar && config_enable module_gg_avatars m
-	use config_wizard && config_enable module_config_wizard m
-	use kde && config_enable module_kde_notify m
 	use speech && config_enable module_speech m
 	use spell && config_enable module_spellchecker m
 	use ssl && config_enable module_encryption m
-	use voice && config_enable module_voice m
-
-	# SMS related modules
-	if use sms; then
-		config_enable module_default_sms m
-		config_enable module_sms m
-	fi
 
 	# Icons
 	config_enable icons_default y
@@ -159,11 +187,4 @@ src_configure() {
 	"
 
 	cmake-utils_src_configure
-}
-
-src_install() {
-	cmake-utils_src_install
-
-	# delete unneeded .a files from modules directory
-	rm -f "${D}"/usr/lib*/kadu/modules/*.a
 }
