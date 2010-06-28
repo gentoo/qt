@@ -1,6 +1,6 @@
 # Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/hgview/hgview-1.0.0.ebuild,v 1.1 2010/07/23 22:48:37 wired Exp $
+# $Header: $
 
 EAPI="2"
 
@@ -15,11 +15,14 @@ SRC_URI=""
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="doc"
 
-DEPEND="dev-python/egenix-mx-base
+DEPEND="dev-vcs/mercurial
+	dev-python/egenix-mx-base
 	dev-python/PyQt4[X]
-	dev-python/qscintilla-python"
+	dev-python/qscintilla-python
+	dev-python/docutils
+	doc? ( app-text/asciidoc )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"/"${PN}"
@@ -28,10 +31,10 @@ src_prepare() {
 	distutils_src_prepare
 
 	# fix mercurial extension install path
-	local origdir="share/python-support/mercurial-common/hgext"
-	local sitedir="$(python_get_sitedir)/hgext"
-	sed -i -e "s:${origdir}:${sitedir#/usr/}:" \
-		"${S}/hgviewlib/__pkginfo__.py" || die "sed failed"
+	if ! use doc; then
+		sed -i '/make -C doc/d' "${S}/setup.py" || die "sed failed"
+		sed -i '/share\/man\/man1/,+1 d' "${S}/hgviewlib/__pkginfo__.py" || die "sed failed"
+	fi
 }
 
 src_install() {
