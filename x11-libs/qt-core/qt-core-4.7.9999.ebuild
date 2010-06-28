@@ -18,7 +18,6 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[qt3support,stable-branch=] )"
 
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/tools/bootstrap
@@ -143,8 +142,9 @@ src_install() {
 	if use glib; then
 		QCONFIG_DEFINE=" $(use glib && echo QT_GLIB)
 			$(use ssl && echo QT_OPENSSL)"
-		isntall_qconfigs
+		install_qconfigs
 	fi
+
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtCore}/{\
 qatomic_macosx.h,\

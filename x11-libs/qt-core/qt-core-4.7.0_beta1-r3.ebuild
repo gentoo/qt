@@ -110,6 +110,7 @@ src_install() {
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die
+
 	#install private headers
 	if use private-headers; then
 		insinto ${QTHEADERDIR}/QtCore/private

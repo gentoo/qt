@@ -10,7 +10,7 @@ inherit qt4-r2 python toolchain-funcs
 
 REVISION=82a8172854e6
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QTVER="4.6.2" # minimal Qt version this is supposed to work with
+QTVER="4.7.0_beta1" # minimal Qt version this is supposed to work with
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
