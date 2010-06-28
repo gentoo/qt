@@ -14,3 +14,5 @@ LICENSE="GPL-2"
 KEYWORDS=""
 SLOT="4"
 IUSE=""
+
+DEPEND="dev-db/unixODBC"
