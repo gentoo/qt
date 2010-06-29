@@ -15,4 +15,7 @@ KEYWORDS=""
 SLOT="4"
 IUSE=""
 
-DEPEND="dev-db/unixODBC"
+DEPEND="
+	>=dev-db/unixODBC-2.3.0
+"
+RDEPEND="${DEPEND}"
