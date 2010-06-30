@@ -16,8 +16,9 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+bearer contacts debug doc multimedia opengl +publishsubscribe +serviceframework +systeminfo +tools versit"
-# messaging and sensors APIs are not (yet) supported
-# TODO: translations (need >= Qt 4.6.3)
+# The following APIs are not (yet) supported:
+#   - messaging, requires QMF which isn't available
+#   - sensors, there are no backends for desktop platforms
 
 DEPEND=">=x11-libs/qt-core-4.6.0:4
 	bearer? (
@@ -46,8 +47,7 @@ DEPEND=">=x11-libs/qt-core-4.6.0:4
 		sys-kernel/linux-headers
 		>=x11-libs/qt-dbus-4.6.0:4
 		>=x11-libs/qt-gui-4.6.0:4
-	)
-"
+	)"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
@@ -57,16 +57,25 @@ PATCHES=(
 	"${FILESDIR}/${P}-fix-tools-linking.patch"
 )
 
-src_configure() {
-	if ! use opengl; then
-		sed -i -e '/: QT += opengl$/d' src/multimedia/multimedia.pro || die
-	fi
+src_prepare() {
+	qt4-r2_src_prepare
 
+	# translations aren't really translated: disable them
+	sed -i -e '/SUBDIRS +=/s/translations//' qtmobility.pro || die
+
+	# fix automagic dependency on qt-opengl
+	if ! use opengl; then
+		sed -i -e '/QT +=/s/opengl//' src/multimedia/multimedia.pro || die
+	fi
+}
+
+src_configure() {
 	local modules="location"
 	for mod in bearer contacts multimedia publishsubscribe \
 			serviceframework systeminfo versit; do
 		use ${mod} && modules+=" ${mod}"
 	done
+
 	local myconf="./configure
 			-prefix '${EPREFIX}/usr'
 			-headerdir '${EPREFIX}/usr/include/qt4'
@@ -76,7 +85,6 @@ src_configure() {
 			$(use tools || echo -no-tools)
 			-modules '${modules}'
 			-no-docs"
-
 	echo ${myconf}
 	eval ${myconf} || die "./configure failed"
 
