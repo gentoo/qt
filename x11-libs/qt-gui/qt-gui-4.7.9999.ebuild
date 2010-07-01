@@ -73,12 +73,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# bug #313619
-	if use stable-branch; then
-		epatch "${FILESDIR}/qtbug-9691-egl.patch"
-		epatch"${FILESDIR}/qtbug-9691-Xdefs.patch"
-		epatch "${FILESDIR}"/qt-4.7-eglfix.patch
-	fi
 	qt4-build-edge_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib

@@ -37,14 +37,6 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
-src_prepare() {
-	if use stable-branch; then
-		epatch "${FILESDIR}/qtbug-9691-egl.patch"
-		epatch "${FILESDIR}/qtbug-9691-Xdefs.patch"
-	fi
-	qt4-build-edge_src_prepare
-}
-
 src_configure() {
 	myconf="${myconf} -opengl
 		$(qt_use egl)

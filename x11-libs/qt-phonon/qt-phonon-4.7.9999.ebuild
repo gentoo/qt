@@ -31,14 +31,6 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 QCONFIG_ADD="phonon"
 QCONFIG_DEFINE="QT_GSTREAMER"
 
-src_prepare() {
-	if use stable-branch; then
-		epatch "${FILESDIR}"/qtbug-9691-egl.patch
-		epatch "${FILESDIR}"/qtbug-9691-Xdefs.patch
-	fi
-	qt4-build-edge_src_prepare
-}
-
 src_configure() {
 	myconf="${myconf} -phonon -phonon-backend -no-opengl -no-svg
 		$(qt_use dbus qdbus)"
