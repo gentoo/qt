@@ -58,6 +58,7 @@ src_configure() {
 		$(qt_use sqlite sql-sqlite plugin) $(use sqlite && echo '-system-sqlite')
 		$(qt_use odbc sql-odbc plugin)
 		$(qt_use freetds sql-tds plugin)
+		$(qt_use firebird sql-ibase plugin)
 		$(qt_use qt3support)"
 
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender
