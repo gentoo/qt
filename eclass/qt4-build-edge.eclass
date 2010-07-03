@@ -240,6 +240,14 @@ qt4-build-edge_src_install() {
 	qt4-build_src_install
 }
 
+# @FUNCTION: qt4-build-edge_src_test
+# @DESCRIPTION:
+# Runs make check in target directories only (required for live ebuilds).
+qt4-build-edge_src_test() {
+	debug-print-function $FUNCNAME "$@"
+	qt4-build_src_test
+}
+
 # @FUNCTION: qt4-build-edge_pkg_postrm
 # @DESCRIPTION:
 # Generates configuration when the package is completely removed.
@@ -292,4 +300,4 @@ qt_nolibx11() {
 	sed -i "/unixtests\/compile.test.*config.tests\/x11\/xlib/,/fi$/d" "${S}"/configure ||
 		die "x11 check sed failed"
 }
-EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install pkg_postrm pkg_postinst
+EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postrm pkg_postinst
