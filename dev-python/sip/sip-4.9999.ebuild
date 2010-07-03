@@ -11,8 +11,6 @@ EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 
 inherit eutils python toolchain-funcs ${HG_ECLASS}
 
-HG_REVISION="cb2c1ea78ed5"
-
 DESCRIPTION="Python bindings generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
 LICENSE="|| ( GPL-2 GPL-3 sip )"
@@ -31,11 +29,9 @@ if [[ ${PV} == *9999* ]]; then
 	S=${WORKDIR}/${PN}
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
-	DEPEND="${DEPEND}
-		sys-devel/bison
-		sys-devel/flex"
-	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}.tar.gz"
-	S=${WORKDIR}/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}
+	MY_P=${PN}-snapshot-${PV%_pre*}-${HG_REVISION}
+	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	S=${WORKDIR}/${MY_P}
 else
 	# official stable release
 	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip${PV%%.*}/${P}.tar.gz"
@@ -43,7 +39,11 @@ fi
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
-	python build.py prepare
+
+	if [[ ${PV} == *9999* ]]; then
+		python build.py prepare || die
+	fi
+
 	python_copy_sources
 }
 

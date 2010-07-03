@@ -31,11 +31,9 @@ if [[ ${PV} == *9999* ]]; then
 	S=${WORKDIR}/${PN}
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
-	DEPEND="${DEPEND}
-		sys-devel/bison
-		sys-devel/flex"
-	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}.tar.gz"
-	S=${WORKDIR}/${PN}-snapshot-${PV/_pre*/}-${HG_REVISION}
+	MY_P=${PN}-snapshot-${PV%_pre*}-${HG_REVISION}
+	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	S=${WORKDIR}/${MY_P}
 else
 	# official stable release
 	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip${PV%%.*}/${P}.tar.gz"
@@ -43,6 +41,11 @@ fi
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
+
+	if [[ ${PV} == *9999* ]]; then
+		python build.py prepare || die
+	fi
+
 	python_copy_sources
 }
 
