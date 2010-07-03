@@ -4,13 +4,13 @@
 
 EAPI="2"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
-SUPPORT_PYTHON_ABIS="2"
+SUPPORT_PYTHON_ABIS="1"
 
 inherit qt4-r2 python toolchain-funcs
 
 REVISION=f3fe5da0634c
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QTVER="4.7.0_beta1" # minimal Qt version this is supposed to work with
+QTVER="4.6.2" # minimal Qt version this is supposed to work with
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
@@ -57,6 +57,10 @@ src_prepare() {
 		sed -i -e 's,^\([[:blank:]]\+\)check_dbus(),\1pass,' \
 			"${S}"/configure.py || die
 	fi
+
+	# Patch to support qreal for arm architecture
+	# wrt bug #322349
+	use arm && epatch "${FILESDIR}/${PN}-4.7.3-qreal_float_support.patch"
 
 	qt4-r2_src_prepare
 	python_copy_sources
@@ -142,7 +146,7 @@ src_install() {
 	}
 	python_execute_function -s installation
 
-	dodoc OPENSOURCE-NOTICE.TXT README doc/pyqt4ref.txt NEWS THANKS || die
+	dodoc OPENSOURCE-NOTICE.TXT doc/pyqt4ref.txt NEWS THANKS || die
 
 	if use doc; then
 		dohtml -r doc/* || die
