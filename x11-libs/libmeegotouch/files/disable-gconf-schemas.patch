@@ -1,17 +1,22 @@
 diff --git a/src/src.pro b/src/src.pro
-index 9b3ddd2..dbfeb6f 100644
+index f60a9dc..5cea0c7 100644
 --- a/src/src.pro
 +++ b/src/src.pro
-@@ -7,12 +7,3 @@ SUBDIRS += \
-     extensions
- win32|macx:SUBDIRS -= settings extensions
+@@ -9,17 +9,6 @@ win32|macx:SUBDIRS -= settings extensions
  
--unix {
--  include(../mkspecs/common.pri)
--  schemas.CONFIG += no_check_exist
--  schemas.files = $${IN_PWD}/meegotouch.schemas
--  schemas.path = $${M_SYSCONFDIR}/gconf/schemas
--  schemas.commands = GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) gconftool-2 --makefile-install-rule $${IN_PWD}/meegotouch.schemas
--
--  INSTALLS += schemas
+ include(../mkspecs/common.pri)
+ 
+-contains(DEFINES, HAVE_GCONF) {
+-    # install gconf schema
+-    unix {
+-        schemas.CONFIG += no_check_exist
+-        schemas.files = $${IN_PWD}/data/meegotouch.schemas
+-        schemas.path = $${M_SYSCONFDIR}/gconf/schemas
+-        schemas.commands = GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) gconftool-2 --makefile-install-rule $${IN_PWD}/data/meegotouch.schemas
+-        INSTALLS += schemas
+-    }
 -}
+-
+ #install device configuration file
+ devices.CONFIG += no_check_exist
+ devices.files = $${IN_PWD}/data/devices.conf

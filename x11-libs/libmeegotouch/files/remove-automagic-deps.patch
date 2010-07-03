@@ -1,8 +1,8 @@
 diff --git a/configure b/configure
-index ddb77ca..d708364 100755
+index 594e4eb..72a9031 100755
 --- a/configure
 +++ b/configure
-@@ -348,45 +348,6 @@ if [ "$CFG_ICU" != "no" ]; then
+@@ -364,50 +364,6 @@ if [ "$CFG_ICU" != "no" ]; then
      fi
  fi
  
@@ -44,7 +44,12 @@ index ddb77ca..d708364 100755
 -	HAVE_CONTENTACTION=no
 -    fi
 -
+-    if [ "$SBOX_UNAME_MACHINE" = "arm" ]; then
+-        IS_ARMEL=yes
+-    fi
+-
 -fi
+-
  
  
- 
+ #-------------------------------------------------------------------------------

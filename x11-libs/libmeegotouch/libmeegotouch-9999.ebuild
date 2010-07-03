@@ -8,12 +8,12 @@ inherit qt4-r2 git multilib toolchain-funcs gnome2-utils
 
 DESCRIPTION="The Harmattan Application Framework library"
 HOMEPAGE="http://duiframework.wordpress.com"
-EGIT_REPO_URI="git://gitorious.org/maemo-6-ui-framework/libdui.git"
+EGIT_REPO_URI="git://gitorious.org/meegotouch/libmeegotouch.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="benchmarks dbus debug +demos gconf gstreamer icu pch plainqt test"
+IUSE="dbus debug +demos gconf gstreamer icu pch plainqt"
 
 COMMON_DEPEND="
 	x11-libs/libXfixes
@@ -31,7 +31,7 @@ COMMON_DEPEND="
 DEPEND="${COMMON_DEPEND}
 	dev-util/pkgconfig"
 RDEPEND="${COMMON_DEPEND}
-	~x11-themes/duitheme-${PV}"
+	~x11-themes/meegotouch-theme-${PV}"
 
 # disable installation of gconf schemas until we have a fix for
 # the sandbox violation
@@ -97,9 +97,8 @@ src_configure() {
 	QTDIR=/usr ./configure -release \
 	    -prefix "/usr" \
 		-libdir "/usr/$(get_libdir)" \
-		$(use_make benchmarks) \
 		$(use_make plainqt) \
-		$(use_make test tests) || die "configure failed"
+		-nomake tests || die "configure failed"
 
 	eqmake4 M_BUILD_TREE="${S}" M_SOURCE_TREE="${S}"
 }

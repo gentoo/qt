@@ -9,11 +9,10 @@
 	<longdescription lang="en">
 	</longdescription>
 	<use>
-		<flag name='benchmarks'>Compile benchmarks</flag>
 		<flag name='demos'>Build demo applications</flag>
 		<flag name='gconf'>Build C++ abstraction layer for gconf settings
 			system</flag>
-		<flag name='plainqt'>Build plainqt style plugin for Harmattan</flag>
+		<flag name='plainqt'>Build plainqt style plugin for MeeGo Touch</flag>
 	</use>
 </pkgmetadata>
 
