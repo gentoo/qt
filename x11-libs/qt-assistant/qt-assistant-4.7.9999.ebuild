@@ -38,6 +38,12 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
+src_prepare() {
+	qt4-build-edge_src_prepare
+	sed -e "s/\(sub-qdoc3\.depends =\).*/\1/" \
+	    -i doc/doc.pri || die "patching qdoc3 depends failed"
+}
+
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
