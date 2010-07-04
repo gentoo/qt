@@ -42,10 +42,6 @@
 =dev-python/qscintilla-python-2.4.4_pre*
 =x11-libs/qscintilla-2.4.4_pre*
 
-# Ben de Groot <yngwin@gentoo.org> (13 Feb 2010)
-# fails to compile
-x11-misc/xqde
-
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
@@ -54,7 +50,3 @@ x11-misc/xqde
 # Highly broken because of bundled qscintilla. Feel free
 # to fix it and unmask it.
 =dev-util/monkeystudio-1.8.4.0_beta1
-
-# Ben de Groot <yngwin@gentoo.org> (27 Jun 2009)
-# Needs Qt 4.4, while 4.5.1 is stable. Use qt-script instead.
-=dev-libs/qsa-1.2*
