@@ -8,24 +8,25 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit eutils python
 
-MY_PN="${PN}5"
-MY_P="${MY_PN}-${PV}"
-
 DESCRIPTION="A full featured Python IDE using PyQt4 and QScintilla"
 HOMEPAGE="http://eric-ide.python-projects.org/"
-SRC_URI="mirror://sourceforge/eric-ide/${MY_PN}/stable/${PV}/${MY_P}.tar.gz"
 
 SLOT="5"
+MY_PN="${PN}${SLOT}"
+MY_P="${MY_PN}-${PV}"
+
+SRC_URI="mirror://sourceforge/eric-ide/${MY_PN}/stable/${PV}/${MY_P}.tar.gz"
 LICENSE="GPL-3"
+
 KEYWORDS="~amd64 ~hppa ~ppc ~ppc64 ~x86"
 IUSE="spell"
 
 DEPEND=">=dev-python/PyQt4-4.7.0[assistant,svg,webkit,X]
 	>=dev-python/qscintilla-python-2.4.0"
 RDEPEND="${DEPEND}
-	>=dev-python/chardet-2.0
-	>=dev-python/pygments-1.1
-	dev-python/coverage"
+	>=dev-python/chardet-2.0.1
+	>=dev-python/pygments-1.1.1
+	>=dev-python/coverage-3.2"
 PDEPEND="spell? ( dev-python/pyenchant )"
 RESTRICT_PYTHON_ABIS="2.*"
 
@@ -40,14 +41,17 @@ unset L
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	epatch "${FILESDIR}/eric-5.0_no_interactive.patch"
-	epatch "${FILESDIR}/eric-5.0_remove_coverage.patch"
+	epatch "${FILESDIR}/${PN}-5.0_no_interactive.patch"
+	epatch "${FILESDIR}/${PN}-5.0_remove_coverage.patch"
+	epatch "${FILESDIR}/${PN}-5.0_sandbox.patch"
 
-	# Delete internal copies of dev-python/chardet, dev-python/coverage,
-	# dev-python/pygments and dev-python/simplejson.
+	# Append ${SLOT} to the icon name to avoid file collisions
+	sed -i -e "s/^Icon=eric$/&${SLOT}/" eric/eric${SLOT}.desktop || die
+
+	# Delete internal copies of dev-python/chardet,
+	# dev-python/coverage and dev-python/pygments
 	rm -fr eric/ThirdParty
-	rm -fr eric/DebugClients/Python/coverage
-	rm -fr eric/DebugClients/Python3/coverage
+	rm -fr eric/DebugClients/Python{,3}/coverage
 }
 
 src_install() {
@@ -61,16 +65,16 @@ src_install() {
 	}
 	python_execute_function installation
 
-	doicon eric/icons/default/eric.png
-	make_desktop_entry "eric5 --nosplash" eric5 eric "Development;IDE;Qt"
+	newicon eric/icons/default/eric.png eric${SLOT}.png || die
+	domenu eric/eric${SLOT}.desktop || die
 }
 
 pkg_postinst() {
-	python_mod_optimize eric5{,config.py,plugins}
+	python_mod_optimize eric${SLOT}{,config.py,plugins}
 
 	elog
 	elog "If you want to use Eric with mod_python, have a look at"
-	elog "\"${EROOT%/}$(python_get_sitedir -f)/eric5/patch_modpython.py\"."
+	elog "\"${EROOT%/}$(python_get_sitedir -f)/eric${SLOT}/patch_modpython.py\"."
 	elog
 	elog "The following packages will give Eric extended functionality:"
 	elog "  dev-python/pylint"
@@ -82,5 +86,5 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-	python_mod_cleanup eric5{,config.py,plugins}
+	python_mod_cleanup eric${SLOT}{,config.py,plugins}
 }
