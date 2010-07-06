@@ -47,8 +47,10 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-5.0_remove_coverage.patch"
 	epatch "${FILESDIR}/${PN}-5.0_sandbox.patch"
 
-	# Append ${SLOT} to the icon name to avoid file collisions
+	# Avoid file collisions among different SLOTs of eric
 	sed -i -e "s/^Icon=eric$/&${SLOT}/" eric/${MY_PN}.desktop || die
+	rm -f eric/APIs/Python/zope-*.api
+	rm -f eric/APIs/Ruby/Ruby-*.api
 
 	# Delete internal copies of dev-python/chardet,
 	# dev-python/coverage and dev-python/pygments
