@@ -47,10 +47,6 @@ RDEPEND="${COMMON_DEPEND}
 
 S="${WORKDIR}/${PN}"
 
-PATCHES=(
-	"${FILESDIR}/libgsm-ugly-code.patch"
-)
-
 # set given .config variable to =m or =y
 # args: <variable> <m/y>
 config_enable() {
