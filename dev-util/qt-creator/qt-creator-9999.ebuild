@@ -80,6 +80,8 @@ src_prepare() {
 				plugin="qtscripteditor"
 			elif [[ ${plugin} == "qml" ]]; then
 				plugins="qmljseditor"
+				sed -i "/^include(qml\/qml.pri)/d" \
+					src/plugins/debugger/debugger.pro
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"
