@@ -107,7 +107,8 @@ src_prepare() {
 }
 
 src_configure() {
-	local qtheaders=
+	#the path must NOT be empty
+	local qtheaders="False"
 	use qml && qtheaders="/usr/include/"
 	eqmake4 \
 		${MY_PN}.pro \
