@@ -80,7 +80,8 @@ src_prepare() {
 				plugin="qtscripteditor"
 			elif [[ ${plugin} == "qml" ]]; then
 				plugins="qmljseditor"
-				epatch "${FILESDIR}"/disable_qml_plugins.patch
+				sed -i "/^contains(QT_CONFIG, declarative)/,/^}$/d" \
+					"${S}"/src/plugins/plugins.pro
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"
