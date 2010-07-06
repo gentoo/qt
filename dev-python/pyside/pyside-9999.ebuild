@@ -15,29 +15,22 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug kde"
 
+QT_PV="4.6.0"
+
 DEPEND=">=dev-libs/boost-1.41.0[python]
-	>=dev-python/boostpythongenerator-0.3.2
-	>=x11-libs/qt-core-4.5.0
-	>=x11-libs/qt-assistant-4.5.0
-	>=x11-libs/qt-gui-4.5.0
-	>=x11-libs/qt-opengl-4.5.0
+	~dev-python/shiboken-${PV}
+	>=x11-libs/qt-core-${QT_PV}
+	>=x11-libs/qt-assistant-${QT_PV}
+	>=x11-libs/qt-gui-${QT_PV}
+	>=x11-libs/qt-opengl-${QT_PV}
 	kde? ( media-sound/phonon )
-	!kde? ( || ( >=x11-libs/qt-phonon-4.5.0 media-sound/phonon ) )
-	>=x11-libs/qt-script-4.5.0
-	>=x11-libs/qt-sql-4.5.0
-	>=x11-libs/qt-svg-4.5.0
-	>=x11-libs/qt-webkit-4.5.0
-	>=x11-libs/qt-xmlpatterns-4.5.0"
+	!kde? ( || ( >=x11-libs/qt-phonon-${QT_PV}
+		media-sound/phonon ) )
+	>=x11-libs/qt-script-${QT_PV}
+	>=x11-libs/qt-sql-${QT_PV}
+	>=x11-libs/qt-svg-${QT_PV}
+	>=x11-libs/qt-webkit-${QT_PV}
+	>=x11-libs/qt-xmlpatterns-${QT_PV}"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
-
-src_prepare() {
-	epatch "${FILESDIR}/${PN}-qtscripttools.patch"
-	sed -e 's/-2.6//' -i data/CMakeLists.txt || die "sed failed"
-}
-
-src_install() {
-	cmake-utils_src_install
-	dodoc AUTHORS ChangeLog || die "dodoc failed"
-}
