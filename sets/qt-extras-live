@@ -15,6 +15,7 @@
 ~dev-python/generatorrunner-9999
 ~dev-python/pyside-examples-9999
 ~dev-python/pyside-9999
+~dev-python/shiboken-9999
 ~dev-python/sip-4.9999
 ~dev-util/qgit-9999
 ~dev-util/qt-creator-9999
