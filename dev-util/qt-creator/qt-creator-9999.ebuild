@@ -80,8 +80,6 @@ src_prepare() {
 				plugin="qtscripteditor"
 			elif [[ ${plugin} == "qml" ]]; then
 				plugins="qmljseditor"
-				sed -i "/^contains(QT_CONFIG, declarative)/,/^}$/d" \
-					"${S}"/src/plugins/plugins.pro
 			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"
@@ -109,7 +107,12 @@ src_prepare() {
 }
 
 src_configure() {
-	eqmake4 ${MY_PN}.pro IDE_LIBRARY_BASENAME="$(get_libdir)"
+	local qtheaders=
+	use qml && qtheaders="/usr/include/"
+	eqmake4 \
+		${MY_PN}.pro \
+		IDE_LIBRARY_BASENAME="$(get_libdir)" \
+		QT_PRIVATE_HEADERS=${qtheaders}
 }
 
 src_install() {
