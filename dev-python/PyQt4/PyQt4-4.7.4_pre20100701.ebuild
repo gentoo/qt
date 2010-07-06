@@ -58,6 +58,9 @@ src_prepare() {
 			"${S}"/configure.py || die
 	fi
 
+	use phonon && sed -i \
+		"/generate_code(\"phonon\")/s:phonon\":&, extra_include_dirs=[\"/usr/include/phonon\"]:" \
+		"${S}"/configure.py
 	# Patch to support qreal for arm architecture
 	# wrt bug #322349
 	use arm && epatch "${FILESDIR}/${PN}-4.7.3-qreal_float_support.patch"
