@@ -8,7 +8,7 @@
 ~app-portage/eix-9999
 ~app-text/poppler-9999
 ~dev-db/unixODBC-GUI-Qt-9999
-~dev-embedded/qvfb-4.9999
+#~dev-embedded/qvfb-4.9999 # it requires qt-4.9999 explicitly
 ~dev-libs/qjson-9999
 ~dev-libs/qoauth-9999
 ~dev-python/apiextractor-9999
@@ -30,6 +30,7 @@
 ~net-im/kadu-9999
 ~net-im/qtwitter-9999
 ~net-misc/kontrolpack-9999
+~net-misc/networkled-9999
 ~sci-calculators/speedcrunch-9999
 ~www-client/arora-9999
 ~www-client/surfer-9999
@@ -37,7 +38,7 @@
 ~x11-libs/libqxt-9999
 ~x11-misc/axkb-9999
 ~x11-terms/qterminal-9999
-~x11-themes/duitheme-9999
+~x11-themes/meegotouch-theme-9999
 ~x11-themes/xcurtheme-9999
 ~x11-wm/antico-9999
 ~x11-wm/antico-deluxe-9999
