@@ -16,8 +16,6 @@
 # Markos Chandras <hwoarang@gentoo.org> (14 Jun 2010)
 # Masking Snapshots and RC releases
 =dev-util/eric-4.5_pre*
-=dev-util/eric-5.0_pre*
-=dev-util/eric-5.0.0_rc*
 
 # Markos Chandras <hwoarang@gentoo.org> (14 Jun 2010)
 # Needs Qt-4.4.X. Removal in 30 days
