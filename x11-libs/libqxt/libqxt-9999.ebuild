@@ -27,6 +27,9 @@ DEPEND="${DEPEND}
 S="${WORKDIR}/${PN}"
 
 src_configure() {
+	eqmake4 ${PN}.pro \
+		QXT_INSTALL_DOCS="/usr/share/doc/${PF}" \
+		QXT_INSTALL_FEATURES="/usr/share/qt4/mkspecs/features"
 	local myconf
 	myconf="-prefix /usr \
 		-libdir /usr/$(get_libdir) \
@@ -41,12 +44,19 @@ src_configure() {
 	./configure ${myconf} || die "configure failed"
 }
 
-src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	dodoc AUTHORS README
+src_compile() {
+	emake || die "emake failed"
+	use doc && emake docs
+}
 
+pkg_postinst() {
 	if use doc; then
-		doxygen Doqsyfile
-		dohtml -r deploy/docs/*
+		elog
+		elog "In case you want to browse the libqxt documentation using"
+		elog "qt-assistant do the following steps:"
+		elog "1. Open qt-assistant"
+		elog "2. Edit->Preferences->Documentation->Add"
+		elog "3. Add this path: /usr/share/doc/${PF}/qxt.qch"
+		elog
 	fi
 }
