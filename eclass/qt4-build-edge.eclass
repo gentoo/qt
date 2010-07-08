@@ -197,15 +197,7 @@ qt4-build-edge_src_unpack() {
 # source files in order to respect CFLAGS/CXXFLAGS/LDFLAGS specified on /etc/make.conf.
 qt4-build-edge_src_prepare() {
 	debug-print-function $FUNCNAME "$@"
-	local NOLIBX11PKG="qt-core qt-dbus qt-script qt-sql qt-test qt-xmlpatterns"
-
-	hasq ${PN} ${NOLIBX11PKG} && qt_nolibx11
-
-	if [[ ${PV} == *.9999 ]]; then
-		[[ ${PN} == qt-assistant ]] && qt_assistant_cleanup
-		generate_include
-	fi
-
+	generate_include
 	# We need to remove any specific hardcoded compiler flags
 	sed -i -e '/^QMAKE_CFLAGS[^_.*]/s:\+=.*:=:' \
 		-e '/^QMAKE_CXXFLAGS[^_.*]/s:\+=.*:=:' \
@@ -271,33 +263,4 @@ generate_include() {
 	QTDIR="." perl bin/syncqt
 }
 
-# @FUNCTION: qt_assistant_cleanup
-# @RETURN: nothing
-# @DESCRIPTION:
-# Tries to clean up tools.pro for live qt-assistant ebuilds
-# Meant to be called in src_prepare
-qt_assistant_cleanup() {
-	# different versions (and branches...) may need different handling,
-	# add a case if you need special handling
-	case "${MY_PV_EXTRA}" in
-		*kde-qt*)
-			sed -e "/^[ \t]*porting/,/^[ \t]*win32.*activeqt$/d" \
-				-e "/mac/,/^embedded.*makeqpf$/d" \
-				-i tools/tools.pro || die "patching tools.pro failed"
-		;;
-		*)
-			sed -e "/^[ \t]*porting/,/^[ \t]*win32.*activeqt$/d" \
-				-e "/mac/,/^embedded.*makeqpf$/d" \
-				-e "s/^\([ \t]*pixeltool\) /\1 qdoc3 /" \
-				-i tools/tools.pro || die "patching tools.pro failed"
-		;;
-	esac
-}
-
-qt_nolibx11() {
-	# delete any referense to X libraries for packages that dont use it
-	einfo "removing X11 check to allow X-less compilation"
-	sed -i "/unixtests\/compile.test.*config.tests\/x11\/xlib/,/fi$/d" "${S}"/configure ||
-		die "x11 check sed failed"
-}
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postrm pkg_postinst
