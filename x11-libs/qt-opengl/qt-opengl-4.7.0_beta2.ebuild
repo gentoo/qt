@@ -16,10 +16,6 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	virtual/glu"
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/qtbug-9691-Xdefs.patch"
-)
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/opengl

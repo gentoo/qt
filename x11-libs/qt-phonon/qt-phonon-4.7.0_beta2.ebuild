@@ -19,10 +19,6 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support]
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )"
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/qtbug-9691-Xdefs.patch"
-)
-
 QT4_TARGET_DIRECTORIES="
 	src/phonon
 	src/plugins/phonon

@@ -38,10 +38,6 @@ DEPEND="${RDEPEND}
 	x11-proto/inputproto"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
 
-PATCHES=(
-	"${FILESDIR}/qtbug-9691-Xdefs.patch" # bug #313619
-)
-
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
