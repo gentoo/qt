@@ -83,6 +83,12 @@ src_prepare() {
 				sed -i "/^include(qml\/qml.pri)/d" \
 					src/plugins/debugger/debugger.pro
 			fi
+			if [[ ${plugin} == "designer" ]]; then
+				sed -i "/plugin_qt4projectmanager/s:^:#:" \
+					src/plugins/plugins.pro \
+					|| die "Failed to disable qt4projectmanager plugin"
+			fi
+
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"
 		fi

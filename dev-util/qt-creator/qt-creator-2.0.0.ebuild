@@ -65,6 +65,11 @@ src_prepare() {
 				plugins="qmljseditor"
 				epatch "${FILESDIR}"/${P}-disable_qml_plugins.patch
 			fi
+			if [[ ${plugin} == "designer" ]]; then
+				sed -i "/plugin_qt4projectmanager/s:^:#:" \
+					src/plugins/plugins.pro \
+					|| die "Failed to disable qt4projectmanager plugin"
+			fi
 			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
 				|| die "Failed to disable ${plugin} plugin"
 		fi
