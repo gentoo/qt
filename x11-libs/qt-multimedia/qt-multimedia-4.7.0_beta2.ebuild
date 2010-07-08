@@ -21,7 +21,6 @@ pkg_setup() {
 		include/Qt/
 		include/QtCore/
 		include/QtGui/
-		include/QtMediaServices/
 		include/QtMultimedia/
 		include/QtNetwork/
 		src/src.pro
