@@ -16,6 +16,7 @@ DEPEND="~x11-libs/qt-core-${PV}
 	~x11-libs/qt-opengl-${PV}
 	~x11-libs/qt-script-${PV}
 	~x11-libs/qt-sql-${PV}
+	~x11-libs/qt-svg-${PV}
 	~x11-libs/qt-webkit-${PV}
 	~x11-libs/qt-xmlpatterns-${PV}"
 RDEPEND="${DEPEND}"

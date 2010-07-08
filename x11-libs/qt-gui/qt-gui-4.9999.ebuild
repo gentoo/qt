@@ -26,7 +26,7 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=,stable-branch=]
 	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
 	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )

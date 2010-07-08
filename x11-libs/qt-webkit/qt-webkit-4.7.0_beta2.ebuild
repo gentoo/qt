@@ -46,3 +46,11 @@ src_configure() {
 	myconf="${myconf} -webkit $(qt_use dbus qdbus)"
 	qt4-build_src_configure
 }
+
+src_install() {
+	qt4-build_src_install
+	#wrt bug #326721
+	dolib.a "${S}"/src/3rdparty/webkit/JavaScriptCore/release/libjscore.a
+	insinto "${QTLIBDIR}"
+	doins "${S}"/src/3rdparty/webkit/JavaScriptCore/release/libjscore.prl
+}

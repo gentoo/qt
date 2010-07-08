@@ -10,13 +10,14 @@ SLOT="4"
 KEYWORDS=""
 IUSE="private-headers"
 
-DEPEND="~x11-libs/qt-core-${PV}
-	~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-multimedia-${PV}
-	~x11-libs/qt-script-${PV}
-	~x11-libs/qt-sql-${PV}
-	~x11-libs/qt-webkit-${PV}
-	~x11-libs/qt-xmlpatterns-${PV}"
+DEPEND="~x11-libs/qt-core-${PV}[stable-branch=]
+	~x11-libs/qt-gui-${PV}[stable-branch=]
+	~x11-libs/qt-multimedia-${PV}[stable-branch=]
+	~x11-libs/qt-script-${PV}[stable-branch=]
+	~x11-libs/qt-sql-${PV}[stable-branch=]
+	~x11-libs/qt-svg-${PV}[stable-branhc=]	
+	~x11-libs/qt-webkit-${PV}[stable-branch=]
+	~x11-libs/qt-xmlpatterns-${PV}[stable-branch=]"
 
 RDEPEND="${DEPEND}"
 
