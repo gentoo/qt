@@ -31,7 +31,7 @@ COMMON_DEPEND="
 	curl? ( net-misc/curl )
 	jpeg? ( >=media-libs/jpeg-7:0 )
 	jpeg2k? ( media-libs/openjpeg )
-	lcms? ( media-libs/lcms )
+	lcms? ( =media-libs/lcms-1* )
 	png? ( media-libs/libpng )
 	qt4? (
 		x11-libs/qt-core:4
