@@ -11,7 +11,7 @@ EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 
 inherit eutils python toolchain-funcs ${HG_ECLASS}
 
-HG_REVISION=710b71e6f0c6
+HG_REVISION=f760366cea3b
 
 DESCRIPTION="Python bindings generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
