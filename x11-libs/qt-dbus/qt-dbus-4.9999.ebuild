@@ -30,7 +30,6 @@ include/QtXml
 src/corelib
 src/xml"
 
-PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
 
 src_configure() {
 	myconf="${myconf} -dbus-linked"

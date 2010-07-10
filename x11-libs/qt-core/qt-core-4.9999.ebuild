@@ -53,7 +53,6 @@ src/script
 tools/linguist/shared
 translations"
 
-PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
 
 src_unpack() {
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
