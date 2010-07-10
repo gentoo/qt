@@ -31,7 +31,6 @@ src/plugins
 src/3rdparty
 src/tools"
 
-PATCHES=( "${FILESDIR}/qt-${PV}-nolibx11.patch" )
 
 pkg_setup() {
 	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then

@@ -33,7 +33,6 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	src/
 	include/
 	tools/"
-
 PATCHES=(
 	"${FILESDIR}/${PN}-4.6-plugandpaint.patch"
 )
