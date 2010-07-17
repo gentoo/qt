@@ -5,7 +5,6 @@
 EAPI="2"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="3.*"
 
 EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 [[ ${PV} == *9999* ]] && HG_ECLASS="mercurial"
