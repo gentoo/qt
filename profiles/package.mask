@@ -9,13 +9,6 @@
 =dev-python/qscintilla-python-2.4.4_pre*
 =x11-libs/qscintilla-2.4.4_pre*
 
-# Markos Chandras <hwoarang@gentoo.org> (07 Jul 2010)
-# Master(qt-creator-2.2 developemt ) branch is considered 
-# highly broken by upstream.
-# Use 2.9999 ebuild which is the development branch of
-# upcoming 2.1 release.
-=dev-util/qt-creator-9999
-
 # Markos Chandras <hwoarang@gentoo.org> (24 Jun 2010)
 # Needs more testing. Masked dependencies ( 4.7.0_beta )
 =dev-util/qt-creator-2.0.0
