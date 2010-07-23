@@ -13,7 +13,8 @@ EGIT_REPO_URI="git://git.freedesktop.org/git/poppler/poppler"
 LICENSE="GPL-2"
 KEYWORDS=""
 SLOT="0"
-IUSE="+abiword cairo cjk curl cxx debug doc exceptions jpeg jpeg2k +lcms png qt4 +utils +xpdf-headers"
+IUSE="+abiword cairo cjk curl cxx debug doc exceptions +introspection jpeg
+jpeg2k +lcms png qt4 +utils +xpdf-headers"
 
 # No test data provided
 RESTRICT="test"
@@ -26,7 +27,8 @@ COMMON_DEPEND="
 	cairo? (
 		dev-libs/glib:2
 		>=x11-libs/cairo-1.8.4
-		>=x11-libs/gtk+-2.14.0:2
+		>=x11-libs/gtk+-2.20.1:2[introspection?]
+		introspection? ( dev-libs/gobject-introspection )
 	)
 	curl? ( net-misc/curl )
 	jpeg? ( >=media-libs/jpeg-7:0 )
@@ -73,6 +75,7 @@ src_configure() {
 		$(cmake-utils_use_enable xpdf-headers XPDF_HEADERS)
 		$(cmake-utils_use_with cairo)
 		$(cmake-utils_use_with cairo GTK)
+		$(cmake-utils_use_with introspection GObjectIntrospection)
 		$(cmake-utils_use_with jpeg)
 		$(cmake-utils_use_with png)
 		$(cmake-utils_use_with qt4)
