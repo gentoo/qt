@@ -15,11 +15,10 @@ SRC_URI="http://get.qt.nokia.com/qt/solutions/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="bearer bluetooth contacts debug doc multimedia opengl +publishsubscribe +serviceframework systeminfo +tools versit"
+IUSE="bearer bluetooth contacts debug doc multimedia opengl +publishsubscribe qml +serviceframework systeminfo +tools versit"
 # The following APIs are not (yet) supported:
 #   - messaging, requires QMF which isn't available
 #   - sensors, there are no backends for desktop platforms
-# FIXME: plugins/plugins.pro has an automagic dep on qt-declarative
 
 COMMON_DEPEND="
 	>=x11-libs/qt-core-4.6.0:4
@@ -41,6 +40,7 @@ COMMON_DEPEND="
 	publishsubscribe? (
 		tools? ( >=x11-libs/qt-gui-4.6.0:4 )
 	)
+	qml? ( x11-libs/qt-declarative:4 )
 	serviceframework? (
 		>=x11-libs/qt-sql-4.6.0:4[sqlite]
 		tools? ( >=x11-libs/qt-gui-4.6.0:4 )
@@ -74,11 +74,14 @@ src_prepare() {
 	qt4-r2_src_prepare
 
 	# translations aren't really translated: disable them
-	sed -i -e '/SUBDIRS +=/s/translations//' qtmobility.pro || die
+	sed -i -e '/SUBDIRS +=/s:translations::' qtmobility.pro || die
 
-	# fix automagic dependency on qt-opengl
+	# fix automagic dependencies on qt-opengl and qt-declarative
 	if ! use opengl; then
-		sed -i -e '/QT +=/s/opengl//' src/multimedia/multimedia.pro || die
+		sed -i -e '/QT +=/s:opengl::' src/multimedia/multimedia.pro || die
+	fi
+	if ! use qml; then
+		sed -i -e '/SUBDIRS +=/s:declarative::' plugins/plugins.pro || die
 	fi
 }
 
@@ -106,7 +109,7 @@ src_configure() {
 
 	# fix automagic dependency on bluez
 	if ! use bluetooth; then
-		sed -i -e '/^bluez_enabled =/s/yes/no/' config.pri || die
+		sed -i -e '/^bluez_enabled =/s:yes:no:' config.pri || die
 	fi
 
 	eqmake4 qtmobility.pro -recursive
