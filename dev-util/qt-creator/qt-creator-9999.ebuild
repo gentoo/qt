@@ -20,7 +20,7 @@ IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
 
 QTVER="4.7.0_beta1:4"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
-	>=x11-libs/qt-gui-${QTVER}[dbus,qt3support]"
+	>=x11-libs/qt-gui-${QTVER}[qt3support]"
 RDEPEND="${DEPEND}
 	>=x11-libs/qt-sql-${QTVER}
 	>=x11-libs/qt-svg-${QTVER}
@@ -35,11 +35,11 @@ RDEPEND="${DEPEND}
 	git? ( dev-vcs/git )
 	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-vcs/mercurial )
-	!qml? ( >=x11-libs/qt-gui-${QTVER}[dbus,qt3support] )
+	!qml? ( >=x11-libs/qt-gui-${QTVER}[qt3support] )
 	qml? (
 		>=x11-libs/qt-declarative-${QTVER}[private-headers]
 		>=x11-libs/qt-core-${QTVER}[private-headers]
-		>=x11-libs/qt-gui-${QTVER}[dbus,qt3support,private-headers]
+		>=x11-libs/qt-gui-${QTVER}[qt3support,private-headers]
 		>=x11-libs/qt-script-${QTVER}[private-headers]
 	)
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )
