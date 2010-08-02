@@ -118,7 +118,7 @@ src_prepare() {
 src_configure() {
 	#the path must NOT be empty
 	local qtheaders="False"
-	use qml && qtheaders="/usr/include/"
+	use qml && qtheaders="/usr/include/qt4/"
 	eqmake4 \
 		${MY_PN}.pro \
 		IDE_LIBRARY_BASENAME="$(get_libdir)" \
