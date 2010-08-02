@@ -2,6 +2,10 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (02 Aug 2010)
+# Needs extensive testing. Ebuild has many QA issues.
+dev-util/madde
+
 # Markos Chandras <hwoarang@gentoo.org> (15 Jul 2010)
 # Masking latest releases
 =dev-python/sip-4.10.4_pre*
