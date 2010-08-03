@@ -5,6 +5,7 @@
 EAPI=3
 
 EGIT_REPO_URI="git://gitorious.org/qt-labs/simulator.git"
+EGIT_BRANCH="1.x"
 
 inherit qt4-r2 git
 

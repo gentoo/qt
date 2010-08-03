@@ -7,7 +7,7 @@ EAPI=3
 EGIT_REPO_URI="git://gitorious.org/qt-labs/messagingframework.git"
 EGIT_BRANCH="master"
 
-inherit qt4-r2 git
+inherit qt4-r2 git multilib
 
 DESCRIPTION="The Qt Messaging Framework"
 HOMEPAGE="labs.trolltech.com/blogs/2009/09/21/introducing-qmf-an-advanced-mobile-messaging-framework/"
@@ -42,6 +42,11 @@ src_prepare() {
 	sed -e "s#QMF_INSTALL_ROOT#QMF_INSTALL_ROOT/share/${PN}#" \
 		-i "tests/tests.pri" \
 		-i "tests/tst_python_email/tst_python_email.pro" || die
+	#multilib-strict support for amd64
+	for x in messageserver qtopiamail; do
+		sed -i "/target.path/s:lib:$(get_libdir):" \
+			src/libraries/$x/$x.pro
+	done
 }
 
 src_install() {

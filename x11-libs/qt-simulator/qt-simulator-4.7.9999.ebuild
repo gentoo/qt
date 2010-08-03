@@ -23,6 +23,9 @@ script dbus"
 DEPEND="~x11-libs/qt-gui-${PV}"
 RDEPEND="${DEPEND}"
 	
+pkg_setup() {
+	PLATFORM="simulator"
+}
 
 src_unpack() {
 	git_src_unpack
