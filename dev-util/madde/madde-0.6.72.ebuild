@@ -58,9 +58,11 @@ src_prepare() {
 	# disable any user interaction
 	epatch "${FILESDIR}"/${P}-no-interactive.patch
 	# fix the installation path
-	sed -i "s:/opt/:${D}opt/${PN}:" ${MY_P}
+	sed -i "s:/opt/:"${D}"opt/${PN}:" ${MY_P}
 	# disable xtar extraction. Will do it later
 	sed -i "/^perl -x/d" ${MY_P}
+	# remove the postinstall scripts. We will do it later
+	sed -i "/postinstall\/postinstall.sh/d" ${MY_P}
 }
 
 src_install() {
@@ -69,10 +71,16 @@ src_install() {
 	# extract the xtar binary
 	perl -x "${MY_P}" xtar > "${D}opt/${PN}/${PV}/xtar"
 	# run the installer
+	# patch postinstaller
 	sh "${S}"/${MY_P}
+	# run the postinst process again to fix the paths
+	sed -i "s:^mypath.*:mypath=\"/opt/${PN}/${PV}/\":" \
+		"${D}"opt/${PN}/${PV}/postinstall/postinstall.sh
+
 }
 
 pkg_postinst() {
+	sh /opt/${PN}/${PV}/postinstall/postinstall.sh
 	elog ">=dev-util/qt-creator-2.0.0 can use madde to create"
 	elog "an extremely useful Maemo development enviroment."
 	elog "To integrate madde to qt-creator go to"
