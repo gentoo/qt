@@ -17,7 +17,9 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND=""
+DEPEND="x11-libs/qt-mobility
+	x11-libs/qmf
+	x11-libs/qt-simulator"
 RDEPEND="${DEPEND}"
 
 src_configure() {
