@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI="3"
 
 EGIT_REPO_URI="git://gitorious.org/qt-labs/messagingframework.git"
-EGIT_BRANCH="master"
 
 inherit multilib qt4-r2 git
 
@@ -19,37 +18,21 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND=">=x11-libs/qt-core-4.6.0
-	>=x11-libs/qt-gui-4.6.0"
+	>=x11-libs/qt-gui-4.6.0
+	>=x11-libs/qt-sql-4.6.0
+	>=x11-libs/qt-test-4.6.0"
 RDEPEND="${DEPEND}"
 
+# TODO:
+#   qt-gui should be optional
+#   qt-test is only needed for unit tests
+#   automagic dep on qt-webkit, see examples/qtmail/plugins/viewers/generic/generic.pro
+
+DOCS="CHANGES"
+PATCHES=(
+	"${FILESDIR}/${PN}-use-standard-install-paths.patch"
+)
+
 src_prepare() {
-	# Fix rpath
-	sed -e "/QMAKE_LFLAGS/d" \
-		-e "/-Wl,-rpath/d" \
-		-e "s#QMF_INSTALL_ROOT#QMF_INSTALL_ROOT/share/${PN}#" \
-		-i "benchmarks/tst_messageserver/tst_messageserver.pro" || die
-	sed -e "/QMAKE_LFLAGS/d" \
-		-i "tests/tests.pri" || die
-
-	# Fix install location
-	for f in $(find "src/plugins/" | grep \.pro); do
-		sed -e "s#QMF_INSTALL_ROOT#QMF_INSTALL_ROOT/share/${PN}#" -i ${f} || die
-	done
-	for f in $(find "examples/" | grep \.pro); do
-		sed -e "s#QMF_INSTALL_ROOT#QMF_INSTALL_ROOT/share/${PN}#" -i ${f} || die
-	done
-
-	sed -e "s#QMF_INSTALL_ROOT#QMF_INSTALL_ROOT/share/${PN}#" \
-		-i "tests/tests.pri" \
-		-i "tests/tst_python_email/tst_python_email.pro" || die
-
-	# multilib-strict support for amd64
-	for x in messageserver qtopiamail; do
-		sed -i "/target.path/s:lib:$(get_libdir):" \
-			src/libraries/$x/$x.pro
-	done
-}
-
-src_install() {
-	emake INSTALL_ROOT="${D}/usr" DESTDIR="${D}/usr" install || die
+	qt4-r2_src_prepare
 }
