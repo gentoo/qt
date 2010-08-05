@@ -8,16 +8,16 @@ Qt4 related packages. For your convenience we provide some sets and
 
 Please note that we use the following versioning scheme:
 
-- 4.x.y_beta, 4.x.y_rc are official pre-releases
-- 4.x.9999[-kde-qt] is "live" code from Nokia's Qt Software git repository
+- 4.x.y_beta, 4.x.y_rc are official pre-releases.
+- 4.x.9999[-kde-qt] is "live" code from Nokia's Qt Software git repository.
         - 4.x.9999[stable-branch] is cloning the Nokia's stable-branch tree. 
         This code is consider stable enough for everyday usage but it gets 
         bumped quite rarely.
         - 4.x.9999[-stable-branch] is cloning the Nokia's master tree. 
-        This code is highly experimental and gets a lots of daily updates.                
-- 4.6.9999[kde-qt] is "live" code from KDE's kde-qt git repository
+        This code is highly experimental and gets a lot of daily updates.                
+- 4.6.9999[kde-qt] is "live" code from KDE's kde-qt git repository.
 
-The corresponding sets we defined are:
+The corresponding sets we define are:
 
 qt-all-4.7
 	the latest official pre-release.
@@ -56,7 +56,7 @@ Bugs should be reported on https://bugs.gentoo.org. Be sure to include
 [qting-edge] in the summary of your bug report.
 
 Users wanting to contribute should first read the `Qt4 ebuild guide
-<http://www.gentoo.org/proj/en/desktop/kde/qt4-based-ebuild-howto.xml>`_.
+<http://www.gentoo.org/proj/en/desktop/qt/qt4-based-ebuild-howto.xml>`_.
 
 Happy Qting!
 
