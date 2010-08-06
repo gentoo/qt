@@ -24,3 +24,7 @@ RDEPEND="${DEPEND}
 	dev-libs/qoauth"
 
 S=${WORKDIR}/${MY_P}
+
+src_configure() {
+	eqmake4 ${PN}.pro PREFIX=/usr
+}
