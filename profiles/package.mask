@@ -2,16 +2,16 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (09 Aug 2010)
+# Masking latest releases
+=dev-python/sip-4.11_pre*
+=dev-python/PyQt4-4.7.5_pre*
+=dev-python/qscintilla-python-2.4.4_pre*
+=x11-libs/qscintilla-2.4.4_pre*
+
 # Markos Chandras <hwoarang@gentoo.org> (02 Aug 2010)
 # Needs extensive testing. Ebuild has many QA issues.
 dev-util/madde
-
-# Markos Chandras <hwoarang@gentoo.org> (15 Jul 2010)
-# Masking latest releases
-=dev-python/sip-4.10.4_pre*
-=dev-python/PyQt4-4.7.4_pre*
-=dev-python/qscintilla-python-2.4.4_pre*
-=x11-libs/qscintilla-2.4.4_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (24 Jun 2010)
 # Needs more testing. Masked dependencies ( 4.7.0_beta )
