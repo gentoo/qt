@@ -8,12 +8,12 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit eutils python toolchain-funcs
 
-HG_REVISION="169fa07f52ab"
+HG_REVISION="8d9c1aad1349"
 MY_P="QScintilla-gpl-snapshot-${PV/_pre*/-${HG_REVISION}}"
 
 DESCRIPTION="Python bindings for Qscintilla"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
-SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"

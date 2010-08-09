@@ -6,8 +6,8 @@
 # Masking latest releases
 =dev-python/sip-4.11_pre*
 =dev-python/PyQt4-4.7.5_pre*
-=dev-python/qscintilla-python-2.4.4_pre*
-=x11-libs/qscintilla-2.4.4_pre*
+=dev-python/qscintilla-python-2.4.5_pre*
+=x11-libs/qscintilla-2.4.5_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (02 Aug 2010)
 # Needs extensive testing. Ebuild has many QA issues.
