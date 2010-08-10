@@ -41,7 +41,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 
 	if [[ ${PV} == *9999* ]]; then
-		python build.py prepare || die
+		$(PYTHON -2) build.py prepare || die
 	fi
 
 	python_copy_sources
@@ -54,7 +54,7 @@ src_configure() {
 				--destdir=${EPREFIX}$(python_get_sitedir)
 				--incdir=${EPREFIX}$(python_get_includedir)
 				--sipdir=${EPREFIX}/usr/share/sip
-				$(use debug && echo '--debug')
+				$(use debug && echo --debug)
 				CC=$(tc-getCC) CXX=$(tc-getCXX)
 				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
 				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
