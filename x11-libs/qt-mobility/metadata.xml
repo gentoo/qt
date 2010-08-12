@@ -6,6 +6,7 @@
 	<flag name="bearer">Build the QtBearer module</flag>
 	<flag name="bluetooth">Enable Bluetooth support in the QtSystemInfo module</flag>
 	<flag name="contacts">Build the QtContacts module</flag>
+	<flag name="location">Build the QtLocation module</flag>
 	<flag name="multimedia">Build the QtMultimediaKit module</flag>
 	<flag name="opengl">Enable OpenGL support in the QtMultimediaKit module</flag>
 	<flag name="publishsubscribe">Build the QtPublishSubscribe module</flag>

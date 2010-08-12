@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 # The following APIs are not (yet) supported:
 #   - messaging, requires QMF which isn't available
 #   - sensors, there are no backends for desktop platforms
-QT_MOBILITY_MODULES="bearer contacts multimedia +publishsubscribe +serviceframework systeminfo versit"
+QT_MOBILITY_MODULES="bearer contacts +location multimedia +publishsubscribe +serviceframework systeminfo versit"
 IUSE="bluetooth debug doc opengl qml +tools ${QT_MOBILITY_MODULES}"
 
 COMMON_DEPEND="
@@ -90,10 +90,15 @@ src_prepare() {
 src_configure() {
 	# the versit module requires contacts support, but luckily
 	# config.pri already takes care of enabling it if necessary
-	local modules="location"
+	local modules=
 	for mod in ${QT_MOBILITY_MODULES//+}; do
-		use ${mod} && modules+=" ${mod}"
+		use ${mod} && modules+="${mod} "
 	done
+	if [[ -z ${modules} ]]; then
+		ewarn "At least one module must be selected for building, but you have selected none."
+		ewarn "The QtLocation module will be automatically enabled."
+		modules="location"
+	fi
 
 	# custom configure script
 	local myconf="./configure
@@ -120,7 +125,6 @@ src_install() {
 	qt4-r2_src_install
 
 	if use doc; then
-		einfo "Installing API documentation"
 		cd "${S}"/doc
 		dohtml -r html/* || die
 		insinto /usr/share/doc/${PF}
