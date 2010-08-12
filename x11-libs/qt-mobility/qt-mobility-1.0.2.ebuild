@@ -15,10 +15,12 @@ SRC_URI="http://get.qt.nokia.com/qt/solutions/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="bearer bluetooth contacts debug doc multimedia opengl +publishsubscribe qml +serviceframework systeminfo +tools versit"
+
 # The following APIs are not (yet) supported:
 #   - messaging, requires QMF which isn't available
 #   - sensors, there are no backends for desktop platforms
+QT_MOBILITY_MODULES="bearer contacts multimedia +publishsubscribe +serviceframework systeminfo versit"
+IUSE="bluetooth debug doc opengl qml +tools ${QT_MOBILITY_MODULES}"
 
 COMMON_DEPEND="
 	>=x11-libs/qt-core-4.6.0:4
@@ -89,8 +91,7 @@ src_configure() {
 	# the versit module requires contacts support, but luckily
 	# config.pri already takes care of enabling it if necessary
 	local modules="location"
-	for mod in bearer contacts multimedia publishsubscribe \
-			serviceframework systeminfo versit; do
+	for mod in ${QT_MOBILITY_MODULES//+}; do
 		use ${mod} && modules+=" ${mod}"
 	done
 
