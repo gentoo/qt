@@ -9,7 +9,7 @@ EGIT_REPO_URI="git://gitorious.org/qt-labs/messagingframework.git"
 inherit multilib qt4-r2 git
 
 DESCRIPTION="The Qt Messaging Framework"
-HOMEPAGE="http://labs.trolltech.com/blogs/2009/09/21/introducing-qmf-an-advanced-mobile-messaging-framework/"
+HOMEPAGE="http://labs.trolltech.com/page/Projects/QtMessaging"
 SRC_URI=""
 
 LICENSE="LGPL-2.1"
