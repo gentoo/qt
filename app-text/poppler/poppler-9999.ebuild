@@ -31,10 +31,10 @@ COMMON_DEPEND="
 		introspection? ( dev-libs/gobject-introspection )
 	)
 	curl? ( net-misc/curl )
-	jpeg? ( >=media-libs/jpeg-7:0 )
+	jpeg? ( virtual/jpeg )
 	jpeg2k? ( media-libs/openjpeg )
 	lcms? ( =media-libs/lcms-1* )
-	png? ( media-libs/libpng )
+	png? ( >=media-libs/libpng-1.4 )
 	qt4? (
 		x11-libs/qt-core:4
 		x11-libs/qt-gui:4
@@ -96,7 +96,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	ewarn 'After upgrading app-text/poppler you may need to reinstall packages'
-	ewarn 'depending on it. If you have gentoolkit installed, you can find those'
-	ewarn 'with `equery d poppler`.'
+	ewarn "After upgrading app-text/poppler you may need to reinstall packages"
+	ewarn "linking to it. If you're not a portage-2.2_rc user, you're advised"
+	ewarn "to run revdep-rebuild"
 }
