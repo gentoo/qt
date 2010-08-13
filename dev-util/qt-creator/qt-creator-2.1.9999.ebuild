@@ -11,7 +11,7 @@ MY_PN="${PN/-/}"
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://qt.nokia.com/products/developer-tools"
 EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
-EGIT_BRANCH="2.1"
+EGIT_BRANCH="2.1.0"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
