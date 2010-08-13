@@ -18,8 +18,7 @@ KEYWORDS="~amd64"
 
 # The following APIs are not (yet) supported:
 #   - messaging, requires QMF which isn't available
-#   - sensors, there are no backends for desktop platforms
-QT_MOBILITY_MODULES="bearer contacts +location multimedia +publishsubscribe +serviceframework systeminfo versit"
+QT_MOBILITY_MODULES="bearer contacts +location multimedia +publishsubscribe sensors +serviceframework systeminfo versit"
 IUSE="bluetooth debug doc opengl qml +tools ${QT_MOBILITY_MODULES}"
 
 COMMON_DEPEND="
