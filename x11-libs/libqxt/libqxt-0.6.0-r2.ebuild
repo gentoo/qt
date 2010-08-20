@@ -4,17 +4,15 @@
 
 EAPI="3"
 
-EHG_REPO_URI="http://dev.libqxt.org/libqxt/"
-
-inherit multilib qt4-r2 mercurial
+inherit multilib qt4-r2
 
 DESCRIPTION="The Qt eXTension library provides cross-platform utility classes for the Qt toolkit"
 HOMEPAGE="http://libqxt.org/"
-SRC_URI=""
+SRC_URI="http://bitbucket.org/${PN}/${PN}/get/v${PV}.tar.bz2 -> ${P}.tar.bz2"
 
 LICENSE="|| ( CPL-1.0 LGPL-2.1 )"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="berkdb crypt debug doc sql web xscreensaver zeroconf"
 
 COMMON_DEPEND="
