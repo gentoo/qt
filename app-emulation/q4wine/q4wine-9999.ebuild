@@ -13,7 +13,7 @@ EGIT_REPO_URI="git://github.com/brezerk/q4wine.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug +icoutils winetriks +wineappdb"
+IUSE="debug +icoutils +wineappdb"
 
 DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql:4[sqlite]
@@ -39,7 +39,6 @@ src_configure() {
 	mycmakeargs=(
 		$(cmake-utils_use debug)
 		$(cmake-utils_use_with icoutils)
-		$(cmake-utils_use_with winetriks)
 		$(cmake-utils_use_with wineappdb)
 	)
 
