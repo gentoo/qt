@@ -35,7 +35,7 @@ src_unpack() {
 
 src_configure() {
 	mycmakeargs=(
-		$(cmake-utils_use debug)
+		$(cmake-utils_use debug DEBUG)
 		$(cmake-utils_use_with icoutils)
 		$(cmake-utils_use_with wineappdb)
 	)
