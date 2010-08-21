@@ -29,8 +29,6 @@ RDEPEND="x11-libs/qt-gui:4
 
 DOCS=(AUTHORS ChangeLog README)
 
-S="${WORKDIR}/${PF}"
-
 src_unpack() {
 	git_src_unpack
 }
