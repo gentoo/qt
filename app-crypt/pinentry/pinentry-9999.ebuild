@@ -21,9 +21,7 @@ DEPEND="
 	!static? (
 		gtk? ( x11-libs/gtk+:2 )
 		!gtk? (
-			!qt3? (
-				!qt4? ( sys-libs/ncurses )
-			)
+			!qt4? ( sys-libs/ncurses )
 		)
 		ncurses? ( sys-libs/ncurses )
 		qt4? ( x11-libs/qt-gui:4 )
