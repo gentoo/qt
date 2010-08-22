@@ -16,11 +16,9 @@ PORTAGE_DIR="/usr/portage/tree"
 
 args=$1
 opts=0
-regen=0
 html=0
 upload=0
 view=0
-count=0
 
 dt="$(date --utc +%Y-%m-%d\ %H:%M:%S) UTC"
 
@@ -31,31 +29,12 @@ do
 	h) html=1 ;;
 	v) view=1 ;;
 	u) upload=1 ;;
-	c) count=1 ;;
 	esac
 done
 
-function check() {
-	CNT=0
-	if [[ $count == 1 ]]; then
-		# this should be rewritten not to grep stuff twice
-		grep --include="*ebuild" -r "inherit" ${PORTAGE_DIR}/* | grep "qt4" | grep -v 'qt4-' | while read i;
-		do
-			E=$(echo ${i} | cut -d":" -f1)
-			stable=0
-			KW=`grep "^KEYWORDS" ${E} | sed -r "s:.*\"(.*)\".*:\1:"`
-			for j in ${KW};
-			do
-				[[ ${j} == ${j/\~} ]] && stable=1 && break;
-			done
-			[[ $stable == 0 ]] && CNT=$((CNT + 1))
-			echo $CNT > /tmp/qt4.count
-		done
-		CNT=`cat /tmp/qt4.count`
-		CNT="(count $CNT)"
-	fi
+function render_head() {
 	if [[ $html == 1 ]]; then
-		echo "  <HTML>
+	echo "  <HTML>
 			<HEAD>
 				<TITLE>Qt4 ~testing ebuilds using old qt4.eclass</TITLE>
 				<STYLE>
@@ -79,45 +58,16 @@ function check() {
 			</HEAD>
 			<BODY>
 			<table cellspacing='0' cellpadding='0' id='mainTable'>
-			<tr><td style='background: #333; color: white;'>Last update: <strong>$dt</strong> ${CNT}</td></tr>
-			<tr><td style='height: 5px'></td></tr>
-			<tr><td style='font-weight: bold'>The following <span style='color: yellow'>~testing</span> ebuilds are using the old, deprecated <span style='color:red'>qt4.eclass</span>.</td></tr>
-			<tr><td style='height: 5px'></td></tr>
+			<tr><td style='background: #333; color: white;'>Last update: <strong>$dt</strong> (testing: ${1} | stable: ${2})</td></tr>
+			
 		"
 	else
-		echo "The following ~testing ebuilds are using the old, deprecated qt4.eclass. ${CNT}"
+		echo "The following ebuilds are using the old, deprecated qt4.eclass. (testing: ${1} | stable: ${2})"
 	fi
 
-	CC=""
+}
 
-	grep --include="*ebuild" -r "inherit" ${PORTAGE_DIR}/* | grep "qt4" | grep -v 'qt4-' | while read i;
-	do
-		E=$(echo ${i} | cut -d":" -f1)
-		stable=0
-		KW=`grep "^KEYWORDS" ${E} | sed -r "s:.*\"(.*)\".*:\1:"`
-		for j in ${KW};
-		do
-			[[ ${j} == ${j/\~} ]] && stable=1 && break;
-		done
-
-		if [[ $stable == 0 ]]; then
-			C=${E%/*}
-			if [[ $C != $CC ]]; then
-				if [[ $html == 1 ]]; then
-					echo "<tr><td class='splitter'></td></tr>";
-				else
-					echo
-				fi
-			fi
-			if [[ $html == 1 ]]; then
-				echo "<tr><td>${E}</td></tr>"
-			else
-				echo ${E}
-			fi
-			CC=$C
-		fi
-	done
-
+function render_foot() {
 	if [[ $html == 1 ]]; then
 		echo "	
 			</table>
@@ -125,6 +75,83 @@ function check() {
 			</HTML>
 		"
 	fi
+}
+
+function render() {
+	C=$1;
+	X=$2;
+	shift;
+	
+	if [[ $html == 1 ]]; then
+		echo "
+			<tr><td style='height: 5px'></td></tr>
+			<tr><td style='font-weight: bold'>The following <span style='color: yellow'>${X}</span> ebuilds are using the old, deprecated <span style='color:red'>qt4.eclass</span>.</td></tr>
+			<tr><td style='height: 5px'></td></tr>
+		";
+	else
+		echo "${X} ebuilds:"
+	fi
+
+
+	CCAT=""
+	while (( $C > 0 )); do
+		C=$(( $C - 1 ))
+		shift
+		CAT=${1%/*}
+		if [[ $CAT != $CCAT ]]; then
+			if [[ $html == 1 ]]; then
+				echo "<tr><td class='splitter'></td></tr>";
+			else
+				echo
+			fi
+		fi
+		if [[ $html == 1 ]]; then
+			echo "<tr><td>${1}</td></tr>"
+		else
+			echo ${1}
+		fi
+		CCAT=${CAT}
+	done
+}
+
+function check() {
+	CNT_S=0
+	CNT_T=0
+	EB_S=( )
+	EB_T=( )
+
+	FOUND=$(grep --include="*ebuild" -r "^inherit" ${PORTAGE_DIR}/ |
+			grep "qt4" | grep -v "qt4-" | sort |
+			while read i; do
+				E=$(echo ${i} | cut -d":" -f1)
+				echo $E;
+			done
+		)
+	for i in $FOUND; do
+		E=${i/*\/}
+		C=${i%\/*}
+		P=${C/*\/}
+		C=${C%\/*}
+		C=${C/*\/}
+		KW=$(grep "^KEYWORDS" ${i} | sed -r "s:.*\"(.*)\".*:\1:")
+		local stable=0
+		for j in ${KW};
+		do
+			[[ ${j} == ${j/\~} ]] && stable=1 && break;
+		done
+		if [[ $stable == 0 ]]; then
+			CNT_T=$((CNT_T + 1))
+			EB_T[${#EB_T[*]}]="$C/$P/$E";
+		else
+			CNT_S=$((CNT_S + 1))
+			EB_S[${#EB_S[*]}]="$C/$P/$E";
+		fi
+	done
+	
+	render_head $CNT_T $CNT_S
+	render $CNT_T "testing" ${EB_T[@]}
+	render $CNT_S "stable" ${EB_S[@]}
+	render_foot 
 }
 
 if [[ $upload == 1 ]] || [[ $view == 1 ]]; then
