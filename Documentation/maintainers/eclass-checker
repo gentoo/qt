@@ -1,15 +1,13 @@
 #!/bin/bash
-# this script requires portage-utils
-# check for ~testing ebuilds using old qt4.eclass
+# this script checks for ebuilds using the old and deprecated qt4.eclass
+# written by Alex Alexander <wired@gentoo.org>
 #
 # arguments
-# -r -> regenerate q cache
 # -h -> generate html instead of plain text
 # -u -> upload results to devspace ( d.g.o:~/public_html/checks/qt4.eclass.html )
 # -v -> open results with xdg-open
-# -c -> add ebuild count
 #
-# ./eclass-echecker -rhu is ran daily by wired:
+# ./eclass-echecker -hu is ran daily by wired:
 # http://dev.gentoo.org/~wired/checks/qt4.eclass.html
 
 PORTAGE_DIR="/usr/portage/tree"
@@ -22,7 +20,7 @@ view=0
 
 dt="$(date --utc +%Y-%m-%d\ %H:%M:%S) UTC"
 
-while getopts rhvuc args
+while getopts hvu args
 do
 	opts=1
 	case $args in
