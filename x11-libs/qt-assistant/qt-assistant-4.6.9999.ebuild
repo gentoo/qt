@@ -38,6 +38,11 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
+src_prepare() {
+	qt4-build-edge_src_prepare
+	qt_assistant_cleanup
+}
+
 src_configure() {
 	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
