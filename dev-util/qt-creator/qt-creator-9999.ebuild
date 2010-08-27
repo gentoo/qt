@@ -80,8 +80,10 @@ src_prepare() {
 				plugin="qtscripteditor"
 			elif [[ ${plugin} == "qml" ]]; then
 				plugins="qmljseditor"
-				sed -i "/^include(qml\/qml.pri)/d" \
-					src/plugins/debugger/debugger.pro
+				# delete plugin_qmldesigner and qmlprojectmanager subdir
+				# definitions to avoid automagic dependencies
+				sed -i -e "/SUBDIRS +=/d" \
+					src/plugins/plugins.pro || die
 			fi
 			if [[ ${plugin} == "designer" ]]; then
 				sed -i "/plugin_qt4projectmanager/s:^:#:" \
@@ -112,6 +114,9 @@ src_prepare() {
 	# fix translations
 	sed -i "/^LANGUAGES/s:=.*:= ${LANGS}:" \
 		share/${MY_PN}/translations/translations.pro
+	# add rpath to make qtcreator actual find its *own* plugins
+	sed -i "/^LIBS/s:+=:& -Wl,-rpath,/usr/$(get_libdir)/${MY_PN} :"	qtcreator.pri || die
+
 }
 
 src_configure() {

@@ -81,8 +81,10 @@ src_prepare() {
 				plugin="qtscripteditor"
 			elif [[ ${plugin} == "qml" ]]; then
 				plugins="qmljseditor"
-				sed -i "/^include(qml\/qml.pri)/d" \
-					src/plugins/debugger/debugger.pro
+				# delete plugin_qmldesigner and qmlprojectmanager subdir
+				# definitions to avoid automagic dependencies
+				sed -i -e "/SUBDIRS +=/d" \
+					src/plugins/plugins.pro || die
 			fi
 			if [[ ${plugin} == "designer" ]]; then
 				sed -i "/plugin_qt4projectmanager/s:^:#:" \
