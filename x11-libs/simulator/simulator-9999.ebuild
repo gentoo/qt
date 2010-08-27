@@ -18,7 +18,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="x11-libs/qt-mobility
-	x11-libs/qmf"
+	net-libs/qmf"
 RDEPEND="${DEPEND}"
 
 src_configure() {
