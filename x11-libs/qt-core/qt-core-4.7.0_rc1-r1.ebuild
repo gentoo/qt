@@ -49,9 +49,7 @@ pkg_setup() {
 		src/3rdparty/md5
 		src/3rdparty/sha1
 		src/3rdparty/easing
-		src/3rdparty/zlib
 		src/3rdparty/zlib_dependency.pri
-		src/3rdparty/zlib.pri
 		src/declarative
 		src/gui
 		src/script
@@ -89,10 +87,10 @@ src_configure() {
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} -fast -no-xkb -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -no-cups -no-gif -no-libpng
-		-no-libmng -no-libjpeg -qt-zlib -no-webkit -no-phonon -no-xmlpatterns
+		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
 		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
 		-no-svg -no-gtkstyle -no-phonon-backend -no-script -no-scripttools
 		-no-cups -no-xsync -no-xinput -no-multimedia"
