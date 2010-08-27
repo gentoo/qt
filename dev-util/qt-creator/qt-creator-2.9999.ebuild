@@ -113,6 +113,10 @@ src_prepare() {
 	# fix translations
 	sed -i "/^LANGUAGES/s:=.*:= ${LANGS}:" \
 		share/${MY_PN}/translations/translations.pro
+
+	# add rpath to make qtcreator actual find its *own* plugins
+	sed -i "/^LIBS/s:+=:& -Wl,-rpath,/usr/$(get_libdir)/${MY_PN} :" qtcreator.pri || die
+
 }
 
 src_configure() {

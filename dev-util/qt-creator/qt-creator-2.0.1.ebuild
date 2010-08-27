@@ -89,6 +89,9 @@ src_prepare() {
 		sed -i "/m_rssFetcher->fetch/s:^:\/\/:" \
 			src/plugins/welcome/communitywelcomepagewidget.cpp || die
 	fi
+
+	# add rpath to make qtcreator actual find its *own* plugins
+	sed -i "/^LIBS/s:+=:& -Wl,-rpath,/usr/$(get_libdir)/${MY_PN} :" qtcreator.pri || die
 }
 
 src_configure() {
