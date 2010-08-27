@@ -11,14 +11,11 @@ MY_P="${PN}-opensource-src-${PV}"
 DESCRIPTION="Qt APIs for mobile devices"
 HOMEPAGE="http://labs.trolltech.com/page/Projects/QtMobility"
 SRC_URI="http://get.qt.nokia.com/qt/solutions/${MY_P}.tar.gz"
-
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 
-# The following APIs are not (yet) supported:
-#   - messaging, requires QMF which isn't available
-QT_MOBILITY_MODULES="bearer contacts +location multimedia +publishsubscribe sensors +serviceframework systeminfo versit"
+QT_MOBILITY_MODULES="bearer contacts +location messaging multimedia +publishsubscribe sensors +serviceframework systeminfo versit"
 IUSE="bluetooth debug doc opengl qml +tools ${QT_MOBILITY_MODULES}"
 
 COMMON_DEPEND="
@@ -28,6 +25,7 @@ COMMON_DEPEND="
 		>=x11-libs/qt-dbus-4.6.0:4
 		>=x11-libs/qt-gui-4.6.0:4
 	)
+	messaging? ( net-libs/qmf )
 	multimedia? (
 		media-libs/alsa-lib
 		>=media-libs/gstreamer-0.10.19:0.10
