@@ -18,7 +18,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~amd64-linux ~ppc ~ppc64 ~x86"
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
-	kde mercurial perforce qml qtscript rss subversion"
+	kde mercurial perforce +qml qtscript rss subversion"
 
 QTVER="4.7.0_beta1:4"
 DEPEND=">x11-libs/qt-assistant-${QTVER}[doc?]"
