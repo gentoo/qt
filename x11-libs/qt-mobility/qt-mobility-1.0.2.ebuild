@@ -97,25 +97,28 @@ src_configure() {
 		modules="location"
 	fi
 
+	# tell configure/qmake where QMF is installed
+	export QMF_INCLUDEDIR="${EPREFIX}"/usr/include/qt4/qtopiamail
+	export QMF_LIBDIR="${EPREFIX}"/usr/$(get_libdir)/qt4
+
 	# custom configure script
-	local myconf="./configure
-			-prefix '${EPREFIX}/usr'
-			-headerdir '${EPREFIX}/usr/include/qt4'
-			-libdir '${EPREFIX}/usr/$(get_libdir)/qt4'
-			-plugindir '${EPREFIX}/usr/$(get_libdir)/qt4/plugins'
-			$(use debug && echo -debug || echo -release)
-			$(use tools || echo -no-tools)
-			-modules '${modules}'
-			-no-docs"
-	echo ${myconf}
-	eval ${myconf} || die "./configure failed"
+	set -- ./configure -no-docs \
+		-prefix "${EPREFIX}/usr" \
+		-headerdir "${EPREFIX}/usr/include/qt4" \
+		-libdir "${EPREFIX}/usr/$(get_libdir)/qt4" \
+		-plugindir "${EPREFIX}/usr/$(get_libdir)/qt4/plugins" \
+		$(use debug && echo -debug || echo -release) \
+		$(use tools || echo -no-tools) \
+		-modules "${modules}"
+	echo "$@"
+	"$@" || die "configure failed"
 
 	# fix automagic dependency on bluez
 	if ! use bluetooth; then
 		sed -i -e '/^bluez_enabled =/s:yes:no:' config.pri || die
 	fi
 
-	eqmake4 qtmobility.pro -recursive
+	eqmake4 -recursive
 }
 
 src_install() {
