@@ -23,7 +23,6 @@
 
 # Markos Chandras <hwoarang@gentoo.org> (25 Aug 2010)
 # Needs more testing. Masked dependencies ( 4.7.0_beta )
-=dev-util/qt-creator-2.0.0
 =dev-util/qt-creator-2.0.1
 
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2010)
