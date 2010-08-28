@@ -16,13 +16,12 @@ SRC_URI=""
 
 LICENSE="LGPL-2.1"
 SLOT="4"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
-IUSE="debug qt3support xmlpatterns multimedia phonon svg webkit \
-script dbus"
+KEYWORDS=""
+IUSE="dbus debug qt3support xmlpatterns multimedia phonon svg webkit script"
 
 DEPEND="~x11-libs/qt-gui-${PV}"
 RDEPEND="${DEPEND}"
-	
+
 pkg_setup() {
 	PLATFORM="simulator"
 }
@@ -54,8 +53,8 @@ src_configure() {
 	local datadir="/usr/share/qt4"
 	local libdir="/usr/$(get_libdir)/qt4"
 
-	myconf+="-prefix    '/usr' 
-		-prefix-install 
+	myconf+="-prefix /usr
+		-prefix-install
 		-hostprefix     '/usr' 
 		-libdir         '${libdir}' 
 		-headerdir      '/usr/include/qt4' 
@@ -67,7 +66,7 @@ src_configure() {
 		-translationdir '${datadir}/translations' 
 		-opensource -confirm-license -stl -verbose
 		"
-	
+
 	for module in ${IUSE}; do
 		if [ ${module} = "debug" ]; then
 			myconf+=" $(use debug && echo -debug || echo -release)"

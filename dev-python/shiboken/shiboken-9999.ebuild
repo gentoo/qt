@@ -12,7 +12,7 @@ EGIT_REPO_URI="git://gitorious.org/pyside/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug"
 
 DEPEND=">=dev-python/apiextractor-0.6.0
