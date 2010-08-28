@@ -3,34 +3,36 @@
 # $Header: $
 
 EAPI="2"
-inherit multilib qt4
+
+inherit multilib qt4-r2
 
 MY_PN="Kognite"
-MY_P="${MY_PN}_source_${PV}"
-DESCRIPTION="Platform independent document management software."
+
+DESCRIPTION="Platform independent document management software"
 HOMEPAGE="http://code.google.com/p/kognite/"
-SRC_URI="http://kognite.googlecode.com/files/${MY_P}.zip"
+SRC_URI="http://kognite.googlecode.com/files/${MY_PN}_source_${PV}.zip"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND="x11-libs/qt-gui:4
+DEPEND="app-text/poppler[qt4]
 	dev-libs/xapian
-	app-text/poppler-bindings[qt4]"
-RDEPEND="$DEPEND"
+	x11-libs/qt-gui:4"
+RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${MY_PN}"
+S=${WORKDIR}/${MY_PN}
 
 src_configure() {
-	qmake -project -norecursive "INCPATH+=-I/usr/include /usr/include/poppler/qt4
-		LIBS+=-L/usr/$(get_libdir) -lxapian -lpoppler-qt4 -lz"
-	eqmake4 "${MY_PN}".pro
+	qmake -project -norecursive \
+		INCPATH+=/usr/include/poppler/qt4 \
+		LIBS+="-L/usr/$(get_libdir) -lxapian -lpoppler-qt4 -lz"
+	eqmake4 ${MY_PN}.pro
 }
 
 src_install() {
-	doicon kognite.png || die "Installing icon failed"
-	newbin Kognite kognite || die "Installing binary failed"
+	doicon kognite.png || die
+	newbin Kognite kognite || die
 	make_desktop_entry kognite Kognite kognite "System;FileTools"
 }
