@@ -23,7 +23,7 @@ LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 IUSE="X assistant +dbus debug doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.10
+DEPEND=">=dev-python/sip-4.10.3
 	>=x11-libs/qt-core-${QTVER}:4
 	>=x11-libs/qt-script-${QTVER}:4
 	>=x11-libs/qt-test-${QTVER}:4
@@ -86,35 +86,35 @@ src_configure() {
 	use prefix || EPREFIX=
 
 	configuration() {
-		local myconf="$(PYTHON) configure.py
-				--confirm-license
-				--bindir=${EPREFIX}/usr/bin
-				--destdir=${EPREFIX}$(python_get_sitedir)
-				--sipdir=${EPREFIX}/usr/share/sip
-				--qsci-api
-				$(use debug && echo '--debug')
-				--enable=QtCore
-				--enable=QtNetwork
-				--enable=QtScript
-				--enable=QtTest
-				--enable=QtXml
-				$(pyqt4_use_enable X QtGui)
-				$(pyqt4_use_enable X QtDesigner)
-				$(pyqt4_use_enable X QtScriptTools)
-				$(pyqt4_use_enable assistant QtAssistant)
-				$(pyqt4_use_enable assistant QtHelp)
-				$(pyqt4_use_enable multimedia QtMultimedia)
-				$(pyqt4_use_enable opengl QtOpenGL)
-				$(pyqt4_use_enable phonon)
-				$(pyqt4_use_enable sql QtSql)
-				$(pyqt4_use_enable svg QtSvg)
-				$(pyqt4_use_enable webkit QtWebKit)
-				$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
-				CC=$(tc-getCC) CXX=$(tc-getCXX)
-				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
-				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LFLAGS='${LDFLAGS}'"
-		echo ${myconf}
-		eval ${myconf} || return 1
+		set -- $(PYTHON) configure.py \
+			--confirm-license \
+			--bindir="${EPREFIX}/usr/bin" \
+			--destdir="${EPREFIX}$(python_get_sitedir)" \
+			--sipdir="${EPREFIX}/usr/share/sip" \
+			--qsci-api \
+			$(use debug && echo --debug) \
+			--enable=QtCore \
+			--enable=QtNetwork \
+			--enable=QtScript \
+			--enable=QtTest \
+			--enable=QtXml \
+			$(pyqt4_use_enable X QtGui) \
+			$(pyqt4_use_enable X QtDesigner) \
+			$(pyqt4_use_enable X QtScriptTools) \
+			$(pyqt4_use_enable assistant QtAssistant) \
+			$(pyqt4_use_enable assistant QtHelp) \
+			$(pyqt4_use_enable multimedia QtMultimedia) \
+			$(pyqt4_use_enable opengl QtOpenGL) \
+			$(pyqt4_use_enable phonon) \
+			$(pyqt4_use_enable sql QtSql) \
+			$(pyqt4_use_enable svg QtSvg) \
+			$(pyqt4_use_enable webkit QtWebKit) \
+			$(pyqt4_use_enable xmlpatterns QtXmlPatterns) \
+			CC="$(tc-getCC)" CXX="$(tc-getCXX)" \
+			LINK="$(tc-getCXX)" LINK_SHLIB="$(tc-getCXX)" \
+			CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LFLAGS="${LDFLAGS}"
+		echo "$@"
+		"$@" || die "configure.py failed"
 
 		for mod in QtCore $(use X && echo 'QtDesigner QtGui'); do
 			# Run eqmake4 inside the qpy subdirs to prevent

@@ -51,19 +51,19 @@ src_prepare() {
 
 src_configure() {
 	configuration() {
-		local myconf="$(PYTHON) configure.py
-				--bindir=${EPREFIX}/usr/bin
-				--destdir=${EPREFIX}$(python_get_sitedir)
-				--incdir=${EPREFIX}$(python_get_includedir)
-				--sipdir=${EPREFIX}/usr/share/sip
-				$(use debug && echo --debug)
-				CC=$(tc-getCC) CXX=$(tc-getCXX)
-				LINK=$(tc-getCXX) LINK_SHLIB=$(tc-getCXX)
-				CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}'
-				LFLAGS='${LDFLAGS}'
-				STRIP=true"
-		echo ${myconf}
-		eval ${myconf}
+		set -- $(PYTHON) configure.py \
+			--bindir="${EPREFIX}/usr/bin" \
+			--destdir="${EPREFIX}$(python_get_sitedir)" \
+			--incdir="${EPREFIX}$(python_get_includedir)" \
+			--sipdir="${EPREFIX}/usr/share/sip" \
+			$(use debug && echo --debug) \
+			CC="$(tc-getCC)" CXX="$(tc-getCXX)" \
+			LINK="$(tc-getCXX)" LINK_SHLIB="$(tc-getCXX)" \
+			CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" \
+			LFLAGS="${LDFLAGS}" \
+			STRIP=true
+		echo "$@"
+		"$@" || die "configure.py failed"
 	}
 	python_execute_function -s configuration
 }
