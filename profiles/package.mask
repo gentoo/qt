@@ -47,10 +47,6 @@ dev-util/madde
 # Masking Snapshots and RC releases
 =dev-util/eric-4.5_pre*
 
-# Markos Chandras <hwoarang@gentoo.org> (14 Jun 2010)
-# Needs Qt-4.4.X. Removal in 30 days
-=dev-libs/qsa-1.2.3
-
 # Dror Levin <spatz@gentoo.org> (23 May 2010)
 # Qt prereleases
 =x11-libs/qt-assistant-4.7.0_beta*
