@@ -114,12 +114,14 @@ src_install() {
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die
 
-	# install translations
+	# install additional translations
 	insinto /usr/share/${MY_PN}/translations/
 	for x in ${LINGUAS}; do
 		for lang in ${LANGS}; do
 			if [[ ${x} == ${lang} ]]; then
-				doins share/${MY_PN}/translations/${MY_PN}_${x}.qm || die
+				cd "${S}"/share/${MY_PN}/translations
+				lrelease ${MY_PN}_${x}.ts -qm ${MY_PN}_${x}.qm || die
+				doins ${MY_PN}_${x}.qm || die
 			fi
 		done
 	done
