@@ -69,6 +69,21 @@ PATCHES=(
 	"${FILESDIR}/${P}-fix-tools-linking.patch"
 )
 
+pkg_setup() {
+	# figure out which modules to build
+	# Note: the versit module requires contacts support, but luckily
+	# 	config.pri already takes care of enabling it if necessary
+	modules=
+	for mod in ${QT_MOBILITY_MODULES//+}; do
+		use ${mod} && modules+="${mod} "
+	done
+	if [[ -z ${modules} ]]; then
+		ewarn "At least one module must be selected for building, but you have selected none."
+		ewarn "The QtLocation module will be automatically enabled."
+		modules="location"
+	fi
+}
+
 src_prepare() {
 	qt4-r2_src_prepare
 
@@ -85,18 +100,6 @@ src_prepare() {
 }
 
 src_configure() {
-	# the versit module requires contacts support, but luckily
-	# config.pri already takes care of enabling it if necessary
-	local modules=
-	for mod in ${QT_MOBILITY_MODULES//+}; do
-		use ${mod} && modules+="${mod} "
-	done
-	if [[ -z ${modules} ]]; then
-		ewarn "At least one module must be selected for building, but you have selected none."
-		ewarn "The QtLocation module will be automatically enabled."
-		modules="location"
-	fi
-
 	# tell configure/qmake where QMF is installed
 	export QMF_INCLUDEDIR="${EPREFIX}"/usr/include/qt4/qtopiamail
 	export QMF_LIBDIR="${EPREFIX}"/usr/$(get_libdir)/qt4
