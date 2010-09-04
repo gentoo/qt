@@ -11,7 +11,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd
 IUSE="egl qt3support es2"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
-	~x11-libs/qt-gui-${PV}[debug=,egl=,qt3support=]
+	~x11-libs/qt-gui-${PV}[debug=,egl,qt3support=]
 	virtual/opengl"
 RDEPEND="${DEPEND}"
 
