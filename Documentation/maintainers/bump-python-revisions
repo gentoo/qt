@@ -41,7 +41,7 @@ esac
 ########################## VARIABLES ############################
 PREV="${1}" # PyQt4 Revision
 SREV="${2}" # Sip Revision
-PVER="4.7.5" # PyQt4 current working version
+PVER="4.7.7" # PyQt4 current working version
 SVER="4.11" #$ Sip current working version
 PYPKG="PyQt-x11-gpl-snapshot-${PVER}-${PREV}" #Format PyQt4 package
 SIPKG="sip-${SVER}-snapshot-${SREV}" # Format Sip package

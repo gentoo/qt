@@ -2,19 +2,19 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (10 Sep 2010)
+# Masking latest releases
+=dev-python/sip-4.11_pre*
+=dev-python/PyQt4-4.7.7_pre*
+=dev-python/qscintilla-python-2.4.5_pre*
+=x11-libs/qscintilla-2.4.5_pre*
+
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2010)
 # Need multiple QA fixes. New USE flags are required
 # to extend functionality, doesn't build with certain
 # use flags enabled. Autotools needs adjustment
 # Look webkit-gtk for ideas
 x11-libs/webkit-qt
-
-# Markos Chandras <hwoarang@gentoo.org> (09 Aug 2010)
-# Masking latest releases
-=dev-python/sip-4.11_pre*
-=dev-python/PyQt4-4.7.5_pre*
-=dev-python/qscintilla-python-2.4.5_pre*
-=x11-libs/qscintilla-2.4.5_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (02 Aug 2010)
 # Needs extensive testing. Ebuild has many QA issues.
