@@ -1,11 +1,13 @@
 #!/bin/bash
-# this script checks for ebuilds using the old and deprecated qt4.eclass
+# this script checks for ebuilds using old and/or deprecated eclasses
 # written by Alex Alexander <wired@gentoo.org>
 #
 # arguments
 # -h -> generate html instead of plain text
-# -u -> upload results to devspace ( d.g.o:~/public_html/checks/qt4.eclass.html )
+# -u -> upload results to devspace ( d.g.o:~/public_html/checks/${eclass}.eclass.html )
 # -v -> open results with xdg-open
+# -e <eclass> -> eclass to check
+# -p <dir> -> PORTAGE_DIR
 #
 # ./eclass-echecker -hu is ran daily by wired:
 # http://dev.gentoo.org/~wired/checks/qt4.eclass.html
@@ -17,16 +19,19 @@ opts=0
 html=0
 upload=0
 view=0
+eclass="qt4"
 
 dt="$(date --utc +%Y-%m-%d\ %H:%M:%S) UTC"
 
-while getopts hvu args
+while getopts hvue:p: args
 do
 	opts=1
 	case $args in
 	h) html=1 ;;
 	v) view=1 ;;
 	u) upload=1 ;;
+	e) eclass=${OPTARG} ;;
+	p) PORTAGE_DIR={$OPTARG} ;;
 	esac
 done
 
@@ -34,7 +39,7 @@ function render_head() {
 	if [[ $html == 1 ]]; then
 	echo "  <HTML>
 			<HEAD>
-				<TITLE>Qt4 ~testing ebuilds using old qt4.eclass</TITLE>
+				<TITLE>Qt4 ~testing ebuilds using old ${eclass}.eclass</TITLE>
 				<STYLE>
 				body {
 					color: black;
@@ -60,7 +65,7 @@ function render_head() {
 			
 		"
 	else
-		echo "The following ebuilds are using the old, deprecated qt4.eclass. (testing: ${1} | stable: ${2})"
+		echo "The following ebuilds are using the old, deprecated ${eclass}.eclass. (testing: ${1} | stable: ${2})"
 	fi
 
 }
@@ -83,7 +88,7 @@ function render() {
 	if [[ $html == 1 ]]; then
 		echo "
 			<tr><td style='height: 5px'></td></tr>
-			<tr><td style='font-weight: bold'>The following <span style='color: yellow'>${X}</span> ebuilds are using the old, deprecated <span style='color:red'>qt4.eclass</span>.</td></tr>
+			<tr><td style='font-weight: bold'>The following <span style='color: yellow'>${X}</span> ebuilds are using the old, deprecated <span style='color:red'>${eclass}.eclass</span>.</td></tr>
 			<tr><td style='height: 5px'></td></tr>
 		";
 	else
@@ -119,12 +124,13 @@ function check() {
 	EB_T=( )
 
 	FOUND=$(grep --include="*ebuild" -r "^inherit" ${PORTAGE_DIR}/ |
-			grep "qt4" | grep -v "qt4-" | sort |
+			grep "${eclass}" | grep -v "${eclass}\-" | sort |
 			while read i; do
 				E=$(echo ${i} | cut -d":" -f1)
 				echo $E;
 			done
 		)
+
 	for i in $FOUND; do
 		E=${i/*\/}
 		C=${i%\/*}
@@ -154,13 +160,13 @@ function check() {
 
 if [[ $upload == 1 ]] || [[ $view == 1 ]]; then
 	if [[ $html == 1 ]]; then
-		check > /tmp/qt4.eclass.html
-		[[ $upload == 1 ]] && scp /tmp/qt4.eclass.html dev.gentoo.org:public_html/checks/
-		[[ $view == 1 ]] && xdg-open /tmp/qt4.eclass.html &
+		check > /tmp/${eclass}.eclass.html
+		[[ $upload == 1 ]] && scp /tmp/${eclass}.eclass.html dev.gentoo.org:public_html/checks/
+		[[ $view == 1 ]] && xdg-open /tmp/${eclass}.eclass.html &
 	else
-		check > /tmp/qt4.eclass.txt
-		[[ $upload == 1 ]] && scp /tmp/qt4.eclass.txt dev.gentoo.org:public_html/checks/
-		[[ $view == 1 ]] && xdg-open /tmp/qt4.eclass.txt &
+		check > /tmp/${eclass}.eclass.txt
+		[[ $upload == 1 ]] && scp /tmp/${eclass}.eclass.txt dev.gentoo.org:public_html/checks/
+		[[ $view == 1 ]] && xdg-open /tmp/${eclass}.eclass.txt &
 	fi
 else
 	check
