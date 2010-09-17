@@ -12,8 +12,7 @@ IUSE="egl qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	~x11-libs/qt-gui-${PV}[debug=,egl=,qt3support=]
-	virtual/opengl
-	virtual/glu"
+	virtual/opengl"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {

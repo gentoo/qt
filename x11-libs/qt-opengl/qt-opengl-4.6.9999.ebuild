@@ -12,8 +12,7 @@ IUSE="qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,kde-qt=,qt3support=,stable-branch=]
 	~x11-libs/qt-gui-${PV}[debug=,kde-qt=,qt3support=,stable-branch=]
-	virtual/opengl
-	virtual/glu"
+	virtual/opengl"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
