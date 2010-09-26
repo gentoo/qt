@@ -35,6 +35,7 @@ RDEPEND="media-libs/fontconfig
 	"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
+	gtk? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
 	x11-proto/xextproto
 	x11-proto/inputproto"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
