@@ -24,25 +24,6 @@ dev-util/madde
 # Masking Snapshots and RC releases
 =dev-util/eric-4.5_pre*
 
-# Dror Levin <spatz@gentoo.org> (23 May 2010)
-# Qt prereleases
-=x11-libs/qt-assistant-4.7.0_beta*
-=x11-libs/qt-core-4.7.0_beta*
-=x11-libs/qt-dbus-4.7.0_beta*
-=x11-libs/qt-declarative-4.7.0_beta*
-=x11-libs/qt-demo-4.7.0_beta*
-=x11-libs/qt-gui-4.7.0_beta*
-=x11-libs/qt-multimedia-4.7.0_beta*
-=x11-libs/qt-opengl-4.7.0_beta*
-=x11-libs/qt-phonon-4.7.0_beta*
-=x11-libs/qt-qt3support-4.7.0_beta*
-=x11-libs/qt-script-4.7.0_beta*
-=x11-libs/qt-sql-4.7.0_beta*
-=x11-libs/qt-svg-4.7.0_beta*
-=x11-libs/qt-test-4.7.0_beta*
-=x11-libs/qt-webkit-4.7.0_beta*
-=x11-libs/qt-xmlpatterns-4.7.0_beta*
-
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
