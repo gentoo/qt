@@ -15,7 +15,7 @@ SRC_URI=""
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="debug"
 
 DEPEND=">=x11-libs/qt-core-4.6.0
 	>=x11-libs/qt-gui-4.6.0
@@ -26,7 +26,10 @@ RDEPEND="${DEPEND}"
 # TODO:
 #   qt-gui should be optional
 #   qt-test is only needed for unit tests
+#   run unit tests from $S (need to fix rpath), don't install them
 #   automagic dep on qt-webkit, see examples/qtmail/plugins/viewers/generic/generic.pro
+#   doc USE flag (emake docs)
+#   examples USE flag
 
 DOCS="CHANGES"
 PATCHES=(
