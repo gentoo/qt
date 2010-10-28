@@ -33,10 +33,14 @@ TRANSLATIONSDIR="${S}/resources"
 src_prepare() {
 	subversion_src_prepare
 	# fix translations
-	mv "${S}"/resources/translations/${MY_PN}_cz.ts	"${S}"/resources/translations/${MY_PN}_cs.ts
-	mv "${S}"/resources/translations/${MY_PN}_jp.ts	"${S}"/resources/translations/${MY_PN}_ja.ts
-	mv "${S}"/resources/translations/${MY_PN}_du.ts	"${S}"/resources/translations/${MY_PN}_nl.ts
-	mv "${S}"/resources/translations/${MY_PN}_kr.ts	"${S}"/resources/translations/${MY_PN}_ko.ts
+	mv "${S}"/resources/translations/${MY_PN}_cz.ts \
+		"${S}"/resources/translations/${MY_PN}_cs.ts || die
+	mv "${S}"/resources/translations/${MY_PN}_jp.ts	\
+		"${S}"/resources/translations/${MY_PN}_ja.ts || die
+	mv "${S}"/resources/translations/${MY_PN}_du.ts	\
+		"${S}"/resources/translations/${MY_PN}_nl.ts || die
+	mv "${S}"/resources/translations/${MY_PN}_kr.ts	\
+		"${S}"/resources/translations/${MY_PN}_ko.ts || die
 
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
