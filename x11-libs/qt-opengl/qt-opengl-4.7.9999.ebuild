@@ -31,7 +31,7 @@ pkg_setup() {
 		src/3rdparty"
 
 	QCONFIG_ADD="opengl"
-	QCONFIG_DEFINE="QT_OPENGL"
+	QCONFIG_DEFINE="QT_OPENGL $(use egl && echo QT_EGL)"
 
 	qt4-build-edge_pkg_setup
 }

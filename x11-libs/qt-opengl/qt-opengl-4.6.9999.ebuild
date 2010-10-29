@@ -30,7 +30,7 @@ src/plugins
 src/3rdparty"
 
 QCONFIG_ADD="opengl"
-QCONFIG_DEFINE="QT_OPENGL"
+QCONFIG_DEFINE="QT_OPENGL $(use egl && echo QT_EGL)"
 
 src_configure() {
 	myconf="${myconf} -opengl
