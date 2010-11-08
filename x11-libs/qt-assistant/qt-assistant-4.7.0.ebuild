@@ -11,10 +11,10 @@ KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86"
 IUSE="compat doc +glib qt3support trace"
 SRC_URI+=" compat? ( ftp://ftp.qt.nokia.com/qt/source/${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz )"
 
-DEPEND="~x11-libs/qt-gui-${PV}[aqua=,glib=,trace?]
-	~x11-libs/qt-sql-${PV}[aqua=,sqlite]
+DEPEND="~x11-libs/qt-gui-${PV}[aqua=,glib=,qt3support=,trace?]
+	~x11-libs/qt-sql-${PV}[aqua=,qt3support=,sqlite]
 	~x11-libs/qt-webkit-${PV}[aqua=]
-	~x11-libs/qt-declarative-${PV}"
+	~x11-libs/qt-declarative-${PV}[qt3support=]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
