@@ -84,7 +84,10 @@ src_prepare() {
 				# delete plugin_qmldesigner and qmlprojectmanager subdir
 				# definitions to avoid automagic dependencies
 				sed -i -e "/SUBDIRS +=/d" \
-					src/plugins/plugins.pro || die
+					src/plugins/plugins.pro \
+					-e "/plugin_qt4projectmanager/s:^:#:" \
+					src/plugins/plugins.pro \
+					|| die
 			fi
 			if [[ ${plugin} == "designer" ]]; then
 				sed -i "/plugin_qt4projectmanager/s:^:#:" \
