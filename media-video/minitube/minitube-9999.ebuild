@@ -19,6 +19,7 @@ KEYWORDS=""
 IUSE="debug kde gstreamer"
 
 DEPEND="x11-libs/qt-gui:4[accessibility]
+	x11-libs/qt-dbus:4
 	gstreamer? (
 		kde? ( || ( media-sound/phonon[gstreamer]  x11-libs/qt-phonon:4 ) )
 		!kde? ( || ( x11-libs/qt-phonon media-sound/phonon[gstreamer] ) )
