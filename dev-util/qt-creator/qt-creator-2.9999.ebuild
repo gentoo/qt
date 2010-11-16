@@ -17,33 +17,28 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
-	inspector kde mercurial perforce +qml qtscript rss subversion"
+	inspector mercurial perforce +qml qtscript rss subversion"
 
-QTVER="4.7.0_beta1:4"
+QTVER="4.7.1:4"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
-	>=x11-libs/qt-gui-${QTVER}[qt3support]"
-RDEPEND="${DEPEND}
 	>=x11-libs/qt-sql-${QTVER}
 	>=x11-libs/qt-svg-${QTVER}
-	>=x11-libs/qt-test-${QTVER}
-	>=x11-libs/qt-webkit-${QTVER}
-	!kde? ( || ( >=x11-libs/qt-phonon-${QTVER} media-sound/phonon ) )
-	kde? ( media-sound/phonon )
+	!qml? ( >=x11-libs/qt-gui-${QTVER} )
+	qml? (
+		>=x11-libs/qt-declarative-${QTVER}[private-headers]
+		>=x11-libs/qt-core-${QTVER}[private-headers]
+		>=x11-libs/qt-gui-${QTVER}[private-headers]
+		>=x11-libs/qt-script-${QTVER}[private-headers]
+	)
+	qtscript? ( >=x11-libs/qt-script-${QTVER} )"
+
+RDEPEND="${DEPEND}
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-vcs/cvs )
 	sys-devel/gdb
 	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
-	inspector? ( >=sci-libs/vtk-5.4[qt4] )
 	mercurial? ( dev-vcs/mercurial )
-	!qml? ( >=x11-libs/qt-gui-${QTVER}[qt3support] )
-	qml? (
-		>=x11-libs/qt-declarative-${QTVER}[private-headers]
-		>=x11-libs/qt-core-${QTVER}[private-headers]
-		>=x11-libs/qt-gui-${QTVER}[qt3support,private-headers]
-		>=x11-libs/qt-script-${QTVER}[private-headers]
-	)
-	qtscript? ( >=x11-libs/qt-script-${QTVER} )
 	subversion? ( dev-vcs/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
@@ -148,7 +143,7 @@ src_install() {
 	# Remove unneeded translations
 	for lang in ${LANGS}; do
 		if ! hasq $lang ${LINGUAS}; then
-			rm ${D}/usr/share/${MY_PN}/translations/${MY_PN}_${lang}.qm \
+			rm "${D}"/usr/share/${MY_PN}/translations/${MY_PN}_${lang}.qm \
 					|| die "failed to remove translations"
 		fi
 	done
