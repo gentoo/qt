@@ -6,7 +6,7 @@ EAPI="3"
 
 EGIT_REPO_URI="git://gitorious.org/qt-labs/messagingframework.git"
 
-inherit multilib qt4-r2 git
+inherit qt4-r2 git
 
 DESCRIPTION="The Qt Messaging Framework"
 HOMEPAGE="http://labs.trolltech.com/page/Projects/QtMessaging"
@@ -24,9 +24,9 @@ DEPEND=">=x11-libs/qt-core-4.6.0
 RDEPEND="${DEPEND}"
 
 # TODO:
-#   qt-gui should be optional
+#   qt-gui could be optional
 #   qt-test is only needed for unit tests
-#   run unit tests from $S (need to fix rpath), don't install them
+#   run unit tests from ${S} (rpath seems to be already correct), but don't install them
 #   automagic dep on qt-webkit, see examples/qtmail/plugins/viewers/generic/generic.pro
 #   doc USE flag (emake docs)
 #   examples USE flag
