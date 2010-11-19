@@ -15,27 +15,38 @@ SRC_URI=""
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug examples test"
 
 DEPEND=">=x11-libs/qt-core-4.6.0
 	>=x11-libs/qt-gui-4.6.0
 	>=x11-libs/qt-sql-4.6.0
-	>=x11-libs/qt-test-4.6.0"
+	examples? ( >=x11-libs/qt-webkit-4.6.0 )
+	test? ( >=x11-libs/qt-test-4.6.0 )"
 RDEPEND="${DEPEND}"
 
 # TODO:
 #   qt-gui could be optional
-#   qt-test is only needed for unit tests
-#   run unit tests from ${S} (rpath seems to be already correct), but don't install them
-#   automagic dep on qt-webkit, see examples/qtmail/plugins/viewers/generic/generic.pro
 #   doc USE flag (emake docs)
-#   examples USE flag
+#   implement src_test
 
 DOCS="CHANGES"
 PATCHES=(
+	# http://bugreports.qt.nokia.com/browse/QTMOBILITY-374
 	"${FILESDIR}/${PN}-use-standard-install-paths.patch"
 )
 
 src_prepare() {
 	qt4-r2_src_prepare
+
+	sed -i -e '/SUBDIRS +=/s:benchmarks::' messagingframework.pro || die
+
+	if ! use examples; then
+		sed -i -e '/examples/d' messagingframework.pro || die
+	fi
+
+	if ! use test; then
+		sed -i -e '/tests/d' messagingframework.pro || die
+	else
+		echo 'INSTALLS -= target' >> tests/tests.pri
+	fi
 }
