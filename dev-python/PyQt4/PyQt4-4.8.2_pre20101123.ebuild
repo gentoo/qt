@@ -8,15 +8,15 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit qt4-r2 python toolchain-funcs
 
-REVISION=bb053c0310a3
+REVISION="a1275c515e24"
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QTVER="4.6.2" # minimal Qt version this is supposed to work with
+QTVER="4.7.1" # minimal Qt version this is supposed to work with
 
 DESCRIPTION="A set of Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
 #SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
 
-SRC_URI="http://gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
