@@ -101,7 +101,7 @@ qt4-build-edge_pkg_setup() {
 	fi
 	# stable-branch is outdated. Last commit on 4th of April. Adding warning
 	# wrt bug #313619
-	if use stable-branch && version_is_at_least "4.7.9999"; then
+	if use stable-branch; then
 		ewarn
 		ewarn				"!!! WARNING !!!"
 		ewarn "Qt-${PV/.9999} stable branch is outdated. If you are"
