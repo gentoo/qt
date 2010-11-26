@@ -26,18 +26,11 @@ MY_EGIT_COMMIT=${EGIT_COMMIT:=}
 
 inherit git qt4-build
 
-[[ ${PV} == *.9999 ]] && SRC_URI=
-
-case "${PV}" in
-	4.9999 | 4.7.9999)
-		IUSE+=" +stable-branch"
-		;;
-	4.6.9999)
-		IUSE+=" stable-branch +kde-qt"
-		;;
-esac
-
-[[ ${PV} == *.9999 ]] && DEPEND="dev-lang/perl"
+if [[ ${PV} == *.9999 ]]; then
+	SRC_URI=
+	IUSE+=" +stable-branch"
+	DEPEND="dev-lang/perl"
+fi
 
 # @FUNCTION: qt4-build-edge_pkg_setup
 # @DESCRIPTION:
@@ -53,37 +46,12 @@ qt4-build-edge_pkg_setup() {
 				MY_PV_EXTRA="${PV}"
 			fi
 			;;
-		4.6.9999)
-			if use kde-qt; then
-				if use stable-branch; then
-					MY_PV_EXTRA="${PV}-kde-qt-stable"
-				else
-					MY_PV_EXTRA="${PV}-kde-qt"
-				fi
-			else
-				if use stable-branch; then
-					MY_PV_EXTRA="${PV}-stable"
-				else
-					MY_PV_EXTRA="${PV}"
-				fi
-			fi
-			;;
 		*)
 			MY_PV_EXTRA="${PV}"
 			;;
 	esac
 
 	case "${MY_PV_EXTRA}" in
-		4.6.9999-kde-qt-stable)
-			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
-			EGIT_PROJECT="qt-${PV}"
-			EGIT_BRANCH="4.6-stable-patched"
-			;;
-		4.6.9999-kde-qt)
-			EGIT_REPO_URI="git://gitorious.org/+kde-developers/qt/kde-qt.git"
-			EGIT_PROJECT="qt-${PV}"
-			EGIT_BRANCH="master"
-			;;
 		4.?.9999 | 4.?.9999-stable)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 			EGIT_PROJECT="qt-${PV}"
@@ -116,7 +84,7 @@ qt4-build-edge_pkg_setup() {
 				;;
 			4.?.9999-kde-qt-stable)
 				ewarn "The ${PV} version ebuilds with kde-qt and stable-branch USE flags install kde-qt from"
-				ewarn "gitorious kde-qt repository, '4.6-stable-patched' branch."
+				ewarn "gitorious kde-qt repository, '4.x-stable-patched' branch."
 				;;
 			4.?.9999-stable | 4.9999-stable)
 				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch."
@@ -125,19 +93,15 @@ qt4-build-edge_pkg_setup() {
 			4.?.9999 | 4.9999)
 				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software."
 				;;
-			4.6.0_alpha_pre*)
-				ewarn "The ${PV} version ebuilds install a technical preview from Nokia Qt Software."
-				ewarn "See http://labs.trolltech.com/blogs/2009/09/09/qt-460-tech-preview-1/"
-				;;
 			4.*.*_*)
 				ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
 				;;
 		esac
 		ewarn
 	fi
-	# stable-branch is outdated.Last commit on 4th of April. Adding warning
+	# stable-branch is outdated. Last commit on 4th of April. Adding warning
 	# wrt bug #313619
-	if use stable-branch && version_is_at_least "4.7.9999"; then
+	if use stable-branch; then
 		ewarn
 		ewarn				"!!! WARNING !!!"
 		ewarn "Qt-${PV/.9999} stable branch is outdated. If you are"
@@ -145,6 +109,7 @@ qt4-build-edge_pkg_setup() {
 		ewarn "to disable 'stable-branch' use flag and rebuild all the Qt modules"
 		ewarn
 	fi
+
 	qt4-build_pkg_setup
 }
 
