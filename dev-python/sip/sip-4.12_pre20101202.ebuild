@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
+PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 
@@ -13,7 +14,7 @@ inherit eutils python toolchain-funcs ${HG_ECLASS}
 
 HG_REVISION=64e98b58216b
 
-DESCRIPTION="Python bindings generator for C and C++ libraries"
+DESCRIPTION="Python extension module generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
 LICENSE="|| ( GPL-2 GPL-3 sip )"
 SLOT="0"
@@ -34,9 +35,6 @@ elif [[ ${PV} == *_pre* ]]; then
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
 	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
-else
-	# official stable release
-	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/sip${PV%%.*}/${P}.tar.gz"
 fi
 
 src_prepare() {
@@ -51,19 +49,23 @@ src_prepare() {
 
 src_configure() {
 	configuration() {
-		set -- $(PYTHON) configure.py \
-			--bindir="${EPREFIX}/usr/bin" \
-			--destdir="${EPREFIX}$(python_get_sitedir)" \
-			--incdir="${EPREFIX}$(python_get_includedir)" \
-			--sipdir="${EPREFIX}/usr/share/sip" \
-			$(use debug && echo --debug) \
-			CC="$(tc-getCC)" CXX="$(tc-getCXX)" \
-			LINK="$(tc-getCXX)" LINK_SHLIB="$(tc-getCXX)" \
-			CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" \
-			LFLAGS="${LDFLAGS}" \
-			STRIP=true
-		echo "$@"
-		"$@" || die "configure.py failed"
+		local myconf=("$(PYTHON)"
+			configure.py
+			--bindir="${EPREFIX}/usr/bin"
+			--incdir="${EPREFIX}$(python_get_includedir)"
+			--destdir="${EPREFIX}$(python_get_sitedir)"
+			--sipdir="${EPREFIX}/usr/share/sip"
+			$(use debug && echo --debug)
+			CC="$(tc-getCC)"
+			CXX="$(tc-getCXX)"
+			LINK="$(tc-getCXX)"
+			LINK_SHLIB="$(tc-getCXX)"
+			CFLAGS="${CFLAGS}"
+			CXXFLAGS="${CXXFLAGS}"
+			LFLAGS="${LDFLAGS}"
+			STRIP=":")
+		echo "${myconf[@]}"
+		"${myconf[@]}"
 	}
 	python_execute_function -s configuration
 }
@@ -71,20 +73,19 @@ src_configure() {
 src_install() {
 	python_src_install
 
-	dodoc NEWS || die
+	dodoc NEWS || die "dodoc failed"
 
 	if use doc; then
-		dohtml -r doc/html/* || die
+		dohtml -r doc/html/* || die "dohtml failed"
 	fi
 }
 
 pkg_postinst() {
 	python_mod_optimize sipconfig.py sipdistutils.py
 
-	ewarn 'When updating sip, you usually need to recompile packages that'
-	ewarn 'depend on sip, such as PyQt4 and qscintilla-python. If you have'
-	ewarn 'app-portage/gentoolkit installed you can find these packages with'
-	ewarn '`equery d sip` and `equery d PyQt4`.'
+	ewarn "When updating dev-python/sip, you usually need to rebuild packages, which depend on dev-python/sip,"
+	ewarn "such as dev-python/PyQt4 and dev-python/qscintilla-python. If you have app-portage/gentoolkit"
+	ewarn "installed, you can find these packages with \`equery d dev-python/sip dev-python/PyQt4\`."
 }
 
 pkg_postrm() {
