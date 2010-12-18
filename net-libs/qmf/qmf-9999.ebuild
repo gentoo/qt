@@ -17,12 +17,12 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug examples test"
 
-DEPEND=">=x11-libs/qt-core-4.6.0
+RDEPEND=">=x11-libs/qt-core-4.6.0
 	>=x11-libs/qt-gui-4.6.0
 	>=x11-libs/qt-sql-4.6.0
-	examples? ( >=x11-libs/qt-webkit-4.6.0 )
+	examples? ( >=x11-libs/qt-webkit-4.6.0 )"
+DEPEND="${RDEPEND}
 	test? ( >=x11-libs/qt-test-4.6.0 )"
-RDEPEND="${DEPEND}"
 
 # TODO:
 #   qt-gui could be optional
