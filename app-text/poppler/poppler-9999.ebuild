@@ -28,7 +28,7 @@ COMMON_DEPEND="
 		dev-libs/glib:2
 		>=x11-libs/cairo-1.8.4
 		>=x11-libs/gtk+-2.20.1:2[introspection?]
-		introspection? ( dev-libs/gobject-introspection )
+		introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
 	)
 	curl? ( net-misc/curl )
 	jpeg? ( virtual/jpeg )
