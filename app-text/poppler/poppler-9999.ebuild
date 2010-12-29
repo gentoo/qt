@@ -14,7 +14,7 @@ LICENSE="GPL-2"
 KEYWORDS=""
 SLOT="0"
 IUSE="+abiword cairo cjk curl cxx debug doc exceptions +introspection jpeg
-jpeg2k +lcms png qt4 +utils +xpdf-headers"
+jpeg2k +lcms png qt4 tiff +utils +xpdf-headers"
 
 # No test data provided
 RESTRICT="test"
@@ -26,7 +26,7 @@ COMMON_DEPEND="
 	abiword? ( dev-libs/libxml2:2 )
 	cairo? (
 		dev-libs/glib:2
-		>=x11-libs/cairo-1.8.4
+		>=x11-libs/cairo-1.10.0
 		>=x11-libs/gtk+-2.20.1:2[introspection?]
 		introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
 	)
@@ -39,6 +39,7 @@ COMMON_DEPEND="
 		x11-libs/qt-core:4
 		x11-libs/qt-gui:4
 	)
+	tiff? ( media-libs/tiff )
 "
 DEPEND="${COMMON_DEPEND}
 	dev-util/pkgconfig
@@ -79,6 +80,7 @@ src_configure() {
 		$(cmake-utils_use_with jpeg)
 		$(cmake-utils_use_with png)
 		$(cmake-utils_use_with qt4)
+		$(cmake-utils_use_with tiff)
 		$(cmake-utils_use exceptions USE_EXCEPTIONS)
 	)
 
