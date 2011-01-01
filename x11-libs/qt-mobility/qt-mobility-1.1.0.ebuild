@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -9,21 +9,21 @@ inherit multilib qt4-r2
 MY_P="${PN}-opensource-src-${PV}"
 
 DESCRIPTION="Qt APIs for mobile devices"
-HOMEPAGE="http://labs.trolltech.com/page/Projects/QtMobility"
-SRC_URI="http://get.qt.nokia.com/qt/solutions/${MY_P}.tar.gz"
+HOMEPAGE="http://qt.nokia.com/products/qt-addons/mobility"
+SRC_URI="http://get.qt.nokia.com/qt/add-ons/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 
-QT_MOBILITY_MODULES="bearer contacts +location messaging multimedia +publishsubscribe sensors +serviceframework systeminfo versit"
-IUSE="bluetooth debug doc opengl qml +tools ${QT_MOBILITY_MODULES}"
+QT_MOBILITY_MODULES="bearer contacts location messaging multimedia publishsubscribe serviceframework systeminfo versit"
+IUSE="bluetooth +dbus debug doc opengl pulseaudio qml +tools ${QT_MOBILITY_MODULES}"
 
 COMMON_DEPEND="
 	>=x11-libs/qt-core-4.6.0:4
-	bearer? (
-		net-misc/networkmanager
-		>=x11-libs/qt-dbus-4.6.0:4
+	bearer? ( >=x11-libs/qt-dbus-4.6.0:4 )
+	location? (
 		>=x11-libs/qt-gui-4.6.0:4
+		>=x11-libs/qt-sql-4.6.0:4[sqlite]
 	)
 	messaging? ( net-libs/qmf )
 	multimedia? (
@@ -35,6 +35,7 @@ COMMON_DEPEND="
 		x11-libs/libXv
 		>=x11-libs/qt-gui-4.6.0:4
 		opengl? ( >=x11-libs/qt-opengl-4.6.0:4 )
+		pulseaudio? ( media-sound/pulseaudio )
 	)
 	publishsubscribe? (
 		tools? ( >=x11-libs/qt-gui-4.6.0:4 )
@@ -42,15 +43,17 @@ COMMON_DEPEND="
 	qml? ( x11-libs/qt-declarative:4 )
 	serviceframework? (
 		>=x11-libs/qt-sql-4.6.0:4[sqlite]
+		dbus? ( >=x11-libs/qt-dbus-4.6.0:4 )
 		tools? ( >=x11-libs/qt-gui-4.6.0:4 )
 	)
 	systeminfo? (
-		net-misc/networkmanager
 		x11-libs/libX11
+		x11-libs/libXrandr
 		>=x11-libs/qt-dbus-4.6.0:4
 		>=x11-libs/qt-gui-4.6.0:4
 		bluetooth? ( net-wireless/bluez )
-	)"
+	)
+"
 DEPEND="${COMMON_DEPEND}
 	multimedia? (
 		sys-kernel/linux-headers
@@ -59,15 +62,16 @@ DEPEND="${COMMON_DEPEND}
 	systeminfo? ( sys-kernel/linux-headers )
 "
 RDEPEND="${COMMON_DEPEND}
-	systeminfo? ( sys-apps/hal )
+	bearer? ( net-misc/networkmanager )
+	systeminfo? (
+		net-misc/networkmanager
+		sys-apps/hal
+	)
 "
 
 S=${WORKDIR}/${MY_P}
 
 DOCS="changes-${PV}"
-PATCHES=(
-	"${FILESDIR}/${P}-fix-tools-linking.patch"
-)
 
 pkg_setup() {
 	# figure out which modules to build
@@ -79,8 +83,8 @@ pkg_setup() {
 	done
 	if [[ -z ${modules} ]]; then
 		ewarn "At least one module must be selected for building, but you have selected none."
-		ewarn "The QtLocation module will be automatically enabled."
-		modules="location"
+		ewarn "The QtContacts module will be automatically enabled."
+		modules="contacts"
 	fi
 }
 
@@ -90,19 +94,22 @@ src_prepare() {
 	# translations aren't really translated: disable them
 	sed -i -e '/SUBDIRS +=/s:translations::' qtmobility.pro || die
 
-	# fix automagic dependencies on qt-opengl and qt-declarative
+	# fix automagic dependency on qt-opengl
 	if ! use opengl; then
 		sed -i -e '/QT +=/s:opengl::' src/multimedia/multimedia.pro || die
 	fi
+	# fix automagic dependency on qt-declarative
 	if ! use qml; then
-		sed -i -e '/SUBDIRS +=/s:declarative::' plugins/plugins.pro || die
+		sed -i -e '/SUBDIRS += declarative/d' plugins/plugins.pro || die
 	fi
 }
 
 src_configure() {
-	# tell configure/qmake where QMF is installed
-	export QMF_INCLUDEDIR="${EPREFIX}"/usr/include/qt4/qtopiamail
-	export QMF_LIBDIR="${EPREFIX}"/usr/$(get_libdir)/qt4
+	if use messaging; then
+		# tell configure/qmake where QMF is installed
+		export QMF_INCLUDEDIR="${EPREFIX}"/usr/include/qt4/qmfclient
+		export QMF_LIBDIR="${EPREFIX}"/usr/$(get_libdir)/qt4
+	fi
 
 	# custom configure script
 	set -- ./configure -no-docs \
@@ -119,6 +126,10 @@ src_configure() {
 	# fix automagic dependency on bluez
 	if ! use bluetooth; then
 		sed -i -e '/^bluez_enabled =/s:yes:no:' config.pri || die
+	fi
+	# fix automagic dependency on pulseaudio
+	if ! use pulseaudio; then
+		sed -i -e '/^pulseaudio_enabled =/s:yes:no:' config.pri || die
 	fi
 
 	eqmake4 -recursive
