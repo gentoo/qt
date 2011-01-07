@@ -6,7 +6,7 @@ EAPI="2"
 
 inherit qt4-r2
 
-HG_REVISION="8673b7890874"
+HG_REVISION="8921e85723a1"
 
 MY_P="QScintilla-gpl-snapshot-${PV/_pre*/-${HG_REVISION}}"
 
