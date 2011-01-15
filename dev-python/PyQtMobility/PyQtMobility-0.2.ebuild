@@ -1,10 +1,12 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="3"
+PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
+RESTRICT_PYTHON_ABIS="*-jython"
 
 inherit python
 
@@ -18,7 +20,7 @@ SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
 KEYWORDS="~amd64"
 
-PYQTM_MODULES="bearer contacts +location messaging multimedia +publishsubscribe sensors +serviceframework systeminfo versit"
+PYQTM_MODULES="bearer contacts location messaging multimedia publishsubscribe serviceframework systeminfo versit"
 IUSE="debug ${PYQTM_MODULES}"
 
 QTM_USE_DEPS=
@@ -27,9 +29,9 @@ for mod in ${PYQTM_MODULES//+}; do
 done
 unset mod
 
-DEPEND=">=dev-python/sip-4.11
-	>=dev-python/PyQt4-4.7.5[X]
-	>=x11-libs/qt-mobility-1.0.2[${QTM_USE_DEPS%,}]"
+DEPEND=">=dev-python/sip-4.12
+	>=dev-python/PyQt4-4.8.2[X]
+	>=x11-libs/qt-mobility-1.1.0[${QTM_USE_DEPS%,}]"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
@@ -44,14 +46,13 @@ pkg_setup() {
 			$(pyqtm_use_enable messaging)
 			$(pyqtm_use_enable multimedia QtMultimediaKit)
 			$(pyqtm_use_enable publishsubscribe QtPublishSubscribe)
-			$(pyqtm_use_enable sensors)
 			$(pyqtm_use_enable serviceframework QtServiceFramework)
 			$(pyqtm_use_enable systeminfo QtSystemInfo)
 			$(pyqtm_use_enable versit) )
 	if [[ ${#modules[@]} -eq 0 ]]; then
 		ewarn "At least one module must be selected for building, but you have selected none."
-		ewarn "The QtLocation module will be automatically enabled."
-		myconf="--enable=QtLocation"
+		ewarn "The QtContacts module will be automatically enabled."
+		myconf="--enable=QtContacts"
 	else
 		myconf="${modules[@]}"
 	fi
@@ -66,9 +67,9 @@ src_prepare() {
 
 src_configure() {
 	configuration() {
-		set -- $(PYTHON) configure.py \
-			--destdir="${EPREFIX}"$(python_get_sitedir) \
-			--sipdir="${EPREFIX}"/usr/share/sip \
+		set -- "$(PYTHON)" configure.py \
+			--destdir="${EPREFIX}$(python_get_sitedir)" \
+			--sipdir="${EPREFIX}/usr/share/sip" \
 			$(use debug && echo --debug) \
 			${myconf}
 		echo "$@"
