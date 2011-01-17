@@ -41,8 +41,8 @@ esac
 ########################## VARIABLES ############################
 PREV="${1}" # PyQt4 Revision
 SREV="${2}" # Sip Revision
-PVER="4.8.2" # PyQt4 current working version
-SVER="4.12" #$ Sip current working version
+PVER="4.8.3" # PyQt4 current working version
+SVER="4.12.1" #$ Sip current working version
 PYPKG="PyQt-x11-gpl-snapshot-${PVER}-${PREV}" #Format PyQt4 package
 SIPKG="sip-${SVER}-snapshot-${SREV}" # Format Sip package
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
