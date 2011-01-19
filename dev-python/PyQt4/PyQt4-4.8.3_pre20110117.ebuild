@@ -6,6 +6,7 @@ EAPI="3"
 PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
+RESTRICT_PYTHON_ABIS="*-jython"
 
 inherit python qt4-r2 toolchain-funcs
 
@@ -36,7 +37,7 @@ DEPEND=">=dev-python/sip-4.11.2
 	)
 	declarative? ( >=x11-libs/qt-declarative-${QT_VER}:4 )
 	multimedia? ( >=x11-libs/qt-multimedia-${QT_VER}:4 )
-	opengl? ( >=x11-libs/qt-opengl-${QT_VER}:4 )
+	opengl? ( >=x11-libs/qt-opengl-${QT_VER}:4 || ( >=x11-libs/qt-opengl-4.7.0:4[-egl] <x11-libs/qt-opengl-4.7.0:4 ) )
 	phonon? (
 		!kde? ( || ( >=x11-libs/qt-phonon-${QT_VER}:4 media-sound/phonon ) )
 		kde? ( media-sound/phonon )
@@ -153,7 +154,7 @@ src_install() {
 	}
 	python_execute_function -s installation
 
-	dodoc doc/pyqt4ref.txt NEWS THANKS || die "dodoc failed"
+	dodoc NEWS README THANKS || die "dodoc failed"
 
 	if use doc; then
 		dohtml -r doc/* || die "dohtml failed"
