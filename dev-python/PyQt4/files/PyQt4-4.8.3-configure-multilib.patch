@@ -1,0 +1,15 @@
+Index: PyQt-x11-gpl-snapshot-4.8.3-4b6c9bc41eeb/configure.py
+===================================================================
+--- PyQt-x11-gpl-snapshot-4.8.3-4b6c9bc41eeb.orig/configure.py
++++ PyQt-x11-gpl-snapshot-4.8.3-4b6c9bc41eeb/configure.py
+@@ -941,8 +941,8 @@ include(%s)
+                     # version.
+                     link = "-framework Python"
+                 elif ("--enable-shared" in ducfg.get("CONFIG_ARGS", "") and
+-                      glob.glob("%s/lib/libpython%d.%d*" % (ducfg["exec_prefix"], py_major, py_minor))):
+-                    lib_dir_flag = quote("-L%s/lib" % ducfg["exec_prefix"])
++                      glob.glob("%s/libpython%d.%d*" % (ducfg["LIBDIR"], py_major, py_minor))):
++                    lib_dir_flag = quote("-L%s" % ducfg["LIBDIR"])
+                     link = "%s -lpython%d.%d%s" % (lib_dir_flag, py_major, py_minor, abi)
+                 else:
+                     sipconfig.inform("Qt Designer plugin disabled because Python library is static")

@@ -51,7 +51,7 @@ RDEPEND="${DEPEND}"
 S=${WORKDIR}/${MY_P}
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.6.1-configure-multilib.patch"
+	"${FILESDIR}/${PN}-4.8.3-configure-multilib.patch"
 	"${FILESDIR}/${PN}-4.7.2-configure.py.patch"
 )
 
