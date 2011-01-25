@@ -124,7 +124,8 @@ src_configure() {
 		"${myconf[@]}" || return 1
 
 		local mod
-		for mod in QtCore $(use X && echo QtDesigner QtGui); do
+		for mod in QtCore $(use X && echo QtDesigner QtGui) $(use declarative &&
+		echo QtDeclarative); do
 			# Run eqmake4 inside the qpy subdirectories to avoid stripping and many other QA issues.
 			pushd qpy/${mod} > /dev/null || return 1
 			eqmake4 $(ls w_qpy*.pro)

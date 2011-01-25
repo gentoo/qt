@@ -1,8 +1,6 @@
-Index: PyQt-x11-gpl-snapshot-4.8.3-4b6c9bc41eeb/configure.py
-===================================================================
---- PyQt-x11-gpl-snapshot-4.8.3-4b6c9bc41eeb.orig/configure.py
-+++ PyQt-x11-gpl-snapshot-4.8.3-4b6c9bc41eeb/configure.py
-@@ -941,8 +941,8 @@ include(%s)
+--- configure.py
++++ configure.py
+@@ -941,8 +941,8 @@
                      # version.
                      link = "-framework Python"
                  elif ("--enable-shared" in ducfg.get("CONFIG_ARGS", "") and
