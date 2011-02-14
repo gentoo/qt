@@ -1,0 +1,19 @@
+--- src/gui/styles/qgtkstyle_p.cpp	2010-11-06 03:55:14.000000000 +0200
++++ src/gui/styles/qgtkstyle_p.cpp	2010-11-13 21:53:51.507000001 +0200
+@@ -252,14 +252,14 @@
+     return QHashableLatin1Literal::fromData(copy);
+ }
+ 
+-
++Q_GLOBAL_STATIC(FontHash, app_fonts)
+ 
+ bool QGtkStyleFilter::eventFilter(QObject *obj, QEvent *e)
+ {
+     if (e->type() == QEvent::ApplicationPaletteChange) {
+         // Only do this the first time since this will also
+         // generate applicationPaletteChange events
+-        if (!qt_app_palettes_hash() ||  qt_app_palettes_hash()->isEmpty()) {
++        if (!app_fonts() ||  app_fonts()->isEmpty()) {
+             stylePrivate->applyCustomPaletteHash();
+         }
+     }
