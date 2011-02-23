@@ -41,8 +41,8 @@ esac
 ########################## VARIABLES ############################
 PREV="${1}" # PyQt4 Revision
 SREV="${2}" # Sip Revision
-PVER="4.8.3" # PyQt4 current working version
-SVER="4.12.1" #$ Sip current working version
+PVER="4.8.4" # PyQt4 current working version
+SVER="4.12.2" #$ Sip current working version
 PYPKG="PyQt-x11-gpl-snapshot-${PVER}-${PREV}" #Format PyQt4 package
 SIPKG="sip-${SVER}-snapshot-${SREV}" # Format Sip package
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
@@ -101,7 +101,7 @@ einfo "Bumping ebuilds..."
 
 # PyQt4
 pushd ${OVERLAY}/dev-python/PyQt4/
-tomove=$(find '.' -type f -name "PyQt4-${PVER}*.ebuild"|tail -1)
+tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
 einfo "Previous ebuild to use: ${tomove#./}"
 mv ${tomove#./} PyQt4-${PVER}_pre${DATE}.ebuild || exit "Failed to bump PyQt4"
 ebegin "Changing revision number to ${PREV}"
@@ -113,7 +113,7 @@ popd
 
 # sip
 pushd ${OVERLAY}/dev-python/sip/
-tomove=$(find '.' -type f -name "sip-${SVER}*.ebuild"|tail -1)
+tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
 einfo "Previous ebuild to use: ${tomove#./}"
 mv ${tomove#./} sip-${SVER}_pre${DATE}.ebuild || exit "Failed to bump sip"
 ebegin "Changing revision number to ${SREV}"
