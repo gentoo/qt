@@ -1,6 +1,15 @@
 #!/bin/bash
 source /etc/init.d/functions.sh
 
+########################## VARIABLES ############################
+PVER="4.8.4" # PyQt4 current working version
+SVER="4.12.2" #$ Sip current working version
+DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
+TARGET="dev.gentooexperimental.org:~/public_html/distfiles/"
+TEMP="/tmp/qting-edge-python-bump/"
+OVERLAY="../../" # ugly but hey dont shoot me
+####################################################################
+
 usage() {
 	echo """
 
@@ -16,6 +25,50 @@ Use -c option to skip bumping operation and do
 	directly the merge operation
 	"""
 }
+
+
+dosip(){
+	SIPKG="sip-${SVER}-snapshot-${new_sip}" # Format Sip package
+	ebegin "Downloading ${SIPKG} tarball..."
+	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/sip4/${SIPKG}.tar.gz || exit 2
+	eend $?
+	ebegin "Copying ${SIPKG} to ${TARGET}"
+	eend $?
+	scp ${TEMP}/${SIPKG}.tar.gz ${TARGET} || exit
+	cp ${TEMP}/${SIPKG}.tar.gz $(portageq envvar DISTDIR) || exit
+	pushd ${OVERLAY}/dev-python/sip/
+	tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
+	einfo "Previous ebuild: ${tomove#./}"
+	mv ${tomove#./} sip-${SVER}_pre${DATE}.ebuild || exit "Failed to bump sip"
+	ebegin "Changing revision number to: ${new_sip}"
+	sed -i "/^HG_REVISION/s:=.*:=${new_sip}:" sip-${SVER}_pre${DATE}.ebuild
+	eend $?
+	repoman manifest
+	git add .
+	popd
+}
+
+dopyqt4(){
+	PYPKG="PyQt-x11-gpl-snapshot-${PVER}-${new_pyqt4}" #Format PyQt4 package
+	ebegin "Downloading ${PYPKG} tarball..."
+	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYPKG}.tar.gz || exit 2
+	eend $?
+	einfo "Copying ${PYPKG} to ${TARGET} ..."
+	scp ${TEMP}/${PYPKG}.tar.gz ${TARGET} || exit
+	cp ${TEMP}/${PYPKG}.tar.gz $(portageq envvar DISTDIR) || exit
+	pushd ${OVERLAY}/dev-python/PyQt4/
+	tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
+	einfo "Previous ebuild: ${tomove#./}"
+	mv ${tomove#./} PyQt4-${PVER}_pre${DATE}.ebuild || exit "Failed to bump PyQt4"
+	ebegin "Changing revision number to: ${new_pyqt4}"
+	sed -i "/^REVISION/s:=.*:=${new_pyqt4}:" PyQt4-${PVER}_pre${DATE}.ebuild
+	eend $?
+	repoman manifest
+	git add .
+	popd
+}
+
+
 
 commit() {
 ewarn "Your changes are ready to be merged. However I strongly recommend you to review your changes."
@@ -37,33 +90,41 @@ case "$choice" in
 esac
 }
 
+getrevisions(){
+	pushd ${OVERLAY}/dev-python/PyQt4/ >> /dev/null
+	pyqt4_tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
+	pyqt4_revision=$(grep ^REVISION ${pyqt4_tomove}|sed "s:^REVISION=::")
+	popd >> /dev/null
+	pushd ${OVERLAY}/dev-python/sip/ >> /dev/null
+	sip_tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
+	sip_revision=$(grep ^HG_REVISION ${sip_tomove}|sed "s:^HG_REVISION=::")
+	popd >> /dev/null
 
-########################## VARIABLES ############################
-PREV="${1}" # PyQt4 Revision
-SREV="${2}" # Sip Revision
-PVER="4.8.4" # PyQt4 current working version
-SVER="4.12.2" #$ Sip current working version
-PYPKG="PyQt-x11-gpl-snapshot-${PVER}-${PREV}" #Format PyQt4 package
-SIPKG="sip-${SVER}-snapshot-${SREV}" # Format Sip package
-DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
-####################################################################
+	einfo "Old Revisions: PyQt4 ${pyqt4_revision}, SIP: ${sip_revision}"
 
-TARGET="dev.gentooexperimental.org:~/public_html/distfiles/"
-TEMP="/tmp/qting-edge-python-bump/"
-OVERLAY="../../" # ugly but hey dont shoot me
+	# Find new revisions
+	new_pyqt4=$(curl -s http://www.riverbankcomputing.com/software/pyqt/download|grep "x11-gpl-snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 6|sed "s:\..*::")
+	new_sip=$(curl -s http://www.riverbankcomputing.com/software/sip/download|grep "snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 7|sed "s:\..*::")
+	
+	# Decide what to bump"
+	[[ ${pyqt4_revision} != ${new_pyqt4} ]] && dopyqt4 && FOUND=true;
+	[[ ${sip_revision} != ${new_sip} ]] && dosip && FOUND=true;
 
-if [[ -z $1 ]]; then
-	eerror " "
-	eerror "Invalid usage"
-	eerror " "
-	usage
-	exit 1
-elif [[ $1 == "-h" ]]; then
-	usage
+	if [[ -n $FOUND ]]; then
+		commit
+		# clean up
+		ebegin "Cleaning up tarballs..."
+		rm ${TEMP}/${SIPKG}.tar.gz || exit
+		rm ${TEMP}/${PYPKG}.tar.gz || exit
+		rm -r ${TEMP}
+		dst=$(portageq envvar DISTDIR)
+		rm ${dst}/${SIPKG}.tar.gz
+		rm ${dst}/${PYPKG}.tar.gz
+		eend $?
+	fi
 	exit 0
-elif [[ $1 == "-c" ]];then
-	commit
-fi
+
+}
 
 einfo """
 	###########################################################
@@ -73,66 +134,4 @@ einfo """
 	# Use ./bump-python-revisions -h for a usage example      #
 	###########################################################
 """
-
-ebegin "Downloading tarballs..."
-wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/sip4/${SIPKG}.tar.gz || exit 2
-wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYPKG}.tar.gz || exit 2
-eend $?
-
-if [[ $? != 0 ]]; then
-	eerror "Failed to download tarballs. Exiting..."
-	exit $?
-fi
-
-# copy the tarballs to mirror
-ebegin "Copying files to mirror..."
-scp ${TEMP}/${PYPKG}.tar.gz ${TARGET} || exit
-scp ${TEMP}/${SIPKG}.tar.gz ${TARGET} || exit
-eend $?
-
-# copy files to local distdir
-ebegin "Copying files to distdir..."
-cp ${TEMP}/${PYPKG}.tar.gz $(portageq envvar DISTDIR) || exit
-cp ${TEMP}/${SIPKG}.tar.gz $(portageq envvar DISTDIR) || exit
-eend $?
-
-# bump ebuilds
-einfo "Bumping ebuilds..."
-
-# PyQt4
-pushd ${OVERLAY}/dev-python/PyQt4/
-tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
-einfo "Previous ebuild to use: ${tomove#./}"
-mv ${tomove#./} PyQt4-${PVER}_pre${DATE}.ebuild || exit "Failed to bump PyQt4"
-ebegin "Changing revision number to ${PREV}"
-sed -i "/^REVISION/s:=.*:=${PREV}:" PyQt4-${PVER}_pre${DATE}.ebuild
-eend $?
-repoman manifest
-git add .
-popd
-
-# sip
-pushd ${OVERLAY}/dev-python/sip/
-tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
-einfo "Previous ebuild to use: ${tomove#./}"
-mv ${tomove#./} sip-${SVER}_pre${DATE}.ebuild || exit "Failed to bump sip"
-ebegin "Changing revision number to ${SREV}"
-sed -i "/^HG_REVISION/s:=.*:=${SREV}:" sip-${SVER}_pre${DATE}.ebuild
-eend $?
-repoman manifest
-git add .
-popd
-
-# commit
-commit
-# clean up
-ebegin "Cleaning up tarballs..."
-rm ${TEMP}/${SIPKG}.tar.gz || exit
-rm ${TEMP}/${PYPKG}.tar.gz || exit
-rm -r ${TEMP}
-dst=$(portageq envvar DISTDIR)
-rm ${dst}/${SIPKG}.tar.gz
-rm ${dst}/${PYPKG}.tar.gz
-eend $?
-
-exit 0
+getrevisions
