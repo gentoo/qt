@@ -15,8 +15,8 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,stable-branch=]
 	~x11-libs/qt-sql-${PV}[debug=,qt3support,stable-branch=]
 	phonon? (
 		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[debug=,stable-branch=]
-			media-sound/phonon[gstreamer] ) )
-		kde? ( media-sound/phonon[gstreamer] ) )"
+			media-libs/phonon[gstreamer] ) )
+		kde? ( media-libs/phonon[gstreamer] ) )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {

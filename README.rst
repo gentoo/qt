@@ -41,7 +41,7 @@ directory, rename it (to prevent portage error on set redefinition), and
 customize it to your own wishes.
 
 KDE users should note that at this point they need to use the
-media-sound/phonon package instead of x11-libs/qt-phonon. As a result we have
+media-libs/phonon package instead of x11-libs/qt-phonon. As a result we have
 commented out qt-phonon in the qt-all-live-kde set. Apart from that, KDE can
 use the official Nokia Qt version, but has specific patches in kde-qt that
 should result in a smoother KDE user experience.

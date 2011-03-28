@@ -30,10 +30,10 @@ COMMON_DEPEND="
 		!kde? (
 			|| (
 				>=x11-libs/qt-phonon-4.4:4
-				media-sound/phonon
+				media-libs/phonon
 			)
 		)
-		kde? ( media-sound/phonon )
+		kde? ( media-libs/phonon )
 	)
 	spell? ( app-text/enchant )
 "

@@ -28,8 +28,8 @@ DEPEND="net-libs/libsoup
 	>=x11-libs/qt-xmlpatterns-${QTVER}
 	dbus? ( >=x11-libs/qt-dbus-${QTVER} )
 	!kde? ( || ( >=x11-libs/qt-phonon-${QTVER}:${SLOT}[dbus=]
-		media-sound/phonon ) )
-	kde? ( media-sound/phonon )
+		media-libs/phonon ) )
+	kde? ( media-libs/phonon )
 	!net-misc/webkit-gtk"
 RDEPEND="${DEPEND}"
 

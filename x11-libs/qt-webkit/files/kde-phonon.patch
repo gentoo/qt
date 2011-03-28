@@ -4,7 +4,7 @@
  CONFIG += building-libs
  CONFIG += depend_includepath
  include($$PWD/../WebKit.pri)
-+# include media-sound/phonon headers
++# include media-libs/phonon headers
 +INCLUDEPATH += /usr/include
  
  TEMPLATE = lib

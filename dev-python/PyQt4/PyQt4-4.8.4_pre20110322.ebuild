@@ -39,8 +39,8 @@ DEPEND=">=dev-python/sip-4.11.2
 	multimedia? ( >=x11-libs/qt-multimedia-${QT_VER}:4 )
 	opengl? ( >=x11-libs/qt-opengl-${QT_VER}:4 || ( >=x11-libs/qt-opengl-4.7.0:4[-egl] <x11-libs/qt-opengl-4.7.0:4 ) )
 	phonon? (
-		!kde? ( || ( >=x11-libs/qt-phonon-${QT_VER}:4 media-sound/phonon ) )
-		kde? ( media-sound/phonon )
+		!kde? ( || ( >=x11-libs/qt-phonon-${QT_VER}:4 media-libs/phonon ) )
+		kde? ( media-libs/phonon )
 	)
 	sql? ( >=x11-libs/qt-sql-${QT_VER}:4 )
 	svg? ( >=x11-libs/qt-svg-${QT_VER}:4 )

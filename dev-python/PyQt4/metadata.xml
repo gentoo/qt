@@ -6,7 +6,7 @@
 <use>
 	<flag name="X">Build QtGui, QtDesigner and QtScriptTools modules</flag>
 	<flag name="assistant">Build QtHelp and QtAssistant modules</flag>
-	<flag name="kde">Select <pkg>media-sound/phonon</pkg> as phonon variant, needed for KDE4</flag>
+	<flag name="kde">Select <pkg>media-libs/phonon</pkg> as phonon variant, needed for KDE4</flag>
 	<flag name="multimedia">Build QtMultimedia module</flag>
 	<flag name="opengl">Build QtOpenGL module</flag>
 	<flag name="phonon">Build phonon module</flag>

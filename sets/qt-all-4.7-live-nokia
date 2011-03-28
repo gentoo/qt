@@ -1,5 +1,5 @@
 # set for all packages from QtSoftware's 4.7 branch
-# qt-phonon is commented out, as you may want media-sound/phonon instead
+# qt-phonon is commented out, as you may want media-libs/phonon instead
 
 ~x11-libs/qt-assistant-4.7.9999
 ~x11-libs/qt-core-4.7.9999

@@ -17,7 +17,7 @@ IUSE="kde lastfm"
 
 DEPEND="x11-libs/qt-core:4
 	x11-libs/qt-gui:4
-	kde? ( media-sound/phonon )
+	kde? ( media-libs/phonon )
 	!kde? ( x11-libs/qt-phonon:4 )
 	lastfm? ( media-libs/liblastfm )"
 RDEPEND="${DEPEND}"

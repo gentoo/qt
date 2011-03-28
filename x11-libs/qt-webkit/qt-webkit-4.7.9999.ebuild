@@ -16,8 +16,8 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,stable-branch=]
 	~x11-libs/qt-xmlpatterns-${PV}[debug=,stable-branch=]
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
 	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=,stable-branch=]
-		media-sound/phonon ) )
-	kde? ( media-sound/phonon )"
+		media-libs/phonon ) )
+	kde? ( media-libs/phonon )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {

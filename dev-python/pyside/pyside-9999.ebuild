@@ -23,9 +23,9 @@ DEPEND=">=dev-libs/boost-1.41.0[python]
 	>=x11-libs/qt-assistant-${QT_PV}
 	>=x11-libs/qt-gui-${QT_PV}
 	>=x11-libs/qt-opengl-${QT_PV}
-	kde? ( media-sound/phonon )
+	kde? ( media-libs/phonon )
 	!kde? ( || ( >=x11-libs/qt-phonon-${QT_PV}
-		media-sound/phonon ) )
+		media-libs/phonon ) )
 	>=x11-libs/qt-script-${QT_PV}
 	>=x11-libs/qt-sql-${QT_PV}
 	>=x11-libs/qt-svg-${QT_PV}

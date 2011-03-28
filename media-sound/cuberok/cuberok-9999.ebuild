@@ -25,8 +25,8 @@ DEPEND="media-libs/taglib
 		media-libs/gstreamer
 	)
 	phonon? (
-		kde? ( media-sound/phonon )
-		!kde? ( || ( >=x11-libs/qt-phonon-4.5:4 media-sound/phonon ) )
+		kde? ( media-libs/phonon )
+		!kde? ( || ( >=x11-libs/qt-phonon-4.5:4 media-libs/phonon ) )
 	)"
 RDEPEND="${DEPEND}
 	gstreamer? ( mp3? ( media-plugins/gst-plugins-mad ) )"
