@@ -15,7 +15,7 @@ EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="bazaar bineditor bookmarks +cmake cvs debug debugger doc examples fakevim git
+IUSE="bazaar bineditor bookmarks +cmake cvs debug doc examples fakevim git
 	inspector mercurial perforce +qml qtscript rss subversion"
 
 QTVER="4.7.1:4"
@@ -41,7 +41,7 @@ RDEPEND="${DEPEND}
 	mercurial? ( dev-vcs/mercurial )
 	subversion? ( dev-vcs/subversion )"
 
-PLUGINS="bookmarks bineditor cmake cvs debugger fakevim git mercurial perforce
+PLUGINS="bookmarks bineditor cmake cvs fakevim git mercurial perforce
 	qml qtscript subversion"
 
 pkg_setup() {
