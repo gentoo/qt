@@ -16,7 +16,7 @@ EGIT_BRANCH="2.0"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="bineditor bookmarks +cmake cvs debug +designer doc examples fakevim git
+IUSE="bazaar bineditor bookmarks +cmake cvs debug debugger doc examples fakevim git
 	inspector mercurial perforce +qml qtscript rss subversion"
 
 QTVER="4.7.1:4"
@@ -33,6 +33,7 @@ DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )"
 
 RDEPEND="${DEPEND}
+	bazaar? ( dev-vcs/bzr )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-vcs/cvs )
 	sys-devel/gdb
@@ -41,7 +42,7 @@ RDEPEND="${DEPEND}
 	mercurial? ( dev-vcs/mercurial )
 	subversion? ( dev-vcs/subversion )"
 
-PLUGINS="bookmarks bineditor cmake cvs designer fakevim git mercurial perforce
+PLUGINS="bookmarks bineditor cmake cvs debugger fakevim git mercurial perforce
 	qml qtscript subversion"
 
 pkg_setup() {
@@ -74,24 +75,15 @@ src_prepare() {
 				plugin="cmakeprojectmanager"
 			elif [[ ${plugin} == "qtscript" ]]; then
 				plugin="qtscripteditor"
-			elif [[ ${plugin} == "qml" ]]; then
-				plugins="qmljseditor"
-				# delete plugin_qmldesigner and qmlprojectmanager subdir
-				# definitions to avoid automagic dependencies
-				sed -i -e "/SUBDIRS +=/d" \
-					src/plugins/plugins.pro \
-					-e "/plugin_qt4projectmanager/s:^:#:" \
-					src/plugins/plugins.pro \
-					|| die
+			elif [[ ${plugin} ==  "qml" ]]; then
+				for x in qmlprojectmanager qmljsinspector qmljseditor qmljstools qmldesigner; do
+					einfo "Disabling ${x} support"
+					sed -i "/plugin_${x}/s:^:#:" src/plugins/plugins.pro \
+						|| die "Failed to disable ${x} plugin"
+					done
 			fi
-			if [[ ${plugin} == "designer" ]]; then
-				sed -i "/plugin_qt4projectmanager/s:^:#:" \
-					src/plugins/plugins.pro \
-					|| die "Failed to disable qt4projectmanager plugin"
-			fi
-
-			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro \
-				|| die "Failed to disable ${plugin} plugin"
+			# Now disable the plugins
+			sed -i "/plugin_${plugin}/s:^:#:" src/plugins/plugins.pro
 		fi
 	done
 
