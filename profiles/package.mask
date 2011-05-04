@@ -2,12 +2,12 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Markos Chandras <hwoarang@gentoo.org> (23 Feb 2011)
+# Markos Chandras <hwoarang@gentoo.org> (04 May 2011)
 # Masking latest releases
 =dev-python/sip-4.12.2_pre*
 =dev-python/PyQt4-4.8.4_pre*
 =dev-python/qscintilla-python-2.4.7_pre*
-=x11-libs/qscintilla-2.4.7_pre*
+=x11-libs/qscintilla-2.5.2_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2010)
 # Need multiple QA fixes. New USE flags are required
