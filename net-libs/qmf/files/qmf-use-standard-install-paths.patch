@@ -239,12 +239,12 @@ diff -Nur qmf-9999.orig/tests/tests.pri qmf-9999/tests/tests.pri
 diff -Nur qmf-9999.orig/tests/tst_python_email/tst_python_email.pro qmf-9999/tests/tst_python_email/tst_python_email.pro
 --- qmf-9999.orig/tests/tst_python_email/tst_python_email.pro	2010-12-30 17:17:02.000000000 +0100
 +++ qmf-9999/tests/tst_python_email/tst_python_email.pro	2010-12-30 17:17:11.000000000 +0100
-@@ -4,7 +4,7 @@
+@@ -5,7 +5,7 @@
+ !symbian {
+     DEFINES += SRCDIR=\\\"$$_PRO_FILE_PWD_\\\"
  
- DEFINES += SRCDIR=\\\"$$_PRO_FILE_PWD_\\\"
+-    testdata.path = $$QMF_INSTALL_ROOT/tests/testdata
++    testdata.path = $$[QMF_INSTALL_ROOT]/tests/testdata
+     testdata.files = testdata/
  
--testdata.path = $$QMF_INSTALL_ROOT/tests/testdata 
-+testdata.path = $$[QT_INSTALL_DATA]/tests/testdata 
- testdata.files = testdata/
- 
- INSTALLS += testdata
+     INSTALLS += testdata
