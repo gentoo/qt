@@ -6,7 +6,7 @@
 # Masking latest releases
 =dev-python/sip-4.12.2_pre*
 =dev-python/PyQt4-4.8.4_pre*
-=dev-python/qscintilla-python-2.4.7_pre*
+=dev-python/qscintilla-python-2.5.2_pre*
 =x11-libs/qscintilla-2.5.2_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2010)
