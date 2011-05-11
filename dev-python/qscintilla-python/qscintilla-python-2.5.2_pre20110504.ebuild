@@ -28,8 +28,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_P}/Python"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-2.4-nostrip.patch
-
+	epatch "${FILESDIR}"/${PN}-2.5-nostrip.patch
 	python_copy_sources
 }
 

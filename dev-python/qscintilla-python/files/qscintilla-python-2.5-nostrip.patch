@@ -1,0 +1,12 @@
+Index: QScintilla-gpl-snapshot-2.5.2-8bac389fb7ae/Python/configure.py
+===================================================================
+--- QScintilla-gpl-snapshot-2.5.2-8bac389fb7ae.orig/Python/configure.py
++++ QScintilla-gpl-snapshot-2.5.2-8bac389fb7ae/Python/configure.py
+@@ -310,6 +310,7 @@ def generate_code():
+             static=opts.static,
+             debug=opts.debug,
+             universal=pyqt.universal,
++	    strip=0,
+             arch=pyqt.arch,
+             prot_is_public=opts.prot_is_public,
+             deployment_target=pyqt.deployment_target
