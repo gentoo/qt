@@ -33,7 +33,7 @@ if [[ ${PV} == *9999* ]]; then
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
-	SRC_URI="http://dev.gentooexperimental.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
 fi
 
