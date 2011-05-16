@@ -10,7 +10,7 @@ RESTRICT_PYTHON_ABIS="*-jython"
 
 inherit python qt4-r2 toolchain-funcs
 
-REVISION=4b711e1aa672
+REVISION=581427363f63
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
 QT_VER="4.7.1" # minimal Qt version this is supposed to work with
 
