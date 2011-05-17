@@ -9,6 +9,7 @@ inherit qt4-r2 mercurial
 DESCRIPTION="Photo processor for RAW and Bitmap images"
 HOMEPAGE="http://www.photivo.org"
 EHG_REPO_URI="https://photivo.googlecode.com/hg/"
+EHG_REVISION="default"
 
 LICENSE="GPL-3"
 SLOT="0"
