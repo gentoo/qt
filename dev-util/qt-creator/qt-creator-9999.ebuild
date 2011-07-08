@@ -122,7 +122,12 @@ src_configure() {
 
 src_install() {
 	#install wrapper
-	dobin bin/${MY_PN} || die "failed to install launcher"
+	dobin bin/${MY_PN} bin/qtpromaker || die "dobin failed"
+	if use qml; then
+		# qmlpuppet component. Bug #367383
+		dobin bin/qmlpuppet || die "Failed to install qmlpuppet component"
+	fi
+
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
 	if use doc; then
 		emake INSTALL_ROOT="${D}/usr" install_inst_qch_docs || die "emake install qch_docs failed"
