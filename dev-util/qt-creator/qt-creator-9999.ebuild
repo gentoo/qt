@@ -125,7 +125,7 @@ src_install() {
 	dobin bin/${MY_PN} || die "failed to install launcher"
 	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
 	if use doc; then
-		emake INSTALL_ROOT="${D}/usr" install_qch_docs || die "emake install qch_docs failed"
+		emake INSTALL_ROOT="${D}/usr" install_inst_qch_docs || die "emake install qch_docs failed"
 	fi
 
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
