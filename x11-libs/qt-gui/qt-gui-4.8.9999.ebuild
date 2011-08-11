@@ -8,7 +8,7 @@ inherit eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus +glib gtk mng nas nis +raster tiff trace
+IUSE="+accessibility cups dbus +glib gif gtk jpeg mng nas nis png +raster tiff trace
 private-headers qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
@@ -27,6 +27,7 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
+	jpeg? ( virtual/jpeg )
 	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
@@ -92,6 +93,7 @@ src_configure() {
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
+		$(qt_use jpeg libjpeg system)
 		$(qt_use mng libmng system)
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
@@ -101,10 +103,12 @@ src_configure() {
 		$(qt_use gtk gtkstyle)
 		$(qt_use xinerama)"
 
+	use gif || myconf="${myconf} -no-gif"
+
 	use nas	&& myconf="${myconf} -system-nas-sound"
 	use raster && myconf="${myconf} -graphicssystem raster"
 
-	myconf="${myconf} -qt-gif -system-libpng -system-libjpeg
+	myconf="${myconf} -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
 		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg"
 
