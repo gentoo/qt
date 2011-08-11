@@ -18,7 +18,7 @@ KEYWORDS=""
 IUSE="bazaar bineditor bookmarks +cmake cvs debug doc examples fakevim git
 	inspector mercurial perforce +qml qtscript rss subversion"
 
-QTVER="4.7.1:4"
+QTVER="4.7.4:4"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	>=x11-libs/qt-sql-${QTVER}
 	>=x11-libs/qt-svg-${QTVER}
@@ -66,6 +66,11 @@ pkg_setup() {
 src_prepare() {
 	qt4-edge_src_prepare
 	git_src_prepare
+	# fix library path for styleplugin
+	sed -i -e "/target.path/s:lib:$(get_libdir):" \
+		"${S}"/src/libs/qtcomponents/styleitem/styleitem.pro \
+		|| die "Failed to fix multilib dir for styleplugin"
+
 	# bug 263087
 	for plugin in ${PLUGINS}; do
 		if ! use ${plugin}; then

@@ -55,6 +55,11 @@ PATCHES=(
 src_prepare() {
 	qt4-r2_src_prepare
 
+	# fix library path for styleplugin
+	sed -i -e "/target.path/s:lib:$(get_libdir):" \
+		"${S}"/src/libs/qtcomponents/styleitem/styleitem.pro \
+		|| die "Failed to fix multilib dir for styleplugin"
+
 	# bug 263087
 	for plugin in ${PLUGINS}; do
 		if ! use ${plugin}; then
