@@ -119,6 +119,9 @@ src_install() {
 	if use doc;then
 		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_qch_docs || die
 	fi
+
+	# Install missing icon
+	doicon ${FILESDIR}/${PN}_logo_48.png
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die
 

@@ -67,6 +67,12 @@ pkg_setup() {
 src_prepare() {
 	qt4-edge_src_prepare
 	git_src_prepare
+
+	# fix library path for styleplugin
+	sed -i -e "/target.path/s:lib:$(get_libdir):" \
+		"${S}"/src/libs/qtcomponents/styleitem/styleitem.pro \
+		|| die "Failed to fix multilib dir for styleplugin"
+
 	# bug 263087
 	for plugin in ${PLUGINS}; do
 		if ! use ${plugin}; then
@@ -134,6 +140,8 @@ src_install() {
 		emake INSTALL_ROOT="${D}/usr" install_inst_qch_docs || die "emake install qch_docs failed"
 	fi
 
+	# Install missing icon
+	doicon ${FILESDIR}/${PN}_logo_48.png
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
