@@ -22,8 +22,9 @@ RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
-		src/3rdparty/webkit/JavaScriptCore
-		src/3rdparty/webkit/WebCore
+		src/3rdparty/webkit/Source/JavaScriptCore/
+		src/3rdparty/webkit/Source/WebCore/
+		src/3rdparty/webkit/Source/WebKit/qt/
 		tools/designer/src/plugins/qwebview"
 	QT4_EXTRACT_DIRECTORIES="
 		include/

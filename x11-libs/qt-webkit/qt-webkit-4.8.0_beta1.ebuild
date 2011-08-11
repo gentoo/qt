@@ -22,8 +22,9 @@ RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
-		src/3rdparty/webkit/JavaScriptCore
-		src/3rdparty/webkit/WebCore
+		src/3rdparty/webkit/Source/JavaScriptCore/
+		src/3rdparty/webkit/Source/WebCore/
+		src/3rdparty/webkit/Source/WebKit/qt/
 		tools/designer/src/plugins/qwebview"
 	QT4_EXTRACT_DIRECTORIES="
 		include/
@@ -38,6 +39,8 @@ pkg_setup() {
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
+	# drop qt_webkit_version.pri from installation files since qt-core
+	# installs it
 	qt4-build-edge_src_prepare
 }
 
