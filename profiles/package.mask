@@ -3,6 +3,10 @@
 # Make sure the atoms you add are valid!
 
 # Markos Chandras <hwoarang@gentoo.org> (11 Aug 2011)
+# Masking rc release
+~dev-util/qt-creator-2.3.0_rc
+
+# Markos Chandras <hwoarang@gentoo.org> (11 Aug 2011)
 # Masking 4.8 beta release
 ~x11-libs/qt-assistant-4.8.0_beta1
 ~x11-libs/qt-core-4.8.0_beta1
