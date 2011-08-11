@@ -39,7 +39,7 @@ qt4-build-edge_pkg_setup() {
 	debug-print-function $FUNCNAME "$@"
 
 	case "${PV}" in
-		4.9999 | 4.7.9999)
+		4.9999 | 4.7.9999 | 4.8.9999)
 			if use stable-branch; then
 				MY_PV_EXTRA="${PV}-stable"
 			else
