@@ -141,7 +141,7 @@ src_install() {
 	fi
 
 	# Install missing icon
-	doicon ${FILESDIR}/${PN}_logo_48.png
+	doicon ${FILESDIR}/${MY_PN}_logo_48.png || die "failed to install icon"
 	make_desktop_entry ${MY_PN} QtCreator qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
