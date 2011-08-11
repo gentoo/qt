@@ -45,13 +45,17 @@ src_prepare() {
 }
 
 src_configure() {
-	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-fontconfig -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-multimedia -no-qt3support -no-svg"
 	! use glib && myconf="${myconf} -no-glib"
+	# https://bugreports.qt.nokia.com//browse/QTBUG-20236
+	# Even though webkit option is included, we do not build
+	# any targets
+	myconf="${myconf} -webkit"
 	qt4-build-edge_src_configure
 }
 
