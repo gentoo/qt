@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-build-edge
+EAPI="3"
+inherit qt4-build
 
 DESCRIPTION="The Phonon module for the Qt toolkit"
 SLOT="4"
@@ -19,21 +19,25 @@ DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support]
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-src/phonon
-src/plugins/phonon
-tools/designer/src/plugins/phononwidgets"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/
-src
-tools"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="
+		src/phonon
+		src/plugins/phonon
+		tools/designer/src/plugins/phononwidgets"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/
+		src
+		tools"
 
-QCONFIG_ADD="phonon"
-QCONFIG_DEFINE="QT_GSTREAMER"
+	QCONFIG_ADD="phonon"
+	use aqua || QCONFIG_DEFINE="QT_GSTREAMER"
+
+	qt4-build_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -phonon -no-opengl -no-svg
 		$(qt_use dbus qdbus)"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

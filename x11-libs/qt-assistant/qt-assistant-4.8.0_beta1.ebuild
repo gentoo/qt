@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-build-edge
+EAPI="3"
+inherit qt4-build
 
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
@@ -17,29 +17,30 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-# Pixeltool isn't really assistant related, but it relies on
-# the assistant libraries. doc/qch/
-QT4_TARGET_DIRECTORIES="
-tools/assistant
-tools/pixeltool
-tools/qdoc3"
-QT4_EXTRACT_DIRECTORIES="
-tools/tools.pro
-tools/shared/fontpanel
-src/
-include/
-doc/"
-
 pkg_setup() {
+	# Pixeltool isn't really assistant related, but it relies on
+	# the assistant libraries. doc/qch/
+	QT4_TARGET_DIRECTORIES="
+		tools/assistant
+		tools/pixeltool
+		tools/qdoc3"
+	QT4_EXTRACT_DIRECTORIES="
+		tools/
+		demos/
+		examples/
+		src/
+		include/
+		doc/"
+
 	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		tools/qttracereplay"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		${QT4_EXTRACT_DIRECTORIES}"
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 	sed -e "s/\(sub-qdoc3\.depends =\).*/\1/" \
 		-i doc/doc.pri || die "patching qdoc3 depends failed"
 }
@@ -56,13 +57,13 @@ src_configure() {
 	# Even though webkit option is included, we do not build
 	# any targets
 	myconf="${myconf} -webkit"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_compile() {
 	# help libQtHelp find freshly built libQtCLucene (bug #289811)
 	export LD_LIBRARY_PATH="${S}/lib"
-	qt4-build-edge_src_compile
+	qt4-build_src_compile
 	# ugly hack to build docs
 	cd "${S}"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die
@@ -75,7 +76,7 @@ src_compile() {
 }
 
 src_install() {
-	qt4-build-edge_src_install
+	qt4-build_src_install
 	# install documentation
 	# note that emake install_qchdocs fails for undefined reason so we use a
 	# workaround

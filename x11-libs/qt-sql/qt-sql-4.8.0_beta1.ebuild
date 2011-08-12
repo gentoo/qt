@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-build-edge
+EAPI="3"
+inherit qt4-build
 
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
@@ -33,17 +33,29 @@ src/tools"
 
 
 pkg_setup() {
-	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
+	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt/
+		include/QtCore/
+		include/QtSql/
+		include/QtScript/
+		src/src.pro
+		src/corelib/
+		src/plugins
+		src/3rdparty
+		src/tools"
+
+if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
 		ewarn "You need to enable at least one SQL driver. Enable at least"
 		ewarn "one of these USE flags: \"firebird freetds mysql odbc postgres sqlite \""
 		die "Enable at least one SQL driver."
 	fi
 
-	qt4-build-edge_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	sed -e '/pg_config --libs/d' -i "${S}"/configure \
 		|| die "sed to fix postgresql usage in ./configure failed"
@@ -67,5 +79,5 @@ src_configure() {
 		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility -no-fontconfig
 		-no-glib -no-opengl -no-svg -no-gtkstyle"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

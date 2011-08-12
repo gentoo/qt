@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-build-edge
+EAPI="3"
+inherit qt4-build
 
 DESCRIPTION="The ECMAScript module for the Qt toolkit"
 SLOT="4"
@@ -13,13 +13,17 @@ IUSE="iconv private-headers"
 DEPEND="~x11-libs/qt-core-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/script/"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/Qt/
-include/QtCore/
-include/QtScript/
-src/corelib/"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/script/"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt/
+		include/QtCore/
+		include/QtScript/
+		src/3rdparty/javascriptcore/
+		src/corelib/"
 
+	qt4-build_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
@@ -28,11 +32,11 @@ src_configure() {
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
 		-no-fontconfig -no-glib -no-opengl -no-svg -no-gtkstyle"
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_install() {
-	qt4-build-edge_src_install
+	qt4-build_src_install
 	#install private headers
 	if use private-headers; then
 		insinto ${QTHEADERDIR}/QtScript/private

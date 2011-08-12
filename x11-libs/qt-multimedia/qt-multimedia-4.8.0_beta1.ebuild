@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-build-edge
+EAPI="3"
+inherit qt4-build
 
 DESCRIPTION="The Qt multimedia module"
 SLOT="4"
@@ -15,18 +15,24 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/multimedia"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/Qt/
-include/QtCore/
-include/QtGui/
-include/QtMultimedia/
-src/src.pro
-src/corelib/
-src/gui/
-src/plugins
-src/3rdparty
-src/tools"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/multimedia"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt/
+		include/QtCore/
+		include/QtGui/
+		include/QtMultimedia/
+		include/QtNetwork/
+		src/src.pro
+		src/3rdparty/
+		src/corelib/
+		src/gui/
+		src/network/
+		src/plugins/
+		src/tools/"
+
+	qt4-build_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
@@ -38,5 +44,5 @@ src_configure() {
 		-no-sql-odbc -no-glib -no-opengl -no-svg -no-gtkstyle -no-phonon-backend -no-script
 		-no-scripttools -no-cups -no-xsync -no-xinput"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit eutils qt4-build-edge
+EAPI="3"
+inherit eutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -41,30 +41,39 @@ DEPEND="${RDEPEND}
 	x11-proto/inputproto"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
 
-QT4_TARGET_DIRECTORIES="
-src/gui
-src/scripttools/
-tools/designer
-tools/linguist/linguist
-src/plugins/imageformats/gif
-src/plugins/imageformats/ico
-src/plugins/imageformats/jpeg
-src/plugins/inputmethods"
-
-QT4_EXTRACT_DIRECTORIES="
-include
-src
-tools/linguist/phrasebooks
-tools/linguist/shared
-tools/shared"
-
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
-		ebeep 5
 	fi
 
-	qt4-build-edge_pkg_setup
+	confutils_use_depend_all gtkstyle glib
+
+	QT4_TARGET_DIRECTORIES="
+		src/gui
+		src/scripttools
+		tools/designer
+		tools/linguist/linguist
+		src/plugins/imageformats/gif
+		src/plugins/imageformats/ico
+		src/plugins/imageformats/jpeg
+		src/plugins/inputmethods"
+
+	QT4_EXTRACT_DIRECTORIES="
+		include
+		src
+		tools/linguist/phrasebooks
+		tools/linguist/shared
+		tools/shared"
+
+	use dbus && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} tools/qdbus/qdbusviewer"
+	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
+	use tiff && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/tiff"
+	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
+	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}	src/plugins/graphicssystems/trace"
+
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
+
+	qt4-build_pkg_setup
 }
 
 src_unpack() {
@@ -76,11 +85,11 @@ src_unpack() {
 
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_src_unpack
+	qt4-build_src_unpack
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
@@ -116,7 +125,7 @@ src_configure() {
 	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
 	myconf="${myconf} -no-webkit -no-phonon -no-opengl"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }
 
 src_install() {
@@ -134,7 +143,7 @@ src_install() {
 			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
 			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
-	qt4-build-edge_src_install
+	qt4-build_src_install
 
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtGui}/{qmacstyle_mac.h,qwindowdefs_win.h} \
