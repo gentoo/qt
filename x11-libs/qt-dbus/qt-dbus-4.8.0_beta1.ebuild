@@ -7,10 +7,10 @@ inherit qt4-build-edge
 
 DESCRIPTION="The DBus module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=]
 	>=sys-apps/dbus-1.0.2"
 RDEPEND="${DEPEND}"
 

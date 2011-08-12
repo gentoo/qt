@@ -7,11 +7,11 @@ inherit qt4-build-edge
 
 DESCRIPTION="The Qt multimedia module"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]
-	~x11-libs/qt-gui-${PV}[debug=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=]
+	~x11-libs/qt-gui-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
 

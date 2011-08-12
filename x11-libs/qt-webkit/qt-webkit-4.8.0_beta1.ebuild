@@ -7,15 +7,15 @@ inherit qt4-build-edge
 
 DESCRIPTION="The Webkit module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="dbus kde"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,stable-branch=]
-	~x11-libs/qt-gui-${PV}[dbus?,debug=,stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}[debug=,stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}[debug=,stable-branch=]
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl]
+	~x11-libs/qt-gui-${PV}[dbus?,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[debug=]
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=]
 		media-libs/phonon ) )
 	kde? ( media-libs/phonon )"
 RDEPEND="${DEPEND}"

@@ -7,17 +7,17 @@ inherit qt4-build-edge
 
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="private-headers"
 
-DEPEND="~x11-libs/qt-core-${PV}[stable-branch=]
-	~x11-libs/qt-gui-${PV}[stable-branch=]
-	~x11-libs/qt-multimedia-${PV}[stable-branch=]
-	~x11-libs/qt-script-${PV}[stable-branch=]
-	~x11-libs/qt-sql-${PV}[stable-branch=]
-	~x11-libs/qt-svg-${PV}[stable-branch=]	
-	~x11-libs/qt-webkit-${PV}[stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}[stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}[=]
+	~x11-libs/qt-gui-${PV}[=]
+	~x11-libs/qt-multimedia-${PV}[=]
+	~x11-libs/qt-script-${PV}[=]
+	~x11-libs/qt-sql-${PV}[=]
+	~x11-libs/qt-svg-${PV}[=]	
+	~x11-libs/qt-webkit-${PV}[=]
+	~x11-libs/qt-xmlpatterns-${PV}[=]"
 
 RDEPEND="${DEPEND}"
 

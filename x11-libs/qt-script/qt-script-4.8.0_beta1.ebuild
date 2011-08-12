@@ -7,10 +7,10 @@ inherit qt4-build-edge
 
 DESCRIPTION="The ECMAScript module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="iconv private-headers"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/script/"

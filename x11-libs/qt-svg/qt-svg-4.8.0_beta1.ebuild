@@ -7,10 +7,10 @@ inherit qt4-build-edge
 
 DESCRIPTION="The SVG module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="iconv"
 
-DEPEND="~x11-libs/qt-gui-${PV}[debug=,stable-branch=]"
+DEPEND="~x11-libs/qt-gui-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="
