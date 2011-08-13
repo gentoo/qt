@@ -7,7 +7,9 @@
 ~dev-util/qt-creator-2.3.0_rc
 
 # Markos Chandras <hwoarang@gentoo.org> (11 Aug 2011)
-# Masking 4.8 beta release
+# Masking 4.8 beta release. The ebuilds are still work in
+# progress. Before reporting any bugs make sure your git
+# tree is up-to-date
 ~x11-libs/qt-assistant-4.8.0_beta1
 ~x11-libs/qt-core-4.8.0_beta1
 ~x11-libs/qt-declarative-4.8.0_beta1
