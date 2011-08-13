@@ -8,16 +8,17 @@ inherit qt4-build
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
-IUSE="private-headers"
+IUSE="private-headers qt3support webkit"
 
-DEPEND="~x11-libs/qt-core-${PV}[=]
-	~x11-libs/qt-gui-${PV}[=]
-	~x11-libs/qt-multimedia-${PV}[=]
-	~x11-libs/qt-script-${PV}[=]
-	~x11-libs/qt-sql-${PV}[=]
-	~x11-libs/qt-svg-${PV}[=]	
-	~x11-libs/qt-webkit-${PV}[=]
-	~x11-libs/qt-xmlpatterns-${PV}[=]"
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,qt3support=]
+    ~x11-libs/qt-gui-${PV}[aqua=,qt3support=]
+    ~x11-libs/qt-opengl-${PV}[aqua=,qt3support=]
+    ~x11-libs/qt-script-${PV}[aqua=]
+    ~x11-libs/qt-sql-${PV}[aqua=,qt3support=]
+    ~x11-libs/qt-svg-${PV}[aqua=]
+    ~x11-libs/qt-xmlpatterns-${PV}[aqua=]
+    qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=] )
+    webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=] )"
 
 RDEPEND="${DEPEND}"
 
