@@ -39,7 +39,8 @@ pkg_setup() {
 	QT4_EXTRACT_DIRECTORIES="
 		include/
 		src/
-		tools/"
+		tools/
+		translations/"
 
 	qt4-build_pkg_setup
 }

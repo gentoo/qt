@@ -26,7 +26,8 @@ MY_EGIT_COMMIT=${EGIT_COMMIT:=}
 
 inherit git qt4-build
 
-if [[ ${PV} == *.9999 ]]; then
+# 4.8 has not stable-branch
+if [[ ${PV} == 4.7.9999 || ${PV} == 4.9999 ]]; then
 	SRC_URI=
 	IUSE+=" +stable-branch"
 	DEPEND="dev-lang/perl"
