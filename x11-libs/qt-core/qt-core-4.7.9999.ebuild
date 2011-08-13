@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 inherit qt4-build-edge
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
