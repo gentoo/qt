@@ -33,7 +33,7 @@ pkg_setup() {
 
 	if use webkit; then
 		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-			src/3rdparty/webkit/WebKit/qt/declarative"
+			src/3rdparty/webkit/Source/WebKit/qt/declarative"
 	fi
 
 	QT4_EXTRACT_DIRECTORIES="

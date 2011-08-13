@@ -8,28 +8,36 @@ inherit qt4-build-edge
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="private-headers"
+IUSE="private-headers webkit"
 
-DEPEND="~x11-libs/qt-core-${PV}[stable-branch=]
-	~x11-libs/qt-gui-${PV}[stable-branch=]
-	~x11-libs/qt-multimedia-${PV}[stable-branch=]
-	~x11-libs/qt-script-${PV}[stable-branch=]
-	~x11-libs/qt-sql-${PV}[stable-branch=]
-	~x11-libs/qt-svg-${PV}[stable-branch=]	
-	~x11-libs/qt-webkit-${PV}[stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}[stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}
+	~x11-libs/qt-gui-${PV}
+	~x11-libs/qt-multimedia-${PV}
+	~x11-libs/qt-script-${PV}
+	~x11-libs/qt-sql-${PV}
+	~x11-libs/qt-svg-${PV}	
+	webkit? ( ~x11-libs/qt-webkit-${PV} )
+	qt3support?  ( ~x11-lbs/qt-webkit-${PV} )
+	~x11-libs/qt-xmlpatterns-${PV}"
 
 RDEPEND="${DEPEND}"
 
 QCONFIG_ADD="declarative"
 
-QT4_TARGET_DIRECTORIES="
-	src/declarative
-	tools/qml"
-QT4_EXTRACT_DIRECTORIES="
-	include/
-	src/
-	tools/"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="
+		src/declarative
+		tools/qml"
+	QT4_EXTRACT_DIRECTORIES="
+		include/
+		src/
+		tools/"
+	if use webkit; then
+		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+			src/3rdparty/webkit/Source/WebKit/qt/declarative"
+	fi
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -declarative"
