@@ -11,9 +11,9 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc +glib trace"
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[=,glib=,trace?]
+	~x11-libs/qt-gui-${PV}[glib=,trace?]
 	~x11-libs/qt-sql-${PV}[sqlite]
-	~x11-libs/qt-webkit-${PV}[=]
+	~x11-libs/qt-webkit-${PV}
 "
 RDEPEND="${DEPEND}"
 
