@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
-IUSE="qt3support"
+IUSE="egl qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	~x11-libs/qt-gui-${PV}[debug=,qt3support=]
@@ -37,7 +37,8 @@ pkg_setup() {
 
 src_configure() {
 	myconf="${myconf} -opengl
-		$(qt_use qt3support)"
+		$(qt_use qt3support)
+		$(qt_use egl)"
 
 	qt4-build_src_configure
 
