@@ -47,7 +47,7 @@ pkg_setup() {
 
 
 src_configure() {
-	myconf="${myconf} -declarative"
+	myconf="${myconf} -declarative -no-gtkstyle"
 	qt4-build_src_configure
 }
 

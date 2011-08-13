@@ -10,13 +10,13 @@ SLOT="4"
 KEYWORDS=""
 IUSE="dbus"
 
-DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support,stable-branch=]
+DEPEND="~x11-libs/qt-gui-${PV}[debug=,glib,qt3support]
 	!kde-base/phonon-kde
 	!kde-base/phonon-xine
 	!media-libs/phonon
 	media-libs/gstreamer
 	media-plugins/gst-plugins-meta
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )"
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="

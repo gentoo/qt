@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE="iconv"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
+DEPEND="~x11-libs/qt-core-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/testlib"

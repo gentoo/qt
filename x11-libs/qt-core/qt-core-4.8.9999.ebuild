@@ -17,7 +17,7 @@ RDEPEND="sys-libs/zlib
 	!<x11-libs/qt-4.4.0:4"
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support,stable-branch=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support] )"
 
 QT4_TARGET_DIRECTORIES="
 src/tools/bootstrap

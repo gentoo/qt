@@ -11,9 +11,9 @@ KEYWORDS=""
 IUSE="doc +glib trace"
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[stable-branch=,glib=,trace?]
-	~x11-libs/qt-sql-${PV}[sqlite,stable-branch=]
-	~x11-libs/qt-webkit-${PV}[stable-branch=]
+	~x11-libs/qt-gui-${PV}[,glib=,trace?]
+	~x11-libs/qt-sql-${PV}[sqlite]
+	~x11-libs/qt-webkit-${PV}
 "
 RDEPEND="${DEPEND}"
 
