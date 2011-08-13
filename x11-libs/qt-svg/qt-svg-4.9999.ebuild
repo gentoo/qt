@@ -13,24 +13,28 @@ IUSE="iconv"
 DEPEND="~x11-libs/qt-gui-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-src/svg
-src/plugins/imageformats/svg
-src/plugins/iconengines/svgiconengine"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/QtSvg/
-include/Qt/
-include/QtGui/
-include/QtCore/
-include/QtXml/
-src/corelib/
-src/gui/
-src/plugins/
-src/xml
-src/3rdparty"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="
+	src/svg
+	src/plugins/imageformats/svg
+	src/plugins/iconengines/svgiconengine"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/QtSvg/
+	include/Qt/
+	include/QtGui/
+	include/QtCore/
+	include/QtXml/
+	src/corelib/
+	src/gui/
+	src/plugins/
+	src/xml
+	src/3rdparty"
 
-QCONFIG_ADD="svg"
-QCONFIG_DEFINE="QT_SVG"
+	QCONFIG_ADD="svg"
+	QCONFIG_DEFINE="QT_SVG"
+
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -svg -no-xkb  -no-fontconfig -no-xrender -no-xrandr

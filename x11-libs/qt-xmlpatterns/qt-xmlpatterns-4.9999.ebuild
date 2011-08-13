@@ -13,17 +13,20 @@ IUSE=""
 DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/QtCore
-include/QtNetwork
-include/QtXmlPatterns
-src/network/
-src/corelib/"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/QtCore
+	include/QtNetwork
+	include/QtXmlPatterns
+	src/network/
+	src/corelib/"
 
-QCONFIG_ADD="xmlpatterns"
-QCONFIG_DEFINE="QT_XMLPATTERNS"
+	QCONFIG_ADD="xmlpatterns"
+	QCONFIG_DEFINE="QT_XMLPATTERNS"
 
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -xmlpatterns"

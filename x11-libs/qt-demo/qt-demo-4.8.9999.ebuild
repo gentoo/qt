@@ -26,16 +26,20 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="demos
-	examples"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	doc/src/images
-	src/
-	include/
-	tools/"
 PATCHES=(
 	"${FILESDIR}/${PN}-4.6-plugandpaint.patch"
 )
+
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="demos
+		examples"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		doc/src/images
+		src/
+		include/
+		tools/"
+	qt4-build-edge_pkg_setup
+}
 
 src_install() {
 	insinto ${QTDOCDIR}/src

@@ -19,20 +19,19 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/Qt/
-include/QtCore/
-include/QtSql/
-include/QtScript/
-src/src.pro
-src/corelib/
-src/plugins
-src/3rdparty
-src/tools"
-
-
 pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/Qt/
+	include/QtCore/
+	include/QtSql/
+	include/QtScript/
+	src/src.pro
+	src/corelib/
+	src/plugins
+	src/3rdparty
+	src/tools"
+
 	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
 		ewarn "You need to enable at least one SQL driver. Enable at least"
 		ewarn "one of these USE flags: \"firebird freetds mysql odbc postgres sqlite \""

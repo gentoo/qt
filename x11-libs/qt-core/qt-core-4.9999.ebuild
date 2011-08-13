@@ -32,26 +32,29 @@ tools/linguist/lconvert
 tools/linguist/lrelease
 tools/linguist/lupdate"
 
-# Most ebuilds include almost everything for testing
-# Will clear out unneeded directories after everything else works OK
-QT4_EXTRACT_DIRECTORIES="
-include/Qt
-include/QtCore
-include/QtNetwork
-include/QtScript
-include/QtXml
-src/plugins/plugins.pro
-src/plugins/qpluginbase.pri
-src/src.pro
-src/3rdparty/des
-src/3rdparty/harfbuzz
-src/3rdparty/md4
-src/3rdparty/md5
-src/3rdparty/sha1
-src/3rdparty/easing
-src/script
-tools/linguist/shared
-translations"
+pkg_setup() {
+	# Most ebuilds include almost everything for testing
+	# Will clear out unneeded directories after everything else works OK
+	QT4_EXTRACT_DIRECTORIES="
+	include/Qt
+	include/QtCore
+	include/QtNetwork
+	include/QtScript
+	include/QtXml
+	src/plugins/plugins.pro
+	src/plugins/qpluginbase.pri
+	src/src.pro
+	src/3rdparty/des
+	src/3rdparty/harfbuzz
+	src/3rdparty/md4
+	src/3rdparty/md5
+	src/3rdparty/sha1
+	src/3rdparty/easing
+	src/script
+	tools/linguist/shared
+	translations"
+	qt4-build-edge_pkg_setup
+}
 
 
 src_unpack() {

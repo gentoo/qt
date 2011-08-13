@@ -26,7 +26,7 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=,stable-branch=]
 	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch] )
 	jpeg? ( virtual/jpeg )
 	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
@@ -39,30 +39,29 @@ DEPEND="${RDEPEND}
 	gtk? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
-
-QT4_TARGET_DIRECTORIES="
-src/gui
-src/scripttools/
-tools/designer
-tools/linguist/linguist
-src/plugins/imageformats/gif
-src/plugins/imageformats/ico
-src/plugins/imageformats/jpeg
-src/plugins/inputmethods"
-
-QT4_EXTRACT_DIRECTORIES="
-include
-src
-tools/linguist/phrasebooks
-tools/linguist/shared
-tools/shared"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch] )"
 
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
 		ebeep 5
 	fi
+	QT4_TARGET_DIRECTORIES="
+	src/gui
+	src/scripttools/
+	tools/designer
+	tools/linguist/linguist
+	src/plugins/imageformats/gif
+	src/plugins/imageformats/ico
+	src/plugins/imageformats/jpeg
+	src/plugins/inputmethods"
+
+	QT4_EXTRACT_DIRECTORIES="
+	include
+	src
+	tools/linguist/phrasebooks
+	tools/linguist/shared
+	tools/shared"
 
 	qt4-build-edge_pkg_setup
 }

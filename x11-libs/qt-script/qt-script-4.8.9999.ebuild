@@ -13,13 +13,16 @@ IUSE="iconv private-headers"
 DEPEND="~x11-libs/qt-core-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/script/"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/Qt/
-include/QtCore/
-include/QtScript/
-src/corelib/"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/script/"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/Qt/
+	include/QtCore/
+	include/QtScript/
+	src/corelib/"
 
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr

@@ -13,12 +13,14 @@ IUSE="iconv"
 DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/testlib"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/QtTest/
-include/QtCore/
-src/corelib/"
-
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/testlib"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/QtTest/
+	include/QtCore/
+	src/corelib/"
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr

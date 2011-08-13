@@ -20,16 +20,20 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support,stable-branch=]
 
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-src/qt3support
-src/tools/uic3
-tools/designer/src/plugins/widgets
-tools/qtconfig
-tools/porting"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-src/
-include/
-tools/"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="
+	src/qt3support
+	src/tools/uic3
+	tools/designer/src/plugins/widgets
+	tools/qtconfig
+	tools/porting"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	src/
+	include/
+	tools/"
+
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} -qt3support

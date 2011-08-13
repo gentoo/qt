@@ -15,18 +15,21 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="src/multimedia"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-include/Qt/
-include/QtCore/
-include/QtGui/
-include/QtMultimedia/
-src/src.pro
-src/corelib/
-src/gui/
-src/plugins
-src/3rdparty
-src/tools"
+pkg_setup() {
+	QT4_TARGET_DIRECTORIES="src/multimedia"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/Qt/
+	include/QtCore/
+	include/QtGui/
+	include/QtMultimedia/
+	src/src.pro
+	src/corelib/
+	src/gui/
+	src/plugins
+	src/3rdparty
+	src/tools"
+	qt4-build-edge_pkg_setup
+}
 
 src_configure() {
 	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
