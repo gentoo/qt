@@ -16,7 +16,8 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 	~x11-libs/qt-gui-${PV}:${SLOT}[qt3support=]
 	~x11-libs/qt-multimedia-${PV}:${SLOT}
 	~x11-libs/qt-opengl-${PV}:${SLOT}[qt3support=]
-	kde? || ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-libs/phonon )
+	kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-libs/phonon ) )
+	!kde? ( ~x11-libs/qt-phonon-${PV}:${SLOT} )
 	~x11-libs/qt-script-${PV}:${SLOT}
 	~x11-libs/qt-sql-${PV}:${SLOT}[qt3support=]
 	~x11-libs/qt-svg-${PV}:${SLOT}

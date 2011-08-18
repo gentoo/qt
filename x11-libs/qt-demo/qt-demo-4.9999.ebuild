@@ -7,7 +7,7 @@ inherit qt4-build-edge
 
 DESCRIPTION="Demonstration module of the Qt toolkit"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="kde qt3support"
 
 DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
@@ -16,7 +16,8 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}
 	~x11-libs/qt-gui-${PV}:${SLOT}[qt3support=]
 	~x11-libs/qt-multimedia-${PV}:${SLOT}
 	~x11-libs/qt-opengl-${PV}:${SLOT}[qt3support=]
-	kde? || ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-libs/phonon )
+	kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT} media-libs/phonon ) )
+	!kde? ( ~x11-libs/qt-phonon-${PV}:${SLOT} )
 	~x11-libs/qt-script-${PV}:${SLOT}
 	~x11-libs/qt-sql-${PV}:${SLOT}[qt3support=]
 	~x11-libs/qt-svg-${PV}:${SLOT}

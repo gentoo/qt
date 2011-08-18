@@ -11,7 +11,7 @@ KEYWORDS=""
 IUSE="qt3support"
 
 DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[stable-branch=]
-	~x11-libs/qt-core-${PV}:${SLOT}[stable-branch=i,qt3support=]
+	~x11-libs/qt-core-${PV}:${SLOT}[stable-branch=,qt3support=]
 	~x11-libs/qt-dbus-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-gui-${PV}:${SLOT}[stable-branch=,qt3support]
 	~x11-libs/qt-declarative-${PV}:${SLOT}[stable-branch=,webkit]
