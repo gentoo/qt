@@ -8,12 +8,12 @@ inherit qt4-build-edge
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="doc +glib trace"
+IUSE="doc +glib qt3support trace"
 
-DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=,glib=,trace?]
-	~x11-libs/qt-sql-${PV}[sqlite,stable-branch=]
+DEPEND="~x11-libs/qt-gui-${PV}[stable-branch=,glib=,trace?,qt3support=]
+	~x11-libs/qt-sql-${PV}[sqlite,stable-branch=,qt3support=]
 	~x11-libs/qt-webkit-${PV}[stable-branch=]
-	~x11-libs/qt-declarative-${PV}[stable-branch=]"
+	~x11-libs/qt-declarative-${PV}[stable-branch=,qt3support=]"
 RDEPEND="${DEPEND}"
 
 # Pixeltool isn't really assistant related, but it relies on
@@ -50,7 +50,8 @@ src_configure() {
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-multimedia -no-qt3support -no-svg"
+		-no-fontconfig -no-multimedia -no-qt3support -no-svg
+		$(qt_use qt3support)"
 	! use glib && myconf="${myconf} -no-glib"
 	qt4-build-edge_src_configure
 }

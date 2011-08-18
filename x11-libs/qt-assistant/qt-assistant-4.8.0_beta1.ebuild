@@ -8,12 +8,13 @@ inherit qt4-build
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc +glib trace"
+IUSE="doc +glib trace,qt3support"
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[glib=,trace?]
-	~x11-libs/qt-sql-${PV}[sqlite]
+	~x11-libs/qt-gui-${PV}[glib=,trace?,qt3support=]
+	~x11-libs/qt-sql-${PV}[sqlite,qt3support=]
 	~x11-libs/qt-webkit-${PV}
+	~x11-libs/qt-declarative-${PV}[qt3support=]
 "
 RDEPEND="${DEPEND}"
 
@@ -51,7 +52,8 @@ src_configure() {
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-multimedia -no-qt3support -no-svg"
+		-no-fontconfig -no-multimedia -no-qt3support -no-svg
+		$(qt_use qt3support)"
 	! use glib && myconf="${myconf} -no-glib"
 	# https://bugreports.qt.nokia.com//browse/QTBUG-20236
 	# Even though webkit option is included, we do not build
