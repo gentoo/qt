@@ -20,7 +20,7 @@ IUSE="debug doc cups directfb fbcon firebird +glib gif mysql nis ssl pch phonon
 	postgres vnc qvfb qt3support sqlite svg svga vnc webkit xmlpatterns"
 
 DEPEND="media-libs/libpng
-	media-libs/jpeg
+	virtual/jpeg
 	media-libs/libmng
 	media-libs/lcms
 	sys-libs/zlib

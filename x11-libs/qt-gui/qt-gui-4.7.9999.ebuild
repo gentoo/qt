@@ -12,7 +12,7 @@ IUSE="+accessibility cups dbus egl +glib gtk mng nas nis private-headers +raster
 
 RDEPEND="media-libs/fontconfig
 	media-libs/freetype:2
-	media-libs/jpeg:0
+	virtual/jpeg
 	media-libs/libpng
 	sys-libs/zlib
 	x11-libs/libX11

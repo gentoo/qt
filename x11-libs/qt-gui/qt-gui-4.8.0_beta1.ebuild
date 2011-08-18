@@ -13,7 +13,7 @@ private-headers qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
-	media-libs/jpeg
+	virtual/jpeg
 	media-libs/libpng
 	sys-libs/zlib
 	x11-libs/libX11
