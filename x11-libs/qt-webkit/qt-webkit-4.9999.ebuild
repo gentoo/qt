@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Webkit module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="dbus kde"
+IUSE="dbus +jit kde"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,stable-branch=]
 	~x11-libs/qt-gui-${PV}[dbus?,debug=,stable-branch=]
@@ -45,6 +45,6 @@ src_prepare() {
 }
 
 src_configure() {
-	myconf="${myconf} -webkit $(qt_use dbus qdbus) -no-gtkstyle"
+	myconf="${myconf} -webkit $(qt_use jit javascript-jit) $(qt_use dbus qdbus) -no-gtkstyle"
 	qt4-build-edge_src_configure
 }
