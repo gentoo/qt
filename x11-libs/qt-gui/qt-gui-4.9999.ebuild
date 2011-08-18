@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="3"
-inherit eutils qt4-build-edge
+inherit eutils confutils qt4-build-edge
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -45,6 +45,9 @@ pkg_setup() {
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
 		ebeep 5
 	fi
+
+	confutils_use_depend_all gtkstyle glib
+
 	QT4_TARGET_DIRECTORIES="
 	src/gui
 	src/scripttools/

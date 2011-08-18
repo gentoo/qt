@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="3"
-inherit eutils qt4-build-edge
+inherit eutils confutils qt4-build-edge
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -22,10 +22,10 @@ RDEPEND="media-libs/fontconfig
 	x11-libs/libXfont
 	x11-libs/libSM
 	x11-libs/libXi
-	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=]
-	~x11-libs/qt-script-${PV}[debug=]
+	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=,stable-branch=]
+	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch] )
 	jpeg? ( virtual/jpeg )
 	gtk? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
@@ -38,13 +38,16 @@ DEPEND="${RDEPEND}
 	gtk? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
 	x11-proto/xextproto
 	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch] )"
 
 pkg_setup() {
 	if ! use qt3support; then
 		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
 		ebeep 5
 	fi
+
+	confutils_use_depend_all gtkstyle glib
+
 	QT4_TARGET_DIRECTORIES="
 	src/gui
 	src/scripttools/

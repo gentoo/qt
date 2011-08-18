@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="3"
-inherit eutils qt4-build
+inherit eutils confutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
