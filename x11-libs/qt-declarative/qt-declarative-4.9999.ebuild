@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="private-headers webkit"
+IUSE="private-headers qt3support webkit"
 
 DEPEND="~x11-libs/qt-core-${PV}
 	~x11-libs/qt-gui-${PV}
