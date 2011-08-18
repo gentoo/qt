@@ -8,16 +8,17 @@ inherit qt4-build-edge
 DESCRIPTION="Demonstration module of the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE=""
+IUSE="qt3support"
 
 DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[stable-branch=]
-	~x11-libs/qt-core-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-core-${PV}:${SLOT}[stable-branch=i,qt3support=]
 	~x11-libs/qt-dbus-${PV}:${SLOT}[stable-branch=]
-	~x11-libs/qt-gui-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-gui-${PV}:${SLOT}[stable-branch=,qt3support]
+	~x11-libs/qt-declarative-${PV}:${SLOT}[stable-branch=,webkit]
 	~x11-libs/qt-multimedia-${PV}:${SLOT}[stable-branch=]
-	~x11-libs/qt-opengl-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-opengl-${PV}:${SLOT}[stable-branch=,qt3support=]
 	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[stable-branch=] media-libs/phonon )
-	~x11-libs/qt-script-${PV}:${SLOT}[stable-branch=]
+	~x11-libs/qt-script-${PV}:${SLOT}[stable-branch=,qt3support=]
 	~x11-libs/qt-sql-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-svg-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-test-${PV}:${SLOT}[stable-branch=]
@@ -36,6 +37,11 @@ pkg_setup() {
 		tools/"
 
 	qt4-build-edge_pkg_setup
+}
+
+src_configure() {
+	myconf="${myconf} $(qt_use qt3support)"
+	qt4-build-edge_src_configure
 }
 
 src_install() {
