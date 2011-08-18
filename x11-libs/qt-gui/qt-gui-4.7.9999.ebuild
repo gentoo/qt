@@ -8,7 +8,7 @@ inherit confutils eutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus egl +glib gtk mng nas nis private-headers +raster tiff trace qt3support xinerama"
+IUSE="+accessibility cups dbus egl +glib gtkstyle mng nas nis private-headers +raster tiff trace qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	media-libs/freetype:2
@@ -26,14 +26,14 @@ RDEPEND="media-libs/fontconfig
 	~x11-libs/qt-script-${PV}[debug=,stable-branch=]
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
-	gtk? ( x11-libs/gtk+:2 )
+	gtkstyle? ( x11-libs/gtk+:2 )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
 	xinerama? ( x11-libs/libXinerama )"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
-	gtk? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
+	gtkstyle? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
 	x11-proto/xextproto
 	x11-proto/inputproto"
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=,stable-branch=] )"
@@ -94,7 +94,7 @@ src_configure() {
 		$(qt_use dbus qdbus)
 		$(qt_use dbus)
 		$(qt_use qt3support)
-		$(qt_use gtk gtkstyle)
+		$(qt_use gtkstyle)
 		$(qt_use xinerama)"
 
 	use nas	&& myconf="${myconf} -system-nas-sound"

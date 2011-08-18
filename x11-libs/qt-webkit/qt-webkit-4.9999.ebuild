@@ -10,12 +10,12 @@ SLOT="4"
 KEYWORDS=""
 IUSE="dbus +jit kde"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl,stable-branch=]
-	~x11-libs/qt-gui-${PV}[dbus?,debug=,stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}[debug=,stable-branch=]
-	~x11-libs/qt-xmlpatterns-${PV}[debug=,stable-branch=]
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=,stable-branch=] )
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[debug=,ssl]
+	~x11-libs/qt-gui-${PV}[dbus?,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[debug=]
+	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[dbus=,debug=]
 		media-libs/phonon ) )
 	kde? ( media-libs/phonon )"
 RDEPEND="${DEPEND}"
@@ -39,8 +39,7 @@ pkg_setup() {
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
-	# drop qt_webkit_version.pri from installation files since qt-core
-	# installs it
+	sed -i -e "/Werror/d" "${S}/src/3rdparty/webkit/Source/WebKit.pri" || die
 	qt4-build-edge_src_prepare
 }
 

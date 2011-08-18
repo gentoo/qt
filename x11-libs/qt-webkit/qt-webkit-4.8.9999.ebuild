@@ -39,8 +39,7 @@ pkg_setup() {
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
-	# drop qt_webkit_version.pri from installation files since qt-core
-	# installs it
+	sed -i -e "/Werror/d" "${S}/src/3rdparty/webkit/Source/WebKit.pri" || die
 	qt4-build-edge_src_prepare
 }
 
