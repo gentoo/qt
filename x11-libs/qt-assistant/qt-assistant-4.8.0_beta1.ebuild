@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The assistant help module for the Qt toolkit."
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc +glib traceqt3support"
+IUSE="doc +glib trace qt3support"
 
 DEPEND="
 	~x11-libs/qt-gui-${PV}[glib=,trace?,qt3support=]
