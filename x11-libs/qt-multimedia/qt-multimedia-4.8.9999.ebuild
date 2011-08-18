@@ -8,7 +8,7 @@ inherit qt4-build-edge
 DESCRIPTION="The Qt multimedia module"
 SLOT="4"
 KEYWORDS=""
-IUSE=""
+IUSE="iconv"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=]
 	~x11-libs/qt-gui-${PV}[debug=]
