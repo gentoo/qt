@@ -2,14 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="4"
 
-EGIT_REPO_URI="git://gitorious.org/qt-labs/messagingframework.git"
+EGIT_REPO_URI="git://gitorious.org/qt-labs/messagingframework.git
+		https://git.gitorious.org/qt-labs/messagingframework.git"
 
-inherit qt4-r2 git
+inherit qt4-r2 git-2
 
 DESCRIPTION="The Qt Messaging Framework"
-HOMEPAGE="http://labs.trolltech.com/page/Projects/QtMessaging"
+HOMEPAGE="http://qt.gitorious.org/qt-labs/messagingframework"
 SRC_URI=""
 
 LICENSE="LGPL-2.1"
@@ -35,36 +36,37 @@ src_prepare() {
 
 	sed -i	-e '/benchmarks/d' \
 		-e '/tests/d' \
-		messagingframework.pro || die
+		messagingframework.pro
 
 	if ! use examples; then
-		sed -i -e '/examples/d' messagingframework.pro || die
+		sed -i -e '/examples/d' messagingframework.pro
 	fi
 
-	sed -i -e 's:QTEST_MAIN:QTEST_APPLESS_MAIN:' tests/tst_*/*.cpp || die
+	sed -i -e 's:QTEST_MAIN:QTEST_APPLESS_MAIN:' tests/tst_*/*.cpp
 }
 
 src_test() {
 	echo ">>> Test phase [QTest]: ${CATEGORY}/${PF}"
 
-	cd "${S}"/tests || die
+	cd "${S}"/tests
 
 	einfo "Building tests"
-	eqmake4
-	emake || die "failed to build tests"
+	eqmake4 && emake
 
 	einfo "Running tests"
 	export QMF_DATA="${T}"
-	local fail= unittest=
-	for unittest in longstring qmailaddress qmailcodec qmailmessage \
-			qmailmessagebody qmailmessagepart qprivateimplementation; do
-		if ! ./tst_${unittest}/build/tst_${unittest}; then
-			eerror "!!! ${unittest} unit test failed !!!"
+	local fail=false test=
+	for test in locks longstream longstring qlogsystem \
+			qmailaddress qmailcodec qmaillog qmailmessage \
+			qmailmessagebody qmailmessageheader qmailmessagepart \
+			qmailnamespace qprivateimplementation; do
+		if ! ./tst_${test}/build/tst_${test}; then
+			eerror "!!! ${test} test failed !!!"
 			fail=true
 		fi
 		echo
 	done
-	[[ ${fail} ]] && die "some unit tests have failed"
+	${fail} && die "some tests have failed"
 }
 
 src_install() {
@@ -73,8 +75,8 @@ src_install() {
 	if use doc; then
 		emake docs || die "failed to generate documentation"
 
-		dohtml -r doc/html/* || die
+		dohtml -r doc/html/*
 		insinto /usr/share/doc/${PF}
-		doins doc/html/qmf.qch || die
+		doins doc/html/qmf.qch
 	fi
 }
