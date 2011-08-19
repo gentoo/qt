@@ -2,8 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="3"
 
+RESTRICT_PYTHON_ABIS="3.*"
 inherit distutils mercurial
 
 EHG_REPO_URI="http://www.logilab.org/cgi-bin/hgwebdir.cgi/hgview"
