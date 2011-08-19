@@ -56,7 +56,6 @@ pkg_setup() {
 	qt4-build-edge_pkg_setup
 }
 
-
 src_unpack() {
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 				${QT4_EXTRACT_DIRECTORIES}"
@@ -151,7 +150,7 @@ src_install() {
 		install_qconfigs
 	fi
 	#remove .la files
-	find "${D}"${QTLIBDIR} -name "*.la" -print0 | xargs -0 rm 
+	find "${D}"${QTLIBDIR} -name "*.la" -print0 | xargs -0 rm
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtCore}/{\
 qatomic_macosx.h,\

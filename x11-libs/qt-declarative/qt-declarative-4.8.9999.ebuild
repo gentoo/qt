@@ -15,7 +15,7 @@ DEPEND="~x11-libs/qt-core-${PV}
 	~x11-libs/qt-multimedia-${PV}
 	~x11-libs/qt-script-${PV}
 	~x11-libs/qt-sql-${PV}
-	~x11-libs/qt-svg-${PV}	
+	~x11-libs/qt-svg-${PV}
 	webkit? ( ~x11-libs/qt-webkit-${PV} )
 	qt3support?  ( ~x11-libs/qt-qt3support-${PV} )
 	~x11-libs/qt-xmlpatterns-${PV}"

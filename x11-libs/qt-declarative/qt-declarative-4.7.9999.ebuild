@@ -16,7 +16,7 @@ DEPEND="~x11-libs/qt-core-${PV}[stable-branch=,qt3support=]
 	~x11-libs/qt-opengl-${PV}[stable-branch=,qt3support=]
 	~x11-libs/qt-script-${PV}[stable-branch=]
 	~x11-libs/qt-sql-${PV}[stable-branch=,qt3support=]
-	~x11-libs/qt-svg-${PV}[stable-branch=]	
+	~x11-libs/qt-svg-${PV}[stable-branch=]
 	~x11-libs/qt-webkit-${PV}[stable-branch=]
 	~x11-libs/qt-xmlpatterns-${PV}[stable-branch=]
 	qt3support? ( ~x11-libs/qt-qt3support-${PV}[stable-branch=] )

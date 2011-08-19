@@ -11,14 +11,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="private-headers qt3support webkit"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,qt3support=]
-    ~x11-libs/qt-gui-${PV}[aqua=,qt3support=]
-    ~x11-libs/qt-opengl-${PV}[aqua=,qt3support=]
-    ~x11-libs/qt-script-${PV}[aqua=]
-    ~x11-libs/qt-sql-${PV}[aqua=,qt3support=]
-    ~x11-libs/qt-svg-${PV}[aqua=]
-    ~x11-libs/qt-xmlpatterns-${PV}[aqua=]
-    qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=] )
-    webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=] )"
+	~x11-libs/qt-gui-${PV}[aqua=,qt3support=]
+	~x11-libs/qt-opengl-${PV}[aqua=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=]
+	~x11-libs/qt-sql-${PV}[aqua=,qt3support=]
+	~x11-libs/qt-svg-${PV}[aqua=]
+	~x11-libs/qt-xmlpatterns-${PV}[aqua=]
+	qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=] )
+	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=] )"
 
 RDEPEND="${DEPEND}"
 
@@ -44,7 +44,6 @@ pkg_setup() {
 
 	qt4-build_pkg_setup
 }
-
 
 src_configure() {
 	myconf="${myconf} -declarative -no-gtkstyle"

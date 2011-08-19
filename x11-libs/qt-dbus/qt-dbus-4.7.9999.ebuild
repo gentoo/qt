@@ -14,7 +14,6 @@ DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]
 	>=sys-apps/dbus-1.0.2"
 RDEPEND="${DEPEND}"
 
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/dbus
