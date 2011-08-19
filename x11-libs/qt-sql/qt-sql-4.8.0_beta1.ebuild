@@ -31,7 +31,6 @@ src/plugins
 src/3rdparty
 src/tools"
 
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}

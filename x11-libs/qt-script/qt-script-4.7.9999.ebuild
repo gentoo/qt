@@ -13,7 +13,6 @@ IUSE="iconv private-headers"
 DEPEND="~x11-libs/qt-core-${PV}[debug=,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/script/"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}

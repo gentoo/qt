@@ -13,7 +13,6 @@ IUSE=""
 DEPEND="~x11-libs/qt-core-${PV}[debug=,exceptions,stable-branch=]"
 RDEPEND="${DEPEND}"
 
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}

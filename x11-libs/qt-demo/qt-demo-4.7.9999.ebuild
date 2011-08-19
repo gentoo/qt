@@ -18,14 +18,13 @@ DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-multimedia-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-opengl-${PV}:${SLOT}[stable-branch=,qt3support=]
 	|| ( ~x11-libs/qt-phonon-${PV}:${SLOT}[stable-branch=] media-libs/phonon )
-	~x11-libs/qt-script-${PV}:${SLOT}[stable-branch=,qt3support=]
+	~x11-libs/qt-script-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-sql-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-svg-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-test-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-webkit-${PV}:${SLOT}[stable-branch=]
 	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[stable-branch=]"
 RDEPEND="${DEPEND}"
-
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="demos

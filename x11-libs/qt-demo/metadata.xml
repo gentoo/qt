@@ -6,5 +6,7 @@
 		<flag name='exceptions'>Build with support for exceptions</flag>
 		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
 			master but guaranteed by Nokia to compile</flag>
+		<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
+		this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 	</use>
 </pkgmetadata>
