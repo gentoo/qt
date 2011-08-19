@@ -24,7 +24,7 @@
 
 MY_EGIT_COMMIT=${EGIT_COMMIT:=}
 
-inherit git qt4-build
+inherit git-2 qt4-build
 
 # 4.8 has not stable-branch
 if [[ ${PV} == *.9999 ]]; then
@@ -142,7 +142,7 @@ qt4-build-edge_src_unpack() {
 
 	case "${PV}" in
 		*.9999)
-			git_src_unpack
+			git-2_src_unpack
 			;;
 		*)
 			echo tar xzf "${DISTDIR}"/${MY_P}.tar.gz ${targets}
