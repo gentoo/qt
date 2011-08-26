@@ -47,6 +47,6 @@ src_prepare() {
 }
 
 src_configure() {
-	myconf="${myconf} -webkit $(qt_use jit javascript-jit) $(qt_use dbus qdbus)"
+	myconf="${myconf} -system-sqlite -webkit $(qt_use jit javascript-jit) $(qt_use dbus qdbus)"
 	qt4-build-edge_src_configure
 }
