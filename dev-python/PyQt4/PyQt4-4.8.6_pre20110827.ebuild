@@ -6,13 +6,14 @@ EAPI="3"
 PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="*-jython"
+RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
 
 inherit python qt4-r2 toolchain-funcs
 
-REVISION=7598c7a759f6
+REVISION=e6842fdef3f9
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QT_VER="4.7.1" # minimal Qt version this is supposed to work with
+QT_VER="4.6.2" # This should be 4.7.X but ~alpha and ~sparc have no keywords for
+#that Qt version yet(?)
 
 DESCRIPTION="Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
@@ -22,10 +23,10 @@ SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
-KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
-IUSE="X assistant +dbus debug declarative examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
+IUSE="X assistant +dbus debug declarative doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.11.2
+DEPEND=">=dev-python/sip-4.12.5_pre20110827
 	>=x11-libs/qt-core-${QT_VER}:4
 	>=x11-libs/qt-script-${QT_VER}:4
 	>=x11-libs/qt-test-${QT_VER}:4
@@ -124,7 +125,7 @@ src_configure() {
 
 		local mod
 		for mod in QtCore $(use X && echo QtDesigner QtGui) $(use declarative &&
-		echo QtDeclarative); do
+		echo QtDeclarative) $(use opengl && echo QtOpenGL); do
 			# Run eqmake4 inside the qpy subdirectories to avoid stripping and many other QA issues.
 			pushd qpy/${mod} > /dev/null || return 1
 			eqmake4 $(ls w_qpy*.pro)
