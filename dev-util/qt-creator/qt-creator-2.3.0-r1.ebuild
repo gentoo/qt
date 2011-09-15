@@ -114,7 +114,6 @@ src_prepare() {
 		done
 		sed -i -e "/botan.pri/d" "${S}"/src/libs/utils/utils_dependencies.pri || die
 		sed -i -e "/botan.pri/d" "${S}"/tests/manual/preprocessor/preprocessor.pro || die
-		einfo "Version of dev-libs/botan to be used: ${botan_version}"
 		# link to system botan
 		sed -i -e "/LIBS/s:$: ${lib_botan}:" "${S}"/${MY_PN}.pri || die
 		sed -i -e "s:-lBotan:${lib_botan}:" "${S}"/tests/manual/appwizards/appwizards.pro || die
