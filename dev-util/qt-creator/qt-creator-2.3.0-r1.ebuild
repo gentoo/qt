@@ -17,7 +17,7 @@ SRC_URI="http://get.qt.nokia.com/${MY_PN}/${MY_P}-src.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-IUSE="bazaar bineditor bookmarks +cmake cvs debug doc examples fakevim git
+IUSE="bazaar bineditor bookmarks +botan-bundled +cmake cvs debug doc examples fakevim git
 	mercurial perforce +qml qtscript rss subversion"
 QTVER="4.7.4:4"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
@@ -42,7 +42,7 @@ RDEPEND="${DEPEND}
 	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
 	subversion? ( dev-vcs/subversion )
-	=dev-libs/botan-1.8*"
+	!botan-bundled? ( =dev-libs/botan-1.8* )"
 
 PLUGINS="bookmarks bineditor cmake cvs fakevim git mercurial
 perforce qml qtscript subversion"
@@ -97,21 +97,30 @@ src_prepare() {
 
 	# add rpath to make qtcreator actual find its *own* plugins
 	sed -i "/^LIBS/s:+=:& -Wl,-rpath,/usr/$(get_libdir)/${MY_PN} :" qtcreator.pri || die
-	# drop bundled libBotan. Bug #383033
-	rm -rf "${S}"/src/libs/3rdparty/botan || die
-	# remove references to bundled botan
-	sed -i -e "s:-lBotan:-lbotan:" "${S}"/tests/manual/appwizards/appwizards.pro || die
-	sed -i -e "s:botan::" "${S}"/src/libs/3rdparty/3rdparty.pro || die
-	for x in testrunner parsertests modeldemo; do
-		sed -i -e "/botan.pri/d" "${S}"/tests/valgrind/memcheck/${x}.pro || die
-	done
-	sed -i -e "/botan.pri/d" "${S}"/src/libs/utils/utils_dependencies.pri || die
-	sed -i -e "/botan.pri/d" "${S}"/tests/manual/preprocessor/preprocessor.pro || die
-	sed -i -e "/LIBS/s:$: -lbotan:" "${S}"/${MY_PN}.pri || die
-	local botan_version=$(best_version dev-libs/botan | cut -d '-' -f3 | \
-		cut -d '.' -f1,2)
-	einfo "Version of dev-libs/botan to be used: ${botan_version}"
-	append-flags $(pkg-config --cflags --libs botan-${botan_version})
+
+	if ! use botan-bundled; then
+		# identify system botan and pkg-config file
+		local botan_version=$(best_version dev-libs/botan | cut -d '-' -f3 | \
+			cut -d '.' -f1,2)
+		local lib_botan=$(pkg-config --libs botan-${botan_version})
+		einfo "Major version of system's botan library to be used: ${botan_version}"
+
+		# drop bundled libBotan. Bug #383033
+		rm -rf "${S}"/src/libs/3rdparty/botan || die
+		# remove references to bundled botan
+		sed -i -e "s:botan::" "${S}"/src/libs/3rdparty/3rdparty.pro || die
+		for x in testrunner parsertests modeldemo; do
+			sed -i -e "/botan.pri/d" "${S}"/tests/valgrind/memcheck/${x}.pro || die
+		done
+		sed -i -e "/botan.pri/d" "${S}"/src/libs/utils/utils_dependencies.pri || die
+		sed -i -e "/botan.pri/d" "${S}"/tests/manual/preprocessor/preprocessor.pro || die
+		einfo "Version of dev-libs/botan to be used: ${botan_version}"
+		# link to system botan
+		sed -i -e "/LIBS/s:$: ${lib_botan}:" "${S}"/${MY_PN}.pri || die
+		sed -i -e "s:-lBotan:${lib_botan}:" "${S}"/tests/manual/appwizards/appwizards.pro || die
+		# append botan refs to compiler flags
+		append-flags $(pkg-config --cflags --libs botan-${botan_version})
+	fi
 }
 
 src_configure() {

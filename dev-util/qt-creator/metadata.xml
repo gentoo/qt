@@ -10,6 +10,7 @@
 	<flag name="bazaar">Add support for bazaar version control system</flag>
 	<flag name="bineditor">enable bineditor plugin</flag>
 	<flag name="bookmarks">enable bookmarks plugin</flag>
+	<flag name="botan-bundled">Use the bundled copy of dev-libs/botan</flag>
 	<flag name="cmake">enable cmake project manager plugin</flag>
 	<flag name="debugger">enable debugger plugin</flag>
 	<flag name="designer">enable designer plugin</flag>
