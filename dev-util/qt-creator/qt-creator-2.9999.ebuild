@@ -16,10 +16,10 @@ EGIT_BRANCH="2.0"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="bazaar bineditor bookmarks +cmake cvs debug doc examples fakevim git
+IUSE="bazaar bineditor bookmarks +botan-bundled +cmake cvs debug doc examples fakevim git
 	inspector mercurial perforce +qml qtscript rss subversion"
 
-QTVER="4.7.1:4"
+QTVER="4.7.4:4"
 DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	>=x11-libs/qt-sql-${QTVER}
 	>=x11-libs/qt-svg-${QTVER}
@@ -30,7 +30,8 @@ DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 		>=x11-libs/qt-gui-${QTVER}[private-headers]
 		>=x11-libs/qt-script-${QTVER}[private-headers]
 	)
-	qtscript? ( >=x11-libs/qt-script-${QTVER} )"
+	qtscript? ( >=x11-libs/qt-script-${QTVER} )
+	!botan-bundled? ( =dev-libs/botan-1.8* )"
 
 RDEPEND="${DEPEND}
 	bazaar? ( dev-vcs/bzr )
@@ -114,6 +115,29 @@ src_prepare() {
 
 	# add rpath to make qtcreator actual find its *own* plugins
 	sed -i "/^LIBS/s:+=:& -Wl,-rpath,/usr/$(get_libdir)/${MY_PN} :" qtcreator.pri || die
+
+	if ! use botan-bundled; then
+		# identify system botan and pkg-config file
+		local botan_version=$(best_version dev-libs/botan | cut -d '-' -f3 | \
+			cut -d '.' -f1,2)
+		local lib_botan=$(pkg-config --libs botan-${botan_version})
+		einfo "Major version of system's botan library to be used: ${botan_version}"
+
+		# drop bundled libBotan. Bug #383033
+		rm -rf "${S}"/src/libs/3rdparty/botan || die
+		# remove references to bundled botan
+		sed -i -e "s:botan::" "${S}"/src/libs/3rdparty/3rdparty.pro || die
+		for x in testrunner parsertests modeldemo; do
+			sed -i -e "/botan.pri/d" "${S}"/tests/valgrind/memcheck/${x}.pro || die
+		done
+		sed -i -e "/botan.pri/d" "${S}"/src/libs/utils/utils_dependencies.pri || die
+		sed -i -e "/botan.pri/d" "${S}"/tests/manual/preprocessor/preprocessor.pro || die
+		# link to system botan
+		sed -i -e "/LIBS/s:$: ${lib_botan}:" "${S}"/${MY_PN}.pri || die
+		sed -i -e "s:-lBotan:${lib_botan}:" "${S}"/tests/manual/appwizards/appwizards.pro || die
+		# append botan refs to compiler flags
+		append-flags $(pkg-config --cflags --libs botan-${botan_version})
+	fi
 
 }
 
