@@ -11,7 +11,9 @@ MY_PN="${PN/-/}"
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://qt.nokia.com/products/developer-tools"
 EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
-EGIT_BRANCH="2.0"
+if [[ ${PV} == 2.9999 ]]; then
+	EGIT_BRANCH="2.0"
+fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -20,7 +22,7 @@ IUSE="bazaar bineditor bookmarks +botan-bundled +cmake cvs debug doc examples fa
 	inspector mercurial perforce +qml qtscript rss subversion"
 
 QTVER="4.7.4:4"
-DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
+CDEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	>=x11-libs/qt-sql-${QTVER}
 	>=x11-libs/qt-svg-${QTVER}
 	!qml? ( >=x11-libs/qt-gui-${QTVER} )
@@ -33,7 +35,10 @@ DEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )
 	!botan-bundled? ( =dev-libs/botan-1.8* )"
 
-RDEPEND="${DEPEND}
+DEPEND= "${CDEPEND}
+	!botan-bundled? ( dev-util/pkgconfig )"
+
+RDEPEND="${CDEPEND}
 	bazaar? ( dev-vcs/bzr )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-vcs/cvs )
@@ -165,13 +170,13 @@ src_install() {
 	fi
 
 	# Install missing icon
-	doicon ${FILESDIR}/${MY_PN}_logo_48.png || die "failed to install icon"
+	doicon "${FILESDIR}"/${MY_PN}_logo_48.png || die "failed to install icon"
 	make_desktop_entry ${MY_PN} "Qt Creator" qtcreator_logo_48 \
 		'Qt;Development;IDE' || die "make_desktop_entry failed"
 
 	# Remove unneeded translations
 	for lang in ${LANGS}; do
-		if ! hasq $lang ${LINGUAS}; then
+		if ! has $lang ${LINGUAS}; then
 			rm "${D}"/usr/share/${MY_PN}/translations/${MY_PN}_${lang}.qm \
 					|| die "failed to remove translations"
 		fi

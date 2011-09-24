@@ -12,11 +12,10 @@
 	<flag name="bookmarks">enable bookmarks plugin</flag>
 	<flag name="botan-bundled">Use the bundled copy of dev-libs/botan</flag>
 	<flag name="cmake">enable cmake project manager plugin</flag>
-	<flag name="debugger">enable debugger plugin</flag>
-	<flag name="designer">enable designer plugin</flag>
 	<flag name="fakevim">enable vim-like key bindings plugin</flag>
 	<flag name="git">enable git plugin</flag>
 	<flag name="mercurial">enable mercurial plugin</flag>
+	<flag name="inspector">Use 3rd-party inspector plugin</flag>
 	<flag name="perforce">enable perforce software configuration manager plugin</flag>
 	<flag name="qml">Simple way of building UIs based on Qt Declarative module</flag>
 	<flag name="qtscript">enable qt script editor plugin</flag>
