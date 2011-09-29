@@ -35,7 +35,7 @@ CDEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )
 	!botan-bundled? ( =dev-libs/botan-1.8* )"
 
-DEPEND= "${CDEPEND}
+DEPEND="${CDEPEND}
 	!botan-bundled? ( dev-util/pkgconfig )"
 
 RDEPEND="${CDEPEND}
