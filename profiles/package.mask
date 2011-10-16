@@ -2,6 +2,27 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (15 Oct 2011)
+# Masking 4.8 rc release. The ebuilds are still work in
+# progress. Before reporting any bugs make sure your git
+# tree is up-to-date
+~x11-libs/qt-assistant-4.8.0_rc1
+~x11-libs/qt-core-4.8.0_rc1
+~x11-libs/qt-declarative-4.8.0_rc1
+~x11-libs/qt-dbus-4.8.0_rc1
+~x11-libs/qt-demo-4.8.0_rc1
+~x11-libs/qt-gui-4.8.0_rc1
+~x11-libs/qt-multimedia-4.8.0_rc1
+~x11-libs/qt-opengl-4.8.0_rc1
+~x11-libs/qt-phonon-4.8.0_rc1
+~x11-libs/qt-qt3support-4.8.0_rc1
+~x11-libs/qt-script-4.8.0_rc1
+~x11-libs/qt-sql-4.8.0_rc1
+~x11-libs/qt-svg-4.8.0_rc1
+~x11-libs/qt-test-4.8.0_rc1
+~x11-libs/qt-webkit-4.8.0_rc1
+~x11-libs/qt-xmlpatterns-4.8.0_rc1
+
 # Markos Chandras <hwoarang@gentoo.org> (27 Aug 2011)
 # Masking latest releases
 =dev-python/sip-4.12.5_pre*
@@ -12,27 +33,6 @@
 # Markos Chandras <hwoarang@gentoo.org> (11 Aug 2011)
 # Masking rc release
 ~dev-util/qt-creator-2.3.0_rc
-
-# Markos Chandras <hwoarang@gentoo.org> (11 Aug 2011)
-# Masking 4.8 beta release. The ebuilds are still work in
-# progress. Before reporting any bugs make sure your git
-# tree is up-to-date
-~x11-libs/qt-assistant-4.8.0_beta1
-~x11-libs/qt-core-4.8.0_beta1
-~x11-libs/qt-declarative-4.8.0_beta1
-~x11-libs/qt-dbus-4.8.0_beta1
-~x11-libs/qt-demo-4.8.0_beta1
-~x11-libs/qt-gui-4.8.0_beta1
-~x11-libs/qt-multimedia-4.8.0_beta1
-~x11-libs/qt-opengl-4.8.0_beta1
-~x11-libs/qt-phonon-4.8.0_beta1
-~x11-libs/qt-qt3support-4.8.0_beta1
-~x11-libs/qt-script-4.8.0_beta1
-~x11-libs/qt-sql-4.8.0_beta1
-~x11-libs/qt-svg-4.8.0_beta1
-~x11-libs/qt-test-4.8.0_beta1
-~x11-libs/qt-webkit-4.8.0_beta1
-~x11-libs/qt-xmlpatterns-4.8.0_beta1
 
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2010)
 # Need multiple QA fixes. New USE flags are required
