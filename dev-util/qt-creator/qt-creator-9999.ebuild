@@ -42,7 +42,7 @@ RDEPEND="${CDEPEND}
 	bazaar? ( dev-vcs/bzr )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-vcs/cvs )
-	sys-devel/gdb
+	sys-devel/gdb[python]
 	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
