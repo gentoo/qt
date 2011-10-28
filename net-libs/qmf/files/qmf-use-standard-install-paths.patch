@@ -1,6 +1,6 @@
 diff -Naur qmf-9999.orig/benchmarks/tst_messageserver/tst_messageserver.pro qmf-9999/benchmarks/tst_messageserver/tst_messageserver.pro
---- qmf-9999.orig/benchmarks/tst_messageserver/tst_messageserver.pro	2011-08-15 02:24:01.801755679 +0200
-+++ qmf-9999/benchmarks/tst_messageserver/tst_messageserver.pro	2011-08-15 02:24:14.857592458 +0200
+--- qmf-9999.orig/benchmarks/tst_messageserver/tst_messageserver.pro	2011-10-28 00:16:42.818798066 +0200
++++ qmf-9999/benchmarks/tst_messageserver/tst_messageserver.pro	2011-10-28 00:16:58.461602502 +0200
 @@ -3,7 +3,7 @@
  CONFIG += qmfmessageserver qmfclient
  
@@ -11,8 +11,8 @@ diff -Naur qmf-9999.orig/benchmarks/tst_messageserver/tst_messageserver.pro qmf-
  BASE=../../
  include($$BASE/common.pri)
 diff -Naur qmf-9999.orig/examples/listfilterplugin/listfilterplugin.pro qmf-9999/examples/listfilterplugin/listfilterplugin.pro
---- qmf-9999.orig/examples/listfilterplugin/listfilterplugin.pro	2011-08-15 02:24:01.894754515 +0200
-+++ qmf-9999/examples/listfilterplugin/listfilterplugin.pro	2011-08-15 02:24:14.860592422 +0200
+--- qmf-9999.orig/examples/listfilterplugin/listfilterplugin.pro	2011-10-28 00:16:42.863797501 +0200
++++ qmf-9999/examples/listfilterplugin/listfilterplugin.pro	2011-10-28 00:16:58.461602503 +0200
 @@ -3,7 +3,7 @@
  CONFIG += qmfclient plugin
  QT = core
@@ -23,8 +23,8 @@ diff -Naur qmf-9999.orig/examples/listfilterplugin/listfilterplugin.pro qmf-9999
  DEFINES += PLUGIN_INTERNAL
  
 diff -Naur qmf-9999.orig/examples/messagingaccounts/messagingaccounts.pro qmf-9999/examples/messagingaccounts/messagingaccounts.pro
---- qmf-9999.orig/examples/messagingaccounts/messagingaccounts.pro	2011-08-15 02:24:01.974753516 +0200
-+++ qmf-9999/examples/messagingaccounts/messagingaccounts.pro	2011-08-15 02:24:14.861592409 +0200
+--- qmf-9999.orig/examples/messagingaccounts/messagingaccounts.pro	2011-10-28 00:16:42.907796951 +0200
++++ qmf-9999/examples/messagingaccounts/messagingaccounts.pro	2011-10-28 00:16:58.461602503 +0200
 @@ -1,6 +1,6 @@
  TEMPLATE = app
  TARGET = messagingaccounts
@@ -34,8 +34,8 @@ diff -Naur qmf-9999.orig/examples/messagingaccounts/messagingaccounts.pro qmf-99
  
  DEPENDPATH += .
 diff -Naur qmf-9999.orig/examples/qtmail/app/app.pro qmf-9999/examples/qtmail/app/app.pro
---- qmf-9999.orig/examples/qtmail/app/app.pro	2011-08-15 02:24:01.952753791 +0200
-+++ qmf-9999/examples/qtmail/app/app.pro	2011-08-15 02:24:14.862592396 +0200
+--- qmf-9999.orig/examples/qtmail/app/app.pro	2011-10-28 00:16:42.875797352 +0200
++++ qmf-9999/examples/qtmail/app/app.pro	2011-10-28 00:16:58.461602503 +0200
 @@ -1,7 +1,7 @@
  TEMPLATE = app
  TARGET = qtmail 
@@ -46,8 +46,8 @@ diff -Naur qmf-9999.orig/examples/qtmail/app/app.pro qmf-9999/examples/qtmail/ap
  DEPENDPATH += . 
  
 diff -Naur qmf-9999.orig/examples/qtmail/libs/qmfutil/qmfutil.pro qmf-9999/examples/qtmail/libs/qmfutil/qmfutil.pro
---- qmf-9999.orig/examples/qtmail/libs/qmfutil/qmfutil.pro	2011-08-15 02:24:01.970753565 +0200
-+++ qmf-9999/examples/qtmail/libs/qmfutil/qmfutil.pro	2011-08-15 02:24:14.862592396 +0200
+--- qmf-9999.orig/examples/qtmail/libs/qmfutil/qmfutil.pro	2011-10-28 00:16:42.905796975 +0200
++++ qmf-9999/examples/qtmail/libs/qmfutil/qmfutil.pro	2011-10-28 00:16:58.461602503 +0200
 @@ -3,7 +3,7 @@
  CONFIG += qmfclient
  TARGET = qmfutil 
@@ -58,8 +58,8 @@ diff -Naur qmf-9999.orig/examples/qtmail/libs/qmfutil/qmfutil.pro qmf-9999/examp
  DEFINES += QMFUTIL_INTERNAL
  
 diff -Naur qmf-9999.orig/examples/qtmail/plugins/composers/email/email.pro qmf-9999/examples/qtmail/plugins/composers/email/email.pro
---- qmf-9999.orig/examples/qtmail/plugins/composers/email/email.pro	2011-08-15 02:24:01.897754479 +0200
-+++ qmf-9999/examples/qtmail/plugins/composers/email/email.pro	2011-08-15 02:24:14.863592383 +0200
+--- qmf-9999.orig/examples/qtmail/plugins/composers/email/email.pro	2011-10-28 00:16:42.865797477 +0200
++++ qmf-9999/examples/qtmail/plugins/composers/email/email.pro	2011-10-28 00:16:58.462602491 +0200
 @@ -2,7 +2,7 @@
  TARGET = emailcomposer 
  CONFIG += qmfclient qmfutil plugin
@@ -70,8 +70,8 @@ diff -Naur qmf-9999.orig/examples/qtmail/plugins/composers/email/email.pro qmf-9
  DEFINES += PLUGIN_INTERNAL
  
 diff -Naur qmf-9999.orig/examples/qtmail/plugins/viewers/generic/generic.pro qmf-9999/examples/qtmail/plugins/viewers/generic/generic.pro
---- qmf-9999.orig/examples/qtmail/plugins/viewers/generic/generic.pro	2011-08-15 02:24:01.901754428 +0200
-+++ qmf-9999/examples/qtmail/plugins/viewers/generic/generic.pro	2011-08-15 02:24:14.864592370 +0200
+--- qmf-9999.orig/examples/qtmail/plugins/viewers/generic/generic.pro	2011-10-28 00:16:42.866797465 +0200
++++ qmf-9999/examples/qtmail/plugins/viewers/generic/generic.pro	2011-10-28 00:16:58.462602491 +0200
 @@ -2,7 +2,7 @@
  TARGET = genericviewer 
  CONFIG += qmfclient qmfutil plugin
@@ -82,8 +82,8 @@ diff -Naur qmf-9999.orig/examples/qtmail/plugins/viewers/generic/generic.pro qmf
  # Use webkit to render mail if available
  contains(QT_CONFIG,webkit){
 diff -Naur qmf-9999.orig/examples/serverobserver/serverobserver.pro qmf-9999/examples/serverobserver/serverobserver.pro
---- qmf-9999.orig/examples/serverobserver/serverobserver.pro	2011-08-15 02:24:01.893754527 +0200
-+++ qmf-9999/examples/serverobserver/serverobserver.pro	2011-08-15 02:24:14.865592357 +0200
+--- qmf-9999.orig/examples/serverobserver/serverobserver.pro	2011-10-28 00:16:42.863797501 +0200
++++ qmf-9999/examples/serverobserver/serverobserver.pro	2011-10-28 00:16:58.462602491 +0200
 @@ -1,6 +1,6 @@
  TEMPLATE = app
  TARGET = serverobserver
@@ -93,8 +93,8 @@ diff -Naur qmf-9999.orig/examples/serverobserver/serverobserver.pro qmf-9999/exa
  
  DEPENDPATH += .
 diff -Naur qmf-9999.orig/src/libraries/qmfclient/qmfclient.pro qmf-9999/src/libraries/qmfclient/qmfclient.pro
---- qmf-9999.orig/src/libraries/qmfclient/qmfclient.pro	2011-08-15 02:24:01.847755104 +0200
-+++ qmf-9999/src/libraries/qmfclient/qmfclient.pro	2011-08-15 02:24:14.866592345 +0200
+--- qmf-9999.orig/src/libraries/qmfclient/qmfclient.pro	2011-10-28 00:16:42.839797803 +0200
++++ qmf-9999/src/libraries/qmfclient/qmfclient.pro	2011-10-28 00:16:58.463602479 +0200
 @@ -4,8 +4,7 @@
  INSTALLS += target
  CONFIG += link_pkgconfig
@@ -120,12 +120,12 @@ diff -Naur qmf-9999.orig/src/libraries/qmfclient/qmfclient.pro qmf-9999/src/libr
  	QMAKE_PKGCONFIG_INCDIR  = $$header_files.path
 -	QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 +	QMAKE_PKGCONFIG_DESTDIR = ../pkgconfig
- }
- 
- include(../../../common.pri)
+         LIBS += -licui18n -licuuc -licudata
+         PRIVATE_HEADERS += support/qcharsetdetector_p.h \
+                            support/qcharsetdetector.h
 diff -Naur qmf-9999.orig/src/libraries/qmfmessageserver/qmfmessageserver.pro qmf-9999/src/libraries/qmfmessageserver/qmfmessageserver.pro
---- qmf-9999.orig/src/libraries/qmfmessageserver/qmfmessageserver.pro	2011-08-15 02:24:01.891754553 +0200
-+++ qmf-9999/src/libraries/qmfmessageserver/qmfmessageserver.pro	2011-08-15 02:24:14.867592333 +0200
+--- qmf-9999.orig/src/libraries/qmfmessageserver/qmfmessageserver.pro	2011-10-28 00:16:42.862797514 +0200
++++ qmf-9999/src/libraries/qmfmessageserver/qmfmessageserver.pro	2011-10-28 00:16:58.463602479 +0200
 @@ -3,7 +3,7 @@
  CONFIG += qmfclient
  TARGET = qmfmessageserver
@@ -153,8 +153,8 @@ diff -Naur qmf-9999.orig/src/libraries/qmfmessageserver/qmfmessageserver.pro qmf
  }
  include(../../../common.pri)
 diff -Naur qmf-9999.orig/src/plugins/contentmanagers/qmfstoragemanager/qmfstoragemanager.pro qmf-9999/src/plugins/contentmanagers/qmfstoragemanager/qmfstoragemanager.pro
---- qmf-9999.orig/src/plugins/contentmanagers/qmfstoragemanager/qmfstoragemanager.pro	2011-08-15 02:24:01.828755340 +0200
-+++ qmf-9999/src/plugins/contentmanagers/qmfstoragemanager/qmfstoragemanager.pro	2011-08-15 02:24:14.868592321 +0200
+--- qmf-9999.orig/src/plugins/contentmanagers/qmfstoragemanager/qmfstoragemanager.pro	2011-10-28 00:16:42.831797902 +0200
++++ qmf-9999/src/plugins/contentmanagers/qmfstoragemanager/qmfstoragemanager.pro	2011-10-28 00:16:58.463602479 +0200
 @@ -3,7 +3,7 @@
  CONFIG += qmfclient plugin
  QT = core
@@ -165,8 +165,8 @@ diff -Naur qmf-9999.orig/src/plugins/contentmanagers/qmfstoragemanager/qmfstorag
  DEFINES += PLUGIN_INTERNAL
  
 diff -Naur qmf-9999.orig/src/plugins/messageservices/imap/imap.pro qmf-9999/src/plugins/messageservices/imap/imap.pro
---- qmf-9999.orig/src/plugins/messageservices/imap/imap.pro	2011-08-15 02:24:01.813755528 +0200
-+++ qmf-9999/src/plugins/messageservices/imap/imap.pro	2011-08-15 02:24:14.869592309 +0200
+--- qmf-9999.orig/src/plugins/messageservices/imap/imap.pro	2011-10-28 00:16:42.824797989 +0200
++++ qmf-9999/src/plugins/messageservices/imap/imap.pro	2011-10-28 00:16:58.463602479 +0200
 @@ -2,7 +2,7 @@
  TARGET = imap 
  CONFIG += qmfmessageserver qmfclient plugin
@@ -177,8 +177,8 @@ diff -Naur qmf-9999.orig/src/plugins/messageservices/imap/imap.pro qmf-9999/src/
  QT += core network
  
 diff -Naur qmf-9999.orig/src/plugins/messageservices/pop/pop.pro qmf-9999/src/plugins/messageservices/pop/pop.pro
---- qmf-9999.orig/src/plugins/messageservices/pop/pop.pro	2011-08-15 02:24:01.824755392 +0200
-+++ qmf-9999/src/plugins/messageservices/pop/pop.pro	2011-08-15 02:24:14.870592297 +0200
+--- qmf-9999.orig/src/plugins/messageservices/pop/pop.pro	2011-10-28 00:16:42.829797928 +0200
++++ qmf-9999/src/plugins/messageservices/pop/pop.pro	2011-10-28 00:16:58.464602466 +0200
 @@ -2,7 +2,7 @@
  TARGET = pop 
  CONFIG += qmfclient qmfmessageserver plugin
@@ -189,8 +189,8 @@ diff -Naur qmf-9999.orig/src/plugins/messageservices/pop/pop.pro qmf-9999/src/pl
  QT = core network
  
 diff -Naur qmf-9999.orig/src/plugins/messageservices/qmfsettings/qmfsettings.pro qmf-9999/src/plugins/messageservices/qmfsettings/qmfsettings.pro
---- qmf-9999.orig/src/plugins/messageservices/qmfsettings/qmfsettings.pro	2011-08-15 02:24:01.820755440 +0200
-+++ qmf-9999/src/plugins/messageservices/qmfsettings/qmfsettings.pro	2011-08-15 02:24:14.870592297 +0200
+--- qmf-9999.orig/src/plugins/messageservices/qmfsettings/qmfsettings.pro	2011-10-28 00:16:42.827797953 +0200
++++ qmf-9999/src/plugins/messageservices/qmfsettings/qmfsettings.pro	2011-10-28 00:16:58.464602466 +0200
 @@ -2,7 +2,7 @@
  TARGET = qmfsettings
  CONFIG += qmfclient qmfmessageserver plugin
@@ -201,8 +201,8 @@ diff -Naur qmf-9999.orig/src/plugins/messageservices/qmfsettings/qmfsettings.pro
  QT = core network
  
 diff -Naur qmf-9999.orig/src/plugins/messageservices/smtp/smtp.pro qmf-9999/src/plugins/messageservices/smtp/smtp.pro
---- qmf-9999.orig/src/plugins/messageservices/smtp/smtp.pro	2011-08-15 02:24:01.819755453 +0200
-+++ qmf-9999/src/plugins/messageservices/smtp/smtp.pro	2011-08-15 02:24:14.871592284 +0200
+--- qmf-9999.orig/src/plugins/messageservices/smtp/smtp.pro	2011-10-28 00:16:42.826797965 +0200
++++ qmf-9999/src/plugins/messageservices/smtp/smtp.pro	2011-10-28 00:16:58.464602466 +0200
 @@ -3,7 +3,7 @@
  
  CONFIG += qmfclient qmfmessageserver plugin
@@ -213,8 +213,8 @@ diff -Naur qmf-9999.orig/src/plugins/messageservices/smtp/smtp.pro qmf-9999/src/
  QT = core network
  
 diff -Naur qmf-9999.orig/src/tools/messageserver/messageserver.pro qmf-9999/src/tools/messageserver/messageserver.pro
---- qmf-9999.orig/src/tools/messageserver/messageserver.pro	2011-08-15 02:24:01.832755292 +0200
-+++ qmf-9999/src/tools/messageserver/messageserver.pro	2011-08-15 02:24:14.872592271 +0200
+--- qmf-9999.orig/src/tools/messageserver/messageserver.pro	2011-10-28 00:16:42.832797889 +0200
++++ qmf-9999/src/tools/messageserver/messageserver.pro	2011-10-28 00:16:58.464602466 +0200
 @@ -14,7 +14,7 @@
  QT = core
  !contains(DEFINES,QMF_NO_MESSAGE_SERVICE_EDITOR):QT += gui
@@ -225,8 +225,8 @@ diff -Naur qmf-9999.orig/src/tools/messageserver/messageserver.pro qmf-9999/src/
  DEPENDPATH += . 
  
 diff -Naur qmf-9999.orig/tests/tests.pri qmf-9999/tests/tests.pri
---- qmf-9999.orig/tests/tests.pri	2011-08-15 02:24:01.769756079 +0200
-+++ qmf-9999/tests/tests.pri	2011-08-15 02:25:04.172975930 +0200
+--- qmf-9999.orig/tests/tests.pri	2011-10-28 00:16:42.804798239 +0200
++++ qmf-9999/tests/tests.pri	2011-10-28 00:17:11.873434831 +0200
 @@ -4,14 +4,14 @@
      QMAKE_MACOSX_DEPLOYMENT_TARGET=10.5
  }
@@ -240,13 +240,19 @@ diff -Naur qmf-9999.orig/tests/tests.pri qmf-9999/tests/tests.pri
  LIBS += -L$$QMFPATH/build
  macx:LIBS += -F$$QMFPATH/build
 -!symbian:QMAKE_LFLAGS += -Wl,-rpath,$$QMFPATH
-+!symbian:QMAKE_LFLAGS += -Wl,-rpath,\\\$$ORIGIN/../$$QMFPATH/build
++!symbian:QMAKE_LFLAGS += -Wl,-rpath,\\\$$ORIGIN/$$QMFPATH/build
  
  symbian {
      TARGET.CAPABILITY = ReadUserData WriteUserData ReadDeviceData WriteDeviceData
+@@ -19,3 +19,5 @@
+ 
+ include(../common.pri)
+ 
++DESTDIR =
++
 diff -Naur qmf-9999.orig/tests/tests.pro qmf-9999/tests/tests.pro
---- qmf-9999.orig/tests/tests.pro	2011-08-15 02:24:01.776755992 +0200
-+++ qmf-9999/tests/tests.pro	2011-08-15 02:24:14.874592245 +0200
+--- qmf-9999.orig/tests/tests.pro	2011-10-28 00:16:42.807798203 +0200
++++ qmf-9999/tests/tests.pro	2011-10-28 00:16:58.465602453 +0200
 @@ -31,6 +31,6 @@
  
  # Install test file description
@@ -256,8 +262,8 @@ diff -Naur qmf-9999.orig/tests/tests.pro qmf-9999/tests/tests.pro
  
  INSTALLS += test_description
 diff -Naur qmf-9999.orig/tests/tst_python_email/tst_python_email.pro qmf-9999/tests/tst_python_email/tst_python_email.pro
---- qmf-9999.orig/tests/tst_python_email/tst_python_email.pro	2011-08-15 02:24:01.786755866 +0200
-+++ qmf-9999/tests/tst_python_email/tst_python_email.pro	2011-08-15 02:24:14.874592245 +0200
+--- qmf-9999.orig/tests/tst_python_email/tst_python_email.pro	2011-10-28 00:16:42.812798139 +0200
++++ qmf-9999/tests/tst_python_email/tst_python_email.pro	2011-10-28 00:16:58.476602315 +0200
 @@ -5,7 +5,7 @@
  !symbian {
      DEFINES += SRCDIR=\\\"$$_PRO_FILE_PWD_\\\"
