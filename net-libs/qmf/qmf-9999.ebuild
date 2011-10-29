@@ -10,8 +10,8 @@ if [[ ${PV} == *9999 ]]; then
 	SCM_ECLASS="git-2"
 	SRC_URI=
 else
-	YYMM="${PV#*_p}"
-	TAG="20${YYMM:0:2}W${YYMM:2:2}"
+	YYYYWW="${PV#*_p}"
+	TAG="${YYYYWW:0:4}W${YYYYWW:4:2}"
 	SRC_URI="http://qt.gitorious.org/qt-labs/messagingframework/archive-tarball/${TAG} -> ${P}.tar.gz"
 	S="${WORKDIR}/qt-labs-messagingframework"
 fi
