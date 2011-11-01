@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI=4
 
 inherit multilib qt4-r2
 
@@ -13,17 +13,37 @@ HOMEPAGE="http://qt.nokia.com/products/qt-addons/mobility"
 SRC_URI="http://get.qt.nokia.com/qt/add-ons/${MY_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
-QT_MOBILITY_MODULES="bearer contacts location messaging multimedia publishsubscribe serviceframework systeminfo versit"
-IUSE="bluetooth +dbus debug doc opengl pulseaudio qml +tools ${QT_MOBILITY_MODULES}"
+# TODO:
+#  - check plugins/contacts/serviceactionmanager
+#  - check plugins/feedback/mmk
 
-COMMON_DEPEND="
-	>=x11-libs/qt-core-4.6.0:4
-	bearer? ( >=x11-libs/qt-dbus-4.6.0:4 )
+QT_MOBILITY_MODULES="bearer connectivity contacts feedback gallery
+		location messaging multimedia organizer publishsubscribe
+		sensors serviceframework systeminfo versit"
+IUSE="bluetooth debug doc networkmanager opengl pulseaudio qml +tools
+	${QT_MOBILITY_MODULES}"
+
+REQUIRED_USE="
+	versit? ( contacts )
+"
+
+RDEPEND="
+	>=x11-libs/qt-core-4.7.0:4
+	bearer? (
+		networkmanager? (
+			net-misc/networkmanager
+			>=x11-libs/qt-dbus-4.7.0:4
+		)
+	)
+	connectivity? (
+		bluetooth? ( net-wireless/bluez )
+	)
+	gallery? ( >=x11-libs/qt-dbus-4.7.0:4 )
 	location? (
-		>=x11-libs/qt-gui-4.6.0:4
-		>=x11-libs/qt-sql-4.6.0:4[sqlite]
+		>=x11-libs/qt-gui-4.7.0:4
+		>=x11-libs/qt-sql-4.7.0:4[sqlite]
 	)
 	messaging? ( net-libs/qmf )
 	multimedia? (
@@ -33,54 +53,59 @@ COMMON_DEPEND="
 		x11-libs/libX11
 		x11-libs/libXext
 		x11-libs/libXv
-		>=x11-libs/qt-gui-4.6.0:4
-		opengl? ( >=x11-libs/qt-opengl-4.6.0:4 )
-		pulseaudio? ( media-sound/pulseaudio )
+		>=x11-libs/qt-gui-4.7.0:4
+		opengl? ( >=x11-libs/qt-opengl-4.7.0:4 )
+		pulseaudio? ( media-sound/pulseaudio[alsa] )
 	)
 	publishsubscribe? (
-		tools? ( >=x11-libs/qt-gui-4.6.0:4 )
+		tools? ( >=x11-libs/qt-gui-4.7.0:4 )
 	)
-	qml? ( x11-libs/qt-declarative:4 )
+	qml? ( >=x11-libs/qt-declarative-4.7.0:4 )
 	serviceframework? (
-		>=x11-libs/qt-sql-4.6.0:4[sqlite]
-		dbus? ( >=x11-libs/qt-dbus-4.6.0:4 )
-		tools? ( >=x11-libs/qt-gui-4.6.0:4 )
+		>=x11-libs/qt-dbus-4.7.0:4
+		>=x11-libs/qt-sql-4.7.0:4[sqlite]
+		tools? ( >=x11-libs/qt-gui-4.7.0:4 )
 	)
 	systeminfo? (
+		sys-apps/util-linux
+		sys-fs/udev
 		x11-libs/libX11
 		x11-libs/libXrandr
-		>=x11-libs/qt-dbus-4.6.0:4
-		>=x11-libs/qt-gui-4.6.0:4
+		>=x11-libs/qt-dbus-4.7.0:4
+		>=x11-libs/qt-gui-4.7.0:4
 		bluetooth? ( net-wireless/bluez )
+		networkmanager? ( net-misc/networkmanager )
 	)
 "
-DEPEND="${COMMON_DEPEND}
+DEPEND="${RDEPEND}
+	dev-util/pkgconfig
 	multimedia? (
 		sys-kernel/linux-headers
 		x11-proto/videoproto
 	)
 	systeminfo? ( sys-kernel/linux-headers )
 "
-RDEPEND="${COMMON_DEPEND}
-	bearer? ( net-misc/networkmanager )
+PDEPEND="
+	connectivity? (
+		bluetooth? ( app-mobilephone/obexd )
+	)
 	systeminfo? (
-		net-misc/networkmanager
-		sys-apps/hal
+		sys-fs/udisks
+		sys-power/upower
 	)
 "
 
-S=${WORKDIR}/${MY_P}
-
+S="${WORKDIR}/${MY_P}"
 DOCS="changes-${PV}"
 
 pkg_setup() {
 	# figure out which modules to build
-	# Note: the versit module requires contacts support, but luckily
-	# 	config.pri already takes care of enabling it if necessary
 	modules=
-	for mod in ${QT_MOBILITY_MODULES//+}; do
+	local m=( ${QT_MOBILITY_MODULES} )
+	for mod in ${m[@]#[+-]}; do
 		use ${mod} && modules+="${mod} "
 	done
+
 	if [[ -z ${modules} ]]; then
 		ewarn "At least one module must be selected for building, but you have selected none."
 		ewarn "The QtContacts module will be automatically enabled."
@@ -127,6 +152,10 @@ src_configure() {
 	if ! use bluetooth; then
 		sed -i -e '/^bluez_enabled =/s:yes:no:' config.pri || die
 	fi
+	# fix automagic dependency on networkmanager
+	if ! use networkmanager; then
+		sed -i -e '/^networkmanager_enabled =/s:yes:no:' config.pri || die
+	fi
 	# fix automagic dependency on pulseaudio
 	if ! use pulseaudio; then
 		sed -i -e '/^pulseaudio_enabled =/s:yes:no:' config.pri || die
@@ -140,8 +169,8 @@ src_install() {
 
 	if use doc; then
 		cd "${S}"/doc
-		dohtml -r html/* || die
+		dohtml -r html/*
 		insinto /usr/share/doc/${PF}
-		doins qch/qtmobility.qch || die
+		doins qch/qtmobility.qch
 	fi
 }
