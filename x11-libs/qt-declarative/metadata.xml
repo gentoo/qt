@@ -4,16 +4,13 @@
 <herd>qt</herd>
 <use>
 	<flag name="private-headers">Install Qt declarative private headers required
-		by Qt-creator QmlDesigner and QmlInspector plugins"</flag>
+		by qt-creator's QmlDesigner and QmlInspector plugins"</flag>
 	<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
 		this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 	<flag name='exceptions'>Add support for exceptions - like catching them
 		inside the event loop (recommended by Nokia)</flag>
 	<flag name='webkit'>Build the WebView QML element</flag>
 	<flag name='stable-branch'>Use the stable git branch - it is slightly behind
-	master but guaranteed by Nokia to compile</flag>
+		master but guaranteed by Nokia to compile</flag>
 </use>
-<longdescription lang="en">
-</longdescription>
 </pkgmetadata>
-

@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
-IUSE="+glib iconv optimized-qmake private-headers qt3support ssl"
+IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 RDEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
@@ -110,11 +110,11 @@ src_install() {
 	install_directories src/{corelib,xml,network,plugins/codecs}
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
-	#install private headers
-	if use private-headers; then
-		insinto ${QTHEADERDIR}/QtCore/private
-		find "${S}"/src/corelib -type f -name "*_p.h" -exec doins {} \;
-	fi
+
+	# install private headers
+	insinto ${QTHEADERDIR}/QtCore/private
+	find "${S}"/src/corelib -type f -name "*_p.h" -exec doins {} \;
+
 	# use freshly built libraries
 	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
 		|| die "generating translations faied"
