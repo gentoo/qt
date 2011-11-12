@@ -131,10 +131,6 @@ src_install() {
 
 	qt4-build_src_install
 
-	# remove some unnecessary headers
-	rm -f "${D}${QTHEADERDIR}"/{Qt,QtGui}/{qmacstyle_mac.h,qwindowdefs_win.h} \
-		"${D}${QTHEADERDIR}"/QtGui/QMacStyle
-
 	# qt-creator
 	# some qt-creator headers are located
 	# under /usr/include/qt4/QtDesigner/private.
