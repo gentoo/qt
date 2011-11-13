@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
-IUSE="private-headers qt3support webkit"
+IUSE="qt3support webkit"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,qt3support=]
 	~x11-libs/qt-gui-${PV}[aqua=,qt3support=]
@@ -52,8 +52,7 @@ src_configure() {
 
 src_install() {
 	qt4-build_src_install
-	if use private-headers; then
-		insinto ${QTHEADERDIR}/QtDeclarative/private
-		find "${S}"/src/declarative/ -type f -name "*_p.h" -exec doins {} \;
-	fi
+
+	insinto ${QTHEADERDIR}/QtDeclarative/private
+	find "${S}"/src/declarative/ -type f -name "*_p.h" -exec doins {} \;
 }

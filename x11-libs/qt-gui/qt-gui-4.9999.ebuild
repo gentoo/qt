@@ -8,8 +8,7 @@ inherit eutils confutils qt4-build-edge
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
 KEYWORDS=""
-IUSE="+accessibility cups dbus +glib gif gtkstyle jpeg mng nas nis png +raster tiff trace
-private-headers qt3support xinerama"
+IUSE="+accessibility cups dbus +glib gif gtkstyle jpeg mng nas nis png +raster tiff trace qt3support xinerama"
 
 RDEPEND="media-libs/fontconfig
 	>=media-libs/freetype-2
@@ -32,7 +31,7 @@ RDEPEND="media-libs/fontconfig
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff )
 	xinerama? ( x11-libs/libXinerama )
-	"
+"
 DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )
 	gtkstyle? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
@@ -137,10 +136,6 @@ src_install() {
 
 	qt4-build-edge_src_install
 
-	# remove some unnecessary headers
-	rm -f "${D}${QTHEADERDIR}"/{Qt,QtGui}/{qmacstyle_mac.h,qwindowdefs_win.h} \
-		"${D}${QTHEADERDIR}"/QtGui/QMacStyle
-
 	# qt-creator
 	# some qt-creator headers are located
 	# under /usr/include/qt4/QtDesigner/private.
@@ -152,11 +147,10 @@ src_install() {
 	insinto /usr/include/qt4/QtDesigner/private/
 	doins "${S}"/tools/designer/src/lib/shared/*
 	doins "${S}"/tools/designer/src/lib/sdk/*
-	#install private headers
-	if use private-headers; then
-		insinto ${QTHEADERDIR}/QtGui/private
-		find "${S}"/src/gui -type f -name "*_p.h" -exec doins {} \;
-	fi
+
+	# install private headers
+	insinto ${QTHEADERDIR}/QtGui/private
+	find "${S}"/src/gui -type f -name "*_p.h" -exec doins {} \;
 
 	# install correct designer and linguist icons, bug 241208
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \

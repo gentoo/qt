@@ -21,10 +21,10 @@
 			all drawing operations into a trace buffer. Later it can be replayed
 			with the qttracereplay utility
 		</flag>
-		<flag name="private-headers">Install Qt declarative private headers required by Qt-creator QmlDesigner and QmlInspector plugins"</flag>
-	<flag name='stable-branch'>Use the stable git branch - it is slightly behind
-		master but guaranteed by Nokia to compile</flag>
-
-	<flag name="egl">Enable EGL graphics engine</flag>
+		<flag name="private-headers">Install Qt declarative private headers required
+			by qt-creator's QmlDesigner and QmlInspector plugins"</flag>
+		<flag name='stable-branch'>Use the stable git branch - it is slightly behind
+			master but guaranteed by Nokia to compile</flag>
+		<flag name="egl">Enable EGL graphics engine</flag>
 	</use>
 </pkgmetadata>
