@@ -4,14 +4,11 @@
 
 # @ECLASS: qt4-edge.eclass
 # @MAINTAINER:
-# Ben de Groot <yngwin@gentoo.org>,
-# Markos Chandras <hwoarang@gentoo.org>,
-# Davide Pesavento <davidepesa@gmail.com>,
-# Dominik Kapusta <ayoy@gentoo.org>
-# @BLURB: Experimental eclass for Qt4 packages
+# @ Qt herd <qt@gentoo.org>
+# @BLURB: Experimental eclass for Qt4 live ebuild
 # @DESCRIPTION:
 # This eclass contains various functions that may be useful when
-# dealing with packages using Qt4 libraries. Requires EAPI=2.
+# dealing with packages using Qt4 libraries. Requires EAPI>=2.
 
 inherit base eutils multilib qt4-r2 toolchain-funcs
 
@@ -24,7 +21,6 @@ qt4-edge_pkg_setup() {
 		ewarn "[qting-edge]. Alternatively, contact qt@gentoo.org."
 		ewarn "Thank you for using qting-edge overlay."
 		ewarn
-		ebeep 5
 	fi
 }
 
