@@ -27,10 +27,10 @@ CDEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	>=x11-libsqt-svg-${QTVER}
 	!qml? ( >=x11-libs/qt-gui-${QTVER} )
 	qml? (
-		>=x11-libs/qt-declarative-${QTVER}[private-headers]
-		>=x11-libs/qt-core-${QTVER}[private-headers]
-		>=x11-libs/qt-gui-${QTVER}[private-headers]
-		>=x11-libs/qt-script-${QTVER}[private-headers]
+		>=x11-libs/qt-declarative-${QTVER}[private-headers(+)]
+		>=x11-libs/qt-core-${QTVER}[private-headers(+)]
+		>=x11-libs/qt-gui-${QTVER}[private-headers(+)]
+		>=x11-libs/qt-script-${QTVER}[private-headers(+)]
 	)
 	qtscript? ( >=x11-libs/qt-script-${QTVER} )
 	!botan-bundled? ( =dev-libs/botan-1.8* )"
