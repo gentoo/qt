@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-LANGS="de es fr it ja pl ru sl"
+EAPI="4"
+LANGS="cs de es fr hu it ja pl ru sl uk zh_CN"
 
 inherit qt4-edge git multilib
 
@@ -19,12 +19,12 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="bazaar bineditor bookmarks +botan-bundled +cmake cvs debug doc examples fakevim git
-	inspector mercurial perforce +qml qtscript rss subversion"
+	mercurial perforce +qml qtscript rss subversion"
 
 QTVER="4.7.4:4"
 CDEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	>=x11-libs/qt-sql-${QTVER}
-	>=x11-libs/qt-svg-${QTVER}
+	>=x11-libsqt-svg-${QTVER}
 	!qml? ( >=x11-libs/qt-gui-${QTVER} )
 	qml? (
 		>=x11-libs/qt-declarative-${QTVER}[private-headers]
@@ -51,24 +51,9 @@ RDEPEND="${CDEPEND}
 PLUGINS="bookmarks bineditor cmake cvs fakevim git mercurial perforce
 	qml qtscript subversion"
 
-pkg_setup() {
-	# change git repo uri if inspector use flag is enabled
-	if use inspector; then
-		elog
-
-		elog "you should contact the upstream maintainer for inspector"
-		elog "plugin bugs. Do _NOT_ file bugs on gentoo bugzilla."
-		elog
-		elog "Upstream maintainer"
-		elog "Enrico Ros <enrico.ros_at_gmail.com>"
-		elog "Project page: http://gitorious.org/~enrico"
-		elog
-		EGIT_REPO_URI="git://gitorious.org/~enrico/${PN}/qt-creator-inspector.git"
-		EGIT_BRANCH="inspector-plugin"
-		EGIT_COMMIT="${EGIT_BRANCH}"
-	fi
-	qt4-edge_pkg_setup
-}
+PATCHES=(
+	"${FILESDIR}"/${PN}-2.1.0_rc1-qml-plugin.patch
+)
 
 src_prepare() {
 	qt4-edge_src_prepare
@@ -106,7 +91,6 @@ src_prepare() {
 		ewarn "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
 		ewarn
 	fi
-
 	#disable rss news on startup ( bug #302978 )
 	if ! use rss; then
 		einfo "Disabling RSS welcome news"
@@ -114,6 +98,7 @@ src_prepare() {
 			src/plugins/welcome/communitywelcomepagewidget.cpp \
 				|| die "failed to disable rss"
 	fi
+
 	# fix translations
 	sed -i "/^LANGUAGES/s:=.*:= ${LANGS}:" \
 		share/${MY_PN}/translations/translations.pro
@@ -164,9 +149,9 @@ src_install() {
 		dobin bin/qmlpuppet || die "Failed to install qmlpuppet component"
 	fi
 
-	emake INSTALL_ROOT="${D}/usr" install_subtargets || die "emake install failed"
+	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_subtargets || die "emake install failed"
 	if use doc; then
-		emake INSTALL_ROOT="${D}/usr" install_inst_qch_docs || die "emake install qch_docs failed"
+		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_qch_docs || die "emake install qch_docs failed"
 	fi
 
 	# Install missing icon
