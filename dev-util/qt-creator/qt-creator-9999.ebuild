@@ -24,7 +24,7 @@ IUSE="bazaar bineditor bookmarks +botan-bundled +cmake cvs debug doc examples fa
 QTVER="4.7.4:4"
 CDEPEND=">=x11-libs/qt-assistant-${QTVER}[doc?]
 	>=x11-libs/qt-sql-${QTVER}
-	>=x11-libsqt-svg-${QTVER}
+	>=x11-libs/qt-svg-${QTVER}
 	!qml? ( >=x11-libs/qt-gui-${QTVER} )
 	qml? (
 		>=x11-libs/qt-declarative-${QTVER}[private-headers(+)]
