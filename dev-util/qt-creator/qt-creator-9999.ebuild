@@ -51,10 +51,6 @@ RDEPEND="${CDEPEND}
 PLUGINS="bookmarks bineditor cmake cvs fakevim git mercurial perforce
 	qml qtscript subversion"
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-2.1.0_rc1-qml-plugin.patch
-)
-
 src_prepare() {
 	qt4-edge_src_prepare
 	git_src_prepare
