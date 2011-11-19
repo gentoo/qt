@@ -97,7 +97,7 @@ src_prepare() {
 
 	# fix translations
 	sed -i "/^LANGUAGES/s:=.*:= ${LANGS}:" \
-		share/${MY_PN}/translations/translations.pro
+		share/${MY_PN}/translations/translations.pro || die
 
 	# add rpath to make qtcreator actual find its *own* plugins
 	sed -i "/^LIBS/s:+=:& -Wl,-rpath,/usr/$(get_libdir)/${MY_PN} :" qtcreator.pri || die
@@ -137,17 +137,24 @@ src_configure() {
 		QT_PRIVATE_HEADERS=${qtheaders}
 }
 
+
+src_compile() {
+	emake
+	use doc && emake docs
+}
+
 src_install() {
 	#install wrapper
-	dobin bin/${MY_PN} bin/qtpromaker || die "dobin failed"
+	dobin bin/${MY_PN} bin/qtpromaker
 	if use qml; then
 		# qmlpuppet component. Bug #367383
-		dobin bin/qmlpuppet || die "Failed to install qmlpuppet component"
+		dobin bin/qmlpuppet
 	fi
 
-	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_subtargets || die "emake install failed"
+	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_subtargets
 	if use doc; then
-		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_qch_docs || die "emake install qch_docs failed"
+		[[ -e "${S}"/share/doc/${MY_PN}/${MY_PN}.qch ]] || due "${MY_PN}.qch is	missing"
+		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_qch_docs
 	fi
 
 	# Install missing icon
