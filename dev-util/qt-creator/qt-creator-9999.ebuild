@@ -49,7 +49,7 @@ RDEPEND="${CDEPEND}
 	subversion? ( dev-vcs/subversion )"
 
 PLUGINS="bookmarks bineditor cmake cvs fakevim git mercurial perforce
-	qml qtscript subversion"
+	qml qtscript rss subversion"
 
 src_prepare() {
 	qt4-edge_src_prepare
@@ -68,6 +68,8 @@ src_prepare() {
 				plugin="cmakeprojectmanager"
 			elif [[ ${plugin} == "qtscript" ]]; then
 				plugin="qtscripteditor"
+			elif [[ ${plugin} == "rss" ]]; then
+				plugin="welcome"
 			elif [[ ${plugin} ==  "qml" ]]; then
 				for x in qmlprojectmanager qmljsinspector qmljseditor qmljstools qmldesigner; do
 					einfo "Disabling ${x} support"
@@ -86,13 +88,6 @@ src_prepare() {
 		ewarn "In order to use it, you need to manually"
 		ewarn "download perforce client from http://www.perforce.com/perforce/downloads/index.html"
 		ewarn
-	fi
-	#disable rss news on startup ( bug #302978 )
-	if ! use rss; then
-		einfo "Disabling RSS welcome news"
-		sed -i "/m_rssFetcher->fetch/s:^:\/\/:" \
-			src/plugins/welcome/communitywelcomepagewidget.cpp \
-				|| die "failed to disable rss"
 	fi
 
 	# fix translations
