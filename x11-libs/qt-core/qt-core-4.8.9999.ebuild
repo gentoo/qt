@@ -10,13 +10,12 @@ SLOT="4"
 KEYWORDS=""
 IUSE="+glib iconv optimized-qmake qt3support ssl"
 
-RDEPEND="sys-libs/zlib
+DEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
 	!<x11-libs/qt-gui-${PVR}
 	!<x11-libs/qt-4.4.0:4"
-DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+RDEPEND="${DEPEND}"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support] )"
 
 QT4_TARGET_DIRECTORIES="
