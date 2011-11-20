@@ -1,6 +1,6 @@
 EAPI="4"
 
-inherit qt4-edge git-2
+inherit qt4-edge git-2 multilib
 
 EGIT_REPO_URI="git://github.com/ariya/screenie.git"
 
@@ -14,9 +14,17 @@ KEYWORDS=""
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
+src_prepare () {
+	qt4-edge_src_prepare
+	sed -i -e "/^Exec/s:Screenie:${PN}:" -e "/^TryExec/s:Screenie:${PN}:" \
+		"${S}"/src/Screenie/res/${PN}.desktop || die
+}
+
 src_install() {
-	# install screenie binary
-	dobin "${S}"/${MY_PN}
-	doicon "${S}"/resources/${MY_PN}.png
-	domenu "${S}"/${MY_PN}.desktop
+	# The package uses generic library names that make cause collisions
+	# in the future. They need to be moved to a subfolder
+	dolib.so "${S}"/bin/release/*.so*
+	newbin "${S}"/bin/release/Screenie ${PN}
+	newicon "${S}"/src/Resources/img/application-icon.png ${PN}.png
+	domenu "${S}"/src/Screenie/res/${PN}.desktop
 }
