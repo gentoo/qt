@@ -7,7 +7,7 @@
 # Qt herd <qt@gentoo.org>
 # @BLURB: Eclass for Qt4 split ebuilds in qting-edge overlay.
 # @DESCRIPTION:
-# This eclass contains various functions that are used when building Qt4
+# This eclass contains various functions that are used when building Qt4.
 
 # WARNING: This eclass requires EAPI=2 or EAPI=3
 #
@@ -24,11 +24,11 @@
 
 MY_EGIT_COMMIT=${EGIT_COMMIT:=}
 
-inherit git-2 qt4-build
+inherit eutils git-2 qt4-build
 
-# 4.8 has not stable-branch
 if [[ ${PV} == *.9999 ]]; then
 	SRC_URI=
+	# 4.8 doesn't have stable-branch
 	if [[ ${PV} != 4.8.9999 ]]; then
 		IUSE+=" +stable-branch"
 	fi
@@ -43,7 +43,7 @@ qt4-build-edge_pkg_setup() {
 
 	case "${PV}" in
 		4.9999 | 4.7.9999 | 4.8.9999)
-			if use stable-branch; then
+			if use_if_iuse stable-branch; then
 				MY_PV_EXTRA="${PV}-stable"
 			else
 				MY_PV_EXTRA="${PV}"
@@ -76,7 +76,7 @@ qt4-build-edge_pkg_setup() {
 
 	# Let users know what they are getting themselves into ;-)
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
-		ewarn
+		echo
 		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary"
 		ewarn "with [qting-edge]. Alternatively, contact <qt@gentoo.org>."
 		ewarn "Thank you for using qting-edge overlay."
@@ -100,11 +100,11 @@ qt4-build-edge_pkg_setup() {
 				ewarn "The ${PV} version ebuilds install a pre-release from Nokia Qt Software."
 				;;
 		esac
-		ewarn
+		echo
 	fi
 	# stable-branch is outdated. Last commit on 4th of April. Adding warning
 	# wrt bug #313619
-	if use stable-branch; then
+	if use_if_iuse stable-branch; then
 		ewarn
 		ewarn				"!!! WARNING !!!"
 		ewarn "Qt-${PV/.9999} stable branch is outdated. If you are"
