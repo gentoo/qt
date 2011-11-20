@@ -30,7 +30,7 @@ if [[ ${PV} == *.9999 ]]; then
 	SRC_URI=
 	# 4.8 doesn't have stable-branch
 	if [[ ${PV} != 4.8.9999 ]]; then
-		IUSE+=" +stable-branch"
+		IUSE+=" stable-branch"
 	fi
 	DEPEND="dev-lang/perl"
 fi
