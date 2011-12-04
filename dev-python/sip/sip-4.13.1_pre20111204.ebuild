@@ -12,7 +12,7 @@ EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 
 inherit eutils python toolchain-funcs ${HG_ECLASS}
 
-HG_REVISION=1c3d2412e35a
+HG_REVISION=98421b9cc511
 
 DESCRIPTION="Python extension module generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"

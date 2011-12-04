@@ -8,7 +8,7 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit eutils python toolchain-funcs
 
-HG_REVISION="8bac389fb7ae"
+HG_REVISION="ab7857131e35"
 MY_P="QScintilla-gpl-snapshot-${PV/_pre*/-${HG_REVISION}}"
 
 DESCRIPTION="Python bindings for Qscintilla"
