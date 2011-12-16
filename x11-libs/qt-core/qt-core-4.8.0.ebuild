@@ -1,22 +1,21 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-core/qt-core-4.7.4-r1.ebuild,v 1.1 2011/11/28 20:48:24 tampakrap Exp $
 
 EAPI="3"
 inherit qt4-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
-IUSE="+glib iconv optimized-qmake qt3support ssl"
+KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+IUSE="+glib iconv +jit optimized-qmake qt3support ssl"
 
 DEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
-	!<x11-libs/qt-gui-${PVR}
 	!<x11-libs/qt-4.4.0:4"
 RDEPEND="${DEPEND}"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[glib=,qt3support] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,glib=,qt3support] )"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
@@ -84,16 +83,16 @@ src_configure() {
 		$(qt_use iconv)
 		$(qt_use optimized-qmake)
 		$(qt_use ssl openssl)
-		$(qt_use qt3support)"
+		$(qt_use qt3support)
+		$(qt_use jit javascript-jit)"
 
-	myconf="${myconf} -no-xkb  -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -no-cups -no-gif -no-libpng
 		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
 		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
 		-no-svg -no-gtkstyle -no-phonon-backend -no-script -no-scripttools
 		-no-cups -no-xsync -no-xinput -no-multimedia"
-
 	qt4-build_src_configure
 }
 
@@ -110,14 +109,18 @@ src_install() {
 
 	emake INSTALL_ROOT="${D}" install_mkspecs || die "emake install_mkspecs failed"
 
-	# install private headers
-	insinto ${QTHEADERDIR}/QtCore/private
+	#install private headers
+	insinto "${QTHEADERDIR#${EPREFIX}}"/QtCore/private
 	find "${S}"/src/corelib -type f -name "*_p.h" -exec doins {} \;
 
 	# use freshly built libraries
+	local DYLD_FPATH=
+	[[ -d "${S}"/lib/QtCore.framework ]] \
+		&& DYLD_FPATH=$(for x in "${S}/lib/"*.framework; do echo -n ":$x"; done)
+	DYLD_LIBRARY_PATH="${S}/lib${DYLD_FPATH}" \
 	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
 		|| die "generating translations faied"
-	insinto ${QTTRANSDIR}
+	insinto "${QTTRANSDIR#${EPREFIX}}"
 	doins translations/*.qm || die "doins translations failed"
 
 	setqtenv
@@ -126,35 +129,49 @@ src_install() {
 	# List all the multilib libdirs
 	local libdirs=
 	for libdir in $(get_all_libdirs); do
-		libdirs="${libdirs}:/usr/${libdir}/qt4"
+		libdirs+=":${EPREFIX}/usr/${libdir}/qt4"
 	done
 
 	cat <<-EOF > "${T}/44qt4"
-	LDPATH=${libdirs:1}
+	LDPATH="${libdirs:1}"
 	EOF
 	doenvd "${T}/44qt4"
 
-	dodir /${QTDATADIR}/mkspecs/gentoo
-	mv "${D}"/${QTDATADIR}/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo \
+	dodir "${QTDATADIR#${EPREFIX}}"/mkspecs/gentoo || die "dodir failed"
+	mv "${D}/${QTDATADIR}"/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo \
 		|| die "Failed to move qconfig.pri"
 
-	sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
-			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
-			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
-		|| die "sed for qconfig.h failed"
+	# Framework hacking
+	if use aqua && [[ ${CHOST#*-darwin} -ge 9 ]] ; then
+		#TODO do this better
+		sed -i -e '2a#include <QtCore/Gentoo/gentoo-qconfig.h>\n' \
+				"${D}${QTLIBDIR}"/QtCore.framework/Headers/qconfig.h \
+			|| die "sed for qconfig.h failed."
+		dosym "${QTHEADERDIR#${EPREFIX}}"/Gentoo "${QTLIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo ||
+			die "dosym failed"
+	else
+		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
+				"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
+				"${D}${QTHEADERDIR}"/Qt/qconfig.h \
+			|| die "sed for qconfig.h failed"
+	fi
+
 	if use glib; then
-		QCONFIG_DEFINE=" $(use glib && echo QT_GLIB)
-				$(use ssl && echo QT_OPENSSL)"
+		QCONFIG_DEFINE="$(use glib && echo QT_GLIB)
+			$(use ssl && echo QT_OPENSSL)"
 		install_qconfigs
 	fi
-	#remove .la files
-	find "${D}"${QTLIBDIR} -name "*.la" -print0 | xargs -0 rm
+	# remove .la files
+	find "${D}${QTLIBDIR}" -name "*.la" -print0 | xargs -0 rm
+
 	# remove some unnecessary headers
 	rm -f "${D}${QTHEADERDIR}"/{Qt,QtCore}/{\
-qatomic_macosx.h,\
 qatomic_windows.h,\
 qatomic_windowsce.h,\
 qt_windows.h}
 
-	keepdir "${QTSYSCONFDIR}"
+	keepdir "${QTSYSCONFDIR#${EPREFIX}}"
+
+	# Framework magic
+	fix_includes
 }

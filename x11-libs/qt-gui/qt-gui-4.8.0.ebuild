@@ -1,43 +1,47 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-gui/qt-gui-4.7.4-r1.ebuild,v 1.3 2011/12/03 20:26:41 grobian Exp $
 
 EAPI="3"
-inherit eutils confutils qt4-build
+inherit confutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
-IUSE="+accessibility cups dbus +glib gif gtkstyle jpeg mng nas nis png +raster tiff trace qt3support xinerama"
+KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+IUSE="+accessibility cups dbus egl gif +glib gtkstyle mng nas nis qt3support raster tiff trace xinerama"
 
 RDEPEND="media-libs/fontconfig
-	>=media-libs/freetype-2
-	media-libs/libpng
+	media-libs/freetype:2
+	media-libs/libpng:0
 	sys-libs/zlib
-	x11-libs/libX11
-	x11-libs/libXext
-	x11-libs/libXrandr
-	x11-libs/libXcursor
-	x11-libs/libXfont
-	x11-libs/libSM
-	x11-libs/libXi
-	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=]
-	~x11-libs/qt-script-${PV}[debug=]
+	virtual/jpeg
+	~x11-libs/qt-core-${PV}[aqua=,debug=,glib=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=,debug=]
+	!aqua? (
+		x11-libs/libX11
+		x11-libs/libXext
+		x11-libs/libXrandr
+		x11-libs/libXcursor
+		x11-libs/libXfont
+		x11-libs/libSM
+		x11-libs/libXi
+	)
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
-	jpeg? ( virtual/jpeg )
-	gtkstyle? ( x11-libs/gtk+:2 )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )
+	gtkstyle? ( x11-libs/gtk+:2[aqua=] )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
-	tiff? ( media-libs/tiff )
-	xinerama? ( x11-libs/libXinerama )
-	"
+	tiff? ( media-libs/tiff:0 )
+	xinerama? ( x11-libs/libXinerama )"
 DEPEND="${RDEPEND}
-	xinerama? ( x11-proto/xineramaproto )
-	gtkstyle? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
-	x11-proto/xextproto
-	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
+	!aqua? (
+		x11-proto/xextproto
+		x11-proto/inputproto
+	)
+	xinerama? ( x11-proto/xineramaproto )"
+RDEPEND="${RDEPEND}
+	!~x11-themes/qgtkstyle-4.7.2"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,debug=] )"
 
 pkg_setup() {
 	if ! use qt3support; then
@@ -59,9 +63,7 @@ pkg_setup() {
 	QT4_EXTRACT_DIRECTORIES="
 		include
 		src
-		tools/linguist/phrasebooks
-		tools/linguist/shared
-		tools/shared"
+		tools"
 
 	use dbus && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} tools/qdbus/qdbusviewer"
 	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
@@ -70,6 +72,9 @@ pkg_setup() {
 	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}	src/plugins/graphicssystems/trace"
 
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
+
+	# mac version does not contain qtconfig?
+	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
 
 	qt4-build_pkg_setup
 }
@@ -88,30 +93,37 @@ src_configure() {
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
-		$(qt_use jpeg libjpeg system)
 		$(qt_use mng libmng system)
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
 		$(qt_use dbus)
+		$(qt_use egl)
 		$(qt_use qt3support)
 		$(qt_use gtkstyle)
 		$(qt_use xinerama)"
 
 	use gif || myconf="${myconf} -no-gif"
-
 	use nas	&& myconf="${myconf} -system-nas-sound"
 	use raster && myconf="${myconf} -graphicssystem raster"
 
+	[[ x86_64-apple-darwin* ]] && myconf="${myconf} -no-ssse3" #367045
+
 	myconf="${myconf} -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
-		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg"
-
-	# Explicitly don't compile these packages.
-	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
-	myconf="${myconf} -no-webkit -no-phonon -no-opengl"
+		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
+		-no-phonon -no-opengl"
 
 	qt4-build_src_configure
+
+	if use gtkstyle; then
+		einfo "patching the Makefile to fix qgtkstyle compilation"
+		sed "s:-I/usr/include/qt4 ::" -i src/gui/Makefile ||
+			die "sed failed"
+	fi
+	einfo "patching the Makefile to fix bug #361277"
+	sed "s:-I/usr/include/qt4/QtGui ::" -i src/gui/Makefile ||
+		die "sed failed"
 }
 
 src_install() {
@@ -138,26 +150,38 @@ src_install() {
 	# which are located under tools/designer/src/lib/*
 	# So instead of installing both, we create the private folder
 	# and drop tools/designer/src/lib/* headers in it.
-	dodir /usr/include/qt4/QtDesigner/private/
-	insinto /usr/include/qt4/QtDesigner/private/
-	doins "${S}"/tools/designer/src/lib/shared/*
-	doins "${S}"/tools/designer/src/lib/sdk/*
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		insinto "${QTLIBDIR#${EPREFIX}}"/QtDesigner.framework/Headers/private/
+	else
+		insinto "${QTHEADERDIR#${EPREFIX}}"/QtDesigner/private/
+	fi
+	doins "${S}"/tools/designer/src/lib/shared/* || die
+	doins "${S}"/tools/designer/src/lib/sdk/* || die
 
-	# install private headers
-	insinto ${QTHEADERDIR}/QtGui/private
+	#install private headers
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		insinto "${QTLIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
+	else
+		insinto "${QTHEADERDIR#${EPREFIX}}"/QtGui/private
+	fi
 	find "${S}"/src/gui -type f -name "*_p.h" -exec doins {} \;
+
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		# rerun to get links to headers right
+		fix_includes
+	fi
 
 	# install correct designer and linguist icons, bug 241208
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \
 		tools/designer/src/designer/images/designer.png \
 		|| die "doicon failed"
 	# Note: absolute image path required here!
-	make_desktop_entry /usr/bin/linguist Linguist \
-			/usr/share/pixmaps/linguist-128-32.png \
+	make_desktop_entry "${EPREFIX}"/usr/bin/linguist Linguist \
+			"${EPREFIX}"/usr/share/pixmaps/linguist-128-32.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "linguist make_desktop_entry failed"
-	make_desktop_entry /usr/bin/designer Designer \
-			/usr/share/pixmaps/designer.png \
+	make_desktop_entry "${EPREFIX}"/usr/bin/designer Designer \
+			"${EPREFIX}"/usr/share/pixmaps/designer.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "designer make_desktop_entry failed"
 }

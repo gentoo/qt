@@ -1,16 +1,16 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-dbus/qt-dbus-4.7.4.ebuild,v 1.1 2011/09/08 09:19:13 wired Exp $
 
 EAPI="3"
 inherit qt4-build
 
 DESCRIPTION="The DBus module for the Qt toolkit"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 IUSE=""
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=]
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,debug=]
 	>=sys-apps/dbus-1.0.2"
 RDEPEND="${DEPEND}"
 
