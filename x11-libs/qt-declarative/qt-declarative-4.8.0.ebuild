@@ -33,19 +33,21 @@ pkg_setup() {
 
 	if use webkit; then
 		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-			src/3rdparty/webkit/WebKit/qt/declarative"
+			src/3rdparty/webkit/Source/WebKit/qt/declarative"
 	fi
 
 	QT4_EXTRACT_DIRECTORIES="
 		include/
 		src/
-		tools/"
+		tools/
+		translations/"
 
 	qt4-build_pkg_setup
 }
 
 src_configure() {
-	myconf="${myconf} -declarative $(qt_use qt3support) $(qt_use webkit)"
+	myconf="${myconf} -declarative -no-gtkstyle
+			$(qt_use qt3support) $(qt_use webkit)"
 	qt4-build_src_configure
 }
 
