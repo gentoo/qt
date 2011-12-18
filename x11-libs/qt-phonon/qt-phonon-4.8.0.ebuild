@@ -17,7 +17,7 @@ DEPEND="~x11-libs/qt-gui-${PV}[aqua=,debug=,qt3support=]
 	!media-sound/phonon
 	!aqua? ( media-libs/gstreamer
 			 media-plugins/gst-plugins-meta )
-	aqua? ( ~x11-libs/qt-opengl-${PV}[aqua,qt3support=] )
+	aqua? ( ~x11-libs/qt-opengl-${PV}[aqua,debug=,qt3support=] )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )"
 RDEPEND="${DEPEND}"
 
