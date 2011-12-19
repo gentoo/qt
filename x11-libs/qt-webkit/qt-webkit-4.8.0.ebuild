@@ -21,6 +21,8 @@ DEPEND="
 	kde? ( || ( media-libs/phonon[aqua=] ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,dbus=,debug=] ) )"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${P}-c++0x-fix.patch" )
+
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/3rdparty/webkit/Source/JavaScriptCore/
@@ -41,11 +43,13 @@ pkg_setup() {
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
+	use c++0x && append-flags -fpermissive
 	sed -i -e "/Werror/d" "${S}/src/3rdparty/webkit/Source/WebKit.pri" || die
 	qt4-build_src_prepare
 }
 
 src_configure() {
+	# won't build with gcc 4.6 without this for now
 	myconf="${myconf}
 			-webkit -system-sqlite -no-gtkstyle
 			-D GST_DISABLE_DEPRECATED
