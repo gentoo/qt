@@ -10,15 +10,15 @@ SLOT="4"
 KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos"
 IUSE="qt3support webkit"
 
-DEPEND="~x11-libs/qt-core-${PV}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-gui-${PV}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-opengl-${PV}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-script-${PV}[aqua=,debug=]
-	~x11-libs/qt-sql-${PV}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-svg-${PV}[aqua=,debug=]
-	~x11-libs/qt-xmlpatterns-${PV}[aqua=,debug=]
-	qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,debug=] )
-	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,debug=] )
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-opengl-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-svg-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
+	qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=] )
 	"
 RDEPEND="${DEPEND}"
 

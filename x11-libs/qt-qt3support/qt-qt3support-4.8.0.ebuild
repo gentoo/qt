@@ -10,11 +10,11 @@ SLOT="4"
 KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 IUSE="+accessibility kde phonon"
 
-DEPEND="~x11-libs/qt-core-${PV}[aqua=,debug=,qt3support]
-	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,debug=,qt3support]
-	~x11-libs/qt-sql-${PV}[aqua=,debug=,qt3support]
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]
+	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=,qt3support]
+	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]
 	phonon? (
-		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[aqua=,debug=]
+		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[aqua=,c++0x=,qpa=,debug=]
 			media-libs/phonon[aqua=,gstreamer] ) )
 		kde? ( media-libs/phonon[aqua=,gstreamer] ) )"
 

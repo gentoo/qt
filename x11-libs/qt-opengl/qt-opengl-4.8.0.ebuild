@@ -10,8 +10,8 @@ SLOT="4"
 KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 IUSE="egl qt3support"
 
-DEPEND="~x11-libs/qt-core-${PV}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-gui-${PV}[aqua=,debug=,egl=,qt3support=]
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,egl=,qt3support=]
 	virtual/opengl"
 RDEPEND="${DEPEND}"
 

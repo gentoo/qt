@@ -12,13 +12,13 @@ IUSE="dbus +jit kde"
 
 DEPEND="
 	dev-db/sqlite:3
-	~x11-libs/qt-core-${PV}[aqua=,debug=,ssl]
-	~x11-libs/qt-gui-${PV}[aqua=,dbus?,debug=]
-	~x11-libs/qt-xmlpatterns-${PV}[aqua=,debug=]
-	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,dbus=,debug=]
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,ssl]
+	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,dbus?,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,c++0x=,qpa=,dbus=,debug=]
 		media-libs/phonon[aqua=] ) )
-	kde? ( || ( media-libs/phonon[aqua=] ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,dbus=,debug] ) )"
+	kde? ( || ( media-libs/phonon[aqua=] ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,dbus=,debug=] ) )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {

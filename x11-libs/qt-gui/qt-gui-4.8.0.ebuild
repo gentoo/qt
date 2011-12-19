@@ -15,8 +15,8 @@ RDEPEND="media-libs/fontconfig
 	media-libs/libpng:0
 	sys-libs/zlib
 	virtual/jpeg
-	~x11-libs/qt-core-${PV}[aqua=,debug=,glib=,qt3support=]
-	~x11-libs/qt-script-${PV}[aqua=,debug=]
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
 	!aqua? (
 		x11-libs/libX11
 		x11-libs/libXext
@@ -27,7 +27,7 @@ RDEPEND="media-libs/fontconfig
 		x11-libs/libXi
 	)
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )
 	gtkstyle? ( x11-libs/gtk+:2[aqua=] )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
@@ -41,7 +41,7 @@ DEPEND="${RDEPEND}
 	xinerama? ( x11-proto/xineramaproto )"
 RDEPEND="${RDEPEND}
 	!~x11-themes/qgtkstyle-4.7.2"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,debug=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,qpa=,debug=] )"
 
 pkg_setup() {
 	if ! use qt3support; then

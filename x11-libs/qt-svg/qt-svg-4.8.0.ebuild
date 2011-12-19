@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 IUSE="+accessibility iconv"
 
-DEPEND="~x11-libs/qt-gui-${PV}[accessibility=,aqua=,debug=]"
+DEPEND="~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {

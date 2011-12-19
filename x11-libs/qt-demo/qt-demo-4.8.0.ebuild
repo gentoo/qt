@@ -10,22 +10,22 @@ SLOT="4"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE="kde qt3support"
 
-DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-core-${PV}:${SLOT}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-dbus-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-declarative-${PV}:${SLOT}[aqua=,debug=,webkit]
-	~x11-libs/qt-gui-${PV}:${SLOT}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-multimedia-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-opengl-${PV}:${SLOT}[aqua=,debug=,qt3support=]
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,debug=]
+DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-core-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-dbus-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-declarative-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=,webkit]
+	~x11-libs/qt-gui-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-multimedia-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-opengl-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
 		media-libs/phonon[aqua=,debug=] ) )
 	kde? ( media-libs/phonon[aqua=,debug=] )
-	~x11-libs/qt-script-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-sql-${PV}:${SLOT}[aqua=,debug=,qt3support=]
-	~x11-libs/qt-svg-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-test-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-webkit-${PV}:${SLOT}[aqua=,debug=]
-	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[aqua=,debug=]"
+	~x11-libs/qt-script-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-sql-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-svg-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-test-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-webkit-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]"
 
 RDEPEND="${DEPEND}"
 

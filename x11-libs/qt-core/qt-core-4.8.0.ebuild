@@ -15,7 +15,7 @@ DEPEND="sys-libs/zlib
 	ssl? ( dev-libs/openssl )
 	!<x11-libs/qt-4.4.0:4"
 RDEPEND="${DEPEND}"
-PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,debug=,glib=,qt3support] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support] )"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="

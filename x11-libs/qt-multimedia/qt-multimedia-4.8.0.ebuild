@@ -11,8 +11,8 @@ KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 -sparc ~x86 ~amd64-linux ~x86-linux ~ppc
 IUSE="iconv"
 
 DEPEND="!aqua? ( media-libs/alsa-lib )
-	~x11-libs/qt-core-${PV}[aqua=,debug=]
-	~x11-libs/qt-gui-${PV}[aqua=,debug=]"
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {

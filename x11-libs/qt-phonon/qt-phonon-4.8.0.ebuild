@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 IUSE="dbus qt3support"
 
-DEPEND="~x11-libs/qt-gui-${PV}[aqua=,debug=,qt3support=]
+DEPEND="~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
 	!kde-base/phonon-kde
 	!kde-base/phonon-xine
 	!media-libs/phonon
@@ -18,7 +18,7 @@ DEPEND="~x11-libs/qt-gui-${PV}[aqua=,debug=,qt3support=]
 	!aqua? ( media-libs/gstreamer
 			 media-plugins/gst-plugins-meta )
 	aqua? ( ~x11-libs/qt-opengl-${PV}[aqua,debug=,qt3support=] )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )"
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
