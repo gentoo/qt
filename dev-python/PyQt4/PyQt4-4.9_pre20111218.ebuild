@@ -10,7 +10,7 @@ RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
 
 inherit python qt4-r2 toolchain-funcs
 
-REVISION=65564eb2fcf4
+REVISION=1cac12f7b6d3
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
 QT_VER="4.6.2" # This should be 4.7.X but ~alpha and ~sparc have no keywords for
 #that Qt version yet(?)

@@ -2,8 +2,8 @@
 source /etc/init.d/functions.sh
 
 ########################## VARIABLES ############################
-PVER="4.8.6" # PyQt4 current working version
-SVER="4.12.5" #$ Sip current working version
+PVER="4.9" # PyQt4 current working version
+SVER="4.13.1" #$ Sip current working version
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
 TARGET="www.gentoo-el.org:~/public_html/distfiles/"
 TEMP="/tmp/qting-edge-python-bump/"
