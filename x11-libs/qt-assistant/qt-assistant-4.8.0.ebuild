@@ -14,7 +14,7 @@ SRC_URI+=" compat? ( ftp://ftp.qt.nokia.com/qt/source/${PN}-qassistantclient-lib
 DEPEND="~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=,trace?]
 	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=,sqlite]
 	~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=]
-	~x11-libs/qt-declarative-${PV}[debug=,qt3support=]"
+	~x11-libs/qt-declarative-${PV}[debug=,qt3support=,webkit]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
@@ -63,7 +63,7 @@ src_prepare() {
 }
 
 src_configure() {
-	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
+	myconf="${myconf} -no-xkb -no-fontconfig -no-xrandr
 		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
