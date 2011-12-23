@@ -44,8 +44,25 @@ RDEPEND="${RDEPEND}
 PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,qpa=,debug=] )"
 
 pkg_setup() {
-	if ! use qt3support; then
-		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
+	# this belongs to pkg_pretend, we have to upgrade to EAPI 4 :)
+	# was planning to use a dep, but to reproduce this you have to
+	# clean-emerge qt-gui[gtkstyle] while having cairo[qt4] installed.
+	# no need to restrict normal first time users for that :)
+	if use gtkstyle && ! has_version x11-libs/qt-gui && has_version x11-libs/cairo[qt4]; then
+		echo
+		eerror "When building qt-gui[gtkstyle] from scratch with cairo present,"
+		eerror "cairo must have the qt4 use flag disabled, otherwise the gtk"
+		eerror "style cannot be built."
+		ewarn
+		eerror "You have the following options:"
+		eerror "  - rebuild cairo with -qt4 USE"
+		eerror "  - build qt-gui with -gtkstyle USE"
+		ewarn
+		eerror "After you successfully install qt-gui, you'll be able to"
+		eerror "re-enable the disabled use flag and/or reinstall cairo."
+		ewarn
+		echo
+		die "can't build qt-gui with gtkstyle USE if cairo has qt4 USE enabled"
 	fi
 
 	confutils_use_depend_all gtkstyle glib
