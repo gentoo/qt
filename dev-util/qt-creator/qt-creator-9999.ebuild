@@ -5,15 +5,14 @@
 EAPI="4"
 LANGS="cs de es fr hu it ja pl ru sl uk zh_CN"
 
-inherit qt4-edge git multilib
+inherit multilib qt4-edge git-2
 
 MY_PN="${PN/-/}"
+
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://qt.nokia.com/products/developer-tools"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git"
-if [[ ${PV} == 2.9999 ]]; then
-	EGIT_BRANCH="2.0"
-fi
+EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
+	https://git.gitorious.org/${PN}/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -39,10 +38,10 @@ DEPEND="${CDEPEND}
 	!botan-bundled? ( dev-util/pkgconfig )"
 
 RDEPEND="${CDEPEND}
+	sys-devel/gdb[python]
 	bazaar? ( dev-vcs/bzr )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-vcs/cvs )
-	sys-devel/gdb[python]
 	examples? ( >=x11-libs/qt-demo-${QTVER} )
 	git? ( dev-vcs/git )
 	mercurial? ( dev-vcs/mercurial )
@@ -53,7 +52,6 @@ PLUGINS="bookmarks bineditor cmake cvs fakevim git mercurial perforce
 
 src_prepare() {
 	qt4-edge_src_prepare
-	git_src_prepare
 
 	# fix library path for styleplugin
 	sed -i -e "/target.path/s:lib:$(get_libdir):" \
@@ -123,7 +121,7 @@ src_prepare() {
 }
 
 src_configure() {
-	#the path must NOT be empty
+	# the path must NOT be empty
 	local qtheaders="False"
 	use qml && qtheaders="/usr/include/qt4/"
 	eqmake4 \
@@ -132,14 +130,13 @@ src_configure() {
 		QT_PRIVATE_HEADERS=${qtheaders}
 }
 
-
 src_compile() {
 	emake
 	use doc && emake docs
 }
 
 src_install() {
-	#install wrapper
+	# Install wrapper
 	dobin bin/${MY_PN} bin/qtpromaker
 	if use qml; then
 		# qmlpuppet component. Bug #367383
