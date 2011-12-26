@@ -2,27 +2,6 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
-# Alex Alexander <wired@gentoo.org> (17 Dec 2011)
-# 4.8.0 final
-# masked because qt-assistant doesn't build yet
-# - it seems to have a hard time detecting qt-webkit
-~x11-libs/qt-assistant-4.8.0
-~x11-libs/qt-core-4.8.0
-~x11-libs/qt-declarative-4.8.0
-~x11-libs/qt-dbus-4.8.0
-~x11-libs/qt-demo-4.8.0
-~x11-libs/qt-gui-4.8.0
-~x11-libs/qt-multimedia-4.8.0
-~x11-libs/qt-opengl-4.8.0
-~x11-libs/qt-phonon-4.8.0
-~x11-libs/qt-qt3support-4.8.0
-~x11-libs/qt-script-4.8.0
-~x11-libs/qt-sql-4.8.0
-~x11-libs/qt-svg-4.8.0
-~x11-libs/qt-test-4.8.0
-~x11-libs/qt-webkit-4.8.0
-~x11-libs/qt-xmlpatterns-4.8.0
-
 # Markos Chandras <hwoarang@gentoo.org> (27 Aug 2011)
 # Masking latest releases
 =dev-python/sip-4.13.1_pre*
