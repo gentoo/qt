@@ -17,6 +17,11 @@ DEPEND="~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=,trace?
 	~x11-libs/qt-declarative-${PV}[debug=,qt3support=,webkit]"
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	# bug 395067
+	"${FILESDIR}/${P}-install-fix.patch"
+)
+
 pkg_setup() {
 	# Pixeltool isn't really assistant related, but it relies on
 	# the assistant libraries. doc/qch/
