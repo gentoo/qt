@@ -155,14 +155,9 @@ src_install() {
 			$(use ssl && echo QT_OPENSSL)"
 		install_qconfigs
 	fi
+
 	# remove .la files
 	find "${D}${QTLIBDIR}" -name "*.la" -print0 | xargs -0 rm
-
-	# remove some unnecessary headers
-	rm -f "${D}${QTHEADERDIR}"/{Qt,QtCore}/{\
-qatomic_windows.h,\
-qatomic_windowsce.h,\
-qt_windows.h}
 
 	keepdir "${QTSYSCONFDIR#${EPREFIX}}"
 
