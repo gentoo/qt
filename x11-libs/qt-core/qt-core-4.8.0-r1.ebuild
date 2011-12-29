@@ -82,21 +82,20 @@ src_prepare() {
 src_configure() {
 	unset QMAKESPEC
 
-	myconf="${myconf}
+	myconf+="
 		$(qt_use glib)
 		$(qt_use iconv)
+		$(qt_use jit javascript-jit)
 		$(qt_use optimized-qmake)
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)
-		$(qt_use jit javascript-jit)"
+		-no-accessibility -no-gui -no-script -no-scripttools -no-xmlpatterns
+		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg
+		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl -no-sm
+		-no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
+		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype
+		-no-xinput -no-xkb"
 
-	myconf="${myconf} -no-xkb -no-fontconfig -no-xrender -no-xrandr
-		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
-		-no-nas-sound -no-dbus -no-cups -no-gif -no-libpng
-		-no-libmng -no-libjpeg -system-zlib -no-webkit -no-phonon -no-xmlpatterns
-		-no-freetype -no-libtiff  -no-accessibility -no-fontconfig -no-opengl
-		-no-svg -no-gtkstyle -no-phonon-backend -no-script -no-scripttools
-		-no-cups -no-xsync -no-xinput -no-multimedia"
 	qt4-build_src_configure
 }
 
