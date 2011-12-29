@@ -59,9 +59,8 @@ pkg_setup() {
 		tools/shared
 		tools/linguist/shared
 		translations"
+
 	qt4-build_pkg_setup
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		${QT4_EXTRACT_DIRECTORIES}"
 }
 
 src_prepare() {
@@ -80,8 +79,6 @@ src_prepare() {
 }
 
 src_configure() {
-	unset QMAKESPEC
-
 	myconf+="
 		-no-accessibility -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon
 		-no-phonon-backend -no-svg -no-webkit -no-script -no-scripttools -no-declarative
@@ -97,12 +94,6 @@ src_configure() {
 		$(qt_use qt3support)"
 
 	qt4-build_src_configure
-}
-
-src_compile() {
-	# bug 259736
-	unset QMAKESPEC
-	qt4-build_src_compile
 }
 
 src_install() {
@@ -122,7 +113,7 @@ src_install() {
 		&& DYLD_FPATH=$(for x in "${S}/lib/"*.framework; do echo -n ":$x"; done)
 	DYLD_LIBRARY_PATH="${S}/lib${DYLD_FPATH}" \
 	LD_LIBRARY_PATH="${S}/lib" "${S}"/bin/lrelease translations/*.ts \
-		|| die "generating translations faied"
+		|| die "generating translations failed"
 	insinto "${QTTRANSDIR#${EPREFIX}}"
 	doins translations/*.qm || die "doins translations failed"
 
