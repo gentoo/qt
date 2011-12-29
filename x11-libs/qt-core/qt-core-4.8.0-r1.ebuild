@@ -83,18 +83,18 @@ src_configure() {
 	unset QMAKESPEC
 
 	myconf+="
+		-no-accessibility -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon
+		-no-phonon-backend -no-svg -no-webkit -no-script -no-scripttools -no-declarative
+		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg
+		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl
+		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
+		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
 		$(qt_use glib)
 		$(qt_use iconv)
 		$(qt_use jit javascript-jit)
 		$(qt_use optimized-qmake)
 		$(qt_use ssl openssl)
-		$(qt_use qt3support)
-		-no-accessibility -no-gui -no-script -no-scripttools -no-xmlpatterns
-		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg
-		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl -no-sm
-		-no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
-		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype
-		-no-xinput -no-xkb"
+		$(qt_use qt3support)"
 
 	qt4-build_src_configure
 }
