@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
-IUSE="+glib iconv +jit optimized-qmake qt3support ssl"
+IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 DEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
@@ -88,7 +88,6 @@ src_configure() {
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
 		$(qt_use glib)
 		$(qt_use iconv)
-		$(qt_use jit javascript-jit)
 		$(qt_use optimized-qmake)
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
