@@ -36,6 +36,7 @@ pkg_setup() {
 		tools/linguist/lupdate"
 
 	QT4_EXTRACT_DIRECTORIES="
+		${QT4_TARGET_DIRECTORIES}
 		include/Qt
 		include/QtCore
 		include/QtDeclarative
