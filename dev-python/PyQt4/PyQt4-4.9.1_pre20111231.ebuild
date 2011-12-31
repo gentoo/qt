@@ -10,10 +10,9 @@ RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
 
 inherit python qt4-r2 toolchain-funcs
 
-REVISION=1cac12f7b6d3
+REVISION=3264a745e75b
 MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QT_VER="4.6.2" # This should be 4.7.X but ~alpha and ~sparc have no keywords for
-#that Qt version yet(?)
+QT_VER="4.8.0"
 
 DESCRIPTION="Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
@@ -23,10 +22,10 @@ SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 IUSE="X assistant +dbus debug declarative doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.12.5_pre20110827
+DEPEND=">=dev-python/sip-4.13.1
 	>=x11-libs/qt-core-${QT_VER}:4
 	>=x11-libs/qt-script-${QT_VER}:4
 	>=x11-libs/qt-test-${QT_VER}:4
@@ -105,6 +104,7 @@ src_configure() {
 			# QtAssistant module is not available with Qt >=4.7.0.
 			$(pyqt4_use_enable assistant QtAssistant)
 			$(pyqt4_use_enable assistant QtHelp)
+			$(pyqt4_use_enable dbus QtDBus)
 			$(pyqt4_use_enable declarative QtDeclarative)
 			$(pyqt4_use_enable multimedia QtMultimedia)
 			$(pyqt4_use_enable opengl QtOpenGL)
