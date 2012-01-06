@@ -2,13 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/media-video/minitube/minitube-1.1.ebuild,v 1.3 2010/08/09 14:34:22 hwoarang Exp $
 
-EAPI="2"
-LANGS="ar es pt_BR pt_PT uk"
-LANGSLONG="bg_BG cs_CZ de_DE el_GR es he_IL hr_HR hu_HU fr_FR fi_FI it_IT
-ja_JP nl_NL nb_NO pl_PL ro_RO ru_RU tr_TR"
+EAPI="4"
+
+LANGS="ca da es es_AR es_ES el fr gl hr hu ia id it nb nl pl pt pt_BR ro
+ru sl sq sr sv_SE te tr zh_CN"
+LANGSLONG="ca_ES de_DE fi_FI he_IL id_ID ka_GE pl_PL uk_UA"
 
 EGIT_REPO_URI="git://gitorious.org/minitube/minitube.git"
-inherit qt4-r2 git
+inherit qt4-r2 git-2
 
 DESCRIPTION="Qt4 YouTube Client"
 HOMEPAGE="http://flavio.tordini.org/minitube"
@@ -36,23 +37,20 @@ S="${WORKDIR}/${PN}"
 src_configure() {
 	eqmake4 ${PN}.pro PREFIX="/usr"
 }
+
 src_install() {
-	dobin build/target/minitube || die "dobin failed"
-	newicon images/app.png minitube.png || die "doicon failed"
-	make_desktop_entry minitube MiniTube minitube "Qt;AudioVideo;Video" \
-	|| die "make_desktop_entry failed"
+	emake INSTALL_ROOT="${D}" install
+	newicon images/app.png minitube.png
 	#translations
 	insinto "/usr/share/${PN}/locale/"
-	for lang in ${LINGUAS}; do
-		for x in ${LANGS}; do
-			if [[ ${x} == ${lang} ]]; then
-				doins "build/target/locale/${x}.qm" || die "doins failed"
-			fi
-		done
-		for x in ${LANGSLONG}; do
-			if [[ ${x%_*} == ${lang} ]]; then
-				doins "build/target/locale/${x}.qm" || die "doins failed"
-			fi
-		done
+	for x in ${LANGS}; do
+		if ! has ${x} ${LINGUAS}; then
+				rm "${D}"/usr/share/${PN}/locale/${x}.qm || die
+		fi
+	done
+	for x in ${LANGSLONG}; do
+		if ! has ${x%_*} ${LINGUAS}; then
+			rm "${D}"/usr/share/${PN}/locale/${x}.qm || die
+		fi
 	done
 }
