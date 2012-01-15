@@ -31,7 +31,7 @@ CDEPEND="
 	>=x11-libs/qt-sql-${QTVER}
 	>=x11-libs/qt-svg-${QTVER}
 	debug? ( >=x11-libs/qt-test-${QTVER} )
-	>=x11-libs/qt-assistant-${QTVER}[doc]
+	>=x11-libs/qt-assistant-${QTVER}[doc?]
 	!botan-bundled? ( =dev-libs/botan-1.8* )
 "
 DEPEND="${CDEPEND}
