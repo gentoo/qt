@@ -68,8 +68,8 @@ src_compile() {
 	# ugly hack to build docs
 	cd "${S}"
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die
-	emake qch_docs || die "emake qch_docs failed"
 	if use doc; then
+		emake qch_docs || die "emake qch_docs failed"
 		emake docs || die "emake docs failed"
 	fi
 	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die "qmake
