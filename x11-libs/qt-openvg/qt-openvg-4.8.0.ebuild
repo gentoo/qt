@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The OpenVG module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
-IUSE="egl qt3support es2"
+IUSE="qt3support es2"
 
 DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=]
 	~x11-libs/qt-gui-${PV}[debug=,egl,qt3support=]
@@ -39,9 +39,8 @@ pkg_setup() {
 src_configure() {
 	gltype="desktop"
 
-	myconf="${myconf} -openvg
-		$(qt_use qt3support)
-		$(qt_use egl)"
+	myconf="${myconf} -openvg -egl
+		$(qt_use qt3support)"
 
 	qt4-build_src_configure
 }
