@@ -8,16 +8,16 @@ inherit qt4-build
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos"
-IUSE="qt3support webkit"
+IUSE="+accessibility qt3support webkit"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=,qt3support=]
 	~x11-libs/qt-opengl-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
 	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
 	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
-	~x11-libs/qt-svg-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-svg-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=]
 	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
-	qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	qt3support? ( ~x11-libs/qt-qt3support-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=] )
 	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=] )
 	"
 RDEPEND="${DEPEND}"
@@ -48,7 +48,7 @@ pkg_setup() {
 
 src_configure() {
 	myconf="${myconf} -declarative -no-gtkstyle
-			$(qt_use qt3support) $(qt_use webkit)"
+			$(qt_use accessibility) $(qt_use qt3support) $(qt_use webkit)"
 	qt4-build_src_configure
 }
 
