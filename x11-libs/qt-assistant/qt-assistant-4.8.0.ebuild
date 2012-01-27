@@ -117,7 +117,7 @@ src_install() {
 	doins tools/assistant/tools/assistant/images/assistant.png ||
 		die "doins failed"
 	# Note: absolute image path required here!
-	make_desktop_entry "${EPREFIX}"/usr/bin/assistant Assistant \
+	make_desktop_entry assistant Assistant \
 		"${EPREFIX}"/usr/share/pixmaps/assistant.png 'Qt;Development;GUIDesigner' ||
 			die "make_desktop_entry failed"
 

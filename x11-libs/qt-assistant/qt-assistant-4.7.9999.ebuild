@@ -88,6 +88,6 @@ src_install() {
 	insinto /usr/share/pixmaps/
 	doins tools/assistant/tools/assistant/images/assistant.png || die
 	# Note: absolute image path required here!
-	make_desktop_entry /usr/bin/assistant Assistant \
+	make_desktop_entry assistant Assistant \
 		/usr/share/pixmaps/assistant.png 'Qt;Development;GUIDesigner' || die
 }
