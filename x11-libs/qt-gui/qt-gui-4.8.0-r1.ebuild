@@ -176,15 +176,15 @@ src_install() {
 	doins "${S}"/tools/designer/src/lib/shared/* || die
 	doins "${S}"/tools/designer/src/lib/sdk/* || die
 
-	#touch the available graphics systems
-	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
+	# touch the available graphics systems
+	mkdir -p "${D}/usr/share/qt4/graphicssystems/" ||
 		die "could not create ${D}/usr/share/qt4/graphicssystems/"
 	touch "${D}/usr/share/qt4/graphicssystems/raster" ||
 		die "could not touch ${D}/usr/share/qt4/graphicssystems/raster"
 	touch "${D}/usr/share/qt4/graphicssystems/native" ||
 		die "could not touch ${D}/usr/share/qt4/graphicssystems/native"
 
-	#install private headers
+	# install private headers
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
 		insinto "${QTLIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
 	else
@@ -202,11 +202,11 @@ src_install() {
 		tools/designer/src/designer/images/designer.png \
 		|| die "doicon failed"
 	# Note: absolute image path required here!
-	make_desktop_entry "${EPREFIX}"/usr/bin/linguist Linguist \
+	make_desktop_entry linguist Linguist \
 			"${EPREFIX}"/usr/share/pixmaps/linguist-128-32.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "linguist make_desktop_entry failed"
-	make_desktop_entry "${EPREFIX}"/usr/bin/designer Designer \
+	make_desktop_entry designer Designer \
 			"${EPREFIX}"/usr/share/pixmaps/designer.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "designer make_desktop_entry failed"
@@ -215,7 +215,7 @@ src_install() {
 pkg_postinst() {
 	# raster is the default graphicssystems, set it if first install
 	eselect qtgraphicssystem set raster --use-old
-	elog "Starting with qt 4.8.0, you may choose the active Qt Graphics System"
+	elog "Starting with Qt 4.8.0, you may choose the active Qt Graphics System"
 	elog "by using a new eselect module called qtgraphicssystem."
 	elog "Run"
 	elog "  eselect qtgraphicssystem"

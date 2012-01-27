@@ -193,11 +193,11 @@ src_install() {
 		tools/designer/src/designer/images/designer.png \
 		|| die "doicon failed"
 	# Note: absolute image path required here!
-	make_desktop_entry "${EPREFIX}"/usr/bin/linguist Linguist \
+	make_desktop_entry linguist Linguist \
 			"${EPREFIX}"/usr/share/pixmaps/linguist-128-32.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "linguist make_desktop_entry failed"
-	make_desktop_entry "${EPREFIX}"/usr/bin/designer Designer \
+	make_desktop_entry designer Designer \
 			"${EPREFIX}"/usr/share/pixmaps/designer.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "designer make_desktop_entry failed"

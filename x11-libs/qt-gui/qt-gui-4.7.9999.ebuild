@@ -146,10 +146,10 @@ src_install() {
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \
 		tools/designer/src/designer/images/designer.png || die
 	# Note: absolute image path required here!
-	make_desktop_entry /usr/bin/linguist Linguist \
+	make_desktop_entry linguist Linguist \
 			/usr/share/pixmaps/linguist-128-32.png \
 			'Qt;Development;GUIDesigner' || die
-	make_desktop_entry /usr/bin/designer Designer \
+	make_desktop_entry designer Designer \
 			/usr/share/pixmaps/designer.png \
 			'Qt;Development;GUIDesigner' || die
 }
