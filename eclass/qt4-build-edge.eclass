@@ -28,10 +28,6 @@ inherit eutils git-2 qt4-build
 
 if [[ ${PV} == *.9999 ]]; then
 	SRC_URI=
-	# 4.8 doesn't have stable-branch
-	if [[ ${PV} != 4.8.9999 ]]; then
-		IUSE+=" stable-branch"
-	fi
 	DEPEND="dev-lang/perl"
 fi
 
@@ -41,29 +37,13 @@ fi
 qt4-build-edge_pkg_setup() {
 	debug-print-function $FUNCNAME "$@"
 
-	case "${PV}" in
-		4.9999 | 4.7.9999 | 4.8.9999)
-			if use_if_iuse stable-branch; then
-				MY_PV_EXTRA="${PV}-stable"
-			else
-				MY_PV_EXTRA="${PV}"
-			fi
-			;;
-		*)
-			MY_PV_EXTRA="${PV}"
-			;;
-	esac
+	MY_PV_EXTRA="${PV}"
 
 	case "${MY_PV_EXTRA}" in
-		4.?.9999 | 4.?.9999-stable)
+		4.?.9999)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
 			EGIT_PROJECT="qt-${PV}"
 			EGIT_BRANCH="${MY_PV_EXTRA/.9999}"
-			;;
-		4.9999-stable)
-			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
-			EGIT_PROJECT="qt-${PV}"
-			EGIT_BRANCH="master-stable"
 			;;
 		4.9999)
 			EGIT_REPO_URI="git://gitorious.org/qt/qt.git"
@@ -82,17 +62,6 @@ qt4-build-edge_pkg_setup() {
 		ewarn "Thank you for using qting-edge overlay."
 		ewarn
 		case "${MY_PV_EXTRA}" in
-			4.?.9999-kde-qt)
-				ewarn "The ${PV} version ebuilds with kde-qt USE flag install kde-qt from gitorious kde-qt repository."
-				;;
-			4.?.9999-kde-qt-stable)
-				ewarn "The ${PV} version ebuilds with kde-qt and stable-branch USE flags install kde-qt from"
-				ewarn "gitorious kde-qt repository, '4.x-stable-patched' branch."
-				;;
-			4.?.9999-stable | 4.9999-stable)
-				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software - stable branch."
-				ewarn "See http://labs.trolltech.com/blogs/2009/07/28/getting-the-best-out-of-two-worlds/"
-				;;
 			4.?.9999 | 4.9999)
 				ewarn "The ${PV} version ebuilds install live git code from Nokia Qt Software."
 				;;
@@ -101,16 +70,6 @@ qt4-build-edge_pkg_setup() {
 				;;
 		esac
 		echo
-	fi
-	# stable-branch is outdated. Last commit on 4th of April. Adding warning
-	# wrt bug #313619
-	if use_if_iuse stable-branch; then
-		ewarn
-		ewarn				"!!! WARNING !!!"
-		ewarn "Qt-${PV/.9999} stable branch is outdated. If you are"
-		ewarn "seeking for bleeding edge code your are kindly advised"
-		ewarn "to disable 'stable-branch' use flag and rebuild all the Qt modules"
-		ewarn
 	fi
 
 	qt4-build_pkg_setup
