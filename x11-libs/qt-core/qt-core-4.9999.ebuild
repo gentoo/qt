@@ -3,7 +3,10 @@
 # $Header: $
 
 EAPI="3"
-inherit qt4-build-edge
+if [[ ${PV} == 4*9999 ]]; then
+	ECLASS="-edge"
+fi
+inherit qt4-build${ECLASS}
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
@@ -16,9 +19,15 @@ IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 DEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
-	ssl? ( dev-libs/openssl )"
+	ssl? ( dev-libs/openssl )
+	!<x11-libs/qt-4.4.0:4
+	!<x11-libs/cairo-1.10.2-r2"
 RDEPEND="${DEPEND}"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support] )"
+
+PATCHES=(
+	"${FILESDIR}/${P}-qurl-regression-fix.patch"
+)
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
@@ -33,7 +42,7 @@ pkg_setup() {
 		tools/linguist/lconvert
 		tools/linguist/lrelease
 		tools/linguist/lupdate"
-	
+
 	# This is not needed in live ebuilds since the git repo contains everything
 	if [[ ${PV} != 4*9999 ]]; then
 		QT4_EXTRACT_DIRECTORIES=" ${QT4_TARGET_DIRECTORIES}
@@ -61,7 +70,7 @@ pkg_setup() {
 			tools/linguist/shared
 			translations"
 	fi
-	qt4-build-edge_pkg_setup
+	qt4-build${ECLASS}_pkg_setup
 }
 
 src_prepare() {
@@ -70,7 +79,7 @@ src_prepare() {
 		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
 	done
 
-	qt4-build-edge_src_prepare
+	qt4-build${ECLASS}_src_prepare
 
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
@@ -93,7 +102,7 @@ src_configure() {
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
-	qt4-build-edge_src_configure
+	qt4-build${ECLASS}_src_configure
 }
 
 src_install() {
