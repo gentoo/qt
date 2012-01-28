@@ -8,7 +8,7 @@ inherit qt4-build
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~ppc-macos"
-IUSE="compat doc +glib qt3support trace"
+IUSE="compat doc +glib qt3support trace webkit"
 SRC_URI+=" compat? ( ftp://ftp.qt.nokia.com/qt/source/${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz )"
 
 DEPEND="~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=,trace?]
