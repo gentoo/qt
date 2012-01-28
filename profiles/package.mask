@@ -2,6 +2,27 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Markos Chandras <hwoarang@gentoo.org> (28 Jan 2012)
+# 4.7.9999 ebuilds are outdated and not supported anymore
+# Please upgrade to 4.8.9999 or 4.99999
+# 4.7.9999 ebuild will be removed in 10 days
+~x11-libs/qt-assistant-4.7.9999
+~x11-libs/qt-core-4.7.9999
+~x11-libs/qt-declarative-4.7.9999
+~x11-libs/qt-dbus-4.7.9999
+~x11-libs/qt-demo-4.7.9999
+~x11-libs/qt-gui-4.7.9999
+~x11-libs/qt-multimedia-4.7.9999
+~x11-libs/qt-opengl-4.7.9999
+~x11-libs/qt-phonon-4.7.9999
+~x11-libs/qt-qt3support-4.7.9999
+~x11-libs/qt-script-4.7.9999
+~x11-libs/qt-sql-4.7.9999
+~x11-libs/qt-svg-4.7.9999
+~x11-libs/qt-test-4.7.9999
+~x11-libs/qt-webkit-4.7.9999
+~x11-libs/qt-xmlpatterns-4.7.9999
+
 # Markos Chandras <hwoarang@gentoo.org> (31 Dec 2011)
 # Masking latest releases
 =dev-python/sip-4.13.1_pre*
