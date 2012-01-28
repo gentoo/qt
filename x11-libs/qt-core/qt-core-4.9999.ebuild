@@ -8,9 +8,9 @@ inherit qt4-build-edge
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
 if [[ ${PV} != 4*9999 ]]; then
-	KEYWORDS=""
-else
 	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+else
+	KEYWORDS=""
 fi
 IUSE="+glib iconv optimized-qmake qt3support ssl"
 
