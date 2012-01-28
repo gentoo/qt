@@ -13,7 +13,8 @@ IUSE="+glib iconv optimized-qmake qt3support ssl"
 DEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
-	!<x11-libs/qt-4.4.0:4"
+	!<x11-libs/qt-4.4.0:4
+	!<x11-libs/cairo-1.10.2-r2"
 RDEPEND="${DEPEND}"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support] )"
 
