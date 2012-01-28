@@ -7,46 +7,64 @@ inherit qt4-build-edge
 
 DESCRIPTION="The Declarative module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
-IUSE="qt3support webkit"
+if [[ ${PV} != 4*9999 ]]; then
+	KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos"
+else
+	KEYWORDS=""
+fi
 
-DEPEND="~x11-libs/qt-core-${PV}
-	~x11-libs/qt-gui-${PV}
-	~x11-libs/qt-multimedia-${PV}
-	~x11-libs/qt-script-${PV}
-	~x11-libs/qt-sql-${PV}
-	~x11-libs/qt-svg-${PV}
-	webkit? ( ~x11-libs/qt-webkit-${PV} )
-	qt3support?  ( ~x11-libs/qt-qt3support-${PV} )
-	~x11-libs/qt-xmlpatterns-${PV}"
+IUSE="+accessibility qt3support webkit"
 
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-opengl-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-svg-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
+	qt3support? ( ~x11-libs/qt-qt3support-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=] )
+	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	"
 RDEPEND="${DEPEND}"
 
-QCONFIG_ADD="declarative"
-
 pkg_setup() {
+	QCONFIG_ADD="declarative"
+
 	QT4_TARGET_DIRECTORIES="
 		src/declarative
-		tools/qml"
-	QT4_EXTRACT_DIRECTORIES="
-		include/
-		src/
-		tools/"
+		src/imports
+		tools/designer/src/plugins/qdeclarativeview
+		tools/qml
+		tools/qmlplugindump"
+
 	if use webkit; then
 		QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 			src/3rdparty/webkit/Source/WebKit/qt/declarative"
 	fi
+
+	QT4_EXTRACT_DIRECTORIES="
+		include/
+		src/
+		tools/
+		translations/"
+
 	qt4-build-edge_pkg_setup
 }
 
 src_configure() {
-	myconf="${myconf} -declarative"
+	myconf="${myconf} -declarative -no-gtkstyle
+			$(qt_use accessibility) $(qt_use qt3support) $(qt_use webkit)"
 	qt4-build-edge_src_configure
 }
 
 src_install() {
 	qt4-build-edge_src_install
-
-	insinto ${QTHEADERDIR}/QtDeclarative/private
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		insinto "${QTLIBDIR#${EPREFIX}}"/QtDeclarative.framework/Headers/private
+		# ran for the 2nd time, need it for the updated headers
+		fix_includes
+	else
+		insinto "${QTHEADERDIR#${EPREFIX}}"/QtDeclarative/private
+	fi
 	find "${S}"/src/declarative/ -type f -name "*_p.h" -exec doins {} \;
 }

@@ -7,10 +7,14 @@ inherit qt4-build-edge
 
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+if [[ ${PV} != 4*9999 ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+else
+	KEYWORDS=""
+fi
 IUSE="firebird freetds iconv mysql odbc postgres qt3support +sqlite"
 
-DEPEND="~x11-libs/qt-core-${PV}[debug=,qt3support=,stable-branch=]
+DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
 	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
@@ -21,16 +25,19 @@ RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/Qt/
-	include/QtCore/
-	include/QtSql/
-	include/QtScript/
-	src/src.pro
-	src/corelib/
-	src/plugins
-	src/3rdparty
-	src/tools"
+
+	if [[ ${PV} != 4*9999 ]]; then
+		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt/
+		include/QtCore/
+		include/QtSql/
+		include/QtScript/
+		src/src.pro
+		src/corelib/
+		src/plugins
+		src/3rdparty
+		src/tools"
+	fi
 
 	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
 		ewarn "You need to enable at least one SQL driver. Enable at least"
@@ -51,20 +58,20 @@ src_prepare() {
 src_configure() {
 	# Don't support sqlite2 anymore
 	myconf="${myconf} -no-sql-sqlite2
-		$(qt_use mysql sql-mysql plugin) $(use mysql && echo "-I/usr/include/mysql -L/usr/$(get_libdir)/mysql ")
-		$(qt_use postgres sql-psql plugin) $(use postgres && echo "-I/usr/include/postgresql/pgsql ")
+		$(qt_use mysql sql-mysql plugin) $(use mysql && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql ")
+		$(qt_use postgres sql-psql plugin) $(use postgres && echo "-I${EPREFIX}/usr/include/postgresql/pgsql ")
 		$(qt_use sqlite sql-sqlite plugin) $(use sqlite && echo '-system-sqlite')
 		$(qt_use odbc sql-odbc plugin)
 		$(qt_use freetds sql-tds plugin)
 		$(qt_use firebird sql-ibase plugin)
 		$(qt_use qt3support)"
 
-	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender -no-xrandr
-		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
-		-no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
+	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender
+		-no-xrandr -no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm
+		-no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
-		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility -no-fontconfig
-		-no-glib -no-opengl -no-svg -no-gtkstyle"
+		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
+		-no-fontconfig -no-glib -no-opengl -no-svg -no-gtkstyle"
 
 	qt4-build-edge_src_configure
 }
