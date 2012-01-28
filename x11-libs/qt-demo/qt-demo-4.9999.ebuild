@@ -12,6 +12,7 @@ if [[ ${PV} != 4*9999 ]]; then
 else
 	KEYWORDS=""
 fi
+IUSE="kde qt3support"
 
 DEPEND="~x11-libs/qt-assistant-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=]
 	~x11-libs/qt-core-${PV}:${SLOT}[aqua=,c++0x=,qpa=,debug=,qt3support=]
