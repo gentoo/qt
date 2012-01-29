@@ -84,7 +84,8 @@ src_configure() {
 		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
 		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-multimedia -no-svg -no-webkit $(qt_use qt3support)"
+		-no-fontconfig -no-multimedia
+		-no-svg $(qt_use qt3support) $(qt_use webkit)"
 	! use glib && myconf="${myconf} -no-glib"
 
 	qt4-build${ECLASS}_src_configure
