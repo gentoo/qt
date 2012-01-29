@@ -6,6 +6,7 @@
 ~x11-libs/qt-gui-4.8.9999 **
 ~x11-libs/qt-multimedia-4.8.9999 **
 ~x11-libs/qt-opengl-4.8.9999 **
+~x11-libs/qt-openvg-4.8.9999 **
 ~x11-libs/qt-phonon-4.8.9999 **
 ~x11-libs/qt-qt3support-4.8.9999 **
 ~x11-libs/qt-script-4.8.9999 **

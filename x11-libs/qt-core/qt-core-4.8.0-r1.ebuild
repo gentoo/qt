@@ -1,19 +1,27 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-core/qt-core-4.7.4-r1.ebuild,v 1.1 2011/11/28 20:48:24 tampakrap Exp $
+# $Header: $
 
 EAPI="3"
-inherit qt4-build
+if [[ ${PV} == 4*9999 ]]; then
+	ECLASS="-edge"
+fi
+inherit qt4-build${ECLASS}
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
-KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+if [[ ${PV} != 4*9999 ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+else
+	KEYWORDS=""
+fi
 IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 DEPEND="sys-libs/zlib
 	glib? ( dev-libs/glib )
 	ssl? ( dev-libs/openssl )
-	!<x11-libs/qt-4.4.0:4"
+	!<x11-libs/qt-4.4.0:4
+	!<x11-libs/cairo-1.10.2-r2"
 RDEPEND="${DEPEND}"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support] )"
 
@@ -35,33 +43,34 @@ pkg_setup() {
 		tools/linguist/lrelease
 		tools/linguist/lupdate"
 
-	QT4_EXTRACT_DIRECTORIES="
-		${QT4_TARGET_DIRECTORIES}
-		include/Qt
-		include/QtCore
-		include/QtDeclarative
-		include/QtGui
-		include/QtNetwork
-		include/QtScript
-		include/QtXml
-		src/plugins/plugins.pro
-		src/plugins/qpluginbase.pri
-		src/src.pro
-		src/3rdparty/des
-		src/3rdparty/harfbuzz
-		src/3rdparty/md4
-		src/3rdparty/md5
-		src/3rdparty/sha1
-		src/3rdparty/easing
-		src/3rdparty/zlib_dependency.pri
-		src/declarative
-		src/gui
-		src/script
-		tools/shared
-		tools/linguist/shared
-		translations"
-
-	qt4-build_pkg_setup
+	# This is not needed in live ebuilds since the git repo contains everything
+	if [[ ${PV} != 4*9999 ]]; then
+		QT4_EXTRACT_DIRECTORIES=" ${QT4_TARGET_DIRECTORIES}
+			include/Qt
+			include/QtCore
+			include/QtDeclarative
+			include/QtGui
+			include/QtNetwork
+			include/QtScript
+			include/QtXml
+			src/plugins/plugins.pro
+			src/plugins/qpluginbase.pri
+			src/src.pro
+			src/3rdparty/des
+			src/3rdparty/harfbuzz
+			src/3rdparty/md4
+			src/3rdparty/md5
+			src/3rdparty/sha1
+			src/3rdparty/easing
+			src/3rdparty/zlib_dependency.pri
+			src/declarative
+			src/gui
+			src/script
+			tools/shared
+			tools/linguist/shared
+			translations"
+	fi
+	qt4-build${ECLASS}_pkg_setup
 }
 
 src_prepare() {
@@ -70,7 +79,7 @@ src_prepare() {
 		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
 	done
 
-	qt4-build_src_prepare
+	qt4-build${ECLASS}_src_prepare
 
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
@@ -93,7 +102,7 @@ src_configure() {
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
-	qt4-build_src_configure
+	qt4-build${ECLASS}_src_configure
 }
 
 src_install() {

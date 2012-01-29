@@ -7,67 +7,90 @@ inherit eutils confutils qt4-build-edge
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
-IUSE="+accessibility cups dbus +glib gif gtkstyle jpeg mng nas nis png +raster tiff trace qt3support xinerama"
+if [[ ${PV} != 4*9999 ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+else
+	KEYWORDS=""
+fi
 
-RDEPEND="media-libs/fontconfig
-	>=media-libs/freetype-2
-	media-libs/libpng
+IUSE="+accessibility cups dbus egl gif +glib gtkstyle mng nas nis qt3support tiff trace xinerama"
+
+RDEPEND="
+	app-admin/eselect-qtgraphicssystem
+	media-libs/fontconfig
+	media-libs/freetype:2
+	media-libs/libpng:0
 	sys-libs/zlib
-	x11-libs/libX11
-	x11-libs/libXext
-	x11-libs/libXrandr
-	x11-libs/libXcursor
-	x11-libs/libXfont
-	x11-libs/libSM
-	x11-libs/libXi
-	~x11-libs/qt-core-${PV}[debug=,glib=,qt3support=]
-	~x11-libs/qt-script-${PV}[debug=]
+	virtual/jpeg
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
+	!aqua? (
+		x11-libs/libX11
+		x11-libs/libXext
+		x11-libs/libXrandr
+		x11-libs/libXcursor
+		x11-libs/libXfont
+		x11-libs/libSM
+		x11-libs/libXi
+	)
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[debug=] )
-	jpeg? ( virtual/jpeg )
-	gtkstyle? ( x11-libs/gtk+:2 )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	gtkstyle? ( x11-libs/gtk+:2[aqua=] )
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
-	tiff? ( media-libs/tiff )
-	xinerama? ( x11-libs/libXinerama )
-"
+	tiff? ( media-libs/tiff:0 )
+	xinerama? ( x11-libs/libXinerama )"
 DEPEND="${RDEPEND}
-	xinerama? ( x11-proto/xineramaproto )
-	gtkstyle? ( || ( >=x11-libs/cairo-1.10.0[-qt4] <x11-libs/cairo-1.10.0 ) )
-	x11-proto/xextproto
-	x11-proto/inputproto"
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[debug=] )"
+	!aqua? (
+		x11-proto/xextproto
+		x11-proto/inputproto
+	)
+	xinerama? ( x11-proto/xineramaproto )"
+RDEPEND="${RDEPEND}
+	!~x11-themes/qgtkstyle-4.7.2"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,qpa=,debug=] )"
 
 pkg_setup() {
-	if ! use qt3support; then
-		ewarn "WARNING: if you need 'qtconfig', you _must_ enable qt3support."
-		ebeep 5
+	# this belongs to pkg_pretend, we have to upgrade to EAPI 4 :)
+	# was planning to use a dep, but to reproduce this you have to
+	# clean-emerge qt-gui[gtkstyle] while having cairo[qt4] installed.
+	# no need to restrict normal first time users for that :)
+	if use gtkstyle && ! has_version x11-libs/qt-gui && has_version x11-libs/cairo[qt4]; then
+		echo
+		eerror "When building qt-gui[gtkstyle] from scratch with cairo present,"
+		eerror "cairo must have the qt4 use flag disabled, otherwise the gtk"
+		eerror "style cannot be built."
+		ewarn
+		eerror "You have the following options:"
+		eerror "  - rebuild cairo with -qt4 USE"
+		eerror "  - build qt-gui with -gtkstyle USE"
+		ewarn
+		eerror "After you successfully install qt-gui, you'll be able to"
+		eerror "re-enable the disabled use flag and/or reinstall cairo."
+		ewarn
+		echo
+		die "can't build qt-gui with gtkstyle USE if cairo has qt4 USE enabled"
 	fi
 
 	confutils_use_depend_all gtkstyle glib
 
 	QT4_TARGET_DIRECTORIES="
-	src/gui
-	src/scripttools/
-	tools/designer
-	tools/linguist/linguist
-	src/plugins/imageformats/gif
-	src/plugins/imageformats/ico
-	src/plugins/imageformats/jpeg
-	src/plugins/inputmethods"
+		src/gui
+		src/scripttools
+		tools/designer
+		tools/linguist/linguist
+		src/plugins/imageformats/gif
+		src/plugins/imageformats/ico
+		src/plugins/imageformats/jpeg
+		src/plugins/inputmethods"
 
-	QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools/linguist/phrasebooks
-	tools/linguist/shared
-	tools/shared"
+	if [[ ${PV} != 4*9999 ]]; then
+		QT4_EXTRACT_DIRECTORIES="
+			include
+			src
+			tools"
+	fi
 
-	qt4-build-edge_pkg_setup
-}
-
-src_unpack() {
 	use dbus && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} tools/qdbus/qdbusviewer"
 	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/tiff"
@@ -76,14 +99,17 @@ src_unpack() {
 
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build-edge_src_unpack
+	# mac version does not contain qtconfig?
+	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
+
+	qt4-build-edge_pkg_setup
 }
 
 src_prepare() {
 	qt4-build-edge_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib
-	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro
+	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro || die
 }
 
 src_configure() {
@@ -93,30 +119,36 @@ src_configure() {
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
-		$(qt_use jpeg libjpeg system)
 		$(qt_use mng libmng system)
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
 		$(qt_use dbus qdbus)
 		$(qt_use dbus)
+		$(qt_use egl)
 		$(qt_use qt3support)
 		$(qt_use gtkstyle)
 		$(qt_use xinerama)"
 
 	use gif || myconf="${myconf} -no-gif"
-
 	use nas	&& myconf="${myconf} -system-nas-sound"
-	use raster && myconf="${myconf} -graphicssystem raster"
+
+	[[ x86_64-apple-darwin* ]] && myconf="${myconf} -no-ssse3" #367045
 
 	myconf="${myconf} -system-libpng -system-libjpeg
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2
-		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg"
-
-	# Explicitly don't compile these packages.
-	# Emerge "qt-webkit", "qt-phonon", etc for their functionality.
-	myconf="${myconf} -no-webkit -no-phonon -no-opengl"
+		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
+		-no-phonon -no-opengl"
 
 	qt4-build-edge_src_configure
+
+	if use gtkstyle; then
+		einfo "patching the Makefile to fix qgtkstyle compilation"
+		sed "s:-I/usr/include/qt4 ::" -i src/gui/Makefile ||
+			die "sed failed"
+	fi
+	einfo "patching the Makefile to fix bug #361277"
+	sed "s:-I/usr/include/qt4/QtGui ::" -i src/gui/Makefile ||
+		die "sed failed"
 }
 
 src_install() {
@@ -143,14 +175,34 @@ src_install() {
 	# which are located under tools/designer/src/lib/*
 	# So instead of installing both, we create the private folder
 	# and drop tools/designer/src/lib/* headers in it.
-	dodir /usr/include/qt4/QtDesigner/private/
-	insinto /usr/include/qt4/QtDesigner/private/
-	doins "${S}"/tools/designer/src/lib/shared/*
-	doins "${S}"/tools/designer/src/lib/sdk/*
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		insinto "${QTLIBDIR#${EPREFIX}}"/QtDesigner.framework/Headers/private/
+	else
+		insinto "${QTHEADERDIR#${EPREFIX}}"/QtDesigner/private/
+	fi
+	doins "${S}"/tools/designer/src/lib/shared/* || die
+	doins "${S}"/tools/designer/src/lib/sdk/* || die
 
-	# install private headers
-	insinto ${QTHEADERDIR}/QtGui/private
+	#touch the available graphics systems
+	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
+		die "could not create ${D}/usr/share/qt4/graphicssystems/"
+	touch "${D}/usr/share/qt4/graphicssystems/raster" ||
+		die "could not touch ${D}/usr/share/qt4/graphicssystems/raster"
+	touch "${D}/usr/share/qt4/graphicssystems/native" ||
+		die "could not touch ${D}/usr/share/qt4/graphicssystems/native"
+
+	#install private headers
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		insinto "${QTLIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
+	else
+		insinto "${QTHEADERDIR#${EPREFIX}}"/QtGui/private
+	fi
 	find "${S}"/src/gui -type f -name "*_p.h" -exec doins {} \;
+
+	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
+		# rerun to get links to headers right
+		fix_includes
+	fi
 
 	# install correct designer and linguist icons, bug 241208
 	doicon tools/linguist/linguist/images/icons/linguist-128-32.png \
@@ -165,4 +217,14 @@ src_install() {
 			/usr/share/pixmaps/designer.png \
 			'Qt;Development;GUIDesigner' \
 			|| die "designer make_desktop_entry failed"
+}
+
+pkg_postinst() {
+	# raster is the default graphicssystems, set it if first install
+	eselect qtgraphicssystem set raster --use-old
+	elog "Starting with qt 4.8.0, you may choose the active Qt Graphics System"
+	elog "by using a new eselect module called qtgraphicssystem."
+	elog "Run"
+	elog "  eselect qtgraphicssystem"
+	elog "for more information"
 }

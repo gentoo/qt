@@ -8,13 +8,12 @@ inherit qt4-build
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
 KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~ppc-macos"
-IUSE="compat doc +glib qt3support trace"
+IUSE="compat doc +glib qt3support trace webkit"
 SRC_URI+=" compat? ( ftp://ftp.qt.nokia.com/qt/source/${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz )"
 
 DEPEND="~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=,trace?]
 	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=,sqlite]
-	~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=]
-	~x11-libs/qt-declarative-${PV}[debug=,qt3support=,webkit]"
+	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=] )"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
@@ -79,7 +78,8 @@ src_configure() {
 	# https://bugreports.qt.nokia.com//browse/QTBUG-20236
 	# Even though webkit option is included, we do not build
 	# any targets
-	myconf="${myconf} -webkit"
+	# UPDATE: gentoo bug 401173
+	! use webkit && myconf="${myconf} -no-webkit"
 
 	qt4-build_src_configure
 }
