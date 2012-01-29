@@ -1,13 +1,20 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-dbus/qt-dbus-4.7.4.ebuild,v 1.1 2011/09/08 09:19:13 wired Exp $
+# $Header: $
 
 EAPI="3"
-inherit qt4-build
+if [[ ${PV} == 4*9999 ]]; then
+	ECLASS="-edge"
+fi
+inherit qt4-build${ECLASS}
 
 DESCRIPTION="The DBus module for the Qt toolkit"
 SLOT="4"
-KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+if [[ ${PV} != 4*9999 ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+else
+	KEYWORDS=""
+fi
 IUSE=""
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=]
@@ -23,17 +30,19 @@ pkg_setup() {
 	QCONFIG_ADD="dbus dbus-linked"
 	QCONFIG_DEFINE="QT_DBUS"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include/QtCore
-		include/QtDBus
-		include/QtXml
-		src/corelib
-		src/xml"
+	if [[ ${PV} != 4*9999 ]]; then
+		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+			include/QtCore
+			include/QtDBus
+			include/QtXml
+			src/corelib
+			src/xml"
+	fi
 
-	qt4-build_pkg_setup
+	qt4-build${ECLASS}_pkg_setup
 }
 
 src_configure() {
 	myconf="${myconf} -dbus-linked"
-	qt4-build_src_configure
+	qt4-build${ECLASS}_src_configure
 }
