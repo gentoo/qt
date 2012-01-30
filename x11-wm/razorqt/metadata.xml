@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>qt</herd>
+	<longdescription lang="en">
+	Razor-qt is an advanced, easy-to-use, and fast desktop environment
+	based on Qt technologies. It has been tailored for users who value
+	simplicity, speed, and an intuitive interface. Unlike most desktop
+	environments, Razor-qt also works fine with weak machines.
+
+	While still a new project, Razor-qt already contains the key DE
+	components: Panel, Desktop, Application launcher, Settings center,
+    Sessions. You can use either all of them or part of them. Razor-qt
+	works with various WMs; most of Razor developers use Openbox. But
+	it's no problem to take any modern WM from fwwm2 to kwin (yes, KDE
+	without Plasma Desktop is possible too).
+	</longdescription>
+</pkgmetadata>
+
