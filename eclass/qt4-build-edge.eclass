@@ -9,7 +9,7 @@
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt4.
 
-# WARNING: This eclass requires EAPI=2 or EAPI=3
+# WARNING: This eclass requires EAPI 2, 3 or 4
 #
 # NOTES:
 #
