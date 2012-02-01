@@ -26,7 +26,7 @@ RDEPEND="${DEPEND}"
 PDEPEND="qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support] )"
 
 PATCHES=(
-	"${FILESDIR}/${P}-qurl-regression-fix.patch"
+	"${FILESDIR}/${PN}-4.8.0-qurl-regression-fix.patch"
 )
 
 pkg_setup() {
