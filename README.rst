@@ -1,5 +1,5 @@
-Welcome to the qting-edge overlay!
-==================================
+Welcome to the qt overlay!
+==========================
 
 This is where the Gentoo Qt team develops and maintains ebuilds for
 experimental Qt4 versions (pre-releases and "live" code from git or svn) and
@@ -53,7 +53,7 @@ If you have questions, you can find us on IRC in #gentoo-qt on Freenode or at
 qt@gentoo.org.
 
 Bugs should be reported on https://bugs.gentoo.org. Be sure to include
-[qting-edge] in the summary of your bug report.
+[qt overlay] in the summary of your bug report.
 
 Users wanting to contribute should first read the `Qt4 ebuild guide
 <http://www.gentoo.org/proj/en/desktop/qt/qt4-based-ebuild-howto.xml>`_.

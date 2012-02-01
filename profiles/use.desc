@@ -1,4 +1,4 @@
-# qting-edge/profiles/use.desc
+# qt/profiles/use.desc
 # Please keep alphabetically sorted
 
 custom-cxxflags - Allows building with user set CXXFLAGS

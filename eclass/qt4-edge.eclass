@@ -18,8 +18,8 @@ qt4-edge_pkg_setup() {
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		ewarn
 		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary with"
-		ewarn "[qting-edge]. Alternatively, contact qt@gentoo.org."
-		ewarn "Thank you for using qting-edge overlay."
+		ewarn "[qt overlay]. Alternatively, contact qt@gentoo.org."
+		ewarn "Thank you for using qt overlay."
 		ewarn
 	fi
 }

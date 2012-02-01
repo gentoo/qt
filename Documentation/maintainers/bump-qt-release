@@ -4,7 +4,7 @@
 # make sure you take care of any new patches before running this script
 # this does not include the qt meta ebuild
 
-EdgeDir="~/overlay/qting-edge"
+EdgeDir="~/overlay/qt"
 RelVer="4.5.2"
 
 echo

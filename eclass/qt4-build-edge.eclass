@@ -5,7 +5,7 @@
 # @ECLASS: qt4-build-edge.eclass
 # @MAINTAINER:
 # Qt herd <qt@gentoo.org>
-# @BLURB: Eclass for Qt4 split ebuilds in qting-edge overlay.
+# @BLURB: Eclass for Qt4 split ebuilds in qt overlay.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt4.
 
@@ -58,8 +58,8 @@ qt4-build-edge_pkg_setup() {
 	if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 		echo
 		ewarn "Please file bugs on bugs.gentoo.org and prepend the summary"
-		ewarn "with [qting-edge]. Alternatively, contact <qt@gentoo.org>."
-		ewarn "Thank you for using qting-edge overlay."
+		ewarn "with [qt overlay]. Alternatively, contact <qt@gentoo.org>."
+		ewarn "Thank you for using qt overlay."
 		ewarn
 		case "${MY_PV_EXTRA}" in
 			4.?.9999 | 4.9999)

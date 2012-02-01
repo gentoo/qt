@@ -6,7 +6,7 @@ PVER="4.9" # PyQt4 current working version
 SVER="4.13.1" #$ Sip current working version
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
 TARGET="www.gentoo-el.org:~/public_html/distfiles/"
-TEMP="/tmp/qting-edge-python-bump/"
+TEMP="/tmp/qt-python-bump/"
 OVERLAY="../../" # ugly but hey dont shoot me
 ####################################################################
 
@@ -128,9 +128,9 @@ getrevisions(){
 
 einfo """
 	###########################################################
-	# Automatic PyQt4/sip bumping tool for qting-edge overlay #
+	# Automatic PyQt4/sip bumping tool for qt overlay         #
 	# Author: Markos Chandras <hwoarang@gentoo.org>	          #
-	#						          #
+	#						                                  #
 	# Use ./bump-python-revisions -h for a usage example      #
 	###########################################################
 """

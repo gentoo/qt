@@ -13,10 +13,9 @@ moto(){
 		# Tool for bumping qt packages using portage #
 		# packages as base. Version 0.0.1            #
 		# Usefull for bumping qt releases e.g. 4.5.1 #
-		# -> 4.5.2 on overlay.			     #
-		# Markos Chandras			     #
-		# hwoarang@gentoo.org			     #
-		# qting-edge overlay			     #
+		# -> 4.5.2 on overlay.                       #
+		# Markos Chandras <hwoarang@gentoo.org>      #
+		# qt overlay                                 #
 		##############################################
 	"""
 }
@@ -27,7 +26,7 @@ usage(){
 		# E.g						#
 		# ./bump-qt-overlay 4.5.1 4.5.2 will copy 4.5.1 #
 		# packages from portage and bump them to 4.5.2  #
-		# on qting-edge overlay				#
+		# on qt overlay                                 #
 		#################################################
 	"""
 }
