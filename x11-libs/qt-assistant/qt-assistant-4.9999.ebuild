@@ -4,9 +4,9 @@
 
 EAPI="4"
 if [[ ${PV} == 4*9999 ]]; then
-	ECLASS="-edge"
+	QT_ECLASS="-edge"
 fi
-inherit qt4-build${ECLASS}
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The assistant help module for the Qt toolkit"
 SLOT="4"
@@ -50,11 +50,11 @@ pkg_setup() {
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		${QT4_EXTRACT_DIRECTORIES}"
 
-	qt4-build${ECLASS}_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_unpack() {
-	qt4-build${ECLASS}_src_unpack
+	qt4-build${QT_ECLASS}_src_unpack
 	# compat version
 	# http://labs.qt.nokia.com/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
 	if use compat; then
@@ -68,7 +68,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	qt4-build${ECLASS}_src_prepare
+	qt4-build${QT_ECLASS}_src_prepare
 	if use compat; then
 		epatch "${FILESDIR}"/"${PN}"-4.7-fix-compat.patch
 	fi
@@ -88,7 +88,7 @@ src_configure() {
 		-no-svg $(qt_use qt3support) $(qt_use webkit)"
 	! use glib && myconf="${myconf} -no-glib"
 
-	qt4-build${ECLASS}_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 }
 
 src_compile() {
@@ -96,7 +96,7 @@ src_compile() {
 	export LD_LIBRARY_PATH="${S}/lib:${QTLIBDIR}"
 	export DYLD_LIBRARY_PATH="${S}/lib:${S}/lib/QtHelp.framework"
 
-	qt4-build${ECLASS}_src_compile
+	qt4-build${QT_ECLASS}_src_compile
 
 	# ugly hack to build docs
 	cd "${S}"
@@ -112,7 +112,7 @@ src_compile() {
 }
 
 src_install() {
-	qt4-build${ECLASS}_src_install
+	qt4-build${QT_ECLASS}_src_install
 	cd "${S}"
 	#see src_compile note
 	if [[ ${PV} != 4*9999 ]]; then

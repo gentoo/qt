@@ -4,9 +4,9 @@
 
 EAPI="4"
 if [[ ${PV} == 4*9999 ]]; then
-	ECLASS="-edge"
+	QT_ECLASS="-edge"
 fi
-inherit qt4-build${ECLASS}
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The DBus module for the Qt toolkit"
 SLOT="4"
@@ -39,10 +39,10 @@ pkg_setup() {
 			src/xml"
 	fi
 
-	qt4-build${ECLASS}_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_configure() {
 	myconf="${myconf} -dbus-linked"
-	qt4-build${ECLASS}_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 }

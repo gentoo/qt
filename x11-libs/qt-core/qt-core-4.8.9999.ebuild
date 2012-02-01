@@ -4,9 +4,9 @@
 
 EAPI="4"
 if [[ ${PV} == 4*9999 ]]; then
-	ECLASS="-edge"
+	QT_ECLASS="-edge"
 fi
-inherit qt4-build${ECLASS}
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
@@ -70,7 +70,7 @@ pkg_setup() {
 			tools/linguist/shared
 			translations"
 	fi
-	qt4-build${ECLASS}_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_prepare() {
@@ -79,7 +79,7 @@ src_prepare() {
 		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
 	done
 
-	qt4-build${ECLASS}_src_prepare
+	qt4-build${QT_ECLASS}_src_prepare
 
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
@@ -102,7 +102,7 @@ src_configure() {
 		$(qt_use ssl openssl)
 		$(qt_use qt3support)"
 
-	qt4-build${ECLASS}_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 }
 
 src_install() {
