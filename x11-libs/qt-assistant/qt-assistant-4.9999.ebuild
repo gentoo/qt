@@ -23,11 +23,6 @@ DEPEND="~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=,trace?
 	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,qpa=,debug=] )"
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	# bug 395067
-	"${FILESDIR}/${P}-install-fix.patch"
-)
-
 pkg_setup() {
 	# Pixeltool isn't really assistant related, but it relies on
 	# the assistant libraries. doc/qch/
