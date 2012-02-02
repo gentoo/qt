@@ -15,8 +15,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="webp"
 
-DEPEND="x11-libs/qt-gui:4
-	webp? ( media-libs/libwebp )"
+DEPEND="x11-libs/qt-gui:4"
+#	webp? ( media-libs/libwebp )"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
@@ -26,3 +26,7 @@ src_configure() {
 	use webp && _webp="CONFIG+=enable-webp"
 	eqmake4 src/${PN}.pro $_webp
 }
+
+# TODO:
+# - unbundle webp
+# - translations handling
