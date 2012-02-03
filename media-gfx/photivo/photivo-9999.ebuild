@@ -13,7 +13,7 @@ EHG_REVISION="default"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS=""
 
 IUSE="gimp"
 
@@ -34,7 +34,7 @@ S=${WORKDIR}/hg
 
 src_prepare() {
 #	remove ccache dependency
-	for File in $(find ${S} -type f); do
+	for File in $(find "${S}" -type f); do
 		if grep -sq ccache ${File}; then
 			sed -e 's/ccache//' -i "${File}"
 		fi
@@ -43,7 +43,7 @@ src_prepare() {
 
 src_install() {
 	qt4-r2_src_install
-	
+
 	if use gimp; then
 		exeinto $(gimptool-2.0 --gimpplugindir)/plug-ins
 		doexe ptGimp
