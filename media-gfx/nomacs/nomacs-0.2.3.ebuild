@@ -19,4 +19,3 @@ DEPEND="x11-libs/qt-gui:4
 	media-libs/libraw
 	media-libs/opencv"
 RDEPEND="${DEPEND}"
-
