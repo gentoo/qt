@@ -1,8 +1,8 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/qtgain/qtgain-0.8.0.ebuild,v 1.1 2009/12/23 21:57:04 ssuominen Exp $
+# $Header: $
 
-EAPI="4"
+EAPI=4
 inherit qt4-r2
 
 DESCRIPTION="A simple frontend to mp3gain, vorbisgain and metaflac"
@@ -26,7 +26,7 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/QtGain"
 
 src_install() {
-	dobin bin/qtgain || die
-	newicon Icons/lsongs.png qtgain.png
-	make_desktop_entry qtgain QtGain
+	dobin bin/${PN}
+	newicon Icons/lsongs.png ${PN}.png
+	make_desktop_entry ${PN} QtGain
 }
