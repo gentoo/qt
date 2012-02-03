@@ -1,4 +1,8 @@
-EAPI="4"
+# Copyright 1999-2012 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+EAPI=4
 
 inherit qt4-edge git-2 multilib
 
@@ -10,6 +14,7 @@ HOMEPAGE="http://code.google.com/p/screenie"
 LICENSE="GPL-2 GPL-3"
 SLOT="0"
 KEYWORDS=""
+IUSE=""
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
