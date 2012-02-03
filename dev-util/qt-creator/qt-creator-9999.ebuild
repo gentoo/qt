@@ -4,19 +4,31 @@
 
 EAPI="4"
 LANGS="cs de es fr hu it ja pl ru sl uk zh_CN"
-
-inherit multilib eutils flag-o-matic qt4-edge git-2
-
 MY_P=${PN}-${PV/_/-}-src
+
+inherit multilib eutils flag-o-matic
+
+if [[ ${PV} = 9999 ]]; then
+	inherit git-2
+	QTCREATOR_SUFFIX="-edge"
+	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
+		https://git.gitorious.org/${PN}/${PN}.git"
+else
+	QTCREATOR_SUFFIX="-r2"
+	SRC_URI="http://get.qt.nokia.com/qtcreator/${MY_P}.tar.gz"
+fi
+inherit qt4${QTCREATOR_SUFFIX}
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://qt.nokia.com/products/developer-tools"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
-	https://git.gitorious.org/${PN}/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+if [[ ${PV} == 9999 ]]; then
+	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+fi
 
 QTC_PLUGINS=(bazaar cmake:cmakeprojectmanager cvs fakevim
 	git madde mercurial perforce subversion valgrind)
@@ -52,7 +64,7 @@ PDEPEND="
 "
 
 src_prepare() {
-	qt4-edge_src_prepare
+	qt4${QTCREATOR_SUFFIX}_src_prepare
 
 	# disable unwanted plugins
 	for plugin in "${QTC_PLUGINS[@]#[+-]}"; do
