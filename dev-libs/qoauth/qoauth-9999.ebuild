@@ -1,14 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit qt4-edge git
+inherit qt4-edge git-2
 
 DESCRIPTION="A Qt-based library for OAuth support"
 HOMEPAGE="http://wiki.github.com/ayoy/qoauth"
-EGIT_REPO_URI="git://github.com/ayoy/qoauth.git"
+EGIT_REPO_URI="git://github.com/ayoy/${PN}"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -37,16 +37,16 @@ src_prepare() {
 
 src_compile() {
 	default
-	emake -C src static || die "emake failed"
+	emake -C src static
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	dolib.a "${S}/lib/lib${PN}.a" || die "dolib failed"
-	dodoc README CHANGELOG || die "dodoc failed"
+	emake INSTALL_ROOT="${D}" install
+	dolib.a "${S}/lib/lib${PN}.a"
+	dodoc README CHANGELOG
 
 	if use doc; then
 		doxygen "${S}/Doxyfile" || die "Failed to generate documentation"
-		dohtml "${S}"/doc/html/* || die "Failed to install documentation"
+		dohtml "${S}"/doc/html/*
 	fi
 }
