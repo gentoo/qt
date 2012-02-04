@@ -1,14 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit qt4-r2 git multilib
+inherit qt4-r2 multilib git-2
 
 DESCRIPTION="The Harmattan window compositor/manager"
 HOMEPAGE="http://duiframework.wordpress.com"
-EGIT_REPO_URI="git://gitorious.org/maemo-6-ui-framework/duicompositor.git"
+EGIT_REPO_URI="git://gitorious.org/maemo-6-ui-framework/${PN}"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
