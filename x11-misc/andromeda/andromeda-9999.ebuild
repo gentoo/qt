@@ -17,4 +17,3 @@ IUSE="debug"
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
-
