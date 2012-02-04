@@ -67,4 +67,3 @@ pkg_postinst() {
 	einfo "For the Removable Media plugin to work,"
 	einfo "make sure sys-fs/udisks is installed."
 }
-
