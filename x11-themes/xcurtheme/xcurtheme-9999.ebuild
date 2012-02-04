@@ -1,14 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit qt4-edge git
+inherit qt4-edge git-2
 
 DESCRIPTION="Qt utility to change Xcrusor themes without restarting X Server."
 HOMEPAGE="http://gitorious.org/qt-xcurtheme"
-EGIT_REPO_URI="git://gitorious.org/qt-xcurtheme/mainline.git"
+EGIT_REPO_URI="git://gitorious.org/qt-xcurtheme/mainline"
 
 LICENSE="GPL-2 WTFPL-2"
 SLOT="0"
