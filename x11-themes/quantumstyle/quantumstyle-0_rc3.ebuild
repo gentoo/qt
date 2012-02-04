@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
 inherit multilib qt4-edge
 
@@ -27,7 +27,7 @@ S="${WORKDIR}/${MY_PN}"
 
 src_install() {
 	insinto /usr/$(get_libdir)/qt4/plugins/styles
-	doins style/libquantumstyle.so || die
-	dodoc themeconfig/default.qsconfig style/ReadMe || die
-	dobin themebuilder/qsthemebuilder || die
+	doins style/libquantumstyle.so
+	dodoc themeconfig/default.qsconfig style/ReadMe
+	dobin themebuilder/qsthemebuilder
 }
