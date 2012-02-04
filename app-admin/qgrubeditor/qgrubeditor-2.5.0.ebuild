@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI=4
 
 inherit qt4-r2
 
@@ -19,13 +19,12 @@ KEYWORDS="~amd64"
 IUSE="debug"
 
 DEPEND="app-arch/gzip
-		media-gfx/imagemagick
-		x11-libs/qt-core
-		x11-libs/qt-gui"
+	media-gfx/imagemagick
+	x11-libs/qt-core
+	x11-libs/qt-gui"
 RDEPEND="${DEPEND}
-		|| ( sys-boot/grub
-		sys-boot/grub-static )"
+	|| ( sys-boot/grub sys-boot/grub-static )"
 
 S="${WORKDIR}/${MY_PN}"
 
-DOCS="AUTHORS README ChangeLog"
+DOCS=( AUTHORS README ChangeLog )
