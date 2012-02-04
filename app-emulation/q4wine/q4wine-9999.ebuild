@@ -1,14 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/q4wine/q4wine-0.112-r1.ebuild,v 1.2 2010/06/10 21:10:57 maekke Exp $
+# $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit git qt4-edge cmake-utils
+inherit qt4-edge cmake-utils git-2
 
 DESCRIPTION="Qt4 utility for Wine applications and prefixes management."
 HOMEPAGE="http://q4wine.brezblock.org.ua/"
-EGIT_REPO_URI="git://github.com/brezerk/q4wine.git"
+EGIT_REPO_URI="git://github.com/brezerk/q4wine"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -31,10 +31,6 @@ RDEPEND="x11-libs/qt-gui:4
 	dbus? ( x11-libs/qt-dbus:4 )"
 
 DOCS=(AUTHORS ChangeLog README)
-
-src_unpack() {
-	git_src_unpack
-}
 
 src_configure() {
 	mycmakeargs=(
