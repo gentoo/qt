@@ -8,16 +8,16 @@ MY_P=${PN}-${PV/_/-}-src
 
 inherit multilib eutils flag-o-matic
 
-if [[ ${PV} = 9999 ]]; then
-	inherit git-2
+if [[ ${PV} == 9999 ]]; then
 	QTCREATOR_SUFFIX="-edge"
 	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
 		https://git.gitorious.org/${PN}/${PN}.git"
+	inherit qt4${QTCREATOR_SUFFIX} git-2
 else
 	QTCREATOR_SUFFIX="-r2"
 	SRC_URI="http://get.qt.nokia.com/qtcreator/${MY_P}.tar.gz"
+	inherit qt4${QTCREATOR_SUFFIX}
 fi
-inherit qt4${QTCREATOR_SUFFIX}
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
 HOMEPAGE="http://qt.nokia.com/products/developer-tools"
