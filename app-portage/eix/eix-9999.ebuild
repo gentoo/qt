@@ -1,9 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-portage/eix/eix-0.15.6.ebuild,v 1.2 2010/03/28 14:12:52 darkside Exp $
+# $Header: $
 
-EAPI="2"
-ESVN_REPO_URI="https://svn.gentooexperimental.org/eix/trunk"
+EAPI=4
+ESVN_REPO_URI="https://svn.gentooexperimental.org/${PN}/trunk"
 ESVN_BOOTSTRAP="./autogen.sh"
 
 inherit multilib subversion
@@ -20,7 +20,7 @@ IUSE="doc sqlite"
 RDEPEND="sqlite? ( dev-db/sqlite:3 )
 	app-arch/bzip2
 	|| (
-		app-arch/lzma-utils
+		app-arch/lzma
 		app-arch/xz-utils
 	)
 	dev-vcs/cvs"
@@ -34,7 +34,7 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+	emake DESTDIR="${D}" install
 
 	dodoc AUTHORS ChangeLog doc/format.txt
 	use doc && dodoc doc/format.html
