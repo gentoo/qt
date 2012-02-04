@@ -126,7 +126,8 @@ src_install() {
 	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install
 
 	if use doc; then
-		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_docs
+		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_qch_docs
+		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_dev_qch_docs
 	fi
 
 	# Install icon & desktop file
