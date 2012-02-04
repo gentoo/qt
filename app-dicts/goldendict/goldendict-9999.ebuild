@@ -1,12 +1,12 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-EGIT_REPO_URI="git://gitorious.org/goldendict/goldendict.git"
+EAPI=4
+EGIT_REPO_URI="git://gitorious.org/goldendict/goldendict"
 LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
 
-inherit git qt4-r2
+inherit qt4-r2 git-2
 
 DESCRIPTION="Feature-rich dictionary lookup program"
 HOMEPAGE="http://goldendict.berlios.de/"
@@ -32,10 +32,6 @@ RDEPEND=">=app-text/hunspell-1.2
 DEPEND="${RDEPEND}
 	dev-util/pkgconfig"
 
-src_unpack() {
-	S=${WORKDIR}/${P} git_src_unpack
-}
-
 src_prepare() {
 	qt4-r2_src_prepare
 
@@ -57,7 +53,7 @@ src_install() {
 	insinto /usr/share/apps/${PN}/locale
 	for lang in ${LANGSLONG}; do
 		if use linguas_${lang%_*}; then
-			doins locale/${lang}.qm || die
+			doins locale/${lang}.qm
 		fi
 	done
 }
