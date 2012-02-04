@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 inherit cmake-utils
 
 DESCRIPTION="Ruby bindings for Qt4"
@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="assistant phonon qt3support qtscript qscintilla qttest qwt webkit xmlpatterns"
 
-RDEPEND=">=virtual/ruby-1.8
+RDEPEND=">=dev-lang/ruby-1.8
 	x11-libs/qt-gui[dbus]
 	x11-libs/qt-opengl
 	x11-libs/qt-sql
