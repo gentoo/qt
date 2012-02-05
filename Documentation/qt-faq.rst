@@ -7,6 +7,11 @@
 .. contents::
 .. sectnum::
 
+How can I contribute to this overlay?
+-------------------------------------
+
+Please, read Documentation/maintainers/README file for proper ways to submit
+bugs and patches for the Qt overlay
 
 Why do I need qt3support?
 -------------------------

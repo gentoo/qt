@@ -1,0 +1,26 @@
+Git Patches:
+
+Since Qt overlay is a git repo, we prefer patches to be sent in proper git
+format. It is easier for us to apply them and you also get all the kudos for
+your work on the commit message. The following process aims to simplify the
+process of creating git patches:
+
+1) Create a separate branch for your patches
+	git checkout -b for-qt
+
+2) Write stuff and then commit them
+
+3) Rebase your "for-qt" branch to master branch
+  a) Switch to master branch
+	git checkout master
+  b) Update your master branch
+	git pull
+  c) Switch back to "for-qt" branch
+	git checkout for-qt
+  d) Rebase your branch onto master
+	git rebase master
+
+4) Create your patch
+   git format-patch master..for-qt
+
+5) Send your patches to qt@gentoo.org or attach them to your bug
