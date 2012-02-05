@@ -56,6 +56,6 @@ src_install() {
 	#touch the available graphics systems
 	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
 		die "could not create ${D}/usr/share/qt4/graphicssystems/"
-	touch "${D}/usr/share/qt4/graphicssystems/openvg" ||
-		die "could not touch ${D}/usr/share/qt4/graphicssystems/openvg"
+	echo "experimental" > "${D}/usr/share/qt4/graphicssystems/openvg" ||
+		die "could not create ${D}/usr/share/qt4/graphicssystems/openvg"
 }

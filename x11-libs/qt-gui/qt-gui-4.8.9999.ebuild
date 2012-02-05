@@ -186,8 +186,8 @@ src_install() {
 	#touch the available graphics systems
 	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
 		die "could not create ${D}/usr/share/qt4/graphicssystems/"
-	touch "${D}/usr/share/qt4/graphicssystems/raster" ||
-		die "could not touch ${D}/usr/share/qt4/graphicssystems/raster"
+	echo "default" > "${D}/usr/share/qt4/graphicssystems/raster" ||
+		die "could not create ${D}/usr/share/qt4/graphicssystems/raster"
 	touch "${D}/usr/share/qt4/graphicssystems/native" ||
 		die "could not touch ${D}/usr/share/qt4/graphicssystems/native"
 
