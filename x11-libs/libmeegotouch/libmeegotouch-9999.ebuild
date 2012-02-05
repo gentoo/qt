@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 
-inherit qt4-r2 git multilib toolchain-funcs gnome2-utils
+inherit qt4-r2 git-2 multilib toolchain-funcs gnome2-utils
 
 DESCRIPTION="The Harmattan Application Framework library"
 HOMEPAGE="http://duiframework.wordpress.com"
@@ -32,11 +32,6 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/pkgconfig"
 RDEPEND="${COMMON_DEPEND}
 	~x11-themes/meegotouch-theme-${PV}"
-
-# disable installation of gconf schemas until we have a fix for
-# the sandbox violation
-PATCHES=( "${FILESDIR}/remove-automagic-deps.patch"
-	"${FILESDIR}/disable-gconf-schemas.patch" )
 
 DOCS="README"
 
@@ -93,8 +88,16 @@ src_configure() {
 	enable_feature gconf GCONF
 	enable_feature gstreamer GSTREAMER
 
+	local myconf
+
+	if use debug ; then
+		myconf="${myconf} --no-release -debug"
+	else
+		myconf="${myconf} -release --no-debug"
+	fi
+
 	# custom configure script
-	QTDIR=/usr ./configure -release \
+	QTDIR=/usr ./configure ${myconf}\
 	    -prefix "/usr" \
 		-libdir "/usr/$(get_libdir)" \
 		$(use_make plainqt) \
