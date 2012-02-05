@@ -7,7 +7,7 @@ inherit cmake-utils
 
 DESCRIPTION="Ruby bindings for Qt4"
 HOMEPAGE="http://rubyforge.org/projects/korundum"
-SRC_URI="http://rubyforge.org/frs/download.php/53816/${P}.tgz"
+SRC_URI="http://rubyforge.org/frs/download.php/75633/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -15,13 +15,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="assistant phonon qt3support qtscript qscintilla qttest qwt webkit xmlpatterns"
 
 RDEPEND=">=dev-lang/ruby-1.8
-	x11-libs/qt-gui[dbus]
+	kde-base/smokeqt
+	x11-libs/qt-gui[accessibility,dbus]
 	x11-libs/qt-opengl
 	x11-libs/qt-sql
-	x11-libs/qt-svg
+	x11-libs/qt-svg[accessibility]
 	assistant? ( x11-libs/qt-assistant )
 	phonon? ( x11-libs/qt-phonon )
-	qt3support? ( x11-libs/qt-qt3support )
+	qt3support? ( x11-libs/qt-qt3support[accessibility] )
 	qtscript? ( x11-libs/qt-script )
 	qttest? ( x11-libs/qt-test )
 	webkit? ( x11-libs/qt-webkit )
@@ -37,9 +38,6 @@ DEPEND="${RDEPEND}"
 # USE=qwt fails... but it's optional now.
 # This currently also installs Qt.rb and Qt3.rb, but i think we only want
 # Qt4.rb.
-
-# Linking qttest.so failes with: cannot find -lsmokekde, bug 224951
-PATCHES=( "${FILESDIR}/${PV}_nosmokekde.patch" )
 
 src_configure() {
 	local MY_RUBYINC=$( ruby -rrbconfig -e 'puts Config::CONFIG["rubyhdrdir"]' )
