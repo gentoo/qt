@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 inherit eutils multilib qt4-edge
 
 DESCRIPTION="Qt4 lightweight music player"
@@ -33,7 +33,6 @@ RDEPEND="${DEPEND}
 
 PATCHES=(
 	"${FILESDIR}/${PN}-9999-no-automagic-deps.patch"
-	"${FILESDIR}/${PN}-ffmpeg-includes.patch"
 )
 
 pkg_setup() {
@@ -64,7 +63,7 @@ src_configure() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}/usr" install || die "emake install failed"
-	dodoc ChangeLog || die
-	doicon images/cuberok.png || die
+	emake INSTALL_ROOT="${D}/usr" install
+	dodoc ChangeLog
+	doicon images/${PN}.png
 }
