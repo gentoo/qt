@@ -64,13 +64,13 @@ src_unpack() {
 
 src_prepare() {
 	qt4-build${QT_ECLASS}_src_prepare
-	if use compat; then
-		epatch "${FILESDIR}"/"${PN}"-4.7-fix-compat.patch
-	fi
-	sed -e "s/\(sub-qdoc3\.depends =\).*/\1/" \
-		-i doc/doc.pri || die "patching qdoc3 depends failed"
+	use compat && epatch "${FILESDIR}"/"${PN}"-4.7-fix-compat.patch
+	
 	# bug 401173
 	! use webkit && epatch "${FILESDIR}"/disable-webkit.patch
+
+	# bug 348034
+	sed -i -e '/^sub-qdoc3\.depends/d' doc/doc.pri || die
 }
 
 src_configure() {
