@@ -26,10 +26,10 @@ IUSE="doc policykit"
 COMMON_DEPEND="policykit? ( sys-auth/polkit-qt )
 	x11-libs/libXcomposite
 	x11-libs/libXdamage
-	>=x11-libs/qt-core-4.6.0
-	>=x11-libs/qt-dbus-4.6.0
-	>=x11-libs/qt-gui-4.6.0
-	>=x11-libs/qt-script-4.6.0"
+	x11-libs/qt-core:4
+	x11-libs/qt-dbus:4
+	x11-libs/qt-gui:4
+	x11-libs/qt-script:4"
 
 DEPEND="${COMMON_DEPEND}
 	doc? ( app-doc/doxygen )
