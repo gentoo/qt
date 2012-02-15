@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
 LANGS="pt_BR"
 LANGSLONG="ru_RU"
@@ -35,7 +35,7 @@ src_configure() {
 }
 
 src_install() {
-	dobin bin/${PN} || die "dobin failed"
+	dobin bin/${PN}
 	make_desktop_entry ${PN} Surfer applications-internet "Qt;Network;WebBrowser"
 	#install translations
 	insinto /usr/share/${PN}/translations/
