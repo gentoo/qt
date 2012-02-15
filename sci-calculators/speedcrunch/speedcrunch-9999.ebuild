@@ -1,14 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit cmake-utils git
+inherit cmake-utils git-2
 
 DESCRIPTION="A fast and usable calculator for power users"
 HOMEPAGE="http://speedcrunch.org/"
-EGIT_REPO_URI="git://gitorious.org/speedcrunch/mainline.git"
+EGIT_REPO_URI="git://gitorious.org/${PN}/mainline"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -47,9 +47,9 @@ src_install() {
 	rmdir "${D}/usr/share/${PN}/locale" 2>/dev/null
 
 	cd ..
-	dodoc ChangeLog HACKING README || die
+	dodoc ChangeLog HACKING README
 	if use doc; then
 		insinto /usr/share/doc/${PF}
-		doins doc/*.pdf || die
+		doins doc/*.pdf
 	fi
 }
