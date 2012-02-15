@@ -1,19 +1,19 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=4
 
-EGIT_REPO_URI="git://gitorious.org/qt-labs/simulator.git"
+EGIT_REPO_URI="git://gitorious.org/qt-labs/${PN}"
 EGIT_BRANCH="1.x"
 
-inherit qt4-r2 git
+inherit qt4-r2 git-2
 
 DESCRIPTION="Qt Simulator"
 HOMEPAGE="http://qt.gitorious.org/qt-labs/simulator"
 SRC_URI=""
 
-LICENSE=""
+LICENSE="as-is"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
