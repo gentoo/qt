@@ -1,15 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI=4
 
-EGIT_REPO_URI="http://github.com/alishuja/networkled.git"
-
-inherit qt4-r2 git
+inherit qt4-r2 git-2
 
 DESCRIPTION="Qt4 network traffic monitor running on system tray"
 HOMEPAGE="http://github.com/alishuja/networkled"
+EGIT_REPO_URI="http://github.com/alishuja/${PN}"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -19,4 +18,4 @@ IUSE=""
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
-DOCS="README"
+DOCS=( README )
