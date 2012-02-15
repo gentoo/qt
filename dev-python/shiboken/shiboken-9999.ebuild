@@ -1,14 +1,14 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/shiboken/shiboken-0.3.2.ebuild,v 1.2 2010/06/16 19:36:37 ayoy Exp $
+# $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit cmake-utils git
+inherit cmake-utils git-2
 
 DESCRIPTION="A tool for creating Python bindings for C++ libraries"
 HOMEPAGE="http://www.pyside.org/"
-EGIT_REPO_URI="git://gitorious.org/pyside/${PN}.git"
+EGIT_REPO_URI="git://gitorious.org/pyside/${PN}"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
