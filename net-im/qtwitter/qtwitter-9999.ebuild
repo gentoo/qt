@@ -1,17 +1,17 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
 LANGS="nb_NO pt_BR"
 LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
 
-inherit qt4-edge git
+inherit qt4-edge git-2
 
 DESCRIPTION="A Qt-based client for Twitter and Identi.ca"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
-EGIT_REPO_URI="git://github.com/ayoy/${PN}.git"
+EGIT_REPO_URI="git://github.com/ayoy/${PN}"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -56,6 +56,6 @@ src_configure() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install || die "emake install failed"
-	dodoc README CHANGELOG || die "dodoc failed"
+	emake INSTALL_ROOT="${D}" install
+	dodoc README CHANGELOG
 }
