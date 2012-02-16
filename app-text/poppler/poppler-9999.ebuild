@@ -1,10 +1,10 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit git cmake-utils
+inherit cmake-utils git-2
 
 DESCRIPTION="PDF rendering library based on the xpdf-3.0 code base"
 HOMEPAGE="http://poppler.freedesktop.org/"
@@ -55,10 +55,6 @@ RDEPEND="${COMMON_DEPEND}
 
 DOCS=(AUTHORS NEWS README README-XPDF TODO)
 
-src_unpack() {
-	git_src_unpack
-}
-
 src_configure() {
 	mycmakeargs=(
 		-DBUILD_GTK_TESTS=OFF
@@ -93,7 +89,7 @@ src_install() {
 	if use cairo && use doc; then
 		# For now install gtk-doc there
 		insinto /usr/share/gtk-doc/html/poppler
-		doins -r "${S}"/glib/reference/html/* || die 'failed to install API documentation'
+		doins -r "${S}"/glib/reference/html/*
 	fi
 }
 

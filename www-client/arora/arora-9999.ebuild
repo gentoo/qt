@@ -1,9 +1,9 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-edge git
+EAPI=4
+inherit qt4-edge git-2
 
 DESCRIPTION="A cross-platform Qt4 WebKit browser"
 HOMEPAGE="http://arora.googlecode.com/"

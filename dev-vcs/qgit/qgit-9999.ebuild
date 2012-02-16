@@ -1,13 +1,13 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit qt4-edge git
+EAPI=4
+inherit qt4-edge git-2
 
 DESCRIPTION="GUI interface for git/cogito SCM"
 HOMEPAGE="http://digilander.libero.it/mcostalba/"
-EGIT_REPO_URI="git://git.kernel.org/pub/scm/qgit/qgit4.git"
+EGIT_REPO_URI="git://git.kernel.org/pub/scm/${PN}/${PN}4.git"
 
 LICENSE="GPL-2"
 SLOT="2"

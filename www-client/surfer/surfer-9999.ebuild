@@ -1,12 +1,12 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
 LANGS="pt_BR"
 lANGSLONG="ru_RU"
-inherit cmake-utils git
+inherit cmake-utils git-2
 
 DESCRIPTION="QtWebkit browser focusing on usability"
 HOMEPAGE="http://qt-apps.org/content/show.php/Surfer?content=110535"
