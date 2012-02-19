@@ -17,7 +17,11 @@ DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,exceptions]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
-	QT4_TARGET_DIRECTORIES="src/xmlpatterns tools/xmlpatterns"
+	QT4_TARGET_DIRECTORIES="
+		src/xmlpatterns
+		tools/xmlpatterns
+		tools/xmlpatternsvalidator"
+
 	if [[ ${PV} != 4*9999 ]]; then
 		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 			include/QtCore
