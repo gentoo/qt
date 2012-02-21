@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,30 +6,39 @@ EAPI="3"
 PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
+RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
 
 inherit python qt4-r2 toolchain-funcs
 
 REVISION=83ed847d0273
-MY_P="PyQt-x11-gpl-snapshot-${PV/_pre*/}-${REVISION}"
-QT_VER="4.8.0"
+
+# Minimal supported version of Qt.
+QT_VER="4.7.2"
 
 DESCRIPTION="Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
-#SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
 
-SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+if [[ ${PV} == *_pre* ]]; then
+	MY_P="PyQt-x11-gpl-snapshot-${PV%_pre*}-${REVISION}"
+	SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+else
+	MY_P="PyQt-x11-gpl-${PV}"
+	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
+fi
 
-SLOT="0"
 LICENSE="|| ( GPL-2 GPL-3 )"
-KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
+SLOT="0"
+KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="X assistant +dbus debug declarative doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
-DEPEND=">=dev-python/sip-4.13.1
+RDEPEND="
+	>=dev-python/sip-4.13.1
 	>=x11-libs/qt-core-${QT_VER}:4
 	>=x11-libs/qt-script-${QT_VER}:4
-	>=x11-libs/qt-test-${QT_VER}:4
-	X? ( >=x11-libs/qt-gui-${QT_VER}:4[dbus?] )
+	X? (
+		>=x11-libs/qt-gui-${QT_VER}:4[dbus?]
+		>=x11-libs/qt-test-${QT_VER}:4
+	)
 	assistant? ( >=x11-libs/qt-assistant-${QT_VER}:4 )
 	dbus? (
 		>=dev-python/dbus-python-0.80
@@ -37,7 +46,10 @@ DEPEND=">=dev-python/sip-4.13.1
 	)
 	declarative? ( >=x11-libs/qt-declarative-${QT_VER}:4 )
 	multimedia? ( >=x11-libs/qt-multimedia-${QT_VER}:4 )
-	opengl? ( >=x11-libs/qt-opengl-${QT_VER}:4 || ( >=x11-libs/qt-opengl-4.7.0:4[-egl] <x11-libs/qt-opengl-4.7.0:4 ) )
+	opengl? (
+		>=x11-libs/qt-opengl-${QT_VER}:4
+		|| ( >=x11-libs/qt-opengl-4.8.0:4 <x11-libs/qt-opengl-4.8.0:4[-egl] )
+	)
 	phonon? (
 		!kde? ( || ( >=x11-libs/qt-phonon-${QT_VER}:4 media-libs/phonon ) )
 		kde? ( media-libs/phonon )
@@ -45,14 +57,19 @@ DEPEND=">=dev-python/sip-4.13.1
 	sql? ( >=x11-libs/qt-sql-${QT_VER}:4 )
 	svg? ( >=x11-libs/qt-svg-${QT_VER}:4 )
 	webkit? ( >=x11-libs/qt-webkit-${QT_VER}:4 )
-	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QT_VER}:4 )"
-RDEPEND="${DEPEND}"
+	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QT_VER}:4 )
+"
+DEPEND="${RDEPEND}
+	dbus? ( dev-util/pkgconfig )
+"
 
 S=${WORKDIR}/${MY_P}
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.7.2-configure.py.patch"
 )
+
+PYTHON_VERSIONED_EXECUTABLES=("/usr/bin/pyuic4")
 
 src_prepare() {
 	if ! use dbus; then
@@ -70,7 +87,7 @@ src_prepare() {
 	python_copy_sources
 
 	preparation() {
-		if [[ "$(python_get_version --major)" == "3" ]]; then
+		if [[ "$(python_get_version -l --major)" == "3" ]]; then
 			rm -fr pyuic/uic/port_v2
 		else
 			rm -fr pyuic/uic/port_v3
@@ -91,16 +108,18 @@ src_configure() {
 			--bindir="${EPREFIX}/usr/bin"
 			--destdir="${EPREFIX}$(python_get_sitedir)"
 			--sipdir="${EPREFIX}/usr/share/sip"
+			--assume-shared
+			--no-timestamp
 			--qsci-api
 			$(use debug && echo --debug)
 			--enable=QtCore
 			--enable=QtNetwork
 			--enable=QtScript
-			--enable=QtTest
 			--enable=QtXml
 			$(pyqt4_use_enable X QtGui)
-			$(pyqt4_use_enable X QtDesigner)
+			$(pyqt4_use_enable X QtDesigner) $(use X || echo --no-designer-plugin)
 			$(pyqt4_use_enable X QtScriptTools)
+			$(pyqt4_use_enable X QtTest)
 			# QtAssistant module is not available with Qt >=4.7.0.
 			$(pyqt4_use_enable assistant QtAssistant)
 			$(pyqt4_use_enable assistant QtHelp)
@@ -124,21 +143,27 @@ src_configure() {
 		"${myconf[@]}" || return 1
 
 		local mod
-		for mod in QtCore $(use X && echo QtDesigner QtGui) $(use declarative &&
-		echo QtDeclarative) $(use opengl && echo QtOpenGL); do
-			# Run eqmake4 inside the qpy subdirectories to avoid stripping and many other QA issues.
+		for mod in QtCore \
+				$(use X && echo QtDesigner QtGui) \
+				$(use dbus && echo QtDBus) \
+				$(use declarative && echo QtDeclarative) \
+				$(use opengl && echo QtOpenGL); do
+			# Run eqmake4 inside the qpy subdirectories to respect
+			# CC, CXX, CFLAGS, CXXFLAGS, LDFLAGS and avoid stripping.
 			pushd qpy/${mod} > /dev/null || return 1
 			eqmake4 $(ls w_qpy*.pro)
 			popd > /dev/null || return 1
 
 			# Fix insecure runpaths.
-			sed -e "/^LFLAGS/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" -i ${mod}/Makefile || die "Fixing of rpaths failed"
+			sed -e "/^LFLAGS[[:space:]]*=/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
+				-i ${mod}/Makefile || die "Failed to fix rpath for ${mod}"
 		done
 
-		# Fix pre-stripping of libpythonplugin.so
+		# Avoid stripping of libpythonplugin.so.
 		if use X; then
-			cd "${BUILDDIR}/designer"
+			pushd designer > /dev/null || return 1
 			eqmake4 python.pro
+			popd > /dev/null || return 1
 		fi
 	}
 	python_execute_function -s configuration
@@ -150,15 +175,16 @@ src_compile() {
 
 src_install() {
 	installation() {
-		# INSTALL_ROOT is needed for the QtDesigner module, other Makefiles use DESTDIR.
-		emake DESTDIR="${D}" INSTALL_ROOT="${D}" install
+		# INSTALL_ROOT is used by designer/Makefile, other Makefiles use DESTDIR.
+		emake DESTDIR="${T}/images/${PYTHON_ABI}" INSTALL_ROOT="${T}/images/${PYTHON_ABI}" install
 	}
 	python_execute_function -s installation
+	python_merge_intermediate_installation_images "${T}/images"
 
-	dodoc NEWS README THANKS || die "dodoc failed"
+	dodoc NEWS THANKS || die "dodoc failed"
 
 	if use doc; then
-		dohtml -r doc/* || die "dohtml failed"
+		dohtml -r doc/html/* || die "dohtml failed"
 	fi
 
 	if use examples; then
@@ -169,6 +195,10 @@ src_install() {
 
 pkg_postinst() {
 	python_mod_optimize PyQt4
+
+	ewarn "When updating dev-python/PyQt4, you usually need to rebuild packages, which depend on"
+	ewarn "dev-python/PyQt4, such as dev-python/qscintilla-python. If you have app-portage/gentoolkit"
+	ewarn "installed, you can find these packages with \`equery d dev-python/PyQt4\`."
 }
 
 pkg_postrm() {
