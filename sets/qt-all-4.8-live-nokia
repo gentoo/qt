@@ -1,4 +1,4 @@
-# set for all packages from QtSoftware's 4.7 branch
+# set for all packages from Nokia's 4.8 branch
 # qt-phonon is commented out, as you may want media-libs/phonon instead
 
 ~x11-libs/qt-assistant-4.8.9999

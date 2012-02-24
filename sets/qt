@@ -3,6 +3,7 @@
 x11-libs/qt-assistant
 x11-libs/qt-core
 x11-libs/qt-dbus
+x11-libs/qt-declarative
 x11-libs/qt-gui
 x11-libs/qt-opengl
 x11-libs/qt-qt3support
