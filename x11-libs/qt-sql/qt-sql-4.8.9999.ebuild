@@ -3,7 +3,11 @@
 # $Header: $
 
 EAPI="4"
-inherit qt4-build-edge
+if [[ ${PV} == 4*9999 ]]; then
+	QT_ECLASS="-edge"
+fi
+
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
@@ -12,31 +16,31 @@ if [[ ${PV} != 4*9999 ]]; then
 else
 	KEYWORDS=""
 fi
-IUSE="firebird freetds iconv mysql odbc postgres qt3support +sqlite"
+IUSE="firebird freetds mysql odbc postgres qt3support +sqlite"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
 	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
-	odbc? ( dev-db/unixODBC )
+	odbc? ( || ( dev-db/unixODBC dev-db/libiodbc ) )
 	postgres? ( dev-db/postgresql-base )
 	sqlite? ( dev-db/sqlite:3 )"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
-	QT4_TARGET_DIRECTORIES="src/sql src/plugins/sqldrivers"
+	QT4_TARGET_DIRECTORIES="
+	src/sql
+	src/plugins/sqldrivers"
 
 	if [[ ${PV} != 4*9999 ]]; then
 		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		include/Qt/
 		include/QtCore/
 		include/QtSql/
-		include/QtScript/
 		src/src.pro
 		src/corelib/
 		src/plugins
-		src/3rdparty
-		src/tools"
+		src/tools/tools.pro"
 	fi
 
 	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
@@ -45,33 +49,29 @@ pkg_setup() {
 		die "Enable at least one SQL driver."
 	fi
 
-	qt4-build-edge_pkg_setup
-}
-
-src_prepare() {
-	qt4-build-edge_src_prepare
-
-	sed -e '/pg_config --libs/d' -i "${S}"/configure \
-		|| die "sed to fix postgresql usage in ./configure failed"
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_configure() {
-	# Don't support sqlite2 anymore
-	myconf="${myconf} -no-sql-sqlite2
-		$(qt_use mysql sql-mysql plugin) $(use mysql && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql ")
-		$(qt_use postgres sql-psql plugin) $(use postgres && echo "-I${EPREFIX}/usr/include/postgresql/pgsql ")
-		$(qt_use sqlite sql-sqlite plugin) $(use sqlite && echo '-system-sqlite')
-		$(qt_use odbc sql-odbc plugin)
-		$(qt_use freetds sql-tds plugin)
+	myconf+="
 		$(qt_use firebird sql-ibase plugin)
-		$(qt_use qt3support)"
+		$(qt_use freetds sql-tds plugin)
+		$(qt_use mysql sql-mysql plugin) $(use mysql && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
+		$(qt_use odbc sql-odbc plugin) $(use odbc && echo "-I${EPREFIX}/usr/include/iodbc")
+		$(qt_use postgres sql-psql plugin) $(use postgres && echo "-I${EPREFIX}/usr/include/postgresql/pgsql")
+		$(qt_use sqlite sql-sqlite plugin) $(use sqlite && echo -system-sqlite)
+		-no-sql-db2
+		-no-sql-oci
+		-no-sql-sqlite2
+		-no-sql-symsql
+		$(qt_use qt3support)
+		-no-accessibility -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon
+		-no-phonon-backend -no-svg -no-webkit -no-script -no-scripttools -no-declarative
+		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg -no-openssl
+		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl
+		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
+		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
+		-no-glib"
 
-	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender
-		-no-xrandr -no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm
-		-no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
-		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
-		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-glib -no-opengl -no-svg -no-gtkstyle"
-
-	qt4-build-edge_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 }
