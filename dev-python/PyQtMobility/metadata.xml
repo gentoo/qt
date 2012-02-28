@@ -3,12 +3,15 @@
 <pkgmetadata>
 <herd>qt</herd>
 <use>
-	<flag name="bearer">Build bindings for the QtBearer module</flag>
 	<flag name="contacts">Build bindings for the QtContacts module</flag>
+	<flag name="feedback">Build bindings for the QtFeedback module</flag>
+	<flag name="gallery">Build bindings for the QtGallery module</flag>
 	<flag name="location">Build bindings for the QtLocation module</flag>
 	<flag name="messaging">Build bindings for the QtMessaging module</flag>
 	<flag name="multimedia">Build bindings for the QtMultimediaKit module</flag>
+	<flag name="organizer">Build bindings for the QtOrganizer module</flag>
 	<flag name="publishsubscribe">Build bindings for the QtPublishSubscribe module</flag>
+	<flag name="sensors">Build bindings for the QtSensors module</flag>
 	<flag name="serviceframework">Build bindings for the QtServiceFramework module</flag>
 	<flag name="systeminfo">Build bindings for the QtSystemInfo module</flag>
 	<flag name="versit">Build bindings for the QtVersit module</flag>
