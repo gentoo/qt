@@ -25,7 +25,7 @@ PYQTM_MODULES="contacts feedback gallery location messaging multimedia organizer
 IUSE="debug ${PYQTM_MODULES}"
 
 REQUIRED_USE="
-	|| ( ${PYQTM_MODULES} )
+	|| ( ${PYQTM_MODULES//+} )
 	versit? ( contacts )
 "
 
