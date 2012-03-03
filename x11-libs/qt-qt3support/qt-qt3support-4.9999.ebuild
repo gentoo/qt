@@ -3,7 +3,10 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-qt3support/qt-qt3support-4.7.4.ebuild,v 1.1 2011/09/08 09:21:19 wired Exp $
 
 EAPI="4"
-inherit qt4-build-edge
+if [[ ${PV} == 4*9999 ]]; then
+    QT_ECLASS="-edge"
+fi
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The Qt3 support module for the Qt toolkit"
 SLOT="4"
@@ -13,15 +16,11 @@ else
 	KEYWORDS=""
 fi
 
-IUSE="+accessibility kde phonon"
+IUSE="+accessibility"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]
 	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=,qt3support]
-	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]
-	phonon? (
-		!kde? ( || ( ~x11-libs/qt-phonon-${PV}[aqua=,c++0x=,qpa=,debug=]
-			media-libs/phonon[aqua=,gstreamer] ) )
-		kde? ( media-libs/phonon[aqua=,gstreamer] ) )"
+	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]"
 
 RDEPEND="${DEPEND}"
 
@@ -35,13 +34,11 @@ pkg_setup() {
 		QT4_EXTRACT_DIRECTORIES="src include tools"
 	fi
 
-	qt4-build-edge_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_configure() {
 	myconf="${myconf} -qt3support
-		$(qt_use phonon gstreamer)
-		$(qt_use phonon)
 		$(qt_use accessibility)"
-	qt4-build-edge_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 }
