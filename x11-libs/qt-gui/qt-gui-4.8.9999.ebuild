@@ -3,7 +3,10 @@
 # $Header: $
 
 EAPI="4"
-inherit eutils confutils qt4-build-edge
+if [[ ${PV} == 4*9999 ]]; then
+    QT_ECLASS="-edge"
+fi
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
@@ -103,11 +106,11 @@ pkg_setup() {
 	# mac version does not contain qtconfig?
 	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
 
-	qt4-build-edge_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_prepare() {
-	qt4-build-edge_src_prepare
+	qt4-build${QT_ECLASS}_src_prepare
 
 	# Don't build plugins this go around, because they depend on qt3support lib
 	sed -i -e "s:CONFIG(shared:# &:g" "${S}"/tools/designer/src/src.pro || die
@@ -140,7 +143,7 @@ src_configure() {
 		-no-sql-odbc -xrender -xrandr -xkb -xshape -sm -no-svg -no-webkit
 		-no-phonon -no-opengl"
 
-	qt4-build-edge_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 
 	if use gtkstyle; then
 		einfo "patching the Makefile to fix qgtkstyle compilation"
@@ -167,7 +170,7 @@ src_install() {
 			$(use tiff && echo QT_IMAGEFORMAT_TIFF) QT_XCURSOR
 			$(use xinerama && echo QT_XINERAMA) QT_XFIXES QT_XKB QT_XRANDR QT_XRENDER"
 
-	qt4-build-edge_src_install
+	qt4-build${QT_ECLASS}_src_install
 
 	# qt-creator
 	# some qt-creator headers are located
@@ -185,12 +188,12 @@ src_install() {
 	doins "${S}"/tools/designer/src/lib/sdk/* || die
 
 	#touch the available graphics systems
-	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
-		die "could not create ${D}/usr/share/qt4/graphicssystems/"
-	echo "default" > "${D}/usr/share/qt4/graphicssystems/raster" ||
-		die "could not create ${D}/usr/share/qt4/graphicssystems/raster"
-	touch "${D}/usr/share/qt4/graphicssystems/native" ||
-		die "could not touch ${D}/usr/share/qt4/graphicssystems/native"
+	mkdir -p "${ED}/usr/share/qt4/graphicssystems/" || 
+		die "could not create ${ED}/usr/share/qt4/graphicssystems/"
+	echo "default" > "${ED}/usr/share/qt4/graphicssystems/raster" ||
+		die "could not create ${ED}/usr/share/qt4/graphicssystems/raster"
+	touch "${ED}/usr/share/qt4/graphicssystems/native" ||
+		die "could not touch ${ED}/usr/share/qt4/graphicssystems/native"
 
 	#install private headers
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]] ; then
