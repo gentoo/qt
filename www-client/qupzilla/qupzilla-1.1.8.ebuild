@@ -20,7 +20,7 @@ DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-webkit:4[dbus]" #TODO: check if dbus is optional
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/nowrep-QupZilla-bbe1ef9"
+S="${WORKDIR}/nowrep-QupZilla-c6455f0"
 
 src_configure() {
 	if use kde ; then
