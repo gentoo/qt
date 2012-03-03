@@ -3,7 +3,10 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-webkit/qt-webkit-4.7.4.ebuild,v 1.1 2011/09/08 09:22:47 wired Exp $
 
 EAPI="4"
-inherit qt4-build-edge
+if [[ ${PV} == 4*9999 ]]; then
+    QT_ECLASS="-edge"
+fi
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The Webkit module for the Qt toolkit"
 SLOT="4"
@@ -12,17 +15,18 @@ if [[ ${PV} != 4*9999 ]]; then
 else
 	KEYWORDS=""
 fi
-IUSE="dbus +jit kde"
+IUSE="+gstreamer +jit"
 
 DEPEND="
 	dev-db/sqlite:3
 	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,ssl]
 	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,dbus?,debug=]
 	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
-	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )
-	!kde? ( || ( ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,c++0x=,qpa=,dbus=,debug=]
-		media-libs/phonon[aqua=] ) )
-	kde? ( || ( media-libs/phonon[aqua=] ~x11-libs/qt-phonon-${PV}:${SLOT}[aqua=,dbus=,debug=] ) )"
+	gstreamer? (
+		dev-libs/glib:2
+		media-libs/gstreamer:0.10
+		media-libs/gst-plugins-base:0.10
+	)"
 RDEPEND="${DEPEND}"
 
 if [[ ${PV} != 4*9999 ]]; then
@@ -45,22 +49,23 @@ pkg_setup() {
 	QCONFIG_ADD="webkit"
 	QCONFIG_DEFINE="QT_WEBKIT"
 
-	qt4-build-edge_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_prepare() {
 	[[ $(tc-arch) == "ppc64" ]] && append-flags -mminimal-toc #241900
 	use c++0x && append-flags -fpermissive
-	sed -i -e "/Werror/d" "${S}/src/3rdparty/webkit/Source/WebKit.pri" || die
-	qt4-build-edge_src_prepare
+	sed -i -e '/QMAKE_CXXFLAGS[[:blank:]]*+=/s:-Werror::g' \
+			src/3rdparty/webkit/Source/WebKit.pri || die
+	qt4-build${QT_ECLASS}_src_prepare
 }
 
 src_configure() {
 	# won't build with gcc 4.6 without this for now
 	myconf="${myconf}
-			-webkit -system-sqlite -no-gtkstyle
-			-D GST_DISABLE_DEPRECATED
+			-webkit -system-sqlite
 			$(qt_use jit javascript-jit)
-			$(qt_use dbus qdbus)"
-	qt4-build-edge_src_configure
+			-DENABLE_VIDEO=$(use gstreamer && echo 1 || echo 0)
+			-D GST_DISABLE_DEPRECATED"
+	qt4-build${QT_ECLASS}_src_configure
 }
