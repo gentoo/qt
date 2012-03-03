@@ -3,7 +3,10 @@
 # $Header: $
 
 EAPI="4"
-inherit qt4-build-edge
+if [[ ${PV} == 4*9999 ]]; then
+    QT_ECLASS="-edge"
+fi
+inherit qt4-build${QT_ECLASS}
 
 DESCRIPTION="The OpenGL module for the Qt toolkit"
 SLOT="4"
@@ -38,7 +41,7 @@ pkg_setup() {
 
 	QCONFIG_ADD="opengl"
 	QCONFIG_DEFINE="QT_OPENGL $(use egl && echo QT_EGL)"
-	qt4-build-edge_pkg_setup
+	qt4-build${QT_ECLASS}_pkg_setup
 }
 
 src_configure() {
@@ -46,18 +49,18 @@ src_configure() {
 		$(qt_use qt3support)
 		$(qt_use egl)"
 
-	qt4-build-edge_src_configure
+	qt4-build${QT_ECLASS}_src_configure
 
 	# Not building tools/designer/src/plugins/tools/view3d as it's
 	# commented out of the build in the source
 }
 
 src_install() {
-	qt4-build-edge_src_install
+	qt4-build${QT_ECLASS}_src_install
 
 	#touch the available graphics systems
-	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
-		die "could not create ${D}/usr/share/qt4/graphicssystems/"
-	echo "experimental" > "${D}/usr/share/qt4/graphicssystems/opengl" ||
-		die "could not create ${D}/usr/share/qt4/graphicssystems/opengl"
+	mkdir -p "${ED}/usr/share/qt4/graphicssystems/" || 
+		die "could not create ${ED}/usr/share/qt4/graphicssystems/"
+	echo "experimental" > "${ED}/usr/share/qt4/graphicssystems/opengl" ||
+		die "could not create ${ED}/usr/share/qt4/graphicssystems/opengl"
 }
