@@ -20,7 +20,7 @@ IUSE="+gstreamer +jit"
 DEPEND="
 	dev-db/sqlite:3
 	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,ssl]
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,dbus?,debug=]
+	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=]
 	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,qpa=,debug=]
 	gstreamer? (
 		dev-libs/glib:2
