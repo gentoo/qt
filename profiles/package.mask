@@ -6,8 +6,8 @@
 # Masking latest releases
 =dev-python/sip-4.13.3_pre*
 =dev-python/PyQt4-4.9.2_pre*
-=dev-python/qscintilla-python-2.6.1_pre*
-=x11-libs/qscintilla-2.6.1_pre*
+=dev-python/qscintilla-python-2.6.2_pre*
+=x11-libs/qscintilla-2.6.2_pre*
 
 # Markos Chandras <hwoarang@gentoo.org> (15 Aug 2010)
 # Need multiple QA fixes. New USE flags are required

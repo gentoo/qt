@@ -9,7 +9,7 @@ RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
 
 inherit eutils python toolchain-funcs
 
-HG_REVISION="3171bb05b1d8"
+HG_REVISION="4e0cb0250dad"
 MY_P="QScintilla-gpl-snapshot-${PV/_pre*/-${HG_REVISION}}"
 
 DESCRIPTION="Python bindings for Qscintilla"
