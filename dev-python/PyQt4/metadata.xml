@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<herd>python</herd>
 	<herd>qt</herd>
+	<herd>python</herd>
 	<use>
 		<flag name="X">Build QtGui, QtDesigner and QtScriptTools modules</flag>
 		<flag name="assistant">Build QtHelp and QtAssistant modules</flag>
