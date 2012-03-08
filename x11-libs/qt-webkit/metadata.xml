@@ -6,7 +6,6 @@
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
 		<flag name="gstreamer">Enable HTML5 audio/video support via <pkg>media-libs/gstreamer</pkg></flag>
-		<flag name="kde">Select <pkg>media-sound/phonon</pkg> as phonon variant needed for kde</flag>
 		<flag name="jit">Enable JavaScriptCore just-in-time compiler for faster JavaScript execution</flag>
 		<flag name="c++0x">Build Qt using the C++11 standard</flag>
 		<flag name="qpa">Build a window system agnostic implementation of Qt</flag>
