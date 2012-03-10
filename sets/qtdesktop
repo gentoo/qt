@@ -9,16 +9,16 @@ media-sound/qmpdclient  # alternative: clementine
 media-video/smplayer    # alternative: vlc
 net-im/qtwitter         # alternative: qwit
 net-im/qutim
+net-misc/qconnman
 sci-calculators/speedcrunch
 www-client/qupzilla
 x11-misc/andromeda      # alternative: qtfm
-x11-misc/ptbatterysystemtray
+x11-misc/ptbatterysystemtray  # alternative: app-laptop/batterymeter
+x11-misc/qlipper
 x11-misc/qxkb
 x11-terms/qterminal
 
 # todo:
-# qconnman
-# qlipper
 # qtarc
 # qtvim
 
