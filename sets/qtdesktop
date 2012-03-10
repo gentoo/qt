@@ -1,0 +1,29 @@
+# full set for RazorQt / QtDesktop
+x11-wm/razorqt
+app-editors/juffed      # alternative: qtvim (todo)
+app-office/qcharselect
+app-text/goldendict
+app-text/kchmviewer
+app-text/qpdfview
+media-sound/qmpdclient  # alternative: clementine
+media-video/smplayer    # alternative: vlc
+net-im/qtwitter         # alternative: qwit
+net-im/qutim
+sci-calculators/speedcrunch
+www-client/qupzilla
+x11-misc/andromeda      # alternative: qtfm
+x11-misc/ptbatterysystemtray
+x11-misc/qxkb
+x11-terms/qterminal
+
+# todo:
+# qconnman
+# qlipper
+# qtarc
+# qtvim
+
+# possible additions:
+# net-p2p/transmission
+# app-emulation/q4wine
+# app-emulation/qtemu
+
