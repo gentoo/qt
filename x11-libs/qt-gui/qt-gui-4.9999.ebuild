@@ -6,7 +6,7 @@ EAPI="4"
 if [[ ${PV} == 4*9999 ]]; then
     QT_ECLASS="-edge"
 fi
-inherit qt4-build${QT_ECLASS}
+inherit eutils confutils qt4-build${QT_ECLASS}
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"
