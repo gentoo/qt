@@ -10,26 +10,32 @@ DESCRIPTION="Library used to create an internal representation of an API in orde
 HOMEPAGE="http://www.pyside.org/"
 EGIT_REPO_URI="git://gitorious.org/pyside/${PN}"
 
-LICENSE="LGPL-2.1"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug test"
 
-RDEPEND=">=dev-libs/boost-1.41.0[python]
-	dev-libs/libxml2
-	dev-libs/libxslt
-	>=x11-libs/qt-core-4.5.0
-	>=x11-libs/qt-xmlpatterns-4.5.0"
+QT_PV="4.7.0:4"
 
+RDEPEND="
+	>=dev-libs/libxml2-2.6.32
+	>=dev-libs/libxslt-1.1.19
+	>=x11-libs/qt-core-${QT_PV}
+	>=x11-libs/qt-xmlpatterns-${QT_PV}
+"
 DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+	test? (
+		>=x11-libs/qt-gui-${QT_PV}
+		>=x11-libs/qt-test-${QT_PV}
+	)"
 
-S="${WORKDIR}/${PN}"
+S=${WORKDIR}/${PN}
 
-DOCS=(AUTHORS)
+DOCS=( AUTHORS )
 
-src_prepare() {
-	sed -e 's:share/cmake-2.6/Modules:share/cmake/Modules:' \
-		-e '/^install/s/lib/lib${LIB_SUFFIX}/' \
-		-i "${S}/CMakeLists.txt" || die "sed failed"
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_build test TESTS)
+	)
+	cmake-utils_src_configure
 }
