@@ -1,0 +1,10 @@
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -82,6 +83,7 @@
+         kajammer
+         ${QT_LIBRARIES}
+         ${QT_GUI_LIBRARIES}
++        ${QT_QTNETWORK_LIBRARY}
+         ${Phonon_LIBRARY}
+         ${Kajamtag_LIB}
+         ${LastFM_LIB}
