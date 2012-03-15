@@ -1,0 +1,43 @@
+--- phoenix.pro
++++ phoenix.pro
+@@ -59,7 +59,7 @@
+         } else {
+             DEFINES += LINUX_32
+ 	}
+-	LIBS += -lz
++	LIBS += -lquazip
+     }
+     
+ 	isEmpty(PREFIX) {
+@@ -106,7 +106,6 @@
+ RC_FILE = fritzing.rc
+ RESOURCES += phoenixresources.qrc
+ 	include(pri/kitchensink.pri)
+-	include(pri/quazip.pri)
+ 	include(pri/partsbinpalette.pri)
+ 	include(pri/partseditor.pri)
+ 	include(pri/referencemodel.pri)
+--- src/utils/folderutils.cpp
++++ src/utils/folderutils.cpp
+@@ -34,8 +34,8 @@
+ #include <QCryptographicHash>
+ 
+ #include "../debugdialog.h"
+-#include "../lib/quazip/quazip.h"
+-#include "../lib/quazip/quazipfile.h"
++#include "quazip/quazip.h"
++#include "quazip/quazipfile.h"
+ #include "../lib/qtsysteminfo/QtSystemInfo.h"
+ 
+ 
+--- pri/utils.pri
++++ pri/utils.pri
+@@ -17,8 +17,6 @@
+ # $Date: 2012-02-01 10:30:37 +0100 (Wed, 01 Feb 2012) $
+ # ********************************************************************/
+ 
+-INCLUDEPATH += src/lib/boost_1_43_0
+-
+ HEADERS += \
+ src/utils/abstractimagebutton.h \
+ src/utils/abstractstatesbutton.h \
