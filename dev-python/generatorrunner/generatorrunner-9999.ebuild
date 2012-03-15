@@ -6,23 +6,32 @@ EAPI=4
 
 inherit cmake-utils git-2
 
-DESCRIPTION="A tool that controls bindings generation"
+DESCRIPTION="A tool to control bindings generation"
 HOMEPAGE="http://www.pyside.org/"
 EGIT_REPO_URI="git://gitorious.org/pyside/${PN}"
 
-LICENSE="LGPL-2.1"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug"
+IUSE="debug test"
 
-DEPEND="~dev-python/apiextractor-${PV}
-	>=x11-libs/qt-core-4.5.0"
-RDEPEND="${DEPEND}"
+QT_PV="4.7.0:4"
 
-S="${WORKDIR}/${PN}"
+RDEPEND="
+	~dev-python/apiextractor-${PV}
+	>=x11-libs/qt-core-${QT_PV}
+"
+DEPEND="${RDEPEND}
+	test? ( >=x11-libs/qt-test-${QT_PV} )
+"
 
-DOCS=(AUTHORS)
+S=${WORKDIR}/${PN}
 
-src_prepare() {
-	sed -e 's/-2.6//' -i CMakeLists.txt || die "sed failed"
+DOCS=( AUTHORS )
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_build test TESTS)
+	)
+	cmake-utils_src_configure
 }
