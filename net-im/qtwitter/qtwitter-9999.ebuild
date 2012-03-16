@@ -9,7 +9,7 @@ LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
 
 inherit qt4-edge git-2
 
-DESCRIPTION="A Qt-based client for Twitter and Identi.ca"
+DESCRIPTION="A Qt-based microblogging client"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
 EGIT_REPO_URI="git://github.com/ayoy/${PN}"
 
@@ -18,12 +18,16 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND=">=x11-libs/qt-gui-4.5:4
+DEPEND=">=dev-libs/qoauth-1.0
+	x11-libs/libX11
+	>=x11-libs/qt-core-4.5:4
 	>=x11-libs/qt-dbus-4.5:4
-	>=dev-libs/qoauth-1.0"
+	>=x11-libs/qt-gui-4.5:4"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"
+
+DOCS="README CHANGELOG"
 
 src_prepare() {
 	qt4-edge_src_prepare
@@ -43,19 +47,11 @@ src_prepare() {
 	done
 
 	# remove translations and add only the selected ones
-	sed -i -e '/^ *LANGS/,/^$/s/^/#/' \
+	sed -e '/^ *LANGS/,/^$/s/^/#/' \
 		-e "/LANGS =/s/.*/LANGS = ${langs}/" \
-			translations/translations.pri || die "sed translations failed"
-	# fix insecure runpaths
-	sed -i -e '/-Wl,-rpath,\$\${DESTDIR}/d' \
-		qtwitter-app/qtwitter-app.pro || die "sed rpath failed"
+		-i translations/translations.pri || die "sed translations failed"
 }
 
 src_configure() {
 	eqmake4 PREFIX="/usr"
-}
-
-src_install() {
-	emake INSTALL_ROOT="${D}" install
-	dodoc README CHANGELOG
 }
