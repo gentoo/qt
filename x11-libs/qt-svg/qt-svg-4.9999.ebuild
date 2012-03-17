@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,7 @@ SLOT="4"
 KEYWORDS=""
 IUSE="iconv"
 
-DEPEND="~x11-libs/qt-gui-${PV}[debug=,stable-branch=]"
+DEPEND="~x11-libs/qt-gui-${PV}[debug=]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
