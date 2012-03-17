@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -22,7 +22,7 @@ RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/multimedia"
-	
+
 	if [[ ${PV} != 4*9999 ]]; then
 		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 			include/Qt/
