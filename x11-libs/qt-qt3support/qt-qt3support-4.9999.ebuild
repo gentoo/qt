@@ -1,10 +1,10 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-qt3support/qt-qt3support-4.7.4.ebuild,v 1.1 2011/09/08 09:21:19 wired Exp $
 
 EAPI="4"
 if [[ ${PV} == 4*9999 ]]; then
-    QT_ECLASS="-edge"
+	QT_ECLASS="-edge"
 fi
 inherit qt4-build${QT_ECLASS}
 
