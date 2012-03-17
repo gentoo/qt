@@ -65,7 +65,7 @@ src_unpack() {
 src_prepare() {
 	qt4-build${QT_ECLASS}_src_prepare
 	use compat && epatch "${FILESDIR}"/"${PN}"-4.7-fix-compat.patch
-	
+
 	# bug 401173
 	! use webkit && epatch "${FILESDIR}"/disable-webkit.patch
 
