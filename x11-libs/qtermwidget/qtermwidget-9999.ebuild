@@ -17,4 +17,3 @@ IUSE="debug" # todo: python
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
-
