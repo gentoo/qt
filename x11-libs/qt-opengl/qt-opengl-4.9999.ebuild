@@ -1,10 +1,10 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="4"
 if [[ ${PV} == 4*9999 ]]; then
-    QT_ECLASS="-edge"
+	QT_ECLASS="-edge"
 fi
 inherit qt4-build${QT_ECLASS}
 
@@ -59,7 +59,7 @@ src_install() {
 	qt4-build${QT_ECLASS}_src_install
 
 	#touch the available graphics systems
-	mkdir -p "${ED}/usr/share/qt4/graphicssystems/" || 
+	mkdir -p "${ED}/usr/share/qt4/graphicssystems/" ||
 		die "could not create ${ED}/usr/share/qt4/graphicssystems/"
 	echo "experimental" > "${ED}/usr/share/qt4/graphicssystems/opengl" ||
 		die "could not create ${ED}/usr/share/qt4/graphicssystems/opengl"
