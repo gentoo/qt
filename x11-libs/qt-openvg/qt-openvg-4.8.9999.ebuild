@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -54,7 +54,7 @@ src_install() {
 	qt4-build-edge_src_install
 
 	#touch the available graphics systems
-	mkdir -p "${D}/usr/share/qt4/graphicssystems/" || 
+	mkdir -p "${D}/usr/share/qt4/graphicssystems/" ||
 		die "could not create ${D}/usr/share/qt4/graphicssystems/"
 	echo "experimental" > "${D}/usr/share/qt4/graphicssystems/openvg" ||
 		die "could not create ${D}/usr/share/qt4/graphicssystems/openvg"
