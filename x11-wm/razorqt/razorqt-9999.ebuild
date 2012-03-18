@@ -21,15 +21,25 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="doc policykit"
+IUSE="doc lightdm policykit"
 
-COMMON_DEPEND="policykit? ( sys-auth/polkit-qt )
+COMMON_DEPEND="sys-apps/file
+	sys-libs/zlib
+	x11-libs/libX11
 	x11-libs/libXcomposite
+	x11-libs/libXcursor
 	x11-libs/libXdamage
+	x11-libs/libXfixes
+	x11-libs/libXrender
 	x11-libs/qt-core:4
 	x11-libs/qt-dbus:4
 	x11-libs/qt-gui:4
-	x11-libs/qt-script:4"
+	x11-libs/qt-script:4
+	lightdm? ( x11-misc/lightdm[qt4] )
+	policykit? (
+		dev-libs/glib:2
+		sys-auth/polkit-qt
+	)"
 
 DEPEND="${COMMON_DEPEND}
 	doc? ( app-doc/doxygen )
@@ -46,6 +56,14 @@ RDEPEND="${COMMON_DEPEND}
 		x11-wm/sawfish
 		x11-wm/windowmaker
 		)"
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_enable lightdm LIGHTDM_GREETER)
+		$(cmake-utils_use_enable policykit)
+	)
+	cmake-utils_src_configure
+}
 
 src_compile() {
 	cmake-utils_src_make

@@ -15,5 +15,7 @@
 	it's no problem to take any modern WM from fwwm2 to kwin (yes, KDE
 	without Plasma Desktop is possible too).
 	</longdescription>
+	<use>
+		<flag name="lightdm">Build Razor-Qt's LightDM greeter</flag>
+	</use>
 </pkgmetadata>
-
