@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>qt</herd>
-<use>
-	<flag name="private-headers">Install Qt declarative private headers required
-		by qt-creator's QmlDesigner and QmlInspector plugins"</flag>
-	<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
-		this does not mean you can compile pure Qt3 programs with Qt4.</flag>
-	<flag name='exceptions'>Add support for exceptions - like catching them
-		inside the event loop (recommended by Nokia)</flag>
-	<flag name='webkit'>Build the WebView QML element</flag>
-	<flag name='stable-branch'>Use the stable git branch - it is slightly behind
-		master but guaranteed by Nokia to compile</flag>
-</use>
+	<herd>qt</herd>
+	<use>
+		<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
+			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
+		<flag name='exceptions'>Add support for exceptions - like catching them
+			inside the event loop (recommended by Nokia)</flag>
+		<flag name='webkit'>Build the WebView QML element</flag>
+		<flag name='c++0x'>Build Qt using the C++11 standard</flag>
+		<flag name='qpa'>Build a window system agnostic implementation of Qt</flag>
+	</use>
+<longdescription lang="en">
+</longdescription>
 </pkgmetadata>
+
