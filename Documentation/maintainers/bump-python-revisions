@@ -2,8 +2,6 @@
 source /etc/init.d/functions.sh
 
 ########################## VARIABLES ############################
-PVER="4.9.2" # PyQt4 current working version
-SVER="4.13.3" #$ Sip current working version
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
 TARGET="www.gentoo-el.org:~/public_html/distfiles/"
 TEMP="/tmp/qt-python-bump/"
@@ -13,13 +11,8 @@ OVERLAY="../../" # ugly but hey dont shoot me
 usage() {
 	echo """
 
-./bump-python-revisions <PyQt4-rev> <sip-rev>
-
-Example: ./bump-python-revisions 11cc33 22bba4
+./bump-python-revisions
 	
-This will bump PyQt4 ebuild to 11cc33 revision,
-and Sip ebuild to snapshot to 22bba4 revision
-
 Use -h option to display this message
 Use -c option to skip bumping operation and do 
 	directly the merge operation
@@ -94,13 +87,15 @@ getrevisions(){
 	pushd ${OVERLAY}/dev-python/PyQt4/ >> /dev/null
 	pyqt4_tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
 	pyqt4_revision=$(grep ^REVISION ${pyqt4_tomove}|sed "s:^REVISION=::")
+	PVER=$(cat ${pyqt4_tomove}|sed "s:PyQt4-\(.*\)_pre.*:\1:")
 	popd >> /dev/null
 	pushd ${OVERLAY}/dev-python/sip/ >> /dev/null
 	sip_tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
 	sip_revision=$(grep ^HG_REVISION ${sip_tomove}|sed "s:^HG_REVISION=::")
+	SVER=$(cat ${sip_tomove}|sed "s:sip-\(.*\)_pre.*:\1:")
 	popd >> /dev/null
 
-	einfo "Old Revisions: PyQt4 ${pyqt4_revision}, SIP: ${sip_revision}"
+	einfo "Old Revisions: PyQt4: ${pyqt4_revision}, SIP: ${sip_revision}"
 
 	# Find new revisions
 	new_pyqt4=$(curl -s http://www.riverbankcomputing.com/software/pyqt/download|grep "x11-gpl-snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 6|sed "s:\..*::")
@@ -129,8 +124,7 @@ getrevisions(){
 einfo """
 	###########################################################
 	# Automatic PyQt4/sip bumping tool for qt overlay         #
-	# Author: Markos Chandras <hwoarang@gentoo.org>	          #
-	#						                                  #
+	# Author: Markos Chandras <hwoarang@gentoo.org>           #
 	# Use ./bump-python-revisions -h for a usage example      #
 	###########################################################
 """
