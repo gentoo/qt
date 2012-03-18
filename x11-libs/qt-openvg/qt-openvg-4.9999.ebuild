@@ -13,7 +13,7 @@ else
 	KEYWWORDS=""
 fi
 
-IUSE="qt3support es2"
+IUSE="qt3support"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support=]
 	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,egl,qpa=,qt3support=]
