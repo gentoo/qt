@@ -11,6 +11,7 @@
 	<name>Davide Pesavento</name>
 </maintainer>
 <use>
+	<flag name="autotools">Enable autotools project manager plugin</flag>
 	<flag name="bazaar">Add support for <pkg>dev-vcs/bzr</pkg> version control system</flag>
 	<flag name="botan-bundled">Use the bundled copy of <pkg>dev-libs/botan</pkg></flag>
 	<flag name="cmake">Enable cmake project manager plugin</flag>
@@ -18,7 +19,7 @@
 	<flag name="git">Add support for <pkg>dev-vcs/git</pkg> version control system</flag>
 	<flag name="madde">Enable integration with MADDE (Maemo Application Development and Debugging Environment)</flag>
 	<flag name="mercurial">Add support for <pkg>dev-vcs/mercurial</pkg> version control system</flag>
-	<flag name="perforce">Enable perforce software configuration manager plugin</flag>
+	<flag name="perforce">Add support for Perforce version control system (requires manual installation of Perforce client)</flag>
 	<flag name="valgrind">Add support for memory debugging using <pkg>dev-util/valgrind</pkg></flag>
 </use>
 </pkgmetadata>

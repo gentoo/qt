@@ -2,21 +2,23 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI=4
+
 LANGS="cs de es fr hu it ja pl ru sl uk zh_CN"
-MY_P=${PN}-${PV/_/-}-src
 
 inherit multilib eutils flag-o-matic
 
-if [[ ${PV} == 9999 ]]; then
+MY_P=${PN}-${PV/_/-}-src
+if [[ ${PV} == *9999* ]]; then
 	QTCREATOR_SUFFIX="-edge"
-	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
-		https://git.gitorious.org/${PN}/${PN}.git"
 	inherit qt4${QTCREATOR_SUFFIX} git-2
+	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
+			https://git.gitorious.org/${PN}/${PN}.git"
 else
 	QTCREATOR_SUFFIX="-r2"
-	SRC_URI="http://get.qt.nokia.com/qtcreator/${MY_P}.tar.gz"
 	inherit qt4${QTCREATOR_SUFFIX}
+	SRC_URI="http://get.qt.nokia.com/qtcreator/${MY_P}.tar.gz"
+	S=${WORKDIR}/${MY_P}
 fi
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
@@ -24,36 +26,34 @@ HOMEPAGE="http://qt.nokia.com/products/developer-tools"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-if [[ ${PV} == 9999 ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-fi
+KEYWORDS=""
 
-QTC_PLUGINS=(bazaar cmake:cmakeprojectmanager cvs fakevim
-	git madde mercurial perforce subversion valgrind)
+QTC_PLUGINS=(autotools:autotoolsprojectmanager bazaar cmake:cmakeprojectmanager
+	cvs fakevim git madde mercurial perforce subversion valgrind)
 IUSE="+botan-bundled debug doc examples ${QTC_PLUGINS[@]%:*}"
 
-QTVER="4.7.4:4"
+QT_PV="4.7.4:4"
+
 CDEPEND="
-	>=x11-libs/qt-core-${QTVER}[private-headers(+)]
-	>=x11-libs/qt-declarative-${QTVER}[private-headers(+)]
-	>=x11-libs/qt-gui-${QTVER}[private-headers(+)]
-	>=x11-libs/qt-script-${QTVER}[private-headers(+)]
-	>=x11-libs/qt-sql-${QTVER}
-	>=x11-libs/qt-svg-${QTVER}
-	debug? ( >=x11-libs/qt-test-${QTVER} )
-	>=x11-libs/qt-assistant-${QTVER}[doc?]
+	>=x11-libs/qt-assistant-${QT_PV}[doc?]
+	>=x11-libs/qt-core-${QT_PV}[private-headers(+)]
+	>=x11-libs/qt-declarative-${QT_PV}[private-headers(+)]
+	>=x11-libs/qt-gui-${QT_PV}[private-headers(+)]
+	>=x11-libs/qt-script-${QT_PV}[private-headers(+)]
+	>=x11-libs/qt-sql-${QT_PV}
+	>=x11-libs/qt-svg-${QT_PV}
+	debug? ( >=x11-libs/qt-test-${QT_PV} )
 	!botan-bundled? ( =dev-libs/botan-1.8* )
 "
 DEPEND="${CDEPEND}
 	!botan-bundled? ( dev-util/pkgconfig )
 "
 RDEPEND="${CDEPEND}
-	sys-devel/gdb[python]
-	examples? ( >=x11-libs/qt-demo-${QTVER} )
+	>=sys-devel/gdb-7.2[python]
+	examples? ( >=x11-libs/qt-demo-${QT_PV} )
 "
 PDEPEND="
+	autotools? ( sys-devel/autoconf )
 	bazaar? ( dev-vcs/bzr )
 	cmake? ( dev-util/cmake )
 	cvs? ( dev-vcs/cvs )
@@ -76,11 +76,11 @@ src_prepare() {
 	done
 
 	if use perforce; then
-		ewarn
+		echo
 		ewarn "You have enabled the perforce plugin."
 		ewarn "In order to use it, you need to manually download the perforce client from"
 		ewarn "  http://www.perforce.com/perforce/downloads/index.html"
-		ewarn
+		echo
 	fi
 
 	# fix translations
@@ -89,8 +89,7 @@ src_prepare() {
 
 	if ! use botan-bundled; then
 		# identify system botan and pkg-config file
-		local botan_version=$(best_version dev-libs/botan | cut -d '-' -f3 | \
-			cut -d '.' -f1,2)
+		local botan_version=$(best_version dev-libs/botan | cut -d '-' -f3 | cut -d '.' -f1,2)
 		local lib_botan=$(pkg-config --libs botan-${botan_version})
 		einfo "Major version of system's botan library to be used: ${botan_version}"
 
@@ -123,23 +122,25 @@ src_compile() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install
+	emake INSTALL_ROOT="${ED}usr" install
 
+	# Install documentation
 	if use doc; then
-		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_qch_docs
-		emake INSTALL_ROOT="${D%/}${EPREFIX}/usr" install_inst_dev_qch_docs
+		insinto /usr/share/doc/${PF}
+		doins share/doc/qtcreator/qtcreator{,-dev}.qch
+		docompress -x /usr/share/doc/${PF}/qtcreator{,-dev}.qch
 	fi
 
 	# Install icon & desktop file
-	doicon src/plugins/coreplugin/images/logo/128/qtcreator.png || die
-	make_desktop_entry qtcreator 'Qt Creator' qtcreator 'Qt;Development;IDE' || die
+	doicon src/plugins/coreplugin/images/logo/128/qtcreator.png
+	make_desktop_entry qtcreator 'Qt Creator' qtcreator 'Qt;Development;IDE'
 
 	# Remove unneeded translations
 	local lang
 	for lang in ${LANGS}; do
 		if ! has ${lang} ${LINGUAS}; then
-			rm "${D}"/usr/share/qtcreator/translations/qtcreator_${lang}.qm \
-				|| eqawarn "failed to remove ${lang} translation"
+			rm "${ED}"usr/share/qtcreator/translations/qtcreator_${lang}.qm \
+				|| eqawarn "Failed to remove ${lang} translation"
 		fi
 	done
 }
