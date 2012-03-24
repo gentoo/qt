@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 source /etc/init.d/functions.sh
 
 ########################## VARIABLES ############################
@@ -64,23 +67,26 @@ dopyqt4(){
 
 
 commit() {
-ewarn "Your changes are ready to be merged. However I strongly recommend you to review your changes."
-ewarn ""
-einfo "Press 'r' to review your changes or 'y' to merge them to master branch (default 'r')."
-read choice
-case "$choice" in
-        y)      ewarn "Your changes will be merged now. Don't break the overlay or I will shoot you down!"
-		git commit -a -m "PyQt4/sip: Automatic version bump, remove old" || exit 2
-                git push || exit 2
-                ;;
-	
-        r|"")   git diff
-                ;;
-	*)	eerror ""
-		eerror "Invalid option. Are you stupid or something?"
-		eerror ""
-		exit 3
-esac
+	ewarn "Your changes are ready to be merged. However I strongly recommend you to review your changes."
+	ewarn ""
+	einfo "Press 'r' to review your changes or 'y' to merge them to master branch (default 'r')."
+	read choice
+	case "$choice" in
+		y)  
+			ewarn "Your changes will be merged now. Don't break the overlay or I will shoot you down!"
+			git commit -a -m "PyQt4/sip: Automatic version bump, remove old" || exit 2
+			git push || exit 2
+			;;
+		r|"")
+			git diff
+			;;
+		*)	
+			eerror ""
+			eerror "Invalid option. Are you stupid or something?"
+			eerror ""
+			exit 3
+	esac
+
 }
 
 getrevisions(){
@@ -105,17 +111,14 @@ getrevisions(){
 	[[ ${pyqt4_revision} != ${new_pyqt4} ]] && dopyqt4 && FOUND=true;
 	[[ ${sip_revision} != ${new_sip} ]] && dosip && FOUND=true;
 
-	if [[ -n $FOUND ]]; then
+	if [[ -n ${FOUND} ]]; then
 		commit
 		# clean up
-		ebegin "Cleaning up tarballs..."
-		rm ${TEMP}/${SIPKG}.tar.gz || exit
-		rm ${TEMP}/${PYPKG}.tar.gz || exit
-		rm -r ${TEMP}
 		dst=$(portageq envvar DISTDIR)
-		rm ${dst}/${SIPKG}.tar.gz
-		rm ${dst}/${PYPKG}.tar.gz
-		eend $?
+		einfo "Cleaning up tarballs..."
+		[[ -n ${SIPKG} ]] && rm ${TEMP}/${SIPKG}.tar.gz && rm ${dst}/${SIPKG}.tar.gz
+		[[ -n ${PYPKG} ]] && rm ${TEMP}/${PYPKG}.tar.gz && rm ${dst}/${PYPKG}.tar.gz
+		rm -r ${TEMP}
 	fi
 	exit 0
 
