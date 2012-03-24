@@ -87,12 +87,12 @@ getrevisions(){
 	pushd ${OVERLAY}/dev-python/PyQt4/ >> /dev/null
 	pyqt4_tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
 	pyqt4_revision=$(grep ^REVISION ${pyqt4_tomove}|sed "s:^REVISION=::")
-	PVER=$(echo ${pyqt4_tomove}|sed "s:PyQt4-\(.*\)_pre.*:\1:")
+	PVER=$(echo ${pyqt4_tomove/\.\//}|sed "s:PyQt4-\(.*\)_pre.*:\1:")
 	popd >> /dev/null
 	pushd ${OVERLAY}/dev-python/sip/ >> /dev/null
 	sip_tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
 	sip_revision=$(grep ^HG_REVISION ${sip_tomove}|sed "s:^HG_REVISION=::")
-	SVER=$(echo ${sip_tomove}|sed "s:sip-\(.*\)_pre.*:\1:")
+	SVER=$(echo ${sip_tomove/\.\//}|sed "s:sip-\(.*\)_pre.*:\1:")
 	popd >> /dev/null
 
 	einfo "Old Revisions: PyQt4: ${pyqt4_revision}, SIP: ${sip_revision}"
