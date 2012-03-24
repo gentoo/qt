@@ -74,7 +74,7 @@ commit() {
 	case "$choice" in
 		y)  
 			ewarn "Your changes will be merged now. Don't break the overlay or I will shoot you down!"
-			git commit -a -m "PyQt4/sip: Automatic version bump, remove old" || exit 2
+			git commit -a -m "PyQt4/sip: Automated version bump, remove old" || exit 2
 			git push || exit 2
 			;;
 		r|"")
