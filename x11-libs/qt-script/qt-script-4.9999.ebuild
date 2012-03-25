@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,19 +12,20 @@ if [[ ${PV} != 4*9999 ]]; then
 else
 	KEYWORDS=""
 fi
-IUSE="iconv"
+IUSE="iconv +jit"
 
 DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="src/script/"
-	
+
 	if [[ ${PV} != 4*9999 ]]; then
 		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 		include/Qt/
 		include/QtCore/
 		include/QtScript/
+		src/3rdparty/javascriptcore/
 		src/corelib/"
 	fi
 

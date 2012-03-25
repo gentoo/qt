@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/qscintilla/qscintilla-2.4.3.ebuild,v 1.1 2010/03/18 01:13:17 yngwin Exp $
 
-EAPI="2"
+EAPI="3"
 
 inherit qt4-r2
 
@@ -16,10 +16,9 @@ SRC_URI="http://gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc python"
 
-RESTRICT="mirror"
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 PDEPEND="python? ( ~dev-python/qscintilla-python-${PV} )"

@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-svg/qt-svg-4.7.4.ebuild,v 1.1 2011/09/08 09:22:11 wired Exp $
 
@@ -14,7 +14,7 @@ else
 fi
 IUSE="+accessibility iconv"
 
-DEPEND="~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=]"
+DEPEND="~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,debug=,qpa=]"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
@@ -44,9 +44,9 @@ pkg_setup() {
 
 src_configure() {
 	myconf="${myconf} -svg
-		$(qt_use iconv)
 		$(qt_use accessibility)
-		-no-xkb  -no-xrender
+		$(qt_use iconv)
+		-no-xkb -no-xrender
 		-no-xrandr -no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm
 		-no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
