@@ -101,7 +101,10 @@ getrevisions(){
 	SVER=$(echo ${sip_tomove/\.\//}|sed "s:sip-\(.*\)_pre.*:\1:")
 	popd >> /dev/null
 
-	einfo "Old Revisions: PyQt4: ${pyqt4_revision}, SIP: ${sip_revision}"
+	einfo "Old Revisions:"
+	echo
+	einfo "PyQt4: ${pyqt4_revision}"
+	einfo "sip: ${sip_revision}"
 
 	# Find new revisions
 	new_pyqt4=$(curl -s http://www.riverbankcomputing.com/software/pyqt/download|grep "x11-gpl-snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 6|sed "s:\..*::")
@@ -119,6 +122,10 @@ getrevisions(){
 		[[ -n ${SIPKG} ]] && rm ${TEMP}/${SIPKG}.tar.gz && rm ${dst}/${SIPKG}.tar.gz
 		[[ -n ${PYPKG} ]] && rm ${TEMP}/${PYPKG}.tar.gz && rm ${dst}/${PYPKG}.tar.gz
 		rm -r ${TEMP}
+	else
+		echo
+		einfo "No new snapshots. Sorry :-("
+		echo
 	fi
 	exit 0
 
