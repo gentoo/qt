@@ -83,15 +83,16 @@ _do_qm() {
 	[[ $# -ne 2 ]] && die "$FUNCNAME requires exactly 2 arguments!"
 
 	local transfile="$(find "${1}" -type f -name "*${2}".qm)"
-	if [[ -e ${transfile} ]]; then
-		INSDESTTREE="/usr/share/${PN}/${1#${S}}" \
-			doins "${transfile}" \
-			|| die "failed to install ${2} translation"
+	if [[ -f ${transfile} ]]; then
+		(
+			insinto /usr/share/${PN}/"${1#${S}}"
+			doins "${transfile}"
+		) || die "failed to install ${2} translation"
 	else
 		eerror
-		eerror "Failed to install ${2} translation. Contact eclass maintainer."
+		eerror "Failed to install ${2} translation: file not found."
 		eerror
-		die "Failed to install translations"
+		die "failed to install ${2} translation"
 	fi
 }
 
