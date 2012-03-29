@@ -57,12 +57,11 @@ function render_head() {
 					height: 1px;
 					background: #333;
 				}
-				</STYLE>		
+				</STYLE>
 			</HEAD>
 			<BODY>
 			<table cellspacing='0' cellpadding='0' id='mainTable'>
 			<tr><td style='background: #333; color: white;'>Last update: <strong>$dt</strong> (testing: ${1} | stable: ${2})</td></tr>
-			
 		"
 	else
 		echo "The following ebuilds are using the old, deprecated ${eclass}.eclass. (testing: ${1} | stable: ${2})"
@@ -72,7 +71,7 @@ function render_head() {
 
 function render_foot() {
 	if [[ $html == 1 ]]; then
-		echo "	
+		echo "
 			</table>
 			</BODY>
 			</HTML>
@@ -84,7 +83,7 @@ function render() {
 	C=$1;
 	X=$2;
 	shift;
-	
+
 	if [[ $html == 1 ]]; then
 		echo "
 			<tr><td style='height: 5px'></td></tr>
@@ -137,7 +136,7 @@ function check() {
 		P=${C/*\/}
 		C=${C%\/*}
 		C=${C/*\/}
-		KW=$(grep "^KEYWORDS" ${i} | sed -r "s:.*\"(.*)\".*:\1:")
+		KW=$(sed -nre 's:^\s*KEYWORDS="(.+)".*$:\1:p' "${i}")
 		local stable=0
 		for j in ${KW};
 		do
@@ -151,11 +150,11 @@ function check() {
 			EB_S[${#EB_S[*]}]="$C/$P/$E";
 		fi
 	done
-	
+
 	render_head $CNT_T $CNT_S
 	render $CNT_T "testing" ${EB_T[@]}
 	render $CNT_S "stable" ${EB_S[@]}
-	render_foot 
+	render_foot
 }
 
 if [[ $upload == 1 ]] || [[ $view == 1 ]]; then
