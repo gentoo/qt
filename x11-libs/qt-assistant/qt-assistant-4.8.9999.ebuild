@@ -100,7 +100,8 @@ src_compile() {
 
 	if use doc; then
 		emake docs
-	else
+	# live ebuild cannot build qch_docs. It will build them through emake docs
+	elif [[ ${QT4_BUILD_TYPE} == release ]]; then
 		emake qch_docs
 	fi
 }
