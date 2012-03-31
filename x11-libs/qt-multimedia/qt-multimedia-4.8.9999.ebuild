@@ -2,56 +2,59 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
-inherit qt4-build-edge
+EAPI=4
 
-DESCRIPTION="The Qt multimedia module"
+inherit qt4-build
+
+DESCRIPTION="The Multimedia module for the Qt toolkit"
 SLOT="4"
-if [[ ${PV} != 4*9999 ]]; then
-	KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 -sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
-else
+if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 fi
+IUSE="alsa"
 
-IUSE="iconv"
-
-DEPEND="!aqua? ( media-libs/alsa-lib )
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=]
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=]"
+DEPEND="
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=]
+	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,qpa=]
+	alsa? ( media-libs/alsa-lib )
+"
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-4.8.0-alsa.patch"
+)
+
 pkg_setup() {
-	QT4_TARGET_DIRECTORIES="src/multimedia"
+	QT4_TARGET_DIRECTORIES="
+		src/multimedia"
 
-	if [[ ${PV} != 4*9999 ]]; then
-		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-			include/Qt/
-			include/QtCore/
-			include/QtGui/
-			include/QtMultimedia/
-			include/QtNetwork/
-			src/src.pro
-			src/3rdparty/
-			src/corelib/
-			src/gui/
-			src/network/
-			src/plugins/
-			src/tools/"
-	fi
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt
+		include/QtCore
+		include/QtGui
+		include/QtMultimedia
+		src/src.pro
+		src/corelib
+		src/gui"
 
-	qt4-build-edge_pkg_setup
+	QCONFIG_ADD="multimedia"
+	QCONFIG_DEFINE="QT_MULTIMEDIA"
+
+	qt4-build_pkg_setup
 }
 
 src_configure() {
-	myconf="${myconf} $(qt_use iconv) -no-xkb  -no-fontconfig -no-xrender
-		-no-xrandr -no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm
-		-no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
-		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
-		-no-xmlpatterns -no-freetype -no-libtiff  -no-accessibility
-		-no-fontconfig -no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite
-		-no-sql-sqlite2 -no-sql-odbc -no-glib -no-opengl -no-svg -no-gtkstyle
-		-no-phonon-backend -no-script -no-scripttools -no-cups -no-xsync
-		-no-xinput"
+	myconf+="
+		-multimedia -audio-backend
+		$(qt_use alsa)
+		-no-accessibility -no-qt3support -no-xmlpatterns -no-phonon -no-phonon-backend
+		-no-svg -no-webkit -no-script -no-scripttools -no-declarative
+		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg -no-openssl
+		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl
+		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
+		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb"
 
-	qt4-build-edge_src_configure
+	qt4-build_src_configure
 }

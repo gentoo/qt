@@ -1,55 +1,50 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
-if [[ ${PV} == 4*9999 ]]; then
-	QT_ECLASS="-edge"
-fi
+EAPI=4
 
-inherit qt4-build${QT_ECLASS}
+inherit qt4-build
 
 DESCRIPTION="The SQL module for the Qt toolkit"
 SLOT="4"
-if [[ ${PV} != 4*9999 ]]; then
-	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
-else
+if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
 IUSE="firebird freetds mysql odbc postgres qt3support +sqlite"
 
-DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+REQUIRED_USE="
+	|| ( firebird freetds mysql odbc postgres sqlite )
+"
+
+DEPEND="
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support=]
 	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
 	odbc? ( || ( dev-db/unixODBC dev-db/libiodbc ) )
 	postgres? ( dev-db/postgresql-base )
-	sqlite? ( dev-db/sqlite:3 )"
+	sqlite? ( dev-db/sqlite:3 )
+"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
-	src/sql
-	src/plugins/sqldrivers"
+		src/sql
+		src/plugins/sqldrivers"
 
-	if [[ ${PV} != 4*9999 ]]; then
-		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include/Qt/
-		include/QtCore/
-		include/QtSql/
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt
+		include/QtCore
+		include/QtSql
 		src/src.pro
-		src/corelib/
+		src/corelib
 		src/plugins
 		src/tools/tools.pro"
-	fi
 
-	if ! (use firebird || use freetds || use mysql || use odbc || use postgres || use sqlite ); then
-		ewarn "You need to enable at least one SQL driver. Enable at least"
-		ewarn "one of these USE flags: \"firebird freetds mysql odbc postgres sqlite \""
-		die "Enable at least one SQL driver."
-	fi
-
-	qt4-build${QT_ECLASS}_pkg_setup
+	qt4-build_pkg_setup
 }
 
 src_configure() {
@@ -73,5 +68,5 @@ src_configure() {
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
 		-no-glib"
 
-	qt4-build${QT_ECLASS}_src_configure
+	qt4-build_src_configure
 }

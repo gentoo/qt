@@ -1,27 +1,25 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qt-qt3support/qt-qt3support-4.7.4.ebuild,v 1.1 2011/09/08 09:21:19 wired Exp $
+# $Header: $
 
-EAPI="4"
-if [[ ${PV} == 4*9999 ]]; then
-	QT_ECLASS="-edge"
-fi
-inherit qt4-build${QT_ECLASS}
+EAPI=4
+
+inherit qt4-build
 
 DESCRIPTION="The Qt3 support module for the Qt toolkit"
 SLOT="4"
-if [[ ${PV} != 4*9999 ]]; then
-	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 -sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
-else
+if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
-
 IUSE="+accessibility"
 
-DEPEND="~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]
-	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,qpa=,debug=,qt3support]
-	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support]"
-
+DEPEND="
+	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support]
+	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,debug=,qpa=,qt3support]
+	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support]
+"
 RDEPEND="${DEPEND}"
 
 pkg_setup() {
@@ -30,15 +28,19 @@ pkg_setup() {
 		src/tools/uic3
 		tools/designer/src/plugins/widgets
 		tools/porting"
-	if [[ ${PV} != 4*9999 ]]; then
-		QT4_EXTRACT_DIRECTORIES="src include tools"
-	fi
 
-	qt4-build${QT_ECLASS}_pkg_setup
+	QT4_EXTRACT_DIRECTORIES="
+		src
+		include
+		tools"
+
+	qt4-build_pkg_setup
 }
 
 src_configure() {
-	myconf="${myconf} -qt3support
+	myconf+="
+		-qt3support
 		$(qt_use accessibility)"
-	qt4-build${QT_ECLASS}_src_configure
+
+	qt4-build_src_configure
 }
