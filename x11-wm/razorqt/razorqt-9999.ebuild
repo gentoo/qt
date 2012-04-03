@@ -46,6 +46,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/cmake"
 
 RDEPEND="${COMMON_DEPEND}
+	>=x11-misc/xdg-utils-1.1.0_rc1_p20120319
 	|| (
 		x11-wm/openbox
 		kde-base/kwin
@@ -59,6 +60,7 @@ RDEPEND="${COMMON_DEPEND}
 
 src_configure() {
 	local mycmakeargs=(
+		-DBUNDLE_XDG_UTILS=NO
 		$(cmake-utils_use_enable lightdm LIGHTDM_GREETER)
 		$(cmake-utils_use_enable policykit)
 	)
