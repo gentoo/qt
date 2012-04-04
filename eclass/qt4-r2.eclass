@@ -317,7 +317,7 @@ _do_qm() {
 # @FUNCTION: prepare_translations
 # @DESCRIPTION:
 # Choose and install translation files. Normally you don't need to call
-# this function directly as it is called from qt4-edge_src_install.
+# this function directly as it is called from qt4-r2_src_install.
 prepare_translations() {
 	debug-print-function $FUNCNAME "$@"
 
