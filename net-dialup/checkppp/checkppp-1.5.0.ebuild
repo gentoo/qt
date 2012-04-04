@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-edge
+inherit qt4-r2
 
 MY_PN="CheckPPP"
 

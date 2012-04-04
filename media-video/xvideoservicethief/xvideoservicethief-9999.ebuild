@@ -6,7 +6,7 @@ EAPI="2"
 
 LANGS="br ca cs da de es fr gl hu it ja ko nl pl ro ru sv"
 
-inherit qt4-edge versionator subversion
+inherit qt4-r2 versionator subversion
 
 MY_PN="xVST"
 MY_PV=$(replace_all_version_separators '_')
@@ -45,7 +45,7 @@ src_prepare() {
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
 	"${S}"/src/options.cpp || die "failed to fix paths"
-	qt4-edge_src_prepare
+	qt4-r2_src_prepare
 }
 
 src_compile() {

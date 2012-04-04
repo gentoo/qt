@@ -5,7 +5,7 @@
 EAPI=3
 
 KDE_REQUIRED="optional"
-inherit qt4-edge kde4-base subversion
+inherit qt4-r2 kde4-base subversion
 
 DESCRIPTION="Qt MPD client with a tree view music library interface"
 HOMEPAGE="http://lowblog.nl/category/qtmpc/"

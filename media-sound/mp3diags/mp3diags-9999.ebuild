@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-edge subversion
+inherit qt4-r2 subversion
 
 MY_PN=${PN/mp3d/MP3D}
 S=${WORKDIR}/${PN}

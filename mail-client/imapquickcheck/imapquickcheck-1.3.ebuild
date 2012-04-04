@@ -6,7 +6,7 @@ EAPI=4
 
 LANGS="fr"
 
-inherit eutils qt4-edge
+inherit eutils qt4-r2
 
 MY_PN=ImapQuickCheck
 

@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge git-2
+inherit qt4-r2 git-2
 
 DESCRIPTION="Qt utility to change Xcrusor themes without restarting X Server."
 HOMEPAGE="http://gitorious.org/qt-xcurtheme"
@@ -30,7 +30,7 @@ src_prepare() {
 }
 
 src_configure() {
-	qt4-edge_src_configure
+	qt4-r2_src_configure
 	if use tools; then
 		pushd tools/cursorFXconvert/
 		eqmake4
@@ -39,7 +39,7 @@ src_configure() {
 }
 
 src_compile() {
-	qt4-edge_src_compile
+	qt4-r2_src_compile
 	if use tools; then
 		pushd tools/cursorFXconvert/
 		emake

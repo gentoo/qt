@@ -9,7 +9,7 @@ MY_PN="Fritzing"
 LANGS="ar bg cs de el en es et fr gl hi hu it ja ko nl pl ro ru sv th tr"
 LANGSLONG="pt_BR pt_PT zh_CN zh_TW"
 
-inherit eutils qt4-edge
+inherit eutils qt4-r2
 
 DESCRIPTION="breadboard and arduino prototyping"
 HOMEPAGE="http://fritzing.org/"
@@ -54,5 +54,5 @@ src_configure() {
 
 src_install() {
 	doman ${MY_PN}.1
-	qt4-edge_src_install
+	qt4-r2_src_install
 }

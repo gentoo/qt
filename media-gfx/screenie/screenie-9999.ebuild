@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge git-2 multilib
+inherit qt4-r2 git-2 multilib
 
 EGIT_REPO_URI="git://github.com/ariya/screenie.git"
 
@@ -20,7 +20,7 @@ DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
 src_prepare () {
-	qt4-edge_src_prepare
+	qt4-r2_src_prepare
 	sed -i -e "/^Exec/s:Screenie:${PN}:" -e "/^TryExec/s:Screenie:${PN}:" \
 		"${S}"/src/Screenie/res/${PN}.desktop || die
 }

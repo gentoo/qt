@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit multilib qt4-edge
+inherit multilib qt4-r2
 
 MY_PN="QuantumStyle"
 MY_P="${MY_PN}-${PV/*_/}"

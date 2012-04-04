@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge subversion
+inherit qt4-r2 subversion
 
 DESCRIPTION="Qt4 XML Editor"
 HOMEPAGE="http://code.google.com/p/qxmledit/"
@@ -29,11 +29,11 @@ src_prepare(){
 	# fix translations
 	sed -i "/^translations.path/ s/\/opt/\/usr\/share/" src/QXmlEdit.pro || \
 		die "failed to fix translations"
-	qt4-edge_src_prepare
+	qt4-r2_src_prepare
 }
 
 src_install(){
-	qt4-edge_src_install
+	qt4-r2_src_install
 	newicon "${S}"/src/images/icon.png ${PN}.png
 	make_desktop_entry QXmlEdit QXmlEdit ${PN} "Qt;Utility;TextEditor;"
 }

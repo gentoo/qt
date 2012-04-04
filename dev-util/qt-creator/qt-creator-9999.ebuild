@@ -6,17 +6,14 @@ EAPI=4
 
 LANGS="cs de es fr hu it ja pl ru sl uk zh_CN"
 
-inherit multilib eutils flag-o-matic
+inherit multilib eutils flag-o-matic qt4-r2
 
 MY_P=${PN}-${PV/_/-}-src
 if [[ ${PV} == *9999* ]]; then
-	QTCREATOR_SUFFIX="-edge"
-	inherit qt4${QTCREATOR_SUFFIX} git-2
+	inherit git-2
 	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
 			https://git.gitorious.org/${PN}/${PN}.git"
 else
-	QTCREATOR_SUFFIX="-r2"
-	inherit qt4${QTCREATOR_SUFFIX}
 	SRC_URI="http://get.qt.nokia.com/qtcreator/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
 fi

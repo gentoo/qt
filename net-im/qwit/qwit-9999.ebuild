@@ -4,7 +4,7 @@
 
 EAPI="2"
 
-inherit qt4-edge subversion
+inherit qt4-r2 subversion
 
 MY_P=${P/_/-}-src
 

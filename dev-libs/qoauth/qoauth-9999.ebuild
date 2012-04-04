@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge git-2
+inherit qt4-r2 git-2
 
 DESCRIPTION="A Qt-based library for OAuth support"
 HOMEPAGE="http://wiki.github.com/ayoy/qoauth"
@@ -22,7 +22,7 @@ RDEPEND="${COMMON_DEPEND}
 	app-crypt/qca-ossl:2[debug?]"
 
 src_prepare() {
-	qt4-edge_src_prepare
+	qt4-r2_src_prepare
 	sed -i -e '/^ *docs \\$/d' \
 	       -e '/^ *build_all \\$/d' \
 	       -e 's/^\#\(!macx\)/\1/' \

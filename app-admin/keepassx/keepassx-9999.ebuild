@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge cmake-utils git-2
+inherit qt4-r2 cmake-utils git-2
 
 DESCRIPTION="Qt password manager compatible with its Win32 and Pocket PC versions."
 HOMEPAGE="http://keepassx.sourceforge.net/"

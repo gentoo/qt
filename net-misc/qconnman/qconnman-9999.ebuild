@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge git-2
+inherit qt4-r2 git-2
 
 DESCRIPTION="Qt4 Connman Applet"
 HOMEPAGE="https://github.com/OSSystems/qconnman"

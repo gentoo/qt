@@ -7,7 +7,7 @@ EAPI=4
 LANGS="nb_NO pt_BR"
 LANGSLONG="ca_ES cs_CZ de_DE es_ES fr_FR it_IT ja_JP pl_PL"
 
-inherit qt4-edge git-2
+inherit qt4-r2 git-2
 
 DESCRIPTION="A Qt-based microblogging client"
 HOMEPAGE="http://www.qt-apps.org/content/show.php/qTwitter?content=99087"
@@ -30,7 +30,7 @@ S="${WORKDIR}/${PN}"
 DOCS="README CHANGELOG"
 
 src_prepare() {
-	qt4-edge_src_prepare
+	qt4-r2_src_prepare
 	echo "CONFIG += nostrip" >> "${S}"/${PN}.pro
 
 	local langs=

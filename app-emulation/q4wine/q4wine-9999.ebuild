@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge cmake-utils git-2
+inherit qt4-r2 cmake-utils git-2
 
 DESCRIPTION="Qt4 utility for Wine applications and prefixes management."
 HOMEPAGE="http://q4wine.brezblock.org.ua/"

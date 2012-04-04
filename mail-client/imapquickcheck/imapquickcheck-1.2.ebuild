@@ -6,7 +6,7 @@ EAPI="2"
 
 LANGS="fr"
 
-inherit qt4-edge
+inherit qt4-r2
 
 MY_PN=ImapQuickCheck
 MY_P=${MY_PN}-${PV}

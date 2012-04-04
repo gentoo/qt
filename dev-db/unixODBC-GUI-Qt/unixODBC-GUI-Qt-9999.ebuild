@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-edge subversion
+inherit qt4-r2 subversion
 
 DESCRIPTION="Qt4 based GUI for unixODBC"
 HOMEPAGE="http://sourceforge.net/projects/unixodbc-gui-qt/"
