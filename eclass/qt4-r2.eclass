@@ -142,39 +142,9 @@ qt4-r2_src_install() {
 		dodoc "${dir}/${doc}" || die "dodoc failed"
 	done
 
-	# install translations # hwoarang: Is this valid for every package???
+	# install translations
 	# need to have specified LANGS or LANGSLONG for this to work
 	[[ -n ${LANGS} || -n ${LANGSLONG} ]] && prepare_translations
-}
-
-# Internal function, used by eqmake4 and qt4-r2_src_configure
-# Look for project files:
-#   0 *.pro files found - output null string
-#   1 *.pro file found - output its name
-#   2 or more *.pro files found - if ${PN}.pro or $(basename ${S}).pro
-#     are there, output any of them
-# Outputs a project file argument used by eqmake4. Sets nullglob locally
-# to avoid expanding *.pro as "*.pro" when there are no matching files.
-_find_project_file() {
-	local dir_name=$(basename "${S}")
-
-	eshopts_push -s nullglob
-	local pro_files=(*.pro)
-	eshopts_pop
-
-	case ${#pro_files[@]} in
-	1)
-		echo "${pro_files[0]}"
-		;;
-	*)
-		for pro_file in "${pro_files[@]}"; do
-			if [[ ${pro_file} == "${dir_name}.pro" || ${pro_file} == "${PN}.pro" ]]; then
-				echo "${pro_file}"
-				break
-			fi
-		done
-		;;
-	esac
 }
 
 # @FUNCTION: eqmake4
@@ -295,10 +265,66 @@ eqmake4() {
 	return 0
 }
 
+# Internal function, used by eqmake4 and qt4-r2_src_configure.
+# Outputs a project file name that can be passed to eqmake4. Sets nullglob
+# locally to avoid expanding *.pro as "*.pro" when there are no matching files.
+#   0 *.pro files found --> outputs null string
+#   1 *.pro file found --> outputs its name
+#   2 or more *.pro files found --> if ${PN}.pro or $(basename ${S}).pro
+#       are there, outputs any of them
+_find_project_file() {
+	local dir_name=$(basename "${S}")
+
+	eshopts_push -s nullglob
+	local pro_files=(*.pro)
+	eshopts_pop
+
+	case ${#pro_files[@]} in
+	1)
+		echo "${pro_files[0]}"
+		;;
+	*)
+		for pro_file in "${pro_files[@]}"; do
+			if [[ ${pro_file} == "${dir_name}.pro" || ${pro_file} == "${PN}.pro" ]]; then
+				echo "${pro_file}"
+				break
+			fi
+		done
+		;;
+	esac
+}
+
+# @FUNCTION: prepare_translations
+# @DESCRIPTION:
+# Choose and install translation files. Normally you don't need to call
+# this function directly as it is called from qt4-r2_src_install.
+prepare_translations() {
+	debug-print-function $FUNCNAME "$@"
+
+	# @VARIABLE: TRANSLATIONSDIR
+	# @DESCRIPTION: Translations directory, defaults to ${S}.
+	local roottrdir=${TRANSLATIONSDIR:-${S}}
+	local trdir=.
+	# Find translations directory
+	for dir in lang langs translations; do
+		[[ -d ${roottrdir}/${dir} ]] && trdir=${roottrdir}/${dir}
+        done
+
+	local lang=
+	for lang in ${LINGUAS}; do
+		for x in ${LANGS}; do
+			[[ ${lang} == ${x%_*} ]] && _do_qm "${trdir}" "${x}"
+		done
+		for x in ${LANGSLONG}; do
+			[[ ${lang} == ${x} ]] && _do_qm "${trdir}" "${x}"
+		done
+	done
+}
+
 # Internal function
 _do_qm() {
 	debug-print-function $FUNCNAME "$@"
-	[[ $# -ne 2 ]] && die "$FUNCNAME requires exactly 2 arguments!"
+	[[ $# -ne 2 ]] && die "$FUNCNAME() requires exactly 2 arguments!"
 
 	local transfile="$(find "${1}" -type f -name "*${2}".qm)"
 	if [[ -f ${transfile} ]]; then
@@ -312,34 +338,6 @@ _do_qm() {
 		eerror
 		die "failed to install ${2} translation"
 	fi
-}
-
-# @VARIABLE: TRANSLATIONSDIR
-# @DESCRIPTION: Translations directory. If not set, ${S} will be used
-
-# @FUNCTION: prepare_translations
-# @DESCRIPTION:
-# Choose and install translation files. Normally you don't need to call
-# this function directly as it is called from qt4-r2_src_install.
-prepare_translations() {
-	debug-print-function $FUNCNAME "$@"
-
-	# Find translations directory
-	# Changed default to . - crazy upstreams :)
-	local roottrdir="${TRANSLATIONSDIR:-${S}}" trdir=.
-	for dir in lang langs translations; do
-		[[ -d ${roottrdir}/${dir} ]] && trdir="${roottrdir}/${dir}"
-        done
-
-	local lang=
-	for lang in ${LINGUAS}; do
-		for x in ${LANGS}; do
-			[[ ${lang} == ${x%_*} ]] && _do_qm "${trdir}" ${x}
-		done
-		for x in ${LANGSLONG}; do
-			[[ ${lang} == ${x} ]] && _do_qm "${trdir}" ${x}
-		done
-	done
 }
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install
