@@ -4,19 +4,24 @@
 
 EAPI=4
 
-inherit cmake-utils git-2
+inherit cmake-utils
 
 DESCRIPTION="Qt4-based filemanager"
 HOMEPAGE="https://gitorious.org/andromeda/pages/Home"
-EGIT_REPO_URI="git://gitorious.org/$PN/${PN}.git"
+SRC_URI="https://gitorious.org/${PN}/${PN}/archive-tarball/v${PV} -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=x11-libs/qt-core-4.7.0:4
 	>=x11-libs/qt-gui-4.7.0:4
 	>=x11-libs/qt-webkit-4.7.0:4"
 RDEPEND="${DEPEND}"
-DOCS="TODO.txt dist/changes-0.2"
+DOCS="TODO.txt dist/changes-${PV}"
+
+src_unpack() {
+	default
+	mv ${PN}-${PN} "${S}" || die
+}
