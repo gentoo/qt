@@ -21,9 +21,9 @@ IUSE="debug"
 
 DEPEND="x11-libs/qt-core:4
 	x11-libs/qt-gui:4
-	x11-libs/qt-sql:4"
+	x11-libs/qt-sql:4[sqlite]"
 RDEPEND="${DEPEND}
-	dev-python/pysqlite:2"
+	dev-lang/python[sqlite]"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-desktopfile.patch
