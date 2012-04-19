@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.123 2012/03/08 14:24:40 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.125 2012/04/19 14:52:12 pesa Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -56,6 +56,8 @@ fi
 RDEPEND="
 	!<x11-libs/qt-assistant-${PV}
 	!>x11-libs/qt-assistant-${PV}-r9999
+	!<x11-libs/qt-bearer-${PV}
+	!>x11-libs/qt-bearer-${PV}-r9999
 	!<x11-libs/qt-core-${PV}
 	!>x11-libs/qt-core-${PV}-r9999
 	!<x11-libs/qt-dbus-${PV}
