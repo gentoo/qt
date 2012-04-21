@@ -148,6 +148,8 @@ src_configure() {
 			LINK_SHLIB="$(tc-getCXX)"
 			CFLAGS="${CFLAGS}"
 			CXXFLAGS="${CXXFLAGS}"
+			CFLAGS_RELEASE=
+			CXXFLAGS_RELEASE=
 			LFLAGS="${LDFLAGS}")
 		echo "${myconf[@]}"
 		"${myconf[@]}" || die
