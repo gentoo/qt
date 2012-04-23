@@ -8,7 +8,7 @@ inherit qt4-r2 git-2 multilib
 
 EGIT_REPO_URI="git://github.com/ariya/screenie.git"
 
-DESCRIPTION="A small QT-based tool to allow you to compose fancy and stylish screenshots"
+DESCRIPTION="A small Qt-based tool to allow you to compose fancy and stylish screenshots"
 HOMEPAGE="http://code.google.com/p/screenie"
 
 LICENSE="GPL-2 GPL-3"
