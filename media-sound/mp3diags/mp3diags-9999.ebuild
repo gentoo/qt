@@ -1,13 +1,12 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
-inherit qt4-r2 subversion
+inherit eutils qt4-r2 subversion
 
-MY_PN=${PN/mp3d/MP3D}
-S=${WORKDIR}/${PN}
+MY_PN=MP3Diags
 
 DESCRIPTION="Qt-based MP3 diagnosis and repair tool"
 HOMEPAGE="http://mp3diags.sourceforge.net"
@@ -16,33 +15,35 @@ ESVN_REPO_URI="http://${PN}.svn.sourceforge.net/svnroot/${PN}/trunk/${PN}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug doc"
+IUSE="doc"
 
-DEPEND="x11-libs/qt-gui:4[debug?]
-	>=dev-libs/boost-1.37"
+DEPEND="
+	>=dev-libs/boost-1.37
+	x11-libs/qt-core:4
+	x11-libs/qt-gui:4
+"
 RDEPEND="${DEPEND}
-	x11-libs/qt-svg:4[debug?]"
+	x11-libs/qt-svg:4
+"
+
+S=${WORKDIR}/${PN}
 
 src_prepare() {
 	if use doc; then
-		sed -i -e "s/QQQVERQQQ/${PV}/" src/Helpers.cpp || die "sed failed"
+		sed -i -e "s/QQQVERQQQ/${PV}/" src/Helpers.cpp || die
 	fi
 }
 
 src_install() {
-	dobin bin/${MY_PN} || die "installing binary failed"
-	dodoc changelog.txt || die "dodoc failed"
+	dobin bin/${MY_PN}
+	dodoc changelog.txt
 
-	domenu desktop/${MY_PN}.desktop || die "installing desktop file failed"
-
-	local icon_sizes="16 22 24 32 36 48"
-	for size in ${icon_sizes}; do
+	local size
+	for size in 16 22 24 32 36 40 48; do
 		insinto /usr/share/icons/hicolor/${size}x${size}/apps
-		newins desktop/${MY_PN}${size}.png ${MY_PN}.png \
-			|| die "installing icons failed"
+		newins desktop/${MY_PN}${size}.png ${MY_PN}.png
 	done
+	domenu desktop/${MY_PN}.desktop
 
-	if use doc; then
-		dohtml doc/html/* || die "installing documentation failed"
-	fi
+	use doc && dohtml doc/html/*
 }
