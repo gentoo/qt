@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.125 2012/04/19 14:52:12 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.126 2012/04/25 17:43:50 grobian Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -504,21 +504,38 @@ qt4-build_src_test() {
 # being used, to avoid complications with some more or less stupid packages.
 fix_includes() {
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
+		local frw dest f h rdir
 		# Some packages tend to include <Qt/...>
 		dodir "${QTHEADERDIR#${EPREFIX}}"/Qt
 
-		# Fake normal headers when frameworks are installed... eases life later on
-		local dest f h
+		# Fake normal headers when frameworks are installed... eases life later
+		# on, make sure we use relative links though, as some ebuilds assume
+		# these dirs exist in src_install to add additional files
+		f=${QTHEADERDIR}
+		h=${QTLIBDIR}
+		while [[ -n ${f} && ${f%%/*} == ${h%%/*} ]] ; do
+			f=${f#*/}
+			h=${h#*/}
+		done
+		rdir=${h}
+		f="../"
+		while [[ ${h} == */* ]] ; do
+			f="${f}../"
+			h=${h#*/}
+		done
+		rdir="${f}${rdir}"
+
 		for frw in "${D}${QTLIBDIR}"/*.framework; do
 			[[ -e "${frw}"/Headers ]] || continue
 			f=$(basename ${frw})
 			dest="${QTHEADERDIR#${EPREFIX}}"/${f%.framework}
-			dosym "${QTLIBDIR#${EPREFIX}}"/${f}/Headers "${dest}"
+			dosym "${rdir}"/${f}/Headers "${dest}"
 
 			# Link normal headers as well.
 			for hdr in "${D}/${QTLIBDIR}/${f}"/Headers/*; do
 				h=$(basename ${hdr})
-				dosym "${QTLIBDIR#${EPREFIX}}"/${f}/Headers/${h} "${QTHEADERDIR#${EPREFIX}}"/Qt/${h}
+				dosym "../${rdir}"/${f}/Headers/${h} \
+					"${QTHEADERDIR#${EPREFIX}}"/Qt/${h}
 			done
 		done
 	fi
