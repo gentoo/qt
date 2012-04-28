@@ -4,8 +4,6 @@
 
 EAPI=4
 
-CMAKE_IN_SOURCE_BUILD="1"
-
 PYTHON_DEPEND="2:2.6 3:3.2"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="2.4 2.5 3.1 *-jython 2.7-pypy-*"
@@ -22,11 +20,18 @@ KEYWORDS=""
 IUSE="test"
 
 RDEPEND="
-	~dev-python/apiextractor-${PV}
-	~dev-python/generatorrunner-${PV}
+	>=dev-libs/libxml2-2.6.32
+	>=dev-libs/libxslt-1.1.19
 	>=x11-libs/qt-core-4.7.0:4
+	>=x11-libs/qt-xmlpatterns-4.7.0:4
+	!dev-python/apiextractor
+	!dev-python/generatorrunner
 "
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	test? (
+		>=x11-libs/qt-gui-4.7.0:4
+		>=x11-libs/qt-test-4.7.0:4
+	)"
 
 S=${WORKDIR}/${PN}
 
@@ -35,8 +40,6 @@ src_prepare() {
 	# caused by the usage of a different version suffix with python >= 3.2
 	sed -i -e "/get_config_var('SOABI')/d" \
 		cmake/Modules/FindPython3InterpWithDebug.cmake || die
-
-	python_src_prepare
 }
 
 src_configure() {
@@ -55,29 +58,29 @@ src_configure() {
 			)
 		fi
 
-		CMAKE_USE_DIR="${BUILDDIR}" cmake-utils_src_configure
+		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_configure
 	}
-	python_execute_function -s configuration
+	python_execute_function configuration
 }
 
 src_compile() {
 	compilation() {
-		CMAKE_USE_DIR="${BUILDDIR}" cmake-utils_src_make
+		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_make
 	}
-	python_execute_function -s compilation
+	python_execute_function compilation
 }
 
 src_test() {
 	testing() {
-		CMAKE_USE_DIR="${BUILDDIR}" cmake-utils_src_test
+		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_test
 	}
-	python_execute_function -s testing
+	python_execute_function testing
 }
 
 src_install() {
 	installation() {
-		CMAKE_USE_DIR="${BUILDDIR}" cmake-utils_src_install
+		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_install
 		mv "${ED}"usr/$(get_libdir)/pkgconfig/${PN}{,-python${PYTHON_ABI}}.pc || die
 	}
-	python_execute_function -s installation
+	python_execute_function installation
 }
