@@ -11,7 +11,7 @@ RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
 
 inherit toolchain-funcs qt4-r2 python
 
-REVISION=b656a91810b6
+REVISION=57236e12b4e2
 
 # Minimal supported version of Qt.
 QT_VER="4.7.2"
