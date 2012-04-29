@@ -19,4 +19,4 @@ DEPEND=">=x11-libs/qt-core-4.7.0:4
 	>=x11-libs/qt-gui-4.7.0:4
 	>=x11-libs/qt-webkit-4.7.0:4"
 RDEPEND="${DEPEND}"
-DOCS="TODO.txt dist/changes-0.2"
+DOCS="TODO.txt dist/changes-*"
