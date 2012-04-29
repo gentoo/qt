@@ -5,6 +5,7 @@ app-office/qcharselect
 app-text/goldendict
 app-text/kchmviewer
 app-text/qpdfview
+media-sound/qastools
 media-sound/qmpdclient  # alternative: clementine
 media-video/smplayer    # alternative: vlc
 net-im/qtwitter         # alternative: qwit
@@ -23,7 +24,7 @@ x11-terms/qterminal
 # qtvim
 
 # possible additions:
-# net-p2p/transmission
+# net-p2p/transmission or qbittorrent
 # app-emulation/q4wine
 # app-emulation/qtemu
 
