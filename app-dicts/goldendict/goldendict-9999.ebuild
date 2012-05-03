@@ -30,7 +30,7 @@ RDEPEND=">=app-text/hunspell-1.2
 	) )
 	kde? ( media-libs/phonon )"
 DEPEND="${RDEPEND}
-	dev-util/pkgconfig"
+	virtual/pkgconfig"
 
 src_prepare() {
 	qt4-r2_src_prepare
