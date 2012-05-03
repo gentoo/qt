@@ -72,7 +72,7 @@ RDEPEND="
 	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QT_VER}:4 )
 "
 DEPEND="${RDEPEND}
-	dbus? ( dev-util/pkgconfig )
+	dbus? ( virtual/pkgconfig )
 "
 
 S=${WORKDIR}/${MY_P}
