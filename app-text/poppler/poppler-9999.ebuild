@@ -42,7 +42,7 @@ COMMON_DEPEND="
 	tiff? ( media-libs/tiff )
 "
 DEPEND="${COMMON_DEPEND}
-	dev-util/pkgconfig
+	virtual/pkgconfig
 "
 RDEPEND="${COMMON_DEPEND}
 	!dev-libs/poppler
