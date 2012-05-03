@@ -32,7 +32,7 @@ RDEPEND="
 	examples? ( >=x11-libs/qt-webkit-4.6.0:4 )
 "
 DEPEND="${RDEPEND}
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	test? ( >=x11-libs/qt-test-4.6.0:4 )
 	!!<net-libs/qmf-2.0_p201209
 "
