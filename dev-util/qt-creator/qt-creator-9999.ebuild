@@ -43,7 +43,7 @@ CDEPEND="
 	!botan-bundled? ( =dev-libs/botan-1.8* )
 "
 DEPEND="${CDEPEND}
-	!botan-bundled? ( dev-util/pkgconfig )
+	!botan-bundled? ( virtual/pkgconfig )
 "
 RDEPEND="${CDEPEND}
 	>=sys-devel/gdb-7.2[python]
