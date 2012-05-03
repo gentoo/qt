@@ -48,7 +48,7 @@ if version_is_at_least 4.8; then
 	IUSE+=" c++0x qpa"
 fi
 
-DEPEND="dev-util/pkgconfig"
+DEPEND="virtual/pkgconfig"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	DEPEND+=" dev-lang/perl"
 fi
