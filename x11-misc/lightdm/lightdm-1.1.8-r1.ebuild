@@ -27,9 +27,9 @@ RDEPEND="dev-libs/glib:2
 		x11-libs/qt-gui:4 )"
 DEPEND="${RDEPEND}
 	dev-util/intltool
-	dev-util/pkgconfig
 	gnome-base/gnome-common
-	sys-devel/gettext"
+	sys-devel/gettext
+	virtual/pkgconfig"
 PDEPEND="gtk? ( x11-misc/lightdm-gtk-greeter )"
 
 DOCS=( NEWS )
