@@ -61,7 +61,7 @@ PDEPEND="
 "
 
 src_prepare() {
-	qt4${QTCREATOR_SUFFIX}_src_prepare
+	qt4-r2_src_prepare
 
 	# disable unwanted plugins
 	for plugin in "${QTC_PLUGINS[@]#[+-]}"; do
