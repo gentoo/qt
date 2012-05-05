@@ -102,9 +102,8 @@ getrevisions(){
 	popd >> /dev/null
 
 	einfo "Old Revisions:"
-	echo
-	einfo "PyQt4: ${pyqt4_revision}"
-	einfo "sip: ${sip_revision}"
+	einfo "PyQt4 : ${pyqt4_revision}"
+	einfo "sip   : ${sip_revision}"
 
 	# Find new revisions
 	new_pyqt4=$(curl -s http://www.riverbankcomputing.com/software/pyqt/download|grep "x11-gpl-snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 6|sed "s:\..*::")
@@ -123,9 +122,9 @@ getrevisions(){
 		[[ -n ${PYPKG} ]] && rm ${TEMP}/${PYPKG}.tar.gz && rm ${dst}/${PYPKG}.tar.gz
 		rm -r ${TEMP}
 	else
-		echo
-		einfo "No new snapshots. Sorry :-("
-		echo
+		ewarn ""
+		ewarn "No new snapshots. Sorry :-("
+		ewarn ""
 	fi
 	exit 0
 
