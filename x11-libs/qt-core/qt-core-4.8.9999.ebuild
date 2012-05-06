@@ -8,11 +8,7 @@ inherit qt4-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
-if [[ ${QT4_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
-fi
+KEYWORDS=""
 IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 DEPEND="
@@ -26,6 +22,10 @@ RDEPEND="${DEPEND}"
 PDEPEND="
 	qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,glib=,qpa=,qt3support] )
 "
+
+PATCHES=(
+	"${FILESDIR}/moc-workaround-for-boost-1.48.patch"
+)
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
