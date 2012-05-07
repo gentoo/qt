@@ -3,17 +3,15 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
-		<flag name='compat'>Build the extra compatibility package required by
-		a few packages. More information at
-		http://labs.qt.nokia.com/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/</flag>
+		<flag name='compat'>Build the extra compatibility layer required by a few packages,
+			see http://labs.qt.nokia.com/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/</flag>
 		<flag name='exceptions'>Add support for exceptions - like catching them
-		inside the event loop (recommended by Nokia)</flag>
+			inside the event loop (recommended by Nokia)</flag>
 		<flag name='qt3support'>Enable the Qt3Support libraries for Qt4. Note that
-		this does not mean you can compile pure Qt3 programs with Qt4.</flag>
+			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name='trace'>Build the qttracereplay utility which is required to 
-		play drawings recorded with the trace graphicssystem engine</flag>
+			play drawings recorded with the trace graphicssystem engine</flag>
 		<flag name='glib'>Enable <pkg>dev-libs/glib</pkg> eventloop support</flag>
-		<flag name='webkit'>Build the WebView QML element</flag>
 		<flag name='c++0x'>Build Qt using the C++11 standard</flag>
 		<flag name='qpa'>Build a window system agnostic implementation of Qt</flag>
 	</use>
