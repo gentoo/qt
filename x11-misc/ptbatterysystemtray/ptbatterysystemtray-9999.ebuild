@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI=4
 
 inherit qt4-r2 git-2
 
@@ -19,5 +19,5 @@ DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
 src_configure() {
-	eqmake4 PtBatterySystemTray.pro INSTALL_PREFIX=/usr
+	eqmake4 ${PN}.pro INSTALL_PREFIX=/usr
 }
