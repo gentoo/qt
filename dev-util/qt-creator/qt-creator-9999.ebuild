@@ -33,7 +33,7 @@ QT_PV="4.7.4:4"
 
 CDEPEND="
 	>=x11-libs/qt-assistant-${QT_PV}[doc?]
-	>=x11-libs/qt-core-${QT_PV}[private-headers(+)]
+	>=x11-libs/qt-core-${QT_PV}[private-headers(+),ssl]
 	>=x11-libs/qt-declarative-${QT_PV}[private-headers(+)]
 	>=x11-libs/qt-gui-${QT_PV}[private-headers(+)]
 	>=x11-libs/qt-script-${QT_PV}[private-headers(+)]
