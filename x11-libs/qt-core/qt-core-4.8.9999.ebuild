@@ -8,7 +8,11 @@ inherit qt4-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 SLOT="4"
-KEYWORDS=""
+if [[ ${QT4_BUILD_TYPE} == live ]]; then
+	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
+fi
 IUSE="+glib iconv optimized-qmake qt3support ssl"
 
 DEPEND="

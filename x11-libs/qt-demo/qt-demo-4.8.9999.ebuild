@@ -8,7 +8,11 @@ inherit qt4-build
 
 DESCRIPTION="Demonstration module and examples for the Qt toolkit"
 SLOT="4"
-KEYWORDS=""
+if [[ ${QT4_BUILD_TYPE} == live ]]; then
+	KEYWORDS=""
+else
+	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x64-macos"
+fi
 IUSE="dbus declarative kde multimedia opengl openvg qt3support webkit xmlpatterns"
 
 DEPEND="
