@@ -32,14 +32,12 @@ pkg_setup() {
 		tools/qdbus/qdbusxml2cpp
 		tools/qdbus/qdbuscpp2xml"
 
-	if [[ ${PV} != 4*9999 ]]; then
-		QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-			include/QtCore
-			include/QtDBus
-			include/QtXml
-			src/corelib
-			src/xml"
-	fi
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/QtCore
+		include/QtDBus
+		include/QtXml
+		src/corelib
+		src/xml"
 
 	QCONFIG_ADD="dbus dbus-linked"
 	QCONFIG_DEFINE="QT_DBUS"

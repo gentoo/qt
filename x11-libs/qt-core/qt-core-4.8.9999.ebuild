@@ -45,33 +45,31 @@ pkg_setup() {
 		tools/linguist/lrelease
 		tools/linguist/lupdate"
 
-	# This is not needed in live ebuilds since the git repo contains everything
-	if [[ ${PV} != 4*9999 ]]; then
-		QT4_EXTRACT_DIRECTORIES=" ${QT4_TARGET_DIRECTORIES}
-			include/Qt
-			include/QtCore
-			include/QtDeclarative
-			include/QtGui
-			include/QtNetwork
-			include/QtScript
-			include/QtXml
-			src/plugins/plugins.pro
-			src/plugins/qpluginbase.pri
-			src/src.pro
-			src/3rdparty/des
-			src/3rdparty/harfbuzz
-			src/3rdparty/md4
-			src/3rdparty/md5
-			src/3rdparty/sha1
-			src/3rdparty/easing
-			src/3rdparty/zlib_dependency.pri
-			src/declarative
-			src/gui
-			src/script
-			tools/shared
-			tools/linguist/shared
-			translations"
-	fi
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include/Qt
+		include/QtCore
+		include/QtDeclarative
+		include/QtGui
+		include/QtNetwork
+		include/QtScript
+		include/QtXml
+		src/plugins/plugins.pro
+		src/plugins/qpluginbase.pri
+		src/src.pro
+		src/3rdparty/des
+		src/3rdparty/harfbuzz
+		src/3rdparty/md4
+		src/3rdparty/md5
+		src/3rdparty/sha1
+		src/3rdparty/easing
+		src/3rdparty/zlib_dependency.pri
+		src/declarative
+		src/gui
+		src/script
+		tools/shared
+		tools/linguist/shared
+		translations"
+
 	qt4-build_pkg_setup
 }
 
