@@ -7,13 +7,17 @@ EAPI=4
 inherit qt4-build
 
 DESCRIPTION="The Help module and Assistant application for the Qt toolkit"
-SRC_URI+=" compat? ( ftp://ftp.qt.nokia.com/qt/source/${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz )"
-SLOT="4"
+SRC_URI+="
+	compat? (
+		ftp://ftp.qt.nokia.com/qt/source/${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz
+		http://dev.gentoo.org/~pesa/distfiles/${PN}-compat-headers-4.7.tar.gz
+	)"
 
+SLOT="4"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~ppc-macos"
+	KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~ppc-macos ~x64-macos"
 fi
 IUSE="compat doc +glib qt3support trace webkit"
 
@@ -53,12 +57,11 @@ src_unpack() {
 	# compat version
 	# http://labs.qt.nokia.com/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
 	if use compat; then
-		unpack ${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz
+		unpack ${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz \
+			${PN}-compat-headers-4.7.tar.gz
 		mv "${WORKDIR}"/${PN}-qassistantclient-library-compat-version-4.6.3 \
-			"${S}"/tools/assistant/compat ||
-				die "moving compat to the right place failed"
-		tar xzf "${FILESDIR}"/${PN}-4.7-include.tar.gz -C "${S}"/include/ ||
-			die "unpacking the include files failed"
+			"${S}"/tools/assistant/compat || die
+		mv "${WORKDIR}"/QtAssistant "${S}"/include/ || die
 	fi
 }
 
@@ -100,8 +103,8 @@ src_compile() {
 
 	if use doc; then
 		emake docs
-	# live ebuild cannot build qch_docs. It will build them through emake docs
 	elif [[ ${QT4_BUILD_TYPE} == release ]]; then
+		# live ebuild cannot build qch_docs, it will build them through emake docs
 		emake qch_docs
 	fi
 }
