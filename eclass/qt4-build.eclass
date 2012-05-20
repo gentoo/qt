@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.128 2012/05/07 21:28:01 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.129 2012/05/20 17:12:34 pesa Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -580,8 +580,9 @@ setqtenv() {
 	QT_INSTALL_PREFIX=${EPREFIX}/usr/$(get_libdir)/qt4
 
 	PLATFORM=$(qt_mkspecs_dir)
-
 	unset QMAKESPEC
+
+	export XDG_CONFIG_HOME="${T}"
 }
 
 # @FUNCTION: prepare_directories
