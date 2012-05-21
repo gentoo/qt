@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-build
+inherit eutils qt4-build
 
 DESCRIPTION="The GUI module for the Qt toolkit"
 SLOT="4"

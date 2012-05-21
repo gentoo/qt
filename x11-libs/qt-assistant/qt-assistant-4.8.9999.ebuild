@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt4-build
+inherit eutils qt4-build
 
 DESCRIPTION="The Help module and Assistant application for the Qt toolkit"
 SRC_URI+="

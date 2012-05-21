@@ -9,7 +9,7 @@ PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
 
-inherit toolchain-funcs qt4-r2 python
+inherit eutils toolchain-funcs qt4-r2 python
 
 REVISION=57236e12b4e2
 
