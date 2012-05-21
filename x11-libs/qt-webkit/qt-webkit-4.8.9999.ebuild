@@ -13,10 +13,9 @@ if [[ ${QT4_BUILD_TYPE} == live ]]; then
 else
 	KEYWORDS="~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
-IUSE="+gstreamer +icu +jit"
+IUSE="+gstreamer icu +jit"
 
-REQUIRED_USE="gstreamer? ( icu )" #407315
-
+# For the libxml2[icu] blocker see bugs 407315 and 411091
 DEPEND="
 	dev-db/sqlite:3
 	x11-libs/libX11
@@ -28,6 +27,7 @@ DEPEND="
 		dev-libs/glib:2
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-base:0.10
+		!icu? ( !!dev-libs/libxml2[icu] )
 	)
 	icu? ( dev-libs/icu )
 "
