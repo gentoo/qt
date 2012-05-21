@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,7 +6,7 @@ EAPI="2"
 
 LANGS="br ca cs da de es fr gl hu it ja ko nl pl ro ru sv"
 
-inherit qt4-r2 versionator subversion
+inherit eutils qt4-r2 versionator subversion
 
 MY_PN="xVST"
 MY_PV=$(replace_all_version_separators '_')
@@ -27,7 +27,7 @@ RDEPEND="x11-libs/qt-gui:4
 	media-video/ffmpeg
 	media-video/flvstreamer"
 
-S="${WORKDIR}"
+S=${WORKDIR}
 TRANSLATIONSDIR="${S}/resources"
 
 src_prepare() {
@@ -44,13 +44,15 @@ src_prepare() {
 
 	# fix plugins, language path
 	sed -i -e "s/getApplicationPath()\ +\ \"/\"\/usr\/share\/${PN}/g" \
-	"${S}"/src/options.cpp || die "failed to fix paths"
+		"${S}"/src/options.cpp || die "failed to fix paths"
+
 	qt4-r2_src_prepare
 }
 
 src_compile() {
+	qt4-r2_src_compile
+
 	local lang=
-	emake || die "emake failed"
 	for lang in "${S}"/resources/translations/*.ts; do
 		lrelease ${lang}
 	done
@@ -63,11 +65,10 @@ src_install() {
 	make_desktop_entry /usr/bin/xvst xVideoServiceThief xvst 'Qt;AudioVideo;Video' \
 		|| die "make_desktop_entry failed"
 
-	#install plugins
+	# install plugins
 	local dest=/usr/share/${PN}/plugins
 	dodir ${dest}
 	find resources/services -name '*.js' -exec cp -dpR {} "${D}"${dest} \;
 
-	#install translations
-	prepare_translations
+	qt4-r2_install_translations
 }

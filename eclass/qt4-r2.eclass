@@ -153,7 +153,7 @@ qt4-r2_src_install() {
 
 	# install translations
 	# need to have specified LANGS or LANGSLONG for this to work
-	[[ -n ${LANGS} || -n ${LANGSLONG} ]] && prepare_translations
+	[[ -n ${LANGS} || -n ${LANGSLONG} ]] && qt4-r2_install_translations
 }
 
 # @FUNCTION: eqmake4
@@ -303,11 +303,11 @@ _find_project_file() {
 	esac
 }
 
-# @FUNCTION: prepare_translations
+# @FUNCTION: qt4-r2_install_translations
 # @DESCRIPTION:
 # Choose and install translation files. Normally you don't need to call
 # this function directly as it is called from qt4-r2_src_install.
-prepare_translations() {
+qt4-r2_install_translations() {
 	debug-print-function $FUNCNAME "$@"
 
 	# @VARIABLE: TRANSLATIONSDIR
