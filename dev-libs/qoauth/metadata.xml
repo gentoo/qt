@@ -2,11 +2,4 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>qt</herd>
-<maintainer>
-<email>d@ayoy.net</email>
-<name>Dominik Kapusta</name>
-</maintainer>
-<longdescription lang="en">
-</longdescription>
 </pkgmetadata>
-

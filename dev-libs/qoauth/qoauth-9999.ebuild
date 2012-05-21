@@ -13,40 +13,50 @@ EGIT_REPO_URI="git://github.com/ayoy/${PN}"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug doc test"
+IUSE="debug doc static-libs test"
 
 COMMON_DEPEND="app-crypt/qca:2[debug?]"
 DEPEND="${COMMON_DEPEND}
-	doc? ( app-doc/doxygen )"
+	doc? ( app-doc/doxygen )
+	test? ( x11-libs/qt-test:4 )
+"
 RDEPEND="${COMMON_DEPEND}
-	app-crypt/qca-ossl:2[debug?]"
+	app-crypt/qca-ossl:2[debug?]
+"
+
+DOCS="README CHANGELOG"
 
 src_prepare() {
 	qt4-r2_src_prepare
-	sed -i -e '/^ *docs \\$/d' \
-	       -e '/^ *build_all \\$/d' \
-	       -e 's/^\#\(!macx\)/\1/' \
-	    src/src.pro || die "sed failed"
-
-	sed -i -e "s/\(.*\)lib$/\1$(get_libdir)/" src/pcfile.sh || die "sed failed"
 
 	if ! use test; then
-		sed -i -e 's/^\(SUBDIRS.*\) tests/\1/' ${PN}.pro || die "sed failed"
+		sed -i -e '/SUBDIRS/s/tests//' ${PN}.pro || die "sed failed"
 	fi
+
+	sed -i -e '/^ *docs \\$/d' \
+		-e '/^ *build_all \\$/d' \
+		-e 's/^\#\(!macx\)/\1/' \
+		src/src.pro || die "sed failed"
+
+	sed -i -e "s/\(.*\)lib$/\1$(get_libdir)/" src/pcfile.sh || die "sed failed"
 }
 
 src_compile() {
 	default
-	emake -C src static
+	if use static-libs; then
+		emake -C src static
+	fi
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install
-	dolib.a "${S}/lib/lib${PN}.a"
-	dodoc README CHANGELOG
+	qt4-r2_src_install
+
+	if use static-libs; then
+		dolib.a "${S}"/lib/lib${PN}.a
+	fi
 
 	if use doc; then
-		doxygen "${S}/Doxyfile" || die "Failed to generate documentation"
+		doxygen "${S}"/Doxyfile || die "failed to generate documentation"
 		dohtml "${S}"/doc/html/*
 	fi
 }
