@@ -71,7 +71,7 @@ unset x
 # @CODE
 #	PATCHES=(
 #		"${FILESDIR}/mypatch.patch"
-#		"${FILESDIR}/patches_folder/"
+#		"${FILESDIR}/mypatch2.patch"
 #	)
 # @CODE
 
