@@ -36,6 +36,7 @@ RDEPEND="${DEPEND}"
 PATCHES=(
 	"${FILESDIR}/${PN}-4.8.0-c++0x-fix.patch"
 	"${FILESDIR}/${PN}-4.8.1+glib-2.31.patch"
+	"${FILESDIR}/${PN}-4.8.1-no-use-ld-gold.patch"
 )
 
 pkg_setup() {
