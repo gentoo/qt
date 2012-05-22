@@ -21,7 +21,7 @@ DEPEND="
 	icu? ( >=dev-libs/icu-49 )
 	ssl? ( dev-libs/openssl )
 	!<x11-libs/cairo-1.10.2-r2
-	!<x11-libs/qt-4.4.0:4
+	!x11-libs/qt:4
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
@@ -94,14 +94,14 @@ src_configure() {
 		-no-accessibility -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon
 		-no-phonon-backend -no-svg -no-webkit -no-script -no-scripttools -no-declarative
 		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg
-		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl
+		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl -no-openvg
 		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
 		$(qt_use glib)
 		$(qt_use iconv)
 		$(qt_use icu)
 		$(qt_use optimized-qmake)
-		$(qt_use ssl openssl)
+		$(use ssl && echo -openssl-linked || echo -no-openssl)
 		$(qt_use qt3support)"
 
 	qt4-build_src_configure
