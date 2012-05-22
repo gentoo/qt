@@ -16,13 +16,13 @@ fi
 IUSE="dbus declarative kde multimedia opengl openvg qt3support webkit xmlpatterns"
 
 DEPEND="
+	~x11-libs/qt-assistant-${PV}:4[aqua=,c++0x=,debug=,qpa=]
 	~x11-libs/qt-core-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?]
 	~x11-libs/qt-gui-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?]
 	~x11-libs/qt-script-${PV}:4[aqua=,c++0x=,debug=,qpa=]
 	~x11-libs/qt-sql-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?]
 	~x11-libs/qt-svg-${PV}:4[aqua=,c++0x=,debug=,qpa=]
 	~x11-libs/qt-test-${PV}:4[aqua=,c++0x=,debug=,qpa=]
-	aqua? ( ~x11-libs/qt-assistant-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
 	dbus? ( ~x11-libs/qt-dbus-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
 	declarative? ( ~x11-libs/qt-declarative-${PV}:4[aqua=,c++0x=,debug=,qpa=,webkit?] )
 	kde? ( media-libs/phonon[aqua=] )
