@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.129 2012/05/20 17:12:34 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.130 2012/05/22 13:41:59 pesa Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -36,7 +36,11 @@ case ${QT4_BUILD_TYPE} in
 		EGIT_BRANCH="${PV%.9999}"
 		;;
 	release)
-		SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
+		if version_is_at_least 4.8.1; then
+			SRC_URI="http://releases.qt-project.org/qt4/source/${MY_P}.tar.gz"
+		else
+			SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
+		fi
 		;;
 esac
 
