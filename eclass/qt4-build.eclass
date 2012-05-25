@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.130 2012/05/22 13:41:59 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.131 2012/05/25 12:06:05 pesa Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -417,8 +417,9 @@ qt4-build_src_configure() {
 	# exceptions USE flag
 	conf+=" $(in_iuse exceptions && qt_use exceptions || echo -exceptions)"
 
-	# disable RPATH on Qt >= 4.8 (bug 380415)
-	version_is_at_least 4.8 && conf+=" -no-rpath"
+	# disable rpath on Qt >= 4.8 (bug 380415)
+	# but leave it enabled on prefix (bug 417169)
+	version_is_at_least 4.8 && use !prefix && conf+=" -no-rpath"
 
 	# precompiled headers don't work on hardened, where the flag is masked
 	conf+=" $(qt_use pch)"
