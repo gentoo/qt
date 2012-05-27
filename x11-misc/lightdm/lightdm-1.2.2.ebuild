@@ -1,19 +1,19 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-misc/lightdm/lightdm-1.1.8.ebuild,v 1.1 2012/03/16 22:29:52 hwoarang Exp $
+# $Header: $
 
 EAPI=4
 inherit autotools eutils pam
 
 DESCRIPTION="A lightweight display manager"
 HOMEPAGE="http://www.freedesktop.org/wiki/Software/LightDM"
-SRC_URI="http://launchpad.net/${PN}/trunk/${PV}/+download/${P}.tar.gz
+SRC_URI="http://launchpad.net/${PN}/1.2/${PV}/+download/${P}.tar.gz
 	mirror://gentoo/introspection-20110205.m4.tar.bz2"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gtk +introspection qt4"
+IUSE="+introspection qt4"
 
 RDEPEND="dev-libs/glib:2
 	dev-libs/libxml2
@@ -26,18 +26,21 @@ RDEPEND="dev-libs/glib:2
 		x11-libs/qt-dbus:4
 		x11-libs/qt-gui:4 )"
 DEPEND="${RDEPEND}
+	dev-util/gtk-doc-am
 	dev-util/intltool
 	gnome-base/gnome-common
 	sys-devel/gettext
 	virtual/pkgconfig"
-PDEPEND="gtk? ( x11-misc/lightdm-gtk-greeter )"
 
 DOCS=( NEWS )
 
 src_prepare() {
 	sed -i -e "/minimum-uid/s:500:1000:" data/users.conf || die
 	sed -i -e "s:gtk+-3.0:gtk+-2.0:" configure.ac || die
+
 	epatch "${FILESDIR}"/session-wrapper-${PN}.patch
+	epatch "${FILESDIR}/${PN}"-1.2.0-fix-configure.patch
+
 	if has_version dev-libs/gobject-introspection; then
 		eautoreconf
 	else
@@ -60,7 +63,6 @@ src_configure() {
 	# do the actual configuration
 	econf --localstatedir=/var \
 		--disable-static \
-		--disable-tests \
 		$(use_enable introspection) \
 		$(use_enable qt4 liblightdm-qt) \
 		--with-user-session=${_session} \
@@ -88,9 +90,6 @@ src_install() {
 pkg_postinst() {
 	elog
 	elog "You will need to install a greeter as actual GUI for LightDM."
-	elog "Currently available greeters include:"
-	elog "    x11-misc/lightdm-gtk-greeter"
-	elog "    x11-wm/razorqt with USE=lightdm"
 	elog
 	elog "Even though the default /etc/${PN}/${PN}.conf will work for"
 	elog "most users, make sure you configure it to suit your needs"
