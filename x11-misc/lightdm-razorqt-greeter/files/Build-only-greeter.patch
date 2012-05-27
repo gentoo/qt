@@ -1,0 +1,43 @@
+From 5a27d6739eefea1a9f32a75113cb66e5e35a4f4b Mon Sep 17 00:00:00 2001
+From: Alec Moskvin <alecm@gmx.com>
+Date: Tue, 8 May 2012 12:08:04 -0400
+Subject: [PATCH] Build only greeter
+
+---
+ CMakeLists.txt |   15 +--------------
+ 1 files changed, 1 insertions(+), 14 deletions(-)
+
+diff --git CMakeLists.txt CMakeLists.txt
+index faa7166..ebc6030 100644
+--- CMakeLists.txt
++++ CMakeLists.txt
+@@ -52,20 +52,7 @@ message(STATUS "")
+ 
+ 
+ # main build subdirs
+-add_subdirectory( libraries )
+-add_subdirectory( razorqt-session )
+-add_subdirectory( razorqt-panel )
+-add_subdirectory( razorqt-desktop )
+-add_subdirectory( razorqt-appswitcher )
+-add_subdirectory( razorqt-resources )
+-#add_subdirectory( razorqt-su )
+-add_subdirectory( razorqt-x11info )
+-add_subdirectory( razorqt-runner )
+-add_subdirectory( razorqt-config )
+-add_subdirectory( razorqt-power )
+-add_subdirectory( razorqt-policykit )
+ add_subdirectory( razorqt-lightdm-greeter )
+-add_subdirectory( razorqt-notify )
+ 
+ ########### Add uninstall target ###############
+ CONFIGURE_FILE(
+@@ -88,4 +75,4 @@ INCLUDE(CPack)
+ # simulate autotools' "make dist"
+ add_custom_target(dist COMMAND ${CMAKE_MAKE_PROGRAM} package_source)
+ 
+-add_subdirectory( doxygen )
++#add_subdirectory( doxygen )
+-- 
+1.7.8.6
+

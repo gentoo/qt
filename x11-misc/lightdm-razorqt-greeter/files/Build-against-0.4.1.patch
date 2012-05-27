@@ -1,0 +1,50 @@
+From c524f4aded68e9e70bf08e8b4e829dab9df517f9 Mon Sep 17 00:00:00 2001
+From: Alec Moskvin <alecm@gmx.com>
+Date: Tue, 8 May 2012 13:06:24 -0400
+Subject: [PATCH 2/2] Build against 0.4.1
+
+---
+ razorqt-lightdm-greeter/CMakeLists.txt |    6 ++++--
+ razorqt-lightdm-greeter/loginform.cpp  |    2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git razorqt-lightdm-greeter/CMakeLists.txt razorqt-lightdm-greeter/CMakeLists.txt
+index 9db9ff3..b5f4ee2 100644
+--- razorqt-lightdm-greeter/CMakeLists.txt
++++ razorqt-lightdm-greeter/CMakeLists.txt
+@@ -52,8 +52,6 @@ else()
+     include_directories (
+             ${CMAKE_CURRENT_SOURCE_DIR}
+             ${CMAKE_CURRENT_BINARY_DIR}
+-            ${CMAKE_SOURCE_DIR}/libraries/
+-            ${CMAKE_SOURCE_DIR}/libraries/razorqt
+             ${LIGHTDM_QT_INCLUDE_DIRS}
+             )
+ 
+@@ -91,6 +89,10 @@ else()
+ 
+     install(TARGETS ${PROJECT} RUNTIME DESTINATION bin)
+     install(FILES   ${DESKTOP_FILES}   DESTINATION /usr/share/xgreeters)
++
++    install(FILES ../razorqt-resources/graphics/rqt-2.svg DESTINATION share/razor/graphics/)
++    install(DIRECTORY ../razorqt-resources/themes/light/razor-lightdm-greeter
++        DESTINATION share/razor/themes/light/)
+ endif()
+ 
+ endif (ENABLE_LIGHTDM_GREETER)
+diff --git razorqt-lightdm-greeter/loginform.cpp razorqt-lightdm-greeter/loginform.cpp
+index 8cffe90..79438a7 100644
+--- razorqt-lightdm-greeter/loginform.cpp
++++ razorqt-lightdm-greeter/loginform.cpp
+@@ -51,7 +51,7 @@ LoginForm::LoginForm(QWidget *parent) : QWidget(parent), ui(new Ui::LoginForm)
+     }
+ 
+     ui->setupUi(this);
+-    setStyleSheet(razorTheme.qss("razor-lightdm-greeter/razor-lightdm-greeter"));
++    setStyleSheet(razorTheme->qss("razor-lightdm-greeter/razor-lightdm-greeter"));
+     ui->hostnameLabel->setFocus();
+ 
+     // Setup users
+-- 
+1.7.8.6
+
