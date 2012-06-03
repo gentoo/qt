@@ -33,13 +33,18 @@ DEPEND="${RDEPEND}
 		>=x11-libs/qt-test-4.7.0:4
 	)"
 
-S=${WORKDIR}/${PN}
-
 src_prepare() {
 	# Fix inconsistent naming of libshiboken.so and ShibokenConfig.cmake,
 	# caused by the usage of a different version suffix with python >= 3.2
 	sed -i -e "/get_config_var('SOABI')/d" \
 		cmake/Modules/FindPython3InterpWithDebug.cmake || die
+
+	if use prefix; then
+		cp "${FILESDIR}"/rpath.cmake .
+		sed \
+			-i '1iinclude(rpath.cmake)' \
+			CMakeLists.txt || die
+	fi
 }
 
 src_configure() {
