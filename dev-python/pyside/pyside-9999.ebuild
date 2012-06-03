@@ -37,7 +37,7 @@ REQUIRED_USE="
 QT_PV="4.7.0:4"
 
 RDEPEND="
-	~dev-python/shiboken-${PV}
+	>=dev-python/shiboken-${PV}
 	>=x11-libs/qt-core-${QT_PV}
 	X? (
 		>=x11-libs/qt-gui-${QT_PV}[accessibility]
@@ -62,13 +62,18 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-S=${WORKDIR}/${PN}
-
 src_prepare() {
 	# Fix generated pkgconfig file to require the shiboken
 	# library suffixed with the correct python version.
 	sed -i -e '/^Requires:/ s/shiboken$/&@SHIBOKEN_PYTHON_SUFFIX@/' \
 		libpyside/pyside.pc.in || die
+
+	if use prefix; then
+		cp "${FILESDIR}"/rpath.cmake .
+		sed \
+			-i '1iinclude(rpath.cmake)' \
+			CMakeLists.txt || die
+	fi
 }
 
 src_configure() {
@@ -108,7 +113,9 @@ src_test() {
 	testing() {
 		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" virtualmake
 	}
+	python_enable_pyc
 	python_execute_function testing
+	python_disable_pyc
 }
 
 src_install() {
