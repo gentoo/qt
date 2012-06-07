@@ -14,7 +14,7 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="glib icu ssl"
+IUSE="+glib icu ssl"
 
 DEPEND="
 	>=dev-libs/libpcre-8.30[pcre16]
