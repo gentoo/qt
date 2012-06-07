@@ -32,19 +32,18 @@ LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
 case ${PN#qt-} in
-	bearer|core|dbus|gui|sql|test|xml)	repo_name="qtbase" ;;
-	3d|jsbackend|script|svg|xmlpatterns)	repo_name="${PN/-}" ;;
+	bearer|core|dbus|gui|sql|test|xml)	EGIT_PROJECT="qtbase" ;;
+	3d|jsbackend|script|svg|xmlpatterns)	EGIT_PROJECT="${PN/-}" ;;
 	*) die "qt5-build.eclass: unknown module ${PN}" ;;
 esac
 case ${QT5_BUILD_TYPE} in
 	live)
-		EGIT_REPO_URI="git://gitorious.org/qt/${repo_name}.git
-			https://git.gitorious.org/qt/${repo_name}.git"
+		EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
+			https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
 		;;
 	release)
 		SRC_URI="" # TODO
 esac
-unset repo_name
 
 IUSE="+c++11 debug +pch"
 
