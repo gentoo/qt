@@ -1,6 +1,6 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.131 2012/05/25 12:06:05 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.132 2012/06/07 15:36:49 pesa Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -58,42 +58,42 @@ if [[ ${QT4_BUILD_TYPE} == live ]]; then
 fi
 
 RDEPEND="
-	!<x11-libs/qt-assistant-${PV}
-	!>x11-libs/qt-assistant-${PV}-r9999
-	!<x11-libs/qt-bearer-${PV}
-	!>x11-libs/qt-bearer-${PV}-r9999
-	!<x11-libs/qt-core-${PV}
-	!>x11-libs/qt-core-${PV}-r9999
-	!<x11-libs/qt-dbus-${PV}
-	!>x11-libs/qt-dbus-${PV}-r9999
-	!<x11-libs/qt-declarative-${PV}
-	!>x11-libs/qt-declarative-${PV}-r9999
-	!<x11-libs/qt-demo-${PV}
-	!>x11-libs/qt-demo-${PV}-r9999
-	!<x11-libs/qt-gui-${PV}
-	!>x11-libs/qt-gui-${PV}-r9999
-	!<x11-libs/qt-multimedia-${PV}
-	!>x11-libs/qt-multimedia-${PV}-r9999
-	!<x11-libs/qt-opengl-${PV}
-	!>x11-libs/qt-opengl-${PV}-r9999
-	!<x11-libs/qt-openvg-${PV}
-	!>x11-libs/qt-openvg-${PV}-r9999
-	!<x11-libs/qt-phonon-${PV}
-	!>x11-libs/qt-phonon-${PV}-r9999
-	!<x11-libs/qt-qt3support-${PV}
-	!>x11-libs/qt-qt3support-${PV}-r9999
-	!<x11-libs/qt-script-${PV}
-	!>x11-libs/qt-script-${PV}-r9999
-	!<x11-libs/qt-sql-${PV}
-	!>x11-libs/qt-sql-${PV}-r9999
-	!<x11-libs/qt-svg-${PV}
-	!>x11-libs/qt-svg-${PV}-r9999
-	!<x11-libs/qt-test-${PV}
-	!>x11-libs/qt-test-${PV}-r9999
-	!<x11-libs/qt-webkit-${PV}
-	!>x11-libs/qt-webkit-${PV}-r9999
-	!<x11-libs/qt-xmlpatterns-${PV}
-	!>x11-libs/qt-xmlpatterns-${PV}-r9999
+	!<x11-libs/qt-assistant-${PV}:4
+	!>x11-libs/qt-assistant-${PV}-r9999:4
+	!<x11-libs/qt-bearer-${PV}:4
+	!>x11-libs/qt-bearer-${PV}-r9999:4
+	!<x11-libs/qt-core-${PV}:4
+	!>x11-libs/qt-core-${PV}-r9999:4
+	!<x11-libs/qt-dbus-${PV}:4
+	!>x11-libs/qt-dbus-${PV}-r9999:4
+	!<x11-libs/qt-declarative-${PV}:4
+	!>x11-libs/qt-declarative-${PV}-r9999:4
+	!<x11-libs/qt-demo-${PV}:4
+	!>x11-libs/qt-demo-${PV}-r9999:4
+	!<x11-libs/qt-gui-${PV}:4
+	!>x11-libs/qt-gui-${PV}-r9999:4
+	!<x11-libs/qt-multimedia-${PV}:4
+	!>x11-libs/qt-multimedia-${PV}-r9999:4
+	!<x11-libs/qt-opengl-${PV}:4
+	!>x11-libs/qt-opengl-${PV}-r9999:4
+	!<x11-libs/qt-openvg-${PV}:4
+	!>x11-libs/qt-openvg-${PV}-r9999:4
+	!<x11-libs/qt-phonon-${PV}:4
+	!>x11-libs/qt-phonon-${PV}-r9999:4
+	!<x11-libs/qt-qt3support-${PV}:4
+	!>x11-libs/qt-qt3support-${PV}-r9999:4
+	!<x11-libs/qt-script-${PV}:4
+	!>x11-libs/qt-script-${PV}-r9999:4
+	!<x11-libs/qt-sql-${PV}:4
+	!>x11-libs/qt-sql-${PV}-r9999:4
+	!<x11-libs/qt-svg-${PV}:4
+	!>x11-libs/qt-svg-${PV}-r9999:4
+	!<x11-libs/qt-test-${PV}:4
+	!>x11-libs/qt-test-${PV}-r9999:4
+	!<x11-libs/qt-webkit-${PV}:4
+	!>x11-libs/qt-webkit-${PV}-r9999:4
+	!<x11-libs/qt-xmlpatterns-${PV}:4
+	!>x11-libs/qt-xmlpatterns-${PV}-r9999:4
 "
 
 S=${WORKDIR}/${MY_P}
@@ -106,7 +106,7 @@ qt4-build_pkg_setup() {
 
 	# Protect users by not allowing downgrades between releases
 	# Downgrading revisions within the same release should be allowed
-	if has_version '>'${CATEGORY}/${P}-r9999; then
+	if has_version ">${CATEGORY}/${P}-r9999:4"; then
 		if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
 			eerror
 			eerror "Sanity check to keep you from breaking your system:"
