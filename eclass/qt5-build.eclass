@@ -150,19 +150,23 @@ qt5-build_src_unpack() {
 			default
 			;;
 	esac
-
-	qt5_prepare_env
 }
 
 # @FUNCTION: qt5-build_src_prepare
 # @DESCRIPTION:
 # Prepare the sources before the configure phase.
 qt5-build_src_prepare() {
+	qt5_prepare_env
+
+	mkdir -p "${QT5_BUILD_DIR}" || die
+
 	if [[ ${PN} != "qt-core" ]]; then
-		skip_qmake_build
-		skip_project_generation
-		symlink_binaries_to_buildtree
+		symlink_tools_to_buildtree
 	fi
+
+	# Avoid unnecessary qmake recompilations
+	sed -i -re "s|^if true;.*(\[ '\!').*(\"\\\$outpath/bin/qmake\".*)|if \1 -e \2 then|" \
+		configure || die "sed configure failed"
 
 	# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
 	sed -i -e "/\"\$MAKE\".*QMAKE_BUILD_ERROR/ s:): \
@@ -182,11 +186,11 @@ qt5-build_src_prepare() {
 	# in compile.test, -m flags are passed to the linker via LIBS
 	# config tests that use $COMPILER directly ignore toolchain
 
-	# respect compiler
+	# Respect C/C++ compiler
 	tc-export CC CXX
 	# qmake-generated Makefiles use LD/LINK for linking
 	export LD="$(tc-getCXX)"
-	# don't strip binaries
+	# Don't strip binaries
 	export STRIP=":"
 
 	base_src_prepare
@@ -252,13 +256,23 @@ qt5-build_src_configure() {
 		"${myconf[@]}"
 	)
 
-	mkdir -p "${QT5_BUILD_DIR}" || die
 	pushd "${QT5_BUILD_DIR}" >/dev/null || die
-
 	einfo "Configuring with: ${conf[@]}"
 	"${S}"/configure "${conf[@]}" || die "configure failed"
-
 	popd >/dev/null || die
+
+	if [[ ${PN} != "qt-core" ]]; then
+		local subdir
+		for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
+			pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
+			einfo "Running qmake in: ${subdir}"
+			"${QT5_BUILD_DIR}"/bin/qmake \
+				"${S}/${subdir}/${subdir##*/}.pro" \
+				QMAKE_LIBDIR_QT="${QTLIBDIR}" \
+				|| die "qmake failed in ${subdir}"
+			popd >/dev/null || die
+		done
+	fi
 }
 
 # @FUNCTION: qt5-build_src_compile
@@ -268,7 +282,7 @@ qt5-build_src_compile() {
 	local subdir
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
 		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
-		einfo "Building in ${subdir}"
+		einfo "Building in: ${subdir}"
 		emake
 		popd >/dev/null || die
 	done
@@ -320,11 +334,26 @@ qt5-build_pkg_postrm() {
 	:
 }
 
+# @FUNCTION: qt_use
+# @USAGE: < flag > [ feature ] [ enableval ]
+# @DESCRIPTION:
+# This will echo "-${enableval}-${feature}" if <flag> is enabled, or
+# "-no-${feature}" if it's disabled. If [feature] is not specified, <flag>
+# will be used for that. If [enableval] is not specified, it omits the
+# "-${enableval}" part.
+qt_use() {
+	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+}
+
+
+######  Internal functions  ######
+
 # @FUNCTION: qt5_prepare_env
 # @INTERNAL
 # @DESCRIPTION:
-# Sets up installation directories.
+# Prepares the environment for building Qt.
 qt5_prepare_env() {
+	# setup installation directories
 	QTPREFIXDIR=${EPREFIX}/usr
 	QTBINDIR=${EPREFIX}/usr/qt5/bin # FIXME
 	QTLIBDIR=${QTPREFIXDIR}/$(get_libdir)/qt5
@@ -339,21 +368,24 @@ qt5_prepare_env() {
 	QTSYSCONFDIR=${EPREFIX}/etc/qt5
 }
 
-# @FUNCTION: qt_use
-# @USAGE: < flag > [ feature ] [ enableval ]
+# @FUNCTION: symlink_tools_to_buildtree
+# @INTERNAL
 # @DESCRIPTION:
-# This will echo "-${enableval}-${feature}" if <flag> is enabled, or
-# "-no-${feature}" if it's disabled. If [feature] is not specified, <flag>
-# will be used for that. If [enableval] is not specified, it omits the
-# "-${enableval}" part.
-qt_use() {
-	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+# Symlinks qt-core tools to buildtree, so they can be used when building other modules.
+symlink_tools_to_buildtree() {
+	mkdir -p "${QT5_BUILD_DIR}"/bin || die
+
+	local bin
+	for bin in "${QTBINDIR}"/{qmake,moc,rcc}; do
+		ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ \
+			|| die "symlinking '${bin}' to '${QT5_BUILD_DIR}/bin/' failed"
+	done
 }
 
 # @FUNCTION: install_qconfigs
 # @INTERNAL
 # @DESCRIPTION:
-# Install gentoo-specific mkspecs configurations.
+# Installs gentoo-specific mkspecs configurations.
 install_qconfigs() {
 	local x
 
