@@ -142,6 +142,11 @@ einfo """
 	###########################################################
 """
 
+<<<<<<< HEAD
+ebegin "Updating tree"
+git pull
+eend $?
+
 while getopts ":hq" opt; do
 	case $opt in
 		h)
