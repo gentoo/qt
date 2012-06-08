@@ -32,7 +32,7 @@ LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
 case ${PN#qt-} in
-	bearer|core|dbus|gui|sql|test|xml)	EGIT_PROJECT="qtbase" ;;
+	core|dbus|gui|network|sql|test|xml)	EGIT_PROJECT="qtbase" ;;
 	3d|jsbackend|script|svg|xmlpatterns)	EGIT_PROJECT="${PN/-}" ;;
 	*) die "qt5-build.eclass: unknown module ${PN}" ;;
 esac

@@ -14,7 +14,7 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="+glib icu ssl"
+IUSE="+glib icu"
 
 DEPEND="
 	>=dev-libs/libpcre-8.30[pcre16]
@@ -22,7 +22,6 @@ DEPEND="
 	virtual/libiconv
 	glib? ( dev-libs/glib:2 )
 	icu? ( >=dev-libs/icu-49 )
-	ssl? ( dev-libs/openssl:0 )
 "
 RDEPEND="${DEPEND}"
 
@@ -32,7 +31,6 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/rcc
 	src/tools/qdoc
 	src/corelib
-	src/network
 	src/concurrent
 )
 
@@ -41,7 +39,6 @@ src_configure() {
 		$(qt_use glib)
 		-iconv
 		$(qt_use icu)
-		$(use ssl && echo -openssl-linked || echo -no-openssl)
 		-no-accessibility -no-gui -no-cups -no-dbus
 		-no-xcb -no-eglfs -no-directfb -no-opengl
 	)

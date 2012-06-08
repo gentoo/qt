@@ -14,12 +14,14 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="connman networkmanager"
+IUSE="connman networkmanager +ssl"
 
 DEPEND="
+	sys-libs/zlib
 	~x11-libs/qt-core-${PV}[debug=]
 	connman? ( ~x11-libs/qt-dbus-${PV}[debug=] )
 	networkmanager? ( ~x11-libs/qt-dbus-${PV}[debug=] )
+	ssl? ( dev-libs/openssl:0 )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )
@@ -27,6 +29,7 @@ RDEPEND="${DEPEND}
 "
 
 QT5_TARGET_SUBDIRS=(
+	src/network
 	src/plugins/bearer/generic
 )
 
@@ -39,15 +42,10 @@ pkg_setup() {
 
 src_configure() {
 	local myconf=(
+		$(use connman || use networkmanager && echo -dbus-linked || echo -no-dbus)
+		$(use ssl && echo -openssl-linked || echo -no-openssl)
 		-no-accessibility -no-gui -no-cups
 		-no-xcb -no-eglfs -no-directfb -no-opengl
 	)
-
-	if use connman || use networkmanager; then
-		myconf+=(-dbus-linked)
-	else
-		myconf+=(-no-dbus)
-	fi
-
 	qt5-build_src_configure
 }
