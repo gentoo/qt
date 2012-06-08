@@ -18,6 +18,7 @@ IUSE=""
 
 DEPEND="
 	sys-apps/dbus
+	sys-libs/zlib
 	~x11-libs/qt-core-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
