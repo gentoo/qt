@@ -175,6 +175,10 @@ qt5-build_src_prepare() {
 		'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
 		configure || die "sed configure failed"
 
+	# Respect CXX in configure
+	sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
+		configure || die "sed QMAKE_CONF_COMPILER failed"
+
 	# Respect CC, CXX, LINK and *FLAGS in config.tests
 	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
 		sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
@@ -184,7 +188,6 @@ qt5-build_src_prepare() {
 
 	# TODO
 	# in compile.test, -m flags are passed to the linker via LIBS
-	# config tests that use $COMPILER directly ignore toolchain
 
 	# Respect C/C++ compiler
 	tc-export CC CXX
