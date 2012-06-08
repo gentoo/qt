@@ -9,6 +9,7 @@ DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
 TARGET="www.gentoo-el.org:~/public_html/distfiles/"
 TEMP="/tmp/qt-python-bump/"
 OVERLAY="../../" # ugly but hey dont shoot me
+QUIET=
 ####################################################################
 
 usage() {
@@ -16,9 +17,9 @@ usage() {
 
 ./bump-python-revisions
 	
-Use -h option to display this message
-Use -c option to skip bumping operation and do 
-	directly the merge operation
+-h: Display this message
+-q: Quiet mode. No questions. Just bump and commit
+
 	"""
 }
 
@@ -67,26 +68,29 @@ dopyqt4(){
 
 
 commit() {
-	ewarn "Your changes are ready to be merged. However I strongly recommend you to review your changes."
-	ewarn ""
-	einfo "Press 'r' to review your changes or 'y' to merge them to master branch (default 'r')."
-	read choice
-	case "$choice" in
-		y)  
-			ewarn "Your changes will be merged now. Don't break the overlay or I will shoot you down!"
-			git commit -a -m "PyQt4/sip: Automated version bump, remove old" || exit 2
-			git push || exit 2
-			;;
-		r|"")
-			git diff
-			;;
-		*)	
-			eerror ""
-			eerror "Invalid option. Are you stupid or something?"
-			eerror ""
-			exit 3
-	esac
-
+	if [[ -z ${QUIET} ]]; then
+		ewarn "Your changes are ready to be merged. However I strongly recommend you to review your changes."
+		ewarn ""
+		einfo "Press 'r' to review your changes or 'y' to merge them to master branch (default 'r')."
+		read choice
+		case "$choice" in
+			y)  
+				ewarn "Your changes will be merged now. Don't break the overlay or I will shoot you down!"
+				git commit -a -m "PyQt4/sip: Automated version bump, remove old" || exit 2
+				git push || exit 2
+				;;
+			r|"")
+				git diff
+				;;
+			*)	
+				eerror ""
+				eerror "Invalid option. Are you stupid or something?"
+				eerror ""
+				exit 3
+		esac
+	else
+		git commit -a -m "PyQt4/sip: Automated version bump, remove old" || exit 2
+	fi
 }
 
 getrevisions(){
@@ -137,4 +141,21 @@ einfo """
 	# Use ./bump-python-revisions -h for a usage example      #
 	###########################################################
 """
+
+while getopts ":hq" opt; do
+	case $opt in
+		h)
+			usage
+			exit 1
+			;;
+		q)
+			QUIET=1
+			;;
+		?)
+			usage
+			exit 1
+			;;
+	esac
+done
+
 getrevisions
