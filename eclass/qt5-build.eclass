@@ -311,8 +311,7 @@ qt5-build_src_install() {
 	# TODO: pkgconfig files are installed in the wrong place
 
 	# remove .la files since we are building only shared Qt libraries
-	# FIXME: use prune_libtool_files when it'll be available in eutils.eclass
-	find "${D}"${QTLIBDIR} -type f -name '*.la' -print0 | xargs -0 rm -f
+	prune_libtool_files --all
 }
 
 # @FUNCTION: qt5-build_pkg_postinst
