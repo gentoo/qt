@@ -15,7 +15,7 @@ else
 fi
 IUSE="+gstreamer icu +jit"
 
-# For the libxml2[icu] blocker see bugs 407315 and 411091
+# libxml2[!icu?] is needed for bugs 407315 and 411091
 DEPEND="
 	dev-db/sqlite:3
 	x11-libs/libX11
@@ -25,9 +25,9 @@ DEPEND="
 	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,debug=,qpa=]
 	gstreamer? (
 		dev-libs/glib:2
+		dev-libs/libxml2:2[!icu?]
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-base:0.10
-		!icu? ( !!dev-libs/libxml2[icu] )
 	)
 	icu? ( dev-libs/icu )
 "
