@@ -90,6 +90,7 @@ commit() {
 		esac
 	else
 		git commit -a -m "PyQt4/sip: Automated version bump, remove old" || exit 2
+		git push || exit 2
 	fi
 }
 
