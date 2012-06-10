@@ -251,10 +251,6 @@ qt5-build_src_configure() {
 		# requires GNU ld >= 2.18
 		-reduce-relocations
 
-		# freetype2 include dir is non-standard
-		# FIXME: move to qt-gui ebuild?
-		$($(tc-getPKG_CONFIG) --cflags-only-I freetype2 2>/dev/null)
-
 		# package-specific options
 		"${myconf[@]}"
 	)
@@ -314,7 +310,7 @@ qt5-build_src_install() {
 	# TODO: pkgconfig files are installed in the wrong place
 
 	# remove .la files since we are building only shared Qt libraries
-	prune_libtool_files --all
+	prune_libtool_files
 }
 
 # @FUNCTION: qt5-build_pkg_postinst
