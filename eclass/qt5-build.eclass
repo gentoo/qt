@@ -12,8 +12,8 @@
 # Requires EAPI 4.
 
 case ${EAPI} in
-	4)	: ;;
-	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
+	4) : ;;
+	*) die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
 inherit base eutils flag-o-matic multilib toolchain-funcs versionator
@@ -32,9 +32,12 @@ LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
 case ${PN#qt-} in
-	core|dbus|gui|network|sql|test|xml)	EGIT_PROJECT="qtbase" ;;
-	3d|jsbackend|script|svg|xmlpatterns)	EGIT_PROJECT="${PN/-}" ;;
-	*) die "qt5-build.eclass: unknown module ${PN}" ;;
+	core|dbus|gui|network|sql|test|widgets|xml)
+		EGIT_PROJECT="qtbase"
+		;;
+	*)
+		EGIT_PROJECT="${PN/-}"
+		;;
 esac
 case ${QT5_BUILD_TYPE} in
 	live)
@@ -43,6 +46,7 @@ case ${QT5_BUILD_TYPE} in
 		;;
 	release)
 		SRC_URI="" # TODO
+		;;
 esac
 
 IUSE="+c++11 debug +pch"
