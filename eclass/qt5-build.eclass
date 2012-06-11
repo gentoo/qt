@@ -161,7 +161,7 @@ qt5-build_src_prepare() {
 	mkdir -p "${QT5_BUILD_DIR}" || die
 
 	if [[ ${PN} != "qt-core" ]]; then
-		symlink_tools_to_buildtree
+		qt5_symlink_tools_to_buildtree
 	fi
 
 	# Avoid unnecessary qmake recompilations
@@ -201,7 +201,7 @@ qt5-build_src_prepare() {
 
 # @FUNCTION: qt5-build_src_configure
 # @DESCRIPTION:
-# Default configure phase.
+# Runs ./configure and qmake.
 qt5-build_src_configure() {
 	# configure arguments
 	local conf=(
@@ -261,30 +261,21 @@ qt5-build_src_configure() {
 	popd >/dev/null || die
 
 	if [[ ${PN} != "qt-core" ]]; then
-		local subdir
-		for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
-			pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
-			einfo "Running qmake in: ${subdir}"
+		qmake() {
 			"${QT5_BUILD_DIR}"/bin/qmake \
 				"${S}/${subdir}/${subdir##*/}.pro" \
 				QMAKE_LIBDIR_QT="${QTLIBDIR}" \
-				|| die "qmake failed in ${subdir}"
-			popd >/dev/null || die
-		done
+				|| die
+		}
+		qt5_foreach_target_subdir qmake
 	fi
 }
 
 # @FUNCTION: qt5-build_src_compile
 # @DESCRIPTION:
-# Compiles the code in QT5_TARGET_SUBDIRS.
+# Compiles the code in target directories.
 qt5-build_src_compile() {
-	local subdir
-	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
-		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
-		einfo "Building in: ${subdir}"
-		emake
-		popd >/dev/null || die
-	done
+	qt5_foreach_target_subdir emake
 }
 
 # @FUNCTION: qt5-build_src_test
@@ -297,14 +288,9 @@ qt5-build_src_test() {
 
 # @FUNCTION: qt5-build_src_install
 # @DESCRIPTION:
-# Perform the actual installation including some library fixes.
+# Performs the actual installation of target directories.
 qt5-build_src_install() {
-	local subdir
-	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
-		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
-		emake INSTALL_ROOT="${D}" install
-		popd >/dev/null || die
-	done
+	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
 	if [[ ${PN} == "qt-core" ]]; then
 		pushd "${QT5_BUILD_DIR}" >/dev/null || die
@@ -372,17 +358,31 @@ qt5_prepare_env() {
 	QTSYSCONFDIR=${EPREFIX}/etc/qt5
 }
 
-# @FUNCTION: symlink_tools_to_buildtree
+# @FUNCTION: qt5_symlink_tools_to_buildtree
 # @INTERNAL
 # @DESCRIPTION:
 # Symlinks qt-core tools to buildtree, so they can be used when building other modules.
-symlink_tools_to_buildtree() {
+qt5_symlink_tools_to_buildtree() {
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
 
 	local bin
 	for bin in "${QTBINDIR}"/{qmake,moc,rcc,uic,qdoc}; do
 		ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ \
 			|| die "symlinking '${bin}' to '${QT5_BUILD_DIR}/bin/' failed"
+	done
+}
+
+# @FUNCTION: qt5_foreach_target_subdir
+# @INTERNAL
+# @DESCRIPTION:
+# Executes the arguments inside each directory listed in QT5_TARGET_SUBDIRS.
+qt5_foreach_target_subdir() {
+	local subdir
+	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
+		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
+		einfo "[${subdir}] $*"
+		"$@"
+		popd >/dev/null || die
 	done
 }
 
