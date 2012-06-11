@@ -12,13 +12,30 @@ SRC_URI="https://launchpad.net/${PN}/trunk/${PV/_}/+download/${P/_}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="cups dbus"
 
-RDEPEND="app-text/poppler[qt4]
+RDEPEND="cups? ( net-print/cups )
+	dbus? ( x11-libs/qt-dbus:4 )
+	app-text/poppler[qt4]
 	x11-libs/qt-core:4
 	x11-libs/qt-gui:4"
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	virtual/pkgconfig"
 
 DOCS="README TODO"
 
 S=${WORKDIR}/${P/_}
+
+src_configure() {
+	local config
+
+	if ! use cups ; then
+		config+=" without_cups"
+	fi
+
+	if ! use dbus ; then
+		config+=" without_dbus"
+	fi
+
+	eqmake4 CONFIG+="${config}"
+}
