@@ -306,6 +306,12 @@ qt5-build_src_install() {
 		popd >/dev/null || die
 	done
 
+	if [[ ${PN} == "qt-core" ]]; then
+		pushd "${QT5_BUILD_DIR}" >/dev/null || die
+		emake INSTALL_ROOT="${D}" install_{qmake,mkspecs}
+		popd >/dev/null || die
+	fi
+
 	# TODO: install_qconfigs
 	# TODO: pkgconfig files are installed in the wrong place
 

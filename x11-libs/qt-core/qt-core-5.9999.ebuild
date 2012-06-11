@@ -45,11 +45,3 @@ src_configure() {
 	)
 	qt5-build_src_configure
 }
-
-src_install() {
-	qt5-build_src_install
-
-	pushd "${QT5_BUILD_DIR}" >/dev/null || die
-	emake INSTALL_ROOT="${D}" install_{qmake,mkspecs}
-	popd >/dev/null || die
-}
