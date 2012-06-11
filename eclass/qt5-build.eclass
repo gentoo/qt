@@ -189,12 +189,9 @@ qt5-build_src_prepare() {
 	# TODO
 	# in compile.test, -m flags are passed to the linker via LIBS
 
-	# Respect C/C++ compiler
-	tc-export CC CXX
+	tc-export CC CXX RANLIB STRIP
 	# qmake-generated Makefiles use LD/LINK for linking
 	export LD="$(tc-getCXX)"
-	# Don't strip binaries
-	export STRIP=":"
 
 	base_src_prepare
 }
@@ -260,15 +257,14 @@ qt5-build_src_configure() {
 	"${S}"/configure "${conf[@]}" || die "configure failed"
 	popd >/dev/null || die
 
-	if [[ ${PN} != "qt-core" ]]; then
-		qmake() {
-			"${QT5_BUILD_DIR}"/bin/qmake \
-				"${S}/${subdir}/${subdir##*/}.pro" \
-				QMAKE_LIBDIR_QT="${QTLIBDIR}" \
-				|| die
-		}
-		qt5_foreach_target_subdir qmake
-	fi
+	qmake() {
+		"${QT5_BUILD_DIR}"/bin/qmake \
+			"${S}/${subdir}/${subdir##*/}.pro" \
+			QMAKE_LIBDIR_QT="${QTLIBDIR}" \
+			CONFIG+=nostrip \
+			|| die
+	}
+	qt5_foreach_target_subdir qmake
 }
 
 # @FUNCTION: qt5-build_src_compile
