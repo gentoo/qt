@@ -1,0 +1,14 @@
+# set for Qt5 Essentials modules
+# http://qt-project.org/wiki/Qt-Essentials-Modules
+
+#x11-libs/qt-3d:5
+x11-libs/qt-core:5
+#x11-libs/qt-declarative:5
+x11-libs/qt-gui:5
+#x11-libs/qt-jsbackend:5
+#x11-libs/qt-location:5
+#x11-libs/qt-multimedia:5
+x11-libs/qt-network:5
+x11-libs/qt-sql:5
+x11-libs/qt-test:5
+#x11-libs/qt-webkit:5

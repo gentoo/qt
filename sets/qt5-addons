@@ -1,0 +1,10 @@
+# set for Qt5 Add-on modules
+# http://qt-project.org/wiki/Qt-Add-ons-Modules
+
+x11-libs/qt-dbus:5
+#x11-libs/qt-opengl:5
+#x11-libs/qt-script:5
+#x11-libs/qt-svg:5
+#x11-libs/qt-widgets:5
+x11-libs/qt-xml:5
+#x11-libs/qt-xmlpatterns:5
