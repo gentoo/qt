@@ -2,6 +2,7 @@
 # qt-phonon is commented out, as you may want media-libs/phonon instead
 
 ~x11-libs/qt-assistant-4.8.9999
+~x11-libs/qt-bearer-4.8.9999
 ~x11-libs/qt-core-4.8.9999
 ~x11-libs/qt-dbus-4.8.9999
 ~x11-libs/qt-declarative-4.8.9999
