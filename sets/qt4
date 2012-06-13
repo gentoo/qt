@@ -1,0 +1,21 @@
+# set for all Qt4 modules
+# copy this file to /etc/portage/sets/qt-custom for customization
+
+x11-libs/qt-assistant:4
+x11-libs/qt-bearer:4
+x11-libs/qt-core:4
+x11-libs/qt-dbus:4
+x11-libs/qt-declarative:4
+x11-libs/qt-demo:4
+x11-libs/qt-gui:4
+x11-libs/qt-multimedia:4
+x11-libs/qt-opengl:4
+x11-libs/qt-openvg:4
+x11-libs/qt-phonon:4
+x11-libs/qt-qt3support:4
+x11-libs/qt-script:4
+x11-libs/qt-sql:4
+x11-libs/qt-svg:4
+x11-libs/qt-test:4
+x11-libs/qt-webkit:4
+x11-libs/qt-xmlpatterns:4
