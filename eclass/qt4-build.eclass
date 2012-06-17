@@ -103,31 +103,16 @@ S=${WORKDIR}/${MY_P}
 qt4-build_pkg_setup() {
 	[[ ${EAPI} == 2 ]] && use !prefix && EPREFIX=
 
-	# Protect users by not allowing downgrades between releases
-	# Downgrading revisions within the same release should be allowed
+	# Protect users by not allowing downgrades between releases.
+	# Downgrading revisions within the same release should be allowed.
 	if has_version ">${CATEGORY}/${P}-r9999:4"; then
 		if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
-			eerror
-			eerror "Sanity check to keep you from breaking your system:"
-			eerror "  Downgrading Qt is completely unsupported and will break your system!"
-			eerror
+			eerror "    ***  Sanity check to keep you from breaking your system  ***"
+			eerror "Downgrading Qt is completely unsupported and will break your system!"
 			die "aborting to save your system"
 		else
 			ewarn "Downgrading Qt is completely unsupported and will break your system!"
 		fi
-	fi
-
-	if [[ ${PN} == qt-webkit ]]; then
-		eshopts_push -s extglob
-		if is-flagq '-g?(gdb)?([1-9])'; then
-			echo
-			ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
-			ewarn "You may experience really long compilation times and/or increased memory usage."
-			ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
-			ewarn "For more info check out bug #307861"
-			echo
-		fi
-		eshopts_pop
 	fi
 
 	PATH="${S}/bin${PATH:+:}${PATH}"
@@ -142,27 +127,42 @@ qt4-build_pkg_setup() {
 			QT4_EXTRACT_DIRECTORIES="src/gui/kernel/qapplication_mac.mm
 				${QT4_EXTRACT_DIRECTORIES}"
 	fi
-
-	if ! version_is_at_least 4.1 $(gcc-version); then
-		ewarn "Using a GCC version lower than 4.1 is not supported."
-	fi
 }
 
-# @ECLASS-VARIABLE: QT4_TARGET_DIRECTORIES
-# @DESCRIPTION:
-# Arguments for build_target_directories. Takes the directories in which the
-# code should be compiled. This is a space-separated list.
-
 # @ECLASS-VARIABLE: QT4_EXTRACT_DIRECTORIES
+# @DEFAULT_UNSET
 # @DESCRIPTION:
 # Space-separated list including the directories that will be extracted from
 # Qt tarball.
+
+# @ECLASS-VARIABLE: QT4_TARGET_DIRECTORIES
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Arguments for build_target_directories. Takes the directories in which the
+# code should be compiled. This is a space-separated list.
 
 # @FUNCTION: qt4-build_src_unpack
 # @DESCRIPTION:
 # Unpacks the sources.
 qt4-build_src_unpack() {
 	setqtenv
+
+	if ! version_is_at_least 4.1 $(gcc-version); then
+		ewarn "Using a GCC version lower than 4.1 is not supported."
+	fi
+
+	if [[ ${PN} == qt-webkit ]]; then
+		eshopts_push -s extglob
+		if is-flagq '-g?(gdb)?([1-9])'; then
+			echo
+			ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
+			ewarn "You may experience really long compilation times and/or increased memory usage."
+			ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
+			ewarn "For more info check out https://bugs.gentoo.org/307861"
+			echo
+		fi
+		eshopts_pop
+	fi
 
 	case ${QT4_BUILD_TYPE} in
 		live)
@@ -209,7 +209,7 @@ qt4-build_src_prepare() {
 	fi
 
 	if version_is_at_least 4.7; then
-		# fix libX11 dependency on non X packages
+		# avoid X11 dependency in non-gui packages
 		local nolibx11_pkgs="qt-core qt-dbus qt-script qt-sql qt-test qt-xmlpatterns"
 		has ${PN} ${nolibx11_pkgs} && qt_nolibx11
 	fi
