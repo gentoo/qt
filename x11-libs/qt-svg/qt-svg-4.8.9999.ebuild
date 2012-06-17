@@ -17,8 +17,8 @@ IUSE="+accessibility"
 
 DEPEND="
 	sys-libs/zlib
-	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=]
-	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,debug=,qpa=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=]
+	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,debug=]
 "
 RDEPEND="${DEPEND}"
 

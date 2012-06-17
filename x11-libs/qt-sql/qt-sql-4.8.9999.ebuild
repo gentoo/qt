@@ -20,7 +20,7 @@ REQUIRED_USE="
 "
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=,qt3support=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,qt3support=]
 	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )

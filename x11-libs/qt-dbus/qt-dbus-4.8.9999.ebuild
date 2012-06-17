@@ -17,7 +17,7 @@ IUSE=""
 
 DEPEND="
 	>=sys-apps/dbus-1.2
-	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=]
 "
 RDEPEND="${DEPEND}"
 

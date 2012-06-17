@@ -48,7 +48,7 @@ IUSE="aqua debug pch"
 [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE+=" +exceptions"
 if version_is_at_least 4.8; then
 	[[ ${CATEGORY}/${PN} != x11-libs/qt-webkit ]] && IUSE+=" c++0x"
-	IUSE+=" qpa"
+	version_is_at_least 4.8.3 || IUSE+=" qpa"
 fi
 
 DEPEND="virtual/pkgconfig"

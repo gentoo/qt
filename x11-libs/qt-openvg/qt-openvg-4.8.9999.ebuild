@@ -17,8 +17,8 @@ IUSE="qt3support"
 
 DEPEND="
 	media-libs/mesa[egl,openvg]
-	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=,qt3support=]
-	~x11-libs/qt-gui-${PV}[aqua=,debug=,egl,qpa=,qt3support=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[aqua=,debug=,egl,qt3support=]
 "
 RDEPEND="${DEPEND}"
 
