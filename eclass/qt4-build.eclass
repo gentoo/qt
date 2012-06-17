@@ -242,14 +242,7 @@ qt4-build_src_prepare() {
 	fi
 
 	if use_if_iuse c++0x; then
-		echo
-		ewarn "You are about to build Qt4 using the C++11 standard. Even though"
-		ewarn "this is an official standard, some of the reverse dependencies"
-		ewarn "may fail to compile or link againt the Qt4 libraries. Before"
-		ewarn "reporting a bug, make sure your bug is reproducible with c++0x"
-		ewarn "disabled."
-		echo
-		append-flags -std=c++0x
+		append-cxxflags -std=c++0x
 	fi
 
 	# Unsupported old gcc versions - hardened needs this :(
