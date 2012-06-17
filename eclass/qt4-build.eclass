@@ -33,7 +33,7 @@ case ${QT4_BUILD_TYPE} in
 	live)
 		EGIT_REPO_URI="git://gitorious.org/qt/qt.git
 			https://git.gitorious.org/qt/qt.git"
-		EGIT_BRANCH="${PV%.9999}"
+		EGIT_BRANCH=${PV%.9999}
 		;;
 	release)
 		if version_is_at_least 4.8.1; then
@@ -45,11 +45,10 @@ case ${QT4_BUILD_TYPE} in
 esac
 
 IUSE="aqua debug pch"
-if [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]]; then
-	IUSE+=" +exceptions"
-fi
+[[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE+=" +exceptions"
 if version_is_at_least 4.8; then
-	IUSE+=" c++0x qpa"
+	[[ ${CATEGORY}/${PN} != x11-libs/qt-webkit ]] && IUSE+=" c++0x"
+	IUSE+=" qpa"
 fi
 
 DEPEND="virtual/pkgconfig"

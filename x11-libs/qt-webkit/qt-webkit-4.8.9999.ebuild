@@ -34,7 +34,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.8.0-c++0x-fix.patch"
 	"${FILESDIR}/${PN}-4.8.1+glib-2.31.patch"
 	"${FILESDIR}/${PN}-4.8.1-no-use-ld-gold.patch"
 )
@@ -58,8 +57,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	use c++0x && append-cxxflags -fpermissive
-
 	# Fix version number in generated pkgconfig file, bug 406443
 	sed -i -e 's/^isEmpty(QT_BUILD_TREE)://' \
 		src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro || die
