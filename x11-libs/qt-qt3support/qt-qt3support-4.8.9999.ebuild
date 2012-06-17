@@ -16,9 +16,9 @@ fi
 IUSE="+accessibility"
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support]
-	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,c++0x=,debug=,qpa=,qt3support]
-	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=,qt3support]
+	~x11-libs/qt-gui-${PV}[accessibility=,aqua=,debug=,qpa=,qt3support]
+	~x11-libs/qt-sql-${PV}[aqua=,debug=,qpa=,qt3support]
 "
 RDEPEND="${DEPEND}"
 

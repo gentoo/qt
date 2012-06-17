@@ -16,7 +16,7 @@ fi
 IUSE=""
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,exceptions,qpa=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,exceptions,qpa=]
 "
 RDEPEND="${DEPEND}"
 

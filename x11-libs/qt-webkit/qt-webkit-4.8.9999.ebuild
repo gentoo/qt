@@ -20,9 +20,9 @@ DEPEND="
 	dev-db/sqlite:3
 	x11-libs/libX11
 	x11-libs/libXrender
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,ssl,qpa=]
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,qpa=]
-	~x11-libs/qt-xmlpatterns-${PV}[aqua=,c++0x=,debug=,qpa=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,ssl,qpa=]
+	~x11-libs/qt-gui-${PV}[aqua=,debug=,qpa=]
+	~x11-libs/qt-xmlpatterns-${PV}[aqua=,debug=,qpa=]
 	gstreamer? (
 		dev-libs/glib:2
 		dev-libs/libxml2:2[!icu?]

@@ -16,7 +16,7 @@ fi
 IUSE="dbus qt3support"
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,qpa=,debug=,qt3support=]
+	~x11-libs/qt-gui-${PV}[aqua=,qpa=,debug=,qt3support=]
 	!kde-base/phonon-kde
 	!kde-base/phonon-xine
 	!media-libs/phonon
@@ -24,7 +24,7 @@ DEPEND="
 	!aqua? ( media-libs/gstreamer
 		 media-plugins/gst-plugins-meta )
 	aqua? ( ~x11-libs/qt-opengl-${PV}[aqua,debug=,qt3support=] )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,qpa=,debug=] )
 "
 RDEPEND="${DEPEND}"
 

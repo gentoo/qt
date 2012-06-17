@@ -16,7 +16,7 @@ fi
 IUSE="iconv +jit"
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=]
 "
 RDEPEND="${DEPEND}"
 

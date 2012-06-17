@@ -16,9 +16,9 @@ fi
 IUSE="connman networkmanager"
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=]
-	connman? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,debug=,qpa=] )
-	networkmanager? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,debug=,qpa=] )
+	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=]
+	connman? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=,qpa=] )
+	networkmanager? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=,qpa=] )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )

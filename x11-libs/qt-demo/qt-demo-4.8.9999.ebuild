@@ -16,26 +16,26 @@ fi
 IUSE="dbus declarative kde multimedia opengl openvg qt3support webkit xmlpatterns"
 
 DEPEND="
-	~x11-libs/qt-assistant-${PV}:4[aqua=,c++0x=,debug=,qpa=]
-	~x11-libs/qt-core-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?]
-	~x11-libs/qt-gui-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?]
-	~x11-libs/qt-script-${PV}:4[aqua=,c++0x=,debug=,qpa=]
-	~x11-libs/qt-sql-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?]
-	~x11-libs/qt-svg-${PV}:4[aqua=,c++0x=,debug=,qpa=]
-	~x11-libs/qt-test-${PV}:4[aqua=,c++0x=,debug=,qpa=]
-	dbus? ( ~x11-libs/qt-dbus-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
-	declarative? ( ~x11-libs/qt-declarative-${PV}:4[aqua=,c++0x=,debug=,qpa=,webkit?] )
+	~x11-libs/qt-assistant-${PV}:4[aqua=,debug=,qpa=]
+	~x11-libs/qt-core-${PV}:4[aqua=,debug=,qpa=,qt3support?]
+	~x11-libs/qt-gui-${PV}:4[aqua=,debug=,qpa=,qt3support?]
+	~x11-libs/qt-script-${PV}:4[aqua=,debug=,qpa=]
+	~x11-libs/qt-sql-${PV}:4[aqua=,debug=,qpa=,qt3support?]
+	~x11-libs/qt-svg-${PV}:4[aqua=,debug=,qpa=]
+	~x11-libs/qt-test-${PV}:4[aqua=,debug=,qpa=]
+	dbus? ( ~x11-libs/qt-dbus-${PV}:4[aqua=,debug=,qpa=] )
+	declarative? ( ~x11-libs/qt-declarative-${PV}:4[aqua=,debug=,qpa=,webkit?] )
 	kde? ( media-libs/phonon[aqua=] )
 	!kde? ( || (
-		~x11-libs/qt-phonon-${PV}:4[aqua=,c++0x=,debug=,qpa=]
+		~x11-libs/qt-phonon-${PV}:4[aqua=,debug=,qpa=]
 		media-libs/phonon[aqua=]
 	) )
-	multimedia? ( ~x11-libs/qt-multimedia-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
-	opengl? ( ~x11-libs/qt-opengl-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?] )
-	openvg? ( ~x11-libs/qt-openvg-${PV}:4[aqua=,c++0x=,debug=,qpa=,qt3support?] )
-	qt3support? ( ~x11-libs/qt-qt3support-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
-	webkit? ( ~x11-libs/qt-webkit-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
-	xmlpatterns? ( ~x11-libs/qt-xmlpatterns-${PV}:4[aqua=,c++0x=,debug=,qpa=] )
+	multimedia? ( ~x11-libs/qt-multimedia-${PV}:4[aqua=,debug=,qpa=] )
+	opengl? ( ~x11-libs/qt-opengl-${PV}:4[aqua=,debug=,qpa=,qt3support?] )
+	openvg? ( ~x11-libs/qt-openvg-${PV}:4[aqua=,debug=,qpa=,qt3support?] )
+	qt3support? ( ~x11-libs/qt-qt3support-${PV}:4[aqua=,debug=,qpa=] )
+	webkit? ( ~x11-libs/qt-webkit-${PV}:4[aqua=,debug=,qpa=] )
+	xmlpatterns? ( ~x11-libs/qt-xmlpatterns-${PV}:4[aqua=,debug=,qpa=] )
 "
 RDEPEND="${DEPEND}"
 

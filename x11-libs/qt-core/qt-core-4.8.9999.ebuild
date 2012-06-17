@@ -25,7 +25,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
-	qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,glib=,qpa=,qt3support] )
+	qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,debug=,glib=,qpa=,qt3support] )
 "
 
 PATCHES=(

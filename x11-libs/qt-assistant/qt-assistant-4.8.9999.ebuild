@@ -22,9 +22,9 @@ fi
 IUSE="compat doc +glib qt3support trace webkit"
 
 DEPEND="
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,glib=,qpa=,qt3support=,trace?]
-	~x11-libs/qt-sql-${PV}[aqua=,c++0x=,debug=,qpa=,qt3support=,sqlite]
-	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,c++0x=,debug=,qpa=] )
+	~x11-libs/qt-gui-${PV}[aqua=,debug=,glib=,qpa=,qt3support=,trace?]
+	~x11-libs/qt-sql-${PV}[aqua=,debug=,qpa=,qt3support=,sqlite]
+	webkit? ( ~x11-libs/qt-webkit-${PV}[aqua=,debug=,qpa=] )
 "
 RDEPEND="${DEPEND}"
 

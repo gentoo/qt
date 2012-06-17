@@ -16,8 +16,8 @@ fi
 IUSE="alsa"
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,debug=,qpa=]
-	~x11-libs/qt-gui-${PV}[aqua=,c++0x=,debug=,qpa=]
+	~x11-libs/qt-core-${PV}[aqua=,debug=,qpa=]
+	~x11-libs/qt-gui-${PV}[aqua=,debug=,qpa=]
 	alsa? ( media-libs/alsa-lib )
 "
 RDEPEND="${DEPEND}"

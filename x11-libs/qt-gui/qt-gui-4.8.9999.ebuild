@@ -26,8 +26,8 @@ RDEPEND="
 	media-libs/libpng:0
 	sys-libs/zlib
 	virtual/jpeg
-	~x11-libs/qt-core-${PV}[aqua=,c++0x=,qpa=,debug=,glib=,qt3support=]
-	~x11-libs/qt-script-${PV}[aqua=,c++0x=,qpa=,debug=]
+	~x11-libs/qt-core-${PV}[aqua=,qpa=,debug=,glib=,qt3support=]
+	~x11-libs/qt-script-${PV}[aqua=,qpa=,debug=]
 	!aqua? (
 		x11-libs/libICE
 		x11-libs/libSM
@@ -41,7 +41,7 @@ RDEPEND="
 		xv? ( x11-libs/libXv )
 	)
 	cups? ( net-print/cups )
-	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,c++0x=,qpa=,debug=] )
+	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,qpa=,debug=] )
 	egl? ( media-libs/mesa[egl] )
 	gtkstyle? ( x11-libs/gtk+:2[aqua=] )
 	mng? ( >=media-libs/libmng-1.0.9 )
@@ -56,7 +56,7 @@ DEPEND="${RDEPEND}
 		xv? ( x11-proto/videoproto )
 	)
 "
-PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,c++0x=,debug=,qpa=] )"
+PDEPEND="qt3support? ( ~x11-libs/qt-qt3support-${PV}[aqua=,debug=,qpa=] )"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.7.3-cups.patch"
