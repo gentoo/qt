@@ -3,9 +3,13 @@
 <pkgmetadata>
 	<herd>qt</herd> 
 	<use>
-		<flag name='exceptions'>Add support for exceptions - like catching them
+		<flag name="c++0x">Build Qt using the C++11 standard</flag>
+		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
-		<flag name='c++0x'>Build Qt using the C++11 standard</flag>
-		<flag name='qpa'>Build a window system agnostic implementation of Qt</flag>
+		<flag name="qpa">Build a window system agnostic implementation of Qt</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
+		<doc>http://qt-project.org/doc/</doc>
+	</upstream>
 </pkgmetadata>

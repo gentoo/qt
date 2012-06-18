@@ -13,4 +13,8 @@
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
+		<doc>http://qt-project.org/doc/</doc>
+	</upstream>
 </pkgmetadata>

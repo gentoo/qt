@@ -7,4 +7,8 @@
 		<flag name="connman">Enable ConnMan-based bearer plugin</flag>
 		<flag name="networkmanager">Enable NetworkManager-based bearer plugin</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
+		<doc>http://qt-project.org/doc/</doc>
+	</upstream>
 </pkgmetadata>

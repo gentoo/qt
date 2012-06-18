@@ -9,4 +9,8 @@
 			inside the event loop (recommended by Nokia)</flag>
 		<flag name="qpa">Build a window system agnostic implementation of Qt</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
+		<doc>http://qt-project.org/doc/</doc>
+	</upstream>
 </pkgmetadata>

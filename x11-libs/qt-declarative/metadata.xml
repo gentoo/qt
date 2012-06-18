@@ -11,4 +11,8 @@
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name="webkit">Build the WebView QML component</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
+		<doc>http://qt-project.org/doc/</doc>
+	</upstream>
 </pkgmetadata>
