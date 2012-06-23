@@ -25,7 +25,7 @@ usage() {
 
 
 dosip(){
-	SIPKG="sip-${SVER}-snapshot-${new_sip}" # Format Sip package
+	SIPKG="sip-snapshot-${new_sip}" # Format Sip package
 	ebegin "Downloading ${SIPKG} tarball..."
 	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/sip4/${SIPKG}.tar.gz || exit 2
 	eend $?
@@ -36,9 +36,9 @@ dosip(){
 	pushd ${OVERLAY}/dev-python/sip/
 	tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
 	einfo "Previous ebuild: ${tomove#./}"
-	mv ${tomove#./} sip-${SVER}_pre${DATE}.ebuild || exit "Failed to bump sip"
-	ebegin "Changing revision number to: ${new_sip}"
-	sed -i "/^HG_REVISION/s:=.*:=${new_sip}:" sip-${SVER}_pre${DATE}.ebuild
+	mv ${tomove#./} sip-${new_sip_ver}_pre${DATE}.ebuild || exit "Failed to bump sip"
+	ebegin "Changing revision number to: ${new_sip_rev}"
+	sed -i "/^HG_REVISION/s:=.*:=${new_sip_rev}:" sip-${new_sip_ver}_pre${DATE}.ebuild
 	eend $?
 	repoman manifest
 	git add .
@@ -46,7 +46,7 @@ dosip(){
 }
 
 dopyqt4(){
-	PYPKG="PyQt-x11-gpl-snapshot-${PVER}-${new_pyqt4}" #Format PyQt4 package
+	PYPKG="PyQt-x11-gpl-snapshot-${new_pyqt4}" #Format PyQt4 package
 	ebegin "Downloading ${PYPKG} tarball..."
 	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYPKG}.tar.gz || exit 2
 	eend $?
@@ -56,9 +56,9 @@ dopyqt4(){
 	pushd ${OVERLAY}/dev-python/PyQt4/
 	tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
 	einfo "Previous ebuild: ${tomove#./}"
-	mv ${tomove#./} PyQt4-${PVER}_pre${DATE}.ebuild || exit "Failed to bump PyQt4"
-	ebegin "Changing revision number to: ${new_pyqt4}"
-	sed -i "/^REVISION/s:=.*:=${new_pyqt4}:" PyQt4-${PVER}_pre${DATE}.ebuild
+	mv ${tomove#./} PyQt4-${new_pyqt4_ver}_pre${DATE}.ebuild || exit "Failed to bump PyQt4"
+	ebegin "Changing revision number to: ${new_pyqt4_rev}"
+	sed -i "/^REVISION/s:=.*:=${new_pyqt4_rev}:" PyQt4-${new_pyqt4_ver}_pre${DATE}.ebuild
 	eend $?
 	repoman manifest
 	git add .
@@ -111,12 +111,31 @@ getrevisions(){
 	einfo "sip   : ${sip_revision}"
 
 	# Find new revisions
-	new_pyqt4=$(curl -s http://www.riverbankcomputing.com/software/pyqt/download|grep "x11-gpl-snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 6|sed "s:\..*::")
-	new_sip=$(curl -s http://www.riverbankcomputing.com/software/sip/download|grep "snapshot-.*.tar.gz"|cut -d '/' -f 5|cut -d '-' -f 7|sed "s:\..*::")
-	
+	new_pyqt4=$(curl -s \
+		http://www.riverbankcomputing.com/software/pyqt/download \
+		| grep "x11-gpl-snapshot-.*.tar.gz" \
+		| cut -d '/' -f 5 | cut -d '-' -f 5-6 \
+		| sed -e "s@\.tar\.gz.*@@")
+	new_pyqt4_rev=$(echo $new_pyqt4 | cut -d '-' -f 2)
+	new_pyqt4_ver=$(echo $new_pyqt4 | cut -d '-' -f 1)
+	[[ -z ${new_pyqt4} ]] || \
+		einfo "New PyQt4 snapshot@rev: ${new_pyqt4}@${new_pyqt4_rev}"
+	new_sip=$(curl -s \
+		http://www.riverbankcomputing.com/software/sip/download \
+		| grep "snapshot-.*.tar.gz" \
+		| cut -d '/' -f 5 | cut -d '-' -f 6-7 \
+		| sed -e "s@\.tar\.gz.*@@")
+	new_sip_rev=$(echo $new_sip | cut -d '-' -f 2)
+	new_sip_ver=$(echo $new_sip | cut -d '-' -f 1)
+	[[ -z ${new_sip} ]] || \
+		einfo "New sip snapshot@rev: ${new_sip}@${new_sip_rev}"
 	# Decide what to bump"
-	[[ ${pyqt4_revision} != ${new_pyqt4} ]] && dopyqt4 && FOUND=true;
-	[[ ${sip_revision} != ${new_sip} ]] && dosip && FOUND=true;
+	[[ -z ${new_pyqt4_rev} ]] || \
+		{ [[ ${pyqt4_revision} != ${new_pyqt4_rev} ]] \
+			&& dopyqt4 && FOUND=true; }
+	[[ -z ${new_sip_rev} ]] || \
+		{ [[ ${sip_revision} != ${new_sip_rev} ]] \
+			&& dosip && FOUND=true; }
 
 	if [[ -n ${FOUND} ]]; then
 		commit
