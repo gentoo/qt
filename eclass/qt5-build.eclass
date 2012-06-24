@@ -8,7 +8,6 @@
 # @BLURB: Eclass for Qt5 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt5.
-# eutils, flag-o-matic, multilib eclasses are guaranteed to be already inherited.
 # Requires EAPI 4.
 
 case ${EAPI} in
@@ -289,6 +288,7 @@ qt5-build_src_test() {
 # @FUNCTION: qt5-build_src_install
 # @DESCRIPTION:
 # Performs the actual installation of target directories.
+# TODO: pkgconfig files are installed in the wrong place
 qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
@@ -296,12 +296,21 @@ qt5-build_src_install() {
 		pushd "${QT5_BUILD_DIR}" >/dev/null || die
 		emake INSTALL_ROOT="${D}" install_{qmake,mkspecs}
 		popd >/dev/null || die
+
+		# create an empty Gentoo/gentoo-qconfig.h
+		dodir "${D}${QTHEADERDIR}"/Gentoo
+		: > "${D}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h
+
+		# include gentoo-qconfig.h at the beginning of Qt{,Core}/qconfig.h
+		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
+			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
+			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
+			|| die "sed qconfig.h failed"
 	fi
 
-	# TODO: install_qconfigs
-	# TODO: pkgconfig files are installed in the wrong place
+	qt5_install_module_qconfigs
 
-	# remove .la files since we are building only shared Qt libraries
+	# remove .la files since we are building only shared libraries
 	prune_libtool_files
 }
 
@@ -310,27 +319,25 @@ qt5-build_src_install() {
 # Regenerate configuration, plus throw a message about possible
 # breakages and proposed solutions.
 qt5-build_pkg_postinst() {
-	# TODO
-	#generate_qconfigs
-	:
+	qt5_regenerate_global_qconfigs
 }
 
 # @FUNCTION: qt5-build_pkg_postrm
 # @DESCRIPTION:
 # Regenerate configuration when the package is completely removed.
 qt5-build_pkg_postrm() {
-	# TODO
-	#generate_qconfigs
-	:
+	if [[ -z ${REPLACED_BY_VERSION} && ${PN} != "qt-core" ]]; then
+		qt5_regenerate_global_qconfigs
+	fi
 }
 
 # @FUNCTION: qt_use
-# @USAGE: < flag > [ feature ] [ enableval ]
+# @USAGE: <flag> [feature] [enableval]
 # @DESCRIPTION:
 # This will echo "-${enableval}-${feature}" if <flag> is enabled, or
-# "-no-${feature}" if it's disabled. If [feature] is not specified, <flag>
-# will be used for that. If [enableval] is not specified, it omits the
-# "-${enableval}" part.
+# "-no-${feature}" if it's disabled. If [feature] is not specified,
+# <flag> will be used for that. If [enableval] is not specified, the
+# "-${enableval}" prefix is omitted.
 qt_use() {
 	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
 }
@@ -386,86 +393,75 @@ qt5_foreach_target_subdir() {
 	done
 }
 
-# @FUNCTION: install_qconfigs
+# @FUNCTION: qt5_install_module_qconfigs
 # @INTERNAL
 # @DESCRIPTION:
-# Installs gentoo-specific mkspecs configurations.
-install_qconfigs() {
+# Creates and installs gentoo-specific ${PN}-qconfig.{h,pri} files.
+qt5_install_module_qconfigs() {
 	local x
 
-	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} ]]; then
-		for x in QCONFIG_ADD QCONFIG_REMOVE; do
-			[[ -n ${!x} ]] && echo ${x}=${!x} >> "${T}"/${PN}-qconfig.pri
-		done
-		insinto ${QTDATADIR#${EPREFIX}}/mkspecs/gentoo
-		doins "${T}"/${PN}-qconfig.pri || die "installing ${PN}-qconfig.pri failed"
-	fi
+	# qconfig.h
+	: > "${T}"/${PN}-qconfig.h
+	for x in ${QCONFIG_DEFINE}; do
+		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
+	done
+	[[ -s ${T}/${PN}-qconfig.h ]] && (
+		insinto "${QTHEADERDIR#${EPREFIX}}"/Gentoo
+		doins "${T}"/${PN}-qconfig.h
+	)
 
-	if [[ -n ${QCONFIG_DEFINE} ]]; then
-		for x in ${QCONFIG_DEFINE}; do
-			echo "#define ${x}" >> "${T}"/gentoo-${PN}-qconfig.h
-		done
-		insinto ${QTHEADERDIR#${EPREFIX}}/Gentoo
-		doins "${T}"/gentoo-${PN}-qconfig.h || die "installing ${PN}-qconfig.h failed"
-	fi
+	# qconfig.pri
+	: > "${T}"/${PN}-qconfig.pri
+	for x in QCONFIG_ADD QCONFIG_REMOVE; do
+		[[ -n ${!x} ]] && echo "${x}=${!x}" >> "${T}"/${PN}-qconfig.pri
+	done
+	[[ -s ${T}/${PN}-qconfig.pri ]] && (
+		insinto "${QTDATADIR#${EPREFIX}}"/mkspecs/gentoo
+		doins "${T}"/${PN}-qconfig.pri
+	)
 }
 
-# @FUNCTION: generate_qconfigs
+# @FUNCTION: qt5_regenerate_global_qconfigs
 # @INTERNAL
 # @DESCRIPTION:
 # Generates gentoo-specific qconfig.{h,pri}.
-generate_qconfigs() {
-	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} ]]; then
-		local x qconfig_add qconfig_remove qconfig_new
-		for x in "${ROOT}${QTDATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
-			[[ -f ${x} ]] || continue
+# Don't die here because dying in pkg_post{inst,rm} just makes things worse.
+qt5_regenerate_global_qconfigs() {
+	einfo "Regenerating gentoo-qconfig.h"
+
+	find "${ROOT}${QTHEADERDIR}"/Gentoo -name 'qt-*-qconfig.h' -type f \
+		-exec cat {} + > "${T}"/gentoo-qconfig.h
+	if [[ -s ${T}/gentoo-qconfig.h ]]; then
+		mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h \
+			|| eerror "Failed to install new gentoo-qconfig.h"
+	else
+		eerror "Generated gentoo-qconfig.h is empty"
+	fi
+
+	einfo "Fixing QT_CONFIG in qconfig.pri"
+
+	if [[ -f ${ROOT}${QTDATADIR}/mkspecs/qconfig.pri ]]; then
+		local x qconfig_add= qconfig_remove=
+		local qt_config=$(sed -n 's/^QT_CONFIG +=//p' "${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri)
+		local new_qt_config=
+
+		# generate list of QT_CONFIG entries from the existing list,
+		# adding QCONFIG_ADD and excluding QCONFIG_REMOVE
+		for x in "${ROOT}${QTDATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
 			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
 			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
 		done
-
-		# these error checks do not use die because dying in pkg_post{inst,rm}
-		# just makes things worse.
-		if [[ -e "${ROOT}${QTDATADIR}"/mkspecs/gentoo/qconfig.pri ]]; then
-			# start with the qconfig.pri that qt-core installed
-			if ! cp "${ROOT}${QTDATADIR}"/mkspecs/gentoo/qconfig.pri \
-				"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri; then
-				eerror "cp qconfig failed."
-				return 1
+		for x in ${qt_config} ${qconfig_add}; do
+			if ! has "${x}" ${new_qt_config} ${qconfig_remove}; then
+				new_qt_config+=" ${x}"
 			fi
+		done
 
-			# generate list of QT_CONFIG entries from the existing list
-			# including qconfig_add and excluding qconfig_remove
-			for x in $(sed -n 's/^QT_CONFIG +=//p' \
-				"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri) ${qconfig_add}; do
-					has ${x} ${qconfig_remove} || qconfig_new+=" ${x}"
-			done
-
-			# replace the existing QT_CONFIG list with qconfig_new
-			if ! sed -i -e "s/QT_CONFIG +=.*/QT_CONFIG += ${qconfig_new}/" \
-				"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri; then
-				eerror "Sed for QT_CONFIG failed"
-				return 1
-			fi
-
-			# create Gentoo/qconfig.h
-			if [[ ! -e ${ROOT}${QTHEADERDIR}/Gentoo ]]; then
-				if ! mkdir -p "${ROOT}${QTHEADERDIR}"/Gentoo; then
-					eerror "mkdir ${QTHEADERDIR}/Gentoo failed"
-					return 1
-				fi
-			fi
-			: > "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h
-			for x in "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-*-qconfig.h; do
-				[[ -f ${x} ]] || continue
-				cat "${x}" >> "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h
-			done
-		else
-			rm -f "${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri
-			rm -f "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h
-			rmdir "${ROOT}${QTDATADIR}"/mkspecs \
-				"${ROOT}${QTDATADIR}" \
-				"${ROOT}${QTHEADERDIR}"/Gentoo \
-				"${ROOT}${QTHEADERDIR}" 2>/dev/null
-		fi
+		# now replace the existing QT_CONFIG with the generated list
+		sed -i -e "s/^QT_CONFIG +=.*/QT_CONFIG +=${new_qt_config}/" \
+			"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri \
+			|| eerror "Failed to sed QT_CONFIG in qconfig.pri"
+	else
+		eerror "qconfig.pri does not exist or is not a regular file"
 	fi
 }
