@@ -230,9 +230,11 @@ qt5-build_src_configure() {
 		$(qt_use c++11)
 
 		# general configure options
-		-shared -fast -largefile
+		-shared
+		-fast
 		-pkg-config
-		-system-zlib -system-pcre
+		-system-zlib
+		-system-pcre
 
 		# don't build examples
 		-nomake examples
