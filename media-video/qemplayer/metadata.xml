@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>proxy-maintainers</herd>
+	<maintainer>
+		<email>wbrana@gmail.com</email>
+		<description>maintainer-by-proxy as well as upstream</description>
+	</maintainer>
+	<maintainer>
+		<email>yngwin@gentoo.org</email>
+		<name>Ben de Groot</name>
+		<description>proxy</description>
+	</maintainer>
+</pkgmetadata>
