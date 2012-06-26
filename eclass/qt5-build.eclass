@@ -388,6 +388,7 @@ qt5_symlink_tools_to_buildtree() {
 qt5_foreach_target_subdir() {
 	local subdir
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
+		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
 		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
 		einfo "[${subdir}] $*"
 		"$@"
