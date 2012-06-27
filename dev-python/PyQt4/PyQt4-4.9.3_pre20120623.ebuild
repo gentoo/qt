@@ -7,7 +7,7 @@ EAPI=4
 PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
+RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
 
 inherit eutils toolchain-funcs qt4-r2 python
 
@@ -44,7 +44,7 @@ REQUIRED_USE="
 "
 
 RDEPEND="
-	>=dev-python/sip-4.13.1
+	>=dev-python/sip-4.13.3
 	>=x11-libs/qt-core-${QT_VER}:4
 	>=x11-libs/qt-script-${QT_VER}:4
 	X? (
