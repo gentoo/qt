@@ -1,14 +1,14 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-libs/qscintilla/qscintilla-2.4.3.ebuild,v 1.1 2010/03/18 01:13:17 yngwin Exp $
+# $Header: /var/cvsroot/gentoo-x86/x11-libs/qscintilla/qscintilla-2.6.2.ebuild,v 1.1 2012/06/27 13:31:54 pesa Exp $
 
-EAPI="3"
+EAPI=4
 
 inherit qt4-r2
 
 HG_REVISION="4e0cb0250dad"
 
-MY_P="QScintilla-gpl-snapshot-${PV/_pre*/-${HG_REVISION}}"
+MY_P=QScintilla-gpl-snapshot-${PV/_pre*/-${HG_REVISION}}
 
 DESCRIPTION="A Qt port of Neil Hodgson's Scintilla C++ editor class"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/qscintilla/intro"
@@ -19,49 +19,59 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc python"
 
-DEPEND="x11-libs/qt-gui:4"
+DEPEND="
+	x11-libs/qt-core:4
+	x11-libs/qt-gui:4
+"
 RDEPEND="${DEPEND}"
 PDEPEND="python? ( ~dev-python/qscintilla-python-${PV} )"
 
 S=${WORKDIR}/${MY_P}
 
-PATCHES=( "${FILESDIR}/${PN}-2.4-designer.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-2.6.2-designer.patch"
+)
 
 src_configure() {
-	cd "${S}"/Qt4
-	einfo "Configuring qscintilla"
+	pushd Qt4Qt5 > /dev/null
+	einfo "Configuration of qscintilla"
 	eqmake4 qscintilla.pro
+	popd > /dev/null
 
-	cd "${S}"/designer-Qt4
-	einfo "Configuring designer plugin"
+	pushd designer-Qt4 > /dev/null
+	einfo "Configuration of designer plugin"
 	eqmake4 designer.pro
+	popd > /dev/null
 }
 
 src_compile() {
-	cd "${S}"/Qt4
-	einfo "Building qscintilla"
-	emake || die "failed to build qscintilla"
+	pushd Qt4Qt5 > /dev/null
+	einfo "Building of qscintilla"
+	emake
+	popd > /dev/null
 
-	cd "${S}"/designer-Qt4
-	einfo "Building designer plugin"
-	emake || die "failed to build designer plugin"
+	pushd designer-Qt4 > /dev/null
+	einfo "Building of designer plugin"
+	emake
+	popd > /dev/null
 }
 
 src_install() {
-	cd "${S}"/Qt4
-	einfo "Installing qscintilla"
-	emake INSTALL_ROOT="${D}" install || die "failed to install qscintilla"
+	pushd Qt4Qt5 > /dev/null
+	einfo "Installation of qscintilla"
+	emake INSTALL_ROOT="${D}" install
+	popd > /dev/null
 
-	cd "${S}"/designer-Qt4
-	einfo "Installing designer plugin"
-	emake INSTALL_ROOT="${D}" install || die "failed to install designer plugin"
+	pushd designer-Qt4 > /dev/null
+	einfo "Installation of designer plugin"
+	emake INSTALL_ROOT="${D}" install
+	popd > /dev/null
 
-	cd "${S}"
 	dodoc NEWS
+
 	if use doc; then
-		einfo "Installing documentation"
-		dohtml doc/html-Qt4/* || die
-		insinto /usr/share/doc/${PF}/Scintilla
-		doins doc/Scintilla/* || die
+		dohtml doc/html-Qt4Qt5/*
+		insinto /usr/share/doc/${PF}
+		doins -r doc/Scintilla
 	fi
 }
