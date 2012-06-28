@@ -300,7 +300,7 @@ qt5-build_src_install() {
 		popd >/dev/null || die
 
 		# create an empty Gentoo/gentoo-qconfig.h
-		dodir "${D}${QTHEADERDIR}"/Gentoo
+		dodir "${QTHEADERDIR#${EPREFIX}}"/Gentoo
 		: > "${D}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h
 
 		# include gentoo-qconfig.h at the beginning of Qt{,Core}/qconfig.h
