@@ -178,6 +178,10 @@ qt5-build_src_prepare() {
 		'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
 		configure || die "sed configure failed"
 
+	# Don't run qmake at the end of configure
+	sed -i -e '/echo "Creating makefiles\./,+2 d' \
+		configure || die "sed configure failed"
+
 	# Respect CXX in configure
 	sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 		configure || die "sed QMAKE_CONF_COMPILER failed"
@@ -258,8 +262,13 @@ qt5-build_src_configure() {
 	)
 
 	pushd "${QT5_BUILD_DIR}" >/dev/null || die
+
 	einfo "Configuring with: ${conf[@]}"
 	"${S}"/configure "${conf[@]}" || die "configure failed"
+
+	einfo "Running qmake on top-level project file"
+	./bin/qmake "${S}"/qtbase.pro CONFIG+=nostrip || die
+
 	popd >/dev/null || die
 
 	qmake() {
