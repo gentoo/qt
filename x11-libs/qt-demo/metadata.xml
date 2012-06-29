@@ -11,7 +11,6 @@
 		<flag name="multimedia">Build QtMultimedia examples and demos</flag>
 		<flag name="opengl">Build QtOpenGL examples and demos</flag>
 		<flag name="openvg">Build QtOpenVG examples and demos</flag>
-		<flag name="qpa">Build a window system agnostic implementation of Qt</flag>
 		<flag name="qt3support">Build Qt3Support examples and demos</flag>
 		<flag name="webkit">Build QtWebKit examples and demos</flag>
 		<flag name="xmlpatterns">Build QtXmlPatterns examples and demos</flag>

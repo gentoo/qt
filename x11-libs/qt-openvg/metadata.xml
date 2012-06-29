@@ -5,7 +5,6 @@
 	<use>
 		<flag name="c++0x">Build Qt using the C++11 standard</flag>
 		<flag name="exceptions">Build with support for exceptions</flag>
-		<flag name="qpa">Build a window system agnostic implementation of Qt</flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4</flag>
 	</use>
 	<upstream>

@@ -9,7 +9,6 @@
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
 		<flag name="glib">Enable <pkg>dev-libs/glib</pkg> eventloop support</flag>
-		<flag name="qpa">Build a window system agnostic implementation of Qt</flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name="trace">Build the 'qttracereplay' utility which is required to 
