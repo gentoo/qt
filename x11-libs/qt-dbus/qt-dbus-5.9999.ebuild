@@ -29,12 +29,12 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/qdbuscpp2xml
 	src/dbus
 )
+QCONFIG_ADD="dbus"
 
 src_configure() {
 	local myconf=(
 		-dbus-linked
-		-no-accessibility -no-gui -no-cups
-		-no-xcb -no-eglfs -no-directfb -no-opengl
+		-no-xcb -no-eglfs -no-directfb
 	)
 	qt5-build_src_configure
 }
