@@ -443,26 +443,27 @@ qt5_regenerate_global_qconfigs() {
 
 	find "${ROOT}${QTHEADERDIR}"/Gentoo -name 'qt-*-qconfig.h' -type f \
 		-exec cat {} + > "${T}"/gentoo-qconfig.h
-	if [[ -s ${T}/gentoo-qconfig.h ]]; then
-		mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h \
-			|| eerror "Failed to install new gentoo-qconfig.h"
-	else
-		eerror "Generated gentoo-qconfig.h is empty"
-	fi
+
+	[[ -s ${T}/gentoo-qconfig.h ]] || ewarn "Generated gentoo-qconfig.h is empty"
+	mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h \
+		|| eerror "Failed to install new gentoo-qconfig.h"
 
 	einfo "Updating QT_CONFIG in qconfig.pri"
 
-	if [[ -f ${ROOT}${QTDATADIR}/mkspecs/qconfig.pri ]]; then
+	local qconfig_pri=${ROOT}${QTDATADIR}/mkspecs/qconfig.pri
+	if [[ -f ${qconfig_pri} ]]; then
 		local x qconfig_add= qconfig_remove=
-		local qt_config=$(sed -n 's/^QT_CONFIG +=//p' "${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri)
+		local qt_config=$(sed -n 's/^QT_CONFIG +=//p' "${qconfig_pri}")
 		local new_qt_config=
 
 		# generate list of QT_CONFIG entries from the existing list,
-		# adding QCONFIG_ADD and excluding QCONFIG_REMOVE
+		# appending QCONFIG_ADD and excluding QCONFIG_REMOVE
+		eshopts_push -s nullglob
 		for x in "${ROOT}${QTDATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
 			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
 			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
 		done
+		eshopts_pop
 		for x in ${qt_config} ${qconfig_add}; do
 			if ! has "${x}" ${new_qt_config} ${qconfig_remove}; then
 				new_qt_config+=" ${x}"
@@ -471,9 +472,8 @@ qt5_regenerate_global_qconfigs() {
 
 		# now replace the existing QT_CONFIG with the generated list
 		sed -i -e "s/^QT_CONFIG +=.*/QT_CONFIG +=${new_qt_config}/" \
-			"${ROOT}${QTDATADIR}"/mkspecs/qconfig.pri \
-			|| eerror "Failed to sed QT_CONFIG in qconfig.pri"
+			"${qconfig_pri}" || eerror "Failed to sed QT_CONFIG in qconfig.pri"
 	else
-		eerror "qconfig.pri does not exist or is not a regular file"
+		ewarn "'${qconfig_pri}' does not exist or is not a regular file"
 	fi
 }
