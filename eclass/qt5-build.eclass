@@ -399,7 +399,7 @@ qt5_foreach_target_subdir() {
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
 		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
 		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
-		einfo "[${subdir}] $*"
+		einfo "Running $* in ${subdir}"
 		"$@"
 		popd >/dev/null || die
 	done
@@ -450,7 +450,7 @@ qt5_regenerate_global_qconfigs() {
 		eerror "Generated gentoo-qconfig.h is empty"
 	fi
 
-	einfo "Fixing QT_CONFIG in qconfig.pri"
+	einfo "Updating QT_CONFIG in qconfig.pri"
 
 	if [[ -f ${ROOT}${QTDATADIR}/mkspecs/qconfig.pri ]]; then
 		local x qconfig_add= qconfig_remove=
