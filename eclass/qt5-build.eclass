@@ -178,10 +178,6 @@ qt5-build_src_prepare() {
 		'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
 		configure || die "sed configure failed"
 
-	# Don't run qmake at the end of configure
-	sed -i -e '/echo "Creating makefiles\./,+2 d' \
-		configure || die "sed configure failed"
-
 	# Respect CXX in configure
 	sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 		configure || die "sed QMAKE_CONF_COMPILER failed"
@@ -235,7 +231,7 @@ qt5-build_src_configure() {
 
 		# general configure options
 		-shared
-		-fast
+		-dont-process
 		-pkg-config
 		-system-zlib
 		-system-pcre
@@ -261,24 +257,18 @@ qt5-build_src_configure() {
 		"${myconf[@]}"
 	)
 
-	pushd "${QT5_BUILD_DIR}" >/dev/null || die
+	pushd "${QT5_BUILD_DIR}" > /dev/null || die
 
 	einfo "Configuring with: ${conf[@]}"
 	"${S}"/configure "${conf[@]}" || die "configure failed"
 
-	einfo "Running qmake on top-level project file"
-	./bin/qmake "${S}"/qtbase.pro CONFIG+=nostrip || die
+	einfo "Running qmake"
+	./bin/qmake -recursive "${S}"/qtbase.pro \
+		QMAKE_LIBDIR="${QTLIBDIR}" \
+		CONFIG+=nostrip \
+		|| die "qmake failed"
 
-	popd >/dev/null || die
-
-	qmake() {
-		"${QT5_BUILD_DIR}"/bin/qmake \
-			"${S}/${subdir}/${subdir##*/}.pro" \
-			QMAKE_LIBDIR_QT="${QTLIBDIR}" \
-			CONFIG+=nostrip \
-			|| die
-	}
-	qt5_foreach_target_subdir qmake
+	popd > /dev/null || die
 }
 
 # @FUNCTION: qt5-build_src_compile
@@ -304,9 +294,9 @@ qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
 	if [[ ${PN} == "qt-core" ]]; then
-		pushd "${QT5_BUILD_DIR}" >/dev/null || die
+		pushd "${QT5_BUILD_DIR}" > /dev/null || die
 		emake INSTALL_ROOT="${D}" install_{qmake,mkspecs}
-		popd >/dev/null || die
+		popd > /dev/null || die
 
 		# create an empty Gentoo/gentoo-qconfig.h
 		dodir "${QTHEADERDIR#${EPREFIX}}"/Gentoo
@@ -398,10 +388,10 @@ qt5_foreach_target_subdir() {
 	local subdir
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
 		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
-		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
+		pushd "${QT5_BUILD_DIR}/${subdir}" > /dev/null || die
 		einfo "Running $* in ${subdir}"
 		"$@"
-		popd >/dev/null || die
+		popd > /dev/null || die
 	done
 }
 
