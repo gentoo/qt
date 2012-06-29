@@ -363,7 +363,7 @@ qt_use() {
 qt5_prepare_env() {
 	# setup installation directories
 	QTPREFIXDIR=${EPREFIX}/usr
-	QTBINDIR=${EPREFIX}/usr/qt5/bin # FIXME
+	QTBINDIR=${QTPREFIXDIR}/qt5/bin # FIXME
 	QTLIBDIR=${QTPREFIXDIR}/$(get_libdir)/qt5
 	QTDOCDIR=${QTPREFIXDIR}/share/doc/qt-${PV}
 	QTHEADERDIR=${QTPREFIXDIR}/include/qt5
