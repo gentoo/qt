@@ -48,11 +48,14 @@ case ${QT5_BUILD_TYPE} in
 		;;
 esac
 
-IUSE="+c++11 debug +pch"
+IUSE="+c++11 debug +pch test"
 
 DEPEND="virtual/pkgconfig"
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
+if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
 	DEPEND+=" dev-lang/perl"
+fi
+if [[ ${PN} != "qt-core" && ${PN} != "qt-test" ]]; then
+	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
 fi
 
 # @ECLASS-VARIABLE: PATCHES
@@ -282,8 +285,17 @@ qt5-build_src_compile() {
 # @DESCRIPTION:
 # Runs tests in target directories.
 qt5-build_src_test() {
-	# TODO
-	:
+	# TODO: find a way to avoid a circular dep between qt-core and qt-test
+	# TODO: generate a custom TESTRUNNER script that setups LD_LIBRARY_PATH
+	if [[ ${PN} != "qt-core" ]]; then
+		tests() {
+			"${QT5_BUILD_DIR}"/bin/qmake \
+				"${S}/${subdir}/${subdir##*/}.pro" \
+				|| die "qmake failed"
+			emake check
+		}
+		qt5_foreach_target_subdir tests
+	fi
 }
 
 # @FUNCTION: qt5-build_src_install
@@ -387,10 +399,17 @@ qt5_symlink_tools_to_buildtree() {
 qt5_foreach_target_subdir() {
 	local subdir
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
+		if [[ ${EBUILD_PHASE} == "test" ]]; then
+			subdir=${subdir/#src/tests\/auto}
+			[[ -d ${subdir} ]] || continue
+		fi
+
 		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
 		pushd "${QT5_BUILD_DIR}/${subdir}" > /dev/null || die
+
 		einfo "Running $* in ${subdir}"
 		"$@"
+
 		popd > /dev/null || die
 	done
 }
