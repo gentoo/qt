@@ -44,8 +44,7 @@ src_configure() {
 	local myconf=(
 		$(use connman || use networkmanager && echo -dbus-linked || echo -no-dbus)
 		$(use ssl && echo -openssl-linked || echo -no-openssl)
-		-no-accessibility -no-gui -no-cups
-		-no-xcb -no-eglfs -no-directfb -no-opengl
+		-no-xcb -no-eglfs -no-directfb
 	)
 	qt5-build_src_configure
 }

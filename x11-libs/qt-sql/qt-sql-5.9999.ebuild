@@ -49,8 +49,7 @@ src_configure() {
 		$(use sqlite && echo -system-sqlite)
 		-no-sql-db2
 		-no-sql-sqlite2
-		-no-accessibility -no-gui -no-cups -no-dbus
-		-no-xcb -no-eglfs -no-directfb -no-opengl
+		-no-xcb -no-eglfs -no-directfb
 	)
 
 	use mysql && myconf+=("-I${EPREFIX}/usr/include/mysql" "-L${EPREFIX}/usr/$(get_libdir)/mysql")
