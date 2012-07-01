@@ -5,7 +5,7 @@
 EAPI=4
 SCONS_MIN_VERSION="2.1"
 
-inherit flag-o-matic eutils scons-utils
+inherit scons-utils toolchain-funcs
 
 DESCRIPTION="File-manager-like Qt4 GUI front-end to MPlayer"
 HOMEPAGE="http://sourceforge.net/projects/qemplayer/"
@@ -41,9 +41,9 @@ pkg_setup() {
 
 src_configure() {
 	myesconsargs=(
+		-j1
 		env=1
 		final=1
-		-j1
 		$(use_scons debug)
 	)
 }
@@ -53,6 +53,6 @@ src_compile() {
 }
 
 src_install() {
+	dodir /usr
 	escons install prefix="${D}"usr
-	dodoc CHANGES README
 }
