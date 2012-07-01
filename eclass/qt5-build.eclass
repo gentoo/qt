@@ -286,16 +286,27 @@ qt5-build_src_compile() {
 # Runs tests in target directories.
 qt5-build_src_test() {
 	# TODO: find a way to avoid a circular dep between qt-core and qt-test
-	# TODO: generate a custom TESTRUNNER script that setups LD_LIBRARY_PATH
-	if [[ ${PN} != "qt-core" ]]; then
-		tests() {
-			"${QT5_BUILD_DIR}"/bin/qmake \
-				"${S}/${subdir}/${subdir##*/}.pro" \
-				|| die "qmake failed"
-			emake check
-		}
-		qt5_foreach_target_subdir tests
-	fi
+	[[ ${PN} == "qt-core" ]] && return
+
+	# create a custom testrunner script that correctly sets
+	# {,DY}LD_LIBRARY_PATH before executing the given test
+	local testrunner=${QT5_BUILD_DIR}/gentoo-testrunner
+	cat <<-EOF > "${testrunner}"
+	#!/bin/sh
+	export LD_LIBRARY_PATH="${QT5_BUILD_DIR}/lib:${QTLIBDIR}"
+	export DYLD_LIBRARY_PATH="${QT5_BUILD_DIR}/lib:${QTLIBDIR}"
+	"\$@"
+	EOF
+	chmod +x "${testrunner}"
+
+	qmake() {
+		"${QT5_BUILD_DIR}"/bin/qmake \
+			"${S}/${subdir}/${subdir##*/}.pro" \
+			|| die "qmake failed"
+	}
+	qt5_foreach_target_subdir qmake
+	qt5_foreach_target_subdir emake
+	qt5_foreach_target_subdir emake TESTRUNNER="'${testrunner}'" check
 }
 
 # @FUNCTION: qt5-build_src_install
