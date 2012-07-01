@@ -16,10 +16,12 @@ fi
 
 IUSE=""
 
-DEPEND="
+RDEPEND="
 	~x11-libs/qt-core-${PV}[debug=]
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	test? ( ~x11-libs/qt-network-${PV}[debug=] )
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/xml
