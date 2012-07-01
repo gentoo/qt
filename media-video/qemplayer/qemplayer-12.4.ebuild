@@ -4,6 +4,7 @@
 
 EAPI=4
 SCONS_MIN_VERSION="2.1"
+
 inherit flag-o-matic eutils scons-utils
 
 DESCRIPTION="File-manager-like Qt4 GUI front-end to MPlayer"
@@ -15,14 +16,18 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-RDEPEND=">=dev-db/sqlite-3.7.13[threadsafe]
+RDEPEND="
+	>=dev-db/sqlite-3.7.13[threadsafe]
 	>=dev-libs/libsigc++-2.2.10
 	|| ( media-video/mplayer media-video/mplayer2 )
+	>=x11-libs/qt-core-4.8:4
 	>=x11-libs/qt-gui-4.8:4
-	>=x11-libs/qt-sql-4.8:4[sqlite]"
+	>=x11-libs/qt-sql-4.8:4[sqlite]
+"
 DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.4.7
-	virtual/pkgconfig"
+	virtual/pkgconfig
+"
 
 pkg_setup() {
 	local major=$(gcc-major-version)
@@ -34,10 +39,10 @@ pkg_setup() {
 
 src_configure() {
 	myesconsargs=(
-		 final=1
-		 env=1
-		 -j1
-		 $(use_scons debug)
+		env=1
+		final=1
+		-j1
+		$(use_scons debug)
 	)
 }
 
@@ -46,7 +51,6 @@ src_compile() {
 }
 
 src_install() {
-	dodir /usr
 	escons install prefix="${D}"usr
-	dodoc INSTALL README CHANGES
+	dodoc CHANGES README
 }
