@@ -30,10 +30,12 @@ DEPEND="${RDEPEND}
 "
 
 pkg_setup() {
-	local major=$(gcc-major-version)
-	local minor=$(gcc-minor-version)
-	if (( major < 4 || ( major == 4 && minor < 4 ) )); then
-		die "gcc 4.4.7 or newer is required"
+	if [[ ${MERGE_TYPE} != "binary" ]]; then
+		local major=$(gcc-major-version)
+		local minor=$(gcc-minor-version)
+		if (( major < 4 || ( major == 4 && minor < 4 ) )); then
+			die "gcc 4.4.7 or newer is required"
+		fi
 	fi
 }
 
