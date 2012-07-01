@@ -11,4 +11,5 @@
 		<name>Ben de Groot</name>
 		<description>proxy</description>
 	</maintainer>
+	<herd>qt</herd>
 </pkgmetadata>
