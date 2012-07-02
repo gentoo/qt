@@ -34,6 +34,14 @@ QT5_TARGET_SUBDIRS=(
 	src/corelib
 	src/concurrent
 )
+QCONFIG_DEFINE="QT_ZLIB"
+
+pkg_setup() {
+	QCONFIG_REMOVE="$(usev !glib)
+			$(usev !icu)"
+
+	qt5-build_pkg_setup
+}
 
 src_configure() {
 	local myconf=(
