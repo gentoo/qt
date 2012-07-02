@@ -51,6 +51,18 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/platforms
 )
 
+pkg_setup() {
+	QCONFIG_ADD="accessibility
+			$(usev fontconfig)
+			$(usev opengl)
+			$(use udev && echo libudev)"
+
+	QCONFIG_DEFINE="$(use egl && echo QT_EGL)
+			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
+
+	qt5-build_pkg_setup
+}
+
 src_configure() {
 	local myconf=(
 		-accessibility
