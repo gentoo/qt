@@ -18,7 +18,7 @@ fi
 
 IUSE="egl +fontconfig gif +glib jpeg opengl +png udev +xcb"
 
-DEPEND="
+RDEPEND="
 	media-libs/freetype:2
 	sys-libs/zlib
 	~x11-libs/qt-core-${PV}[debug=,glib=]
@@ -40,7 +40,9 @@ DEPEND="
 		x11-libs/xcb-util-wm
 	)
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	test? ( ~x11-libs/qt-network-${PV}[debug=] )
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/gui
