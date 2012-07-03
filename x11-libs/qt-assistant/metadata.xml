@@ -11,7 +11,7 @@
 		<flag name="glib">Enable <pkg>dev-libs/glib</pkg> eventloop support</flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
-		<flag name="trace">Build the 'qttracereplay' utility which is required to 
+		<flag name="trace">Build the 'qttracereplay' utility which is required to
 			play drawings recorded with the trace graphicssystem</flag>
 	</use>
 	<upstream>
