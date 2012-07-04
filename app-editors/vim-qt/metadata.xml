@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>qt</herd>
+	<maintainer>
+		<email>ThyArmageddon+Gentoo@Gmail.com</email>
+		<name>Elijah El Lazkani</name>
+	</maintainer>
+	<longdescription lang="en">The well known vim editor with a Qt based front-end interface</longdescription>
+</pkgmetadata>
