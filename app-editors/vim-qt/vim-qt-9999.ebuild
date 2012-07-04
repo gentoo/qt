@@ -18,7 +18,7 @@ IUSE="acl cscope debug gpm nls perl python ruby"
 
 COMMON_DEPEND="
 	app-admin/eselect-vi
-	=app-editors/vim-core-7.3.487
+	>=app-editors/vim-core-7.3.487
 	sys-libs/ncurses
 	>=x11-libs/qt-core-4.7.0:4
 	>=x11-libs/qt-gui-4.7.0:4
