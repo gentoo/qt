@@ -25,7 +25,7 @@ usage() {
 
 
 dosip(){
-	SIPKG="sip-snapshot-${new_sip}" # Format Sip package
+	SIPKG="sip-${new_sip}" # Format Sip package
 	ebegin "Downloading ${SIPKG} tarball..."
 	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/sip4/${SIPKG}.tar.gz || exit 2
 	eend $?
@@ -123,9 +123,9 @@ getrevisions(){
 	new_sip=$(curl -s \
 		http://www.riverbankcomputing.com/software/sip/download \
 		| grep "snapshot-.*.tar.gz" \
-		| cut -d '/' -f 5 | cut -d '-' -f 6-7 \
+		| cut -d '/' -f 5 | cut -d '-' -f 5-8 \
 		| sed -e "s@\.tar\.gz.*@@")
-	new_sip_rev=$(echo $new_sip | cut -d '-' -f 2)
+	new_sip_rev=$(echo $new_sip | cut -d '-' -f 3)
 	new_sip_ver=$(echo $new_sip | cut -d '-' -f 1)
 	[[ -z ${new_sip} ]] || \
 		einfo "New sip snapshot@rev: ${new_sip}@${new_sip_rev}"
