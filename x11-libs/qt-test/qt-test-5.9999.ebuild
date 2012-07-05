@@ -16,10 +16,12 @@ fi
 
 IUSE=""
 
-DEPEND="
+RDEPEND="
 	~x11-libs/qt-core-${PV}[debug=]
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	~x11-libs/qt-gui-${PV}[debug=]
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/testlib
