@@ -166,20 +166,21 @@ qt5-build_src_prepare() {
 
 	mkdir -p "${QT5_BUILD_DIR}" || die
 
-	if [[ ${PN} != "qt-core" ]]; then
+	if [[ ${PN} == "qt-core" ]]; then
+		# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
+		sed -i -e "/\"\$MAKE\".*QMAKE_BUILD_ERROR=/ s:): \
+			${MAKEOPTS} ${EXTRA_EMAKE} \
+			'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
+			'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
+			configure || die "sed configure failed"
+	else
+		# Skip qmake build
+		sed -i -e '/"$MAKE".*QMAKE_BUILD_ERROR=/ d' \
+			configure || die "sed configure failed"
+		rm -f qmake/Makefile*
+
 		qt5_symlink_tools_to_buildtree
 	fi
-
-	# Avoid unnecessary qmake recompilations
-	sed -i -re "s|^if true;.*(\[ '\!').*(\"\\\$outpath/bin/qmake\".*)|if \1 -e \2 then|" \
-		configure || die "sed configure failed"
-
-	# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
-	sed -i -e "/\"\$MAKE\".*QMAKE_BUILD_ERROR/ s:): \
-		${MAKEOPTS} ${EXTRA_EMAKE} \
-		'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
-		'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
-		configure || die "sed configure failed"
 
 	# Respect CXX in configure
 	sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
@@ -398,8 +399,7 @@ qt5_symlink_tools_to_buildtree() {
 
 	local bin
 	for bin in "${QTBINDIR}"/{qmake,moc,rcc,uic,qdoc}; do
-		ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ \
-			|| die "symlinking '${bin}' to '${QT5_BUILD_DIR}/bin/' failed"
+		ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
 	done
 }
 
