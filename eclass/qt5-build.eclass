@@ -54,7 +54,7 @@ DEPEND="virtual/pkgconfig"
 if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
 	DEPEND+=" dev-lang/perl"
 fi
-if [[ ${PN} != "qt-core" && ${PN} != "qt-test" ]]; then
+if [[ ${PN} != "qt-test" ]]; then
 	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
 fi
 
@@ -285,10 +285,8 @@ qt5-build_src_compile() {
 # @FUNCTION: qt5-build_src_test
 # @DESCRIPTION:
 # Runs tests in target directories.
+# TODO: find a way to avoid circular deps with USE=test.
 qt5-build_src_test() {
-	# TODO: find a way to avoid a circular dep between qt-core and qt-test
-	[[ ${PN} == "qt-core" ]] && return
-
 	# create a custom testrunner script that correctly sets
 	# {,DY}LD_LIBRARY_PATH before executing the given test
 	local testrunner=${QT5_BUILD_DIR}/gentoo-testrunner
