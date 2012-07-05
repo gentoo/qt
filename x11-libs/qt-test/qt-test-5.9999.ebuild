@@ -20,7 +20,7 @@ RDEPEND="
 	~x11-libs/qt-core-${PV}[debug=]
 "
 DEPEND="${RDEPEND}
-	~x11-libs/qt-gui-${PV}[debug=]
+	test? ( ~x11-libs/qt-gui-${PV}[debug=] )
 "
 
 QT5_TARGET_SUBDIRS=(
