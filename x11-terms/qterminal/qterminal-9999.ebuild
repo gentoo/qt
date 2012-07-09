@@ -7,8 +7,8 @@ EAPI="4"
 inherit cmake-utils git-2
 
 DESCRIPTION="Qt4-based multitab terminal emulator"
-HOMEPAGE="https://gitorious.org/qterminal/pages/Home"
-EGIT_REPO_URI="git://gitorious.org/qterminal/qterminal.git"
+HOMEPAGE="https://github.com/qterminal/"
+EGIT_REPO_URI="git://github.com/qterminal/qterminal.git"
 
 LICENSE="GPL-2"
 SLOT="0"

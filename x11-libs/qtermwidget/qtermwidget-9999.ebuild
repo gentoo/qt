@@ -7,8 +7,8 @@ EAPI="4"
 inherit cmake-utils git-2
 
 DESCRIPTION="Qt4 terminal emulator widget"
-HOMEPAGE="https://gitorious.org/qtermwidget"
-EGIT_REPO_URI="git://gitorious.org/qtermwidget/qtermwidget.git"
+HOMEPAGE="https://github.com/qterminal/"
+EGIT_REPO_URI="git://github.com/qterminal/qtermwidget.git"
 
 LICENSE="GPL-2"
 SLOT="0"
