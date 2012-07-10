@@ -37,6 +37,7 @@ dosip(){
 	tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
 	einfo "Previous ebuild: ${tomove#./}"
 	mv ${tomove#./} sip-${new_sip_ver}_pre${DATE}.ebuild || exit "Failed to bump sip"
+	git rm ${tomove}
 	ebegin "Changing revision number to: ${new_sip_rev}"
 	sed -i "/^HG_REVISION/s:=.*:=${new_sip_rev}:" sip-${new_sip_ver}_pre${DATE}.ebuild
 	eend $?
@@ -57,6 +58,7 @@ dopyqt4(){
 	tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
 	einfo "Previous ebuild: ${tomove#./}"
 	mv ${tomove#./} PyQt4-${new_pyqt4_ver}_pre${DATE}.ebuild || exit "Failed to bump PyQt4"
+	git rm ${tomove}
 	ebegin "Changing revision number to: ${new_pyqt4_rev}"
 	sed -i "/^REVISION/s:=.*:=${new_pyqt4_rev}:" PyQt4-${new_pyqt4_ver}_pre${DATE}.ebuild
 	eend $?
