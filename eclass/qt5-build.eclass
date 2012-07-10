@@ -15,7 +15,7 @@ case ${EAPI} in
 	*) die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-inherit base eutils flag-o-matic multilib toolchain-funcs versionator
+inherit eutils flag-o-matic multilib toolchain-funcs versionator
 
 if [[ ${PV} == *9999* ]]; then
 	QT5_BUILD_TYPE="live"
@@ -194,7 +194,9 @@ qt5-build_src_prepare() {
 	tc-export CC CXX RANLIB STRIP
 	export LD="$(tc-getCXX)" # qmake-generated Makefiles use LD/LINK for linking
 
-	base_src_prepare
+	# patching
+	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
+	epatch_user
 }
 
 # @FUNCTION: qt5-build_src_configure
