@@ -187,18 +187,18 @@ qt5-build_src_prepare() {
 		configure || die "sed QMAKE_CONF_COMPILER failed"
 
 	# Respect CC, CXX, LINK and *FLAGS in config.tests
+	# FIXME: in compile.test, -m flags are passed to the linker via LIBS
 	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
 		sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
 			'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
 			'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
 		|| die "sed config.tests failed"
 
-	# TODO
-	# in compile.test, -m flags are passed to the linker via LIBS
+	# Remove unused project files to speed up recursive qmake invocation
+	rm -f demos/demos.pro examples/examples.pro tests/tests.pro tools/tools.pro
 
 	tc-export CC CXX RANLIB STRIP
-	# qmake-generated Makefiles use LD/LINK for linking
-	export LD="$(tc-getCXX)"
+	export LD="$(tc-getCXX)" # qmake-generated Makefiles use LD/LINK for linking
 
 	base_src_prepare
 }
@@ -237,11 +237,13 @@ qt5-build_src_configure() {
 		-shared
 		-dont-process
 		-pkg-config
+
+		# prefer system libraries
 		-system-zlib
 		-system-pcre
 
-		# don't build examples
-		-nomake examples
+		# exclude examples and tests from building
+		-make libs
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
 		$(use prefix || echo -no-rpath)
