@@ -191,7 +191,7 @@ qt5-build_src_prepare() {
 	# Remove unused project files to speed up recursive qmake invocation
 	rm -f demos/demos.pro examples/examples.pro tests/tests.pro tools/tools.pro
 
-	# patching
+	# Apply patches
 	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
 	epatch_user
 }
