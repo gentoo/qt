@@ -14,7 +14,7 @@ case ${EAPI} in
 	*)	die "qt4-build.eclass requires EAPI 2, 3 or 4." ;;
 esac
 
-inherit base eutils flag-o-matic multilib toolchain-funcs versionator
+inherit eutils flag-o-matic multilib toolchain-funcs versionator
 
 if [[ ${PV} == *9999* ]]; then
 	QT4_BUILD_TYPE="live"
@@ -352,7 +352,9 @@ qt4-build_src_prepare() {
 	sed -i -e '/^QMAKE_\(LIB\|INC\)DIR\(_X11\|_OPENGL\|\)\t/s/=.*$/=/' \
 		mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
 
-	base_src_prepare
+	# apply patches
+	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
+	epatch_user
 }
 
 # @FUNCTION: qt4-build_src_configure
