@@ -191,9 +191,6 @@ qt5-build_src_prepare() {
 	# Remove unused project files to speed up recursive qmake invocation
 	rm -f demos/demos.pro examples/examples.pro tests/tests.pro tools/tools.pro
 
-	tc-export CC CXX RANLIB STRIP
-	export LD="$(tc-getCXX)" # qmake-generated Makefiles use LD/LINK for linking
-
 	# patching
 	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
 	epatch_user
@@ -203,6 +200,11 @@ qt5-build_src_prepare() {
 # @DESCRIPTION:
 # Runs ./configure and qmake.
 qt5-build_src_configure() {
+	# toolchain setup
+	tc-export CC CXX RANLIB STRIP
+	# qmake-generated Makefiles use LD/LINK for linking
+	export LD="$(tc-getCXX)"
+
 	# configure arguments
 	local conf=(
 		# installation paths
