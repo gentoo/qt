@@ -84,12 +84,6 @@ fi
 # Build directory for out-of-source builds.
 : ${QT5_BUILD_DIR:=${WORKDIR}/${P}_build}
 
-# @ECLASS-VARIABLE: QT5_VERBOSE_CONFIGURE
-# @DESCRIPTION:
-# Set to false to suppress printing of detailed information
-# about each step of the configure process.
-: ${QT5_VERBOSE_CONFIGURE:=true}
-
 # @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
 # @DESCRIPTION:
 # Set to false to reduce build output during compilation.
@@ -249,8 +243,7 @@ qt5-build_src_configure() {
 		$(use prefix || echo -no-rpath)
 
 		# verbosity of the configure and build phases
-		$(${QT5_VERBOSE_CONFIGURE} && echo -verbose)
-		$(${QT5_VERBOSE_BUILD} || echo -silent)
+		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
 
 		# precompiled headers don't work on hardened, where the flag is masked
 		$(qt_use pch)
