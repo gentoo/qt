@@ -21,7 +21,7 @@ HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.p
 
 if [[ ${PV} == *_pre* ]]; then
 	MY_P="PyQt-x11-gpl-snapshot-${PV%_pre*}-${REVISION}"
-	SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 else
 	MY_P="PyQt-x11-gpl-${PV}"
 	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
