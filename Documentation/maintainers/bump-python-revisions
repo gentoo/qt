@@ -6,7 +6,7 @@ source /etc/init.d/functions.sh
 
 ########################## VARIABLES ############################
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
-TARGET="www.gentoo-el.org:~/public_html/distfiles/"
+TARGET="dev.gentoo.org:~/public_html/distfiles/"
 TEMP="/tmp/qt-python-bump/"
 OVERLAY="../../" # ugly but hey dont shoot me
 QUIET=
