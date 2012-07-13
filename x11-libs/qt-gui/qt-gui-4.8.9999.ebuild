@@ -238,4 +238,11 @@ pkg_postinst() {
 	elog "Run"
 	elog "  eselect qtgraphicssystem"
 	elog "for more information."
+	if use gtkstyle ; then
+		# see bug 388551
+		elog "For Qt's GTK style to work, you need to either export"
+		elog "the following variable into your environment:"
+		elog '  GTK2_RC_FILES="$HOME/.gtkrc-2.0"'
+		elog "or alternatively install gnome-base/libgnomeui"
+	fi
 }
