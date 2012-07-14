@@ -23,7 +23,7 @@ DEPEND="x11-libs/qt-gui:4[accessibility]
 	x11-libs/qt-dbus:4
 	gstreamer? (
 		kde? ( || ( media-libs/phonon[gstreamer]  x11-libs/qt-phonon:4 ) )
-		!kde? ( || ( x11-libs/qt-phonon media-libs/phonon[gstreamer] ) )
+		!kde? ( || ( x11-libs/qt-phonon:4 media-libs/phonon[gstreamer] ) )
 		media-plugins/gst-plugins-soup
 		media-plugins/gst-plugins-ffmpeg
 		media-plugins/gst-plugins-faac
