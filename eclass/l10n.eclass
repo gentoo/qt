@@ -32,15 +32,8 @@
 #
 # Example: PLOCALE_BACKUP="en_US"
 
-# @FUNCTION: l10n_iuse
-# @DESCRIPTION:
-# Print a list of linguas useflags, corresponding to PLOCALES.
-# Normally used within IUSE.
-#
-# Example: IUSE="doc pdf $(l10n_iuse)"
-l10n_iuse() {
-	[[ -n "${PLOCALES}" ]] && printf 'linguas_%s ' ${PLOCALES}
-}
+# Add linguas useflags
+[[ -n "${PLOCALES}" ]] && IUSE+=" $(printf 'linguas_%s ' ${PLOCALES})"
 
 # @FUNCTION: l10n_for_each_locale_do
 # @USAGE: <function>
