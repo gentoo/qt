@@ -7,7 +7,7 @@ SCONS_MIN_VERSION="2.1"
 
 inherit scons-utils toolchain-funcs
 
-DESCRIPTION="File-manager-like Qt4 GUI front-end to MPlayer"
+DESCRIPTION="File-manager-like GUI front-end to MPlayer"
 HOMEPAGE="http://sourceforge.net/projects/qemplayer/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.xz"
 
@@ -18,7 +18,6 @@ IUSE="debug"
 
 RDEPEND="
 	>=dev-db/sqlite-3.7.13[threadsafe]
-	>=dev-libs/libsigc++-2.2.10
 	|| ( media-video/mplayer media-video/mplayer2 )
 	>=x11-libs/qt-core-4.8:4
 	>=x11-libs/qt-gui-4.8:4
@@ -41,7 +40,6 @@ pkg_setup() {
 
 src_configure() {
 	myesconsargs=(
-		-j1
 		env=1
 		final=1
 		$(use_scons debug)
