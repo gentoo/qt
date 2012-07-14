@@ -17,5 +17,5 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND=">=x11-libs/qt-webkit-4.6.0"
+DEPEND=">=x11-libs/qt-webkit-4.6.0:4"
 RDEPEND="${DEPEND}"
