@@ -40,15 +40,16 @@
 # @DESCRIPTION:
 # Convenience function for processing localizations. The parameter should
 # be a function (defined in the consuming eclass or ebuild) which takes
-# an individual localization as parameter.
+# an individual localization as (last) parameter.
 #
 # Example: l10n_for_each_locale_do install_locale
 l10n_for_each_locale_do() {
-	l10n_get_linguas_crosssection
-	if [[ -n "${L10N_LOCS}" ]]; then
+	local xlocs=
+	xlocs=$(l10n_get_linguas_crosssection)
+	if [[ -n "${xlocs}" ]]; then
 		local x
-		for x in ${L10N_LOCS}; do
-			${1} ${x} || die "failed to process ${x} locale"
+		for x in ${xlocs}; do
+			${@} ${x} || die "failed to process ${x} locale"
 		done
 	fi
 }
@@ -66,7 +67,7 @@ l10n_for_each_unselected_locale_do() {
 	einfo "Unselected locales are: ${o}"
 	if [[ -n "${o}" ]]; then
 		for x in ${o}; do
-			${1} ${x} || die "failed to process unselected ${x} locale"
+			${@} ${x} || die "failed to process unselected ${x} locale"
 		done
 	fi
 }
@@ -99,19 +100,17 @@ l10n_find_plocales_changes() {
 # @FUNCTION: l10n_get_linguas_crosssection
 # @DESCRIPTION:
 # Determine the cross-section of user-set LINGUAS and the locales which
-# the package offers (listed in PLOCALES), and export L10N_LOCS. In case
-# no locales are selected, fall back on PLOCALE_BACKUP. This function is
+# the package offers (listed in PLOCALES), and return them. In case no
+# locales are selected, fall back on PLOCALE_BACKUP. This function is
 # normally used internally in this eclass, not by l10n.eclass consumers.
 l10n_get_linguas_crosssection() {
-	# @VARIABLE: L10N_LOCS
-	# @DESCRIPTION: Selected locales (cross-section of LINGUAS and PLOCALES)
-	unset L10N_LOCS
 	local lang= loc= xloc=
 	for lang in ${LINGUAS}; do
 		for loc in ${PLOCALES}; do
 			[[ ${lang} == ${loc} ]] && xloc+="${loc} "
 		done
 	done
-	export L10N_LOCS="${xloc:-$PLOCALE_BACKUP}"
-	einfo "Selected locales are: ${L10N_LOCS}"
+	xloc=${xloc:-$PLOCALE_BACKUP}
+	printf "%s" "${xloc}"
+#	einfo "Selected locales are: ${xloc:-none}"
 }
