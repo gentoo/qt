@@ -33,7 +33,11 @@
 # Example: PLOCALE_BACKUP="en_US"
 
 # Add linguas useflags
-[[ -n "${PLOCALES}" ]] && IUSE+=" $(printf 'linguas_%s ' ${PLOCALES})"
+if [[ -n "${PLOCALES}" ]]; then
+	for u in ${PLOCALES}; do
+		IUSE+=" linguas_${u}"
+	done
+fi
 
 # @FUNCTION: l10n_for_each_locale_do
 # @USAGE: <function>
@@ -44,30 +48,27 @@
 #
 # Example: l10n_for_each_locale_do install_locale
 l10n_for_each_locale_do() {
-	local xlocs=
-	xlocs=$(l10n_get_linguas_crosssection)
-	if [[ -n "${xlocs}" ]]; then
-		local x
-		for x in ${xlocs}; do
-			${@} ${x} || die "failed to process ${x} locale"
+	local locs x
+	locs=$(l10n_get_locales)
+	if [[ -n "${locs}" ]]; then
+		for x in ${locs}; do
+			${@} ${x} || die "failed to process enabled ${x} locale"
 		done
 	fi
 }
 
-# @FUNCTION: l10n_for_each_unselected_locale_do
+# @FUNCTION: l10n_for_each_disabled_locale_do
 # @USAGE: <function>
 # @DESCRIPTION:
 # Complementary to l10n_for_each_locale_do, this function will process
-# locales that are not selected. This could be used for example to remove
+# locales that are disabled. This could be used for example to remove
 # locales from a Makefile, to prevent them from being built needlessly.
-l10n_for_each_unselected_locale_do() {
-	local o= x=
-	o=$(join -v 1 <(echo "${PLOCALES// /$'\n'}") <(echo "${LINGUAS// /$'\n'}") )
-	o=${o//$'\n'/' '}
-	einfo "Unselected locales are: ${o}"
-	if [[ -n "${o}" ]]; then
-		for x in ${o}; do
-			${@} ${x} || die "failed to process unselected ${x} locale"
+l10n_for_each_disabled_locale_do() {
+	local locs x
+	locs=$(l10n_get_locales disabled)
+	if [[ -n "${locs}" ]]; then
+		for x in ${locs}; do
+			${@} ${x} || die "failed to process disabled ${x} locale"
 		done
 	fi
 }
@@ -94,22 +95,33 @@ l10n_find_plocales_changes() {
 	if [[ ${PLOCALES} != ${current%[[:space:]]} ]] ; then
 		einfo "There are changes in locales! This ebuild should be updated to:"
 		einfo "PLOCALES=\"${current%[[:space:]]}\""
+	else
+		einfo "Done"
 	fi
 }
 
-# @FUNCTION: l10n_get_linguas_crosssection
+# @FUNCTION: l10n_get_locales
+# @USAGE: [disabled]
 # @DESCRIPTION:
-# Determine the cross-section of user-set LINGUAS and the locales which
-# the package offers (listed in PLOCALES), and return them. In case no
-# locales are selected, fall back on PLOCALE_BACKUP. This function is
-# normally used internally in this eclass, not by l10n.eclass consumers.
-l10n_get_linguas_crosssection() {
-	local lang= loc= xloc=
-	for lang in ${LINGUAS}; do
-		for loc in ${PLOCALES}; do
-			[[ ${lang} == ${loc} ]] && xloc+="${loc} "
-		done
+# Determine which LINGUAS USE flags the user has enabled that are offered
+# by the package, as listed in PLOCALES, and return them. In case no
+# locales are selected, fall back on PLOCALE_BACKUP. When the disabled
+# argument is given, return the disabled useflags instead of the enabled
+# ones. This function is normally used internally in this eclass, not by
+# l10n.eclass consumers.
+l10n_get_locales() {
+	local disabled_locales enabled_locales loc locs
+	for loc in ${PLOCALES}; do
+		if use linguas_${loc}; then
+			enabled_locales+="${loc} "
+		else
+			disabled_locales+="${loc} "
+		fi
 	done
-	xloc=${xloc:-$PLOCALE_BACKUP}
-	printf "%s" "${xloc}"
+	if [[ ${1} == disabled ]]; then
+		locs=${disabled_locales}
+	else
+		locs=${enabled_locales:-$PLOCALE_BACKUP}
+	fi
+	printf "%s" "${locs}"
 }
