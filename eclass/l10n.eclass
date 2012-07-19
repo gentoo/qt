@@ -112,5 +112,4 @@ l10n_get_linguas_crosssection() {
 	done
 	xloc=${xloc:-$PLOCALE_BACKUP}
 	printf "%s" "${xloc}"
-#	einfo "Selected locales are: ${xloc:-none}"
 }
