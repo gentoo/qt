@@ -44,7 +44,10 @@ case ${QT5_BUILD_TYPE} in
 			https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
 		;;
 	release)
-		SRC_URI="" # TODO
+		MY_PN="qt-everywhere-opensource-src"
+		MY_P=${MY_PN}-${PV/_/-}
+		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/beta-snapshots/latest/${MY_P}.tar.xz"
+		S=${WORKDIR}/${MY_PN}-${PV%%_*}/${EGIT_PROJECT}
 		;;
 esac
 
