@@ -47,9 +47,6 @@ src_configure() {
 		$(qt_use postgres sql-psql   plugin)
 		$(qt_use sqlite   sql-sqlite plugin)
 		$(use sqlite && echo -system-sqlite)
-		-no-sql-db2
-		-no-sql-sqlite2
-		-no-xcb -no-eglfs -no-directfb
 	)
 
 	use mysql && myconf+=("-I${EPREFIX}/usr/include/mysql" "-L${EPREFIX}/usr/$(get_libdir)/mysql")

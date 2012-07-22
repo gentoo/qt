@@ -29,10 +29,3 @@ DEPEND="${RDEPEND}
 QT5_TARGET_SUBDIRS=(
 	src/testlib
 )
-
-src_configure() {
-	local myconf=(
-		-no-xcb -no-eglfs -no-directfb
-	)
-	qt5-build_src_configure
-}

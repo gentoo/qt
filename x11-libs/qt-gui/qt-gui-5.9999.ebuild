@@ -14,7 +14,7 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# TODO: directfb, eglfs, kms, evdev, ibus
+# TODO: directfb, eglfs, kms, linuxfb, evdev, ibus
 
 IUSE="egl +fontconfig gif +glib jpeg opengl +png udev +xcb"
 
@@ -76,7 +76,6 @@ src_configure() {
 		$(use udev || echo -no-libudev)
 		$(qt_use xcb)
 		-no-dbus
-		-no-eglfs -no-directfb
 	)
 	qt5-build_src_configure
 }

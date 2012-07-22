@@ -48,7 +48,6 @@ src_configure() {
 		$(qt_use glib)
 		-iconv
 		$(qt_use icu)
-		-no-xcb -no-eglfs -no-directfb
 	)
 	qt5-build_src_configure
 }

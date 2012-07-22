@@ -259,6 +259,13 @@ qt5-build_src_configure() {
 		# requires GNU ld >= 2.18
 		-reduce-relocations
 
+		# disable all SQL drivers by default, override in qt-sql
+		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
+		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
+
+		# disable all platform plugins by default, override in qt-gui
+		-no-xcb -no-xrender -no-eglfs -no-directfb -no-linuxfb -no-kms
+
 		# package-specific options
 		"${myconf[@]}"
 	)

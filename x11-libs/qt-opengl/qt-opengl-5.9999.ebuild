@@ -34,7 +34,6 @@ src_configure() {
 		-accessibility
 		$(qt_use egl)
 		-opengl
-		-no-eglfs -no-directfb
 	)
 	qt5-build_src_configure
 }

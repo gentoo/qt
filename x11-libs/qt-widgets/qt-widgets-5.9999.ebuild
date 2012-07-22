@@ -29,7 +29,6 @@ QT5_TARGET_SUBDIRS=(
 src_configure() {
 	local myconf=(
 		-accessibility
-		-no-eglfs -no-directfb
 	)
 	qt5-build_src_configure
 }
