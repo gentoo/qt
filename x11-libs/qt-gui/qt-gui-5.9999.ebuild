@@ -14,7 +14,7 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# TODO: directfb, eglfs, evdev, ibus
+# TODO: directfb, eglfs, kms, evdev, ibus
 
 IUSE="egl +fontconfig gif +glib jpeg opengl +png udev +xcb"
 
