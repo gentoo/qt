@@ -319,7 +319,7 @@ qt5-build_src_install() {
 
 	if [[ ${PN} == "qt-core" ]]; then
 		pushd "${QT5_BUILD_DIR}" > /dev/null || die
-		emake INSTALL_ROOT="${D}" install_{configtests,mkspecs,qmake,syncqt}
+		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
 		popd > /dev/null || die
 
 		# create an empty Gentoo/gentoo-qconfig.h
