@@ -74,7 +74,7 @@ src_configure() {
 		$(qt_use opengl)
 		$(qt_use png libpng system)
 		$(use udev || echo -no-libudev)
-		$(qt_use xcb)
+		$(use xcb && echo -xcb -xrender)
 		-no-dbus
 	)
 	qt5-build_src_configure
