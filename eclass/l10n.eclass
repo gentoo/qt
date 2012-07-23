@@ -33,11 +33,9 @@
 # Example: PLOCALE_BACKUP="en_US"
 
 # Add linguas useflags
-if [[ -n "${PLOCALES}" ]]; then
-	for u in ${PLOCALES}; do
-		IUSE+=" linguas_${u}"
-	done
-fi
+for u in ${PLOCALES}; do
+	IUSE+=" linguas_${u}"
+done
 
 # @FUNCTION: l10n_for_each_locale_do
 # @USAGE: <function>
@@ -50,11 +48,9 @@ fi
 l10n_for_each_locale_do() {
 	local locs x
 	locs=$(l10n_get_locales)
-	if [[ -n "${locs}" ]]; then
-		for x in ${locs}; do
-			${@} ${x} || die "failed to process enabled ${x} locale"
-		done
-	fi
+	for x in ${locs}; do
+		"${@}" ${x} || die "failed to process enabled ${x} locale"
+	done
 }
 
 # @FUNCTION: l10n_for_each_disabled_locale_do
@@ -66,11 +62,9 @@ l10n_for_each_locale_do() {
 l10n_for_each_disabled_locale_do() {
 	local locs x
 	locs=$(l10n_get_locales disabled)
-	if [[ -n "${locs}" ]]; then
-		for x in ${locs}; do
-			${@} ${x} || die "failed to process disabled ${x} locale"
-		done
-	fi
+	for x in ${locs}; do
+		"${@}" ${x} || die "failed to process disabled ${x} locale"
+	done
 }
 
 # @FUNCTION: l10n_find_plocales_changes
