@@ -3,7 +3,7 @@
 
 #x11-libs/qt-3d:5
 x11-libs/qt-core:5
-#x11-libs/qt-declarative:5
+x11-libs/qt-declarative:5
 x11-libs/qt-gui:5
 x11-libs/qt-jsbackend:5
 #x11-libs/qt-location:5
