@@ -87,6 +87,13 @@ src_prepare() {
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CXXFLAGS failed"
 	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix LDFLAGS failed"
+
+	# bug #427782
+	sed -i -e "/^CPPFLAGS/s/-g//" \
+		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CPPFLAGS failed"
+	sed -i -e "s/setBootstrapVariable QMAKE_CFLAGS_RELEASE/QMakeVar set QMAKE_CFLAGS_RELEASE/" \
+		-e "s/setBootstrapVariable QMAKE_CXXFLAGS_RELEASE/QMakeVar set QMAKE_CXXFLAGS_RELEASE/" \
+		"${S}/configure" || die "sed configure setBootstrapVariable failed"
 }
 
 src_configure() {
