@@ -3,7 +3,7 @@
 
 x11-libs/qt-dbus:5
 x11-libs/qt-opengl:5
-#x11-libs/qt-script:5
+x11-libs/qt-script:5
 #x11-libs/qt-svg:5
 x11-libs/qt-widgets:5
 x11-libs/qt-xml:5

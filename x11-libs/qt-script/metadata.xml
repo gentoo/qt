@@ -6,6 +6,7 @@
 		<flag name="c++0x">Build Qt using the C++11 standard</flag>
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
+		<flag name="scripttools">Build the QtScriptTools module (requires QtWidgets)</flag>
 	</use>
 	<upstream>
 		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
