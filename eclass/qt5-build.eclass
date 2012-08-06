@@ -243,8 +243,9 @@ qt5-build_src_configure() {
 		-system-zlib
 		-system-pcre
 
-		# exclude examples and tests from building
-		-make libs
+		# exclude examples and tests from being built
+		-nomake examples
+		-nomake tests
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
 		$(use prefix || echo -no-rpath)
