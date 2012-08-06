@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt5-module
+inherit qt5-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
@@ -27,5 +27,5 @@ src_configure() {
 	# TODO: v8snapshot
 	echo "QT_CONFIG -= v8snapshot" >> "${QT5_BUILD_DIR}"/.qmake.cache
 
-	qt5-module_src_configure
+	qt5-build_src_configure
 }

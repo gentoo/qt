@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit qt5-module
+inherit qt5-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
@@ -30,7 +30,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt5-module_src_prepare
+	qt5-build_src_prepare
 
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
