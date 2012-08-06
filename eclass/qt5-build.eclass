@@ -31,7 +31,7 @@ LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
 case ${PN#qt-} in
-	core|dbus|gui|network|opengl|sql|test|widgets|xml)
+	core|dbus|gui|network|opengl|printsupport|sql|test|widgets|xml)
 		EGIT_PROJECT="qtbase"
 		;;
 	*)
@@ -51,7 +51,10 @@ case ${QT5_BUILD_TYPE} in
 		;;
 esac
 
-IUSE="+c++11 debug +pch test"
+IUSE="+c++11 debug test"
+if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
+	IUSE+=" +pch"
+fi
 
 DEPEND="virtual/pkgconfig"
 if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
@@ -157,42 +160,46 @@ qt5-build_src_unpack() {
 
 # @FUNCTION: qt5-build_src_prepare
 # @DESCRIPTION:
-# Prepare the sources before the configure phase.
+# Prepares the sources before the configure phase.
 qt5-build_src_prepare() {
 	qt5_prepare_env
 
 	mkdir -p "${QT5_BUILD_DIR}" || die
 
-	if [[ ${PN} == "qt-core" ]]; then
+	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
 		# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
 		sed -i -e "/\"\$MAKE\".*QMAKE_BUILD_ERROR=/ s:): \
 			${MAKEOPTS} ${EXTRA_EMAKE} \
 			'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
 			'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
 			configure || die "sed configure failed"
-	else
-		# Skip qmake build
-		sed -i -e '/"$MAKE".*QMAKE_BUILD_ERROR=/ d' \
-			configure || die "sed configure failed"
-		rm -f qmake/Makefile*
 
+		# Respect CXX in configure
+		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
+			configure || die "sed QMAKE_CONF_COMPILER failed"
+
+		# Respect CC, CXX, LINK and *FLAGS in config.tests
+		# FIXME: in compile.test, -m flags are passed to the linker via LIBS
+		find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
+			sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
+				'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
+				'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
+			|| die "sed config.tests failed"
+
+		if [[ ${PN} != "qt-core" ]]; then
+			# Skip qmake build
+			sed -i -e '/"$MAKE".*QMAKE_BUILD_ERROR=/ d' \
+				configure || die "sed configure failed"
+			rm -f qmake/Makefile*
+		fi
+	fi
+
+	if [[ ${PN} != "qt-core" ]]; then
 		qt5_symlink_tools_to_buildtree
 	fi
 
-	# Respect CXX in configure
-	sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
-		configure || die "sed QMAKE_CONF_COMPILER failed"
-
-	# Respect CC, CXX, LINK and *FLAGS in config.tests
-	# FIXME: in compile.test, -m flags are passed to the linker via LIBS
-	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
-		sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
-			'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
-			'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
-		|| die "sed config.tests failed"
-
 	# Remove unused project files to speed up recursive qmake invocation
-	rm -f demos/demos.pro examples/examples.pro tests/tests.pro tools/tools.pro
+	rm -f demos/demos.pro examples/examples.pro tests/tests.pro
 
 	# Apply patches
 	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
@@ -201,83 +208,22 @@ qt5-build_src_prepare() {
 
 # @FUNCTION: qt5-build_src_configure
 # @DESCRIPTION:
-# Runs ./configure and qmake.
+# Runs qmake, possibly preceded by ./configure.
 qt5-build_src_configure() {
 	# toolchain setup
 	tc-export CC CXX RANLIB STRIP
 	# qmake-generated Makefiles use LD/LINK for linking
 	export LD="$(tc-getCXX)"
 
-	# configure arguments
-	local conf=(
-		# installation paths
-		-prefix "${QTPREFIXDIR}"
-		-bindir "${QTBINDIR}"
-		-libdir "${QTLIBDIR}"
-		-docdir "${QTDOCDIR}"
-		-headerdir "${QTHEADERDIR}"
-		-plugindir "${QTPLUGINDIR}"
-		-importdir "${QTIMPORTDIR}"
-		-datadir "${QTDATADIR}"
-		-translationdir "${QTTRANSDIR}"
-		-sysconfdir "${QTSYSCONFDIR}"
-		-examplesdir "${QTEXAMPLESDIR}"
-		-testsdir "${QTTESTSDIR}"
-
-		# debug/release
-		$(use debug && echo -debug || echo -release)
-		-no-separate-debug-info
-
-		# licensing stuff
-		-opensource -confirm-license
-
-		# C++11 support
-		$(qt_use c++11)
-
-		# general configure options
-		-shared
-		-dont-process
-		-pkg-config
-
-		# prefer system libraries
-		-system-zlib
-		-system-pcre
-
-		# exclude examples and tests from being built
-		-nomake examples
-		-nomake tests
-
-		# disable rpath on non-prefix (bugs 380415 and 417169)
-		$(use prefix || echo -no-rpath)
-
-		# verbosity of the configure and build phases
-		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
-
-		# precompiled headers don't work on hardened, where the flag is masked
-		$(qt_use pch)
-
-		# reduce relocations in libraries through extra linker optimizations
-		# requires GNU ld >= 2.18
-		-reduce-relocations
-
-		# disable all SQL drivers by default, override in qt-sql
-		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
-		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
-
-		# disable all platform plugins by default, override in qt-gui
-		-no-xcb -no-xrender -no-eglfs -no-directfb -no-linuxfb -no-kms
-
-		# package-specific options
-		"${myconf[@]}"
-	)
-
 	pushd "${QT5_BUILD_DIR}" > /dev/null || die
 
-	einfo "Configuring with: ${conf[@]}"
-	"${S}"/configure "${conf[@]}" || die "configure failed"
+	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
+		qt5_base_configure
+	fi
 
 	einfo "Running qmake"
-	./bin/qmake -recursive "${S}"/qtbase.pro \
+	./bin/qmake -recursive \
+		"${S}"/${EGIT_PROJECT}.pro \
 		QMAKE_LIBDIR="${QTLIBDIR}" \
 		CONFIG+=nostrip \
 		|| die "qmake failed"
@@ -297,6 +243,8 @@ qt5-build_src_compile() {
 # Runs tests in target directories.
 # TODO: find a way to avoid circular deps with USE=test.
 qt5-build_src_test() {
+	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
+
 	# create a custom testrunner script that correctly sets
 	# {,DY}LD_LIBRARY_PATH before executing the given test
 	local testrunner=${QT5_BUILD_DIR}/gentoo-testrunner
@@ -411,22 +359,96 @@ qt5_symlink_tools_to_buildtree() {
 	done
 }
 
+# @FUNCTION: qt5_base_configure
+# @INTERNAL
+# @DESCRIPTION:
+# Runs ./configure for modules belonging to qtbase.
+qt5_base_configure() {
+	# configure arguments
+	local conf=(
+		# installation paths
+		-prefix "${QTPREFIXDIR}"
+		-bindir "${QTBINDIR}"
+		-libdir "${QTLIBDIR}"
+		-docdir "${QTDOCDIR}"
+		-headerdir "${QTHEADERDIR}"
+		-plugindir "${QTPLUGINDIR}"
+		-importdir "${QTIMPORTDIR}"
+		-datadir "${QTDATADIR}"
+		-translationdir "${QTTRANSDIR}"
+		-sysconfdir "${QTSYSCONFDIR}"
+		-examplesdir "${QTEXAMPLESDIR}"
+		-testsdir "${QTTESTSDIR}"
+
+		# debug/release
+		$(use debug && echo -debug || echo -release)
+		-no-separate-debug-info
+
+		# licensing stuff
+		-opensource -confirm-license
+
+		# C++11 support
+		$(qt_use c++11)
+
+		# general configure options
+		-shared
+		-dont-process
+		-pkg-config
+
+		# prefer system libraries
+		-system-zlib
+		-system-pcre
+
+		# exclude examples and tests from being built
+		-nomake examples
+		-nomake tests
+
+		# disable rpath on non-prefix (bugs 380415 and 417169)
+		$(use prefix || echo -no-rpath)
+
+		# verbosity of the configure and build phases
+		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
+
+		# precompiled headers don't work on hardened, where the flag is masked
+		$(qt_use pch)
+
+		# reduce relocations in libraries through extra linker optimizations
+		# requires GNU ld >= 2.18
+		-reduce-relocations
+
+		# disable all SQL drivers by default, override in qt-sql
+		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
+		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
+
+		# disable all platform plugins by default, override in qt-gui
+		-no-xcb -no-xrender -no-eglfs -no-directfb -no-linuxfb -no-kms
+
+		# package-specific options
+		"${myconf[@]}"
+	)
+
+	einfo "Configuring with: ${conf[@]}"
+	"${S}"/configure "${conf[@]}" || die "configure failed"
+}
+
 # @FUNCTION: qt5_foreach_target_subdir
 # @INTERNAL
 # @DESCRIPTION:
 # Executes the arguments inside each directory listed in QT5_TARGET_SUBDIRS.
 qt5_foreach_target_subdir() {
+	[[ -z ${QT5_TARGET_SUBDIRS[@]} ]] && QT5_TARGET_SUBDIRS=("")
+
 	local subdir
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
 		if [[ ${EBUILD_PHASE} == "test" ]]; then
-			subdir=${subdir/#src/tests\/auto}
-			[[ -d ${subdir} ]] || continue
+			subdir=tests/auto${subdir#src}
+			[[ -d ${S}/${subdir} ]] || continue
 		fi
 
 		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
 		pushd "${QT5_BUILD_DIR}/${subdir}" > /dev/null || die
 
-		einfo "Running $* in ${subdir}"
+		einfo "Running $* ${subdir:+in ${subdir}}"
 		"$@"
 
 		popd > /dev/null || die
