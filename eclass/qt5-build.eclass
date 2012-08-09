@@ -224,8 +224,9 @@ qt5-build_src_configure() {
 	einfo "Running qmake"
 	./bin/qmake -recursive \
 		"${S}"/${EGIT_PROJECT}.pro \
-		QMAKE_LIBDIR="${QTLIBDIR}" \
 		CONFIG+=nostrip \
+		QMAKE_LIBDIR+="${QT5_BUILD_DIR}/lib" \
+		QMAKE_LIBDIR+="${QTLIBDIR}" \
 		|| die "qmake failed"
 
 	popd > /dev/null || die
