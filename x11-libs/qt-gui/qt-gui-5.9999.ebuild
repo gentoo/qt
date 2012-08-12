@@ -14,19 +14,34 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# TODO: directfb, eglfs, kms, linuxfb, evdev, ibus
+# TODO: directfb, linuxfb, ibus
 
-IUSE="egl +fontconfig gif +glib jpeg opengl +png udev +xcb"
+IUSE="egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
+REQUIRED_USE="
+	egl? ( gles2 )
+	eglfs? ( egl evdev )
+	gles2? ( opengl )
+	kms? ( egl )
+"
 
 RDEPEND="
+	media-libs/fontconfig
 	media-libs/freetype:2
 	sys-libs/zlib
 	~x11-libs/qt-core-${PV}[debug=,glib=]
 	egl? ( media-libs/mesa[egl] )
-	fontconfig? ( media-libs/fontconfig )
 	gif? ( media-libs/giflib )
+	gles2? ( || (
+		media-libs/mesa[gles2]
+		media-libs/mesa[gles]
+	) )
 	glib? ( dev-libs/glib:2 )
 	jpeg? ( virtual/jpeg )
+	kms? (
+		media-libs/mesa[gbm]
+		sys-fs/udev
+		x11-libs/libdrm
+	)
 	opengl? ( virtual/opengl )
 	png? ( media-libs/libpng:0 )
 	udev? ( sys-fs/udev )
@@ -41,6 +56,7 @@ RDEPEND="
 	)
 "
 DEPEND="${RDEPEND}
+	evdev? ( sys-kernel/linux-headers )
 	test? ( ~x11-libs/qt-network-${PV}[debug=] )
 "
 
@@ -52,26 +68,44 @@ QT5_TARGET_SUBDIRS=(
 )
 
 pkg_setup() {
-	QCONFIG_ADD="accessibility
-			$(usev fontconfig)
-			$(usev opengl)
-			$(use udev && echo libudev)"
+	QCONFIG_ADD="
+		accessibility
+		$(usev egl)
+		$(usev eglfs)
+		$(usev evdev)
+		fontconfig
+		$(use gles2 && echo opengles2)
+		$(usev kms)
+		$(usev opengl)
+		$(use udev && echo libudev)
+		$(usev xcb)"
 
 	QCONFIG_DEFINE="$(use egl && echo QT_EGL)
+			$(use eglfs && echo QT_EGLFS)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
 
 	qt5-build_pkg_setup
 }
 
 src_configure() {
+	local opengl="-no-opengl"
+	if use gles2; then
+		opengl="-opengl es2"
+	elif use opengl; then
+		opengl="-opengl desktop"
+	fi
+
 	local myconf=(
 		-accessibility
 		$(qt_use egl)
-		$(qt_use fontconfig)
+		$(qt_use eglfs)
+		$(qt_use evdev)
+		-fontconfig
 		$(use gif || echo -no-gif)
 		$(qt_use glib)
 		$(qt_use jpeg libjpeg system)
-		$(qt_use opengl)
+		$(qt_use kms)
+		${opengl}
 		$(qt_use png libpng system)
 		$(use udev || echo -no-libudev)
 		$(use xcb && echo -xcb -xrender)

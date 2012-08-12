@@ -5,13 +5,16 @@
 	<use>
 		<flag name="c++0x">Build Qt using the C++11 standard</flag>
 		<flag name="c++11">Build Qt using the C++11 standard</flag>
-		<flag name="egl">Use EGL instead of default GLX to manage OpenGL
-		      contexts on the desktop</flag>
+		<flag name="egl">Use EGL instead of default GLX to manage OpenGL contexts</flag>
+		<flag name="eglfs">Compile EGL Full Screen/Single Surface support</flag>
+		<flag name="evdev">Enable evdev input support</flag>
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
+		<flag name="gles2">Use OpenGL ES 2.0 instead of desktop OpenGL</flag>
 		<flag name="glib">Enable <pkg>dev-libs/glib</pkg> eventloop support</flag>
 		<flag name="gtkstyle">Build a Qt style called GTK+ that mimics the active
 			GTK+ theme</flag>
+		<flag name="kms">Enable KMS-based QPA plugin</flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name="trace">
