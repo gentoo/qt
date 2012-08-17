@@ -7,11 +7,10 @@ EAPI=4
 inherit multilib qt4-r2
 
 MY_PN="QuantumStyle"
-MY_P="${MY_PN}-${PV/*_/}"
 
 DESCRIPTION="SVG themable style for Qt4 and KDE"
-HOMEPAGE="http://kde-look.org/content/show.php/QuantumStyle?content=101088"
-SRC_URI="http://kde-look.org/CONTENT/content-files/101088-${MY_P}.tar.gz"
+HOMEPAGE="http://kde-look.org/content/show.php/?content=101088"
+SRC_URI="http://saidlankri.free.fr/${MY_PN}-${PV/*_rc/RC}.tar.bz2"
 
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
@@ -19,11 +18,13 @@ SLOT="0"
 IUSE="debug"
 
 DEPEND="
+	x11-libs/qt-core:4
 	x11-libs/qt-gui:4
+	x11-libs/qt-svg:4
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${MY_PN}"
+S=${WORKDIR}/${MY_PN}
 
 src_install() {
 	insinto /usr/$(get_libdir)/qt4/plugins/styles
