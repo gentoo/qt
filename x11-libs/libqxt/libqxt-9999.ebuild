@@ -4,13 +4,11 @@
 
 EAPI=4
 
-EHG_REPO_URI="http://dev.libqxt.org/libqxt/"
-
-inherit multilib qt4-r2 mercurial
+inherit multilib qt4-r2 git-2
 
 DESCRIPTION="The Qt eXTension library provides cross-platform utility classes for the Qt toolkit"
 HOMEPAGE="http://libqxt.org/"
-SRC_URI=""
+EGIT_REPO_URI="https://bitbucket.org/${PN}/${PN}.git"
 
 LICENSE="|| ( CPL-1.0 LGPL-2.1 )"
 SLOT="0"
@@ -35,8 +33,6 @@ DEPEND="${COMMON_DEPEND}
 RDEPEND="${COMMON_DEPEND}
 	xscreensaver? ( x11-libs/libXScrnSaver )
 "
-
-S=${WORKDIR}/${PN}
 
 DOCS="AUTHORS CHANGES README"
 PATCHES=(

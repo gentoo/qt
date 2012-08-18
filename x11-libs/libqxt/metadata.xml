@@ -5,7 +5,7 @@
 <use>
 	<flag name="berkdb">Build the QxtBerkeley module</flag>
 	<flag name="sql">Build the QxtSql module</flag>
-	<flag name="web">Enable fast cgi bindings</flag>
+	<flag name="web">Build the QxtWeb module</flag>
 	<flag name="zeroconf">Build the QxtZeroconf module</flag>
 </use>
 </pkgmetadata>
