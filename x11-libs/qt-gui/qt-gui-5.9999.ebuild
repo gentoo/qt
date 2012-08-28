@@ -16,7 +16,7 @@ fi
 
 # TODO: directfb, linuxfb, ibus
 
-IUSE="egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
+IUSE="+accessibility egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="
 	egl? ( gles2 )
 	eglfs? ( egl evdev )
@@ -53,6 +53,10 @@ RDEPEND="
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
 		x11-libs/xcb-util-wm
+		accessibility? (
+			app-accessibility/at-spi2-core
+			~x11-libs/qt-dbus-${PV}[debug=]
+		)
 	)
 "
 DEPEND="${RDEPEND}
@@ -69,7 +73,7 @@ QT5_TARGET_SUBDIRS=(
 
 pkg_setup() {
 	QCONFIG_ADD="
-		accessibility
+		$(usev accessibility)
 		$(usev egl)
 		$(usev eglfs)
 		$(usev evdev)
@@ -88,6 +92,11 @@ pkg_setup() {
 }
 
 src_configure() {
+	local dbus="-no-dbus"
+	if use accessibility && use xcb; then
+		dbus="-dbus"
+	fi
+
 	local opengl="-no-opengl"
 	if use gles2; then
 		opengl="-opengl es2"
@@ -96,7 +105,8 @@ src_configure() {
 	fi
 
 	local myconf=(
-		-accessibility
+		$(qt_use accessibility)
+		${dbus}
 		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
@@ -109,7 +119,6 @@ src_configure() {
 		$(qt_use png libpng system)
 		$(use udev || echo -no-libudev)
 		$(use xcb && echo -xcb -xrender)
-		-no-dbus
 	)
 	qt5-build_src_configure
 }
