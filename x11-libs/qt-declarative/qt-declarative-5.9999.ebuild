@@ -14,17 +14,18 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="localstorage"
+IUSE="+accessibility localstorage"
 
 # TODO: easingcurveeditor|qmlscene? ( qt-widgets )
 # TODO: xml? ( qt-xmlpatterns )
 
 DEPEND="
 	~x11-libs/qt-core-${PV}[debug=]
-	~x11-libs/qt-gui-${PV}[debug=]
+	~x11-libs/qt-gui-${PV}[accessibility=,debug=,opengl]
 	~x11-libs/qt-jsbackend-${PV}[debug=]
 	~x11-libs/qt-network-${PV}[debug=]
 	~x11-libs/qt-test-${PV}[debug=]
+	~x11-libs/qt-widgets-${PV}[accessibility=,debug=]
 	localstorage? ( ~x11-libs/qt-sql-${PV}[debug=] )
 "
 RDEPEND="${DEPEND}"
