@@ -355,8 +355,10 @@ qt5_symlink_tools_to_buildtree() {
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
 
 	local bin
-	for bin in "${QTBINDIR}"/{qmake,moc,rcc,uic,qdoc}; do
-		ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
+	for bin in "${QTBINDIR}"/{qmake,moc,rcc,uic,qdoc,qdbuscpp2xml,qdbusxml2cpp}; do
+		if [[ -e ${bin} ]]; then
+			ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
+		fi
 	done
 }
 
