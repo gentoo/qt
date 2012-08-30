@@ -19,3 +19,7 @@ IUSE="debug"
 DEPEND="x11-libs/qt-gui:4
 	x11-libs/qt-sql:4"
 RDEPEND="${DEPEND}"
+
+src_compile() {
+	emake -j1
+}
