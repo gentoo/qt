@@ -27,4 +27,5 @@ RDEPEND="${DEPEND}
 
 S="${WORKDIR}/${MY_PN}"
 
+PATCHES=( "${FILESDIR}/${P}-gcc-4.7.patch" )
 DOCS=( AUTHORS README ChangeLog )
