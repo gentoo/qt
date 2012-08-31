@@ -2,7 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<herd>qt</herd>
-	<use></use>
+	<use>
+		<flag name="c++11">Build Qt using the C++11 standard</flag>
+	</use>
 	<upstream>
 		<bugs-to>https://bugreports.qt-project.org/</bugs-to>
 		<doc>http://qt-project.org/doc/</doc>
