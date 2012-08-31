@@ -13,12 +13,11 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="kde lastfm"
+IUSE="lastfm"
 
-DEPEND="x11-libs/qt-core:4
+DEPEND="media-libs/phonon
+	x11-libs/qt-core:4
 	x11-libs/qt-gui:4
-	kde? ( media-libs/phonon )
-	!kde? ( x11-libs/qt-phonon:4 )
 	lastfm? ( media-libs/liblastfm )"
 RDEPEND="${DEPEND}"
 
