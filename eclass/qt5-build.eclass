@@ -55,10 +55,8 @@ if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
 	IUSE+=" +pch"
 fi
 
-DEPEND="virtual/pkgconfig"
-if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
-	DEPEND+=" >=dev-lang/perl-5.10"
-fi
+DEPEND=">=dev-lang/perl-5.10
+	virtual/pkgconfig"
 if [[ ${PN} != "qt-test" ]]; then
 	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
 fi
