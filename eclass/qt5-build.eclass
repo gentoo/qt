@@ -40,14 +40,13 @@ case ${PN#qt-} in
 esac
 case ${QT5_BUILD_TYPE} in
 	live)
+		MY_P=${P}
 		EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
 			https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
 		;;
 	release)
-		MY_PN="qt-everywhere-opensource-src"
-		MY_P=${MY_PN}-${PV/_/-}
-		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/beta-snapshots/latest/${MY_P}.tar.xz"
-		S=${WORKDIR}/${MY_PN}-${PV%%_*}/${EGIT_PROJECT}
+		MY_P=${EGIT_PROJECT}-opensource-src-${PV/_/-}
+		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/${PV#*_}/split_sources/${MY_P}.tar.xz"
 		;;
 esac
 
@@ -63,6 +62,8 @@ fi
 if [[ ${PN} != "qt-test" ]]; then
 	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
 fi
+
+S=${WORKDIR}/${MY_P}
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
@@ -88,7 +89,7 @@ fi
 # @ECLASS-VARIABLE: QT5_BUILD_DIR
 # @DESCRIPTION:
 # Build directory for out-of-source builds.
-: ${QT5_BUILD_DIR:=${WORKDIR}/${P}_build}
+: ${QT5_BUILD_DIR:=${WORKDIR}/${MY_P}_build}
 
 # @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
 # @DESCRIPTION:
