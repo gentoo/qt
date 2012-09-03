@@ -1,8 +1,8 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=4
 
 inherit qt4-r2 mercurial
 
@@ -14,17 +14,16 @@ EHG_REVISION="default"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-
 IUSE="gimp"
 
-RDEPEND="x11-libs/qt-gui:4
+RDEPEND="x11-libs/qt-core:4
+	x11-libs/qt-gui:4
 	|| ( media-libs/jpeg:62 media-libs/libjpeg-turbo )
 	media-gfx/exiv2
+	media-libs/cimg
 	media-libs/lcms:2
 	media-libs/lensfun
 	sci-libs/fftw:3.0
-	media-libs/libpng:1.2
-	>=media-libs/tiff-4.0.0_beta6
 	media-libs/liblqr
 	media-gfx/graphicsmagick[q16,-lcms]
 	gimp? ( media-gfx/gimp )"
@@ -33,12 +32,26 @@ DEPEND="${RDEPEND}"
 S=${WORKDIR}/hg
 
 src_prepare() {
-#	remove ccache dependency
+	# remove ccache dependency
+	local File
 	for File in $(find "${S}" -type f); do
 		if grep -sq ccache ${File}; then
 			sed -e 's/ccache//' -i "${File}"
 		fi
 	done
+
+	# useless check (no pkgconfig file is provided)
+	sed -e "/PKGCONFIG  += CImg/d" \
+		-i photivoProject/photivoProject.pro || die
+}
+
+src_configure() {
+	local config="WithSystemCImg"
+	if ! use gimp ; then
+		config+=" WithoutGimp"
+	fi
+
+	eqmake4 "CONFIG+=${config}"
 }
 
 src_install() {
