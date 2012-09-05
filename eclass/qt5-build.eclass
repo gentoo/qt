@@ -425,6 +425,11 @@ qt5_base_configure() {
 		# disable all platform plugins by default, override in qt-gui
 		-no-xcb -no-xrender -no-eglfs -no-directfb -no-linuxfb -no-kms
 
+		# disable gtkstyle because it adds qt4 include paths to the compiler
+		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
+		# TODO: fix properly in qt-widgets
+		-no-gtkstyle
+
 		# package-specific options
 		"${myconf[@]}"
 	)
