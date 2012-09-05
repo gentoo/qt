@@ -4,12 +4,11 @@
 
 EAPI=4
 
-inherit qt4-r2 git-2 multilib
-
-EGIT_REPO_URI="git://github.com/ariya/screenie.git"
+inherit qt4-r2 git-2
 
 DESCRIPTION="A small Qt-based tool to allow you to compose fancy and stylish screenshots"
 HOMEPAGE="http://code.google.com/p/screenie"
+EGIT_REPO_URI="git://github.com/ariya/screenie.git"
 
 LICENSE="GPL-2 GPL-3"
 SLOT="0"
@@ -19,6 +18,11 @@ IUSE=""
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${P}-build.patch"
+	"${FILESDIR}/${P}-desktop.patch"
+)
+
 src_prepare () {
 	qt4-r2_src_prepare
 	sed -i -e "/^Exec/s:Screenie:${PN}:" -e "/^TryExec/s:Screenie:${PN}:" \
@@ -26,7 +30,7 @@ src_prepare () {
 }
 
 src_install() {
-	# The package uses generic library names that make cause collisions
+	# The package uses generic library names that may cause collisions
 	# in the future. They need to be moved to a subfolder
 	dolib.so "${S}"/bin/release/*.so*
 	newbin "${S}"/bin/release/Screenie ${PN}
