@@ -4,7 +4,7 @@
 x11-libs/qt-core:5
 x11-libs/qt-declarative:5
 x11-libs/qt-gui:5
-#x11-libs/qt-multimedia:5
+x11-libs/qt-multimedia:5
 x11-libs/qt-network:5
 x11-libs/qt-sql:5
 x11-libs/qt-test:5
