@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
-<pkgmetadata>
-<herd>qt</herd>
-	<use>
-		<flag name='webp'>Enable webp image format support using <pkg>media-libs/libwebp</pkg></flag>
-	</use>
-</pkgmetadata>
