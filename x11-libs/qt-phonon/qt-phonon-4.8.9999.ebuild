@@ -21,8 +21,8 @@ DEPEND="
 	!kde-base/phonon-xine
 	!media-libs/phonon
 	!media-sound/phonon
-	!aqua? ( media-libs/gstreamer
-		 media-plugins/gst-plugins-meta )
+	!aqua? ( media-libs/gstreamer:0.10
+		 media-plugins/gst-plugins-meta:0.10 )
 	aqua? ( ~x11-libs/qt-opengl-${PV}[aqua,debug=,qt3support=] )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )
 "
