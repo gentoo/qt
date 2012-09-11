@@ -28,6 +28,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-4.8.2+gcc-4.7.patch"
+)
+
 pkg_setup() {
 	# Pixeltool isn't really assistant related, but it relies on
 	# the assistant libraries.
