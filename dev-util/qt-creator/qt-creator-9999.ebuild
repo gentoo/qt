@@ -4,12 +4,12 @@
 
 EAPI=4
 
-LANGS="cs de es fr hu it ja pl ru sl uk zh_CN"
+PLOCALES="cs de fr hu ja pl ru sl zh_CN"
 
-inherit multilib eutils flag-o-matic qt4-r2
+inherit eutils flag-o-matic l10n multilib qt4-r2
 
 DESCRIPTION="Lightweight IDE for C++ development centering around Qt"
-HOMEPAGE="http://qt.nokia.com/products/developer-tools"
+HOMEPAGE="http://qt-project.org/wiki/Category:Tools::QtCreator"
 LICENSE="LGPL-2.1"
 
 if [[ ${PV} == *9999* ]]; then
@@ -17,30 +17,33 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
 		https://git.gitorious.org/${PN}/${PN}.git"
 else
-	MY_P=${PN}-${PV/_/-}-src
-	SRC_URI="http://get.qt.nokia.com/qtcreator/${MY_P}.tar.gz"
+	MY_PV=${PV/_/-}
+	MY_P=${PN}-${MY_PV}-src
+	SRC_URI="http://releases.qt-project.org/qtcreator/${MY_PV}/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
 fi
 
 SLOT="0"
 KEYWORDS=""
 
-QTC_PLUGINS=(autotools:autotoolsprojectmanager bazaar cmake:cmakeprojectmanager
-	cvs fakevim git madde mercurial perforce subversion valgrind)
+QTC_PLUGINS=(android autotools:autotoolsprojectmanager bazaar
+	clearcase cmake:cmakeprojectmanager cvs fakevim git
+	madde mercurial perforce qnx subversion valgrind)
 IUSE="+botan-bundled debug doc examples ${QTC_PLUGINS[@]%:*}"
 
-QT_PV="4.7.4:4"
+# minimum Qt version required
+QT_PV="4.8.0:4"
 
 CDEPEND="
 	>=x11-libs/qt-assistant-${QT_PV}[doc?]
-	>=x11-libs/qt-core-${QT_PV}[private-headers(+),ssl]
-	>=x11-libs/qt-declarative-${QT_PV}[private-headers(+)]
-	>=x11-libs/qt-gui-${QT_PV}[private-headers(+)]
-	>=x11-libs/qt-script-${QT_PV}[private-headers(+)]
+	>=x11-libs/qt-core-${QT_PV}[ssl]
+	>=x11-libs/qt-declarative-${QT_PV}
+	>=x11-libs/qt-gui-${QT_PV}
+	>=x11-libs/qt-script-${QT_PV}
 	>=x11-libs/qt-sql-${QT_PV}
 	>=x11-libs/qt-svg-${QT_PV}
 	debug? ( >=x11-libs/qt-test-${QT_PV} )
-	!botan-bundled? ( =dev-libs/botan-1.8* )
+	!botan-bundled? ( >=dev-libs/botan-1.10.2 )
 "
 DEPEND="${CDEPEND}
 	!botan-bundled? ( virtual/pkgconfig )
@@ -72,16 +75,8 @@ src_prepare() {
 		fi
 	done
 
-	if use perforce; then
-		echo
-		ewarn "You have enabled the perforce plugin."
-		ewarn "In order to use it, you need to manually download the perforce client from"
-		ewarn "  http://www.perforce.com/perforce/downloads/index.html"
-		echo
-	fi
-
 	# fix translations
-	sed -i -e "/^LANGUAGES/s:=.*:= ${LANGS}:" \
+	sed -i -e "/^LANGUAGES =/ s:=.*:= $(l10n_get_locales):" \
 		share/qtcreator/translations/translations.pro || die
 
 	if ! use botan-bundled; then
@@ -110,7 +105,7 @@ src_prepare() {
 src_configure() {
 	eqmake4 qtcreator.pro \
 		IDE_LIBRARY_BASENAME="$(get_libdir)" \
-		IDE_PACKAGE_MODE=true
+		IDE_PACKAGE_MODE=yes
 }
 
 src_compile() {
@@ -121,6 +116,8 @@ src_compile() {
 src_install() {
 	emake INSTALL_ROOT="${ED}usr" install
 
+	dodoc dist/{changes-2.*,known-issues}
+
 	# Install documentation
 	if use doc; then
 		insinto /usr/share/doc/${PF}
@@ -128,16 +125,6 @@ src_install() {
 		docompress -x /usr/share/doc/${PF}/qtcreator{,-dev}.qch
 	fi
 
-	# Install icon & desktop file
-	doicon src/plugins/coreplugin/images/logo/128/qtcreator.png
+	# Install desktop file
 	make_desktop_entry qtcreator 'Qt Creator' qtcreator 'Qt;Development;IDE'
-
-	# Remove unneeded translations
-	local lang
-	for lang in ${LANGS}; do
-		if ! has ${lang} ${LINGUAS}; then
-			rm "${ED}"usr/share/qtcreator/translations/qtcreator_${lang}.qm \
-				|| eqawarn "Failed to remove ${lang} translation"
-		fi
-	done
 }
