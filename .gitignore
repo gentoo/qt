@@ -1,3 +1,4 @@
 *.swp
 *~
 metadata/cache
+metadata/md5-cache
