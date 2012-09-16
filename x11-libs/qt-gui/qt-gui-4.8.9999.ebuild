@@ -229,9 +229,6 @@ src_install() {
 	use dbus && doicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png
 	make_desktop_entry designer Designer designer 'Qt;Development;GUIDesigner'
 	make_desktop_entry linguist Linguist linguist-128-32 'Qt;Development;GUIDesigner'
-
-	# see bug 388551
-	use gtkstyle && doenvd "${FILESDIR}"/44qt4-gtkstyle
 }
 
 pkg_postinst() {
