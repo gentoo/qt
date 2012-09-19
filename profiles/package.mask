@@ -2,6 +2,11 @@
 # Add your name and the date, as well as an explanation for the mask
 # Make sure the atoms you add are valid!
 
+# Ben de Groot <yngwin@gentoo.org> (19 Sep 2012)
+# Ebuild still needs work. Started on version bump, but not tested at all.
+# See also bug #431748
+=media-video/avidemux-2.6.0
+
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
