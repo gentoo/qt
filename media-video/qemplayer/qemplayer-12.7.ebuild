@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=4
-SCONS_MIN_VERSION="2.1"
+SCONS_MIN_VERSION="2.2"
 
 inherit scons-utils toolchain-funcs
 
@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 RDEPEND="
-	>=dev-db/sqlite-3.7.13[threadsafe]
+	>=dev-db/sqlite-3.7.14[threadsafe]
 	|| ( media-video/mplayer media-video/mplayer2 )
 	>=x11-libs/qt-core-4.8:4
 	>=x11-libs/qt-gui-4.8:4
