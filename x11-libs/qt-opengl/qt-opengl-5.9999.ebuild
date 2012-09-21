@@ -17,7 +17,6 @@ fi
 IUSE="egl"
 
 DEPEND="
-	virtual/glu
 	virtual/opengl
 	~x11-libs/qt-core-${PV}[debug=]
 	~x11-libs/qt-gui-${PV}[debug=,egl=,opengl]
