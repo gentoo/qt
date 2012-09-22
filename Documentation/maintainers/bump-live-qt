@@ -3,7 +3,7 @@
 . /etc/init.d/functions.sh
 base="${1}"
 version="${2}"
-overlay="../../x11-libs/"
+overlay="$(portageq get_repo_path / qt)/x11-libs/"
 RED=$'\033[31;01m'
 GREEN=$'\e[32;01m'
 moto(){

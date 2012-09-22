@@ -4,7 +4,7 @@
 base="${1}"
 version="${2}"
 portdir="$(portageq envvar PORTDIR)/x11-libs/"
-overlay="../../x11-libs/"
+overlay="$(portageq get_repo_path / qt)"
 RED=$'\033[31;01m'
 GREEN=$'\e[32;01m'
 moto(){

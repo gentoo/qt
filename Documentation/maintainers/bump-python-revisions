@@ -8,7 +8,7 @@ source /etc/init.d/functions.sh
 DATE="$(date +%F|sed 's/-//g')" # date to be added to ebuilds
 TARGET="dev.gentoo.org:~/public_html/distfiles/"
 TEMP="/tmp/qt-python-bump/"
-OVERLAY="../../" # ugly but hey dont shoot me
+OVERLAY="$(portageq get_repo_path / qt)"
 QUIET=
 ####################################################################
 
