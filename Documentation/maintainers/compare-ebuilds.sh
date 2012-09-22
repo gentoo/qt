@@ -18,10 +18,7 @@ OVERLAY=
 LIVE_VERSION="4.8.9999" # you normally don't need to change that
 
 #hacky way to find full path for qt overlay
-for prof in $(portageq portdir_overlay); do
-	grep -q "^qt$" ${prof}/profiles/repo_name
-	[[ $? == 0 ]] && OVERLAY=${prof} && break
-done
+OVERLAY=$(portageq get_repo_path / qt)
 
 [[ -z ${OVERLAY} ]] && \
 	echo "Can't find path for your Qt overlay" && \
