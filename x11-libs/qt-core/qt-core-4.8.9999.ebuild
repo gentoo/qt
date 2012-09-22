@@ -88,7 +88,7 @@ src_prepare() {
 	sed -i -e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix LDFLAGS failed"
 
-	# bug #427782
+	# bug 427782
 	sed -i -e "/^CPPFLAGS/s/-g//" \
 		"${S}/qmake/Makefile.unix" || die "sed qmake/Makefile.unix CPPFLAGS failed"
 	sed -i -e "s/setBootstrapVariable QMAKE_CFLAGS_RELEASE/QMakeVar set QMAKE_CFLAGS_RELEASE/" \
