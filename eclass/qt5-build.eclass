@@ -223,7 +223,6 @@ qt5-build_src_configure() {
 	einfo "Running qmake"
 	./bin/qmake -recursive \
 		"${S}"/${EGIT_PROJECT}.pro \
-		CONFIG+=nostrip \
 		QMAKE_LIBDIR+="${QT5_BUILD_DIR}/lib" \
 		QMAKE_LIBDIR+="${QTLIBDIR}" \
 		|| die "qmake failed"
@@ -401,7 +400,7 @@ qt5_base_configure() {
 		-system-zlib
 		-system-pcre
 
-		# exclude examples and tests from being built
+		# exclude examples and tests from default build
 		-nomake examples
 		-nomake tests
 
@@ -410,6 +409,9 @@ qt5_base_configure() {
 
 		# verbosity of the configure and build phases
 		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
+
+		# don't strip
+		-no-strip
 
 		# precompiled headers don't work on hardened, where the flag is masked
 		$(qt_use pch)
@@ -430,7 +432,7 @@ qt5_base_configure() {
 		# TODO: fix properly in qt-widgets
 		-no-gtkstyle
 
-		# package-specific options
+		# module-specific options
 		"${myconf[@]}"
 	)
 
