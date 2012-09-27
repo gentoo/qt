@@ -223,6 +223,7 @@ qt5-build_src_configure() {
 	einfo "Running qmake"
 	./bin/qmake -recursive \
 		"${S}"/${EGIT_PROJECT}.pro \
+		$(version_is_at_least 5.0.0_beta2 || echo "CONFIG+=nostrip") \
 		QMAKE_LIBDIR+="${QT5_BUILD_DIR}/lib" \
 		QMAKE_LIBDIR+="${QTLIBDIR}" \
 		|| die "qmake failed"
@@ -411,7 +412,7 @@ qt5_base_configure() {
 		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
 
 		# don't strip
-		-no-strip
+		$(version_is_at_least 5.0.0_beta2 && echo -no-strip)
 
 		# precompiled headers don't work on hardened, where the flag is masked
 		$(qt_use pch)
