@@ -7,7 +7,8 @@ inherit qt4-r2 git-2
 
 DESCRIPTION="GUI interface for git/cogito SCM"
 HOMEPAGE="http://digilander.libero.it/mcostalba/"
-EGIT_REPO_URI="git://git.kernel.org/pub/scm/${PN}/${PN}4.git"
+EGIT_REPO_URI="git://repo.or.cz/${PN}4/redivivus.git
+	http://repo.or.cz/r/${PN}4/redivivus.git"
 
 LICENSE="GPL-2"
 SLOT="2"
@@ -19,6 +20,6 @@ RDEPEND="${DEPEND}
 	>=dev-vcs/git-1.5.3"
 
 src_install() {
-	newbin bin/qgit qgit4
+	newbin bin/${PN} ${PN}4
 	dodoc README
 }
