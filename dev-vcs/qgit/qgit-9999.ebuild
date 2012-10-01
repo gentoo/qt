@@ -3,12 +3,13 @@
 # $Header: $
 
 EAPI=4
-inherit qt4-r2 git-2
 
-DESCRIPTION="GUI interface for git/cogito SCM"
-HOMEPAGE="http://digilander.libero.it/mcostalba/"
-EGIT_REPO_URI="git://repo.or.cz/${PN}4/redivivus.git
-	http://repo.or.cz/r/${PN}4/redivivus.git"
+inherit eutils qt4-r2 git-2
+
+DESCRIPTION="Qt4 GUI for git repositories"
+HOMEPAGE="http://libre.tibirna.org/projects/qgit/wiki/QGit"
+EGIT_REPO_URI="git://repo.or.cz/qgit4/redivivus.git
+	http://repo.or.cz/r/qgit4/redivivus.git"
 
 LICENSE="GPL-2"
 SLOT="2"
@@ -17,9 +18,12 @@ IUSE=""
 
 DEPEND="x11-libs/qt-gui:4"
 RDEPEND="${DEPEND}
-	>=dev-vcs/git-1.5.3"
+	>=dev-vcs/git-1.6
+"
 
 src_install() {
-	newbin bin/${PN} ${PN}4
+	newbin bin/qgit qgit4
+	newicon src/resources/qgit.png qgit4.png
+	make_desktop_entry qgit4 QGit qgit4
 	dodoc README
 }
