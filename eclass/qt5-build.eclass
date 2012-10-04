@@ -166,12 +166,20 @@ qt5-build_src_prepare() {
 	mkdir -p "${QT5_BUILD_DIR}" || die
 
 	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
-		# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
-		sed -i -e "/\"\$MAKE\".*QMAKE_BUILD_ERROR=/ s:): \
-			${MAKEOPTS} ${EXTRA_EMAKE} \
-			'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
-			'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
-			configure || die "sed configure failed"
+		if [[ ${PN} == "qt-core" ]]; then
+			# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
+			# FIXME: see bug 434780
+			sed -i -e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
+				${MAKEOPTS} ${EXTRA_EMAKE} \
+				'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
+				'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
+				configure || die "sed qmake build failed"
+		else
+			# Skip qmake build
+			sed -i -e '/outpath\/qmake".*"$MAKE")/ d' \
+				configure || die "sed qmake build failed"
+			rm -f qmake/Makefile*
+		fi
 
 		# Respect CXX in configure
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
@@ -184,13 +192,6 @@ qt5-build_src_prepare() {
 				'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
 				'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
 			|| die "sed config.tests failed"
-
-		if [[ ${PN} != "qt-core" ]]; then
-			# Skip qmake build
-			sed -i -e '/"$MAKE".*QMAKE_BUILD_ERROR=/ d' \
-				configure || die "sed configure failed"
-			rm -f qmake/Makefile*
-		fi
 	fi
 
 	if [[ ${PN} != "qt-core" ]]; then
