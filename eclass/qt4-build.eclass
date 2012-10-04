@@ -10,8 +10,8 @@
 # This eclass contains various functions that are used when building Qt4.
 
 case ${EAPI} in
-	2|3|4)	: ;;
-	*)	die "qt4-build.eclass requires EAPI 2, 3 or 4." ;;
+	2|3|4|5) : ;;
+	*)	 die "qt4-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs versionator
