@@ -9,7 +9,7 @@ DESCRIPTION="A Qt implementation of XDG standards"
 HOMEPAGE="http://razor-qt.org/"
 
 if [[ ${PV} = *9999* ]]; then
-inherit git-2
+	inherit git-2
 	EGIT_REPO_URI="git://github.com/Razor-qt/razor-qt.git"
 	EGIT_BRANCH="master"
 	KEYWORDS=""
