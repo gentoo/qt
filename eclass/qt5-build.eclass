@@ -11,8 +11,8 @@
 # Requires EAPI 4.
 
 case ${EAPI} in
-	4) : ;;
-	*) die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
+	4|5)	: ;;
+	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs versionator
