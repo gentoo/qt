@@ -113,16 +113,12 @@ S=${WORKDIR}/${MY_P}
 # @DESCRIPTION:
 # Warns and/or dies if the user is trying to downgrade Qt.
 qt5-build_pkg_setup() {
-	# Protect users by not allowing downgrades between releases.
-	# Downgrading revisions within the same release should be allowed.
+	# Warn users of possible breakage when downgrading to a previous release.
+	# Downgrading revisions within the same release is safe.
 	if has_version ">${CATEGORY}/${P}-r9999:${SLOT}"; then
-		if [[ -z ${I_KNOW_WHAT_I_AM_DOING} ]]; then
-			eerror "    ***  Sanity check to keep you from breaking your system  ***"
-			eerror "Downgrading Qt is completely unsupported and will break your system!"
-			die "aborting to save your system"
-		else
-			ewarn "Downgrading Qt is completely unsupported and will break your system!"
-		fi
+		ewarn
+		ewarn "Downgrading Qt is completely unsupported and can break your system!"
+		ewarn
 	fi
 }
 
