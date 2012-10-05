@@ -41,6 +41,7 @@ src_configure() {
 		-DMODULE_LIBRAZORQT=On
 		-DMODULE_LIBRAZORQXT=On
 		-DMODULE_LIBRAZORMOUNT=On
+		-DMODULE_X11INFO=On
 	)
 	cmake-utils_src_configure
 }
