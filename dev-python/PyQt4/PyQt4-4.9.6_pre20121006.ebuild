@@ -24,12 +24,12 @@ if [[ ${PV} == *_pre* ]]; then
 	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 else
 	MY_P="PyQt-x11-gpl-${PV}"
-	SRC_URI="http://www.riverbankcomputing.com/static/Downloads/${PN}/${MY_P}.tar.gz"
+	SRC_URI="mirror://sourceforge/pyqt/${PN}/PyQt-${PV}/${MY_P}.tar.gz"
 fi
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
 IUSE="X assistant dbus debug declarative doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
 
 REQUIRED_USE="
@@ -44,7 +44,7 @@ REQUIRED_USE="
 "
 
 RDEPEND="
-	>=dev-python/sip-4.13.3
+	>=dev-python/sip-4.14
 	>=x11-libs/qt-core-${QT_VER}:4
 	>=x11-libs/qt-script-${QT_VER}:4
 	X? (
@@ -148,8 +148,6 @@ src_configure() {
 			LINK_SHLIB="$(tc-getCXX)"
 			CFLAGS="${CFLAGS}"
 			CXXFLAGS="${CXXFLAGS}"
-			CFLAGS_RELEASE=
-			CXXFLAGS_RELEASE=
 			LFLAGS="${LDFLAGS}")
 		echo "${myconf[@]}"
 		"${myconf[@]}" || die
