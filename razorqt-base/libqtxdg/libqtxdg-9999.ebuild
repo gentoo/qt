@@ -14,7 +14,7 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_BRANCH="master"
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/downloads/Razor-qt/razor-qt/${P}.tar.bz2"
+	SRC_URI="https://github.com/downloads/Razor-qt/razor-qt/razorqt-${PV}.tar.bz2"
 	KEYWORDS="~amd64 ~x86"
 fi
 
