@@ -5,7 +5,7 @@
 EAPI=4
 inherit cmake-utils
 
-DESCRIPTION="Razor-qt "
+DESCRIPTION="Razor-qt module for automatic suspend"
 HOMEPAGE="http://razor-qt.org/"
 
 if [[ ${PV} = *9999* ]]; then
