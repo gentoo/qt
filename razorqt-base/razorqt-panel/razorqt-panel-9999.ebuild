@@ -20,9 +20,8 @@ fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
-IUSE="cpuload +mount networkmonitor sensors +volume"
-#IUSE="+clock colorpicker cpuload +desktopswitch +mainmenu +mount networkmonitor
-#	quicklaunch screensaver sensors +showdesktop +taskbar +tray +volume"
+IUSE="+clock colorpicker cpuload +desktopswitch +mainmenu +mount networkmonitor
+	quicklaunch screensaver sensors +showdesktop +taskbar +tray +volume"
 
 DEPEND="razorqt-base/razorqt-libs
 	cpuload? ( sys-libs/libstatgrab )
@@ -38,11 +37,10 @@ src_configure() {
 		-DSPLIT_BUILD=On
 		-DMODULE_PANEL=On
 	)
-	# commented out, since this currently has no effect (yngwin, 2012-10-05)
-	# it probably also needs more fixing for automagic deps (e.g. alsa / pulse)
-#	for i in clock colorpicker cpuload desktopswitch mainmenu mount networkmonitor \
-#			quicklaunch screensaver sensors showdesktop taskbar tray volume; do
-#		use $i || mycmakeargs+=( -D${i^^}-PLUGIN=No )
-#	done
+	# probably needs fixing for automagic deps (e.g. alsa / pulse)
+	for i in clock colorpicker cpuload desktopswitch mainmenu mount networkmonitor \
+			quicklaunch screensaver sensors showdesktop taskbar tray volume; do
+		use $i || mycmakeargs+=( -D${i^^}_PLUGIN=No )
+	done
 	cmake-utils_src_configure
 }
