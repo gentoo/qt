@@ -272,6 +272,7 @@ qt5-build_src_install() {
 
 	if [[ ${PN} == "qt-core" ]]; then
 		pushd "${QT5_BUILD_DIR}" > /dev/null || die
+		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake,syncqt}"
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
 		popd > /dev/null || die
 
@@ -284,6 +285,12 @@ qt5-build_src_install() {
 			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
 			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
 			|| die "sed qconfig.h failed"
+
+		# install env.d file for custom LDPATH
+		cat <<-EOF > "${T}"/55qt5
+		LDPATH="${QTLIBDIR}"
+		EOF
+		doenvd "${T}"/55qt5
 	fi
 
 	qt5_install_module_qconfigs
