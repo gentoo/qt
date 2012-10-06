@@ -21,7 +21,7 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 IUSE="+clock colorpicker cpuload +desktopswitch +mainmenu +mount networkmonitor
-	quicklaunch screensaver sensors +showdesktop +taskbar +tray +volume"
+	+quicklaunch screensaver sensors +showdesktop +taskbar +tray +volume"
 
 DEPEND="razorqt-base/razorqt-libs
 	cpuload? ( sys-libs/libstatgrab )
