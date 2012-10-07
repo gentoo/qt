@@ -143,8 +143,6 @@ src_compile() {
 	use x86 && replace-flags -O0 -O1
 
 	local x mycmakeargs
-	final_targets="buildCore buildCli buildPluginsCommon "
-	final_targets+="buildPluginsCLI "
 	# default args
 	use debug \
 		&& POSTFIX="_debug" \
@@ -176,13 +174,11 @@ src_compile() {
 		avidemux_build_process buildQt4 avidemux/qt4${POSTFIX} "${mycmakeargs}"
 		mycmakeargs+="-DPLUGIN_UI=QT4 "
 		avidemux_build_process buildPluginsQt4 avidemux_plugins${POSTFIX} "${mycmakeargs}"
-		final_targets+="buildQt4 buildPluginsQt4 "
 	fi
 	if use gtk; then
 		avidemux_build_process buildGtk avidemux_gtk${POSTFIX} "${mycmakeargs}"
 		mycmakeargs+="-DPLUGIN_UI=GTK "
 		avidemux_build_process buildPluginsGtk avidemux_plugins${POSTFIX} "${mycmakeargs}"
-		final_targets+="buildGtk buildPluginsGtk"
 	fi
 }
 
