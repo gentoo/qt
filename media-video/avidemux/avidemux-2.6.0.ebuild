@@ -117,12 +117,17 @@ src_prepare() {
 
 	# Fix icon name -> avidemux-2.6.png
 	sed -i -e "/^Icon/ s:${PN}:${PN}-2.6:" ${PN}2.desktop || die
+	# the desktop file is broken. It uses avidemux2 instead of avidemux3
+	# so it will actually launch avidemux-2.5 if it is installed
+	sed -i -e "/^Exec/ s:${PN}2:${PN}3:" ${PN}2.desktop || die
 	# Now rename to not collide with 2.5
 	mv ${PN}2.desktop ${PN}-2.6.desktop
 	# fix major issues in desktop files wrt bugs #291453, #316599, #430500
 	# duplicate desktop file
 	cp ${PN}-2.6.desktop ${PN}-2.6-gtk.desktop || die
-	sed -i -re '/^Exec/ s:(avidemux2_)gtk:\1qt4:' ${PN}-2.6.desktop || die
+	# the desktop file is broken. It uses avidemux2 instead of avidemux3
+	# so it will actually launch avidemux-2.5 if it is installed
+	sed -i -re '/^Exec/ s:(avidemux3_)gtk:\1qt4:' ${PN}-2.6.desktop || die
 }
 
 src_configure() {
