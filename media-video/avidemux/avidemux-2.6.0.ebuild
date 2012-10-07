@@ -187,6 +187,8 @@ src_install() {
 	# Move it to ${D}.
 	insinto /
 	doins -r "${S}"/gentoo-install/*
+	# Mark executables with +x
+	find "${ED}"/usr/bin -exec chmod a+x {} \;
 
 	newicon ${PN}_icon.png ${PN}-2.6.png
 	use gtk && domenu ${PN}-2.6-gtk.desktop
