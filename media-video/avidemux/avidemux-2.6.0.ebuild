@@ -13,7 +13,7 @@ HOMEPAGE="http://fixounet.free.fr/avidemux"
 SRC_URI="mirror://sourceforge/${PN}/${PV}/${MY_P}.tar.gz"
 
 # Multiple licenses because of all the bundled stuff
-LICENSE="GPL-2 MIT GPL-1 LGPG-1 public-domaini PSF-2"
+LICENSE="GPL-2 MIT GPL-1 LGPG-1 public-domain PSF-2"
 SLOT="2.6"
 KEYWORDS="~amd64 ~x86"
 IUSE="aften a52 alsa amr arts debug dts esd faa faac faad fontconfig gtk jack
