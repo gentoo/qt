@@ -176,7 +176,7 @@ src_compile() {
 		avidemux_build_process buildPluginsQt4 avidemux_plugins${POSTFIX} "${mycmakeargs}"
 	fi
 	if use gtk; then
-		avidemux_build_process buildGtk avidemux_gtk${POSTFIX} "${mycmakeargs}"
+		avidemux_build_process buildGtk avidemux/gtk${POSTFIX} "${mycmakeargs}"
 		mycmakeargs+="-DPLUGIN_UI=GTK "
 		avidemux_build_process buildPluginsGtk avidemux_plugins${POSTFIX} "${mycmakeargs}"
 	fi
