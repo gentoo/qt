@@ -51,6 +51,7 @@ src_configure() {
 	configuration() {
 		local mycmakeargs=(
 			-DPYTHON_EXECUTABLE="$(PYTHON -a)"
+			-DPYTHON_SITE_PACKAGES="${EPREFIX}$(python_get_sitedir)"
 			-DPYTHON_SUFFIX="-python${PYTHON_ABI}"
 			$(cmake-utils_use_build test TESTS)
 		)
@@ -58,8 +59,8 @@ src_configure() {
 		if [[ $(python_get_version -l --major) == 3 ]]; then
 			mycmakeargs+=(
 				-DUSE_PYTHON3=ON
-				-DPYTHON3_INCLUDE_DIR="$(python_get_includedir)"
-				-DPYTHON3_LIBRARY="$(python_get_library)"
+				-DPYTHON3_INCLUDE_DIR="${EPREFIX}$(python_get_includedir)"
+				-DPYTHON3_LIBRARY="${EPREFIX}$(python_get_library)"
 			)
 		fi
 
