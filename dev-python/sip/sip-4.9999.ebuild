@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI="5"
 PYTHON_DEPEND="*"
-PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
+PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 
 EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 [[ ${PV} == *9999* ]] && HG_ECLASS="mercurial"
@@ -16,7 +16,9 @@ inherit eutils python toolchain-funcs ${HG_ECLASS}
 DESCRIPTION="Python extension module generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
 LICENSE="|| ( GPL-2 GPL-3 sip )"
-SLOT="0"
+
+# Subslot based on SIP_API_MAJOR_NR from siplib/sip.h.in
+SLOT="0/9"
 KEYWORDS=""
 IUSE="debug doc"
 
@@ -32,7 +34,7 @@ if [[ ${PV} == *9999* ]]; then
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
-	SRC_URI="http://www.gentoo-el.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
 fi
 
@@ -82,10 +84,6 @@ src_install() {
 
 pkg_postinst() {
 	python_mod_optimize sipconfig.py sipdistutils.py
-
-	ewarn "When updating dev-python/sip, you usually need to rebuild packages that depend on it,"
-	ewarn "such as PyQt4, qscintilla-python and pykde4. If you have app-portage/gentoolkit"
-	ewarn "installed, you can find these packages with \`equery d dev-python/sip\`."
 }
 
 pkg_postrm() {
