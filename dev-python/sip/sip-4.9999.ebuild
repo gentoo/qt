@@ -10,7 +10,9 @@ PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 
 inherit eutils python toolchain-funcs
 
-HG_REVISION=
+DESCRIPTION="Python extension module generator for C and C++ libraries"
+HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
+LICENSE="|| ( GPL-2 GPL-3 sip )"
 
 if [[ ${PV} == *9999* ]]; then
 	# live version from mercurial repo
@@ -18,6 +20,7 @@ if [[ ${PV} == *9999* ]]; then
 	inherit mercurial
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
+	HG_REVISION=
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
 	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
@@ -25,10 +28,6 @@ else
 	# official release
 	SRC_URI="mirror://sourceforge/pyqt/${P}.tar.gz"
 fi
-
-DESCRIPTION="Python extension module generator for C and C++ libraries"
-HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
-LICENSE="|| ( GPL-2 GPL-3 sip )"
 
 # Sub-slot based on SIP_API_MAJOR_NR from siplib/sip.h.in
 SLOT="0/9"
