@@ -16,8 +16,6 @@ if [[ ${PV} == *9999* ]]; then
 	# live version from mercurial repo
 	EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
 	inherit mercurial
-	DEPEND="sys-devel/bison
-		sys-devel/flex"
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
@@ -37,12 +35,20 @@ SLOT="0/9"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 IUSE="debug doc"
 
-DEPEND+=""
-RDEPEND=""
+DEPEND=""
+RDEPEND="${DEPEND}"
+[[ ${PV} == *9999* ]] && DEPEND+="
+	sys-devel/bison
+	sys-devel/flex
+	doc? ( dev-python/sphinx )
+"
 
 src_prepare() {
 	if [[ ${PV} == *9999* ]]; then
 		$(PYTHON -2) build.py prepare || die
+		if use doc; then
+			$(PYTHON -2) build.py doc || die
+		fi
 	fi
 
 	# Sub-slot sanity check
@@ -90,10 +96,7 @@ src_install() {
 	python_src_install
 
 	dodoc NEWS
-
-	if use doc; then
-		dohtml -r doc/html/*
-	fi
+	use doc && dohtml -r doc/html/*
 }
 
 pkg_postinst() {
