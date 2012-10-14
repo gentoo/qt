@@ -16,15 +16,14 @@ usage() {
 	echo """
 
 ./bump-python-revisions
-	
+
 -h: Display this message
 -q: Quiet mode. No questions. Just bump and commit
 
 	"""
 }
 
-
-dosip(){
+dosip() {
 	SIPKG="sip-${new_sip}" # Format Sip package
 	ebegin "Downloading ${SIPKG} tarball..."
 	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/sip4/${SIPKG}.tar.gz || exit 2
@@ -39,14 +38,14 @@ dosip(){
 	mv ${tomove#./} sip-${new_sip_ver}_pre${DATE}.ebuild || exit "Failed to bump sip"
 	git rm ${tomove}
 	ebegin "Changing revision number to: ${new_sip_rev}"
-	sed -i "/^HG_REVISION/s:=.*:=${new_sip_rev}:" sip-${new_sip_ver}_pre${DATE}.ebuild
+	sed -i -e "/HG_REVISION=/s:=.*:=${new_sip_rev}:" sip-${new_sip_ver}_pre${DATE}.ebuild
 	eend $?
 	repoman manifest
 	git add .
 	popd
 }
 
-dopyqt4(){
+dopyqt4() {
 	PYPKG="PyQt-x11-gpl-snapshot-${new_pyqt4}" #Format PyQt4 package
 	ebegin "Downloading ${PYPKG} tarball..."
 	wget -P ${TEMP} http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYPKG}.tar.gz || exit 2
@@ -67,8 +66,6 @@ dopyqt4(){
 	popd
 }
 
-
-
 commit() {
 	if [[ -z ${QUIET} ]]; then
 		ewarn "Your changes are ready to be merged. However I strongly recommend you to review your changes."
@@ -76,7 +73,7 @@ commit() {
 		einfo "Press 'r' to review your changes or 'y' to merge them to master branch (default 'r')."
 		read choice
 		case "$choice" in
-			y)  
+			y)
 				ewarn "Your changes will be merged now. Don't break the overlay or I will shoot you down!"
 				git commit -m "PyQt4/sip: Automated version bump, remove old" || exit 2
 				git push || exit 2
@@ -84,7 +81,7 @@ commit() {
 			r|"")
 				git diff
 				;;
-			*)	
+			*)
 				eerror ""
 				eerror "Invalid option. Are you stupid or something?"
 				eerror ""
@@ -96,17 +93,17 @@ commit() {
 	fi
 }
 
-getrevisions(){
-	pushd ${OVERLAY}/dev-python/PyQt4/ >> /dev/null
+getrevisions() {
+	pushd ${OVERLAY}/dev-python/PyQt4/ > /dev/null
 	pyqt4_tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
 	pyqt4_revision=$(grep ^REVISION ${pyqt4_tomove}|sed "s:^REVISION=::")
 	PVER=$(echo ${pyqt4_tomove/\.\//}|sed "s:PyQt4-\(.*\)_pre.*:\1:")
-	popd >> /dev/null
-	pushd ${OVERLAY}/dev-python/sip/ >> /dev/null
+	popd > /dev/null
+	pushd ${OVERLAY}/dev-python/sip/ > /dev/null
 	sip_tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
-	sip_revision=$(grep ^HG_REVISION ${sip_tomove}|sed "s:^HG_REVISION=::")
+	sip_revision=$(grep "HG_REVISION=" ${sip_tomove}|sed "s:HG_REVISION=::")
 	SVER=$(echo ${sip_tomove/\.\//}|sed "s:sip-\(.*\)_pre.*:\1:")
-	popd >> /dev/null
+	popd > /dev/null
 
 	einfo "Old Revisions:"
 	einfo "PyQt4 : ${pyqt4_revision}"
