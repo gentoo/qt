@@ -8,37 +8,51 @@ SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 
-EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
-[[ ${PV} == *9999* ]] && HG_ECLASS="mercurial"
+inherit eutils python toolchain-funcs
 
-inherit eutils python toolchain-funcs ${HG_ECLASS}
-
-DESCRIPTION="Python extension module generator for C and C++ libraries"
-HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
-LICENSE="|| ( GPL-2 GPL-3 sip )"
-
-# Subslot based on SIP_API_MAJOR_NR from siplib/sip.h.in
-SLOT="0/9"
-KEYWORDS=""
-IUSE="debug doc"
-
-DEPEND=""
-RDEPEND=""
+HG_REVISION=
 
 if [[ ${PV} == *9999* ]]; then
 	# live version from mercurial repo
-	DEPEND="${DEPEND}
-		sys-devel/bison
+	EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
+	inherit mercurial
+	DEPEND="sys-devel/bison
 		sys-devel/flex"
-	S=${WORKDIR}/${PN}
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
 	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
+else
+	# official release
+	SRC_URI="mirror://sourceforge/pyqt/${P}.tar.gz"
 fi
 
+DESCRIPTION="Python extension module generator for C and C++ libraries"
+HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
+LICENSE="|| ( GPL-2 GPL-3 sip )"
+
+# Sub-slot based on SIP_API_MAJOR_NR from siplib/sip.h.in
+SLOT="0/9"
+KEYWORDS=""
+IUSE="debug doc"
+
+DEPEND+=""
+RDEPEND=""
+
 src_prepare() {
+	# Sub-slot sanity check
+	local sub_slot=${SLOT#*/}
+	local sip_api_major_nr=$(sed -nre 's:^#define SIP_API_MAJOR_NR\s+([0-9]+):\1:p' siplib/sip.h.in)
+	if [[ ${sub_slot} != ${sip_api_major_nr} ]]; then
+		eerror
+		eerror "Ebuild sub-slot (${sub_slot}) does not match SIP_API_MAJOR_NR (${sip_api_major_nr})"
+		eerror "Please update SLOT variable as follows:"
+		eerror "    SLOT=\"${SLOT%%/*}/${sip_api_major_nr}\""
+		eerror
+		die "sub-slot sanity check failed"
+	fi
+
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 	sed -i -e 's/-O2//g' specs/* || die
 

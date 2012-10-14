@@ -8,12 +8,25 @@ SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 
-EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
-[[ ${PV} == *9999* ]] && HG_ECLASS="mercurial"
-
-inherit eutils python toolchain-funcs ${HG_ECLASS}
+inherit eutils python toolchain-funcs
 
 HG_REVISION=3eba5b9842f0
+
+if [[ ${PV} == *9999* ]]; then
+	# live version from mercurial repo
+	EHG_REPO_URI="http://www.riverbankcomputing.com/hg/sip"
+	inherit mercurial
+	DEPEND="sys-devel/bison
+		sys-devel/flex"
+elif [[ ${PV} == *_pre* ]]; then
+	# development snapshot
+	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
+	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	S=${WORKDIR}/${MY_P}
+else
+	# official release
+	SRC_URI="mirror://sourceforge/pyqt/${P}.tar.gz"
+fi
 
 DESCRIPTION="Python extension module generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
@@ -24,21 +37,8 @@ SLOT="0/9"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 IUSE="debug doc"
 
-DEPEND=""
+DEPEND+=""
 RDEPEND=""
-
-if [[ ${PV} == *9999* ]]; then
-	# live version from mercurial repo
-	DEPEND="${DEPEND}
-		sys-devel/bison
-		sys-devel/flex"
-	S=${WORKDIR}/${PN}
-elif [[ ${PV} == *_pre* ]]; then
-	# development snapshot
-	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
-	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
-	S=${WORKDIR}/${MY_P}
-fi
 
 src_prepare() {
 	# Sub-slot sanity check
