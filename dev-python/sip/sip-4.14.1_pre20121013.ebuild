@@ -19,7 +19,7 @@ DESCRIPTION="Python extension module generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
 LICENSE="|| ( GPL-2 GPL-3 sip )"
 
-# Subslot based on SIP_API_MAJOR_NR from siplib/sip.h.in
+# Sub-slot based on SIP_API_MAJOR_NR from siplib/sip.h.in
 SLOT="0/9"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 IUSE="debug doc"
@@ -41,6 +41,18 @@ elif [[ ${PV} == *_pre* ]]; then
 fi
 
 src_prepare() {
+	# Sub-slot sanity check
+	local sub_slot=${SLOT#*/}
+	local sip_api_major_nr=$(sed -nre 's:^#define SIP_API_MAJOR_NR\s+([0-9]+):\1:p' siplib/sip.h.in)
+	if [[ ${sub_slot} != ${sip_api_major_nr} ]]; then
+		eerror
+		eerror "Ebuild sub-slot (${sub_slot}) does not match SIP_API_MAJOR_NR (${sip_api_major_nr})"
+		eerror "Please update SLOT variable as follows:"
+		eerror "    SLOT=\"${SLOT%%/*}/${sip_api_major_nr}\""
+		eerror
+		die "sub-slot sanity check failed"
+	fi
+
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 	sed -i -e 's/-O2//g' specs/* || die
 
