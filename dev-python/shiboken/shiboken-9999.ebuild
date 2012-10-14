@@ -29,6 +29,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	test? (
+		dev-python/numpy
 		>=x11-libs/qt-gui-4.7.0:4
 		>=x11-libs/qt-test-4.7.0:4
 	)"
