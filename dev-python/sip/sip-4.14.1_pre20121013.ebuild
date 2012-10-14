@@ -41,6 +41,10 @@ DEPEND+=""
 RDEPEND=""
 
 src_prepare() {
+	if [[ ${PV} == *9999* ]]; then
+		$(PYTHON -2) build.py prepare || die
+	fi
+
 	# Sub-slot sanity check
 	local sub_slot=${SLOT#*/}
 	local sip_api_major_nr=$(sed -nre 's:^#define SIP_API_MAJOR_NR\s+([0-9]+):\1:p' siplib/sip.h.in)
@@ -55,10 +59,6 @@ src_prepare() {
 
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 	sed -i -e 's/-O2//g' specs/* || die
-
-	if [[ ${PV} == *9999* ]]; then
-		$(PYTHON -2) build.py prepare || die
-	fi
 
 	python_src_prepare
 }
