@@ -30,8 +30,6 @@ src_configure() {
 	local mycmakeargs=(
 		-DSPLIT_BUILD=On
 		-DMODULE_CONFIG=On
-		-DMODULE_CONFUPDATE=On
-		-DMODULE_ABOUT=On
 	)
 	cmake-utils_src_configure
 }

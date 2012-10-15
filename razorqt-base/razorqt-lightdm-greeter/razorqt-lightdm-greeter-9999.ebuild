@@ -26,6 +26,7 @@ DEPEND="razorqt-base/razorqt-libs
 	x11-misc/lightdm[qt4]"
 RDEPEND="${DEPEND}
 	razorqt-base/razorqt-data
+	razorqt-base/razorqt-power
 	!x11-misc/lightdm-razorqt-greeter"
 
 src_configure() {

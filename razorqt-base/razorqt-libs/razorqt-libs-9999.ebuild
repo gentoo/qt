@@ -18,7 +18,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-LICENSE="LGPL-2.1+"
+LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 IUSE=""
 
@@ -41,6 +41,7 @@ src_configure() {
 		-DMODULE_LIBRAZORQT=On
 		-DMODULE_LIBRAZORQXT=On
 		-DMODULE_LIBRAZORMOUNT=On
+		-DMODULE_ABOUT=On
 		-DMODULE_X11INFO=On
 	)
 	cmake-utils_src_configure

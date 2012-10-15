@@ -24,21 +24,13 @@ IUSE=""
 
 DEPEND="razorqt-base/razorqt-libs"
 RDEPEND="${DEPEND}
-	razorqt-base/razorqt-data
-	|| ( x11-wm/openbox
-		kde-base/kwin
-		x11-wm/metacity
-		xfce-base/xfwm4
-		x11-wm/enlightenment
-		x11-wm/fvwm
-		x11-wm/sawfish
-		x11-wm/windowmaker
-	)"
+	razorqt-base/razorqt-data"
 
 src_configure() {
 	local mycmakeargs=(
 		-DSPLIT_BUILD=On
 		-DMODULE_SESSION=On
+		-DMODULE_CONFUPDATE=On
 		-DBUNDLE_XDG_UTILS=No
 	)
 	cmake-utils_src_configure

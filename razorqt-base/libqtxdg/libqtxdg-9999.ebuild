@@ -18,7 +18,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-LICENSE="LGPL-2.1+"
+LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE=""
 

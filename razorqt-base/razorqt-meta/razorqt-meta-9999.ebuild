@@ -35,4 +35,13 @@ RDEPEND="~razorqt-base/libqtxdg-${PV}
 	~razorqt-base/razorqt-session-${PV}
 	lightdm? ( ~razorqt-base/razorqt-lightdm-greeter-${PV} )
 	policykit? ( ~razorqt-base/razorqt-policykit-${PV} )
+	|| ( x11-wm/openbox
+		kde-base/kwin
+		x11-wm/metacity
+		xfce-base/xfwm4
+		x11-wm/enlightenment
+		x11-wm/fvwm
+		x11-wm/sawfish
+		x11-wm/windowmaker
+	)
 	!x11-wm/razorqt"
