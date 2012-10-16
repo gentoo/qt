@@ -40,7 +40,7 @@ dosip() {
 	ebegin "Changing revision number to: ${new_sip_rev}"
 	sed -i -e "/HG_REVISION=/s:=.*:=${new_sip_rev}:" sip-${new_sip_ver}_pre${DATE}.ebuild
 	eend $?
-	repoman manifest
+	repoman manifest || exit 1
 	git add .
 	popd
 }
@@ -61,7 +61,7 @@ dopyqt4() {
 	ebegin "Changing revision number to: ${new_pyqt4_rev}"
 	sed -i "/^REVISION/s:=.*:=${new_pyqt4_rev}:" PyQt4-${new_pyqt4_ver}_pre${DATE}.ebuild
 	eend $?
-	repoman manifest
+	repoman manifest || exit 1
 	git add .
 	popd
 }
