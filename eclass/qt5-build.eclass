@@ -163,23 +163,26 @@ qt5-build_src_prepare() {
 
 	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
 		if [[ ${PN} == "qt-core" ]]; then
-			# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when building qmake
-			# FIXME: see bug 434780
-			sed -i -e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
-				${MAKEOPTS} ${EXTRA_EMAKE} \
-				'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
+			# Respect CC, CXX, *FLAGS, MAKEOPTS and
+			# EXTRA_EMAKE when bootstrapping qmake
+			sed -i \
+				-e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
+				${MAKEOPTS} ${EXTRA_EMAKE} 'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
 				'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
-				configure || die "sed qmake build failed"
+				-e '/"$CFG_RELEASE_QMAKE"/,/^\s\+fi$/ d' \
+				configure || die "sed failed (respect env for qmake)"
+			sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
+				qmake/Makefile.unix || die "sed failed (CPPFLAGS)"
 		else
-			# Skip qmake build
+			# Skip qmake bootstrap
 			sed -i -e '/outpath\/qmake".*"$MAKE")/ d' \
-				configure || die "sed qmake build failed"
+				configure || die "sed failed (skip qmake bootstrap)"
 			rm -f qmake/Makefile*
 		fi
 
 		# Respect CXX in configure
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
-			configure || die "sed QMAKE_CONF_COMPILER failed"
+			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
 		# Respect CC, CXX, LINK and *FLAGS in config.tests
 		# FIXME: in compile.test, -m flags are passed to the linker via LIBS
@@ -187,7 +190,7 @@ qt5-build_src_prepare() {
 			sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
 				'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
 				'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
-			|| die "sed config.tests failed"
+			|| die "sed failed (config.tests)"
 	fi
 
 	if [[ ${PN} != "qt-core" ]]; then
@@ -284,7 +287,7 @@ qt5-build_src_install() {
 		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
 			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
-			|| die "sed qconfig.h failed"
+			|| die "sed failed (qconfig.h)"
 
 		# install env.d file for custom LDPATH
 		cat <<-EOF > "${T}"/55qt5
