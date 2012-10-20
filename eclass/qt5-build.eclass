@@ -165,8 +165,7 @@ qt5-build_src_prepare() {
 		if [[ ${PN} == "qt-core" ]]; then
 			# Respect CC, CXX, *FLAGS, MAKEOPTS and
 			# EXTRA_EMAKE when bootstrapping qmake
-			sed -i \
-				-e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
+			sed -i -e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
 				${MAKEOPTS} ${EXTRA_EMAKE} 'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
 				'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
 				-e '/"$CFG_RELEASE_QMAKE"/,/^\s\+fi$/ d' \
@@ -196,11 +195,10 @@ qt5-build_src_prepare() {
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
 		# Respect toolchain and flags in config.tests
-		# FIXME: in compile.test, -m flags are passed to the linker via LIBS
 		find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
-			sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
-				'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
-				'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
+			sed -ri -e '/CXXFLAGS=/ s/"(\$CXXFLAGS) (\$PARAM)"/"\2 \1"/' \
+				-e '/LFLAGS=/ s/"(\$LFLAGS) (\$PARAM)"/"\2 \1"/' \
+				-e '/bin\/qmake/ s/-nocache //' \
 			|| die "sed failed (config.tests)"
 	fi
 
