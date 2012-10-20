@@ -180,11 +180,22 @@ qt5-build_src_prepare() {
 			rm -f qmake/Makefile*
 		fi
 
+		# Reset QMAKE_*FLAGS_{RELEASE,DEBUG} variables,
+		# or they will override user's flags (bug 427782)
+		sed -i -e '/^SYSTEM_VARIABLES=/ i \
+			QMakeVar set QMAKE_CFLAGS_RELEASE\
+			QMakeVar set QMAKE_CFLAGS_DEBUG\
+			QMakeVar set QMAKE_CXXFLAGS_RELEASE\
+			QMakeVar set QMAKE_CXXFLAGS_DEBUG\
+			QMakeVar set QMAKE_LFLAGS_RELEASE\
+			QMakeVar set QMAKE_LFLAGS_DEBUG\n' \
+			configure || die "sed failed (QMAKE_*FLAGS_{RELEASE,DEBUG})"
+
 		# Respect CXX in configure
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
-		# Respect CC, CXX, LINK and *FLAGS in config.tests
+		# Respect toolchain and flags in config.tests
 		# FIXME: in compile.test, -m flags are passed to the linker via LIBS
 		find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
 			sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
