@@ -96,12 +96,12 @@ commit() {
 getrevisions() {
 	pushd ${OVERLAY}/dev-python/PyQt4/ > /dev/null
 	pyqt4_tomove=$(find '.' -type f -name "PyQt4-*_pre*.ebuild"|tail -1)
-	pyqt4_revision=$(grep ^REVISION ${pyqt4_tomove}|sed "s:^REVISION=::")
+	pyqt4_revision=$(grep ^REVISION ${pyqt4_tomove}|cut -d "=" -f 2)
 	PVER=$(echo ${pyqt4_tomove/\.\//}|sed "s:PyQt4-\(.*\)_pre.*:\1:")
 	popd > /dev/null
 	pushd ${OVERLAY}/dev-python/sip/ > /dev/null
 	sip_tomove=$(find '.' -type f -name "sip-*_pre*.ebuild"|tail -1)
-	sip_revision=$(grep "HG_REVISION=" ${sip_tomove}|sed "s:HG_REVISION=::")
+	sip_revision=$(grep "HG_REVISION=" ${sip_tomove}|cut -d "=" -f 2)
 	SVER=$(echo ${sip_tomove/\.\//}|sed "s:sip-\(.*\)_pre.*:\1:")
 	popd > /dev/null
 
@@ -130,10 +130,10 @@ getrevisions() {
 		einfo "New sip snapshot@rev: ${new_sip}@${new_sip_rev}"
 	# Decide what to bump"
 	[[ -z ${new_pyqt4_rev} ]] || \
-		{ [[ ${pyqt4_revision} != ${new_pyqt4_rev} ]] \
+		{ [[ "${pyqt4_revision}" != "${new_pyqt4_rev}" ]] \
 			&& dopyqt4 && FOUND=true; }
 	[[ -z ${new_sip_rev} ]] || \
-		{ [[ ${sip_revision} != ${new_sip_rev} ]] \
+		{ [[ "${sip_revision}" != "${new_sip_rev}" ]] \
 			&& dosip && FOUND=true; }
 
 	if [[ -n ${FOUND} ]]; then
