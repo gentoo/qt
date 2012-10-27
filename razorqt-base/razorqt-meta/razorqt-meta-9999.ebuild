@@ -44,4 +44,7 @@ RDEPEND="~razorqt-base/libqtxdg-${PV}
 		x11-wm/sawfish
 		x11-wm/windowmaker
 	)
+	!<razorqt-base/razorqt-lightdm-greeter-0.5.0
+	!<razorqt-base/razorqt-meta-0.5.0
+	!x11-misc/lightdm-razorqt-greeter
 	!x11-wm/razorqt"

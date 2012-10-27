@@ -16,6 +16,7 @@ if [[ ${PV} = *9999* ]]; then
 else
 	SRC_URI="https://github.com/downloads/Razor-qt/razor-qt/razorqt-${PV}.tar.bz2"
 	KEYWORDS="~amd64 ~x86"
+	S="${WORKDIR}/razorqt-${PV}"
 fi
 
 LICENSE="GPL-2 LGPL-2.1+"

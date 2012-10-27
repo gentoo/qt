@@ -16,13 +16,17 @@ if [[ ${PV} = *9999* ]]; then
 else
 	SRC_URI="https://github.com/downloads/Razor-qt/razor-qt/razorqt-${PV}.tar.bz2"
 	KEYWORDS="~amd64 ~x86"
+	S="${WORKDIR}/razorqt-${PV}"
 fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
 IUSE="doc"
 
-RDEPEND="!x11-wm/razorqt"
+RDEPEND="!<razorqt-base/razorqt-lightdm-greeter-0.5.0
+	!<razorqt-base/razorqt-meta-0.5.0
+	!x11-misc/lightdm-razorqt-greeter
+	!x11-wm/razorqt"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 
