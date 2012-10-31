@@ -21,14 +21,17 @@ fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
-IUSE="+clock colorpicker cpuload +desktopswitch +mainmenu +mount networkmonitor
-	+quicklaunch screensaver sensors +showdesktop +taskbar +tray +volume"
+IUSE="+alsa +clock colorpicker cpuload +desktopswitch +mainmenu +mount
+	networkmonitor pulseaudio +quicklaunch screensaver sensors +showdesktop
+	+taskbar +tray +volume"
+REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
 
 DEPEND="razorqt-base/razorqt-libs
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
-	volume? ( || ( media-libs/alsa-lib media-sound/pulseaudio ) )"
+	volume? ( alsa? ( media-libs/alsa-lib )
+		pulseaudio? ( media-sound/pulseaudio ) )"
 RDEPEND="${DEPEND}
 	razorqt-base/razorqt-data
 	mount? ( sys-fs/udisks )"
@@ -38,10 +41,17 @@ src_configure() {
 		-DSPLIT_BUILD=On
 		-DMODULE_PANEL=On
 	)
-	# probably needs fixing for automagic deps (e.g. alsa / pulse)
+
+	local i
 	for i in clock colorpicker cpuload desktopswitch mainmenu mount networkmonitor \
 			quicklaunch screensaver sensors showdesktop taskbar tray volume; do
 		use $i || mycmakeargs+=( -D${i^^}_PLUGIN=No )
 	done
+
+	if use volume; then
+		for i in alsa pulseaudio; do
+			use $i || mycmakeargs+=( -DVOLUME_USE_${i^^}=No )
+		done
+	fi
 	cmake-utils_src_configure
 }
