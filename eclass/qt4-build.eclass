@@ -23,7 +23,7 @@ else
 	QT4_BUILD_TYPE="release"
 fi
 
-HOMEPAGE="http://qt-project.org/ http://qt.nokia.com/"
+HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 
 MY_PV=${PV/_/-}

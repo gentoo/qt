@@ -26,7 +26,7 @@ fi
 
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
 
-HOMEPAGE="http://qt-project.org/ http://qt.nokia.com/"
+HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
