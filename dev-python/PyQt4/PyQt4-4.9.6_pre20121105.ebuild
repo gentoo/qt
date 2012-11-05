@@ -145,11 +145,16 @@ src_configure() {
 			AR="$(tc-getAR) cqs"
 			CC="$(tc-getCC)"
 			CFLAGS="${CFLAGS}"
+			CFLAGS_RELEASE=
 			CXX="$(tc-getCXX)"
 			CXXFLAGS="${CXXFLAGS}"
+			CXXFLAGS_RELEASE=
 			LINK="$(tc-getCXX)"
 			LINK_SHLIB="$(tc-getCXX)"
 			LFLAGS="${LDFLAGS}"
+			LFLAGS_RELEASE=
+			RANLIB=
+			STRIP=
 		)
 		echo "${myconf[@]}"
 		"${myconf[@]}" || die
