@@ -77,24 +77,21 @@ DEPEND="${RDEPEND}
 
 S=${WORKDIR}/${MY_P}
 
-PATCHES=(
-#	"${FILESDIR}/${PN}-4.7.2-configure.py.patch"
-)
-
 PYTHON_VERSIONED_EXECUTABLES=("/usr/bin/pyuic4")
 
 src_prepare() {
-	if ! use dbus; then
-		sed -e 's/^\([[:blank:]]\+\)check_dbus()/\1pass/' -i configure.py || die
-	fi
-
-	# Support qreal for arm architecture (bug #322349).
-	use arm && epatch "${FILESDIR}/${PN}-4.7.3-qreal_float_support.patch"
-
 	qt4-r2_src_prepare
 
-	# Use proper include directory.
-	sed -e "s:/usr/include:${EPREFIX}/usr/include:g" -i configure.py || die
+	# Support qreal on arm architecture (bug 322349).
+	use arm && epatch "${FILESDIR}/${PN}-4.7.3-qreal_float_support.patch"
+
+	# Use proper include directory for phonon.
+	sed -i -e "s:^\s\+generate_code(\"phonon\":&, extra_include_dirs=[\"${EPREFIX}/usr/include/phonon\"]:" \
+		configure.py || die
+
+	if ! use dbus; then
+		sed -i -e 's/^\(\s\+\)check_dbus()/\1pass/' configure.py || die
+	fi
 
 	python_copy_sources
 
