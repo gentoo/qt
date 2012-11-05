@@ -78,7 +78,7 @@ DEPEND="${RDEPEND}
 S=${WORKDIR}/${MY_P}
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.7.2-configure.py.patch"
+#	"${FILESDIR}/${PN}-4.7.2-configure.py.patch"
 )
 
 PYTHON_VERSIONED_EXECUTABLES=("/usr/bin/pyuic4")
@@ -114,8 +114,8 @@ pyqt4_use_enable() {
 
 src_configure() {
 	configuration() {
-		local myconf=("$(PYTHON)"
-			configure.py
+		local myconf=(
+			"$(PYTHON)" configure.py
 			--confirm-license
 			--bindir="${EPREFIX}/usr/bin"
 			--destdir="${EPREFIX}$(python_get_sitedir)"
@@ -142,13 +142,15 @@ src_configure() {
 			$(pyqt4_use_enable svg QtSvg)
 			$(pyqt4_use_enable webkit QtWebKit)
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
+			AR="$(tc-getAR) cqs"
 			CC="$(tc-getCC)"
+			CFLAGS="${CFLAGS}"
 			CXX="$(tc-getCXX)"
+			CXXFLAGS="${CXXFLAGS}"
 			LINK="$(tc-getCXX)"
 			LINK_SHLIB="$(tc-getCXX)"
-			CFLAGS="${CFLAGS}"
-			CXXFLAGS="${CXXFLAGS}"
-			LFLAGS="${LDFLAGS}")
+			LFLAGS="${LDFLAGS}"
+		)
 		echo "${myconf[@]}"
 		"${myconf[@]}" || die
 
@@ -160,9 +162,9 @@ src_configure() {
 				$(use opengl && echo QtOpenGL); do
 			# Run eqmake4 inside the qpy subdirectories to respect
 			# CC, CXX, CFLAGS, CXXFLAGS, LDFLAGS and avoid stripping.
-			pushd qpy/${mod} > /dev/null || return 1
+			pushd qpy/${mod} > /dev/null || return
 			eqmake4 $(ls w_qpy*.pro)
-			popd > /dev/null || return 1
+			popd > /dev/null || return
 
 			# Fix insecure runpaths.
 			sed -e "/^LFLAGS[[:space:]]*=/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
@@ -171,9 +173,9 @@ src_configure() {
 
 		# Avoid stripping of libpythonplugin.so.
 		if use X; then
-			pushd designer > /dev/null || return 1
+			pushd designer > /dev/null || return
 			eqmake4 python.pro
-			popd > /dev/null || return 1
+			popd > /dev/null || return
 		fi
 	}
 	python_execute_function -s configuration
