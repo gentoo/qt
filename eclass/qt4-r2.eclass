@@ -244,9 +244,13 @@ eqmake4() {
 		-makefile \
 		QTDIR="${EPREFIX}"/usr/$(get_libdir) \
 		QMAKE="${EPREFIX}"/usr/bin/qmake \
+		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
 		QMAKE_CXX="$(tc-getCXX)" \
 		QMAKE_LINK="$(tc-getCXX)" \
+		QMAKE_OBJCOPY="$(tc-getOBJCOPY)" \
+		QMAKE_RANLIB= \
+		QMAKE_STRIP= \
 		QMAKE_CFLAGS="${CFLAGS}" \
 		QMAKE_CFLAGS_RELEASE= \
 		QMAKE_CFLAGS_DEBUG= \
@@ -259,7 +263,6 @@ eqmake4() {
 		QMAKE_LIBDIR_QT="${EPREFIX}"/usr/$(get_libdir)/qt4 \
 		QMAKE_LIBDIR_X11="${EPREFIX}"/usr/$(get_libdir) \
 		QMAKE_LIBDIR_OPENGL="${EPREFIX}"/usr/$(get_libdir) \
-		QMAKE_STRIP= \
 		"${qmake_args[@]}"
 
 	# was qmake successful?
