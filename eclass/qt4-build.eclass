@@ -558,8 +558,8 @@ qt4-build_src_install() {
 	fix_library_files
 	fix_includes
 
-	# remove .la files since we are building only shared Qt libraries
-	find "${D}"${QTLIBDIR} -type f -name '*.la' -print0 | xargs -0 rm -f
+	# remove .la files since we are building only shared libraries
+	prune_libtool_files
 }
 
 # @FUNCTION: setqtenv
