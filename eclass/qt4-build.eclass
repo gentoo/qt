@@ -567,20 +567,20 @@ qt4-build_src_install() {
 setqtenv() {
 	# Set up installation directories
 	QTPREFIXDIR=${EPREFIX}/usr
-	QTBINDIR=${EPREFIX}/usr/bin
-	QTLIBDIR=${EPREFIX}/usr/$(get_libdir)/qt4
-	QTPCDIR=${EPREFIX}/usr/$(get_libdir)/pkgconfig
-	QTDOCDIR=${EPREFIX}/usr/share/doc/qt-${PV}
-	QTHEADERDIR=${EPREFIX}/usr/include/qt4
+	QTBINDIR=${QTPREFIXDIR}/bin
+	QTLIBDIR=${QTPREFIXDIR}/$(get_libdir)/qt4
+	QTPCDIR=${QTPREFIXDIR}/$(get_libdir)/pkgconfig
+	QTDOCDIR=${QTPREFIXDIR}/share/doc/qt-${PV}
+	QTHEADERDIR=${QTPREFIXDIR}/include/qt4
 	QTPLUGINDIR=${QTLIBDIR}/plugins
 	QTIMPORTDIR=${QTLIBDIR}/imports
-	QTDATADIR=${EPREFIX}/usr/share/qt4
+	QTDATADIR=${QTPREFIXDIR}/share/qt4
 	QTTRANSDIR=${QTDATADIR}/translations
 	QTSYSCONFDIR=${EPREFIX}/etc/qt4
 	QTEXAMPLESDIR=${QTDATADIR}/examples
 	QTDEMOSDIR=${QTDATADIR}/demos
 	QMAKE_LIBDIR_QT=${QTLIBDIR}
-	QT_INSTALL_PREFIX=${EPREFIX}/usr/$(get_libdir)/qt4
+	QT_INSTALL_PREFIX=${QTLIBDIR}
 
 	PLATFORM=$(qt_mkspecs_dir)
 	unset QMAKESPEC
@@ -594,22 +594,25 @@ setqtenv() {
 # @DESCRIPTION:
 # Generates Makefiles for the given list of directories.
 prepare_directories() {
+	# avoid running over the maximum argument number, bug #299810
+	{
+		echo "${S}"/mkspecs/common/*.conf
+		find "${S}" -name '*.pr[io]'
+	} | xargs sed -i \
+		-e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
+		-e "s:\$\$\[QT_INSTALL_PLUGINS\]:${QTPLUGINDIR}:g" \
+		|| die
+
 	for x in "$@"; do
 		pushd "${S}"/${x} >/dev/null || die
 		einfo "Running qmake in: ${x}"
-		# avoid running over the maximum argument number, bug #299810
-		{
-			echo "${S}"/mkspecs/common/*.conf
-			find "${S}" -name '*.pr[io]'
-		} | xargs sed -i \
-			-e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
-			-e "s:\$\$\[QT_INSTALL_PLUGINS\]:${QTPLUGINDIR}:g" \
-			|| die
-		"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die "qmake failed"
+		"${S}"/bin/qmake \
+			"LIBS+=-L${QTLIBDIR}" \
+			"CONFIG+=nostrip" \
+			|| die "qmake failed"
 		popd >/dev/null || die
 	done
 }
-
 
 # @FUNCTION: build_directories
 # @USAGE: < directories >
