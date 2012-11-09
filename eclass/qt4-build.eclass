@@ -622,9 +622,14 @@ prepare_directories() {
 build_directories() {
 	for x in "$@"; do
 		pushd "${S}"/${x} >/dev/null || die
-		emake CC="$(tc-getCC)" \
+		emake \
+			AR="$(tc-getAR) cqs" \
+			CC="$(tc-getCC)" \
 			CXX="$(tc-getCXX)" \
-			LINK="$(tc-getCXX)" || die "emake failed"
+			LINK="$(tc-getCXX)" \
+			RANLIB=":" \
+			STRIP=":" \
+			|| die "emake failed"
 		popd >/dev/null || die
 	done
 }
