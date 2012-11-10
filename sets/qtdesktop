@@ -1,5 +1,5 @@
 # full set for RazorQt / QtDesktop
-razorqt-base/razorqt-meta
+@razorqt
 app-editors/juffed      # alternative: vim-qt
 app-office/qcharselect
 app-text/goldendict
