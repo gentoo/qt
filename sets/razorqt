@@ -1,0 +1,17 @@
+razorqt-base/libqtxdg
+razorqt-base/razorqt-libs
+razorqt-base/razorqt-data
+razorqt-base/razorqt-appswitcher
+razorqt-base/razorqt-autosuspend
+razorqt-base/razorqt-config
+razorqt-base/razorqt-desktop
+razorqt-base/razorqt-kbshortcuts
+razorqt-base/razorqt-lightdm-greeter
+razorqt-base/razorqt-notifications
+razorqt-base/razorqt-openssh-askpass
+razorqt-base/razorqt-panel
+razorqt-base/razorqt-policykit
+razorqt-base/razorqt-power
+razorqt-base/razorqt-runner
+razorqt-base/razorqt-session
+razorqt-base/razorqt-meta # for completeness, and to make sure a WM is pulled in
