@@ -10,8 +10,8 @@
 # This eclass contains various functions that are used when building Qt4.
 
 case ${EAPI} in
-	2|3|4|5) : ;;
-	*)	 die "qt4-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
+	3|4|5)	: ;;
+	*)	die "qt4-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs versionator
@@ -101,8 +101,6 @@ S=${WORKDIR}/${MY_P}
 # @DESCRIPTION:
 # Sets up PATH and LD_LIBRARY_PATH.
 qt4-build_pkg_setup() {
-	[[ ${EAPI} == 2 ]] && use !prefix && EPREFIX=
-
 	# Protect users by not allowing downgrades between releases.
 	# Downgrading revisions within the same release should be allowed.
 	if has_version ">${CATEGORY}/${P}-r9999:4"; then
@@ -190,7 +188,7 @@ qt4-build_src_unpack() {
 # PATCHES array variable containing all various patches to be applied.
 # This variable is expected to be defined in global scope of ebuild.
 # Make sure to specify the full path. This variable is utilised in
-# src_unpack/src_prepare phase, based on EAPI.
+# src_prepare() phase.
 #
 # @CODE
 #   PATCHES=( "${FILESDIR}/mypatch.patch"
@@ -550,7 +548,6 @@ fix_includes() {
 # @DESCRIPTION:
 # Perform the actual installation including some library fixes.
 qt4-build_src_install() {
-	[[ ${EAPI} == 2 ]] && use !prefix && ED=${D}
 	setqtenv
 
 	install_directories ${QT4_TARGET_DIRECTORIES}
