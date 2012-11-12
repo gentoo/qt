@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit cmake-utils git-2
 
@@ -20,11 +20,13 @@ DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}/${PN}"
-DOCS=( "${S}/README" )
+
+DOCS=( README.md )
 
 src_configure() {
-	mycmakeargs="${mycmakeargs}
-		$(cmake-utils_use test QJSON_BUILD_TESTS)"
+	local mycmakeargs=(
+		$(cmake-utils_use test QJSON_BUILD_TESTS)
+	)
 
 	cmake-utils_src_configure
 }
