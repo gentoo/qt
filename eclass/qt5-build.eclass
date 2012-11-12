@@ -229,7 +229,7 @@ qt5-build_src_configure() {
 	./bin/qmake -recursive \
 		"${S}"/${EGIT_PROJECT}.pro \
 		QMAKE_LIBDIR+="${QT5_BUILD_DIR}/lib" \
-		QMAKE_LIBDIR+="${QTLIBDIR}" \
+		QMAKE_LIBDIR+="${QT5_LIBDIR}" \
 		|| die "qmake failed"
 
 	popd > /dev/null || die
@@ -254,8 +254,8 @@ qt5-build_src_test() {
 	local testrunner=${QT5_BUILD_DIR}/gentoo-testrunner
 	cat <<-EOF > "${testrunner}"
 	#!/bin/sh
-	export LD_LIBRARY_PATH="${QT5_BUILD_DIR}/lib:${QTLIBDIR}"
-	export DYLD_LIBRARY_PATH="${QT5_BUILD_DIR}/lib:${QTLIBDIR}"
+	export LD_LIBRARY_PATH="${QT5_BUILD_DIR}/lib:${QT5_LIBDIR}"
+	export DYLD_LIBRARY_PATH="${QT5_BUILD_DIR}/lib:${QT5_LIBDIR}"
 	"\$@"
 	EOF
 	chmod +x "${testrunner}"
@@ -284,18 +284,18 @@ qt5-build_src_install() {
 		popd > /dev/null || die
 
 		# create an empty Gentoo/gentoo-qconfig.h
-		dodir "${QTHEADERDIR#${EPREFIX}}"/Gentoo
-		: > "${D}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h
+		dodir "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
+		: > "${D}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h
 
 		# include gentoo-qconfig.h at the beginning of Qt{,Core}/qconfig.h
 		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
-			"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
-			"${D}${QTHEADERDIR}"/Qt/qconfig.h \
+			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
+			"${D}${QT5_HEADERDIR}"/Qt/qconfig.h \
 			|| die "sed failed (qconfig.h)"
 
 		# install env.d file for custom LDPATH
 		cat <<-EOF > "${T}"/55qt5
-		LDPATH="${QTLIBDIR}"
+		LDPATH="${QT5_LIBDIR}"
 		EOF
 		doenvd "${T}"/55qt5
 	fi
@@ -343,18 +343,18 @@ qt_use() {
 # Prepares the environment for building Qt.
 qt5_prepare_env() {
 	# setup installation directories
-	QTPREFIXDIR=${EPREFIX}/usr
-	QTBINDIR=${QTPREFIXDIR}/qt5/bin # FIXME
-	QTLIBDIR=${QTPREFIXDIR}/$(get_libdir)/qt5
-	QTDOCDIR=${QTPREFIXDIR}/share/doc/qt-${PV}
-	QTHEADERDIR=${QTPREFIXDIR}/include/qt5
-	QTPLUGINDIR=${QTLIBDIR}/plugins
-	QTIMPORTDIR=${QTLIBDIR}/imports
-	QTDATADIR=${QTPREFIXDIR}/share/qt5
-	QTTRANSDIR=${QTDATADIR}/translations
-	QTEXAMPLESDIR=${QTDATADIR}/examples
-	QTTESTSDIR=${QTDATADIR}/tests
-	QTSYSCONFDIR=${EPREFIX}/etc/qt5
+	QT5_PREFIX=${EPREFIX}/usr
+	QT5_BINDIR=${QT5_PREFIX}/qt5/bin # FIXME
+	QT5_HEADERDIR=${QT5_PREFIX}/include/qt5
+	QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)/qt5
+	QT5_PLUGINDIR=${QT5_LIBDIR}/plugins
+	QT5_IMPORTDIR=${QT5_LIBDIR}/imports
+	QT5_DATADIR=${QT5_PREFIX}/share/qt5
+	QT5_DOCDIR=${QT5_PREFIX}/share/doc/qt-${PV}
+	QT5_TRANSLATIONDIR=${QT5_DATADIR}/translations
+	QT5_EXAMPLESDIR=${QT5_DATADIR}/examples
+	QT5_TESTSDIR=${QT5_DATADIR}/tests
+	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
 }
 
 # @FUNCTION: qt5_symlink_tools_to_buildtree
@@ -365,7 +365,7 @@ qt5_symlink_tools_to_buildtree() {
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
 
 	local bin
-	for bin in "${QTBINDIR}"/{qmake,moc,rcc,uic,qdoc,qdbuscpp2xml,qdbusxml2cpp}; do
+	for bin in "${QT5_BINDIR}"/{qmake,moc,rcc,uic,qdoc,qdbuscpp2xml,qdbusxml2cpp}; do
 		if [[ -e ${bin} ]]; then
 			ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
 		fi
@@ -380,18 +380,18 @@ qt5_base_configure() {
 	# configure arguments
 	local conf=(
 		# installation paths
-		-prefix "${QTPREFIXDIR}"
-		-bindir "${QTBINDIR}"
-		-libdir "${QTLIBDIR}"
-		-docdir "${QTDOCDIR}"
-		-headerdir "${QTHEADERDIR}"
-		-plugindir "${QTPLUGINDIR}"
-		-importdir "${QTIMPORTDIR}"
-		-datadir "${QTDATADIR}"
-		-translationdir "${QTTRANSDIR}"
-		-sysconfdir "${QTSYSCONFDIR}"
-		-examplesdir "${QTEXAMPLESDIR}"
-		-testsdir "${QTTESTSDIR}"
+		-prefix "${QT5_PREFIX}"
+		-bindir "${QT5_BINDIR}"
+		-headerdir "${QT5_HEADERDIR}"
+		-libdir "${QT5_LIBDIR}"
+		-plugindir "${QT5_PLUGINDIR}"
+		-importdir "${QT5_IMPORTDIR}"
+		-datadir "${QT5_DATADIR}"
+		-docdir "${QT5_DOCDIR}"
+		-translationdir "${QT5_TRANSLATIONDIR}"
+		-sysconfdir "${QT5_SYSCONFDIR}"
+		-examplesdir "${QT5_EXAMPLESDIR}"
+		-testsdir "${QT5_TESTSDIR}"
 
 		# debug/release
 		$(use debug && echo -debug || echo -release)
@@ -490,7 +490,7 @@ qt5_install_module_qconfigs() {
 		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
 	done
 	[[ -s ${T}/${PN}-qconfig.h ]] && (
-		insinto "${QTHEADERDIR#${EPREFIX}}"/Gentoo
+		insinto "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
 		doins "${T}"/${PN}-qconfig.h
 	)
 
@@ -500,7 +500,7 @@ qt5_install_module_qconfigs() {
 		[[ -n ${!x} ]] && echo "${x}=${!x}" >> "${T}"/${PN}-qconfig.pri
 	done
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
-		insinto "${QTDATADIR#${EPREFIX}}"/mkspecs/gentoo
+		insinto "${QT5_DATADIR#${EPREFIX}}"/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri
 	)
 }
@@ -513,16 +513,16 @@ qt5_install_module_qconfigs() {
 qt5_regenerate_global_qconfigs() {
 	einfo "Regenerating gentoo-qconfig.h"
 
-	find "${ROOT}${QTHEADERDIR}"/Gentoo -name 'qt-*-qconfig.h' -type f \
+	find "${ROOT}${QT5_HEADERDIR}"/Gentoo -name 'qt-*-qconfig.h' -type f \
 		-exec cat {} + > "${T}"/gentoo-qconfig.h
 
 	[[ -s ${T}/gentoo-qconfig.h ]] || ewarn "Generated gentoo-qconfig.h is empty"
-	mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QTHEADERDIR}"/Gentoo/gentoo-qconfig.h \
+	mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h \
 		|| eerror "Failed to install new gentoo-qconfig.h"
 
 	einfo "Updating QT_CONFIG in qconfig.pri"
 
-	local qconfig_pri=${ROOT}${QTDATADIR}/mkspecs/qconfig.pri
+	local qconfig_pri=${ROOT}${QT5_DATADIR}/mkspecs/qconfig.pri
 	if [[ -f ${qconfig_pri} ]]; then
 		local x qconfig_add= qconfig_remove=
 		local qt_config=$(sed -n 's/^QT_CONFIG +=//p' "${qconfig_pri}")
@@ -531,7 +531,7 @@ qt5_regenerate_global_qconfigs() {
 		# generate list of QT_CONFIG entries from the existing list,
 		# appending QCONFIG_ADD and excluding QCONFIG_REMOVE
 		eshopts_push -s nullglob
-		for x in "${ROOT}${QTDATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
+		for x in "${ROOT}${QT5_DATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
 			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
 			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
 		done
