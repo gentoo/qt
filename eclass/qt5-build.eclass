@@ -162,22 +162,18 @@ qt5-build_src_prepare() {
 	mkdir -p "${QT5_BUILD_DIR}" || die
 
 	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
-		if [[ ${PN} == "qt-core" ]]; then
-			# Respect CC, CXX, *FLAGS, MAKEOPTS and
-			# EXTRA_EMAKE when bootstrapping qmake
-			sed -i -e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
-				${MAKEOPTS} ${EXTRA_EMAKE} 'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
-				'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
-				-e '/"$CFG_RELEASE_QMAKE"/,/^\s\+fi$/ d' \
-				configure || die "sed failed (respect env for qmake)"
-			sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
-				qmake/Makefile.unix || die "sed failed (CPPFLAGS)"
-		else
-			# Skip qmake bootstrap
-			sed -i -e '/outpath\/qmake".*"$MAKE")/ d' \
-				configure || die "sed failed (skip qmake bootstrap)"
-			rm -f qmake/Makefile*
-		fi
+		# Avoid unnecessary qmake recompilations
+		sed -i -re "s|^if true;.*(\[ '\!').*(\"\\\$outpath/bin/qmake\".*)|if \1 -e \2 then|" \
+			configure || die "sed failed (skip qmake bootstrap)"
+
+		# Respect CC, CXX, *FLAGS, MAKEOPTS and EXTRA_EMAKE when bootstrapping qmake
+		sed -i -e "/outpath\/qmake\".*\"\$MAKE\")/ s:): \
+			${MAKEOPTS} ${EXTRA_EMAKE} 'CC=$(tc-getCC)' 'CXX=$(tc-getCXX)' \
+			'QMAKE_CFLAGS=${CFLAGS}' 'QMAKE_CXXFLAGS=${CXXFLAGS}' 'QMAKE_LFLAGS=${LDFLAGS}'&:" \
+			-e '/"$CFG_RELEASE_QMAKE"/,/^\s\+fi$/ d' \
+			configure || die "sed failed (respect env for qmake build)"
+		sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
+			qmake/Makefile.unix || die "sed failed (CPPFLAGS for qmake build)"
 
 		# Reset QMAKE_*FLAGS_{RELEASE,DEBUG} variables,
 		# or they will override user's flags (bug 427782)
@@ -232,7 +228,6 @@ qt5-build_src_configure() {
 	einfo "Running qmake"
 	./bin/qmake -recursive \
 		"${S}"/${EGIT_PROJECT}.pro \
-		$(version_is_at_least 5.0.0_beta2 || echo "CONFIG+=nostrip") \
 		QMAKE_LIBDIR+="${QT5_BUILD_DIR}/lib" \
 		QMAKE_LIBDIR+="${QTLIBDIR}" \
 		|| die "qmake failed"
@@ -416,6 +411,7 @@ qt5_base_configure() {
 		# prefer system libraries
 		-system-zlib
 		-system-pcre
+		-system-xcb
 
 		# exclude examples and tests from default build
 		-nomake examples
@@ -428,7 +424,7 @@ qt5_base_configure() {
 		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
 
 		# don't strip
-		$(version_is_at_least 5.0.0_beta2 && echo -no-strip)
+		-no-strip
 
 		# precompiled headers don't work on hardened, where the flag is masked
 		$(qt_use pch)
