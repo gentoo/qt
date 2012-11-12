@@ -24,7 +24,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/tools/bootstrap
 	src/tools/qdbusxml2cpp
 	src/tools/qdbuscpp2xml
 	src/dbus
