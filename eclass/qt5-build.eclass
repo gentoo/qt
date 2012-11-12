@@ -292,12 +292,6 @@ qt5-build_src_install() {
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
 			"${D}${QT5_HEADERDIR}"/Qt/qconfig.h \
 			|| die "sed failed (qconfig.h)"
-
-		# install env.d file for custom LDPATH
-		cat <<-EOF > "${T}"/55qt5
-		LDPATH="${QT5_LIBDIR}"
-		EOF
-		doenvd "${T}"/55qt5
 	fi
 
 	qt5_install_module_qconfigs
@@ -344,11 +338,12 @@ qt_use() {
 qt5_prepare_env() {
 	# setup installation directories
 	QT5_PREFIX=${EPREFIX}/usr
-	QT5_BINDIR=${QT5_PREFIX}/qt5/bin # FIXME
 	QT5_HEADERDIR=${QT5_PREFIX}/include/qt5
-	QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)/qt5
-	QT5_PLUGINDIR=${QT5_LIBDIR}/plugins
-	QT5_IMPORTDIR=${QT5_LIBDIR}/imports
+	QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)
+	QT5_ARCHDATADIR=${QT5_PREFIX}/$(get_libdir)/qt5
+	QT5_BINDIR=${QT5_ARCHDATADIR}/bin
+	QT5_PLUGINDIR=${QT5_ARCHDATADIR}/plugins
+	QT5_IMPORTDIR=${QT5_ARCHDATADIR}/imports
 	QT5_DATADIR=${QT5_PREFIX}/share/qt5
 	QT5_DOCDIR=${QT5_PREFIX}/share/doc/qt-${PV}
 	QT5_TRANSLATIONDIR=${QT5_DATADIR}/translations
@@ -384,6 +379,7 @@ qt5_base_configure() {
 		-bindir "${QT5_BINDIR}"
 		-headerdir "${QT5_HEADERDIR}"
 		-libdir "${QT5_LIBDIR}"
+		-archdatadir "${QT5_ARCHDATADIR}"
 		-plugindir "${QT5_PLUGINDIR}"
 		-importdir "${QT5_IMPORTDIR}"
 		-datadir "${QT5_DATADIR}"
