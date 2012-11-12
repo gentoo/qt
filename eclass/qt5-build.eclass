@@ -496,7 +496,7 @@ qt5_install_module_qconfigs() {
 		[[ -n ${!x} ]] && echo "${x}=${!x}" >> "${T}"/${PN}-qconfig.pri
 	done
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
-		insinto "${QT5_DATADIR#${EPREFIX}}"/mkspecs/gentoo
+		insinto "${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri
 	)
 }
@@ -518,7 +518,7 @@ qt5_regenerate_global_qconfigs() {
 
 	einfo "Updating QT_CONFIG in qconfig.pri"
 
-	local qconfig_pri=${ROOT}${QT5_DATADIR}/mkspecs/qconfig.pri
+	local qconfig_pri=${ROOT}${QT5_ARCHDATADIR}/mkspecs/qconfig.pri
 	if [[ -f ${qconfig_pri} ]]; then
 		local x qconfig_add= qconfig_remove=
 		local qt_config=$(sed -n 's/^QT_CONFIG +=//p' "${qconfig_pri}")
@@ -527,7 +527,7 @@ qt5_regenerate_global_qconfigs() {
 		# generate list of QT_CONFIG entries from the existing list,
 		# appending QCONFIG_ADD and excluding QCONFIG_REMOVE
 		eshopts_push -s nullglob
-		for x in "${ROOT}${QT5_DATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
+		for x in "${ROOT}${QT5_ARCHDATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
 			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
 			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
 		done
