@@ -206,11 +206,9 @@ qt4-build_src_prepare() {
 		QTDIR="." ./bin/syncqt || die "syncqt failed"
 	fi
 
-	if version_is_at_least 4.7; then
-		# avoid X11 dependency in non-gui packages
-		local nolibx11_pkgs="qt-core qt-dbus qt-script qt-sql qt-test qt-xmlpatterns"
-		has ${PN} ${nolibx11_pkgs} && qt_nolibx11
-	fi
+	# avoid X11 dependency in non-gui packages
+	local nolibx11_pkgs="qt-core qt-dbus qt-script qt-sql qt-test qt-xmlpatterns"
+	has ${PN} ${nolibx11_pkgs} && qt_nolibx11
 
 	if use aqua; then
 		# provide a proper macx-g++-64
@@ -374,7 +372,7 @@ qt4-build_src_configure() {
 		-docdir ${QTDOCDIR}
 		-headerdir ${QTHEADERDIR}
 		-plugindir ${QTPLUGINDIR}
-		$(version_is_at_least 4.7 && echo -importdir ${QTIMPORTDIR})
+		-importdir ${QTIMPORTDIR}
 		-datadir ${QTDATADIR}
 		-translationdir ${QTTRANSDIR}
 		-sysconfdir ${QTSYSCONFDIR}
