@@ -1,14 +1,14 @@
 # set for Qt5 Add-on modules
 # http://qt-project.org/wiki/Qt-Add-ons-Modules
 
-x11-libs/qt3d:5
+#x11-libs/qt-concurrent:5
 x11-libs/qt-dbus:5
-x11-libs/qt-jsbackend:5
-x11-libs/qt-location:5
+#x11-libs/qt-graphicaleffects:5
+#x11-libs/qt-imageformats:5
 x11-libs/qt-opengl:5
 #x11-libs/qt-printsupport:5
+#x11-libs/qt-quick1:5
 x11-libs/qt-script:5
 x11-libs/qt-svg:5
-x11-libs/qt-widgets:5
 x11-libs/qt-xml:5
 x11-libs/qt-xmlpatterns:5
