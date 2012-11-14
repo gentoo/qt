@@ -15,6 +15,7 @@ else
 fi
 
 # TODO: directfb, linuxfb, ibus
+# FIXME: at-spi2 no longer needed since 5.0.0_beta2
 
 IUSE="+accessibility egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="

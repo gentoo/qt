@@ -224,11 +224,13 @@ src_install() {
 	echo "default" > "${ED}"/usr/share/qt4/graphicssystems/raster || die
 	touch "${ED}"/usr/share/qt4/graphicssystems/native || die
 
-	doicon tools/designer/src/designer/images/designer.png \
-		tools/linguist/linguist/images/icons/linguist-128-32.png
-	use dbus && doicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png
+	doicon tools/designer/src/designer/images/designer.png
+	newicon tools/linguist/linguist/images/icons/linguist-128-32.png linguist.png
+	newicon tools/qtconfig/images/appicon.png qtconfig.png
+	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 	make_desktop_entry designer Designer designer 'Qt;Development;GUIDesigner'
-	make_desktop_entry linguist Linguist linguist-128-32 'Qt;Development;GUIDesigner'
+	make_desktop_entry linguist Linguist linguist 'Qt;Development;Translation'
+	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
 }
 
 pkg_postinst() {
