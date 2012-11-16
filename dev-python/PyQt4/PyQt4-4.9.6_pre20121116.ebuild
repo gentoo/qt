@@ -11,7 +11,7 @@ RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
 
 inherit eutils toolchain-funcs qt4-r2 python
 
-REVISION=4d74d3bd6314
+REVISION=4cc2c28be058
 
 # Minimal supported version of Qt.
 QT_VER="4.7.2"
