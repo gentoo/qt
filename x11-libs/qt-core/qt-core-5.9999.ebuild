@@ -29,7 +29,6 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap
 	src/tools/moc
 	src/tools/rcc
-	src/tools/uic
 	src/tools/qdoc
 	src/corelib
 	src/concurrent

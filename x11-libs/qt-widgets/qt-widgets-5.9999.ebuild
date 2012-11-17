@@ -23,6 +23,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
+	src/tools/uic
 	src/widgets
 	# FIXME: writes outside of the sandbox because of DESTDIR = $$QT.gui
 	#src/plugins/accessible
