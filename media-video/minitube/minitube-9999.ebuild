@@ -1,56 +1,56 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/minitube/minitube-1.1.ebuild,v 1.3 2010/08/09 14:34:22 hwoarang Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-video/minitube/minitube-1.9.ebuild,v 1.2 2012/11/17 19:17:31 hwoarang Exp $
 
-EAPI="4"
-
-LANGS="ca da es es_AR es_ES el fr gl hr hu ia id it nb nl pl pt pt_BR ro
-ru sl sq sr sv_SE te tr zh_CN"
-LANGSLONG="ca_ES de_DE fi_FI he_IL id_ID ka_GE pl_PL uk_UA"
+EAPI=4
+PLOCALES="ar ca ca_ES da de_DE el en es es_AR es_ES fi fi_FI fr gl he_IL hr hu
+ia id it jv ka_GE nb nl nn pl pl_PL pt pt_BR ro ru sk sl sq sr sv_SE tr 
+uk_UA zh_CN"
 
 EGIT_REPO_URI="git://gitorious.org/minitube/minitube.git"
-inherit qt4-r2 git-2
+inherit l10n qt4-r2 git-2
 
 DESCRIPTION="Qt4 YouTube Client"
 HOMEPAGE="http://flavio.tordini.org/minitube"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
-IUSE="debug kde gstreamer"
+KEYWORDS="~amd64 ~x86"
+IUSE="debug gstreamer kde"
 
-DEPEND="x11-libs/qt-gui:4[accessibility]
-	x11-libs/qt-dbus:4
+DEPEND=">=x11-libs/qt-gui-4.6:4[accessibility]
+	>=x11-libs/qt-dbus-4.6:4
+	kde? ( || ( media-libs/phonon[gstreamer?] >=x11-libs/qt-phonon-4.6:4 ) )
+	!kde? ( || ( >=x11-libs/qt-phonon-4.6:4 media-libs/phonon[gstreamer?] ) )
 	gstreamer? (
-		kde? ( || ( media-libs/phonon[gstreamer]  x11-libs/qt-phonon:4 ) )
-		!kde? ( || ( x11-libs/qt-phonon:4 media-libs/phonon[gstreamer] ) )
 		media-plugins/gst-plugins-soup
 		media-plugins/gst-plugins-ffmpeg
 		media-plugins/gst-plugins-faac
-		media-plugins/gst-plugins-faad )
-	!gstreamer? ( media-libs/phonon[-gstreamer] )"
-
+		media-plugins/gst-plugins-faad
+	)
+"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}"
+S=${WORKDIR}/${PN}
 
-src_configure() {
-	eqmake4 ${PN}.pro PREFIX="/usr"
+DOCS="AUTHORS CHANGES TODO"
+
+src_prepare() {
+	qt4-r2_src_prepare
+
+	# Remove unneeded translations
+	local trans=
+	for x in $(l10n_get_locales); do
+		trans+="${x}.ts "
+	done
+	if [[ -n ${trans} ]]; then
+		sed -i -e "/^TRANSLATIONS/s/+=.*/+=${trans}/" locale/locale.pri || die
+	fi
+	# gcc-4.7. Bug #422977
+	epatch "${FILESDIR}"/${PN}-1.9-gcc47.patch
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install
+	qt4-r2_src_install
 	newicon images/app.png minitube.png
-	#translations
-	insinto "/usr/share/${PN}/locale/"
-	for x in ${LANGS}; do
-		if ! has ${x} ${LINGUAS}; then
-				rm "${D}"/usr/share/${PN}/locale/${x}.qm || die
-		fi
-	done
-	for x in ${LANGSLONG}; do
-		if ! has ${x%_*} ${LINGUAS}; then
-			rm "${D}"/usr/share/${PN}/locale/${x}.qm || die
-		fi
-	done
 }
