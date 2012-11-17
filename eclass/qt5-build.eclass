@@ -46,7 +46,7 @@ case ${QT5_BUILD_TYPE} in
 		;;
 	release)
 		MY_P=${EGIT_PROJECT}-opensource-src-${PV/_/-}
-		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/${PV#*_}/split_sources/${MY_P}.tar.xz"
+		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/${PV#*_}/submodules_tar/${MY_P}.tar.xz"
 		;;
 esac
 
