@@ -4,8 +4,8 @@
 
 EAPI=4
 PLOCALES="ar ca ca_ES da de_DE el en es es_AR es_ES fi fi_FI fr gl he_IL hr hu
-ia id it jv ka_GE nb nl nn pl pl_PL pt pt_BR ro ru sk sl sq sr sv_SE tr 
-uk_UA zh_CN"
+ia id it jv ka_GE nb nl nn pl pl_PL pt pt_BR ro ru sk sl sq sr sv_SE tr uk_UA
+zh_CN"
 
 EGIT_REPO_URI="git://gitorious.org/minitube/minitube.git"
 inherit l10n qt4-r2 git-2
@@ -15,7 +15,7 @@ HOMEPAGE="http://flavio.tordini.org/minitube"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="debug gstreamer kde"
 
 DEPEND=">=x11-libs/qt-gui-4.6:4[accessibility]
