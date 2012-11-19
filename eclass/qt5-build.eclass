@@ -202,9 +202,6 @@ qt5-build_src_prepare() {
 		qt5_symlink_tools_to_buildtree
 	fi
 
-	# Remove unused project files to speed up recursive qmake invocation
-	rm -f demos/demos.pro examples/examples.pro tests/tests.pro
-
 	# Apply patches
 	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
 	epatch_user
@@ -225,12 +222,7 @@ qt5-build_src_configure() {
 		qt5_base_configure
 	fi
 
-	einfo "Running qmake"
-	./bin/qmake -recursive \
-		"${S}"/${EGIT_PROJECT}.pro \
-		QMAKE_LIBDIR+="${QT5_BUILD_DIR}/lib" \
-		QMAKE_LIBDIR+="${QT5_LIBDIR}" \
-		|| die "qmake failed"
+	qt5_foreach_target_subdir qt5_qmake
 
 	popd > /dev/null || die
 }
@@ -260,12 +252,7 @@ qt5-build_src_test() {
 	EOF
 	chmod +x "${testrunner}"
 
-	qmake() {
-		"${QT5_BUILD_DIR}"/bin/qmake \
-			"${S}/${subdir}/${subdir##*/}.pro" \
-			|| die "qmake failed"
-	}
-	qt5_foreach_target_subdir qmake
+	qt5_foreach_target_subdir qt5_qmake
 	qt5_foreach_target_subdir emake
 	qt5_foreach_target_subdir emake TESTRUNNER="'${testrunner}'" check
 }
@@ -350,6 +337,8 @@ qt5_prepare_env() {
 	QT5_EXAMPLESDIR=${QT5_DATADIR}/examples
 	QT5_TESTSDIR=${QT5_DATADIR}/tests
 	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
+
+	export QMAKEMODULES=${QT5_ARCHDATADIR}/mkspecs/modules
 }
 
 # @FUNCTION: qt5_symlink_tools_to_buildtree
@@ -399,9 +388,10 @@ qt5_base_configure() {
 		# C++11 support
 		$(qt_use c++11)
 
-		# general configure options
+		# build shared libraries
 		-shared
-		-dont-process
+
+		# use pkg-config to detect include and library paths
 		-pkg-config
 
 		# prefer system libraries
@@ -447,6 +437,23 @@ qt5_base_configure() {
 
 	einfo "Configuring with: ${conf[@]}"
 	"${S}"/configure "${conf[@]}" || die "configure failed"
+}
+
+# @FUNCTION: qt5_qmake
+# @INTERNAL
+# @DESCRIPTION:
+# Helper function that runs qmake in the current target subdir.
+# Intended to be called by qt5_foreach_target_subdir().
+qt5_qmake() {
+	local projectfile=${S}/
+	if [[ -n ${subdir} ]]; then
+		projectfile+=${subdir}/${subdir##*/}.pro
+	else
+		projectfile+=${EGIT_PROJECT}.pro
+	fi
+
+	"${QT5_BUILD_DIR}"/bin/qmake "${projectfile}" \
+		|| die "qmake failed (${projectfile})"
 }
 
 # @FUNCTION: qt5_foreach_target_subdir
