@@ -1,7 +1,7 @@
 # set for Qt5 Add-on modules
 # http://qt-project.org/wiki/Qt-Add-ons-Modules
 
-#x11-libs/qt-concurrent:5
+x11-libs/qt-concurrent:5
 x11-libs/qt-dbus:5
 #x11-libs/qt-graphicaleffects:5
 #x11-libs/qt-imageformats:5
