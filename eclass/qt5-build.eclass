@@ -31,7 +31,7 @@ LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
 case ${PN#qt-} in
-	core|dbus|gui|network|opengl|printsupport|sql|test|widgets|xml)
+	concurrent|core|dbus|gui|network|opengl|printsupport|sql|test|widgets|xml)
 		EGIT_PROJECT="qtbase"
 		;;
 	*)

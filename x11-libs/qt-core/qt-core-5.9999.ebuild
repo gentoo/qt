@@ -31,7 +31,6 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/rcc
 	src/tools/qdoc
 	src/corelib
-	src/concurrent
 )
 QCONFIG_DEFINE="QT_ZLIB"
 
