@@ -40,7 +40,6 @@ case ${PN#qt-} in
 esac
 case ${QT5_BUILD_TYPE} in
 	live)
-		MY_P=${P}
 		EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
 			https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
 		;;
@@ -61,7 +60,7 @@ if [[ ${PN} != "qt-test" ]]; then
 	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
 fi
 
-S=${WORKDIR}/${MY_P}
+S=${WORKDIR}/${EGIT_PROJECT}
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
@@ -87,7 +86,7 @@ S=${WORKDIR}/${MY_P}
 # @ECLASS-VARIABLE: QT5_BUILD_DIR
 # @DESCRIPTION:
 # Build directory for out-of-source builds.
-: ${QT5_BUILD_DIR:=${WORKDIR}/${MY_P}_build}
+: ${QT5_BUILD_DIR:=${WORKDIR}/${EGIT_PROJECT}_build}
 
 # @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
 # @DESCRIPTION:
@@ -149,6 +148,7 @@ qt5-build_src_unpack() {
 			;;
 		release)
 			default
+			mv "${MY_P}" "${EGIT_PROJECT}" || die
 			;;
 	esac
 }
@@ -158,8 +158,6 @@ qt5-build_src_unpack() {
 # Prepares the sources before the configure phase.
 qt5-build_src_prepare() {
 	qt5_prepare_env
-
-	mkdir -p "${QT5_BUILD_DIR}" || die
 
 	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
 		# Avoid unnecessary qmake recompilations
@@ -216,6 +214,7 @@ qt5-build_src_configure() {
 	# qmake-generated Makefiles use LD/LINK for linking
 	export LD="$(tc-getCXX)"
 
+	mkdir -p "${QT5_BUILD_DIR}" || die
 	pushd "${QT5_BUILD_DIR}" > /dev/null || die
 
 	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
@@ -445,12 +444,8 @@ qt5_base_configure() {
 # Helper function that runs qmake in the current target subdir.
 # Intended to be called by qt5_foreach_target_subdir().
 qt5_qmake() {
-	local projectfile=${S}/
-	if [[ -n ${subdir} ]]; then
-		projectfile+=${subdir}/${subdir##*/}.pro
-	else
-		projectfile+=${EGIT_PROJECT}.pro
-	fi
+	local projectdir=${PWD/#${QT5_BUILD_DIR}/${S}}
+	local projectfile=${projectdir}/${projectdir##*/}.pro
 
 	"${QT5_BUILD_DIR}"/bin/qmake "${projectfile}" \
 		|| die "qmake failed (${projectfile})"
