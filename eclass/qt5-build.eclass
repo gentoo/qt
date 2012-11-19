@@ -50,9 +50,6 @@ case ${QT5_BUILD_TYPE} in
 esac
 
 IUSE="+c++11 debug test"
-if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
-	IUSE+=" +pch"
-fi
 
 DEPEND=">=dev-lang/perl-5.10
 	virtual/pkgconfig"
@@ -411,8 +408,9 @@ qt5_base_configure() {
 		# don't strip
 		-no-strip
 
-		# precompiled headers don't work on hardened, where the flag is masked
-		$(qt_use pch)
+		# precompiled headers aren't really useful for us
+		# and cause problems on hardened, so turn them off
+		-no-pch
 
 		# reduce relocations in libraries through extra linker optimizations
 		# requires GNU ld >= 2.18
