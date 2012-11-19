@@ -334,7 +334,9 @@ qt5_prepare_env() {
 	QT5_TESTSDIR=${QT5_DATADIR}/tests
 	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
 
-	export QMAKEMODULES=${QT5_ARCHDATADIR}/mkspecs/modules
+	export QMAKEMODULES="${QT5_BUILD_DIR}/mkspecs/modules
+			${S}/mkspecs/modules
+			${QT5_ARCHDATADIR}/mkspecs/modules"
 }
 
 # @FUNCTION: qt5_symlink_tools_to_buildtree
