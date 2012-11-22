@@ -327,6 +327,7 @@ qt5_prepare_env() {
 	QT5_BINDIR=${QT5_ARCHDATADIR}/bin
 	QT5_PLUGINDIR=${QT5_ARCHDATADIR}/plugins
 	QT5_IMPORTDIR=${QT5_ARCHDATADIR}/imports
+	QT5_QMLDIR=${QT5_ARCHDATADIR}/qml
 	QT5_DATADIR=${QT5_PREFIX}/share/qt5
 	QT5_DOCDIR=${QT5_PREFIX}/share/doc/qt-${PV}
 	QT5_TRANSLATIONDIR=${QT5_DATADIR}/translations
@@ -369,6 +370,7 @@ qt5_base_configure() {
 		-archdatadir "${QT5_ARCHDATADIR}"
 		-plugindir "${QT5_PLUGINDIR}"
 		-importdir "${QT5_IMPORTDIR}"
+		-qmldir "${QT5_QMLDIR}"
 		-datadir "${QT5_DATADIR}"
 		-docdir "${QT5_DOCDIR}"
 		-translationdir "${QT5_TRANSLATIONDIR}"
