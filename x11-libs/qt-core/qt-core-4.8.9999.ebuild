@@ -13,7 +13,7 @@ if [[ ${QT4_BUILD_TYPE} == live ]]; then
 else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
-IUSE="+glib iconv icu optimized-qmake qt3support ssl"
+IUSE="+glib iconv icu qt3support ssl"
 
 DEPEND="
 	sys-libs/zlib
@@ -107,7 +107,6 @@ src_configure() {
 		$(qt_use glib)
 		$(qt_use iconv)
 		$(qt_use icu)
-		$(qt_use optimized-qmake)
 		$(use ssl && echo -openssl-linked || echo -no-openssl)
 		$(qt_use qt3support)"
 
