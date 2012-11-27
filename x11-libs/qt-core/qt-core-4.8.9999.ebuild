@@ -171,7 +171,7 @@ src_install() {
 	install_qconfigs
 
 	# remove .la files
-	find "${D}${QTLIBDIR}" -name "*.la" -print0 | xargs -0 rm
+	prune_libtool_files
 
 	keepdir "${QTSYSCONFDIR#${EPREFIX}}"
 
