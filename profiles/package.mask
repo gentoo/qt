@@ -5,3 +5,24 @@
 # Markos Chandras <hwoarang@gentoo.org> (25 Jul 2009)
 # Alpha versions are not for everybody :)
 =app-emulation/qtemu-2.0_alpha*
+
+# Ben de Groot <yngwin@gentoo.org) (30 Nov 2012)
+# initial bump, masked for testing
+=x11-libs/qt-assistant-4.8.4
+=x11-libs/qt-bearer-4.8.4
+=x11-libs/qt-core-4.8.4
+=x11-libs/qt-dbus-4.8.4
+=x11-libs/qt-declarative-4.8.4
+=x11-libs/qt-demo-4.8.4
+=x11-libs/qt-gui-4.8.4
+=x11-libs/qt-multimedia-4.8.4
+=x11-libs/qt-opengl-4.8.4
+=x11-libs/qt-openvg-4.8.4
+=x11-libs/qt-phonon-4.8.4
+=x11-libs/qt-qt3support-4.8.4
+=x11-libs/qt-script-4.8.4
+=x11-libs/qt-sql-4.8.4
+=x11-libs/qt-svg-4.8.4
+=x11-libs/qt-test-4.8.4
+=x11-libs/qt-webkit-4.8.4
+=x11-libs/qt-xmlpatterns-4.8.4
