@@ -8,7 +8,7 @@ inherit cmake-utils git-2
 
 DESCRIPTION="A library for mapping JSON data to QVariant objects"
 HOMEPAGE="http://qjson.sourceforge.net"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}"
+EGIT_REPO_URI="git://github.com/flavio/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -17,11 +17,10 @@ IUSE="debug doc test"
 
 RDEPEND="x11-libs/qt-core:4"
 DEPEND="${RDEPEND}
-	doc? ( app-doc/doxygen )"
+	doc? ( app-doc/doxygen )
+	test? ( x11-libs/qt-test:4 )"
 
-S="${WORKDIR}/${PN}"
-
-DOCS=( README.md )
+DOCS=( ChangeLog README.md )
 
 src_configure() {
 	local mycmakeargs=(
@@ -33,9 +32,9 @@ src_configure() {
 
 src_install() {
 	if use doc; then
-		cd "${S}/doc"
+		cd doc
 		doxygen Doxyfile || die "Generating documentation failed"
-		HTML_DOCS=( "${S}/doc/html/*" )
+		HTML_DOCS=( doc/html/ )
 	fi
 
 	cmake-utils_src_install
