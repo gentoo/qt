@@ -28,10 +28,6 @@ PDEPEND="
 	qt3support? ( ~x11-libs/qt-gui-${PV}[aqua=,debug=,glib=,qt3support] )
 "
 
-PATCHES=(
-	"${FILESDIR}/moc-workaround-for-boost-1.48.patch"
-)
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/tools/bootstrap
