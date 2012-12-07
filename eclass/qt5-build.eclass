@@ -270,10 +270,9 @@ qt5-build_src_install() {
 		dodir "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
 		: > "${D}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h
 
-		# include gentoo-qconfig.h at the beginning of Qt{,Core}/qconfig.h
+		# include gentoo-qconfig.h at the beginning of QtCore/qconfig.h
 		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
-			"${D}${QT5_HEADERDIR}"/Qt/qconfig.h \
 			|| die "sed failed (qconfig.h)"
 	fi
 
