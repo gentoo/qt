@@ -51,7 +51,7 @@ esac
 
 IUSE="+c++11 debug test"
 
-DEPEND=">=dev-lang/perl-5.10
+DEPEND=">=dev-lang/perl-5.14
 	virtual/pkgconfig"
 if [[ ${PN} != "qt-test" ]]; then
 	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
