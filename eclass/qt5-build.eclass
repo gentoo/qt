@@ -326,6 +326,7 @@ qt5_prepare_env() {
 	QT5_ARCHDATADIR=${QT5_PREFIX}/$(get_libdir)/qt5
 	QT5_BINDIR=${QT5_ARCHDATADIR}/bin
 	QT5_PLUGINDIR=${QT5_ARCHDATADIR}/plugins
+	QT5_LIBEXECDIR=${QT5_ARCHDATADIR}/libexec
 	QT5_IMPORTDIR=${QT5_ARCHDATADIR}/imports
 	QT5_QMLDIR=${QT5_ARCHDATADIR}/qml
 	QT5_DATADIR=${QT5_PREFIX}/share/qt5
@@ -369,6 +370,7 @@ qt5_base_configure() {
 		-libdir "${QT5_LIBDIR}"
 		-archdatadir "${QT5_ARCHDATADIR}"
 		-plugindir "${QT5_PLUGINDIR}"
+		-libexecdir "${QT5_LIBEXECDIR}"
 		-importdir "${QT5_IMPORTDIR}"
 		-qmldir "${QT5_QMLDIR}"
 		-datadir "${QT5_DATADIR}"
