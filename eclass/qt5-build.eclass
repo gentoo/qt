@@ -8,10 +8,10 @@
 # @BLURB: Eclass for Qt5 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt5.
-# Requires EAPI 4.
+# Requires EAPI 5.
 
 case ${EAPI} in
-	4|5)	: ;;
+	5)	: ;;
 	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
