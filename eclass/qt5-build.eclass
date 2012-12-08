@@ -17,15 +17,6 @@ esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs versionator
 
-if [[ ${PV} == *9999* ]]; then
-	QT5_BUILD_TYPE="live"
-	inherit git-2
-else
-	QT5_BUILD_TYPE="release"
-fi
-
-EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
-
 HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
@@ -38,16 +29,29 @@ case ${PN#qt-} in
 		EGIT_PROJECT="${PN/-}"
 		;;
 esac
-case ${QT5_BUILD_TYPE} in
-	live)
-		EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
-			https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
+
+case ${PV} in
+	5.9999)
+		QT5_BUILD_TYPE="live"
+		EGIT_BRANCH="dev"
+		inherit git-2
 		;;
-	release)
-		MY_P=${EGIT_PROJECT}-opensource-src-${PV/_/-}
+	5.?.9999)
+		QT5_BUILD_TYPE="live"
+		EGIT_BRANCH="stable"
+		inherit git-2
+		;;
+	*)
+		QT5_BUILD_TYPE="release"
+		MY_P="${EGIT_PROJECT}-opensource-src-${PV/_/-}"
 		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/${PV#*_}/submodules_tar/${MY_P}.tar.xz"
 		;;
 esac
+
+EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
+	https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
+EGIT_SOURCEDIR=${WORKDIR}/${EGIT_PROJECT}
+S=${EGIT_SOURCEDIR}
 
 IUSE="+c++11 debug test"
 
@@ -57,7 +61,7 @@ if [[ ${PN} != "qt-test" ]]; then
 	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
 fi
 
-S=${WORKDIR}/${EGIT_PROJECT}
+EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
@@ -335,6 +339,7 @@ qt5_prepare_env() {
 	QT5_TESTSDIR=${QT5_DATADIR}/tests
 	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
 
+	# see mkspecs/features/qt_config.prf
 	export QMAKEMODULES="${QT5_BUILD_DIR}/mkspecs/modules:${S}/mkspecs/modules:${QT5_ARCHDATADIR}/mkspecs/modules"
 }
 
