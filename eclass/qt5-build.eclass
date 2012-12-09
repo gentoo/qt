@@ -45,13 +45,12 @@ case ${PV} in
 		QT5_BUILD_TYPE="release"
 		MY_P="${EGIT_PROJECT}-opensource-src-${PV/_/-}"
 		SRC_URI="http://releases.qt-project.org/qt${PV%.*}/${PV#*_}/submodules_tar/${MY_P}.tar.xz"
+		S=${WORKDIR}/${MY_P}
 		;;
 esac
 
 EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
 	https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
-EGIT_SOURCEDIR=${WORKDIR}/${EGIT_PROJECT}
-S=${EGIT_SOURCEDIR}
 
 IUSE="+c++11 debug test"
 
@@ -87,7 +86,7 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 # @ECLASS-VARIABLE: QT5_BUILD_DIR
 # @DESCRIPTION:
 # Build directory for out-of-source builds.
-: ${QT5_BUILD_DIR:=${WORKDIR}/${EGIT_PROJECT}_build}
+: ${QT5_BUILD_DIR:=${S}_build}
 
 # @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
 # @DESCRIPTION:
@@ -149,7 +148,6 @@ qt5-build_src_unpack() {
 			;;
 		release)
 			default
-			mv "${MY_P}" "${EGIT_PROJECT}" || die
 			;;
 	esac
 }
