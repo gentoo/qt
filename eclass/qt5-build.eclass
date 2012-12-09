@@ -451,10 +451,9 @@ qt5_base_configure() {
 # Intended to be called by qt5_foreach_target_subdir().
 qt5_qmake() {
 	local projectdir=${PWD/#${QT5_BUILD_DIR}/${S}}
-	local projectfile=${projectdir}/${projectdir##*/}.pro
 
-	"${QT5_BUILD_DIR}"/bin/qmake "${projectfile}" \
-		|| die "qmake failed (${projectfile})"
+	"${QT5_BUILD_DIR}"/bin/qmake "${projectdir}" \
+		|| die "qmake failed (${projectdir})"
 }
 
 # @FUNCTION: qt5_foreach_target_subdir
