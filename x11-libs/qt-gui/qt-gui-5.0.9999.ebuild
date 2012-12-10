@@ -40,12 +40,12 @@ RDEPEND="
 	jpeg? ( virtual/jpeg )
 	kms? (
 		media-libs/mesa[gbm]
-		sys-fs/udev
+		virtual/udev
 		x11-libs/libdrm
 	)
 	opengl? ( virtual/opengl )
 	png? ( media-libs/libpng:0 )
-	udev? ( sys-fs/udev )
+	udev? ( virtual/udev )
 	xcb? (
 		>=x11-libs/libX11-1.5
 		>=x11-libs/libXi-1.6
