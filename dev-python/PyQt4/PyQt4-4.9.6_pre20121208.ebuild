@@ -44,7 +44,7 @@ REQUIRED_USE="
 "
 
 RDEPEND="
-	>=dev-python/sip-4.14
+	>=dev-python/sip-4.14.2
 	>=x11-libs/qt-core-${QT_VER}:4
 	>=x11-libs/qt-script-${QT_VER}:4
 	X? (
