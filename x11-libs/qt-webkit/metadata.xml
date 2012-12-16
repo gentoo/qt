@@ -3,6 +3,7 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
+		<flag name="c++11">Build Qt using the C++11 standard</flag>
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
 		<flag name="gstreamer">Enable HTML5 audio/video support via <pkg>media-libs/gstreamer</pkg></flag>
