@@ -21,9 +21,13 @@ DEPEND="
 	sys-libs/zlib
 	virtual/libiconv
 	glib? ( dev-libs/glib:2 )
-	icu? ( >=dev-libs/icu-49 )
+	icu? ( dev-libs/icu )
 "
 RDEPEND="${DEPEND}"
+
+PATCHES=(
+	"${FILESDIR}/${PV}-fix-installation-of-aux-headers.patch"
+)
 
 QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap

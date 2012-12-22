@@ -21,7 +21,7 @@ DEPEND="
 	sys-libs/zlib
 	virtual/libiconv
 	glib? ( dev-libs/glib:2 )
-	icu? ( >=dev-libs/icu-49 )
+	icu? ( dev-libs/icu )
 "
 RDEPEND="${DEPEND}"
 
