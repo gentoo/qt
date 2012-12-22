@@ -260,7 +260,6 @@ qt5-build_src_test() {
 # @FUNCTION: qt5-build_src_install
 # @DESCRIPTION:
 # Performs the actual installation of target directories.
-# TODO: pkgconfig files are installed in the wrong place
 qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
