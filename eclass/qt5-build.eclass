@@ -5,6 +5,8 @@
 # @ECLASS: qt5-build.eclass
 # @MAINTAINER:
 # Qt herd <qt@gentoo.org>
+# @AUTHOR:
+# Davide Pesavento <pesa@gentoo.org>
 # @BLURB: Eclass for Qt5 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt5.
