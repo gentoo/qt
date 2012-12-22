@@ -274,7 +274,7 @@ qt4-build_src_prepare() {
 
 	# Respect CC, CXX, LINK and *FLAGS in config.tests
 	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
-		sed -i -e "/bin\/qmake/ s: \"QT_BUILD_TREE=: \
+		sed -i -e "/bin\/qmake/ s: \"\$SRCDIR/: \
 			'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
 			'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
 		|| die "sed config.tests failed"
