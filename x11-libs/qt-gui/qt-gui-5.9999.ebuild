@@ -15,7 +15,6 @@ else
 fi
 
 # TODO: directfb, linuxfb, ibus
-# FIXME: at-spi2 no longer needed since 5.0.0_beta2
 
 IUSE="+accessibility egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="
@@ -55,10 +54,7 @@ RDEPEND="
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
 		x11-libs/xcb-util-wm
-		accessibility? (
-			app-accessibility/at-spi2-core
-			~x11-libs/qt-dbus-${PV}[debug=]
-		)
+		accessibility? ( ~x11-libs/qt-dbus-${PV}[debug=] )
 	)
 "
 DEPEND="${RDEPEND}
