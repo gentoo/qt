@@ -2,19 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 PYTHON_DEPEND="*"
 PYTHON_EXPORT_PHASE_FUNCTIONS="1"
 SUPPORT_PYTHON_ABIS="1"
 RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
 
-inherit eutils toolchain-funcs qt4-r2 python
+inherit eutils qt4-r2 python toolchain-funcs
 
 REVISION=87332d15cad2
-
-# Minimal supported version of Qt.
-QT_VER="4.7.2"
 
 DESCRIPTION="Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
@@ -24,52 +21,54 @@ if [[ ${PV} == *_pre* ]]; then
 	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 else
 	MY_P="PyQt-x11-gpl-${PV}"
-	SRC_URI="mirror://sourceforge/pyqt/${PN}/PyQt-${PV}/${MY_P}.tar.gz"
+	SRC_URI="mirror://sourceforge/pyqt/${MY_P}.tar.gz"
 fi
 
 LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
-IUSE="X assistant dbus debug declarative doc examples kde multimedia opengl phonon sql svg webkit xmlpatterns"
+
+IUSE="X dbus debug declarative doc examples help kde multimedia opengl phonon script scripttools sql svg webkit xmlpatterns"
 
 REQUIRED_USE="
-	assistant? ( X )
 	declarative? ( X )
+	help? ( X )
 	multimedia? ( X )
 	opengl? ( X )
 	phonon? ( X )
+	scripttools? ( X script )
 	sql? ( X )
 	svg? ( X )
 	webkit? ( X )
 "
 
+# Minimal supported version of Qt.
+QT_PV="4.8.0:4"
+
 RDEPEND="
-	>=dev-python/sip-4.14.2
-	>=x11-libs/qt-core-${QT_VER}:4
-	>=x11-libs/qt-script-${QT_VER}:4
+	>=dev-python/sip-4.14.2:=
+	>=x11-libs/qt-core-${QT_PV}
 	X? (
-		>=x11-libs/qt-gui-${QT_VER}:4[dbus?]
-		>=x11-libs/qt-test-${QT_VER}:4
+		>=x11-libs/qt-gui-${QT_PV}[dbus?]
+		>=x11-libs/qt-test-${QT_PV}
 	)
-	assistant? ( >=x11-libs/qt-assistant-${QT_VER}:4 )
 	dbus? (
 		>=dev-python/dbus-python-0.80
-		>=x11-libs/qt-dbus-${QT_VER}:4
+		>=x11-libs/qt-dbus-${QT_PV}
 	)
-	declarative? ( >=x11-libs/qt-declarative-${QT_VER}:4 )
-	multimedia? ( >=x11-libs/qt-multimedia-${QT_VER}:4 )
-	opengl? (
-		>=x11-libs/qt-opengl-${QT_VER}:4
-		|| ( >=x11-libs/qt-opengl-4.8.0:4 <x11-libs/qt-opengl-4.8.0:4[-egl] )
-	)
+	declarative? ( >=x11-libs/qt-declarative-${QT_PV} )
+	help? ( >=x11-libs/qt-assistant-${QT_PV} )
+	multimedia? ( >=x11-libs/qt-multimedia-${QT_PV} )
+	opengl? ( >=x11-libs/qt-opengl-${QT_PV} )
 	phonon? (
-		!kde? ( || ( >=x11-libs/qt-phonon-${QT_VER}:4 media-libs/phonon ) )
 		kde? ( media-libs/phonon )
+		!kde? ( || ( >=x11-libs/qt-phonon-${QT_PV} media-libs/phonon ) )
 	)
-	sql? ( >=x11-libs/qt-sql-${QT_VER}:4 )
-	svg? ( >=x11-libs/qt-svg-${QT_VER}:4 )
-	webkit? ( >=x11-libs/qt-webkit-${QT_VER}:4 )
-	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QT_VER}:4 )
+	script? ( >=x11-libs/qt-script-${QT_PV} )
+	sql? ( >=x11-libs/qt-sql-${QT_PV} )
+	svg? ( >=x11-libs/qt-svg-${QT_PV} )
+	webkit? ( >=x11-libs/qt-webkit-${QT_PV} )
+	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QT_PV} )
 "
 DEPEND="${RDEPEND}
 	dbus? ( virtual/pkgconfig )
@@ -106,7 +105,7 @@ src_prepare() {
 }
 
 pyqt4_use_enable() {
-	use $1 && echo "--enable=${2:-$1}"
+	use $1 && echo --enable=${2:-Qt$(echo ${1:0:1} | tr '[:lower:]' '[:upper:]')${1:1}}
 }
 
 src_configure() {
@@ -123,20 +122,20 @@ src_configure() {
 			$(use debug && echo --debug)
 			--enable=QtCore
 			--enable=QtNetwork
-			--enable=QtScript
 			--enable=QtXml
-			$(pyqt4_use_enable X QtGui)
 			$(pyqt4_use_enable X QtDesigner) $(use X || echo --no-designer-plugin)
-			$(pyqt4_use_enable X QtScriptTools)
+			$(pyqt4_use_enable X QtGui)
 			$(pyqt4_use_enable X QtTest)
-			$(pyqt4_use_enable assistant QtHelp)
 			$(pyqt4_use_enable dbus QtDBus)
-			$(pyqt4_use_enable declarative QtDeclarative)
-			$(pyqt4_use_enable multimedia QtMultimedia)
+			$(pyqt4_use_enable declarative)
+			$(pyqt4_use_enable help)
+			$(pyqt4_use_enable multimedia)
 			$(pyqt4_use_enable opengl QtOpenGL)
-			$(pyqt4_use_enable phonon)
-			$(pyqt4_use_enable sql QtSql)
-			$(pyqt4_use_enable svg QtSvg)
+			$(pyqt4_use_enable phonon phonon)
+			$(pyqt4_use_enable script)
+			$(pyqt4_use_enable scripttools QtScriptTools)
+			$(pyqt4_use_enable sql)
+			$(pyqt4_use_enable svg)
 			$(pyqt4_use_enable webkit QtWebKit)
 			$(pyqt4_use_enable xmlpatterns QtXmlPatterns)
 			AR="$(tc-getAR) cqs"
@@ -169,8 +168,8 @@ src_configure() {
 			popd > /dev/null || return
 
 			# Fix insecure runpaths.
-			sed -e "/^LFLAGS[[:space:]]*=/s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
-				-i ${mod}/Makefile || die "Failed to fix rpath for ${mod}"
+			sed -i -e "/^LFLAGS\s*=/ s:-Wl,-rpath,${BUILDDIR}/qpy/${mod}::" \
+				${mod}/Makefile || die "Failed to fix rpath for ${mod}"
 		done
 
 		# Avoid stripping of libpythonplugin.so.
@@ -205,10 +204,6 @@ src_install() {
 
 pkg_postinst() {
 	python_mod_optimize PyQt4
-
-	ewarn "When updating dev-python/PyQt4, you usually need to rebuild packages that depend on it,"
-	ewarn "such as dev-python/qscintilla-python and kde-base/pykde4. If you have app-portage/gentoolkit"
-	ewarn "installed, you can find these packages with \`equery d dev-python/PyQt4\`."
 }
 
 pkg_postrm() {
