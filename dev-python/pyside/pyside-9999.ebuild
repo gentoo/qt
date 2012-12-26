@@ -19,7 +19,7 @@ EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="X declarative help multimedia kde opengl phonon script scripttools sql svg test webkit xmlpatterns"
+IUSE="X declarative help kde multimedia opengl phonon script scripttools sql svg test webkit xmlpatterns"
 
 REQUIRED_USE="
 	declarative? ( X )
@@ -34,6 +34,7 @@ REQUIRED_USE="
 	webkit? ( X )
 "
 
+# Minimal supported version of Qt.
 QT_PV="4.7.0:4"
 
 RDEPEND="
@@ -49,10 +50,7 @@ RDEPEND="
 	opengl? ( >=x11-libs/qt-opengl-${QT_PV} )
 	phonon? (
 		kde? ( media-libs/phonon )
-		!kde? ( || (
-			>=x11-libs/qt-phonon-${QT_PV}
-			media-libs/phonon
-		) )
+		!kde? ( || ( >=x11-libs/qt-phonon-${QT_PV} media-libs/phonon ) )
 	)
 	script? ( >=x11-libs/qt-script-${QT_PV} )
 	sql? ( >=x11-libs/qt-sql-${QT_PV} )
