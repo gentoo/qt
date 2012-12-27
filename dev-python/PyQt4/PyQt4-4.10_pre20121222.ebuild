@@ -29,7 +29,6 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
 IUSE="X dbus debug declarative doc examples help kde multimedia opengl phonon script scripttools sql svg webkit xmlpatterns"
-
 REQUIRED_USE="
 	declarative? ( X )
 	help? ( X )
@@ -105,7 +104,7 @@ src_prepare() {
 }
 
 pyqt4_use_enable() {
-	use $1 && echo --enable=${2:-Qt$(echo ${1:0:1} | tr '[:lower:]' '[:upper:]')${1:1}}
+	use $1 && echo --enable=${2:-Qt$(tr 'a-z' 'A-Z' <<< ${1:0:1})${1:1}}
 }
 
 src_configure() {
