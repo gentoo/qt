@@ -36,20 +36,13 @@ case ${QT4_BUILD_TYPE} in
 		EGIT_BRANCH=${PV%.9999}
 		;;
 	release)
-		if version_is_at_least 4.8.1; then
-			SRC_URI="http://releases.qt-project.org/qt4/source/${MY_P}.tar.gz"
-		else
-			SRC_URI="http://get.qt.nokia.com/qt/source/${MY_P}.tar.gz"
-		fi
+		SRC_URI="http://releases.qt-project.org/qt4/source/${MY_P}.tar.gz"
 		;;
 esac
 
 IUSE="aqua debug pch"
 [[ ${CATEGORY}/${PN} != x11-libs/qt-xmlpatterns ]] && IUSE+=" +exceptions"
-if version_is_at_least 4.8; then
-	[[ ${CATEGORY}/${PN} != x11-libs/qt-webkit ]] && IUSE+=" c++0x"
-	version_is_at_least 4.8.3 || IUSE+=" qpa"
-fi
+[[ ${CATEGORY}/${PN} != x11-libs/qt-webkit ]] && IUSE+=" c++0x"
 
 DEPEND="virtual/pkgconfig"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
@@ -279,11 +272,6 @@ qt4-build_src_prepare() {
 			'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
 		|| die "sed config.tests failed"
 
-	if ! version_is_at_least 4.8; then
-		# Strip predefined CFLAGS from mkspecs (bugs 312689 and 352778)
-		sed -i -e '/^QMAKE_CFLAGS_RELEASE/s:+=.*:+=:' mkspecs/common/g++.conf || die
-	fi
-
 	# Bug 172219
 	sed -e 's:/X11R6/:/:' -i mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
 
@@ -411,9 +399,8 @@ qt4-build_src_configure() {
 	# exceptions USE flag
 	conf+=" $(in_iuse exceptions && qt_use exceptions || echo -exceptions)"
 
-	# disable rpath on Qt >= 4.8 (bug 380415)
-	# but leave it enabled on prefix (bug 417169)
-	version_is_at_least 4.8 && use !prefix && conf+=" -no-rpath"
+	# disable rpath (bug 380415), except on prefix (bug 417169)
+	use prefix || conf+=" -no-rpath"
 
 	# precompiled headers don't work on hardened, where the flag is masked
 	conf+=" $(qt_use pch)"
