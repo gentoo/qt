@@ -515,8 +515,9 @@ qt5_install_module_qconfigs() {
 qt5_regenerate_global_qconfigs() {
 	einfo "Regenerating gentoo-qconfig.h"
 
-	find "${ROOT}${QT5_HEADERDIR}"/Gentoo -name 'qt-*-qconfig.h' -type f \
-		-exec cat {} + > "${T}"/gentoo-qconfig.h
+	find "${ROOT}${QT5_HEADERDIR}"/Gentoo \
+		-name '*-qconfig.h' -a \! -name 'gentoo-qconfig.h' -type f \
+		-execdir cat '{}' + > "${T}"/gentoo-qconfig.h
 
 	[[ -s ${T}/gentoo-qconfig.h ]] || ewarn "Generated gentoo-qconfig.h is empty"
 	mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h \
@@ -533,7 +534,7 @@ qt5_regenerate_global_qconfigs() {
 		# generate list of QT_CONFIG entries from the existing list,
 		# appending QCONFIG_ADD and excluding QCONFIG_REMOVE
 		eshopts_push -s nullglob
-		for x in "${ROOT}${QT5_ARCHDATADIR}"/mkspecs/gentoo/qt-*-qconfig.pri; do
+		for x in "${ROOT}${QT5_ARCHDATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
 			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
 			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
 		done
