@@ -515,28 +515,28 @@ qt5_install_module_qconfigs() {
 qt5_regenerate_global_qconfigs() {
 	einfo "Regenerating gentoo-qconfig.h"
 
-	find "${ROOT}${QT5_HEADERDIR}"/Gentoo \
+	find "${ROOT%/}${QT5_HEADERDIR}"/Gentoo \
 		-name '*-qconfig.h' -a \! -name 'gentoo-qconfig.h' -type f \
 		-execdir cat '{}' + > "${T}"/gentoo-qconfig.h
 
 	[[ -s ${T}/gentoo-qconfig.h ]] || ewarn "Generated gentoo-qconfig.h is empty"
-	mv -f "${T}"/gentoo-qconfig.h "${ROOT}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h \
+	mv -f "${T}"/gentoo-qconfig.h "${ROOT%/}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h \
 		|| eerror "Failed to install new gentoo-qconfig.h"
 
 	einfo "Updating QT_CONFIG in qconfig.pri"
 
-	local qconfig_pri=${ROOT}${QT5_ARCHDATADIR}/mkspecs/qconfig.pri
+	local qconfig_pri=${ROOT%/}${QT5_ARCHDATADIR}/mkspecs/qconfig.pri
 	if [[ -f ${qconfig_pri} ]]; then
 		local x qconfig_add= qconfig_remove=
-		local qt_config=$(sed -n 's/^QT_CONFIG +=//p' "${qconfig_pri}")
+		local qt_config=$(sed -n 's/^QT_CONFIG\s*+=\s*//p' "${qconfig_pri}")
 		local new_qt_config=
 
 		# generate list of QT_CONFIG entries from the existing list,
 		# appending QCONFIG_ADD and excluding QCONFIG_REMOVE
 		eshopts_push -s nullglob
-		for x in "${ROOT}${QT5_ARCHDATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
-			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=//p' "${x}")"
-			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=//p' "${x}")"
+		for x in "${ROOT%/}${QT5_ARCHDATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
+			qconfig_add+=" $(sed -n 's/^QCONFIG_ADD=\s*//p' "${x}")"
+			qconfig_remove+=" $(sed -n 's/^QCONFIG_REMOVE=\s*//p' "${x}")"
 		done
 		eshopts_pop
 		for x in ${qt_config} ${qconfig_add}; do
@@ -546,9 +546,9 @@ qt5_regenerate_global_qconfigs() {
 		done
 
 		# now replace the existing QT_CONFIG with the generated list
-		sed -i -e "s/^QT_CONFIG +=.*/QT_CONFIG +=${new_qt_config}/" \
-			"${qconfig_pri}" || eerror "Failed to sed QT_CONFIG in qconfig.pri"
+		sed -i -e "s/^QT_CONFIG\s*+=.*/QT_CONFIG +=${new_qt_config}/" \
+			"${qconfig_pri}" || eerror "Failed to sed QT_CONFIG in ${qconfig_pri}"
 	else
-		ewarn "'${qconfig_pri}' does not exist or is not a regular file"
+		ewarn "${qconfig_pri} does not exist or is not a regular file"
 	fi
 }
