@@ -234,6 +234,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	qt4-build_pkg_postinst
+
 	# raster is the default graphicssystems, set it on first install
 	eselect qtgraphicssystem set raster --use-old
 
