@@ -6,7 +6,7 @@ EAPI=5
 
 PYTHON_COMPAT=( python2_{6,7} )
 
-inherit python-any-r1 qt5-build
+inherit pax-utils python-any-r1 qt5-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
@@ -32,8 +32,10 @@ pkg_setup() {
 }
 
 src_configure() {
-	# TODO: v8snapshot
-	echo "QT_CONFIG -= v8snapshot" >> "${QT5_BUILD_DIR}"/.qmake.cache
+	if host-is-pax; then
+		echo "QT_CONFIG -= v8snapshot" >> "${QT5_BUILD_DIR}"/.qmake.cache
+		QCONFIG_REMOVE="v8snapshot"
+	fi
 
 	qt5-build_src_configure
 }
