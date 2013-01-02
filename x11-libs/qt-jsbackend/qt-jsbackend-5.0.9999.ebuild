@@ -4,7 +4,9 @@
 
 EAPI=5
 
-inherit qt5-build
+PYTHON_COMPAT=( python2_{6,7} )
+
+inherit python-any-r1 qt5-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
@@ -19,9 +21,15 @@ IUSE=""
 # yep, qt-core is a build-time dep only
 RDEPEND=""
 DEPEND="${RDEPEND}
+	${PYTHON_DEPS}
 	~x11-libs/qt-core-${PV}[debug=]
 	test? ( ~x11-libs/qt-gui-${PV}[debug=] )
 "
+
+pkg_setup() {
+	python-any-r1_pkg_setup
+	qt5-build_pkg_setup
+}
 
 src_configure() {
 	# TODO: v8snapshot
