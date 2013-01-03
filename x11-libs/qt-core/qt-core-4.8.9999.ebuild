@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit qt4-build
 
@@ -18,7 +18,7 @@ IUSE="+glib iconv icu qt3support ssl"
 DEPEND="
 	sys-libs/zlib
 	glib? ( dev-libs/glib:2 )
-	icu? ( >=dev-libs/icu-49 )
+	icu? ( >=dev-libs/icu-49:= )
 	ssl? ( dev-libs/openssl )
 	!<x11-libs/cairo-1.10.2-r2
 	!x11-libs/qt:4
