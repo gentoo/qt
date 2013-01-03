@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit qt4-build flag-o-matic
 
@@ -29,7 +29,7 @@ DEPEND="
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-base:0.10
 	)
-	icu? ( dev-libs/icu )
+	icu? ( dev-libs/icu:= )
 "
 RDEPEND="${DEPEND}"
 
