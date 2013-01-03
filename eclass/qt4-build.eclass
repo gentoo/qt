@@ -425,15 +425,6 @@ qt4-build_src_configure() {
 		unset glibflags
 	fi
 
-	if use_if_iuse qpa; then
-		echo
-		ewarn "The qpa useflag enables the Qt Platform Abstraction, formely"
-		ewarn "known as Qt Lighthouse. If you are not sure what that is, then"
-		ewarn "disable it before reporting any bugs related to this useflag."
-		echo
-		conf+=" -qpa"
-	fi
-
 	if use aqua; then
 		# On (snow) leopard use the new (frameworked) cocoa code.
 		if [[ ${CHOST##*-darwin} -ge 9 ]]; then
