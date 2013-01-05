@@ -20,6 +20,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/4.8.2-javascriptcore-x32.patch" )
+
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/script"
