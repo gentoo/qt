@@ -9,7 +9,7 @@ x11-libs/qt-dbus:5
 x11-libs/qt-jsbackend:5
 #x11-libs/qt-location:5
 x11-libs/qt-opengl:5
-#x11-libs/qt-printsupport:5
+x11-libs/qt-printsupport:5
 #x11-libs/qt-quick1:5
 x11-libs/qt-script:5
 #x11-libs/qt-sensors:5
