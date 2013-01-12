@@ -23,7 +23,17 @@ RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
 
-PATCHES=( "${FILESDIR}/${P}-gcc47.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-gcc47.patch"
+	"${FILESDIR}/${P}-unbundle.patch"
+)
+
+src_prepare() {
+	qt4-r2_src_prepare
+
+	# to ensure unbundling
+	rm src/qtlockedfile*
+}
 
 src_configure() {
 	eqmake4 CONFIG+=qtsingleapplication-uselib
