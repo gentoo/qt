@@ -3,15 +3,10 @@
 # $Header: $
 
 EAPI=5
-
-PYTHON_DEPEND="*"
-PYTHON_EXPORT_PHASE_FUNCTIONS="1"
-SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="*-jython *-pypy-*"
-
-inherit eutils qt4-r2 python toolchain-funcs
-
+PYTHON_COMPAT=( python{2_5,2_6,2_7,3_1,3_2} )
 REVISION=f0118624625e
+
+inherit eutils qt4-r2 python-r1 toolchain-funcs
 
 DESCRIPTION="Python bindings for the Qt toolkit"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
@@ -45,7 +40,8 @@ REQUIRED_USE="
 QT_PV="4.8.0:4"
 
 RDEPEND="
-	>=dev-python/sip-4.14.2:=
+	${PYTHON_DEPS}
+	>=dev-python/sip-4.14.2:=[${PYTHON_USEDEP}]
 	>=x11-libs/qt-core-${QT_PV}
 	X? (
 		>=x11-libs/qt-gui-${QT_PV}[dbus?]
@@ -75,8 +71,6 @@ DEPEND="${RDEPEND}
 
 S=${WORKDIR}/${MY_P}
 
-PYTHON_VERSIONED_EXECUTABLES=("/usr/bin/pyuic4")
-
 src_prepare() {
 	qt4-r2_src_prepare
 
@@ -94,13 +88,15 @@ src_prepare() {
 	python_copy_sources
 
 	preparation() {
-		if [[ $(python_get_version -l --major) == 3 ]]; then
+		pushd "${BUILD_DIR}" > /dev/null
+		if [[ ${EPYTHON} == python3.* ]]; then
 			rm -fr pyuic/uic/port_v2
 		else
 			rm -fr pyuic/uic/port_v3
 		fi
+		popd > /dev/null
 	}
-	python_execute_function -s preparation
+	python_foreach_impl preparation
 }
 
 pyqt4_use_enable() {
@@ -109,8 +105,9 @@ pyqt4_use_enable() {
 
 src_configure() {
 	configuration() {
+		pushd "${BUILD_DIR}" > /dev/null
 		local myconf=(
-			"$(PYTHON)" configure.py
+			"${PYTHON}" configure.py
 			--confirm-license
 			--bindir="${EPREFIX}/usr/bin"
 			--destdir="${EPREFIX}$(python_get_sitedir)"
@@ -177,18 +174,34 @@ src_configure() {
 			eqmake4 python.pro
 			popd > /dev/null || return
 		fi
+
+		popd > /dev/null
 	}
-	python_execute_function -s configuration
+	python_foreach_impl configuration
+}
+
+src_compile() {
+	compilation() {
+		pushd "${BUILD_DIR}" > /dev/null
+		default
+		popd > /dev/null
+	}
+	python_foreach_impl compilation
 }
 
 src_install() {
 	installation() {
+		pushd "${BUILD_DIR}" > /dev/null
 		# INSTALL_ROOT is used by designer/Makefile, other Makefiles use DESTDIR.
-		emake DESTDIR="${T}/images/${PYTHON_ABI}" INSTALL_ROOT="${T}/images/${PYTHON_ABI}" install
-	}
-	python_execute_function -s installation
-	python_merge_intermediate_installation_images "${T}/images"
+		emake DESTDIR="${D}" INSTALL_ROOT="${D}" install
+		popd > /dev/null
 
+		mv "${ED}"/usr/bin/pyuic4{,-${EPYTHON}} || die
+		python_optimize
+	}
+	python_foreach_impl installation
+
+	dosym python-exec /usr/bin/pyuic4
 	dodoc NEWS THANKS
 
 	if use doc; then
@@ -199,12 +212,4 @@ src_install() {
 		insinto /usr/share/doc/${PF}
 		doins -r examples
 	fi
-}
-
-pkg_postinst() {
-	python_mod_optimize PyQt4
-}
-
-pkg_postrm() {
-	python_mod_cleanup PyQt4
 }
