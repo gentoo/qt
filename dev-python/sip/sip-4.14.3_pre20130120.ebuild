@@ -3,12 +3,9 @@
 # $Header: $
 
 EAPI="5"
-PYTHON_DEPEND="*"
-SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="*-jython 2.7-pypy-*"
-PYTHON_EXPORT_PHASE_FUNCTIONS="1"
+PYTHON_COMPAT=( python{2_5,2_6,2_7,3_1,3_2} )
 
-inherit eutils python toolchain-funcs
+inherit eutils python-r1 toolchain-funcs
 
 DESCRIPTION="Python extension module generator for C and C++ libraries"
 HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
@@ -34,21 +31,28 @@ SLOT="0/9"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 IUSE="debug doc"
 
-DEPEND=""
+DEPEND="${PYTHON_DEPS}"
 RDEPEND="${DEPEND}"
+
 [[ ${PV} == *9999* ]] && DEPEND+="
+	=dev-lang/python-2*
 	sys-devel/bison
 	sys-devel/flex
-	doc? ( dev-python/sphinx )
+	doc? ( dev-python/sphinx[$(python_gen_usedep python2*)] )
 "
 
 src_prepare() {
+
+	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
+
 	if [[ ${PV} == *9999* ]]; then
-		$(PYTHON -2) build.py prepare || die
+		python2 build.py prepare || die
 		if use doc; then
-			$(PYTHON -2) build.py doc || die
+			python2 build.py doc || die
 		fi
 	fi
+
+	python_copy_sources
 
 	# Sub-slot sanity check
 	local sub_slot=${SLOT#*/}
@@ -61,16 +65,13 @@ src_prepare() {
 		eerror
 		die "sub-slot sanity check failed"
 	fi
-
-	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
-
-	python_src_prepare
 }
 
 src_configure() {
 	configuration() {
+		pushd "${BUILD_DIR}" > /dev/null
 		local myconf=(
-			"$(PYTHON)" configure.py
+			"${PYTHON}" configure.py
 			--bindir="${EPREFIX}/usr/bin"
 			--destdir="${EPREFIX}$(python_get_sitedir)"
 			--incdir="${EPREFIX}$(python_get_includedir)"
@@ -92,21 +93,29 @@ src_configure() {
 		)
 		echo "${myconf[@]}"
 		"${myconf[@]}"
+		popd > /dev/null
 	}
-	python_execute_function -s configuration
+	python_foreach_impl configuration
+}
+
+src_compile() {
+	compilation() {
+		pushd "${BUILD_DIR}" > /dev/null
+		default
+		popd > /dev/null
+	}
+	python_foreach_impl compilation
 }
 
 src_install() {
-	python_src_install
+	installation() {
+		pushd "${BUILD_DIR}" > /dev/null
+		emake DESTDIR="${D}" install
+		python_optimize
+		popd > /dev/null
+	}
+	python_foreach_impl installation
 
 	dodoc NEWS
 	use doc && dohtml -r doc/html/*
-}
-
-pkg_postinst() {
-	python_mod_optimize sipconfig.py sipdistutils.py
-}
-
-pkg_postrm() {
-	python_mod_cleanup sipconfig.py sipdistutils.py
 }
