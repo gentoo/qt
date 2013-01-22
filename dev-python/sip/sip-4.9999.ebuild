@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="5"
+EAPI=5
 PYTHON_COMPAT=( python{2_5,2_6,2_7,3_1,3_2} )
 
 inherit eutils python-r1 toolchain-funcs
@@ -42,7 +42,6 @@ RDEPEND="${DEPEND}"
 "
 
 src_prepare() {
-
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 
 	if [[ ${PV} == *9999* ]]; then
@@ -51,8 +50,6 @@ src_prepare() {
 			python2 build.py doc || die
 		fi
 	fi
-
-	python_copy_sources
 
 	# Sub-slot sanity check
 	local sub_slot=${SLOT#*/}
@@ -65,6 +62,8 @@ src_prepare() {
 		eerror
 		die "sub-slot sanity check failed"
 	fi
+
+	python_copy_sources
 }
 
 src_configure() {
