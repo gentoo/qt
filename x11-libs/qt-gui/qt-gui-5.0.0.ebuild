@@ -82,7 +82,8 @@ pkg_setup() {
 		$(use udev && echo libudev)
 		$(usev xcb)"
 
-	QCONFIG_DEFINE="$(use egl && echo QT_EGL)
+	QCONFIG_DEFINE="$(use accessibility || echo QT_NO_ACCESSIBILITY)
+			$(use egl && echo QT_EGL)
 			$(use eglfs && echo QT_EGLFS)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
 
