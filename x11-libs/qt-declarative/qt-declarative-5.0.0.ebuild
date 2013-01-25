@@ -35,8 +35,4 @@ src_prepare() {
 
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
-
-	# Fix sandbox violation
-	sed -i -e '/DESTDIR/ s|QT\.gui\.|QT.quick.|' \
-		src/plugins/accessible/quick/quick.pro || die
 }
