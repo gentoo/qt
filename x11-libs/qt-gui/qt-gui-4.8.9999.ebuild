@@ -236,16 +236,11 @@ src_install() {
 pkg_postinst() {
 	qt4-build_pkg_postinst
 
-	# raster is the default graphicssystems, set it on first install
+	# raster is the default graphicssystem, set it on first install
 	eselect qtgraphicssystem set raster --use-old
-
-	elog "Starting with Qt 4.8, you may choose the active Qt Graphics System"
-	elog "by using a new eselect module called qtgraphicssystem."
-	elog "Run \`eselect qtgraphicssystem\` for more information."
 
 	if use gtkstyle; then
 		# see bug 388551
-		elog
 		elog "For Qt's GTK style to work, you need to either export"
 		elog "the following variable into your environment:"
 		elog '  GTK2_RC_FILES="$HOME/.gtkrc-2.0"'
