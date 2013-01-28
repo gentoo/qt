@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 PLOCALES="cs de en es fr he it ja lv nl pt pt_BR ru zh"
 MY_P="${PN}-qt-${PV}"
