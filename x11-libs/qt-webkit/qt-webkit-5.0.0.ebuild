@@ -24,7 +24,7 @@ IUSE="+accessibility gstreamer libxml2 multimedia opengl qml udev webp widgets x
 RDEPEND="
 	dev-db/sqlite
 	media-libs/fontconfig
-	media-libs/libpng:0
+	media-libs/libpng:0=
 	sys-libs/zlib
 	virtual/jpeg
 	virtual/opengl
