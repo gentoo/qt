@@ -43,7 +43,7 @@ RDEPEND="
 		x11-libs/libdrm
 	)
 	opengl? ( virtual/opengl )
-	png? ( media-libs/libpng:0 )
+	png? ( media-libs/libpng:0= )
 	udev? ( virtual/udev )
 	xcb? (
 		>=x11-libs/libX11-1.5

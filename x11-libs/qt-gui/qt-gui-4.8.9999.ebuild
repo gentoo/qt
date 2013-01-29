@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit eutils qt4-build
 
@@ -23,7 +23,7 @@ RDEPEND="
 	app-admin/eselect-qtgraphicssystem
 	media-libs/fontconfig
 	media-libs/freetype:2
-	media-libs/libpng:0
+	media-libs/libpng:0=
 	sys-libs/zlib
 	virtual/jpeg
 	~x11-libs/qt-core-${PV}[aqua=,debug=,glib=,qt3support=]
