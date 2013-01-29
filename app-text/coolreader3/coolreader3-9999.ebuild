@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="media-libs/freetype
-	media-libs/libpng
+	media-libs/libpng:=
 	sys-libs/zlib
 	virtual/jpeg
 	x11-libs/qt-core:4
