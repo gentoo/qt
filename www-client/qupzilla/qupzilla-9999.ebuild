@@ -38,7 +38,7 @@ DEPEND="
 	dbus? ( >=x11-libs/qt-dbus-4.7:4 )"
 RDEPEND="${DEPEND}"
 
-DOCS="AUTHORS BUILDING CHANGELOG FAQ README.md TODO"
+DOCS="AUTHORS BUILDING CHANGELOG FAQ README.md"
 
 src_prepare() {
 	# remove outdated copies of localizations:
