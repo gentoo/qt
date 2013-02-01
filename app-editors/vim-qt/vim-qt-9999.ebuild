@@ -2,21 +2,22 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit eutils toolchain-funcs flag-o-matic git-2
 
 DESCRIPTION="Qt GUI version of the Vim text editor"
-HOMEPAGE="https://bitbucket.org/equalsraf/vim-qt/overview"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
-	https://gitorious.org/${PN}/${PN}.git"
+HOMEPAGE="https://bitbucket.org/equalsraf/vim-qt/wii/Home"
+EGIT_REPO_URI="https://bitbucket.org/equalsraf/${PN}.git
+	git://github.com/equalsraf/${PN}.git
+	git://gitorious.org/${PN}/${PN}.git"
 
 LICENSE="vim"
 SLOT="0"
 KEYWORDS=""
 IUSE="acl cscope debug gpm nls perl python ruby"
 
-COMMON_DEPEND="
+RDEPEND="
 	app-admin/eselect-vi
 	>=app-editors/vim-core-7.3.487
 	sys-libs/ncurses
@@ -28,15 +29,13 @@ COMMON_DEPEND="
 	nls? ( virtual/libintl )
 	perl? ( dev-lang/perl )
 	ruby? ( dev-lang/ruby:1.8 )"
-DEPEND="${COMMON_DEPEND}
+DEPEND="${RDEPEND}
 	sys-devel/autoconf"
-RDEPEND="${COMMON_DEPEND}"
 
 src_configure() {
 	use debug && append-flags "-DDEBUG"
 
-	local myconf="--with-features=huge
-		--enable-multibyte"
+	local myconf="--with-features=huge --enable-multibyte"
 	myconf+=" $(use_enable acl)"
 	myconf+=" $(use_enable gpm)"
 	myconf+=" $(use_enable nls)"
@@ -55,5 +54,5 @@ src_configure() {
 src_install() {
 	dobin src/qvim
 	doicon -s 64 src/qt/icons/vim-qt.png
-	make_desktop_entry qvim Vim-qt vim-qt "QT;TextEditor;Development;"
+	make_desktop_entry qvim Vim-qt vim-qt "Qt;TextEditor;Development;"
 }
