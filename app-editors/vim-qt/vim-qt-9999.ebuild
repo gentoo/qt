@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python{2_5,2_6,2_7} )
 PYTHON_REQ_USE="threads"
-inherit eutils fdo-mime python-any-r1
+inherit eutils fdo-mime flag-o-matic python-any-r1
 
 DESCRIPTION="Qt GUI version of the Vim text editor"
 HOMEPAGE="https://bitbucket.org/equalsraf/vim-qt/wiki/Home"
