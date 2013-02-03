@@ -25,10 +25,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/${PV}-fix-installation-of-aux-headers.patch"
-)
-
 QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap
 	src/tools/moc
