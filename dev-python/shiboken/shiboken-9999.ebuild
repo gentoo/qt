@@ -2,13 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-PYTHON_DEPEND="2:2.6 3:3.2"
-SUPPORT_PYTHON_ABIS="1"
-RESTRICT_PYTHON_ABIS="2.4 2.5 3.1 3.3 *-jython 2.7-pypy-*"
+PYTHON_COMPAT=( python{2_6,2_7,3_2} )
 
-inherit multilib cmake-utils python git-2
+inherit multilib cmake-utils python-r1 git-2
 
 DESCRIPTION="A tool for creating Python bindings for C++ libraries"
 HOMEPAGE="http://www.pyside.org/"
@@ -29,10 +27,12 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	test? (
-		dev-python/numpy
+		dev-python/numpy[${PYTHON_USEDEP}]
 		>=x11-libs/qt-gui-4.7.0:4
 		>=x11-libs/qt-test-4.7.0:4
 	)"
+
+DOCS=( AUTHORS ChangeLog )
 
 src_prepare() {
 	# Fix inconsistent naming of libshiboken.so and ShibokenConfig.cmake,
@@ -51,43 +51,37 @@ src_prepare() {
 src_configure() {
 	configuration() {
 		local mycmakeargs=(
-			-DPYTHON_EXECUTABLE="$(PYTHON -a)"
+			-DPYTHON_EXECUTABLE="${PYTHON}"
 			-DPYTHON_SITE_PACKAGES="${EPREFIX}$(python_get_sitedir)"
-			-DPYTHON_SUFFIX="-python${PYTHON_ABI}"
+			-DPYTHON_SUFFIX="-${EPYTHON}"
 			$(cmake-utils_use_build test TESTS)
 		)
 
-		if [[ $(python_get_version -l --major) == 3 ]]; then
+		if [[ ${EPYTHON} == python3* ]]; then
 			mycmakeargs+=(
 				-DUSE_PYTHON3=ON
 				-DPYTHON3_INCLUDE_DIR="${EPREFIX}$(python_get_includedir)"
-				-DPYTHON3_LIBRARY="${EPREFIX}$(python_get_library)"
+				-DPYTHON3_LIBRARY="${EPREFIX}$(python_get_library_path)"
 			)
 		fi
 
-		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_configure
+		cmake-utils_src_configure
 	}
-	python_execute_function configuration
+	python_foreach_impl configuration
 }
 
 src_compile() {
-	compilation() {
-		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_make
-	}
-	python_execute_function compilation
+	python_foreach_impl cmake-utils_src_make
 }
 
 src_test() {
-	testing() {
-		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_test
-	}
-	python_execute_function testing
+	python_foreach_impl cmake-utils_src_test
 }
 
 src_install() {
 	installation() {
-		CMAKE_BUILD_DIR="${S}_${PYTHON_ABI}" cmake-utils_src_install
-		mv "${ED}"usr/$(get_libdir)/pkgconfig/${PN}{,-python${PYTHON_ABI}}.pc || die
+		cmake-utils_src_install
+		mv "${ED}"usr/$(get_libdir)/pkgconfig/${PN}{,-${EPYTHON}}.pc || die
 	}
-	python_execute_function installation
+	python_foreach_impl installation
 }
