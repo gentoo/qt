@@ -7,7 +7,7 @@ app-text/kchmviewer
 app-text/qpdfview
 media-gfx/photo         # alternative: nomacs
 media-sound/qastools
-media-sound/qmpdclient  # alternative: clementine
+media-sound/cantata     # alternatives: qmpdclient, clementine
 media-video/smplayer    # alternative: vlc
 net-im/qtwitter         # alternative: qwit
 net-im/qutim            # alternative: psi
