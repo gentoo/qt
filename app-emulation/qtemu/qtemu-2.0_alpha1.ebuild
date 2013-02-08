@@ -12,7 +12,7 @@ DESCRIPTION="A graphical user interface for QEMU written in Qt4."
 HOMEPAGE="http://qtemu.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.bz2"
 
-LICENSE="GPL-2 LGPL-2.1 CCPL-Attribution-3.0"
+LICENSE="GPL-2 LGPL-2.1 CC-BY-3.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="qemu"
