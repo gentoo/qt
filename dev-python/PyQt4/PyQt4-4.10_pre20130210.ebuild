@@ -107,7 +107,7 @@ src_configure() {
 			"${PYTHON}" configure.py
 			--confirm-license
 			--bindir="${EPREFIX}/usr/bin"
-			--destdir="${EPREFIX}$(python_get_sitedir)"
+			--destdir="$(python_get_sitedir)"
 			--sipdir="${EPREFIX}/usr/share/sip"
 			--assume-shared
 			--no-timestamp

@@ -71,8 +71,8 @@ src_configure() {
 		local myconf=(
 			"${PYTHON}" configure.py
 			--bindir="${EPREFIX}/usr/bin"
-			--destdir="${EPREFIX}$(python_get_sitedir)"
-			--incdir="${EPREFIX}$(python_get_includedir)"
+			--destdir="$(python_get_sitedir)"
+			--incdir="$(python_get_includedir)"
 			--sipdir="${EPREFIX}/usr/share/sip"
 			$(use debug && echo --debug)
 			AR="$(tc-getAR) cqs"
