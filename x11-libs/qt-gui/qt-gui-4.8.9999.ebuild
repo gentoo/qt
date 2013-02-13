@@ -19,6 +19,7 @@ REQUIRED_USE="
 	gtkstyle? ( glib )
 "
 
+# cairo[-qt4] is needed because of bug 454066
 RDEPEND="
 	app-admin/eselect-qtgraphicssystem
 	media-libs/fontconfig
@@ -43,7 +44,10 @@ RDEPEND="
 	cups? ( net-print/cups )
 	dbus? ( ~x11-libs/qt-dbus-${PV}[aqua=,debug=] )
 	egl? ( media-libs/mesa[egl] )
-	gtkstyle? ( x11-libs/gtk+:2[aqua=] )
+	gtkstyle? (
+		x11-libs/cairo[-qt4]
+		x11-libs/gtk+:2[aqua=]
+	)
 	mng? ( >=media-libs/libmng-1.0.9 )
 	nas? ( >=media-libs/nas-1.5 )
 	tiff? ( media-libs/tiff:0 )
@@ -63,27 +67,6 @@ PATCHES=(
 )
 
 pkg_setup() {
-	# this belongs to pkg_pretend, we have to upgrade to EAPI 4 :)
-	# was planning to use a dep, but to reproduce this you have to
-	# clean-emerge qt-gui[gtkstyle] while having cairo[qt4] installed.
-	# no need to restrict normal first time users for that :)
-	if use gtkstyle && ! has_version x11-libs/qt-gui && has_version x11-libs/cairo[qt4]; then
-		echo
-		eerror "When building qt-gui[gtkstyle] from scratch with cairo present,"
-		eerror "cairo must have the qt4 use flag disabled, otherwise the gtk"
-		eerror "style cannot be built."
-		ewarn
-		eerror "You have the following options:"
-		eerror "  - rebuild cairo with -qt4 USE"
-		eerror "  - build qt-gui with -gtkstyle USE"
-		ewarn
-		eerror "After you successfully install qt-gui, you'll be able to"
-		eerror "re-enable the disabled use flag and/or reinstall cairo."
-		ewarn
-		echo
-		die "can't build ${PN} with USE=gtkstyle if cairo has 'qt4' USE flag enabled"
-	fi
-
 	QT4_TARGET_DIRECTORIES="
 		src/gui
 		src/scripttools
@@ -144,7 +127,7 @@ src_configure() {
 		$(qt_use xv xvideo)"
 
 	myconf+="
-		-system-libpng -system-libjpeg
+		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl"
@@ -163,7 +146,7 @@ src_configure() {
 
 src_install() {
 	QCONFIG_ADD="
-		mitshm x11sm xcursor xfixes xinput xkb xrandr xrender xshape xsync
+		mitshm tablet x11sm xcursor xfixes xinput xkb xrandr xrender xshape xsync
 		fontconfig gif png system-png jpeg system-jpeg
 		$(usev accessibility)
 		$(usev cups)
@@ -184,7 +167,7 @@ src_install() {
 			$(use nas && echo QT_NAS)
 			$(use nis && echo QT_NIS)
 			$(use tiff && echo QT_IMAGEFORMAT_TIFF)
-			QT_SESSIONMANAGER QT_SHAPE QT_XCURSOR QT_XFIXES
+			QT_SESSIONMANAGER QT_SHAPE QT_TABLET QT_XCURSOR QT_XFIXES
 			$(use xinerama && echo QT_XINERAMA)
 			QT_XINPUT QT_XKB QT_XRANDR QT_XRENDER QT_XSYNC
 			$(use xv && echo QT_XVIDEO)"
