@@ -3,7 +3,6 @@
 <pkgmetadata>
 <herd>qt</herd>
 <use>
-	<flag name="kvm"> Enable kvm based virtual machines </flag>
 	<flag name="qemu"> Enable qemu based virtual machines </flag>
 </use>
 </pkgmetadata>
