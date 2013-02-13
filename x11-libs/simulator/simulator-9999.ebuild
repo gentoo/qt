@@ -12,7 +12,7 @@ DESCRIPTION="Qt Simulator"
 HOMEPAGE="http://qt.gitorious.org/qt-labs/simulator"
 SRC_URI=""
 
-LICENSE="as-is"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE=""
