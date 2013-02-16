@@ -14,11 +14,11 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="+accessibility"
+IUSE=""
 
 DEPEND="
 	~x11-libs/qt-core-${PV}[debug=]
-	~x11-libs/qt-gui-${PV}[accessibility=,debug=]
+	~x11-libs/qt-gui-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
 
@@ -27,10 +27,3 @@ QT5_TARGET_SUBDIRS=(
 	src/widgets
 	src/plugins/accessible
 )
-
-src_configure() {
-	local myconf=(
-		$(qt_use accessibility)
-	)
-	qt5-build_src_configure
-}

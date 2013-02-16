@@ -16,7 +16,7 @@ fi
 
 # TODO: directfb, linuxfb, ibus
 
-IUSE="+accessibility egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
+IUSE="accessibility egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="
 	egl? ( gles2 )
 	eglfs? ( egl evdev )
@@ -71,7 +71,7 @@ QT5_TARGET_SUBDIRS=(
 
 pkg_setup() {
 	QCONFIG_ADD="
-		$(usev accessibility)
+		$(use accessibility && echo accessibility-atspi-bridge)
 		$(usev egl)
 		$(usev eglfs)
 		$(usev evdev)
@@ -82,7 +82,7 @@ pkg_setup() {
 		$(use udev && echo libudev)
 		$(usev xcb)"
 
-	QCONFIG_DEFINE="$(use accessibility || echo QT_NO_ACCESSIBILITY)
+	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
 			$(use egl && echo QT_EGL)
 			$(use eglfs && echo QT_EGLFS)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
@@ -104,7 +104,6 @@ src_configure() {
 	fi
 
 	local myconf=(
-		$(qt_use accessibility)
 		${dbus}
 		$(qt_use egl)
 		$(qt_use eglfs)

@@ -31,7 +31,6 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
-		-accessibility
 		$(qt_use egl)
 		-opengl
 	)

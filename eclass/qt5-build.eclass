@@ -394,6 +394,10 @@ qt5_base_configure() {
 		# build shared libraries
 		-shared
 
+		# disabling accessibility support is not recommended by upstream,
+		# as it will break QStyle and may break other internal parts of Qt
+		-accessibility
+
 		# use pkg-config to detect include and library paths
 		-pkg-config
 
@@ -432,7 +436,6 @@ qt5_base_configure() {
 
 		# disable gtkstyle because it adds qt4 include paths to the compiler
 		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
-		# TODO: fix properly in qt-widgets
 		-no-gtkstyle
 
 		# module-specific options

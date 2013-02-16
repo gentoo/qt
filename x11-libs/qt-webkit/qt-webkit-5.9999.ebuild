@@ -19,7 +19,7 @@ fi
 # TODO: qtprintsupport, qttestlib, geolocation, orientation/sensors
 # FIXME: tons of automagic deps
 
-IUSE="+accessibility gstreamer libxml2 multimedia opengl qml udev webp widgets xslt"
+IUSE="gstreamer libxml2 multimedia opengl qml udev webp widgets xslt"
 
 RDEPEND="
 	dev-db/sqlite
@@ -32,7 +32,7 @@ RDEPEND="
 	x11-libs/libXcomposite
 	x11-libs/libXrender
 	~x11-libs/qt-core-${PV}[debug=,icu]
-	~x11-libs/qt-gui-${PV}[accessibility=,debug=]
+	~x11-libs/qt-gui-${PV}[debug=]
 	~x11-libs/qt-network-${PV}[debug=]
 	~x11-libs/qt-sql-${PV}[debug=]
 	gstreamer? (
@@ -46,7 +46,7 @@ RDEPEND="
 	qml? ( ~x11-libs/qt-declarative-${PV}[debug=] )
 	udev? ( virtual/udev )
 	webp? ( media-libs/libwebp )
-	widgets? ( ~x11-libs/qt-widgets-${PV}[accessibility=,debug=] )
+	widgets? ( ~x11-libs/qt-widgets-${PV}[debug=] )
 	xslt? (
 		libxml2? ( dev-libs/libxslt )
 		!libxml2? ( ~x11-libs/qt-xmlpatterns-${PV}[debug=] )

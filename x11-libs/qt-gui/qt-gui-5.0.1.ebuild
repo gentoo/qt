@@ -71,7 +71,6 @@ QT5_TARGET_SUBDIRS=(
 
 pkg_setup() {
 	QCONFIG_ADD="
-		$(usev accessibility)
 		$(usev egl)
 		$(usev eglfs)
 		$(usev evdev)
@@ -82,7 +81,7 @@ pkg_setup() {
 		$(use udev && echo libudev)
 		$(usev xcb)"
 
-	QCONFIG_DEFINE="$(use accessibility || echo QT_NO_ACCESSIBILITY)
+	QCONFIG_DEFINE="
 			$(use egl && echo QT_EGL)
 			$(use eglfs && echo QT_EGLFS)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
@@ -104,7 +103,6 @@ src_configure() {
 	fi
 
 	local myconf=(
-		$(qt_use accessibility)
 		${dbus}
 		$(qt_use egl)
 		$(qt_use eglfs)
