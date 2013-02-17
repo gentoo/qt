@@ -16,16 +16,15 @@ if [[ ${PV} == *9999* ]]; then
 	inherit git-2
 	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
 		https://git.gitorious.org/${PN}/${PN}.git"
-	KEYWORDS=""
 else
 	MY_PV=${PV/_/-}
 	MY_P=${PN}-${MY_PV}-src
 	SRC_URI="http://releases.qt-project.org/qtcreator/${MY_PV}/${MY_P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
 	S=${WORKDIR}/${MY_P}
 fi
 
 SLOT="0"
+KEYWORDS=""
 
 QTC_PLUGINS=(android autotools:autotoolsprojectmanager bazaar
 	clearcase cmake:cmakeprojectmanager cvs fakevim git
