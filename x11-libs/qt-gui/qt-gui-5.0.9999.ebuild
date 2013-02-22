@@ -16,12 +16,11 @@ fi
 
 # TODO: directfb, linuxfb, ibus
 
-IUSE="accessibility egl eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
+IUSE="accessibility eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="
-	egl? ( gles2 )
-	eglfs? ( egl evdev )
+	eglfs? ( evdev gles2 )
 	gles2? ( opengl )
-	kms? ( egl )
+	kms? ( gles2 )
 "
 
 RDEPEND="
@@ -29,11 +28,10 @@ RDEPEND="
 	media-libs/freetype:2
 	sys-libs/zlib
 	~x11-libs/qt-core-${PV}[debug=,glib=]
-	egl? ( media-libs/mesa[egl] )
 	gif? ( media-libs/giflib )
 	gles2? ( || (
-		media-libs/mesa[gles2]
-		media-libs/mesa[gles]
+		media-libs/mesa[egl,gles2]
+		media-libs/mesa[egl,gles]
 	) )
 	glib? ( dev-libs/glib:2 )
 	jpeg? ( virtual/jpeg )
@@ -72,19 +70,18 @@ QT5_TARGET_SUBDIRS=(
 pkg_setup() {
 	QCONFIG_ADD="
 		$(use accessibility && echo accessibility-atspi-bridge)
-		$(usev egl)
 		$(usev eglfs)
 		$(usev evdev)
 		fontconfig
-		$(use gles2 && echo opengles2)
+		$(use gles2 && echo egl opengles2)
 		$(usev kms)
 		$(usev opengl)
 		$(use udev && echo libudev)
 		$(usev xcb)"
 
 	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
-			$(use egl && echo QT_EGL)
 			$(use eglfs && echo QT_EGLFS)
+			$(use gles2 && echo QT_EGL)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
 
 	qt5-build_pkg_setup
@@ -96,24 +93,23 @@ src_configure() {
 		dbus="-dbus"
 	fi
 
-	local opengl="-no-opengl"
+	local gl="-no-egl -no-opengl"
 	if use gles2; then
-		opengl="-opengl es2"
+		gl="-egl -opengl es2"
 	elif use opengl; then
-		opengl="-opengl desktop"
+		gl="-no-egl -opengl desktop"
 	fi
 
 	local myconf=(
 		${dbus}
-		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
 		-fontconfig
 		$(use gif || echo -no-gif)
+		${gl}
 		$(qt_use glib)
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
-		${opengl}
 		$(qt_use png libpng system)
 		$(use udev || echo -no-libudev)
 		$(use xcb && echo -xcb -xrender)
