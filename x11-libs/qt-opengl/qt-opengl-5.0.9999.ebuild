@@ -14,14 +14,13 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="egl"
+IUSE=""
 
 DEPEND="
 	virtual/opengl
 	~x11-libs/qt-core-${PV}[debug=]
-	~x11-libs/qt-gui-${PV}[debug=,egl=,opengl]
+	~x11-libs/qt-gui-${PV}[debug=,opengl]
 	~x11-libs/qt-widgets-${PV}[debug=]
-	egl? ( media-libs/mesa[egl] )
 "
 RDEPEND="${DEPEND}"
 
@@ -31,7 +30,6 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
-		$(qt_use egl)
 		-opengl
 	)
 	qt5-build_src_configure
