@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit eutils qt4-r2 subversion
 
@@ -18,7 +18,7 @@ KEYWORDS=""
 IUSE="doc"
 
 DEPEND="
-	>=dev-libs/boost-1.37
+	>=dev-libs/boost-1.37:=
 	dev-qt/qtcore:4
 	dev-qt/qtgui:4
 "
