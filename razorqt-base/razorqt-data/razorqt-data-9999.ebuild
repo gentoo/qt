@@ -28,7 +28,7 @@ RDEPEND="!<razorqt-base/razorqt-lightdm-greeter-0.5.0
 	!x11-misc/lightdm-razorqt-greeter
 	!x11-wm/razorqt"
 DEPEND="${RDEPEND}
-	x11-libs/qt-core:4
+	dev-qt/qtcore:4
 	doc? ( app-doc/doxygen )"
 
 src_configure() {

@@ -29,8 +29,8 @@ IUSE="acl cscope debug gpm nls perl python ruby"
 RDEPEND="app-admin/eselect-vi
 	>=app-editors/vim-core-7.3.762[acl?]
 	sys-libs/ncurses
-	>=x11-libs/qt-core-4.7.0:4
-	>=x11-libs/qt-gui-4.7.0:4
+	>=dev-qt/qtcore-4.7.0:4
+	>=dev-qt/qtgui-4.7.0:4
 	acl? ( kernel_linux? ( sys-apps/acl ) )
 	cscope? ( dev-util/cscope )
 	gpm? ( sys-libs/gpm )

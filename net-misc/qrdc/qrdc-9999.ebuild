@@ -16,8 +16,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug"
 
-DEPEND="x11-libs/qt-gui:4
-	x11-libs/qt-sql:4"
+DEPEND="dev-qt/qtgui:4
+	dev-qt/qtsql:4"
 RDEPEND="${DEPEND}"
 
 src_compile() {

@@ -19,10 +19,10 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="
-	>=x11-libs/qt-core-4.7:4
-	>=x11-libs/qt-gui-4.7:4
-	>=x11-libs/qt-mobility-1.2[location]
-	>=x11-libs/qt-script-4.7:4
+	>=dev-qt/qtcore-4.7:4
+	>=dev-qt/qtgui-4.7:4
+	>=dev-qt/qt-mobility-1.2[location]
+	>=dev-qt/qtscript-4.7:4
 "
 RDEPEND="${DEPEND}"
 

@@ -23,7 +23,7 @@ HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
-case ${PN#qt-} in
+case ${PN#qt} in
 	concurrent|core|dbus|gui|network|opengl|printsupport|sql|test|widgets|xml)
 		EGIT_PROJECT="qtbase"
 		;;
@@ -59,7 +59,7 @@ IUSE="+c++11 debug test"
 DEPEND=">=dev-lang/perl-5.14
 	virtual/pkgconfig"
 if [[ ${PN} != "qt-test" ]]; then
-	DEPEND+=" test? ( ~x11-libs/qt-test-${PV}[debug=] )"
+	DEPEND+=" test? ( ~dev-qt/qt-test-${PV}[debug=] )"
 fi
 
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm

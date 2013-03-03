@@ -18,10 +18,10 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug gstreamer kde"
 
-DEPEND=">=x11-libs/qt-gui-4.6:4[accessibility]
-	>=x11-libs/qt-dbus-4.6:4
-	kde? ( || ( media-libs/phonon[gstreamer?] >=x11-libs/qt-phonon-4.6:4 ) )
-	!kde? ( || ( >=x11-libs/qt-phonon-4.6:4 media-libs/phonon[gstreamer?] ) )
+DEPEND=">=dev-qt/qtgui-4.6:4[accessibility]
+	>=dev-qt/qtdbus-4.6:4
+	kde? ( || ( media-libs/phonon[gstreamer?] >=dev-qt/qtphonon-4.6:4 ) )
+	!kde? ( || ( >=dev-qt/qtphonon-4.6:4 media-libs/phonon[gstreamer?] ) )
 	gstreamer? (
 		media-plugins/gst-plugins-soup
 		media-plugins/gst-plugins-ffmpeg

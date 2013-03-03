@@ -15,10 +15,10 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug doc test"
 
-RDEPEND="x11-libs/qt-core:4"
+RDEPEND="dev-qt/qtcore:4"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )
-	test? ( x11-libs/qt-test:4 )"
+	test? ( dev-qt/qttest:4 )"
 
 DOCS=( ChangeLog README.md )
 

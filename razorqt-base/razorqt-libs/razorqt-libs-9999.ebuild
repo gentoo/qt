@@ -30,9 +30,9 @@ DEPEND="razorqt-base/libqtxdg
 	x11-libs/libXdamage
 	x11-libs/libXfixes
 	x11-libs/libXrender
-	x11-libs/qt-core:4
-	x11-libs/qt-dbus:4
-	x11-libs/qt-gui:4
+	dev-qt/qtcore:4
+	dev-qt/qtdbus:4
+	dev-qt/qtgui:4
 	!x11-wm/razorqt"
 RDEPEND="${DEPEND}"
 

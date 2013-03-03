@@ -20,8 +20,8 @@ IUSE="debug"
 
 DEPEND="app-arch/gzip
 	media-gfx/imagemagick
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4"
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4"
 RDEPEND="${DEPEND}
 	|| ( sys-boot/grub sys-boot/grub-static )"
 

@@ -18,8 +18,8 @@ DEPEND="media-libs/freetype
 	media-libs/libpng:=
 	sys-libs/zlib
 	virtual/jpeg
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4"
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4"
 RDEPEND="${DEPEND}
 	virtual/ttf-fonts"
 

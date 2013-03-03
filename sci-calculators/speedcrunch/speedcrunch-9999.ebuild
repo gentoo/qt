@@ -26,7 +26,7 @@ for X in ${LANGSLONG}; do
 	IUSE="${IUSE} linguas_${X}"
 done
 
-DEPEND="x11-libs/qt-gui:4"
+DEPEND="dev-qt/qtgui:4"
 RDEPEND="${DEPEND}"
 
 src_prepare() {

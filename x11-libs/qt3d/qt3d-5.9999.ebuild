@@ -18,8 +18,8 @@ fi
 IUSE=""
 
 DEPEND="
-	~x11-libs/qt-core-${PV}[debug=]
-	~x11-libs/qt-gui-${PV}[debug=,opengl]
-	~x11-libs/qt-network-${PV}[debug=]
+	~dev-qt/qtcore-${PV}[debug=]
+	~dev-qt/qtgui-${PV}[debug=,opengl]
+	~dev-qt/qtnetwork-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"

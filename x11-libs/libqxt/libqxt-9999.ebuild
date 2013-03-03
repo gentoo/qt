@@ -17,18 +17,18 @@ IUSE="berkdb debug doc sql ssl web xscreensaver zeroconf"
 
 COMMON_DEPEND="
 	x11-libs/libXrandr
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
 	berkdb? ( >=sys-libs/db-4.6 )
-	sql? ( x11-libs/qt-sql:4 )
+	sql? ( dev-qt/qtsql:4 )
 	ssl? (
 		>=dev-libs/openssl-0.9.8
-		x11-libs/qt-core:4[ssl]
+		dev-qt/qtcore:4[ssl]
 	)
 	zeroconf? ( net-dns/avahi[mdnsresponder-compat] )
 "
 DEPEND="${COMMON_DEPEND}
-	doc? ( x11-libs/qt-assistant:4 )
+	doc? ( dev-qt/qthelp:4 )
 "
 RDEPEND="${COMMON_DEPEND}
 	xscreensaver? ( x11-libs/libXScrnSaver )

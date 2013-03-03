@@ -20,9 +20,9 @@ IUSE="debug"
 
 DEPEND=">=dev-libs/qoauth-1.0
 	x11-libs/libX11
-	>=x11-libs/qt-core-4.5:4
-	>=x11-libs/qt-dbus-4.5:4
-	>=x11-libs/qt-gui-4.5:4"
+	>=dev-qt/qtcore-4.5:4
+	>=dev-qt/qtdbus-4.5:4
+	>=dev-qt/qtgui-4.5:4"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}"

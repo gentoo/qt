@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="x11-libs/qt-mobility
+DEPEND="dev-qt/qt-mobility
 	net-libs/qmf"
 RDEPEND="${DEPEND}"
 

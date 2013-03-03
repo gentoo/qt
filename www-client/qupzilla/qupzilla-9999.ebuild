@@ -30,12 +30,12 @@ SLOT="0"
 IUSE="dbus debug kde nonblockdialogs"
 
 DEPEND="
-	>=x11-libs/qt-core-4.7:4
-	>=x11-libs/qt-gui-4.7:4
-	>=x11-libs/qt-script-4.7:4
-	>=x11-libs/qt-sql-4.7:4
-	>=x11-libs/qt-webkit-4.7:4
-	dbus? ( >=x11-libs/qt-dbus-4.7:4 )"
+	>=dev-qt/qtcore-4.7:4
+	>=dev-qt/qtgui-4.7:4
+	>=dev-qt/qtscript-4.7:4
+	>=dev-qt/qtsql-4.7:4
+	>=dev-qt/qtwebkit-4.7:4
+	dbus? ( >=dev-qt/qtdbus-4.7:4 )"
 RDEPEND="${DEPEND}"
 
 DOCS="AUTHORS BUILDING CHANGELOG FAQ README.md"
@@ -52,7 +52,7 @@ src_configure() {
 	export DISABLE_DBUS=$(use dbus && echo false || echo true)
 	export KDE=$(use kde && echo true || echo false) # in future this will enable nepomuk integration
 	export NONBLOCK_JS_DIALOGS=$(use nonblockdialogs && echo true || echo false)
-	has_version '>=x11-libs/qt-webkit-4.8.0:4' && export USE_QTWEBKIT_2_2=true
+	has_version '>=dev-qt/qtwebkit-4.8.0:4' && export USE_QTWEBKIT_2_2=true
 
 	# needs qt-webkit with webgl enabled (which we currently don't)
 	# export USE_WEBGL=$(use webgl && echo true || echo false)

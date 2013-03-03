@@ -19,9 +19,9 @@ IUSE="debug"
 RDEPEND="
 	>=dev-db/sqlite-3.7.14[threadsafe]
 	|| ( media-video/mplayer media-video/mplayer2 )
-	>=x11-libs/qt-core-4.8:4
-	>=x11-libs/qt-gui-4.8:4
-	>=x11-libs/qt-sql-4.8:4[sqlite]
+	>=dev-qt/qtcore-4.8:4
+	>=dev-qt/qtgui-4.8:4
+	>=dev-qt/qtsql-4.8:4[sqlite]
 "
 DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.4.7

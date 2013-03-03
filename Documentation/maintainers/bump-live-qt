@@ -3,7 +3,7 @@
 . /etc/init.d/functions.sh
 base="${1}"
 version="${2}"
-overlay="$(portageq get_repo_path / qt)/x11-libs/"
+overlay="$(portageq get_repo_path / qt)/dev-qt/"
 RED=$'\033[31;01m'
 GREEN=$'\e[32;01m'
 moto(){
@@ -54,7 +54,7 @@ for pkg in qt-assistant qt-core qt-dbus qt-demo qt-gui qt-multimedia qt-opengl q
 done
 einfo "Packages are ready but I advice you to review them first. ${GREEN}Commit[C]${NORMAL}/${RED}Review[R]${NORMAL}" && read choice
 if [[ "${choice}" == "C" ]]; then
-	git commit -a -m "x11-libs/qt-*:bump to ${version}"
+	git commit -a -m "dev-qt/qt*:bump to ${version}"
 	git pull --rebase
 	git push
 elif [[ "${choice}" == "R" ]]; then

@@ -16,9 +16,9 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="net-misc/connman
-	x11-libs/qt-core:4
-	x11-libs/qt-dbus:4
-	x11-libs/qt-gui:4"
+	dev-qt/qtcore:4
+	dev-qt/qtdbus:4
+	dev-qt/qtgui:4"
 RDEPEND="${DEPEND}"
 
 DOCS="README.md"

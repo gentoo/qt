@@ -36,8 +36,8 @@ COMMON_DEPEND="
 	lcms? ( =media-libs/lcms-1* )
 	png? ( >=media-libs/libpng-1.4 )
 	qt4? (
-		x11-libs/qt-core:4
-		x11-libs/qt-gui:4
+		dev-qt/qtcore:4
+		dev-qt/qtgui:4
 	)
 	tiff? ( media-libs/tiff )
 "

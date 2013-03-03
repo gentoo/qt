@@ -15,11 +15,11 @@ SLOT="0"
 KEYWORDS=""
 IUSE="test"
 
-RDEPEND=">=x11-libs/qt-core-4.8.0:4
-	>=x11-libs/qt-gui-4.8.0:4
-	>=x11-libs/qt-webkit-4.8.0:4"
+RDEPEND=">=dev-qt/qtcore-4.8.0:4
+	>=dev-qt/qtgui-4.8.0:4
+	>=dev-qt/qtwebkit-4.8.0:4"
 DEPEND="${RDEPEND}
-	test? ( >=x11-libs/qt-test-4.8.0:4 )"
+	test? ( >=dev-qt/qttest-4.8.0:4 )"
 DOCS="TODO.txt dist/changes-*"
 
 src_prepare() {

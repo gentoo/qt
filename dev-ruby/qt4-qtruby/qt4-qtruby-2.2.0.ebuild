@@ -16,17 +16,17 @@ IUSE="assistant phonon qt3support qtscript qscintilla qttest qwt webkit xmlpatte
 
 RDEPEND=">=dev-lang/ruby-1.8
 	kde-base/smokeqt
-	x11-libs/qt-gui:4[accessibility,dbus]
-	x11-libs/qt-opengl:4
-	x11-libs/qt-sql:4
-	x11-libs/qt-svg:4[accessibility]
-	assistant? ( x11-libs/qt-assistant:4 )
-	phonon? ( x11-libs/qt-phonon:4 )
-	qt3support? ( x11-libs/qt-qt3support:4[accessibility] )
-	qtscript? ( x11-libs/qt-script:4 )
-	qttest? ( x11-libs/qt-test:4 )
-	webkit? ( x11-libs/qt-webkit:4 )
-	xmlpatterns? ( x11-libs/qt-xmlpatterns:4 )
+	dev-qt/qtgui:4[accessibility,dbus]
+	dev-qt/qtopengl:4
+	dev-qt/qtsql:4
+	dev-qt/qtsvg:4[accessibility]
+	assistant? ( dev-qt/qthelp:4 )
+	phonon? ( dev-qt/qtphonon:4 )
+	qt3support? ( dev-qt/qt3support:4[accessibility] )
+	qtscript? ( dev-qt/qtscript:4 )
+	qttest? ( dev-qt/qttest:4 )
+	webkit? ( dev-qt/qtwebkit:4 )
+	xmlpatterns? ( dev-qt/qtxmlpatterns:4 )
 	qscintilla? ( =x11-libs/qscintilla-2* )
 	qwt? ( x11-libs/qwt:5 )"
 DEPEND="${RDEPEND}"

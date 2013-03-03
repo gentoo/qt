@@ -18,8 +18,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="qemu"
 
 DEPEND="net-libs/libvncserver
-	x11-libs/qt-gui:4
-	x11-libs/qt-webkit:4"
+	dev-qt/qtgui:4
+	dev-qt/qtwebkit:4"
 RDEPEND="${DEPEND}
 	qemu? ( app-emulation/qemu )"
 

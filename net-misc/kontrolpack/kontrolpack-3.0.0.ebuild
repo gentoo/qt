@@ -29,8 +29,8 @@ IUSE="debug"
 DEPEND="dev-db/sqlite
 	dev-libs/libxml2
 	dev-libs/openssl
-	>=x11-libs/qt-core-4.5:4
-	>=x11-libs/qt-gui-4.5:4"
+	>=dev-qt/qtcore-4.5:4
+	>=dev-qt/qtgui-4.5:4"
 RDEPEND="${DEPEND}"
 
 src_prepare() {

@@ -26,14 +26,14 @@ IUSE="debug doc examples test"
 RDEPEND="
 	dev-libs/icu:=
 	sys-libs/zlib
-	>=x11-libs/qt-core-4.6.0:4
-	>=x11-libs/qt-gui-4.6.0:4
-	>=x11-libs/qt-sql-4.6.0:4
-	examples? ( >=x11-libs/qt-webkit-4.6.0:4 )
+	>=dev-qt/qtcore-4.6.0:4
+	>=dev-qt/qtgui-4.6.0:4
+	>=dev-qt/qtsql-4.6.0:4
+	examples? ( >=dev-qt/qtwebkit-4.6.0:4 )
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	test? ( >=x11-libs/qt-test-4.6.0:4 )
+	test? ( >=dev-qt/qttest-4.6.0:4 )
 	!!<net-libs/qmf-2.0_p201209
 "
 

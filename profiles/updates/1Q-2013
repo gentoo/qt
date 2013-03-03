@@ -1,0 +1,6 @@
+move x11-libs/qt-components dev-qt/qtcomponents
+move x11-libs/qt-concurrent dev-qt/qtconcurrent
+move x11-libs/qt-jsbackend dev-qt/qtjsbackend
+move x11-libs/qt-location dev-qt/qtlocation
+move x11-libs/qt-printsupport dev-qt/qtprintsupport
+move x11-libs/qt-widgets dev-qt/qtwidgets

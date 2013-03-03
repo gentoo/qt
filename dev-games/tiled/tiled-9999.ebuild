@@ -19,9 +19,9 @@ KEYWORDS=""
 IUSE="examples"
 
 DEPEND="sys-libs/zlib
-	>=x11-libs/qt-core-4.6:4
-	>=x11-libs/qt-gui-4.6:4
-	>=x11-libs/qt-opengl-4.6:4"
+	>=dev-qt/qtcore-4.6:4
+	>=dev-qt/qtgui-4.6:4
+	>=dev-qt/qtopengl-4.6:4"
 RDEPEND="${DEPEND}"
 
 DOCS=( AUTHORS COPYING NEWS README.md )

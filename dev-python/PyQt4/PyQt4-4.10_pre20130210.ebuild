@@ -42,28 +42,28 @@ QT_PV="4.8.0:4"
 RDEPEND="
 	${PYTHON_DEPS}
 	>=dev-python/sip-4.14.2:=[${PYTHON_USEDEP}]
-	>=x11-libs/qt-core-${QT_PV}
+	>=dev-qt/qtcore-${QT_PV}
 	X? (
-		>=x11-libs/qt-gui-${QT_PV}[dbus?]
-		>=x11-libs/qt-test-${QT_PV}
+		>=dev-qt/qtgui-${QT_PV}[dbus?]
+		>=dev-qt/qttest-${QT_PV}
 	)
 	dbus? (
 		>=dev-python/dbus-python-0.80
-		>=x11-libs/qt-dbus-${QT_PV}
+		>=dev-qt/qtdbus-${QT_PV}
 	)
-	declarative? ( >=x11-libs/qt-declarative-${QT_PV} )
-	help? ( >=x11-libs/qt-assistant-${QT_PV} )
-	multimedia? ( >=x11-libs/qt-multimedia-${QT_PV} )
-	opengl? ( >=x11-libs/qt-opengl-${QT_PV} )
+	declarative? ( >=dev-qt/qtdeclarative-${QT_PV} )
+	help? ( >=dev-qt/qthelp-${QT_PV} )
+	multimedia? ( >=dev-qt/qtmultimedia-${QT_PV} )
+	opengl? ( >=dev-qt/qtopengl-${QT_PV} )
 	phonon? (
 		kde? ( media-libs/phonon )
-		!kde? ( || ( >=x11-libs/qt-phonon-${QT_PV} media-libs/phonon ) )
+		!kde? ( || ( >=dev-qt/qtphonon-${QT_PV} media-libs/phonon ) )
 	)
-	script? ( >=x11-libs/qt-script-${QT_PV} )
-	sql? ( >=x11-libs/qt-sql-${QT_PV} )
-	svg? ( >=x11-libs/qt-svg-${QT_PV} )
-	webkit? ( >=x11-libs/qt-webkit-${QT_PV} )
-	xmlpatterns? ( >=x11-libs/qt-xmlpatterns-${QT_PV} )
+	script? ( >=dev-qt/qtscript-${QT_PV} )
+	sql? ( >=dev-qt/qtsql-${QT_PV} )
+	svg? ( >=dev-qt/qtsvg-${QT_PV} )
+	webkit? ( >=dev-qt/qtwebkit-${QT_PV} )
+	xmlpatterns? ( >=dev-qt/qtxmlpatterns-${QT_PV} )
 "
 DEPEND="${RDEPEND}
 	dbus? ( virtual/pkgconfig )

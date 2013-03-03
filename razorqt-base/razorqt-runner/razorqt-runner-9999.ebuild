@@ -24,7 +24,7 @@ SLOT="0"
 IUSE=""
 
 DEPEND="razorqt-base/razorqt-libs
-	x11-libs/qt-script:4"
+	dev-qt/qtscript:4"
 RDEPEND="${DEPEND}
 	razorqt-base/razorqt-data"
 

@@ -19,7 +19,7 @@ IUSE=""
 
 DOCS="AUTHORS"
 
-DEPEND="x11-libs/qt-gui:4"
+DEPEND="dev-qt/qtgui:4"
 RDEPEND="${DEPEND}
 	dev-libs/qoauth"
 

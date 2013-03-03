@@ -21,11 +21,11 @@ RDEPEND=">=app-text/hunspell-1.2
 	media-libs/libvorbis
 	sys-libs/zlib
 	x11-libs/libXtst
-	>=x11-libs/qt-core-4.5:4[exceptions]
-	>=x11-libs/qt-gui-4.5:4[exceptions]
-	>=x11-libs/qt-webkit-4.5:4[exceptions]
+	>=dev-qt/qtcore-4.5:4[exceptions]
+	>=dev-qt/qtgui-4.5:4[exceptions]
+	>=dev-qt/qtwebkit-4.5:4[exceptions]
 	!kde? ( || (
-		>=x11-libs/qt-phonon-4.5:4[exceptions]
+		>=dev-qt/qtphonon-4.5:4[exceptions]
 		media-libs/phonon
 	) )
 	kde? ( media-libs/phonon )"

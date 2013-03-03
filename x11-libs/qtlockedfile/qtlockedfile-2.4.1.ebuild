@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="x11-libs/qt-core:4"
+DEPEND="dev-qt/qtcore:4"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}

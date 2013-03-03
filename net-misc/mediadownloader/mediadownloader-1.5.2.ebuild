@@ -18,11 +18,11 @@ IUSE="kde"
 DEPEND="
 	x11-libs/libX11
 	x11-libs/libXtst
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4
-	x11-libs/qt-opengl:4
-	x11-libs/qt-webkit:4
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
+	dev-qt/qtopengl:4
+	dev-qt/qtwebkit:4
 	kde? ( media-libs/phonon )
-	!kde? ( || ( x11-libs/qt-phonon media-libs/phonon ) )
+	!kde? ( || ( dev-qt/qtphonon media-libs/phonon ) )
 "
 RDEPEND="${DEPEND}"

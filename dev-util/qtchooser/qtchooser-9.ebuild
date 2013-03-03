@@ -17,8 +17,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 
-DEPEND="test? ( x11-libs/qt-test )"
-RDEPEND="!x11-libs/qt-core:4" # FIXME
+DEPEND="test? ( dev-qt/qttest )"
+RDEPEND="!dev-qt/qtcore:4" # FIXME
 
 S=${WORKDIR}/${MY_P}
 

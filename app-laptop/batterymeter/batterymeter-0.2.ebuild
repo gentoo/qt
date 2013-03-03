@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="sys-libs/libacpi
-	x11-libs/qt-gui:4"
+	dev-qt/qtgui:4"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${PN}/src

@@ -19,11 +19,11 @@ IUSE="doc"
 
 DEPEND="
 	>=dev-libs/boost-1.37
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
 "
 RDEPEND="${DEPEND}
-	x11-libs/qt-svg:4
+	dev-qt/qtsvg:4
 "
 
 S=${WORKDIR}/${PN}

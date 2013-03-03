@@ -16,7 +16,7 @@ IUSE=""
 
 RDEPEND=">=dev-lang/lua-5.1.4
 	=media-gfx/flam3-9999
-	>=x11-libs/qt-gui-4.6:4"
+	>=dev-qt/qtgui-4.6:4"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 

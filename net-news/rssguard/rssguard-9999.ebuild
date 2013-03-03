@@ -15,12 +15,12 @@ SLOT="0"
 KEYWORDS=""
 IUSE="dbus"
 
-DEPEND="x11-libs/qt-core:4
-	x11-libs/qt-gui:4
-	x11-libs/qt-webkit:4
-	x11-libs/qt-xmlpatterns:4
+DEPEND="dev-qt/qtcore:4
+	dev-qt/qtgui:4
+	dev-qt/qtwebkit:4
+	dev-qt/qtxmlpatterns:4
 	x11-themes/hicolor-icon-theme
-	dbus? ( x11-libs/qt-dbus:4 )"
+	dbus? ( dev-qt/qtdbus:4 )"
 RDEPEND="${DEPEND}"
 
 DOCS=( resources/text/AUTHORS resources/text/CHANGELOG )

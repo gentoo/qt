@@ -16,8 +16,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="lastfm"
 
 DEPEND="media-libs/phonon
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
 	lastfm? ( media-libs/liblastfm )"
 RDEPEND="${DEPEND}"
 

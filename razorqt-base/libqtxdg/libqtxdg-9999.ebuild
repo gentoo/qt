@@ -24,8 +24,8 @@ SLOT="0"
 IUSE=""
 
 DEPEND="sys-apps/file
-	x11-libs/qt-core:4
-	x11-libs/qt-gui:4
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
 	!x11-wm/razorqt"
 RDEPEND="${DEPEND}
 	x11-misc/xdg-utils"

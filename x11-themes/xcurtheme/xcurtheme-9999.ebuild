@@ -18,7 +18,7 @@ IUSE="tools"
 DEPEND="
 	x11-libs/libXcursor
 	x11-libs/libXfixes
-	x11-libs/qt-gui:4
+	dev-qt/qtgui:4
 "
 RDEPEND="${DEPEND}"
 

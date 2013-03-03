@@ -18,7 +18,7 @@ IUSE="debug doc static-libs test"
 COMMON_DEPEND="app-crypt/qca:2[debug?]"
 DEPEND="${COMMON_DEPEND}
 	doc? ( app-doc/doxygen )
-	test? ( x11-libs/qt-test:4 )
+	test? ( dev-qt/qttest:4 )
 "
 RDEPEND="${COMMON_DEPEND}
 	app-crypt/qca-ossl:2[debug?]

@@ -22,8 +22,8 @@ KEYWORDS=""
 IUSE="debug"
 
 DEPEND="app-arch/unzip
-	x11-libs/qt-gui:4"
-RDEPEND="x11-libs/qt-gui:4
+	dev-qt/qtgui:4"
+RDEPEND="dev-qt/qtgui:4
 	media-video/ffmpeg
 	media-video/flvstreamer"
 

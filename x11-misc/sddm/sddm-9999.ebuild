@@ -15,7 +15,7 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="sys-libs/pam
-	x11-libs/qt-declarative:4"
+	dev-qt/qtdeclarative:4"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
