@@ -21,7 +21,6 @@ DEPEND="
 	icu? ( >=dev-libs/icu-49:= )
 	ssl? ( dev-libs/openssl )
 	!<x11-libs/cairo-1.10.2-r2
-	!x11-libs/qt:4
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
