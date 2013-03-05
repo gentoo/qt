@@ -58,8 +58,8 @@ IUSE="+c++11 debug test"
 
 DEPEND=">=dev-lang/perl-5.14
 	virtual/pkgconfig"
-if [[ ${PN} != "qt-test" ]]; then
-	DEPEND+=" test? ( ~dev-qt/qt-test-${PV}[debug=] )"
+if [[ ${PN} != "qttest" ]]; then
+	DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
 fi
 
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
@@ -131,7 +131,7 @@ qt5-build_src_unpack() {
 		ewarn "Using a GCC version lower than 4.4 is not supported."
 	fi
 
-	if [[ ${PN} == "qt-webkit" ]]; then
+	if [[ ${PN} == "qtwebkit" ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
 			echo
@@ -197,7 +197,7 @@ qt5-build_src_prepare() {
 			|| die "sed failed (config.tests)"
 	fi
 
-	if [[ ${PN} != "qt-core" ]]; then
+	if [[ ${PN} != "qtcore" ]]; then
 		qt5_symlink_tools_to_buildtree
 	fi
 
@@ -263,7 +263,7 @@ qt5-build_src_test() {
 qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
-	if [[ ${PN} == "qt-core" ]]; then
+	if [[ ${PN} == "qtcore" ]]; then
 		pushd "${QT5_BUILD_DIR}" > /dev/null || die
 		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake,syncqt}"
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
@@ -297,7 +297,7 @@ qt5-build_pkg_postinst() {
 # @DESCRIPTION:
 # Regenerate configuration when the package is completely removed.
 qt5-build_pkg_postrm() {
-	if [[ -z ${REPLACED_BY_VERSION} && ${PN} != "qt-core" ]]; then
+	if [[ -z ${REPLACED_BY_VERSION} && ${PN} != "qtcore" ]]; then
 		qt5_regenerate_global_qconfigs
 	fi
 }
@@ -345,7 +345,7 @@ qt5_prepare_env() {
 # @FUNCTION: qt5_symlink_tools_to_buildtree
 # @INTERNAL
 # @DESCRIPTION:
-# Symlinks qt-core tools to buildtree, so they can be used when building other modules.
+# Symlinks qtcore tools to buildtree, so they can be used when building other modules.
 qt5_symlink_tools_to_buildtree() {
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
 
@@ -427,11 +427,11 @@ qt5_base_configure() {
 		# requires GNU ld >= 2.18
 		-reduce-relocations
 
-		# disable all SQL drivers by default, override in qt-sql
+		# disable all SQL drivers by default, override in qtsql
 		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
 		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
 
-		# disable all platform plugins by default, override in qt-gui
+		# disable all platform plugins by default, override in qtgui
 		-no-xcb -no-xrender -no-eglfs -no-directfb -no-linuxfb -no-kms
 
 		# disable gtkstyle because it adds qt4 include paths to the compiler

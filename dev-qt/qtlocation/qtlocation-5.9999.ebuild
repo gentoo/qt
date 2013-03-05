@@ -15,13 +15,13 @@ else
 fi
 
 # FIXME: src/3rdparty/poly2tri doesn't respect CXX and CXXFLAGS
-# TODO: plugins (qt-jsondb, geoclue, gypsy), qml
+# TODO: plugins (qtjsondb, geoclue, gypsy), qml
 IUSE=""
 
 DEPEND="
+	~dev-qt/qt3d-${PV}[debug=]
 	~dev-qt/qtcore-${PV}[debug=]
 	~dev-qt/qtgui-${PV}[debug=]
 	~dev-qt/qtnetwork-${PV}[debug=]
-	~x11-libs/qt3d-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"

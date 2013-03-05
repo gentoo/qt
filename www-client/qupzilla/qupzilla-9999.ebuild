@@ -54,7 +54,7 @@ src_configure() {
 	export NONBLOCK_JS_DIALOGS=$(use nonblockdialogs && echo true || echo false)
 	has_version '>=dev-qt/qtwebkit-4.8.0:4' && export USE_QTWEBKIT_2_2=true
 
-	# needs qt-webkit with webgl enabled (which we currently don't)
+	# needs qtwebkit with webgl enabled (which we currently don't)
 	# export USE_WEBGL=$(use webgl && echo true || echo false)
 
 	eqmake4

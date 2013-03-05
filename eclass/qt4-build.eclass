@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build.eclass,v 1.144 2013/03/03 00:22:56 pesa Exp $
 
 # @ECLASS: qt4-build.eclass
 # @MAINTAINER:
@@ -41,52 +41,13 @@ case ${QT4_BUILD_TYPE} in
 esac
 
 IUSE="aqua debug pch"
-[[ ${CATEGORY}/${PN} != dev-qt/qtxmlpatterns ]] && IUSE+=" +exceptions"
 [[ ${CATEGORY}/${PN} != dev-qt/qtwebkit ]] && IUSE+=" c++0x"
+[[ ${CATEGORY}/${PN} != dev-qt/qtxmlpatterns ]] && IUSE+=" +exceptions"
 
 DEPEND="virtual/pkgconfig"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	DEPEND+=" dev-lang/perl"
 fi
-
-RDEPEND="
-	!<dev-qt/qtbearer-${PV}:4
-	!>dev-qt/qtbearer-${PV}-r9999:4
-	!<dev-qt/qtcore-${PV}:4
-	!>dev-qt/qtcore-${PV}-r9999:4
-	!<dev-qt/qtdbus-${PV}:4
-	!>dev-qt/qtdbus-${PV}-r9999:4
-	!<dev-qt/qtdeclarative-${PV}:4
-	!>dev-qt/qtdeclarative-${PV}-r9999:4
-	!<dev-qt/qtdemo-${PV}:4
-	!>dev-qt/qtdemo-${PV}-r9999:4
-	!<dev-qt/qtgui-${PV}:4
-	!>dev-qt/qtgui-${PV}-r9999:4
-	!<dev-qt/qthelp-${PV}:4
-	!>dev-qt/qthelp-${PV}-r9999:4
-	!<dev-qt/qtmultimedia-${PV}:4
-	!>dev-qt/qtmultimedia-${PV}-r9999:4
-	!<dev-qt/qtopengl-${PV}:4
-	!>dev-qt/qtopengl-${PV}-r9999:4
-	!<dev-qt/qtopenvg-${PV}:4
-	!>dev-qt/qtopenvg-${PV}-r9999:4
-	!<dev-qt/qtphonon-${PV}:4
-	!>dev-qt/qtphonon-${PV}-r9999:4
-	!<dev-qt/qt3support-${PV}:4
-	!>dev-qt/qt3support-${PV}-r9999:4
-	!<dev-qt/qtscript-${PV}:4
-	!>dev-qt/qtscript-${PV}-r9999:4
-	!<dev-qt/qtsql-${PV}:4
-	!>dev-qt/qtsql-${PV}-r9999:4
-	!<dev-qt/qtsvg-${PV}:4
-	!>dev-qt/qtsvg-${PV}-r9999:4
-	!<dev-qt/qttest-${PV}:4
-	!>dev-qt/qttest-${PV}-r9999:4
-	!<dev-qt/qtwebkit-${PV}:4
-	!>dev-qt/qtwebkit-${PV}-r9999:4
-	!<dev-qt/qtxmlpatterns-${PV}:4
-	!>dev-qt/qtxmlpatterns-${PV}-r9999:4
-"
 
 S=${WORKDIR}/${MY_P}
 
@@ -142,7 +103,7 @@ qt4-build_src_unpack() {
 		ewarn "Using a GCC version lower than 4.1 is not supported."
 	fi
 
-	if [[ ${PN} == qtwebkit ]]; then
+	if [[ ${CATEGORY}/${PN} == dev-qt/qtwebkit ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
 			echo
@@ -212,7 +173,7 @@ qt4-build_src_prepare() {
 			-i mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
 	fi
 
-	if [[ ${PN} != qtcore ]]; then
+	if [[ ${CATEGORY}/${PN} != dev-qt/qtcore ]]; then
 		skip_qmake_build
 		skip_project_generation
 		symlink_binaries_to_buildtree
@@ -470,7 +431,7 @@ qt4-build_src_compile() {
 # Runs tests only in target directories.
 qt4-build_src_test() {
 	# QtMultimedia does not have any test suite (bug #332299)
-	[[ ${PN} == qtmultimedia ]] && return
+	[[ ${CATEGORY}/${PN} == dev-qt/qtmultimedia ]] && return
 
 	for dir in ${QT4_TARGET_DIRECTORIES}; do
 		emake -j1 check -C ${dir}
@@ -662,7 +623,7 @@ install_qconfigs() {
 # @DESCRIPTION:
 # Generates gentoo-specific qconfig.{h,pri}.
 generate_qconfigs() {
-	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} || ${PN} == qtcore ]]; then
+	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} || ${CATEGORY}/${PN} == dev-qt/qtcore ]]; then
 		local x qconfig_add qconfig_remove qconfig_new
 		for x in "${ROOT}${QTDATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
 			[[ -f ${x} ]] || continue

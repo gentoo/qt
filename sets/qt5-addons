@@ -1,7 +1,7 @@
 # set for Qt5 Add-on modules
 # http://qt-project.org/wiki/Qt-Add-ons-Modules
 
-#x11-libs/qt3d:5
+#dev-qt/qt3d:5
 dev-qt/qtconcurrent:5
 dev-qt/qtdbus:5
 #dev-qt/qtgraphicaleffects:5
