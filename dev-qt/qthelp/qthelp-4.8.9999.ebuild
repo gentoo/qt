@@ -59,11 +59,11 @@ src_unpack() {
 	qt4-build_src_unpack
 
 	# compat version
-	# http://labs.qt.nokia.com/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
+	# http://blog.qt.digia.com/blog/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
 	if use compat; then
-		unpack ${PN}-qassistantclient-library-compat-src-4.6.3.tar.gz \
-			${PN}-compat-headers-4.7.tar.gz
-		mv "${WORKDIR}"/${PN}-qassistantclient-library-compat-version-4.6.3 \
+		unpack qt-assistant-qassistantclient-library-compat-src-4.6.3.tar.gz \
+			qt-assistant-compat-headers-4.7.tar.gz
+		mv "${WORKDIR}"/qt-assistant-qassistantclient-library-compat-version-4.6.3 \
 			"${S}"/tools/assistant/compat || die
 		mv "${WORKDIR}"/QtAssistant "${S}"/include/ || die
 	fi
@@ -117,6 +117,7 @@ src_install() {
 	qt4-build_src_install
 
 	emake INSTALL_ROOT="${D}" install_qchdocs
+
 	# do not compress .qch files
 	docompress -x "${QTDOCDIR}"/qch
 
