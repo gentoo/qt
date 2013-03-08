@@ -27,6 +27,10 @@ PDEPEND="
 	qt3support? ( ~dev-qt/qtgui-${PV}[aqua=,debug=,glib=,qt3support] )
 "
 
+PATCHES=(
+	"${FILESDIR}/moc-workaround-for-BOOST_JOIN.patch"
+)
+
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/tools/bootstrap
