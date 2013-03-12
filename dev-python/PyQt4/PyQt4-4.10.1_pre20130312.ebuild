@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.9.6-r2.ebuild,v 1.4 2013/02/15 08:07:48 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.10.ebuild,v 1.1 2013/03/12 09:12:18 pesa Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python{2_5,2_6,2_7,3_1,3_2,3_3} )
@@ -41,7 +41,7 @@ QT_PV="4.8.0:4"
 
 RDEPEND="
 	${PYTHON_DEPS}
-	>=dev-python/sip-4.14.2:=[${PYTHON_USEDEP}]
+	>=dev-python/sip-4.14.3:=[${PYTHON_USEDEP}]
 	>=dev-qt/qtcore-${QT_PV}
 	X? (
 		>=dev-qt/qtgui-${QT_PV}[dbus?]
@@ -77,8 +77,10 @@ src_prepare() {
 	# Support qreal on arm architecture (bug 322349).
 	use arm && epatch "${FILESDIR}/${PN}-4.7.3-qreal_float_support.patch"
 
-	# Use proper include directory for phonon.
-	sed -i -e "s:^\s\+generate_code(\"phonon\":&, extra_include_dirs=[\"${EPREFIX}/usr/include/phonon\"]:" \
+	# Allow building against KDE's phonon (bug 433944 and others).
+	sed -i \
+		-e "s:VideoWidget()\":&, extra_include_dirs=[\"${EPREFIX}/usr/include/qt4/QtGui\"]:" \
+		-e "s:^\s\+generate_code(\"phonon\":&, extra_include_dirs=[\"${EPREFIX}/usr/include/phonon\"]:" \
 		configure.py || die
 
 	if ! use dbus; then
@@ -172,7 +174,7 @@ src_configure() {
 			popd > /dev/null || return
 		fi
 	}
-	python_foreach_impl run_in_build_dir configuration
+	python_parallel_foreach_impl run_in_build_dir configuration
 }
 
 src_compile() {
