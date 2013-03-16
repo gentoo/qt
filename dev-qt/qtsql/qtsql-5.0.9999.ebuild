@@ -4,6 +4,8 @@
 
 EAPI=5
 
+QT5_MODULE="qtbase"
+
 inherit multilib qt5-build
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"

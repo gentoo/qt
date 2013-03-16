@@ -23,36 +23,35 @@ HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="5"
 
-case ${PN#qt} in
-	concurrent|core|dbus|gui|network|opengl|printsupport|sql|test|widgets|xml)
-		EGIT_PROJECT="qtbase"
-		;;
-	*)
-		EGIT_PROJECT="${PN/-}"
-		;;
-esac
+# @ECLASS-VARIABLE: QT5_MODULE
+# @DESCRIPTION:
+# The upstream name of the module this package belongs to. Used for
+# SRC_URI and EGIT_REPO_URI. Must be defined before inheriting the eclass.
+: ${QT5_MODULE:=${PN}}
 
 case ${PV} in
 	5.9999)
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH="dev"
-		inherit git-2
 		;;
 	5.?.9999)
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH="stable"
-		inherit git-2
 		;;
 	*)
 		QT5_BUILD_TYPE="release"
-		MY_P="${EGIT_PROJECT}-opensource-src-${PV/_/-}"
+		MY_P="${QT5_MODULE}-opensource-src-${PV/_/-}"
 		SRC_URI="http://releases.qt-project.org/qt5/${PV}/submodules_tar/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 esac
 
-EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
-	https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
+if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
+	EGIT_PROJECT=${QT5_MODULE}
+	EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
+		https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
+	inherit git-2
+fi
 
 IUSE="+c++11 debug test"
 
@@ -160,7 +159,7 @@ qt5-build_src_unpack() {
 qt5-build_src_prepare() {
 	qt5_prepare_env
 
-	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
+	if [[ ${QT5_MODULE} == "qtbase" ]]; then
 		# Avoid unnecessary qmake recompilations
 		sed -i -re "s|^if true;.*(\[ '\!').*(\"\\\$outpath/bin/qmake\".*)|if \1 -e \2 then|" \
 			configure || die "sed failed (skip qmake bootstrap)"
@@ -218,7 +217,7 @@ qt5-build_src_configure() {
 	mkdir -p "${QT5_BUILD_DIR}" || die
 	pushd "${QT5_BUILD_DIR}" > /dev/null || die
 
-	if [[ ${EGIT_PROJECT} == "qtbase" ]]; then
+	if [[ ${QT5_MODULE} == "qtbase" ]]; then
 		qt5_base_configure
 	fi
 
