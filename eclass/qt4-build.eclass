@@ -527,15 +527,6 @@ setqtenv() {
 # @DESCRIPTION:
 # Generates Makefiles for the given list of directories.
 prepare_directories() {
-	# avoid running over the maximum argument number, bug #299810
-	{
-		echo "${S}"/mkspecs/common/*.conf
-		find "${S}" -name '*.pr[io]'
-	} | xargs sed -i \
-		-e "s:\$\$\[QT_INSTALL_LIBS\]:${QTLIBDIR}:g" \
-		-e "s:\$\$\[QT_INSTALL_PLUGINS\]:${QTPLUGINDIR}:g" \
-		|| die
-
 	for x in "$@"; do
 		pushd "${S}"/${x} >/dev/null || die
 		einfo "Running qmake in: ${x}"
