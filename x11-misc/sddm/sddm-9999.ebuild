@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-inherit cmake-utils git-2
+inherit cmake-utils git-2 toolchain-funcs
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
@@ -21,6 +21,11 @@ RDEPEND="sys-libs/pam
 	qt5? ( dev-qt/qtdeclarative:5 )"
 DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.7.0"
+
+pkg_pretend() {
+	[[ $(gcc-version) < 4.7 ]] && \
+		die 'The active compiler needs to be gcc 4.7 (or newer)'
+}
 
 src_prepare() {
 	# respect our cflags
