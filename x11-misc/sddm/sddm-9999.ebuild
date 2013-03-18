@@ -12,14 +12,24 @@ EGIT_REPO_URI="git://github.com/sddm/sddm.git"
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
 KEYWORDS=""
-IUSE=""
+IUSE="+qt4 qt5"
+REQUIRED_USE="^^ ( qt4 qt5 )"
 
-DEPEND="sys-libs/pam
-	dev-qt/qtdeclarative:4"
-RDEPEND="${DEPEND}"
+RDEPEND="sys-libs/pam
+	sys-power/upower
+	qt4? ( dev-qt/qtdeclarative:4 )
+	qt5? ( dev-qt/qtdeclarative:5 )"
+DEPEND="${RDEPEND}
+	>=sys-devel/gcc-4.7.0"
 
 src_prepare() {
-	# respect our cflags, and make it work with gcc-4.6 (hopefully)
-	sed -e 's|-Wall -march=native -O2 -g -std=c++11|-std=c++0x|' \
+	# respect our cflags
+	sed -e 's|-Wall -march=native||' \
+		-e 's|-O2||' \
 		-i CMakeLists.txt || die 'sed failed'
+}
+
+src_configure() {
+	local mycmakeargs=( $(cmake-utils_use_use qt5 QT5) )
+	cmake-utils_src_configure
 }
