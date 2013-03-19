@@ -42,8 +42,3 @@ src_configure() {
 	local mycmakeargs=( $(cmake-utils_use_use qt5 QT5) )
 	cmake-utils_src_configure
 }
-
-src_install() {
-	cmake-utils_src_install
-	keepdir /run/sddm
-}
