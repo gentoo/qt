@@ -21,5 +21,6 @@ DEPEND="
 	~dev-qt/qtgui-${PV}[debug=]
 	~dev-qt/qtwidgets-${PV}[debug=]
 	~dev-qt/qtxml-${PV}[debug=]
+	sys-libs/zlib
 "
 RDEPEND="${DEPEND}"
