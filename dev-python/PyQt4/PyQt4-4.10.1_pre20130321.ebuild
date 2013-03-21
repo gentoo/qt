@@ -4,7 +4,7 @@
 
 EAPI=5
 PYTHON_COMPAT=( python{2_5,2_6,2_7,3_1,3_2,3_3} )
-REVISION=7b8a544a91d2
+REVISION=19c32f448665
 
 inherit eutils qt4-r2 python-r1 toolchain-funcs
 
