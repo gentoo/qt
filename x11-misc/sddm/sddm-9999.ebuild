@@ -3,19 +3,26 @@
 # $Header: $
 
 EAPI=5
-inherit cmake-utils git-2 toolchain-funcs
+inherit cmake-utils toolchain-funcs
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
-EGIT_REPO_URI="git://github.com/sddm/sddm.git"
+
+if [[ ${PV} = *9999* ]]; then
+	inherit git-2
+	EGIT_REPO_URI="git://github.com/sddm/sddm.git"
+	KEYWORDS=""
+else
+	SRC_URI="http://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
-KEYWORDS=""
 IUSE="+qt4 qt5"
 REQUIRED_USE="^^ ( qt4 qt5 )"
 
-RDEPEND="sys-libs/pam
+RDEPEND="sys-auth/pambase
 	sys-power/upower
 	x11-libs/libxcb
 	qt4? ( dev-qt/qtdeclarative:4 )
