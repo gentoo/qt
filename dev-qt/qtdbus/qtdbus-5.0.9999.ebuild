@@ -26,9 +26,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
+	src/dbus
 	src/tools/qdbusxml2cpp
 	src/tools/qdbuscpp2xml
-	src/dbus
 )
 QCONFIG_ADD="dbus dbus-linked"
 
