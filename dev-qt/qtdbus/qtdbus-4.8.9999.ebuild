@@ -16,8 +16,8 @@ fi
 IUSE=""
 
 DEPEND="
-	>=sys-apps/dbus-1.2
 	~dev-qt/qtcore-${PV}[aqua=,debug=]
+	>=sys-apps/dbus-1.2
 "
 RDEPEND="${DEPEND}"
 

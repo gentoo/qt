@@ -16,9 +16,9 @@ fi
 IUSE="egl qt3support"
 
 DEPEND="
-	virtual/opengl
 	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=]
 	~dev-qt/qtgui-${PV}[aqua=,debug=,egl=,qt3support=]
+	virtual/opengl
 "
 RDEPEND="${DEPEND}"
 

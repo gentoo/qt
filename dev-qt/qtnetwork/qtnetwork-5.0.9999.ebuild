@@ -19,8 +19,8 @@ fi
 IUSE="connman networkmanager +ssl"
 
 DEPEND="
-	sys-libs/zlib
 	~dev-qt/qtcore-${PV}[debug=]
+	sys-libs/zlib
 	connman? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	networkmanager? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	ssl? ( dev-libs/openssl:0 )

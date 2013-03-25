@@ -19,9 +19,9 @@ fi
 IUSE=""
 
 DEPEND="
+	~dev-qt/qtcore-${PV}[debug=]
 	>=sys-apps/dbus-1.4.20
 	sys-libs/zlib
-	~dev-qt/qtcore-${PV}[debug=]
 "
 RDEPEND="${DEPEND}"
 

@@ -18,7 +18,7 @@ fi
 
 IUSE=""
 
-# yep, qt-core is a build-time dep only
+# qtcore is a build-time dep only
 RDEPEND=""
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}

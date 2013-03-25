@@ -26,10 +26,10 @@ REQUIRED_USE="
 "
 
 RDEPEND="
+	~dev-qt/qtcore-${PV}[debug=,glib=]
 	media-libs/fontconfig
 	media-libs/freetype:2
 	sys-libs/zlib
-	~dev-qt/qtcore-${PV}[debug=,glib=]
 	gif? ( media-libs/giflib )
 	gles2? ( || (
 		media-libs/mesa[egl,gles2]

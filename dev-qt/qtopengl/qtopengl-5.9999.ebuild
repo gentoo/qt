@@ -19,10 +19,10 @@ fi
 IUSE=""
 
 DEPEND="
-	virtual/opengl
 	~dev-qt/qtcore-${PV}[debug=]
 	~dev-qt/qtgui-${PV}[debug=,opengl]
 	~dev-qt/qtwidgets-${PV}[debug=]
+	virtual/opengl
 "
 RDEPEND="${DEPEND}"
 

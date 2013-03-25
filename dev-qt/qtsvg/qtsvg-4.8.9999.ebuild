@@ -16,9 +16,9 @@ fi
 IUSE="+accessibility"
 
 DEPEND="
-	sys-libs/zlib
 	~dev-qt/qtcore-${PV}[aqua=,debug=]
 	~dev-qt/qtgui-${PV}[accessibility=,aqua=,debug=]
+	sys-libs/zlib
 "
 RDEPEND="${DEPEND}"
 

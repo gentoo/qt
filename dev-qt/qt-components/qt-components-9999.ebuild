@@ -21,10 +21,10 @@ DEPEND="
 	>=dev-qt/qtcore-4.7.4:4
 	>=dev-qt/qtdeclarative-4.7.4:4
 	meego? (
-		x11-libs/libXdamage
-		x11-libs/libXrandr
 		>=dev-qt/qtdbus-4.7.4:4
 		>=dev-qt/qtopengl-4.7.4:4
+		x11-libs/libXdamage
+		x11-libs/libXrandr
 		mobility? ( >=dev-qt/qt-mobility-1.2[systeminfo] )
 	)
 	symbian? (

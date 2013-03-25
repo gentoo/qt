@@ -19,10 +19,10 @@ fi
 IUSE="egl"
 
 DEPEND="
-	virtual/opengl
 	~dev-qt/qtcore-${PV}[debug=]
 	~dev-qt/qtgui-${PV}[debug=,egl=,opengl]
 	~dev-qt/qtwidgets-${PV}[debug=]
+	virtual/opengl
 	egl? ( media-libs/mesa[egl] )
 "
 RDEPEND="${DEPEND}"

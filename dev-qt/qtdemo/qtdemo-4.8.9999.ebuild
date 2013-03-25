@@ -16,9 +16,9 @@ fi
 IUSE="dbus declarative kde multimedia opengl openvg qt3support webkit xmlpatterns"
 
 DEPEND="
-	~dev-qt/qthelp-${PV}:4[aqua=,debug=]
 	~dev-qt/qtcore-${PV}:4[aqua=,debug=,qt3support?]
 	~dev-qt/qtgui-${PV}:4[aqua=,debug=,qt3support?]
+	~dev-qt/qthelp-${PV}:4[aqua=,debug=]
 	~dev-qt/qtscript-${PV}:4[aqua=,debug=]
 	~dev-qt/qtsql-${PV}:4[aqua=,debug=,qt3support?]
 	~dev-qt/qtsvg-${PV}:4[aqua=,debug=]

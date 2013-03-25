@@ -23,6 +23,10 @@ IUSE="gstreamer libxml2 multimedia opengl qml udev webp widgets xslt"
 
 RDEPEND="
 	dev-db/sqlite
+	~dev-qt/qtcore-${PV}[debug=,icu]
+	~dev-qt/qtgui-${PV}[debug=]
+	~dev-qt/qtnetwork-${PV}[debug=]
+	~dev-qt/qtsql-${PV}[debug=]
 	media-libs/fontconfig
 	media-libs/libpng:0=
 	sys-libs/zlib
@@ -31,10 +35,6 @@ RDEPEND="
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXrender
-	~dev-qt/qtcore-${PV}[debug=,icu]
-	~dev-qt/qtgui-${PV}[debug=]
-	~dev-qt/qtnetwork-${PV}[debug=]
-	~dev-qt/qtsql-${PV}[debug=]
 	gstreamer? (
 		dev-libs/glib:2
 		>=media-libs/gstreamer-0.10.30:0.10
