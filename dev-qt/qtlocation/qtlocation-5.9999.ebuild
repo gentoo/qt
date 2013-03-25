@@ -19,9 +19,9 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qt3d-${PV}[debug=]
-	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
-	~dev-qt/qtnetwork-${PV}[debug=]
+	>=dev-qt/qt3d-${PV}:5[debug=]
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtgui-${PV}:5[debug=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=]
 "
 RDEPEND="${DEPEND}"

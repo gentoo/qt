@@ -17,10 +17,10 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
-	~dev-qt/qtwidgets-${PV}[debug=]
-	~dev-qt/qtxml-${PV}[debug=]
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtgui-${PV}:5[debug=]
+	>=dev-qt/qtwidgets-${PV}:5[debug=]
+	>=dev-qt/qtxml-${PV}:5[debug=]
 	sys-libs/zlib
 "
 RDEPEND="${DEPEND}"

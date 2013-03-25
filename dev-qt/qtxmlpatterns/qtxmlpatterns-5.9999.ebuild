@@ -17,7 +17,7 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtnetwork-${PV}[debug=]
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=]
 "
 RDEPEND="${DEPEND}"

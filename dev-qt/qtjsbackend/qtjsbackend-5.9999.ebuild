@@ -22,8 +22,8 @@ IUSE=""
 RDEPEND=""
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
-	~dev-qt/qtcore-${PV}[debug=]
-	test? ( ~dev-qt/qtgui-${PV}[debug=] )
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	test? ( >=dev-qt/qtgui-${PV}:5[debug=] )
 "
 
 pkg_setup() {

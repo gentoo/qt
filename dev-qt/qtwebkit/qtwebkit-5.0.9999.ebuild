@@ -23,10 +23,10 @@ IUSE="gstreamer libxml2 multimedia opengl qml udev webp widgets xslt"
 
 RDEPEND="
 	dev-db/sqlite
-	~dev-qt/qtcore-${PV}[debug=,icu]
-	~dev-qt/qtgui-${PV}[debug=]
-	~dev-qt/qtnetwork-${PV}[debug=]
-	~dev-qt/qtsql-${PV}[debug=]
+	>=dev-qt/qtcore-${PV}:5[debug=,icu]
+	>=dev-qt/qtgui-${PV}:5[debug=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=]
+	>=dev-qt/qtsql-${PV}:5[debug=]
 	media-libs/fontconfig
 	media-libs/libpng:0=
 	sys-libs/zlib
@@ -41,15 +41,15 @@ RDEPEND="
 		>=media-libs/gst-plugins-base-0.10.30:0.10
 	)
 	libxml2? ( dev-libs/libxml2 )
-	multimedia? ( ~dev-qt/qtmultimedia-${PV}[debug=] )
-	opengl? ( ~dev-qt/qtopengl-${PV}[debug=] )
-	qml? ( ~dev-qt/qtdeclarative-${PV}[debug=] )
+	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5[debug=] )
+	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
+	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
 	udev? ( virtual/udev )
 	webp? ( media-libs/libwebp )
-	widgets? ( ~dev-qt/qtwidgets-${PV}[debug=] )
+	widgets? ( >=dev-qt/qtwidgets-${PV}:5[debug=] )
 	xslt? (
 		libxml2? ( dev-libs/libxslt )
-		!libxml2? ( ~dev-qt/qtxmlpatterns-${PV}[debug=] )
+		!libxml2? ( >=dev-qt/qtxmlpatterns-${PV}:5[debug=] )
 	)
 "
 DEPEND="${RDEPEND}

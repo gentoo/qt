@@ -20,13 +20,13 @@ IUSE="localstorage"
 # TODO: xml? ( qt-xmlpatterns )
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,opengl]
-	~dev-qt/qtjsbackend-${PV}[debug=]
-	~dev-qt/qtnetwork-${PV}[debug=]
-	~dev-qt/qttest-${PV}[debug=]
-	~dev-qt/qtwidgets-${PV}[debug=]
-	localstorage? ( ~dev-qt/qtsql-${PV}[debug=] )
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
+	>=dev-qt/qtjsbackend-${PV}:5[debug=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=]
+	>=dev-qt/qttest-${PV}:5[debug=]
+	>=dev-qt/qtwidgets-${PV}:5[debug=]
+	localstorage? ( >=dev-qt/qtsql-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
 

@@ -55,10 +55,16 @@ fi
 
 IUSE="+c++11 debug test"
 
-DEPEND=">=dev-lang/perl-5.14
-	virtual/pkgconfig"
+DEPEND="
+	>=dev-lang/perl-5.14
+	virtual/pkgconfig
+"
 if [[ ${PN} != "qttest" ]]; then
-	DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
+	if [[ ${QT5_MODULE} == "qtbase" ]]; then
+		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
+	else
+		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5[debug=] )"
+	fi
 fi
 
 EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
@@ -115,7 +121,7 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 qt5-build_pkg_setup() {
 	# Warn users of possible breakage when downgrading to a previous release.
 	# Downgrading revisions within the same release is safe.
-	if has_version ">${CATEGORY}/${P}-r9999:${SLOT}"; then
+	if has_version ">${CATEGORY}/${P}-r9999:5"; then
 		ewarn
 		ewarn "Downgrading Qt is completely unsupported and can break your system!"
 		ewarn

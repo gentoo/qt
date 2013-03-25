@@ -21,10 +21,10 @@ fi
 IUSE="alsa gstreamer openal pulseaudio qml"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
-	~dev-qt/qtnetwork-${PV}[debug=]
-	~dev-qt/qtwidgets-${PV}[debug=]
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtgui-${PV}:5[debug=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=]
+	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	alsa? ( media-libs/alsa-lib )
 	gstreamer? (
 		media-libs/gstreamer:0.10
@@ -33,6 +33,6 @@ DEPEND="
 	)
 	openal? ( media-libs/openal )
 	pulseaudio? ( media-sound/pulseaudio )
-	qml? ( ~dev-qt/qtdeclarative-${PV}[debug=] )
+	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
