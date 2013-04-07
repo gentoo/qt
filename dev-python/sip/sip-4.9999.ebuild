@@ -38,7 +38,7 @@ RDEPEND="${DEPEND}"
 	=dev-lang/python-2*
 	sys-devel/bison
 	sys-devel/flex
-	doc? ( dev-python/sphinx[$(python_gen_usedep python2*)] )
+	doc? ( dev-python/sphinx[$(python_gen_usedep 'python2*')] )
 "
 
 src_prepare() {
