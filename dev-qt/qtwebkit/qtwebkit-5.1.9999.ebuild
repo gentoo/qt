@@ -63,3 +63,10 @@ pkg_setup() {
 	python-any-r1_pkg_setup
 	qt5-build_pkg_setup
 }
+
+src_prepare() {
+	# bug 458222
+	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
+
+	qt5-build_src_prepare
+}
