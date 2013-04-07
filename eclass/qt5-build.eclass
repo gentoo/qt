@@ -31,17 +31,27 @@ SLOT="5"
 
 case ${PV} in
 	5.9999)
+		# git dev branch
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH="dev"
 		;;
 	5.?.9999)
+		# git stable branch
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH="stable"
 		;;
-	*)
+	*_alpha?|*_beta?|*_rc?)
+		# pre-releases
 		QT5_BUILD_TYPE="release"
 		MY_P="${QT5_MODULE}-opensource-src-${PV/_/-}"
-		SRC_URI="http://releases.qt-project.org/qt5/${PV}/submodules_tar/${MY_P}.tar.xz"
+		SRC_URI="http://download.qt-project.org/development_releases/qt/${PV%.*}/${PV/_/-}/submodules_tar/${MY_P}.tar.xz"
+		S=${WORKDIR}/${MY_P}
+		;;
+	*)
+		# official stable releases
+		QT5_BUILD_TYPE="release"
+		MY_P="${QT5_MODULE}-opensource-src-${PV}"
+		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/submodules_tar/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 esac
