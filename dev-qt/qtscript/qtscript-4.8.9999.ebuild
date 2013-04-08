@@ -6,7 +6,7 @@ EAPI=4
 
 inherit qt4-build
 
-DESCRIPTION="The ECMAScript module for the Qt toolkit"
+DESCRIPTION="The QtScript module for the Qt toolkit"
 SLOT="4"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
