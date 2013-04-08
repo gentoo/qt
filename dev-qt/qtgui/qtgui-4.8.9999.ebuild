@@ -13,6 +13,7 @@ if [[ ${QT4_BUILD_TYPE} == live ]]; then
 else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
+
 IUSE="+accessibility cups dbus egl gif +glib gtkstyle mng nas nis qt3support tiff trace xinerama +xv"
 
 REQUIRED_USE="
@@ -71,7 +72,6 @@ pkg_setup() {
 		src/gui
 		src/scripttools
 		tools/designer
-		tools/linguist/linguist
 		src/plugins/imageformats/gif
 		src/plugins/imageformats/ico
 		src/plugins/imageformats/jpeg
@@ -208,11 +208,9 @@ src_install() {
 	touch "${ED}"/usr/share/qt4/graphicssystems/native || die
 
 	doicon tools/designer/src/designer/images/designer.png
-	newicon tools/linguist/linguist/images/icons/linguist-128-32.png linguist.png
 	newicon tools/qtconfig/images/appicon.png qtconfig.png
 	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 	make_desktop_entry designer Designer designer 'Qt;Development;GUIDesigner'
-	make_desktop_entry linguist Linguist linguist 'Qt;Development;Translation'
 	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
 }
 
