@@ -21,34 +21,29 @@ HOMEPAGE="http://qt.gitorious.org/qt-labs/messagingframework"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug doc examples test"
+IUSE="debug doc examples icu test zlib"
 
 RDEPEND="
-	dev-libs/icu:=
-	sys-libs/zlib
-	>=dev-qt/qtcore-4.6.0:4
-	>=dev-qt/qtgui-4.6.0:4
-	>=dev-qt/qtsql-4.6.0:4
-	examples? ( >=dev-qt/qtwebkit-4.6.0:4 )
+	>=dev-qt/qtcore-4.8:4
+	>=dev-qt/qtgui-4.8:4
+	>=dev-qt/qtsql-4.8:4
+	examples? ( >=dev-qt/qtwebkit-4.8:4 )
+	icu? ( dev-libs/icu:= )
+	zlib? ( sys-libs/zlib )
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	test? ( >=dev-qt/qttest-4.6.0:4 )
+	test? ( >=dev-qt/qttest-4.8:4 )
 	!!<net-libs/qmf-2.0_p201209
 "
 
-DOCS="CHANGES"
-
+DOCS=(CHANGES)
 PATCHES=(
 	"${FILESDIR}/${PN}-tests.patch"
 )
 
 src_prepare() {
 	qt4-r2_src_prepare
-
-	# fix libdir
-	find "${S}" -name '*.pro' -type f -print0 | xargs -0 \
-		sed -i -re "s:/lib(/|$):/$(get_libdir)\1:" || die
 
 	sed -i	-e '/benchmarks/d' \
 		-e '/tests/d' \
@@ -57,6 +52,22 @@ src_prepare() {
 	if ! use examples; then
 		sed -i -e '/examples/d' messagingframework.pro || die
 	fi
+
+	# disable automagic deps
+	if ! use icu; then
+		sed -i -e 's/packagesExist(icu-uc)/false:&/' \
+			src/libraries/qmfclient/qmfclient.pro || die
+	fi
+	if ! use zlib; then
+		sed -i -e 's/packagesExist(zlib)/false:&/' \
+			src/plugins/messageservices/imap/imap.pro || die
+	fi
+
+	# fix libdir
+	find "${S}" -name '*.pro' -type f -print0 | xargs -0 \
+		sed -i -re "s:/lib(/|$):/$(get_libdir)\1:" || die
+	sed -i -e "s:/lib/:/$(get_libdir)/:" \
+		src/libraries/qmfclient/support/qmailnamespace.cpp || die
 }
 
 src_configure() {
