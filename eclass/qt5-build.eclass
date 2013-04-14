@@ -44,14 +44,14 @@ case ${PV} in
 		# pre-releases
 		QT5_BUILD_TYPE="release"
 		MY_P="${QT5_MODULE}-opensource-src-${PV/_/-}"
-		SRC_URI="http://download.qt-project.org/development_releases/qt/${PV%.*}/${PV/_/-}/submodules_tar/${MY_P}.tar.xz"
+		SRC_URI="http://download.qt-project.org/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 	*)
 		# official stable releases
 		QT5_BUILD_TYPE="release"
 		MY_P="${QT5_MODULE}-opensource-src-${PV}"
-		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/submodules_tar/${MY_P}.tar.xz"
+		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/submodules/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 esac
