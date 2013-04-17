@@ -33,7 +33,6 @@ pkg_setup() {
 		src/declarative
 		src/imports
 		src/plugins/qmltooling
-		tools/designer/src/plugins/qdeclarativeview
 		tools/qml
 		tools/qmlplugindump"
 

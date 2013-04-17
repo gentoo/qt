@@ -31,13 +31,11 @@ RDEPEND="${DEPEND}"
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/phonon
-		src/plugins/phonon
-		tools/designer/src/plugins/phononwidgets"
+		src/plugins/phonon"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	QT4_EXTRACT_DIRECTORIES="
 		include
-		src
-		tools"
+		src"
 
 	QCONFIG_ADD="phonon"
 	QCONFIG_DEFINE="QT_PHONON

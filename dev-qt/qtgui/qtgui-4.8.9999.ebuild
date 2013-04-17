@@ -71,7 +71,6 @@ pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/gui
 		src/scripttools
-		tools/designer
 		src/plugins/imageformats/gif
 		src/plugins/imageformats/ico
 		src/plugins/imageformats/jpeg
@@ -79,14 +78,13 @@ pkg_setup() {
 
 	QT4_EXTRACT_DIRECTORIES="
 		include
-		src
-		tools"
+		src"
 
-	use accessibility && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/accessible/widgets"
-	use dbus && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} tools/qdbus/qdbusviewer"
-	use mng && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/mng"
-	use tiff && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES} src/plugins/imageformats/tiff"
-	use trace && QT4_TARGET_DIRECTORIES="${QT4_TARGET_DIRECTORIES}	src/plugins/graphicssystems/trace"
+	use accessibility && QT4_TARGET_DIRECTORIES+=" src/plugins/accessible/widgets"
+	use dbus && QT4_TARGET_DIRECTORIES+=" tools/qdbus/qdbusviewer"
+	use mng && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/mng"
+	use tiff && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/tiff"
+	use trace && QT4_TARGET_DIRECTORIES+=" src/plugins/graphicssystems/trace"
 
 	# mac version does not contain qtconfig?
 	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
@@ -101,15 +99,9 @@ src_prepare() {
 
 	# Add -xvideo to the list of accepted configure options
 	sed -i -e 's:|-xinerama|:&-xvideo|:' configure
-
-	# Don't build plugins this go around, because they depend on qt3support lib
-	sed -i -e 's:CONFIG(shared:# &:g' tools/designer/src/src.pro
 }
 
 src_configure() {
-	export PATH="${S}/bin:${PATH}"
-	export LD_LIBRARY_PATH="${S}/lib:${LD_LIBRARY_PATH}"
-
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
 		$(use gif || echo -no-gif)
@@ -174,21 +166,6 @@ src_install() {
 
 	qt4-build_src_install
 
-	# qt-creator
-	# some qt-creator headers are located
-	# under /usr/include/qt4/QtDesigner/private.
-	# those headers are just includes of the headers
-	# which are located under tools/designer/src/lib/*
-	# So instead of installing both, we create the private folder
-	# and drop tools/designer/src/lib/* headers in it.
-	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		insinto "${QTLIBDIR#${EPREFIX}}"/QtDesigner.framework/Headers/private/
-	else
-		insinto "${QTHEADERDIR#${EPREFIX}}"/QtDesigner/private/
-	fi
-	doins "${S}"/tools/designer/src/lib/shared/*
-	doins "${S}"/tools/designer/src/lib/sdk/*
-
 	# install private headers
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
 		insinto "${QTLIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
@@ -207,11 +184,10 @@ src_install() {
 	echo "default" > "${ED}"/usr/share/qt4/graphicssystems/raster || die
 	touch "${ED}"/usr/share/qt4/graphicssystems/native || die
 
-	doicon tools/designer/src/designer/images/designer.png
 	newicon tools/qtconfig/images/appicon.png qtconfig.png
-	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
-	make_desktop_entry designer Designer designer 'Qt;Development;GUIDesigner'
 	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
+
+	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 }
 
 pkg_postinst() {
