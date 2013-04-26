@@ -2,36 +2,20 @@ Welcome to the qt overlay!
 ==========================
 
 This is where the Gentoo Qt team develops and maintains ebuilds for
-experimental Qt4 versions (pre-releases and "live" code from git or svn) and
+experimental Qt4 versions (pre-releases and "live" code from git) and
 Qt4 related packages. For your convenience we provide some sets and
 ``package.keyword`` files.
+
+The overlay is hosted on Github and on the official Gentoo overlays
+infrastructure at
+
+https://github.com/gentoo/qt
+http://git.overlays.gentoo.org/gitweb/?p=proj/qt.git;a=summary
+
 
 Please note that we use the following versioning scheme:
 
 - 4.x.y_beta, 4.x.y_rc are official pre-releases.
-- 4.x.9999[-kde-qt] is "live" code from Nokia's Qt Software git repository.
-        - 4.x.9999[stable-branch] is cloning the Nokia's stable-branch tree. 
-        This code is consider stable enough for everyday usage but it gets 
-        bumped quite rarely.
-        - 4.x.9999[-stable-branch] is cloning the Nokia's master tree. 
-        This code is highly experimental and gets a lot of daily updates.                
-- 4.6.9999[kde-qt] is "live" code from KDE's kde-qt git repository.
-
-The corresponding sets we define are:
-
-qt-all-4.7
-	the latest official pre-release.
-qt-all-{,4.6,4.7}-live-nokia
-	"live" code from Nokia's Qt Software git repo.
-qt-all-live-kde
-	"live" code from KDE's kde-qt git repo.
-
-If you want to use kde-qt, you should mask the official pre-releases.
-
-Even though we are trying to do our best regarding that build status 
-of live Qt packages, they may not work all the time. You might want to consult 
-our automatically generated page which lists the status of all Qt live ebuilds
-http://dev.gentoo.org/~hwoarang/qt/qt4-live-status.html
 
 You don't need to emerge the Qt ebuilds specifically, they are normally pulled
 in as dependencies for packages that use Qt4. But you may want to have all of
