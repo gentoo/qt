@@ -26,7 +26,8 @@ RDEPEND="sys-auth/pambase
 	sys-power/upower
 	x11-libs/libxcb
 	qt4? ( dev-qt/qtdeclarative:4 )
-	qt5? ( dev-qt/qtdeclarative:5 )"
+	qt5? ( dev-qt/qtdeclarative:5
+	       dev-qt/qtdbus:5 )"
 DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.7.0"
 
