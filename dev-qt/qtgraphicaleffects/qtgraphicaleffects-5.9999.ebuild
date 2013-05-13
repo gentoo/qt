@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit qt5-build
+inherit qt5-build virtualx
 
 DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
 
@@ -22,3 +22,12 @@ RDEPEND="
 	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]
 "
+DEPEND="${RDEPEND}
+	test? ( >=dev-qt/qtgui-${PV}:5[debug=]
+		>=dev-qt/qttest-${PV}:5[debug=] )
+"
+
+src_test() {
+	local VIRTUALX_COMMAND="qt5-build_src_test"
+	virtualmake
+}
