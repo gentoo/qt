@@ -22,4 +22,3 @@ RDEPEND="
 	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]
 "
-RDEPEND="${DEPEND}"
