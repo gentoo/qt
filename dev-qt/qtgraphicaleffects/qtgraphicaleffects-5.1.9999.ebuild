@@ -23,10 +23,7 @@ RDEPEND="
 	>=dev-qt/qtxmlpatterns-${PV}:5[debug=]
 "
 DEPEND="${RDEPEND}
-	test? (
-		>=dev-qt/qtgui-${PV}:5[debug=]
-		>=dev-qt/qttest-${PV}:5[debug=]
-	)
+	test? ( >=dev-qt/qtgui-${PV}:5[debug=] )
 "
 
 src_test() {
