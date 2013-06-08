@@ -1,0 +1,46 @@
+From 048ce11557402f7689a384a6ab02d49e21159cb9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B8rgen=20Lind?= <jorgen.lind@digia.com>
+Date: Fri, 10 May 2013 09:27:34 +0200
+Subject: [PATCH] Add BypassWinowManagerHint
+
+Change-Id: Iaf04172aa4fce8d6b354c1c1fc3c376831ee8e91
+Reviewed-by: Andy Nichols <andy.nichols@digia.com>
+---
+ src/corelib/global/qnamespace.h    |    3 ++-
+ src/corelib/global/qnamespace.qdoc |    6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/src/corelib/global/qnamespace.h b/src/corelib/global/qnamespace.h
+index 95d9baa..74949b8 100644
+--- a/src/corelib/global/qnamespace.h
++++ b/src/corelib/global/qnamespace.h
+@@ -293,7 +293,8 @@ public:
+         WindowType_Mask = 0x000000ff,
+         MSWindowsFixedSizeDialogHint = 0x00000100,
+         MSWindowsOwnDC = 0x00000200,
+-        X11BypassWindowManagerHint = 0x00000400,
++        BypassWindowManagerHint = 0x00000400,
++        X11BypassWindowManagerHint = BypassWindowManagerHint,
+         FramelessWindowHint = 0x00000800,
+         WindowTitleHint = 0x00001000,
+         WindowSystemMenuHint = 0x00002000,
+diff --git a/src/corelib/global/qnamespace.qdoc b/src/corelib/global/qnamespace.qdoc
+index b6ce9e0..9eb0c6b 100644
+--- a/src/corelib/global/qnamespace.qdoc
++++ b/src/corelib/global/qnamespace.qdoc
+@@ -1999,6 +1999,12 @@
+     \value MSWindowsOwnDC  Gives the window its own display
+            context on Windows.
+ 
++    \value BypassWindowManagerHint This flag can be used to indicate to the platform plugin
++           that "all" window manager protocols should be disabled. This flag will behave
++           different depending on what operating system the application is running on and
++           what window manager is running. The flag can be used to get a native window
++           with no configuration set.
++
+     \value X11BypassWindowManagerHint  Bypass the window
+            manager completely. This results in a borderless window
+            that is not managed at all (i.e., no keyboard input unless
+-- 
+1.7.1
+
