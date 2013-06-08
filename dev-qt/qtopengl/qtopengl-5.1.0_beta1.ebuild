@@ -16,23 +16,32 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE=""
+IUSE="egl gles2"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
 	~dev-qt/qtgui-${PV}[debug=,opengl]
 	~dev-qt/qtwidgets-${PV}[debug=]
 	virtual/opengl
+	egl? ( media-libs/mesa[egl] )
 "
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
 	src/opengl
 )
+pkg_setup() {
+	QCONFIG_ADD+="opengl
+		$(use egl && echo egl)
+		$(use gles2 && echo opengles2)"
+	QCONFIG_DEFINE+="QT_OPENGL
+		$(use gles2 && echo QT_OPENGLES2)"
+}
 
 src_configure() {
 	local myconf=(
-		-opengl
+		$(qt_use egl)
+		-opengl $(use gles2 && echo es2)
 	)
 	qt5-build_src_configure
 }

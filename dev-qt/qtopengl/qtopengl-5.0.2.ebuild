@@ -16,7 +16,7 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="egl"
+IUSE="egl gles2"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
@@ -30,11 +30,18 @@ RDEPEND="${DEPEND}"
 QT5_TARGET_SUBDIRS=(
 	src/opengl
 )
+pkg_setup() {
+	QCONFIG_ADD+="opengl
+		$(use egl && echo egl)
+		$(use gles2 && echo opengles2)"
+	QCONFIG_DEFINE+="QT_OPENGL
+		$(use gles2 && echo QT_OPENGLES2)"
+}
 
 src_configure() {
 	local myconf=(
 		$(qt_use egl)
-		-opengl
+		-opengl $(use gles2 && echo es2)
 	)
 	qt5-build_src_configure
 }
