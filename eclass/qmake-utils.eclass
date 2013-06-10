@@ -12,6 +12,9 @@
 # Utility eclass providing wrapper functions for Qt4 and Qt5 qmake.
 # Requires EAPI=2 or later.
 
+if [[ ${___ECLASS_ONCE_QMAKE_UTILS} != "recur -_+^+_- spank" ]]; then
+___ECLASS_ONCE_QMAKE_UTILS="recur -_+^+_- spank"
+
 case ${EAPI} in
 	2|3|4|5) : ;;
 	*)	 die "qmake-utils.eclass: unsupported EAPI=${EAPI:-0}" ;;
@@ -244,3 +247,5 @@ eqmake5() {
 		die "eqmake5 failed"
 	fi
 }
+
+fi
