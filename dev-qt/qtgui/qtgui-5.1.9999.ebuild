@@ -87,6 +87,8 @@ pkg_setup() {
 			$(use gles2 && echo QT_EGL)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
 
+	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
+
 	qt5-build_pkg_setup
 }
 
