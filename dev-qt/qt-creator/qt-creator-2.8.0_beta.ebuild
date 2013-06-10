@@ -25,7 +25,7 @@ else
 fi
 
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~ppc ~x86"
 
 QTC_PLUGINS=(android autotools:autotoolsprojectmanager bazaar
 	clearcase cmake:cmakeprojectmanager cvs fakevim git
