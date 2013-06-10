@@ -17,7 +17,50 @@ case ${EAPI} in
 	*)	 die "qmake-utils.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-inherit multilib toolchain-funcs
+inherit eutils multilib toolchain-funcs
+
+# @FUNCTION: qmake-utils_find_pro_file
+# @RETURN: zero or one qmake .pro file names
+# @INTERNAL
+# @DESCRIPTION:
+# Outputs a project file name that can be passed to eqmake.
+#   0 *.pro files found --> outputs null string;
+#   1 *.pro file found --> outputs its name;
+#   2 or more *.pro files found --> if "${PN}.pro" or
+#       "$(basename ${S}).pro" are there, outputs one of them.
+qmake-utils_find_pro_file() {
+	local dir_name=$(basename "${S}")
+
+	# set nullglob to avoid expanding *.pro to the literal
+	# string "*.pro" when there are no matching files
+	eshopts_push -s nullglob
+	local pro_files=(*.pro)
+	eshopts_pop
+
+	case ${#pro_files[@]} in
+	0)
+		: ;;
+	1)
+		echo "${pro_files}"
+		;;
+	*)
+		for pro_file in "${pro_files[@]}"; do
+			if [[ ${pro_file%.pro} == ${dir_name} || ${pro_file%.pro} == ${PN} ]]; then
+				echo "${pro_file}"
+				break
+			fi
+		done
+		;;
+	esac
+}
+
+# @VARIABLE: EQMAKE4_EXCLUDE
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# List of files to be excluded from eqmake4 CONFIG processing.
+# Paths are relative to the current working directory (usually ${S}).
+#
+# Example: EQMAKE4_EXCLUDE="ignore/me.pro foo/*"
 
 # @FUNCTION: eqmake4
 # @USAGE: [project_file] [parameters to qmake]
@@ -28,8 +71,9 @@ inherit multilib toolchain-funcs
 # that it exists. Otherwise eqmake4 fails.
 #
 # All other arguments are appended unmodified to qmake command line.
+#
 # For recursive build systems, i.e. those based on the subdirs template,
-# you should run eqmake5 on the top-level project file only, unless you
+# you should run eqmake4 on the top-level project file only, unless you
 # have a valid reason to do otherwise. During the building, qmake will
 # be automatically re-invoked with the right arguments on every directory
 # specified inside the top-level project file.
@@ -46,7 +90,7 @@ eqmake4() {
 	# if not, then search for it
 	local regexp='.*\.pro'
 	if ! [[ ${1} =~ ${regexp} ]]; then
-		local project_file=$(_find_project_file)
+		local project_file=$(qmake-utils_find_pro_file)
 		if [[ -z ${project_file} ]]; then
 			echo
 			eerror "No project files found in '${PWD}'!"
@@ -65,6 +109,7 @@ eqmake4() {
 		config_add="debug"
 		config_remove="release"
 	fi
+
 	local awkscript='BEGIN {
 				printf "### eqmake4 was here ###\n" > file;
 				printf "CONFIG -= debug_and_release %s\n", remove >> file;
@@ -87,16 +132,25 @@ eqmake4() {
 			END {
 				print fixed;
 			}'
-	local file=
+
+	[[ -n ${EQMAKE4_EXCLUDE} ]] && eshopts_push -o noglob
+
+	local file
 	while read file; do
+		local excl
+		for excl in ${EQMAKE4_EXCLUDE}; do
+			[[ ${file} == ${excl} ]] && continue 2
+		done
 		grep -q '^### eqmake4 was here ###$' "${file}" && continue
+
 		local retval=$({
-				rm -f "${file}" || echo FAIL
-				awk -v file="${file}" \
-					-v add=${config_add} \
-					-v remove=${config_remove} \
-					-- "${awkscript}" || echo FAIL
-				} < "${file}")
+			rm -f "${file}" || echo FAIL
+			awk -v file="${file}" \
+				-v add=${config_add} \
+				-v remove=${config_remove} \
+				-- "${awkscript}" || echo FAIL
+			} < "${file}")
+
 		if [[ ${retval} == 1 ]]; then
 			einfo " - fixed CONFIG in ${file}"
 		elif [[ ${retval} != 0 ]]; then
@@ -104,6 +158,8 @@ eqmake4() {
 			die "eqmake4 failed to process ${file}"
 		fi
 	done < <(find . -type f -name '*.pr[io]' -printf '%P\n' 2>/dev/null)
+
+	[[ -n ${EQMAKE4_EXCLUDE} ]] && eshopts_pop
 
 	"${EPREFIX}"/usr/bin/qmake \
 		-makefile \
