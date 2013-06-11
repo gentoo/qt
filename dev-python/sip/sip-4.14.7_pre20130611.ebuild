@@ -27,7 +27,7 @@ else
 fi
 
 # Sub-slot based on SIP_API_MAJOR_NR from siplib/sip.h.in
-SLOT="0/9"
+SLOT="0/10"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 IUSE="debug doc"
 
