@@ -187,6 +187,13 @@ src_install() {
 	newicon tools/qtconfig/images/appicon.png qtconfig.png
 	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
 
+	# see bug 388551
+	cat <<-EOF > "${T}"/qtgui.sh
+	export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
+	EOF
+	insinto /etc/profile.d
+	doins "${T}"/qtgui.sh
+
 	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 }
 
@@ -195,12 +202,4 @@ pkg_postinst() {
 
 	# raster is the default graphicssystem, set it on first install
 	eselect qtgraphicssystem set raster --use-old
-
-	if use gtkstyle; then
-		# see bug 388551
-		elog "For Qt's GTK style to work, you need to either export"
-		elog "the following variable into your environment:"
-		elog '  GTK2_RC_FILES="$HOME/.gtkrc-2.0"'
-		elog "or alternatively install gnome-base/libgnomeui"
-	fi
 }
