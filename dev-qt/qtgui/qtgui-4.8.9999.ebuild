@@ -188,11 +188,13 @@ src_install() {
 	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
 
 	# see bug 388551
-	cat <<-EOF > "${T}"/qtgui.sh
-	export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
-	EOF
-	insinto /etc/profile.d
-	doins "${T}"/qtgui.sh
+	if use gtkstyle; then
+		cat <<-EOF > "${T}"/qtgui.sh
+		export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
+		EOF
+		insinto /etc/profile.d
+		doins "${T}"/qtgui.sh
+	fi
 
 	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 }
