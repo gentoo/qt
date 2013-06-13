@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 EGIT_REPO_URI="git://gitorious.org/goldendict/goldendict"
 LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
 
 inherit qt4-r2 git-2
 
 DESCRIPTION="Feature-rich dictionary lookup program"
-HOMEPAGE="http://goldendict.berlios.de/"
+HOMEPAGE="http://goldendict.org/"
 
 LICENSE="GPL-3"
 SLOT="0"
