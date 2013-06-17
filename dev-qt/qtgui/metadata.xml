@@ -19,9 +19,8 @@
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name="trace">
 			Build the 'trace' graphicssystem engine which allows to record
-			all drawing operations into a trace buffer. Later it can be replayed
-			with the qttracereplay utility
-		</flag>
+			all drawing operations into a trace buffer. The trace can be replayed
+			later with the qttracereplay tool.</flag>
 	</use>
 	<upstream>
 		<bugs-to>https://bugreports.qt-project.org/</bugs-to>

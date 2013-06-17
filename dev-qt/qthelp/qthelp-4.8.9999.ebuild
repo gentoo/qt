@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit eutils qt4-build
 
-DESCRIPTION="The Help module and Assistant application for the Qt toolkit"
+DESCRIPTION="The Help module for the Qt toolkit"
 SRC_URI+="
 	compat? (
 		ftp://ftp.qt.nokia.com/qt/source/qt-assistant-qassistantclient-library-compat-src-4.6.3.tar.gz
@@ -19,38 +19,30 @@ if [[ ${QT4_BUILD_TYPE} == live ]]; then
 else
 	KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~ppc-macos ~x64-macos"
 fi
-IUSE="compat doc +glib qt3support trace webkit"
+
+IUSE="compat doc"
 
 DEPEND="
-	~dev-qt/qtgui-${PV}[aqua=,debug=,glib=,qt3support=,trace?]
-	~dev-qt/qtsql-${PV}[aqua=,debug=,qt3support=,sqlite]
-	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=] )
+	~dev-qt/qtcore-${PV}[aqua=,debug=]
+	~dev-qt/qtgui-${PV}[aqua=,debug=]
+	~dev-qt/qtsql-${PV}[aqua=,debug=,sqlite]
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-4.8.2+gcc-4.7.patch"
-)
-
 pkg_setup() {
-	# Pixeltool isn't really assistant related, but it relies on
-	# the assistant libraries.
 	QT4_TARGET_DIRECTORIES="
-		tools/assistant
-		tools/pixeltool
+		tools/assistant/lib
+		tools/assistant/qhelpgenerator
+		tools/assistant/qcollectiongenerator
+		tools/assistant/qhelpconverter
 		tools/qdoc3"
 	QT4_EXTRACT_DIRECTORIES="
-		tools
 		demos
+		doc
 		examples
-		src
 		include
-		doc"
-
-	use trace && QT4_TARGET_DIRECTORIES+=" tools/qttracereplay"
-
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		${QT4_EXTRACT_DIRECTORIES}"
+		src
+		tools"
 
 	qt4-build_pkg_setup
 }
@@ -74,23 +66,17 @@ src_prepare() {
 
 	use compat && epatch "${FILESDIR}"/${PN}-4.7-fix-compat.patch
 
-	# bug 401173
-	use webkit || epatch "${FILESDIR}"/disable-webkit.patch
-
 	# bug 348034
 	sed -i -e '/^sub-qdoc3\.depends/d' doc/doc.pri || die
 }
 
 src_configure() {
 	myconf+="
-		-no-xkb -no-fontconfig -no-xrandr
-		-no-xfixes -no-xcursor -no-xinerama -no-xshape -no-sm -no-opengl
-		-no-nas-sound -no-dbus -iconv -no-cups -no-nis -no-gif -no-libpng
-		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-phonon
-		-no-xmlpatterns -no-freetype -no-libtiff -no-accessibility
-		-no-fontconfig -no-multimedia -no-svg
-		$(qt_use qt3support) $(qt_use webkit)"
-	use glib || myconf+=" -no-glib"
+		-system-libpng -system-libjpeg -system-zlib
+		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite2 -no-sql-odbc
+		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
+		-no-multimedia -no-opengl -no-phonon -no-svg -no-webkit -no-xmlpatterns
+		-no-nas-sound -no-dbus -no-cups -no-nis -fontconfig"
 
 	qt4-build_src_configure
 }
@@ -103,7 +89,7 @@ src_compile() {
 	qt4-build_src_compile
 
 	# ugly hack to build docs
-	qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" projects.pro || die
+	"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die
 
 	if use doc; then
 		emake docs
@@ -125,11 +111,8 @@ src_install() {
 		emake INSTALL_ROOT="${D}" install_htmldocs
 	fi
 
-	doicon tools/assistant/tools/assistant/images/assistant.png
-	make_desktop_entry assistant Assistant assistant 'Qt;Development'
-
 	if use compat; then
-		insinto /usr/share/qt4/mkspecs/features
+		insinto "${QTDATADIR#${EPREFIX}}"/mkspecs/features
 		doins tools/assistant/compat/features/assistant.prf
 	fi
 }

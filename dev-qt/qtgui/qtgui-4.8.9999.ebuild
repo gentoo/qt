@@ -84,7 +84,7 @@ pkg_setup() {
 	use dbus && QT4_TARGET_DIRECTORIES+=" tools/qdbus/qdbusviewer"
 	use mng && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/tiff"
-	use trace && QT4_TARGET_DIRECTORIES+=" src/plugins/graphicssystems/trace"
+	use trace && QT4_TARGET_DIRECTORIES+=" src/plugins/graphicssystems/trace tools/qttracereplay"
 
 	# mac version does not contain qtconfig?
 	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
