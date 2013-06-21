@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 RDEPEND="
-	>=dev-db/sqlite-3.7.14[threadsafe]
+	>=dev-db/sqlite-3.7.17
 	|| ( media-video/mplayer media-video/mplayer2 )
 	>=dev-qt/qtcore-4.8:4
 	>=dev-qt/qtgui-4.8:4
