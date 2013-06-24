@@ -30,6 +30,7 @@ RDEPEND="${DEPEND}"
 QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap
 	src/tools/moc
+	src/tools/qdoc
 	src/tools/rcc
 	src/corelib
 )
