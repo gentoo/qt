@@ -25,6 +25,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-lin
 
 IUSE="X dbus debug declarative doc examples help kde multimedia opengl phonon script scripttools sql svg webkit xmlpatterns"
 REQUIRED_USE="
+	${PYTHON_REQUIRED_USE}
 	declarative? ( X )
 	help? ( X )
 	multimedia? ( X )
