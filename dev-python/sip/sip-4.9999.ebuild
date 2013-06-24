@@ -41,6 +41,8 @@ RDEPEND="${DEPEND}"
 	doc? ( dev-python/sphinx[$(python_gen_usedep 'python2*')] )
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
 
