@@ -39,7 +39,7 @@ DEPEND="${RDEPEND}
 
 DOCS=(CHANGES)
 PATCHES=(
-	"${FILESDIR}/${PN}-tests.patch"
+	"${FILESDIR}/${PN}-4.0.2-tests.patch"
 )
 
 src_prepare() {
@@ -83,14 +83,14 @@ src_test() {
 	emake
 
 	einfo "Running tests"
-	export QMF_DATA="${T}"
+	export QMF_DATA=${T}
 	local fail=false test=
-	for test in locks longstream longstring python_email qcop qlogsystem \
-			qmailaddress qmailcodec qmaillog qmailmessage \
-			qmailmessagebody qmailmessageheader qmailmessagepart \
-			qmailnamespace qprivateimplementation; do
-		if ! LC_ALL=C ./tst_${test}/tst_${test}; then
-			eerror "'${test}' test failed!"
+	for test in tst_*; do
+		# skip test that requires messageserver to be running
+		[[ ${test} == tst_qmailstorageaction ]] && continue
+
+		if ! LC_ALL=C ./${test}/${test}; then
+			eerror "${test#tst_} test failed!"
 			fail=true
 		fi
 		echo
