@@ -2,10 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/media-video/elltube/elltube-0.3.ebuild,v 1.1 2010/02/15 23:20:17 hwoarang Exp $
 
-inherit eutils subversion
+EAPI=5
 
-DESCRIPTION="A YouTube Downloader and Converter"
+inherit subversion
+
+DESCRIPTION="A YouTube downloader and converter"
 HOMEPAGE="http://sourceforge.net/projects/elltube"
+
 ESVN_REPO_URI="http://elltube.svn.sourceforge.net/svnroot/elltube/trunk/"
 ESVN_PROJECT="elltube"
 
@@ -14,16 +17,18 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND=">=dev-lang/python-2.4
+RDEPEND="
+	>=dev-lang/python-2.4
 	dev-python/PyQt4
-	media-video/ffmpeg"
+	media-video/ffmpeg
+"
 
 src_compile() {
-	#just pass since make command does nasty stuff :)
-	true
+	# just pass since make does nasty stuff :)
+	:
 }
 
 src_install() {
-	emake DESTDIR="${D}" PREFIX="/usr" install || die "emake install failed"
-	dodoc CHANGELOG || die "dodoc failed"
+	emake DESTDIR="${D}" PREFIX="${EPREFIX}/usr" install
+	dodoc CHANGELOG
 }
