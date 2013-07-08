@@ -74,6 +74,7 @@ pkg_setup() {
 		src/plugins/imageformats/gif
 		src/plugins/imageformats/ico
 		src/plugins/imageformats/jpeg
+		src/plugins/imageformats/tga
 		src/plugins/inputmethods"
 
 	QT4_EXTRACT_DIRECTORIES="
