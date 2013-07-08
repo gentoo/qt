@@ -14,7 +14,7 @@ else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
 
-IUSE="+accessibility cups dbus egl gif +glib gtkstyle mng nas nis qt3support tiff trace xinerama +xv"
+IUSE="+accessibility cups dbus egl +glib gtkstyle mng nas nis qt3support tiff trace xinerama +xv"
 
 REQUIRED_USE="
 	gtkstyle? ( glib )
@@ -105,7 +105,6 @@ src_prepare() {
 src_configure() {
 	myconf="$(qt_use accessibility)
 		$(qt_use cups)
-		$(use gif || echo -no-gif)
 		$(qt_use glib)
 		$(qt_use mng libmng system)
 		$(qt_use nas nas-sound system)
