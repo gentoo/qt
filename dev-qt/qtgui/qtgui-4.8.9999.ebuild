@@ -139,7 +139,7 @@ src_configure() {
 src_install() {
 	QCONFIG_ADD="
 		mitshm tablet x11sm xcursor xfixes xinput xkb xrandr xrender xshape xsync
-		fontconfig gif png system-png jpeg system-jpeg
+		fontconfig system-freetype gif png system-png jpeg system-jpeg
 		$(usev accessibility)
 		$(usev cups)
 		$(use mng && echo system-mng)
@@ -148,11 +148,11 @@ src_install() {
 		$(use tiff && echo system-tiff)
 		$(usev xinerama)
 		$(use xv && echo xvideo)"
-	QCONFIG_REMOVE="no-gif no-jpeg no-png"
+	QCONFIG_REMOVE="no-freetype no-gif no-jpeg no-png no-gui"
 	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY)
 			$(use cups && echo QT_CUPS)
 			$(use egl && echo QT_EGL)
-			QT_FONTCONFIG
+			QT_FONTCONFIG QT_FREETYPE
 			$(use gtkstyle && echo QT_STYLE_GTK)
 			QT_IMAGEFORMAT_JPEG QT_IMAGEFORMAT_PNG
 			$(use mng && echo QT_IMAGEFORMAT_MNG)
