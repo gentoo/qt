@@ -11,7 +11,7 @@ SLOT="4"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x64-macos"
+	KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x64-macos"
 fi
 IUSE="dbus declarative kde multimedia opengl openvg qt3support webkit xmlpatterns"
 
