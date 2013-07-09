@@ -14,7 +14,7 @@ else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
 
-IUSE="+accessibility cups dbus egl +glib gtkstyle mng nas nis qt3support tiff trace xinerama +xv"
+IUSE="+accessibility cups egl +glib gtkstyle mng nas nis qt3support tiff trace xinerama +xv"
 
 REQUIRED_USE="
 	gtkstyle? ( glib )
@@ -43,7 +43,6 @@ RDEPEND="
 		xv? ( x11-libs/libXv )
 	)
 	cups? ( net-print/cups )
-	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=] )
 	egl? ( media-libs/mesa[egl] )
 	gtkstyle? (
 		x11-libs/cairo[-qt4]
@@ -82,7 +81,6 @@ pkg_setup() {
 		src"
 
 	use accessibility && QT4_TARGET_DIRECTORIES+=" src/plugins/accessible/widgets"
-	use dbus && QT4_TARGET_DIRECTORIES+=" tools/qdbus/qdbusviewer"
 	use mng && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/tiff"
 	use trace && QT4_TARGET_DIRECTORIES+=" src/plugins/graphicssystems/trace tools/qttracereplay"
@@ -110,8 +108,6 @@ src_configure() {
 		$(qt_use nas nas-sound system)
 		$(qt_use nis)
 		$(qt_use tiff libtiff system)
-		$(qt_use dbus qdbus)
-		$(qt_use dbus)
 		$(qt_use egl)
 		$(qt_use qt3support)
 		$(qt_use gtkstyle)
@@ -129,11 +125,10 @@ src_configure() {
 	qt4-build_src_configure
 
 	if use gtkstyle; then
-		einfo "patching the Makefile to fix qgtkstyle compilation"
-		sed "s:-I/usr/include/qt4 ::" -i src/gui/Makefile ||
-			die "sed failed"
+		sed -i -e 's:-I/usr/include/qt4 ::' src/gui/Makefile || die "sed failed"
 	fi
-	sed -i -e "s:-I/usr/include/qt4/QtGui ::" src/gui/Makefile || die "sed failed"
+
+	sed -i -e 's:-I/usr/include/qt4/QtGui ::' src/gui/Makefile || die "sed failed"
 }
 
 src_install() {
@@ -187,16 +182,15 @@ src_install() {
 	newicon tools/qtconfig/images/appicon.png qtconfig.png
 	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
 
-	# see bug 388551
+	# bug 388551
 	if use gtkstyle; then
-		cat <<-EOF > "${T}"/qtgui.sh
+		local tempfile=${T}/${PN}${SLOT}.sh
+		cat <<-EOF > "${tempfile}"
 		export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
 		EOF
 		insinto /etc/profile.d
-		doins "${T}"/qtgui.sh
+		doins "${tempfile}"
 	fi
-
-	use dbus && newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 }
 
 pkg_postinst() {
