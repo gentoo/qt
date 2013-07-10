@@ -28,7 +28,7 @@ PDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/moc-workaround-for-BOOST_JOIN.patch"
+	"${FILESDIR}/moc-boost-lexical-cast.patch"
 )
 
 pkg_setup() {
@@ -46,13 +46,7 @@ pkg_setup() {
 		tools/linguist/lupdate"
 
 	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include/Qt
-		include/QtCore
-		include/QtDeclarative
-		include/QtGui
-		include/QtNetwork
-		include/QtScript
-		include/QtXml
+		include
 		src/plugins/plugins.pro
 		src/plugins/qpluginbase.pri
 		src/src.pro
