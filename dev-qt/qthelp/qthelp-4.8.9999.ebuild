@@ -32,9 +32,9 @@ RDEPEND="${DEPEND}"
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		tools/assistant/lib
-		tools/assistant/qhelpgenerator
-		tools/assistant/qcollectiongenerator
-		tools/assistant/qhelpconverter
+		tools/assistant/tools/qhelpgenerator
+		tools/assistant/tools/qcollectiongenerator
+		tools/assistant/tools/qhelpconverter
 		tools/qdoc3"
 	QT4_EXTRACT_DIRECTORIES="
 		demos
