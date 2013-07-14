@@ -24,7 +24,7 @@ fi
 
 LICENSE="vim"
 SLOT="0"
-IUSE="acl cscope debug gpm nls perl python ruby"
+IUSE="acl cscope debug gpm lua nls perl python ruby"
 
 RDEPEND="app-admin/eselect-vi
 	>=app-editors/vim-core-7.3.762[acl?]
@@ -34,8 +34,9 @@ RDEPEND="app-admin/eselect-vi
 	acl? ( kernel_linux? ( sys-apps/acl ) )
 	cscope? ( dev-util/cscope )
 	gpm? ( sys-libs/gpm )
+	lua? ( dev-lang/lua )
 	nls? ( virtual/libintl )
-	perl? ( dev-lang/perl )
+	perl? ( >=dev-lang/perl-5.16.0 )
 	python? ( ${PYTHON_DEPS} )
 	ruby? ( || ( dev-lang/ruby:1.9 dev-lang/ruby:1.8 ) )"
 DEPEND="${RDEPEND}"
@@ -52,6 +53,7 @@ src_configure() {
 	myconf+=" $(use_enable acl)"
 	myconf+=" $(use_enable gpm)"
 	myconf+=" $(use_enable nls)"
+	myconf+=" $(use_enable lua luainterp)"
 	myconf+=" $(use_enable perl perlinterp)"
 	myconf+=" $(use_enable python pythoninterp)"
 	myconf+=" $(use_enable ruby rubyinterp)"
