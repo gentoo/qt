@@ -31,6 +31,7 @@ RDEPEND="${DEPEND}"
 
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
+		tools/assistant/lib/fulltextsearch
 		tools/assistant/lib
 		tools/assistant/tools/qhelpgenerator
 		tools/assistant/tools/qcollectiongenerator
