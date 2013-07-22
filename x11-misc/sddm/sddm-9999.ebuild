@@ -24,7 +24,7 @@ REQUIRED_USE="^^ ( qt4 qt5 )"
 
 RDEPEND="sys-auth/pambase
 	sys-power/upower
-	x11-libs/libxcb
+	x11-libs/libxcb[xkb]
 	qt4? ( dev-qt/qtdeclarative:4 )
 	qt5? ( dev-qt/qtdeclarative:5
 	       dev-qt/qtdbus:5 )"
