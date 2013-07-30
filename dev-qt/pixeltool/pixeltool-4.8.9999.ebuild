@@ -26,6 +26,8 @@ pkg_setup() {
 	QT4_TARGET_DIRECTORIES="tools/pixeltool"
 	QT4_EXTRACT_DIRECTORIES="
 		include
+		src/corelib
+		src/gui
 		tools/pixeltool"
 
 	qt4-build_pkg_setup
