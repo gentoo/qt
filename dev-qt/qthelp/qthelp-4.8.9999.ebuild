@@ -84,7 +84,7 @@ src_configure() {
 		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
-		-no-multimedia -no-opengl -no-phonon -no-svg -no-webkit -no-xmlpatterns
+		-no-multimedia -no-opengl -no-phonon -no-qt3support -no-svg -no-webkit -no-xmlpatterns
 		-no-nas-sound -no-cups -no-nis -fontconfig"
 
 	qt4-build_src_configure
