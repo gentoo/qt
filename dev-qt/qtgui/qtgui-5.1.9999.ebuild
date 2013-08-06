@@ -36,7 +36,7 @@ RDEPEND="
 		media-libs/mesa[egl,gles]
 	) )
 	glib? ( dev-libs/glib:2 )
-	jpeg? ( virtual/jpeg )
+	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
 		virtual/udev

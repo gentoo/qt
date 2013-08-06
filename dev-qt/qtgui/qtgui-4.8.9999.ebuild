@@ -29,7 +29,7 @@ RDEPEND="
 	media-libs/freetype:2
 	media-libs/libpng:0=
 	sys-libs/zlib
-	virtual/jpeg
+	virtual/jpeg:0
 	!aqua? (
 		x11-libs/libICE
 		x11-libs/libSM
