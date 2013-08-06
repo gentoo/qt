@@ -30,7 +30,7 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/libpng:0=
 	sys-libs/zlib
-	virtual/jpeg
+	virtual/jpeg:0
 	virtual/opengl
 	x11-libs/libX11
 	x11-libs/libXcomposite
