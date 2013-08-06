@@ -11,13 +11,13 @@ EGIT_REPO_URI="git://crengine.git.sourceforge.net/gitroot/crengine/crengine"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="media-libs/freetype
-	media-libs/libpng:=
+	media-libs/libpng:0=
 	sys-libs/zlib
-	virtual/jpeg
+	virtual/jpeg:0
 	dev-qt/qtcore:4
 	dev-qt/qtgui:4"
 RDEPEND="${DEPEND}
