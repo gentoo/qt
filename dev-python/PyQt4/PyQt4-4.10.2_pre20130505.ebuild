@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.10.2.ebuild,v 1.2 2013/07/08 06:04:50 pesa Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_5,2_6,2_7,3_1,3_2,3_3} )
+PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
 REVISION=6f54723ef2ba
 
 inherit eutils qt4-r2 python-r1 toolchain-funcs
