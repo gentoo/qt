@@ -4,7 +4,7 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python{3_1,3_2} )
+PYTHON_COMPAT=( python3_2 )
 
 EGIT_REPO_URI="https://github.com/oconnor663/linuxmessenger"
 
