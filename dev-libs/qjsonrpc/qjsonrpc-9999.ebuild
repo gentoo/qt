@@ -2,16 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit qt4-r2 git-2
+inherit multilib qt4-r2 git-2
 
-DESCRIPTION="Qt-based library implementing the JSON-RPC 2.0 protocol"
+DESCRIPTION="Qt implementation of the JSON-RPC 2.0 protocol"
 HOMEPAGE="http://symbiosoft.net/projects/qjsonrpc"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}
-	https://git.gitorious.org/${PN}/${PN}"
+EGIT_REPO_URI="https://bitbucket.org/devonit/qjsonrpc"
 
-LICENSE="LGPL-3"
+LICENSE="LGPL-2.1+"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug test"
@@ -19,15 +18,16 @@ IUSE="debug test"
 DEPEND=">=dev-qt/qtcore-4.7:4"
 RDEPEND="${DEPEND}"
 
+DOCS=(AUTHORS CHANGES TODO)
+
 src_prepare() {
 	qt4-r2_src_prepare
 
 	if ! use test; then
-		sed -i -e '/SUBDIRS += tests/d' ${PN}.pro || die
+		sed -i -e 's/tests//' qjsonrpc.pro || die
 	fi
 }
 
-src_install() {
-	dolib.a lib/libqjsonrpc.a
-	dodoc AUTHORS TODO
+src_configure() {
+	eqmake4 LIBDIR="$(get_libdir)"
 }
