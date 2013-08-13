@@ -13,17 +13,25 @@ EGIT_REPO_URI="git://github.com/flavio/${PN}.git"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug doc test"
+IUSE="debug doc +qt4 qt5 test"
 
-RDEPEND="dev-qt/qtcore:4"
+RDEPEND="
+	qt4? ( dev-qt/qtcore:4 )
+	qt5? ( dev-qt/qtcore:5 )"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )
-	test? ( dev-qt/qttest:4 )"
+	test? (
+		qt4? ( dev-qt/qttest:4 )
+		qt5? ( dev-qt/qttest:5 )
+	)"
+
+REQUIRED_USE="^^ ( qt4 qt5 )"
 
 DOCS=( ChangeLog README.md )
 
 src_configure() {
 	local mycmakeargs=(
+		$(cmake-utils_use qt4 QT4_BUILD)
 		$(cmake-utils_use test QJSON_BUILD_TESTS)
 	)
 
