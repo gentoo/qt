@@ -5,10 +5,6 @@
 	<email>pesa@gentoo.org</email>
 	<name>Davide Pesavento</name>
 </maintainer>
-<maintainer>
-	<email>hwoarang@gentoo.org</email>
-	<name>Markos Chandras</name>
-</maintainer>
 <herd>qt</herd>
 <use>
 	<flag name="android">Build Android plugin</flag>
@@ -17,7 +13,6 @@
 	<flag name="clearcase">Add support for IBM ClearCase version control system (requires manual installation of ClearCase client)</flag>
 	<flag name="cmake">Enable cmake project manager plugin</flag>
 	<flag name="fakevim">Enable support for vim-like key bindings</flag>
-	<flag name="git">Add support for <pkg>dev-vcs/git</pkg> version control system</flag>
 	<flag name="madde">Enable integration with MADDE (Maemo Application Development and Debugging Environment)</flag>
 	<flag name="mercurial">Add support for <pkg>dev-vcs/mercurial</pkg> version control system</flag>
 	<flag name="perforce">Add support for Perforce version control system (requires manual installation of Perforce client)</flag>
