@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/pyside/pyside-1.2.0.ebuild,v 1.1 2013/08/15 10:19:36 pesa Exp $
 
 EAPI=5
 
@@ -11,16 +11,17 @@ inherit multilib cmake-utils python-r1 virtualx git-2
 MY_P="${PN}-qt4.8+${PV}"
 
 DESCRIPTION="Python bindings for the Qt framework"
-HOMEPAGE="http://www.pyside.org/"
+HOMEPAGE="http://qt-project.org/wiki/PySide"
 EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="X declarative help kde multimedia opengl phonon script scripttools sql svg test webkit xmlpatterns"
+IUSE="X declarative designer help kde multimedia opengl phonon script scripttools sql svg test webkit xmlpatterns"
 
 REQUIRED_USE="
 	declarative? ( X )
+	designer? ( X )
 	help? ( X )
 	multimedia? ( X )
 	opengl? ( X )
@@ -43,6 +44,7 @@ RDEPEND="
 		>=dev-qt/qttest-${QT_PV}
 	)
 	declarative? ( >=dev-qt/qtdeclarative-${QT_PV} )
+	designer? ( || ( dev-qt/designer:4 <dev-qt/qtgui-4.8.5:4 ) )
 	help? ( >=dev-qt/qthelp-${QT_PV} )
 	multimedia? ( >=dev-qt/qtmultimedia-${QT_PV} )
 	opengl? ( >=dev-qt/qtopengl-${QT_PV} )
@@ -82,10 +84,10 @@ src_configure() {
 	local mycmakeargs=(
 		$(cmake-utils_use_build test TESTS)
 		$(cmake-utils_use_disable X QtGui)
-		$(cmake-utils_use_disable X QtDesigner)
 		$(cmake-utils_use_disable X QtTest)
-		$(cmake-utils_use_disable X QtUiTools)
 		$(cmake-utils_use_disable declarative QtDeclarative)
+		$(cmake-utils_use_disable designer QtDesigner)
+		$(cmake-utils_use_disable designer QtUiTools)
 		$(cmake-utils_use_disable help QtHelp)
 		$(cmake-utils_use_disable multimedia QtMultimedia)
 		$(cmake-utils_use_disable opengl QtOpenGL)
