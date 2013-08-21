@@ -18,7 +18,8 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="dev-qt/qtcore:4
-	dev-qt/qtgui:4"
+	dev-qt/qtgui:4
+	x11-libs/qtlockedfile"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
