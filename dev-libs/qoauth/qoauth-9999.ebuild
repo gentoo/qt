@@ -21,7 +21,7 @@ DEPEND="${COMMON_DEPEND}
 	test? ( dev-qt/qttest:4 )
 "
 RDEPEND="${COMMON_DEPEND}
-	app-crypt/qca-ossl:2[debug?]
+	|| ( ~app-crypt/qca-9999:2[debug?,openssl,qt4] <app-crypt/qca-ossl-9999:2[debug?] )
 "
 
 DOCS="README CHANGELOG"
