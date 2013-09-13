@@ -49,7 +49,7 @@ RDEPEND="
 		>=dev-qt/qttest-${QT_PV}
 	)
 	dbus? (
-		>=dev-python/dbus-python-0.80
+		>=dev-python/dbus-python-0.80[${PYTHON_USEDEP}]
 		>=dev-qt/qtdbus-${QT_PV}
 	)
 	declarative? ( >=dev-qt/qtdeclarative-${QT_PV} )
