@@ -46,6 +46,8 @@ RDEPEND="
 	png? ( media-libs/libpng:0= )
 	udev? ( virtual/udev )
 	xcb? (
+		x11-libs/libICE
+		x11-libs/libSM
 		>=x11-libs/libX11-1.5
 		>=x11-libs/libXi-1.6
 		x11-libs/libXrender
@@ -117,7 +119,7 @@ src_configure() {
 		$(qt_use kms)
 		$(qt_use png libpng system)
 		$(use udev || echo -no-libudev)
-		$(use xcb && echo -xcb -xrender)
+		$(use xcb && echo -xcb -xrender -sm)
 	)
 	qt5-build_src_configure
 }
