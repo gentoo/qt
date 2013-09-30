@@ -18,7 +18,7 @@ fi
 
 # TODO: directfb, linuxfb, ibus
 
-IUSE="accessibility eglfs evdev gif gles2 +glib jpeg kms opengl +png udev +xcb"
+IUSE="accessibility eglfs evdev gif gles2 +glib harfbuzz jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="
 	eglfs? ( evdev gles2 )
 	gles2? ( opengl )
@@ -36,6 +36,7 @@ RDEPEND="
 		media-libs/mesa[egl,gles]
 	) )
 	glib? ( dev-libs/glib:2 )
+	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:0= )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
@@ -79,6 +80,7 @@ pkg_setup() {
 		$(usev evdev)
 		fontconfig
 		$(use gles2 && echo egl opengles2)
+		$(use harfbuzz && echo system-harfbuzz)
 		$(usev kms)
 		$(usev opengl)
 		$(use udev && echo libudev)
@@ -112,9 +114,11 @@ src_configure() {
 		$(qt_use eglfs)
 		$(qt_use evdev)
 		-fontconfig
+		-system-freetype
 		$(use gif || echo -no-gif)
 		${gl}
 		$(qt_use glib)
+		$(qt_use harfbuzz harfbuzz system)
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
 		$(qt_use png libpng system)
