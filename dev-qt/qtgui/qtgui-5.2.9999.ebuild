@@ -16,9 +16,9 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# TODO: directfb, linuxfb, ibus
+# TODO: directfb, linuxfb, offscreen
 
-IUSE="accessibility eglfs evdev gif gles2 +glib harfbuzz jpeg kms opengl +png udev +xcb"
+IUSE="accessibility eglfs evdev gif gles2 +glib harfbuzz ibus jpeg kms opengl +png udev +xcb"
 REQUIRED_USE="
 	eglfs? ( evdev gles2 )
 	gles2? ( opengl )
@@ -37,6 +37,7 @@ RDEPEND="
 	) )
 	glib? ( dev-libs/glib:2 )
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:0= )
+	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
@@ -65,11 +66,15 @@ DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
 	test? ( ~dev-qt/qtnetwork-${PV}[debug=] )
 "
+PDEPEND="
+	ibus? ( app-i18n/ibus )
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/gui
 	src/platformsupport
 	src/plugins/imageformats
+	src/plugins/platforminputcontexts/compose
 	src/plugins/platforms
 )
 
@@ -91,6 +96,7 @@ pkg_setup() {
 			$(use gles2 && echo QT_EGL)
 			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
 
+	use ibus && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
 
 	qt5-build_pkg_setup
