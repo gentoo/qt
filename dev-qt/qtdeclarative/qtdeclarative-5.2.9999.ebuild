@@ -14,10 +14,7 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="localstorage"
-
-# TODO: easingcurveeditor|qmlscene? ( qt-widgets )
-# TODO: xml? ( qt-xmlpatterns )
+IUSE="+localstorage +xml"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
@@ -26,12 +23,16 @@ DEPEND="
 	>=dev-qt/qttest-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	localstorage? ( >=dev-qt/qtsql-${PV}:5[debug=] )
+	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt5-build_src_prepare
-
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
+
+	use xml || sed -i -e '/xmllistmodel/d' \
+		src/imports/imports.pro || die
+
+	qt5-build_src_prepare
 }
