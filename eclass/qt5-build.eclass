@@ -56,12 +56,11 @@ case ${PV} in
 		;;
 esac
 
-if [[ ${QT5_BUILD_TYPE} == "live" ]]; then
-	EGIT_PROJECT=${QT5_MODULE}
-	EGIT_REPO_URI="git://gitorious.org/qt/${EGIT_PROJECT}.git
-		https://git.gitorious.org/qt/${EGIT_PROJECT}.git"
-	inherit git-2
-fi
+EGIT_REPO_URI=(
+	"git://gitorious.org/qt/${QT5_MODULE}.git"
+	"https://git.gitorious.org/qt/${QT5_MODULE}.git"
+)
+[[ ${QT5_BUILD_TYPE} == "live" ]] && inherit git-r3
 
 IUSE="+c++11 debug test"
 
@@ -161,7 +160,7 @@ qt5-build_src_unpack() {
 
 	case ${QT5_BUILD_TYPE} in
 		live)
-			git-2_src_unpack
+			git-r3_src_unpack
 			;;
 		release)
 			default

@@ -18,7 +18,7 @@ inherit eutils flag-o-matic multilib toolchain-funcs versionator
 
 if [[ ${PV} == *9999* ]]; then
 	QT4_BUILD_TYPE="live"
-	inherit git-2
+	inherit git-r3
 else
 	QT4_BUILD_TYPE="release"
 fi
@@ -31,8 +31,10 @@ MY_P=qt-everywhere-opensource-src-${MY_PV}
 
 case ${QT4_BUILD_TYPE} in
 	live)
-		EGIT_REPO_URI="git://gitorious.org/qt/qt.git
-			https://git.gitorious.org/qt/qt.git"
+		EGIT_REPO_URI=(
+			"git://gitorious.org/qt/qt.git"
+			"https://git.gitorious.org/qt/qt.git"
+		)
 		EGIT_BRANCH=${PV%.9999}
 		;;
 	release)
@@ -118,7 +120,7 @@ qt4-build_src_unpack() {
 
 	case ${QT4_BUILD_TYPE} in
 		live)
-			git-2_src_unpack
+			git-r3_src_unpack
 			;;
 		release)
 			local tarball="${MY_P}.tar.gz" target= targets=
