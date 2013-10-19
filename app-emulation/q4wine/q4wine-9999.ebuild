@@ -15,12 +15,13 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug +icoutils +wineappdb +dbus gnome kde"
 
-DEPEND="dev-qt/qtgui:4
-	dev-qt/qtsql:4[sqlite]
+CDEPEND="dev-qt/qtgui:4
+	dev-qt/qtsingleapplication
+	dev-qt/qtsql:4[sqlite]"
+DEPEND="${CDEPEND}
 	dev-util/cmake"
 
-RDEPEND="dev-qt/qtgui:4
-	dev-qt/qtsql:4[sqlite]
+RDEPEND="${CDEPEND}
 	app-admin/sudo
 	app-emulation/wine
 	>=sys-apps/which-2.19
@@ -34,6 +35,7 @@ DOCS=(AUTHORS ChangeLog README)
 
 src_configure() {
 	mycmakeargs=(
+		-DWITH_SYSTEM_SINGLEAPP=ON
 		$(cmake-utils_use debug DEBUG)
 		$(cmake-utils_use_with icoutils)
 		$(cmake-utils_use_with wineappdb)
