@@ -26,8 +26,8 @@ DEPEND="
 	gstreamer? (
 		dev-libs/glib:2
 		dev-libs/libxml2:2[!icu?]
-		media-libs/gstreamer:0.10
-		media-libs/gst-plugins-base:0.10
+		>=media-libs/gstreamer-0.10.36:0.10
+		>=media-libs/gst-plugins-base-0.10.36:0.10
 	)
 	icu? ( dev-libs/icu:= )
 "
