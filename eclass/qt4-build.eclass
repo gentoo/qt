@@ -43,7 +43,9 @@ case ${QT4_BUILD_TYPE} in
 esac
 
 IUSE="aqua debug pch"
-[[ ${CATEGORY}/${PN} != dev-qt/qtwebkit ]] && IUSE+=" c++0x"
+if ! version_is_at_least 4.8.5; then
+	[[ ${CATEGORY}/${PN} != dev-qt/qtwebkit ]] && IUSE+=" c++0x"
+fi
 [[ ${CATEGORY}/${PN} != dev-qt/qtxmlpatterns ]] && IUSE+=" +exceptions"
 
 DEPEND="virtual/pkgconfig"
@@ -101,10 +103,10 @@ qt4-build_pkg_setup() {
 qt4-build_src_unpack() {
 	setqtenv
 
-	if ! version_is_at_least 4.1 $(gcc-version); then
-		ewarn "Using a GCC version lower than 4.1 is not supported."
-	elif use_if_iuse c++0x && ! version_is_at_least 4.4 $(gcc-version); then
-		ewarn "USE=c++0x requires GCC 4.4 or later."
+	if ! version_is_at_least 4.4 $(gcc-version); then
+		ewarn
+		ewarn "Using a GCC version lower than 4.4 is not supported."
+		ewarn
 	fi
 
 	if [[ ${CATEGORY}/${PN} == dev-qt/qtwebkit ]]; then
