@@ -62,7 +62,7 @@ EGIT_REPO_URI=(
 )
 [[ ${QT5_BUILD_TYPE} == "live" ]] && inherit git-r3
 
-IUSE="+c++11 debug test"
+IUSE="debug test"
 
 DEPEND="
 	>=dev-lang/perl-5.14
@@ -401,9 +401,6 @@ qt5_base_configure() {
 
 		# licensing stuff
 		-opensource -confirm-license
-
-		# C++11 support
-		$(qt_use c++11)
 
 		# build shared libraries
 		-shared

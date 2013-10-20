@@ -3,7 +3,6 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
-		<flag name="c++11">Build Qt using the C++11 standard</flag>
 		<flag name="connman">Enable ConnMan-based bearer plugin</flag>
 		<flag name="networkmanager">Enable NetworkManager-based bearer plugin</flag>
 	</use>
