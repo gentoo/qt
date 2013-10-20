@@ -1,0 +1,18 @@
+--- goldendict.pro.orig	2013-10-20 12:16:58.420238403 +0400
++++ goldendict.pro	2013-10-20 12:17:13.747239739 +0400
+@@ -25,7 +25,8 @@
+ QT += phonon
+ CONFIG += exceptions \
+     rtti \
+-    stl
++    stl \
++    qtsingleapplication
+ OBJECTS_DIR = build
+ UI_DIR = build
+ MOC_DIR = build
+@@ -322,5 +323,3 @@
+ TS_OUT = $$TRANSLATIONS
+ TS_OUT ~= s/.ts/.qm/g
+ PRE_TARGETDEPS += $$TS_OUT
+-
+-include( qtsingleapplication/src/qtsingleapplication.pri )

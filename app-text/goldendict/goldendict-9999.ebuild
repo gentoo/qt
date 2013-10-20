@@ -6,7 +6,7 @@ EAPI=5
 EGIT_REPO_URI="git://gitorious.org/goldendict/goldendict"
 LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
 
-inherit qt4-r2 git-2
+inherit qt4-r2 git-r3
 
 DESCRIPTION="Feature-rich dictionary lookup program"
 HOMEPAGE="http://goldendict.org/"
@@ -17,6 +17,7 @@ KEYWORDS=""
 IUSE="debug kde"
 
 RDEPEND=">=app-text/hunspell-1.2
+	dev-qt/qtsingleapplication
 	media-libs/libogg
 	media-libs/libvorbis
 	sys-libs/zlib
@@ -31,6 +32,11 @@ RDEPEND=">=app-text/hunspell-1.2
 	kde? ( media-libs/phonon )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
+
+PATCHES=(
+	 "${FILESDIR}/${PN}-2602a03cd-gcc-4.7.patch"
+	 "${FILESDIR}/${PN}-2602a03cd-qtsingleapplication-unbundle.patch"
+)
 
 src_prepare() {
 	qt4-r2_src_prepare

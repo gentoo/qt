@@ -1,0 +1,13 @@
+--- processwrapper.cc.orig	2013-10-20 12:10:13.525203117 +0400
++++ processwrapper.cc	2013-10-20 12:10:29.516204511 +0400
+@@ -2,6 +2,10 @@
+ 
+ #include <QtCore>
+ 
++#if defined(Q_OS_UNIX)
++#include <unistd.h>
++#endif
++
+ #ifdef Q_OS_WIN32
+ 
+ #include <windows.h>
