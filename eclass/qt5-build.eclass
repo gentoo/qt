@@ -517,7 +517,8 @@ qt5_install_module_qconfigs() {
 	# qconfig.pri
 	: > "${T}"/${PN}-qconfig.pri
 	for x in QCONFIG_ADD QCONFIG_REMOVE; do
-		[[ -n ${!x} ]] && echo "${x}=${!x}" >> "${T}"/${PN}-qconfig.pri
+		[[ -n ${!x} ]] && echo "${x}=${!x}" | tr '\n' ' ' | sed 's/	//g'  \
+			>> "${T}"/${PN}-qconfig.pri
 	done
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
 		insinto "${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/gentoo
