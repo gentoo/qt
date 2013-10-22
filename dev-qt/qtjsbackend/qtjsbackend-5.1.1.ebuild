@@ -34,7 +34,7 @@ pkg_setup() {
 src_configure() {
 	if host-is-pax; then
 		echo "QT_CONFIG -= v8snapshot" >> "${QT5_BUILD_DIR}"/.qmake.cache
-		QCONFIG_REMOVE="v8snapshot"
+		QCONFIG_REMOVE=( v8snapshot )
 	fi
 
 	qt5-build_src_configure

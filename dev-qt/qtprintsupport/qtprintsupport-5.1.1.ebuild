@@ -34,7 +34,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 pkg_setup() {
-	QCONFIG_ADD="$(usev cups)"
+	QCONFIG_ADD=( $(usev cups) )
 
 	qt5-build_pkg_setup
 }

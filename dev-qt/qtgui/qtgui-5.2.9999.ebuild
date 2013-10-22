@@ -79,7 +79,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 pkg_setup() {
-	QCONFIG_ADD="
+	QCONFIG_ADD=(
 		$(use accessibility && echo accessibility-atspi-bridge)
 		$(usev eglfs)
 		$(usev evdev)
@@ -89,12 +89,15 @@ pkg_setup() {
 		$(usev kms)
 		$(usev opengl)
 		$(use udev && echo libudev)
-		$(usev xcb)"
+		$(usev xcb)
+	)
 
-	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
-			$(use eglfs && echo QT_EGLFS)
-			$(use gles2 && echo QT_EGL)
-			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)"
+	QCONFIG_DEFINE=(
+		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
+		$(use eglfs && echo QT_EGLFS)
+		$(use gles2 && echo QT_EGL)
+		$(use jpeg && echo QT_IMAGEFORMAT_JPEG)
+	)
 
 	use ibus && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
