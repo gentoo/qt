@@ -91,7 +91,6 @@ pkg_setup() {
 		$(use udev && echo libudev)
 		$(usev xcb)
 	)
-
 	QCONFIG_DEFINE=(
 		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
 		$(use eglfs && echo QT_EGLFS)

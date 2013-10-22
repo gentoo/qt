@@ -506,7 +506,7 @@ qt5_install_module_qconfigs() {
 
 	# qconfig.h
 	: > "${T}"/${PN}-qconfig.h
-	for x in ${QCONFIG_DEFINE[@]}; do
+	for x in "${QCONFIG_DEFINE[@]}"; do
 		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
 	done
 	[[ -s ${T}/${PN}-qconfig.h ]] && (
@@ -516,12 +516,10 @@ qt5_install_module_qconfigs() {
 
 	# qconfig.pri
 	: > "${T}"/${PN}-qconfig.pri
-
 	[[ -n ${QCONFIG_ADD[@]} ]] && echo "QCONFIG_ADD=${QCONFIG_ADD[@]}" \
 		>> "${T}"/${PN}-qconfig.pri
 	[[ -n ${QCONFIG_REMOVE[@]} ]] && echo "QCONFIG_REMOVE=${QCONFIG_REMOVE[@]}" \
 		>> "${T}"/${PN}-qconfig.pri
-
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
 		insinto "${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri

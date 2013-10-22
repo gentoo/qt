@@ -82,12 +82,11 @@ pkg_setup() {
 		$(use udev && echo libudev)
 		$(usev xcb)
 	)
-
 	QCONFIG_DEFINE=(
-			$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
-			$(use eglfs && echo QT_EGLFS)
-			$(use gles2 && echo QT_EGL)
-			$(use jpeg && echo QT_IMAGEFORMAT_JPEG)
+		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
+		$(use eglfs && echo QT_EGLFS)
+		$(use gles2 && echo QT_EGL)
+		$(use jpeg && echo QT_IMAGEFORMAT_JPEG)
 	)
 
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
