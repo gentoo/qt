@@ -110,16 +110,19 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 : ${QT5_VERBOSE_BUILD:=true}
 
 # @ECLASS-VARIABLE: QCONFIG_ADD
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# List of options that need to be added to QT_CONFIG in qconfig.pri
+# Array of options that must be added to QT_CONFIG in qconfig.pri
 
 # @ECLASS-VARIABLE: QCONFIG_REMOVE
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# List of options that need to be removed from QT_CONFIG in qconfig.pri
+# Array of options that must be removed from QT_CONFIG in qconfig.pri
 
 # @ECLASS-VARIABLE: QCONFIG_DEFINE
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# List of variables that should be defined at the top of QtCore/qconfig.h
+# Array of macros that must be defined in QtCore/qconfig.h
 
 # @FUNCTION: qt5-build_pkg_setup
 # @DESCRIPTION:
@@ -139,18 +142,20 @@ qt5-build_pkg_setup() {
 # Unpacks the sources.
 qt5-build_src_unpack() {
 	if ! version_is_at_least 4.4 $(gcc-version); then
+		ewarn
 		ewarn "Using a GCC version lower than 4.4 is not supported."
+		ewarn
 	fi
 
 	if [[ ${PN} == "qtwebkit" ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
-			echo
+			ewarn
 			ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
 			ewarn "You may experience really long compilation times and/or increased memory usage."
 			ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
 			ewarn "For more info check out https://bugs.gentoo.org/307861"
-			echo
+			ewarn
 		fi
 		eshopts_pop
 	fi
