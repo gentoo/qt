@@ -450,7 +450,7 @@ qt5_base_configure() {
 		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
 		-no-gtkstyle
 
-		# don't build with -Werror
+		# do not build with -Werror
 		-no-warnings-are-errors
 
 		# module-specific options
@@ -506,7 +506,7 @@ qt5_install_module_qconfigs() {
 
 	# qconfig.h
 	: > "${T}"/${PN}-qconfig.h
-	for x in ${QCONFIG_DEFINE}; do
+	for x in ${QCONFIG_DEFINE[@]}; do
 		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
 	done
 	[[ -s ${T}/${PN}-qconfig.h ]] && (
@@ -516,9 +516,12 @@ qt5_install_module_qconfigs() {
 
 	# qconfig.pri
 	: > "${T}"/${PN}-qconfig.pri
-	for x in QCONFIG_ADD QCONFIG_REMOVE; do
-		[[ -n ${!x} ]] && echo "${x}=${!x}" >> "${T}"/${PN}-qconfig.pri
-	done
+
+	[[ -n ${QCONFIG_ADD[@]} ]] && echo "QCONFIG_ADD=${QCONFIG_ADD[@]}" \
+		>> "${T}"/${PN}-qconfig.pri
+	[[ -n ${QCONFIG_REMOVE[@]} ]] && echo "QCONFIG_REMOVE=${QCONFIG_REMOVE[@]}" \
+		>> "${T}"/${PN}-qconfig.pri
+
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
 		insinto "${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri
