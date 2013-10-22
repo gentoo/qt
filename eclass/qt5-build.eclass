@@ -112,17 +112,14 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 # @ECLASS-VARIABLE: QCONFIG_ADD
 # @DESCRIPTION:
 # List of options that need to be added to QT_CONFIG in qconfig.pri
-: ${QCONFIG_ADD:=}
 
 # @ECLASS-VARIABLE: QCONFIG_REMOVE
 # @DESCRIPTION:
 # List of options that need to be removed from QT_CONFIG in qconfig.pri
-: ${QCONFIG_REMOVE:=}
 
 # @ECLASS-VARIABLE: QCONFIG_DEFINE
 # @DESCRIPTION:
 # List of variables that should be defined at the top of QtCore/qconfig.h
-: ${QCONFIG_DEFINE:=}
 
 # @FUNCTION: qt5-build_pkg_setup
 # @DESCRIPTION:
