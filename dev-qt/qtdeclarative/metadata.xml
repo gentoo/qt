@@ -10,6 +10,7 @@
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name="webkit">Build the WebView QML component</flag>
+		<flag name="widgets">Enable QtWidgets support</flag>
 		<flag name="xml">Build the XmlListModel import for QtQuick2
 			(requires QtXmlPatterns)</flag>
 	</use>

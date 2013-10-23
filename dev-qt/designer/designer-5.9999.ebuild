@@ -25,7 +25,7 @@ DEPEND="
 	>=dev-qt/qtprintsupport-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	>=dev-qt/qtxml-${PV}:5[debug=]
-	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=] )
+	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=,widgets] )
 "
 RDEPEND="${DEPEND}"
 
@@ -34,9 +34,8 @@ QT5_TARGET_SUBDIRS=(
 )
 
 src_prepare() {
-	qt5-build_src_prepare
+	qt_use_disable_mod webkit webkitwidgets \
+		src/designer/src/plugins/plugins.pro
 
-	if ! use webkit; then
-		sed -i -e '/qwebview/d' src/designer/src/plugins/plugins.pro || die
-	fi
+	qt5-build_src_prepare
 }

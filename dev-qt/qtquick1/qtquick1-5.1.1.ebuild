@@ -32,20 +32,16 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	qt_use_disable_mod opengl opengl \
+		src/imports/imports.pro \
+		tools/qml/qml.pri
+
+	qt_use_disable_mod webkit webkitwidgets \
+		src/imports/imports.pro
+
+	qt_use_disable_mod xml xmlpatterns \
+		src/declarative/declarative.pro \
+		src/declarative/util/util.pri
+
 	qt5-build_src_prepare
-
-	if ! use opengl; then
-		sed -i -e 's/qtHaveModule(opengl)/false/' \
-			src/imports/imports.pro \
-			tools/qml/qml.pri || die
-	fi
-
-	use webkit || sed -i -e '/webview/d' \
-		src/imports/imports.pro || die
-
-	if ! use xml; then
-		sed -i -e 's/qtHaveModule(xmlpatterns)/false/' \
-			src/declarative/declarative.pro \
-			src/declarative/util/util.pri || die
-	fi
 }

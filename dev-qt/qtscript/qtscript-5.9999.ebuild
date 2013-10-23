@@ -26,8 +26,8 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt5-build_src_prepare
+	qt_use_disable_mod scripttools widgets \
+		src/src.pro
 
-	use scripttools || sed -i -e '/scripttools/d' \
-		src/src.pro || die
+	qt5-build_src_prepare
 }
