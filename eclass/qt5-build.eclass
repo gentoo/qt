@@ -329,6 +329,29 @@ qt_use() {
 	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
 }
 
+# @FUNCTION: qt_use_disable_mod
+# @USAGE: <flag> <module> <files...>
+# @DESCRIPTION:
+# <flag> is the name of a flag in IUSE.
+# <module> is the (lowercase) name of a Qt5 module.
+# <files...> is a list of one or more qmake project files.
+#
+# This function patches <files> to treat <module> as not installed
+# when <flag> is disabled, otherwise it does nothing.
+# This can be useful to avoid an automagic dependency when the module
+# is present on the system but the corresponding USE flag is disabled.
+qt_use_disable_mod() {
+	[[ $# -ge 3 ]] || die "${FUNCNAME}() requires at least 3 arguments"
+
+	local flag=$1
+	local module=$2
+	shift 2
+
+	use "${flag}" && return
+
+	echo "$@" | xargs sed -i -e "s/qtHaveModule(${module})/false/g" || die
+}
+
 
 ######  Internal functions  ######
 
