@@ -1,10 +1,10 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-2.8.0.ebuild,v 1.2 2013/08/15 08:04:02 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.0.0_beta.ebuild,v 1.1 2013/10/23 13:08:04 pesa Exp $
 
 EAPI=5
 
-PLOCALES="cs de es fr it ja pl ru sl uk zh_CN zh_TW"
+PLOCALES="cs de fr ja pl ru sl zh_CN zh_TW"
 
 inherit eutils l10n multilib qt4-r2
 
@@ -12,10 +12,12 @@ DESCRIPTION="Lightweight IDE for C++/QML development centering around Qt"
 HOMEPAGE="http://qt-project.org/wiki/Category:Tools::QtCreator"
 LICENSE="LGPL-2.1"
 
-if [[ ${PV} == *9999* ]]; then
-	inherit git-2
-	EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}.git
-		https://git.gitorious.org/${PN}/${PN}.git"
+if [[ ${PV} == *9999 ]]; then
+	inherit git-r3
+	EGIT_REPO_URI=(
+		"git://gitorious.org/${PN}/${PN}.git"
+		"https://git.gitorious.org/${PN}/${PN}.git"
+	)
 else
 	MY_PV=${PV/_/-}
 	MY_P=${PN}-${MY_PV}-src
@@ -27,9 +29,9 @@ fi
 SLOT="0"
 KEYWORDS=""
 
-QTC_PLUGINS=(android autotools:autotoolsprojectmanager bazaar
-	clearcase cmake:cmakeprojectmanager cvs fakevim git
-	madde mercurial perforce qnx subversion valgrind)
+QTC_PLUGINS=(android autotools:autotoolsprojectmanager baremetal bazaar
+	clearcase cmake:cmakeprojectmanager cvs fakevim git ios mercurial
+	perforce python:pythoneditor qnx subversion valgrind)
 IUSE="debug doc examples test ${QTC_PLUGINS[@]%:*}"
 
 # minimum Qt version required
@@ -53,7 +55,7 @@ DEPEND="${CDEPEND}
 	test? ( >=dev-qt/qttest-${QT_PV} )
 "
 RDEPEND="${CDEPEND}
-	>=sys-devel/gdb-7.2[python]
+	>=sys-devel/gdb-7.2[client(+),python]
 	examples? ( >=dev-qt/qtdemo-${QT_PV} )
 "
 PDEPEND="
