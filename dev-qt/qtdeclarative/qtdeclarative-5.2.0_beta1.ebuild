@@ -14,25 +14,32 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="localstorage"
-
-# TODO: easingcurveeditor|qmlscene? ( qt-widgets )
-# TODO: xml? ( qt-xmlpatterns )
+IUSE="+localstorage +widgets +xml"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
-	>=dev-qt/qtjsbackend-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qttest-${PV}:5[debug=]
-	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	localstorage? ( >=dev-qt/qtsql-${PV}:5[debug=] )
+	widgets? ( >=dev-qt/qtwidgets-${PV}:5[debug=] )
+	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt5-build_src_prepare
-
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
+
+	qt_use_disable_mod widgets widgets \
+		src/imports/imports.pro \
+		tools/tools.pro \
+		tools/qmlscene/qmlscene.pro \
+		tools/qml/qml.pro
+
+	qt_use_disable_mod xml xmlpatterns \
+		src/imports/imports.pro \
+		tests/auto/quick/quick.pro
+
+	qt5-build_src_prepare
 }
