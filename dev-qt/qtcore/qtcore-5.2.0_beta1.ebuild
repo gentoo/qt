@@ -44,6 +44,12 @@ pkg_setup() {
 	qt5-build_pkg_setup
 }
 
+src_prepare() {
+	epatch "${FILESDIR}"/fix-cmake-errors.patch
+
+	qt5-build_src_prepare
+}
+
 src_configure() {
 	local myconf=(
 		$(qt_use glib)
