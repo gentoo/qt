@@ -1,0 +1,2 @@
+move razorqt-base/libqtxdg lxde-base/libqtxdg
+move razorqt-base/razorqt-libs lxde-base/liblxqt
