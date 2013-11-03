@@ -1,2 +1,4 @@
 move razorqt-base/libqtxdg lxde-base/libqtxdg
 move razorqt-base/razorqt-libs lxde-base/liblxqt
+move razorqt-base/razorqt-kbshortcuts lxde-base/lxqt-globalkeys
+move razorqt-base/razorqt-notifications lxde-base/lxqt-notificationd

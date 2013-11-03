@@ -31,7 +31,7 @@ DEPEND="sys-apps/file
 	qt5? ( dev-qt/qtcore:5
 		dev-qt/qtxml:5
 		dev-qt/qtwidgets:5
-		dev-qt/linguist:5
+		dev-qt/qttools:5
 		test? ( dev-qt/qttest:5 )
 	)"
 RDEPEND="${DEPEND}
