@@ -32,6 +32,7 @@ DEPEND="lxde-base/liblxqt
 	dev-qt/qtcore:4
 	dev-qt/qtdbus:4
 	dev-qt/qtgui:4
+	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
