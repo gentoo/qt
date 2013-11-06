@@ -3,6 +3,9 @@
 # $Header: $
 
 EAPI=5
+AUTOTOOLS_AUTORECONF=1
+AUTOTOOLS_IN_SOURCE_BUILD=1
+inherit autotools-utils
 
 DESCRIPTION="A library creating and utilizing caches to speed up freedesktop.org application menus"
 HOMEPAGE="http://www.lxde.org/"
@@ -23,5 +26,8 @@ IUSE=""
 
 RDEPEND="dev-libs/glib:2"
 DEPEND="${RDEPEND}
+	dev-util/gtk-doc
 	sys-devel/gettext
 	virtual/pkgconfig"
+
+DOCS=( AUTHORS NEWS README ) # ChangeLog is empty
