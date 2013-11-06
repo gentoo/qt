@@ -17,7 +17,7 @@ if [[ ${PV} == *9999* ]]; then
 	inherit mercurial
 elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
-	HG_REVISION=14732b487dda
+	HG_REVISION=5e5fdf4cc35c
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
 	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
