@@ -26,17 +26,19 @@ SLOT="0"
 IUSE=""
 
 # vala and gtk+ deps should be dropped later
-RDEPEND="dev-libs/dbus-glib
+CDEPEND="dev-libs/dbus-glib
 	dev-libs/glib:2
 	sys-apps/dbus
 	sys-auth/polkit
 	x11-libs/gtk+:2
 	x11-libs/libX11"
-DEPEND="${RDEPEND}
+DEPEND="${CDEPEND}
 	$(vala_depend)
 	dev-util/intltool
 	sys-devel/gettext
 	virtual/pkgconfig"
+RDEPEND="${CDEPEND}
+	lxde-base/lxqt-common"
 
 src_prepare() {
 	vala_src_prepare
