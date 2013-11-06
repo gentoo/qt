@@ -36,6 +36,7 @@ DEPEND="lxde-base/liblxqt
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
+	sysstat? ( lxde-base/libsysstat )
 	volume? ( alsa? ( media-libs/alsa-lib )
 		pulseaudio? ( media-sound/pulseaudio ) )
 	worldclock? ( dev-libs/icu )"
