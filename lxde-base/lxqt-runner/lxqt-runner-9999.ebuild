@@ -30,5 +30,5 @@ RDEPEND="lxde-base/liblxqt
 	dev-qt/qtdbus:4
 	dev-qt/qtgui:4
 	dev-qt/qtscript:4"
-DEPEND="${DEPEND}
+DEPEND="${RDEPEND}
 	virtual/pkgconfig"
