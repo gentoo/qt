@@ -22,5 +22,8 @@ LICENSE="LGPL-2.1+"
 SLOT="0"
 IUSE=""
 
-RDEPEND="lxde-base/liblxqt"
-DEPEND="${RDEPEND}"
+DEPEND="lxde-base/liblxqt"
+RDEPEND="${DEPEND}
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
+	dev-qt/qtsvg:4"
