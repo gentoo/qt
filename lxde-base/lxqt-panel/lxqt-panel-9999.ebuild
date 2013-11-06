@@ -40,7 +40,8 @@ DEPEND="lxde-base/liblxqt
 	volume? ( alsa? ( media-libs/alsa-lib )
 		pulseaudio? ( media-sound/pulseaudio ) )
 	worldclock? ( dev-libs/icu )"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	lxde-base/lxmenu-data"
 
 src_configure() {
 	local mycmakeargs
