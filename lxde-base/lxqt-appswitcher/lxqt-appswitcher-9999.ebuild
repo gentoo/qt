@@ -5,7 +5,7 @@
 EAPI=5
 inherit cmake-utils
 
-DESCRIPTION="LXDE-Qt quick launcher"
+DESCRIPTION="LXDE-Qt applications switcher"
 HOMEPAGE="http://www.lxde.org/"
 
 if [[ ${PV} = *9999* ]]; then
