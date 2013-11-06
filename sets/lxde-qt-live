@@ -20,3 +20,5 @@
 =lxde-base/lxqt-common-9999
 =lxde-base/lxmenu-data-9999
 =lxde-base/libxdsettings-9999
+x11-wm/openbox:3
+=lxde-base/obconf-qt-9999
