@@ -36,6 +36,7 @@ case ${QT4_BUILD_TYPE} in
 			"https://git.gitorious.org/qt/qt.git"
 		)
 		EGIT_BRANCH=${PV%.9999}
+		MY_P=${P}
 		;;
 	release)
 		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
