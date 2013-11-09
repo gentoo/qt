@@ -39,6 +39,7 @@ case ${QT4_BUILD_TYPE} in
 		;;
 	release)
 		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
+		S=${WORKDIR}/${MY_P}
 		;;
 esac
 
@@ -52,8 +53,6 @@ DEPEND="virtual/pkgconfig"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	DEPEND+=" dev-lang/perl"
 fi
-
-S=${WORKDIR}/${MY_P}
 
 # @FUNCTION: qt4-build_pkg_setup
 # @DESCRIPTION:
