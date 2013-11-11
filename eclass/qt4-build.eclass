@@ -26,9 +26,6 @@ fi
 HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 
-MY_PV=${PV/_/-}
-MY_P=qt-everywhere-opensource-src-${MY_PV}
-
 case ${QT4_BUILD_TYPE} in
 	live)
 		EGIT_REPO_URI=(
@@ -38,6 +35,7 @@ case ${QT4_BUILD_TYPE} in
 		EGIT_BRANCH=${PV%.9999}
 		;;
 	release)
+		MY_P=qt-everywhere-opensource-src-${PV/_/-}
 		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
 		S=${WORKDIR}/${MY_P}
 		;;
