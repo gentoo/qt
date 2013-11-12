@@ -93,9 +93,11 @@ pkg_setup() {
 	)
 	QCONFIG_DEFINE=(
 		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
-		$(use eglfs && echo QT_EGLFS)
-		$(use gles2 && echo QT_EGL)
-		$(use jpeg && echo QT_IMAGEFORMAT_JPEG)
+		$(use eglfs	|| echo QT_NO_EGLFS)
+		$(use gles2	&& echo QT_OPENGL_ES QT_OPENGL_ES_2 || echo QT_NO_EGL)
+		$(use jpeg	|| echo QT_NO_IMAGEFORMAT_JPEG)
+		$(use opengl	|| echo QT_NO_OPENGL)
+		$(use png	|| echo QT_NO_IMAGEFORMAT_PNG)
 	)
 
 	use ibus && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
