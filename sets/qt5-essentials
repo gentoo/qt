@@ -1,5 +1,5 @@
 # set for Qt5 Essentials modules
-# http://qt-project.org/wiki/Qt-Essentials-Modules
+# http://qt-project.org/wiki/Qt_5_Structure
 
 dev-qt/qtcore:5
 dev-qt/qtdeclarative:5

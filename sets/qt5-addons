@@ -1,17 +1,14 @@
 # set for Qt5 Add-on modules
-# http://qt-project.org/wiki/Qt-Add-ons-Modules
+# http://qt-project.org/wiki/Qt_5_Structure
 
-#dev-qt/qt3d:5
 dev-qt/qtconcurrent:5
 dev-qt/qtdbus:5
 dev-qt/qtgraphicaleffects:5
 #dev-qt/qtimageformats:5
-#dev-qt/qtlocation:5
 dev-qt/qtopengl:5
 dev-qt/qtprintsupport:5
-#dev-qt/qtquick1:5
+dev-qt/qtquick1:5
 dev-qt/qtscript:5
-#dev-qt/qtsensors:5
 dev-qt/qtserialport:5
 dev-qt/qtsvg:5
 dev-qt/qtxml:5
