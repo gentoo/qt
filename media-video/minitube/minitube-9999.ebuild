@@ -16,7 +16,7 @@ HOMEPAGE="http://flavio.tordini.org/minitube"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug gstreamer kde"
+IUSE="debug download gstreamer kde"
 
 DEPEND=">=dev-qt/qtgui-4.8:4[accessibility]
 	>=dev-qt/qtdbus-4.8:4
@@ -49,9 +49,22 @@ src_prepare() {
 	fi
 	# gcc-4.7. Bug #422977
 	epatch "${FILESDIR}"/${PN}-1.9-gcc47.patch
+	# Enable video downloads. Bug #491344
+	use download && { echo "DEFINES += APP_DOWNLOADS" >> ${PN}.pro; }
 }
 
 src_install() {
 	qt4-r2_src_install
 	newicon images/app.png minitube.png
+}
+
+pkg_postinst() {
+	if use download; then
+		elog "You activated the 'download' USE flag. This allows you to"
+		elog "download videos from youtube, which might violate the youtube"
+		elog "terms-of-service (TOS) in some legislations. If downloading"
+		elog "youtube-videos is not allowed in your legislation, please"
+		elog "disable the 'download' use flag. For details on the youtube TOS,"
+		elog "see http://www.youtube.com/t/terms"
+	fi
 }
