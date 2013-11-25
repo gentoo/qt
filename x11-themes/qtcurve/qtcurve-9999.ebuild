@@ -18,7 +18,7 @@ else
 	KEYWORDS="~alpha ~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 fi
 
-LICENSE="GPL-2"
+LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="+X gtk kde nls +qt4 qt5 windeco"
 REQUIRED_USE="gtk? ( X )
