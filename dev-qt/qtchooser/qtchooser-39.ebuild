@@ -6,7 +6,7 @@ EAPI=5
 
 inherit toolchain-funcs
 
-MY_P=${P}-g980c64c
+MY_P=${P}-g4717841
 
 DESCRIPTION="Qt4/Qt5 version chooser"
 HOMEPAGE="http://macieira.org/qtchooser/"
