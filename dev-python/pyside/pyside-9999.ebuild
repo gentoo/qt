@@ -1,23 +1,26 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/pyside/pyside-1.2.0.ebuild,v 1.1 2013/08/15 10:19:36 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/pyside/pyside-1.2.1-r1.ebuild,v 1.1 2013/12/25 19:26:11 pesa Exp $
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_6,2_7,3_2} )
+PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
 
-inherit multilib cmake-utils python-r1 virtualx git-2
+inherit multilib cmake-utils python-r1 virtualx git-r3
 
 MY_P="${PN}-qt4.8+${PV}"
 
 DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="http://qt-project.org/wiki/PySide"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}"
+EGIT_REPO_URI=(
+	"git://gitorious.org/pyside/${PN}.git"
+	"https://git.gitorious.org/pyside/${PN}.git"
+)
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
-IUSE="X declarative designer help kde multimedia opengl phonon script scripttools sql svg test webkit xmlpatterns"
+IUSE="X declarative designer help multimedia opengl phonon script scripttools sql svg test webkit xmlpatterns"
 
 REQUIRED_USE="
 	declarative? ( X )
@@ -48,10 +51,10 @@ RDEPEND="
 	help? ( >=dev-qt/qthelp-${QT_PV} )
 	multimedia? ( >=dev-qt/qtmultimedia-${QT_PV} )
 	opengl? ( >=dev-qt/qtopengl-${QT_PV} )
-	phonon? (
-		kde? ( media-libs/phonon )
-		!kde? ( || ( >=dev-qt/qtphonon-${QT_PV} media-libs/phonon ) )
-	)
+	phonon? ( || (
+		media-libs/phonon[qt4(+)]
+		>=dev-qt/qtphonon-${QT_PV}
+	) )
 	script? ( >=dev-qt/qtscript-${QT_PV} )
 	sql? ( >=dev-qt/qtsql-${QT_PV} )
 	svg? ( >=dev-qt/qtsvg-${QT_PV}[accessibility] )
@@ -73,10 +76,8 @@ src_prepare() {
 		libpyside/pyside.pc.in || die
 
 	if use prefix; then
-		cp "${FILESDIR}"/rpath.cmake .
-		sed \
-			-i '1iinclude(rpath.cmake)' \
-			CMakeLists.txt || die
+		cp "${FILESDIR}"/rpath.cmake . || die
+		sed -i -e '1iinclude(rpath.cmake)' CMakeLists.txt || die
 	fi
 }
 
@@ -99,6 +100,14 @@ src_configure() {
 		$(cmake-utils_use_disable webkit QtWebKit)
 		$(cmake-utils_use_disable xmlpatterns QtXmlPatterns)
 	)
+
+	if use phonon && has_version "media-libs/phonon[qt4(+)]"; then
+		# bug 475786
+		mycmakeargs+=(
+			-DQT_PHONON_INCLUDE_DIR="${EPREFIX}/usr/include/phonon"
+			-DQT_PHONON_LIBRARY_RELEASE="${EPREFIX}/usr/$(get_libdir)/libphonon.so"
+		)
+	fi
 
 	configuration() {
 		local mycmakeargs=(

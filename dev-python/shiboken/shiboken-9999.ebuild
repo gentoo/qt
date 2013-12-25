@@ -1,16 +1,19 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/shiboken/shiboken-1.2.0.ebuild,v 1.1 2013/08/15 09:45:01 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/shiboken/shiboken-1.2.1-r1.ebuild,v 1.2 2013/12/25 17:44:15 pesa Exp $
 
 EAPI=5
 
-PYTHON_COMPAT=( python{2_6,2_7,3_2} )
+PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
 
-inherit multilib cmake-utils python-r1 git-2
+inherit multilib cmake-utils python-r1 git-r3
 
 DESCRIPTION="A tool for creating Python bindings for C++ libraries"
 HOMEPAGE="http://qt-project.org/wiki/PySide"
-EGIT_REPO_URI="git://gitorious.org/pyside/${PN}"
+EGIT_REPO_URI=(
+	"git://gitorious.org/pyside/${PN}.git"
+	"https://git.gitorious.org/pyside/${PN}.git"
+)
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -27,7 +30,6 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	test? (
-		dev-python/numpy[${PYTHON_USEDEP}]
 		>=dev-qt/qtgui-4.7.0:4
 		>=dev-qt/qttest-4.7.0:4
 	)"
@@ -41,25 +43,24 @@ src_prepare() {
 		cmake/Modules/FindPython3InterpWithDebug.cmake || die
 
 	if use prefix; then
-		cp "${FILESDIR}"/rpath.cmake .
-		sed \
-			-i '1iinclude(rpath.cmake)' \
-			CMakeLists.txt || die
+		cp "${FILESDIR}"/rpath.cmake . || die
+		sed -i -e '1iinclude(rpath.cmake)' CMakeLists.txt || die
 	fi
 }
 
 src_configure() {
 	configuration() {
 		local mycmakeargs=(
+			$(cmake-utils_use_build test TESTS)
 			-DPYTHON_EXECUTABLE="${PYTHON}"
 			-DPYTHON_SITE_PACKAGES="$(python_get_sitedir)"
 			-DPYTHON_SUFFIX="-${EPYTHON}"
-			$(cmake-utils_use_build test TESTS)
 		)
 
 		if [[ ${EPYTHON} == python3* ]]; then
 			mycmakeargs+=(
 				-DUSE_PYTHON3=ON
+				-DPYTHON3_EXECUTABLE="${PYTHON}"
 				-DPYTHON3_INCLUDE_DIR="$(python_get_includedir)"
 				-DPYTHON3_LIBRARY="$(python_get_library_path)"
 			)
