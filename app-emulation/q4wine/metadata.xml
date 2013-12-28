@@ -3,14 +3,11 @@
 <pkgmetadata>
 <herd>qt</herd>
 <maintainer>
-<email>hwoarang@gentoo.org</email>
-<name>Markos Chandras</name>
+	<email>hwoarang@gentoo.org</email>
+	<name>Markos Chandras</name>
 </maintainer>
 <use>
-<flag name="icoutils"> Enable icoutils support </flag>
-<flag name="wineappdb"> Enable Win AppDB browser subsystem </flag>
+	<flag name="icoutils">Enable icoutils support</flag>
+	<flag name="wineappdb">Enable Win AppDB browser subsystem</flag>
 </use>
-<longdescription lang="en">
-</longdescription>
 </pkgmetadata>
-
