@@ -50,7 +50,8 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )"
 
 DOCS=( AUTHORS ChangeLog.md README.md TODO.md )
-PATCHES=( "${DISTDIR}/${P}-old_config_file.patch" )
+
+[[ ${PV} == *9999* ]] || PATCHES=( "${DISTDIR}/${P}-old_config_file.patch" )
 
 pkg_setup() {
 	use kde && kde4-base_pkg_setup
