@@ -22,7 +22,3 @@ RDEPEND="
 	~dev-qt/qtwidgets-${PV}[debug=]
 "
 DEPEND="${RDEPEND}"
-
-QT5_TARGET_SUBDIRS=(
-	src/x11extras
-)
