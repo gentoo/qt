@@ -19,9 +19,9 @@ IUSE="qml wayland-compositor"
 
 DEPEND="
 	>=dev-libs/wayland-1.1.0
-	>=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
-	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
+	>=dev-qt/qtcore-5.2.1:5[debug=]
+	>=dev-qt/qtgui-5.2.1:5[debug=,opengl]
+	qml? ( >=dev-qt/qtdeclarative-5.2.1:5[debug=] )
 "
 RDEPEND="${DEPEND}"
 
