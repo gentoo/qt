@@ -45,7 +45,7 @@ RDEPEND="
 	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
 	udev? ( virtual/udev )
-	webp? ( media-libs/libwebp )
+	webp? ( media-libs/libwebp:= )
 	widgets? ( >=dev-qt/qtwidgets-${PV}:5[debug=] )
 	xslt? (
 		libxml2? ( dev-libs/libxslt )
