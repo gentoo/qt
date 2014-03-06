@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -67,6 +67,10 @@ pkg_setup() {
 src_prepare() {
 	# bug 458222
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
+
+	# bug 490254
+	echo "QMAKE_CFLAGS=\"${CFLAGS}\"" >> .qmake.conf
+	echo "QMAKE_CXXFLAGS=\"${CXXFLAGS}\"" >> .qmake.conf
 
 	qt5-build_src_prepare
 }
