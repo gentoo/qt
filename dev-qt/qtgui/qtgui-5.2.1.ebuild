@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -22,7 +22,7 @@ IUSE="accessibility eglfs evdev gif gles2 +glib harfbuzz ibus jpeg kms opengl +p
 REQUIRED_USE="
 	eglfs? ( evdev gles2 )
 	gles2? ( opengl )
-	kms? ( gles2 )
+	kms? ( evdev gles2 )
 "
 
 RDEPEND="
