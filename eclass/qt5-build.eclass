@@ -40,7 +40,7 @@ case ${PV} in
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH="stable"
 		;;
-	*_alpha?|*_beta?|*_rc?)
+	*_alpha*|*_beta*|*_rc*)
 		# pre-releases
 		QT5_BUILD_TYPE="release"
 		MY_P="${QT5_MODULE}-opensource-src-${PV/_/-}"
