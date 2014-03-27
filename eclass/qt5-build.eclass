@@ -17,7 +17,14 @@ case ${EAPI} in
 	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-inherit eutils flag-o-matic multilib toolchain-funcs versionator
+# @ECLASS-VARIABLE: VIRTUALX_REQUIRED
+# @DESCRIPTION:
+# For proper description see virtualx.eclass manpage.
+# Here we redefine default value to be manual, if your package needs virtualx
+# for tests you should proceed with setting VIRTUALX_REQUIRED=test.
+: ${VIRTUALX_REQUIRED:=manual}
+
+inherit eutils flag-o-matic multilib toolchain-funcs versionator virtualx
 
 HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
@@ -270,7 +277,16 @@ qt5-build_src_test() {
 
 	qt5_foreach_target_subdir qt5_qmake
 	qt5_foreach_target_subdir emake
-	qt5_foreach_target_subdir emake TESTRUNNER="'${testrunner}'" check
+
+	_test_runner() {
+		qt5_foreach_target_subdir emake TESTRUNNER="'${testrunner}'" check
+	}
+
+	if [[ ${VIRTUALX_REQUIRED} == test ]]; then
+		VIRTUALX_COMMAND="_test_runner" virtualmake
+	else
+		_test_runner
+	fi
 }
 
 # @FUNCTION: qt5-build_src_install
