@@ -16,6 +16,7 @@ KEYWORDS=""
 IUSE="debug"
 
 DEPEND="dev-qt/qtgui:4
+	x11-libs/libqxt
 	x11-libs/qtermwidget"
 RDEPEND="${DEPEND}"
 
