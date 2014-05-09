@@ -14,11 +14,11 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="+localstorage +widgets +xml"
+IUSE="+localstorage +widgets +xml gles2"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=,opengl]
+	>=dev-qt/qtgui-${PV}:5[debug=,gles2=,opengl]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qttest-${PV}:5[debug=]
 	localstorage? ( >=dev-qt/qtsql-${PV}:5[debug=] )

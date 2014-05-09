@@ -5,6 +5,7 @@
 	<use>
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
+		<flag name="gles2">Use OpenGL ES 2.0 instead of desktop OpenGL</flag>
 		<flag name="localstorage">Build the LocalStorage import for
 			QtQuick (requires QtSql)</flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
