@@ -1,19 +1,19 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-text/poppler/poppler-0.22.5.ebuild,v 1.2 2013/07/12 20:34:24 dilfridge Exp $
+# $Header: $
 
 EAPI=5
 
-inherit cmake-utils toolchain-funcs git-2
+inherit cmake-utils toolchain-funcs git-r3
 
 DESCRIPTION="PDF rendering library based on the xpdf-3.0 code base"
 HOMEPAGE="http://poppler.freedesktop.org/"
-EGIT_REPO_URI="git://git.freedesktop.org/git/poppler/poppler"
+EGIT_REPO_URI="git://git.freedesktop.org/git/${PN}/${PN}"
 
 LICENSE="GPL-2"
 KEYWORDS=""
-SLOT="0/43"
-IUSE="cairo cjk curl cxx debug doc +introspection +jpeg jpeg2k +lcms png qt4 tiff +utils"
+SLOT="0/46"
+IUSE="cairo cjk curl cxx debug doc +introspection +jpeg jpeg2k +lcms png qt4 qt5 tiff +utils"
 
 # No test data provided
 RESTRICT="test"
@@ -36,21 +36,23 @@ COMMON_DEPEND="
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4
 	)
+	qt5? (
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+		dev-qt/qtxml:5
+	)
 	tiff? ( media-libs/tiff:0 )
 "
 DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 "
 RDEPEND="${COMMON_DEPEND}
-	!dev-libs/poppler
-	!dev-libs/poppler-glib
-	!dev-libs/poppler-qt3
-	!dev-libs/poppler-qt4
-	!app-text/poppler-utils
 	cjk? ( >=app-text/poppler-data-0.4.4 )
 "
 
 DOCS=(AUTHORS NEWS README README-XPDF TODO)
+
+PATCHES=( "${FILESDIR}/${PN}-0.26.0-qt5-dependencies.patch" )
 
 src_configure() {
 	# this is needed for multilib, see bug 459394
@@ -63,6 +65,7 @@ src_configure() {
 	mycmakeargs=(
 		-DBUILD_GTK_TESTS=OFF
 		-DBUILD_QT4_TESTS=OFF
+		-DBUILD_QT5_TESTS=OFF
 		-DBUILD_CPP_TESTS=OFF
 		-DENABLE_SPLASH=ON
 		-DENABLE_ZLIB=ON
@@ -76,6 +79,7 @@ src_configure() {
 		$(cmake-utils_use_with jpeg)
 		$(cmake-utils_use_with png)
 		$(cmake-utils_use_with qt4)
+		$(cmake-utils_use_find_package qt5 Qt5Core)
 		$(cmake-utils_use_with tiff)
 	)
 	if use lcms; then
