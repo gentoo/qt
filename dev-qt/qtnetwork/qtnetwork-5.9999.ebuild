@@ -23,7 +23,7 @@ DEPEND="
 	sys-libs/zlib
 	connman? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	networkmanager? ( ~dev-qt/qtdbus-${PV}[debug=] )
-	ssl? ( dev-libs/openssl:0 )
+	ssl? ( dev-libs/openssl:0[-bindist] )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )
