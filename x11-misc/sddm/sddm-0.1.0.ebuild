@@ -24,8 +24,8 @@ REQUIRED_USE="^^ ( qt4 qt5 )"
 
 RDEPEND="
 	upower? ( || ( sys-power/upower  sys-apps/systemd ) )
-	x11-libs/libxcb[xkb]
 	sys-auth/pambase
+	x11-libs/libxcb[xkb]
 	qt4? ( dev-qt/qtdeclarative:4 )
 	qt5? ( dev-qt/qtdeclarative:5
 	       dev-qt/qtdbus:5 )"
@@ -39,8 +39,7 @@ pkg_pretend() {
 
 src_prepare() {
 
-	epatch "${FILESDIR}/sddm-pm-utils-support.patch"
-	epatch "${FILESDIR}/pid-support.patch"
+	#	epatch "${FILESDIR}/sddm-pm-utils-support.patch"
 
 	# respect our cflags
 	sed -e 's|-Wall -march=native||' \
@@ -48,9 +47,9 @@ src_prepare() {
 		-i CMakeLists.txt || die 'sed failed'
 	# use our location
 	sed -e 's|AuthDir=/var/run/xauth|AuthDir=/run/sddm|' \
-		-i data/sddm.conf.in
+		-i data/sddm.conf.in || die
 	# Replace XSession file with lxdm version
-	cp -a "${FILESDIR}"/Xsession data/scripts
+	cp -a "${FILESDIR}"/Xsession data/scripts || die
 }
 
 src_configure() {

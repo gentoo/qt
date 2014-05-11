@@ -1,0 +1,52 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 770b53b..2d4b2ef 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -92,6 +92,7 @@ set(DATA_INSTALL_DIR            "${CMAKE_INSTALL_PREFIX}/share/apps/sddm"   CACH
+ set(SYS_CONFIG_DIR              "/etc"                                      CACHE PATH      "System config directory")
+ set(DBUS_CONFIG_DIR             "${SYS_CONFIG_DIR}/dbus-1/system.d"         CACHE PATH      "DBus config files directory")
+ 
++set(PID_FILE			"/run/sddm.pid"                             CACHE PATH      "Path to pid file")
+ set(CONFIG_FILE                 "${SYS_CONFIG_DIR}/sddm.conf"               CACHE PATH      "Path of the sddm config file")
+ set(LOG_FILE                    "/var/log/sddm.log"                         CACHE PATH      "Path of the sddm log file")
+ set(COMPONENTS_TRANSLATION_DIR  "${DATA_INSTALL_DIR}/translations"          CACHE PATH      "Components translations directory")
+diff --git a/src/common/Constants.h.in b/src/common/Constants.h.in
+index 75adfc6..1c9b9a5 100644
+--- a/src/common/Constants.h.in
++++ b/src/common/Constants.h.in
+@@ -28,5 +28,6 @@
+ 
+ #define CONFIG_FILE                 "@CONFIG_FILE@"
+ #define LOG_FILE                    "@LOG_FILE@"
++#define PID_FILE                    "@PID_FILE@"
+ 
+ #endif // SDDM_CONSTANTS_H
+diff --git a/src/daemon/DaemonApp.cpp b/src/daemon/DaemonApp.cpp
+index 9ad226b..b7d6cb5 100644
+--- a/src/daemon/DaemonApp.cpp
++++ b/src/daemon/DaemonApp.cpp
+@@ -33,6 +33,7 @@
+ #include <QDebug>
+ #include <QHostInfo>
+ #include <QTimer>
++#include <QFile>
+ 
+ #include <iostream>
+ 
+@@ -50,6 +51,16 @@ namespace SDDM {
+         // log message
+         qDebug() << " DAEMON: Initializing...";
+ 
++        // Write PID File
++        if ( ! QString(PID_FILE).isEmpty() ) {
++            QFile pidFile(PID_FILE);
++            QString pid = QString::number(QCoreApplication::applicationPid());
++            if ( pidFile.open(QIODevice::WriteOnly | QIODevice::Text) ) {
++                pidFile.write(pid.toLatin1().data(), qstrlen(pid.toLatin1().data()));
++                pidFile.close();
++            }
++        }
++
+         // create configuration
+         m_configuration = new Configuration(CONFIG_FILE, this);
+ 
