@@ -1,10 +1,11 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=5
 
 QT5_MODULE="qtbase"
+VIRTUALX_REQUIRED="test"
 
 inherit qt5-build
 
@@ -16,15 +17,33 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE=""
+IUSE="cups"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
+	~dev-qt/qtgui-${PV}[debug=]
+	~dev-qt/qtwidgets-${PV}[debug=]
+	cups? ( >=net-print/cups-1.4 )
 "
 DEPEND="${RDEPEND}
 	test? ( ~dev-qt/qtnetwork-${PV}[debug=] )
 "
 
 QT5_TARGET_SUBDIRS=(
-	src/xml
+	src/printsupport
+	src/plugins/printsupport
 )
+
+pkg_setup() {
+	QCONFIG_ADD=(
+		$(usev cups)
+	)
+	qt5-build_pkg_setup
+}
+
+src_configure() {
+	local myconf=(
+		$(qt_use cups)
+	)
+	qt5-build_src_configure
+}

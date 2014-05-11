@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -18,23 +18,13 @@ fi
 
 IUSE=""
 
-DEPEND="
+RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	>=sys-apps/dbus-1.4.20
-	sys-libs/zlib
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	test? ( ~dev-qt/qtnetwork-${PV}[debug=] )
+"
 
 QT5_TARGET_SUBDIRS=(
-	src/dbus
-	src/tools/qdbusxml2cpp
-	src/tools/qdbuscpp2xml
+	src/xml
 )
-QCONFIG_ADD=( dbus dbus-linked )
-
-src_configure() {
-	local myconf=(
-		-dbus-linked
-	)
-	qt5-build_src_configure
-}

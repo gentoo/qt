@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -50,7 +50,8 @@ case ${PV} in
 	*_alpha*|*_beta*|*_rc*)
 		# pre-releases
 		QT5_BUILD_TYPE="release"
-		MY_P="${QT5_MODULE}-opensource-src-${PV/_/-}"
+		MY_PV="${PV/rc/RC}"
+		MY_P="${QT5_MODULE}-opensource-src-${MY_PV/_/-}"
 		SRC_URI="http://download.qt-project.org/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;

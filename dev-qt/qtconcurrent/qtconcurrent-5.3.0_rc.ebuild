@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -18,16 +18,11 @@ fi
 
 IUSE=""
 
-RDEPEND="
+DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
 "
-DEPEND="${RDEPEND}
-	test? (
-		~dev-qt/qtgui-${PV}[debug=]
-		~dev-qt/qtxml-${PV}[debug=]
-	)
-"
+RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/testlib
+	src/concurrent
 )

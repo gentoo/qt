@@ -3,14 +3,13 @@
 ~app-dicts/goldendict-9999
 ~app-emulation/q4wine-9999
 ~app-emulation/qtemu-9999
-~app-text/poppler-9999
 ~dev-db/unixODBC-GUI-Qt-9999
 ~dev-libs/qjson-9999
 ~dev-libs/qoauth-9999
 ~dev-python/pyside-9999
 ~dev-python/shiboken-9999
 ~dev-python/sip-4.9999
-~dev-util/qt-creator-9999
+~dev-qt/qt-creator-9999
 ~dev-vcs/hgview-9999
 ~dev-vcs/qgit-9999
 ~media-gfx/photivo-9999

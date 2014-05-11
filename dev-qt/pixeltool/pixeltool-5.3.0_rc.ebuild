@@ -1,8 +1,10 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=5
+
+QT5_MODULE="qttools"
 
 inherit qt5-build
 
@@ -16,9 +18,14 @@ fi
 
 IUSE=""
 
-RDEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,xcb]
-	~dev-qt/qtwidgets-${PV}[debug=]
+DEPEND="
+	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtgui-${PV}:5[debug=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=]
+	>=dev-qt/qtwidgets-${PV}:5[debug=]
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
+
+QT5_TARGET_SUBDIRS=(
+	src/pixeltool
+)

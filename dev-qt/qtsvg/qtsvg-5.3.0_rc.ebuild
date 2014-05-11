@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,20 +14,13 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="scripttools"
+IUSE=""
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
-	scripttools? (
-		>=dev-qt/qtgui-${PV}:5[debug=]
-		>=dev-qt/qtwidgets-${PV}:5[debug=]
-	)
+	>=dev-qt/qtgui-${PV}:5[debug=]
+	>=dev-qt/qtwidgets-${PV}:5[debug=]
+	>=dev-qt/qtxml-${PV}:5[debug=]
+	sys-libs/zlib
 "
 RDEPEND="${DEPEND}"
-
-src_prepare() {
-	qt_use_disable_mod scripttools widgets \
-		src/src.pro
-
-	qt5-build_src_prepare
-}

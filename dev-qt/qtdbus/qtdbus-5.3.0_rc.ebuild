@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,39 +16,25 @@ else
 	KEYWORDS="~amd64"
 fi
 
-IUSE="+glib icu"
+IUSE=""
 
 DEPEND="
-	>=dev-libs/libpcre-8.30[pcre16]
+	~dev-qt/qtcore-${PV}[debug=]
+	>=sys-apps/dbus-1.4.20
 	sys-libs/zlib
-	virtual/libiconv
-	glib? ( dev-libs/glib:2 )
-	icu? ( dev-libs/icu:= )
 "
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/tools/bootstrap
-	src/tools/moc
-	src/tools/rcc
-	src/corelib
+	src/dbus
+	src/tools/qdbusxml2cpp
+	src/tools/qdbuscpp2xml
 )
-QCONFIG_DEFINE=( QT_ZLIB )
-
-pkg_setup() {
-	QCONFIG_REMOVE=(
-		$(usev !glib)
-		$(usev !icu)
-	)
-
-	qt5-build_pkg_setup
-}
+QCONFIG_ADD=( dbus dbus-linked )
 
 src_configure() {
 	local myconf=(
-		$(qt_use glib)
-		-iconv
-		$(qt_use icu)
+		-dbus-linked
 	)
 	qt5-build_src_configure
 }
