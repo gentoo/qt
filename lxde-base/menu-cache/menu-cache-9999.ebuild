@@ -32,7 +32,4 @@ DEPEND="${RDEPEND}
 
 DOCS=( AUTHORS NEWS README ) # ChangeLog is empty
 
-src_prepare() {
-	epatch "${FILESDIR}/gtk-doc.patch"
-	eautoreconf
-}
+PATCHES=( "${FILESDIR}/gtk-doc.patch" )
