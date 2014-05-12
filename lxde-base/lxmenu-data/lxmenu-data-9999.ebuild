@@ -24,10 +24,9 @@ LICENSE="GPL-2"
 SLOT="0"
 IUSE=""
 
-RDEPEND=""
+RDEPEND="!lxde-base/lxmenu-data"
 DEPEND="dev-util/intltool
 	sys-devel/gettext
-	virtual/pkgconfig
-	!lxde-base/lxmenu-data"
+	virtual/pkgconfig"
 
 DOCS=( AUTHORS README ) # ChangeLog is empty
