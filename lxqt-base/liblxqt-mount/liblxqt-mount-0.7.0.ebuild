@@ -29,7 +29,4 @@ DEPEND="lxqt-base/liblxqt
 	virtual/udev"
 RDEPEND="${DEPEND}"
 
-src_unpack() {
-	default
-	S=${WORKDIR}
-}
+S=${WORKDIR}
