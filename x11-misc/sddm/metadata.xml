@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <herd>qt</herd>
-  <use>
-    <flag name='qt5'>Use Qt5 instead of Qt4</flag>
-  </use>
+	<maintainer>
+		<email>teknocratdefunct@riseup.net</email>
+		<name>Harvey Mittens</name>
+	</maintainer>
+	<longdescription lang="en">
+	SDDM is a modern display manager for X11 aiming to be fast, simple and beatiful. It uses modern technologies like QtQuick, which in turn gives the designer the ability to create smooth, animated user interfaces.
+	</longdescription>
 </pkgmetadata>

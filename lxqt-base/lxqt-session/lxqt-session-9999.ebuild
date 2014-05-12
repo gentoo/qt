@@ -3,31 +3,33 @@
 # $Header: $
 
 EAPI=5
-AUTOTOOLS_AUTORECONF=1
-AUTOTOOLS_IN_SOURCE_BUILD=1
-inherit autotools-utils
 
-DESCRIPTION="Application menu resources"
+inherit cmake-utils
+
+DESCRIPTION="LXQT session manager"
 HOMEPAGE="http://www.lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
-	
 	KEYWORDS=""
 else
-	SRC_URI="http://lxqt.org/downloads/${PN}/${PV}/${P}.tar.xz"
+	SRC_URI="http://lxqt.org/downloads/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
 fi
 
-LICENSE="GPL-2"
+LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 IUSE=""
 
-RDEPEND=""
-DEPEND="dev-util/intltool
+CDEPEND="dev-libs/dbus-glib
+	dev-libs/glib:2
+	sys-apps/dbus
+	x11-libs/libX11
+	lxqt-base/liblxqt"
+DEPEND="${CDEPEND}
+	dev-util/intltool
 	sys-devel/gettext
-	virtual/pkgconfig
-	!lxde-base/lxmenu-data"
-
-DOCS=( AUTHORS README ) # ChangeLog is empty
+	virtual/pkgconfig"
+RDEPEND="${CDEPEND}
+	lxqt-base/lxqt-common"
