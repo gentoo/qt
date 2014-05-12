@@ -1,0 +1,92 @@
+--- src/daemon/PowerManager.cpp	2014-02-14 14:52:22.248986025 -0500
++++ PowerManager.cpp	2014-02-14 14:55:25.163990924 -0500
+@@ -23,6 +23,7 @@
+ #include "DaemonApp.h"
+ #include "Messages.h"
+ 
++#include <QFile>
+ #include <QDBusConnectionInterface>
+ #include <QDBusInterface>
+ #include <QDBusReply>
+@@ -49,6 +50,59 @@
+         virtual void hybridSleep() const = 0;
+     };
+ 
++/**
++ * PM-UTILS Backend (as failsafe only)
++ */
++
++   class PMUtilsBackend : public PowerManagerBackend {
++   public:
++   	PMUtilsBackend() {
++		
++	}
++
++	~PMUtilsBackend() {
++
++	}
++
++	Capabilities capabilities() const {
++		Capabilities caps = Capability::PowerOff | Capability::Reboot;
++
++		if(QProcess::execute("pm-is-supported --suspend"))
++			caps |= Capability::Suspend;
++
++		if(QProcess::execute("pm-is-supported --hibernate"))
++			caps |= Capability::Hibernate;
++
++		if(QProcess::execute("pm-is-supported --suspend-hybrid"))
++			caps |= Capability::HybridSleep;
++
++
++		return caps;
++	}
++
++	        void powerOff() const {
++			QProcess::execute(daemonApp->configuration()->haltCommand());
++		}
++
++		void reboot() const {
++			QProcess::execute(daemonApp->configuration()->rebootCommand());
++		}
++		
++		void suspend() const {
++			QProcess::execute("pm-suspend");
++		}
++		
++		void hibernate() const {
++			QProcess::execute("pm-hibernate");
++		}
++		
++		void hybridSleep() const {
++			QProcess::execute("pm-suspend-hybrid");
++		}
++
++   };
++
++
+     /**********************************************/
+     /* UPOWER BACKEND                             */
+     /**********************************************/
+@@ -199,11 +253,20 @@
+         // check if upower interface exists
+         if (interface->isServiceRegistered(UPOWER_SERVICE))
+             m_backends << new UPowerBackend();
++
++	// check if pm-utils is installed
++	QFile PMInstalled("/usr/bin/pm-is-supported");
++
++	//Only add pm-utils if no other option exists
++	if(PMInstalled.exists() && m_backends.empty())
++	{
++		m_backends << new PMUtilsBackend();
++	}
+     }
+ 
+     PowerManager::~PowerManager() {
+         while (!m_backends.empty())
+-            delete m_backends.takeFirst();
++	     delete m_backends.takeFirst();
+     }
+ 
+     Capabilities PowerManager::capabilities() const {

@@ -8,12 +8,11 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 inherit autotools-utils
 
 DESCRIPTION="A library creating and utilizing caches to speed up freedesktop.org application menus"
-HOMEPAGE="http://www.lxde.org/"
+HOMEPAGE="http://www.lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="git://github.com/lxde/${PN}.git"
-	EGIT_BRANCH="master"
+	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
 	KEYWORDS=""
 else
 	SRC_URI="mirror://sourceforge/lxde/${P}.tar.bz2"
@@ -22,12 +21,18 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0/2"
-IUSE=""
+IUSE="doc"
 
 RDEPEND="dev-libs/glib:2"
 DEPEND="${RDEPEND}
-	dev-util/gtk-doc
+	!lxde-base/menu-cache
+	doc? ( dev-util/gtk-doc )
 	sys-devel/gettext
 	virtual/pkgconfig"
 
 DOCS=( AUTHORS NEWS README ) # ChangeLog is empty
+
+src_prepare() {
+	epatch "${FILESDIR}/gtk-doc.patch"
+	eautoreconf
+}
