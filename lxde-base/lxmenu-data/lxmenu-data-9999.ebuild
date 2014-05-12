@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=5
+
 AUTOTOOLS_AUTORECONF=1
 AUTOTOOLS_IN_SOURCE_BUILD=1
 inherit autotools-utils
@@ -13,7 +14,6 @@ HOMEPAGE="http://www.lxqt.org/"
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
-	
 	KEYWORDS=""
 else
 	SRC_URI="http://lxqt.org/downloads/${PN}/${PV}/${P}.tar.xz"
