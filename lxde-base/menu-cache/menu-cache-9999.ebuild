@@ -21,7 +21,7 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0/2"
-IUSE="doc"
+IUSE="doc static-libs"
 
 RDEPEND="dev-libs/glib:2"
 DEPEND="${RDEPEND}
