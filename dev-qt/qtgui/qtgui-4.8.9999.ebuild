@@ -36,6 +36,7 @@ RDEPEND="
 		x11-libs/libX11
 		x11-libs/libXcursor
 		x11-libs/libXext
+		x11-libs/libXfixes
 		x11-libs/libXi
 		x11-libs/libXrandr
 		x11-libs/libXrender
@@ -44,6 +45,7 @@ RDEPEND="
 	)
 	cups? ( net-print/cups )
 	egl? ( media-libs/mesa[egl] )
+	glib? ( dev-libs/glib:2 )
 	gtkstyle? (
 		x11-libs/cairo[-qt4]
 		x11-libs/gtk+:2[aqua=]
