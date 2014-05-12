@@ -18,6 +18,8 @@ IUSE="egl qt3support"
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=]
 	~dev-qt/qtgui-${PV}[aqua=,debug=,egl=,qt3support=]
+	x11-libs/libX11
+	x11-libs/libXrender
 	virtual/opengl
 "
 RDEPEND="${DEPEND}"
