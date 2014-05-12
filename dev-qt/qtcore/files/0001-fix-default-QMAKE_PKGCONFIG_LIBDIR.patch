@@ -1,0 +1,31 @@
+From 50bc2b25d8dc3e420be63da7af3b2bc8bd38bb2b Mon Sep 17 00:00:00 2001
+From: Oswald Buddenhagen <oswald.buddenhagen@digia.com>
+Date: Mon, 14 Apr 2014 17:07:26 +0200
+Subject: [PATCH 1/7] fix default QMAKE_PKGCONFIG_LIBDIR
+
+it needs neither native separators, nor a trailing separator.
+
+the QMAKE_PKGCONFIG_INCDIR default was already ok.
+
+Change-Id: I1048b3870fd3ca09aa76b41aecda7d90402aa64a
+Reviewed-by: Joerg Bornemann <joerg.bornemann@digia.com>
+---
+ qmake/generators/makefile.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/qmake/generators/makefile.cpp b/qmake/generators/makefile.cpp
+index a20e8ff..3870d1e 100644
+--- a/qmake/generators/makefile.cpp
++++ b/qmake/generators/makefile.cpp
+@@ -3217,7 +3217,7 @@ MakefileGenerator::writePkgConfigFile()
+     QString prefix = pkgConfigPrefix();
+     QString libDir = project->first("QMAKE_PKGCONFIG_LIBDIR").toQString();
+     if(libDir.isEmpty())
+-        libDir = prefix + Option::dir_sep + "lib" + Option::dir_sep;
++        libDir = prefix + "/lib";
+     QString includeDir = project->first("QMAKE_PKGCONFIG_INCDIR").toQString();
+     if(includeDir.isEmpty())
+         includeDir = prefix + "/include";
+-- 
+1.9.2
+
