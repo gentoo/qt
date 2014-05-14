@@ -5,6 +5,7 @@
 EAPI=5
 
 QT5_MODULE="qtbase"
+VIRTUALX_REQUIRED="test"
 
 inherit qt5-build
 
