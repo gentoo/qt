@@ -33,5 +33,4 @@ DEPEND="dev-qt/qtcore:4
 
 src_install(){
 	cmake-utils_src_install
-	doman man/*.1
 }
