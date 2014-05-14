@@ -16,13 +16,14 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# TODO: directfb, linuxfb, offscreen
+# TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
-IUSE="accessibility eglfs evdev gif gles2 +glib harfbuzz ibus jpeg kms opengl +png udev +xcb"
+IUSE="accessibility egl eglfs evdev +gif gles2 +glib harfbuzz ibus jpeg kms +opengl +png udev +xcb"
 REQUIRED_USE="
-	eglfs? ( evdev gles2 )
+	egl? ( evdev opengl )
+	eglfs? ( egl )
 	gles2? ( opengl )
-	kms? ( evdev gles2 )
+	kms? ( egl gles2 )
 "
 
 RDEPEND="
@@ -30,23 +31,21 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/freetype:2
 	sys-libs/zlib
-	gif? ( media-libs/giflib )
-	gles2? ( || (
-		media-libs/mesa[egl,gles2]
-		media-libs/mesa[egl,gles]
-	) )
+	egl? ( media-libs/mesa[egl] )
+	evdev? ( sys-libs/mtdev )
+	gles2? ( media-libs/mesa[gles2] )
 	glib? ( dev-libs/glib:2 )
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:0= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
-		virtual/udev
+		virtual/libudev:0=
 		x11-libs/libdrm
 	)
 	opengl? ( virtual/opengl )
 	png? ( media-libs/libpng:0= )
-	udev? ( virtual/udev )
+	udev? ( virtual/libudev:0= )
 	xcb? (
 		x11-libs/libICE
 		x11-libs/libSM
@@ -54,7 +53,7 @@ RDEPEND="
 		>=x11-libs/libXi-1.6
 		x11-libs/libXrender
 		>=x11-libs/libxcb-1.10[xkb]
-		>=x11-libs/libxkbcommon-0.4.1
+		>=x11-libs/libxkbcommon-0.4.1[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
@@ -73,35 +72,39 @@ PDEPEND="
 QT5_TARGET_SUBDIRS=(
 	src/gui
 	src/platformsupport
+	src/plugins/generic
 	src/plugins/imageformats
-	src/plugins/platforminputcontexts/compose
 	src/plugins/platforms
 )
 
 pkg_setup() {
 	QCONFIG_ADD=(
 		$(use accessibility && echo accessibility-atspi-bridge)
+		$(usev egl && use xcb && echo egl_x11)
 		$(usev eglfs)
-		$(usev evdev)
+		$(usev evdev && echo mtdev)
 		fontconfig
-		$(use gles2 && echo egl opengles2)
+		$(use gles2 && echo opengles2)
 		$(use harfbuzz && echo system-harfbuzz)
 		$(usev kms)
 		$(usev opengl)
 		$(use udev && echo libudev)
-		$(usev xcb)
+		$(usev xcb && echo xcb-plugin xcb-render xcb-sm xcb-xlib)
 	)
 	QCONFIG_DEFINE=(
 		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
+		$(use egl	|| echo QT_NO_EGL QT_NO_EGL_X11)
 		$(use eglfs	|| echo QT_NO_EGLFS)
-		$(use gles2	&& echo QT_OPENGL_ES QT_OPENGL_ES_2 || echo QT_NO_EGL)
+		$(use evdev	|| echo QT_NO_EVDEV)
+		$(use gles2	&& echo QT_OPENGL_ES QT_OPENGL_ES_2)
 		$(use jpeg	|| echo QT_NO_IMAGEFORMAT_JPEG)
 		$(use opengl	|| echo QT_NO_OPENGL)
 		$(use png	|| echo QT_NO_IMAGEFORMAT_PNG)
 	)
 
-	use ibus && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
+	use ibus   && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
+	use xcb	   && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
 
 	qt5-build_pkg_setup
 }
@@ -112,17 +115,19 @@ src_configure() {
 		dbus="-dbus"
 	fi
 
-	local gl="-no-egl -no-opengl"
+	local gl="-no-opengl"
 	if use gles2; then
-		gl="-egl -opengl es2"
+		gl="-opengl es2"
 	elif use opengl; then
-		gl="-no-egl -opengl desktop"
+		gl="-opengl desktop"
 	fi
 
 	local myconf=(
 		${dbus}
+		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
+		$(qt_use evdev mtdev)
 		-fontconfig
 		-system-freetype
 		$(use gif || echo -no-gif)
@@ -132,8 +137,8 @@ src_configure() {
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
 		$(qt_use png libpng system)
-		$(use udev || echo -no-libudev)
-		$(use xcb && echo -xcb -xrender -sm)
+		$(qt_use udev libudev)
+		$(use xcb && echo -xcb -xcb-xlib -xinput2 -xrender -sm)
 	)
 	qt5-build_src_configure
 }
