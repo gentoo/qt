@@ -14,13 +14,23 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# FIXME: widgets is automagic in src/private/private.pri
-
-IUSE=""
+IUSE="widgets"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtdeclarative-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
+	widgets? ( >=dev-qt/qtwidgets-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	qt_use_disable_mod widgets widgets \
+		src/src.pro \
+		src/controls/Private/private.pri \
+		tests/auto/activeFocusOnTab/activeFocusOnTab.pro \
+		tests/auto/controls/controls.pro \
+		tests/auto/testplugin/testplugin.pro
+
+	qt5-build_src_prepare
+}
