@@ -19,7 +19,7 @@ IUSE="widgets"
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtdeclarative-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[accessibility,debug=]
+	>=dev-qt/qtgui-${PV}:5[debug=]
 	widgets? ( >=dev-qt/qtwidgets-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
