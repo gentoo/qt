@@ -16,9 +16,9 @@ else
 	KEYWORDS="~amd64"
 fi
 
-# TODO: qtprintsupport, qttestlib, geolocation, orientation/sensors
+# TODO: qttestlib, geolocation, orientation/sensors
 
-IUSE="gstreamer libxml2 multimedia opengl qml udev webp widgets xslt"
+IUSE="gstreamer libxml2 multimedia opengl printsupport qml udev webp widgets xslt"
 
 RDEPEND="
 	dev-db/sqlite:3
@@ -42,6 +42,7 @@ RDEPEND="
 	libxml2? ( dev-libs/libxml2:2 )
 	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5[debug=] )
 	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
+	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5[debug=] )
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
 	udev? ( virtual/udev )
 	webp? ( media-libs/libwebp:0= )
@@ -64,22 +65,24 @@ pkg_setup() {
 }
 
 src_prepare() {
-	use gstreamer  || epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
-	use libxml2    || sed -i -e '/config_libxml2: WEBKIT_CONFIG += use_libxml2/d' \
+	use gstreamer    || epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
+	use libxml2      || sed -i -e '/config_libxml2: WEBKIT_CONFIG += use_libxml2/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	use multimedia || sed -i -e '/WEBKIT_CONFIG += video use_qt_multimedia/d' \
+	use multimedia   || sed -i -e '/WEBKIT_CONFIG += video use_qt_multimedia/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	use opengl     || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
+	use opengl       || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	use qml        || sed -i -e '/have?(QTQUICK): SUBDIRS += declarative/d' \
+	use printsupport || sed -i -e '/WEBKIT_CONFIG += have_qtprintsupport/d' \
+		Tools/qmake/mkspecs/features/features.prf || die
+	use qml          || sed -i -e '/have?(QTQUICK): SUBDIRS += declarative/d' \
 		Source/QtWebKit.pro || die
-	use udev       || sed -i -e '/linux: WEBKIT_CONFIG += gamepad/d' \
+	use udev         || sed -i -e '/linux: WEBKIT_CONFIG += gamepad/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	use webp       || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
+	use webp         || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	use widgets    || sed -i -e '/SUBDIRS += webkitwidgets/d' \
+	use widgets      || sed -i -e '/SUBDIRS += webkitwidgets/d' \
 		Source/QtWebKit.pro || die
-	use xslt       || sed -i -e '/config_libxslt: WEBKIT_CONFIG += xslt/d' \
+	use xslt         || sed -i -e '/config_libxslt: WEBKIT_CONFIG += xslt/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
 
 	# bug 458222
