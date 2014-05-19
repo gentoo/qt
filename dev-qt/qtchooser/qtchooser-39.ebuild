@@ -9,8 +9,8 @@ inherit toolchain-funcs
 MY_P=${P}-g4717841
 
 DESCRIPTION="Qt4/Qt5 version chooser"
-HOMEPAGE="http://macieira.org/qtchooser/"
-SRC_URI="http://macieira.org/qtchooser/${MY_P}.tar.gz"
+HOMEPAGE="https://qt.gitorious.org/qt/qtchooser"
+SRC_URI="http://macieira.org/${PN}/${MY_P}.tar.gz"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
@@ -18,7 +18,7 @@ KEYWORDS="~amd64"
 IUSE="test"
 
 DEPEND="test? ( dev-qt/qttest )"
-RDEPEND="!dev-qt/qtcore:4" # FIXME
+RDEPEND="!<dev-qt/qtcore-4.8.6:4"
 
 S=${WORKDIR}/${MY_P}
 
