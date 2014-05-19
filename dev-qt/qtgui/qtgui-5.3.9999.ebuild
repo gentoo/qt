@@ -78,6 +78,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 pkg_setup() {
+	# Always add reverse to QCONFIG_REMOVE below.
 	QCONFIG_ADD=(
 		$(use accessibility && echo accessibility-atspi-bridge)
 		$(usev egl && use xcb && echo egl_x11)
@@ -90,6 +91,18 @@ pkg_setup() {
 		$(usev opengl)
 		$(use udev && echo libudev)
 		$(usev xcb && echo xcb-plugin xcb-render xcb-sm xcb-xlib)
+	)
+	QCONFIG_REMOVE=(
+		$(use accessibility || echo accessibility accessibility-atspi-bridge)
+		$(use egl || echo egl_x11 echo egl_x11)
+		$(use eglfs || echo eglfs)
+		$(use evdev || echo evdev mtdev)
+		$(use gles2 || echo opengles2)
+		$(use harfbuzz || echo system-harfbuzz)
+		$(use kms || echo kms)
+		$(use opengl || echo opengl)
+		$(use udev || echo libudev)
+		$(use xcb || echo xcb xcb-plugin xcb-render xcb-sm xcb-xlib)
 	)
 	QCONFIG_DEFINE=(
 		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
