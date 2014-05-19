@@ -17,13 +17,6 @@ case ${EAPI} in
 	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-# @ECLASS-VARIABLE: VIRTUALX_REQUIRED
-# @DESCRIPTION:
-# For proper description see virtualx.eclass manpage.
-# Here we redefine default value to be manual, if your package needs virtualx
-# for tests you should proceed with setting VIRTUALX_REQUIRED=test.
-: ${VIRTUALX_REQUIRED:=manual}
-
 inherit eutils flag-o-matic multilib toolchain-funcs versionator virtualx
 
 HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
@@ -131,6 +124,13 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 # @DEFAULT_UNSET
 # @DESCRIPTION:
 # Array of macros that must be defined in QtCore/qconfig.h
+
+# @ECLASS-VARIABLE: VIRTUALX_REQUIRED
+# @DESCRIPTION:
+# For proper description see virtualx.eclass man page.
+# Here we redefine default value to be manual, if your package needs virtualx
+# for tests you should proceed with setting VIRTUALX_REQUIRED=test.
+: ${VIRTUALX_REQUIRED:=manual}
 
 # @FUNCTION: qt5-build_pkg_setup
 # @DESCRIPTION:
@@ -261,7 +261,6 @@ qt5-build_src_compile() {
 # @FUNCTION: qt5-build_src_test
 # @DESCRIPTION:
 # Runs tests in target directories.
-# TODO: find a way to avoid circular deps with USE=test.
 qt5-build_src_test() {
 	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
 
@@ -396,8 +395,6 @@ qt5_prepare_env() {
 
 	if [[ ${QT5_MODULE} == "qtbase" ]]; then
 		# see mkspecs/features/qt_config.prf
-		# note: this could be the cause of bug 451456, so do it
-		#       only when really needed, i.e. for qtbase modules
 		export QMAKEMODULES="${QT5_BUILD_DIR}/mkspecs/modules:${S}/mkspecs/modules:${QT5_ARCHDATADIR}/mkspecs/modules"
 	fi
 }
