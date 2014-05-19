@@ -103,7 +103,10 @@ EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_
 # @ECLASS-VARIABLE: QT5_BUILD_DIR
 # @DESCRIPTION:
 # Build directory for out-of-source builds.
-: ${QT5_BUILD_DIR:=${S}_build}
+case ${QT5_BUILD_TYPE} in
+	live)    : ${QT5_BUILD_DIR:=${S}_build} ;;
+	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
+esac
 
 # @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
 # @DESCRIPTION:
@@ -169,12 +172,8 @@ qt5-build_src_unpack() {
 	fi
 
 	case ${QT5_BUILD_TYPE} in
-		live)
-			git-r3_src_unpack
-			;;
-		release)
-			default
-			;;
+		live)    git-r3_src_unpack ;;
+		release) default ;;
 	esac
 }
 
