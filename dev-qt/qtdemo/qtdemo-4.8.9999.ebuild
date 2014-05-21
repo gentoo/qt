@@ -97,10 +97,10 @@ src_configure() {
 	myconf+="
 		$(qt_use dbus)
 		$(qt_use declarative)
-		$(qt_use multimedia)
+		$(qt_use multimedia) -no-audio-backend
 		$(qt_use opengl)
 		$(qt_use openvg)
-		$(qt_use phonon)
+		$(qt_use phonon) -no-phonon-backend
 		$(qt_use qt3support)
 		$(qt_use webkit)
 		$(qt_use xmlpatterns)"
