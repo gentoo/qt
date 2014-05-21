@@ -1,15 +1,15 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.10.3-r1.ebuild,v 1.1 2013/10/23 10:14:55 mgorny Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/PyQt4/PyQt4-4.10.3-r3.ebuild,v 1.2 2014/05/21 21:29:32 pesa Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
 REVISION=6f54723ef2ba
 
-inherit eutils qt4-r2 python-r1 toolchain-funcs
+inherit eutils multibuild python-r1 qmake-utils toolchain-funcs
 
 DESCRIPTION="Python bindings for the Qt toolkit"
-HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ http://pypi.python.org/pypi/PyQt"
+HOMEPAGE="http://www.riverbankcomputing.co.uk/software/pyqt/intro/ https://pypi.python.org/pypi/PyQt4"
 
 if [[ ${PV} == *_pre* ]]; then
 	MY_P="PyQt-x11-gpl-snapshot-${PV%_pre*}-${REVISION}"
@@ -23,10 +23,11 @@ LICENSE="|| ( GPL-2 GPL-3 )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
 
-IUSE="X dbus debug declarative doc examples help kde multimedia opengl phonon script scripttools sql svg webkit xmlpatterns"
+IUSE="X dbus debug declarative designer doc examples help kde multimedia opengl phonon script scripttools sql svg webkit xmlpatterns"
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	declarative? ( X )
+	designer? ( X )
 	help? ( X )
 	multimedia? ( X )
 	opengl? ( X )
@@ -42,12 +43,10 @@ QT_PV="4.8.0:4"
 
 RDEPEND="
 	${PYTHON_DEPS}
-	dev-python/python-exec:2[${PYTHON_USEDEP}]
 	>=dev-python/sip-4.15.0:=[${PYTHON_USEDEP}]
 	>=dev-qt/qtcore-${QT_PV}
 	X? (
 		>=dev-qt/qtgui-${QT_PV}
-		|| ( dev-qt/designer:4 <dev-qt/qtgui-4.8.5:4 )
 		>=dev-qt/qttest-${QT_PV}
 	)
 	dbus? (
@@ -55,6 +54,7 @@ RDEPEND="
 		>=dev-qt/qtdbus-${QT_PV}
 	)
 	declarative? ( >=dev-qt/qtdeclarative-${QT_PV} )
+	designer? ( || ( dev-qt/designer:4 <dev-qt/qtgui-4.8.5:4 ) )
 	help? ( >=dev-qt/qthelp-${QT_PV} )
 	multimedia? ( >=dev-qt/qtmultimedia-${QT_PV} )
 	opengl? ( >=dev-qt/qtopengl-${QT_PV} )
@@ -75,8 +75,6 @@ DEPEND="${RDEPEND}
 S=${WORKDIR}/${MY_P}
 
 src_prepare() {
-	qt4-r2_src_prepare
-
 	# Support qreal on arm architecture (bug 322349).
 	use arm && epatch "${FILESDIR}/${PN}-4.7.3-qreal_float_support.patch"
 
@@ -121,11 +119,11 @@ src_configure() {
 			--enable=QtCore
 			--enable=QtNetwork
 			--enable=QtXml
-			$(pyqt4_use_enable X QtDesigner) $(use X || echo --no-designer-plugin)
 			$(pyqt4_use_enable X QtGui)
 			$(pyqt4_use_enable X QtTest)
 			$(pyqt4_use_enable dbus QtDBus)
 			$(pyqt4_use_enable declarative)
+			$(pyqt4_use_enable designer) $(use designer || echo --no-designer-plugin)
 			$(pyqt4_use_enable help)
 			$(pyqt4_use_enable multimedia)
 			$(pyqt4_use_enable opengl QtOpenGL)
@@ -155,9 +153,10 @@ src_configure() {
 
 		local mod
 		for mod in QtCore \
-				$(use X && echo QtDesigner QtGui) \
+				$(use X && echo QtGui) \
 				$(use dbus && echo QtDBus) \
 				$(use declarative && echo QtDeclarative) \
+				$(use designer && echo QtDesigner) \
 				$(use opengl && echo QtOpenGL); do
 			# Run eqmake4 inside the qpy subdirectories to respect
 			# CC, CXX, CFLAGS, CXXFLAGS, LDFLAGS and avoid stripping.
@@ -171,7 +170,7 @@ src_configure() {
 		done
 
 		# Avoid stripping of libpythonplugin.so.
-		if use X; then
+		if use designer; then
 			pushd designer > /dev/null || return
 			eqmake4 python.pro
 			popd > /dev/null || return
@@ -186,15 +185,19 @@ src_compile() {
 
 src_install() {
 	installation() {
+		local tmp_root=${D%/}/tmp
+
 		# INSTALL_ROOT is used by designer/Makefile, other Makefiles use DESTDIR.
-		emake DESTDIR="${D}" INSTALL_ROOT="${D}" install
-		mkdir -p "${ED}"/usr/lib/python-exec/${EPYTHON} || die
-		mv "${ED}"/usr/bin/pyuic4 "${ED}"/usr/lib/python-exec/${EPYTHON}/ || die
+		emake DESTDIR="${tmp_root}" INSTALL_ROOT="${tmp_root}" install
+
+		python_doexe "${tmp_root}${EPREFIX}"/usr/bin/pyuic4
+		rm "${tmp_root}${EPREFIX}"/usr/bin/pyuic4 || die
+
+		multibuild_merge_root "${tmp_root}" "${D}"
 		python_optimize
 	}
 	python_foreach_impl run_in_build_dir installation
 
-	dosym ../lib/python-exec/python-exec2 /usr/bin/pyuic4
 	dodoc NEWS THANKS
 
 	if use doc; then

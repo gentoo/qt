@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
+PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3,3_4} )
 
 inherit eutils python-r1 toolchain-funcs
 
@@ -27,7 +27,7 @@ else
 fi
 
 # Sub-slot based on SIP_API_MAJOR_NR from siplib/sip.h.in
-SLOT="0/10"
+SLOT="0/11"
 KEYWORDS=""
 IUSE="debug doc"
 
@@ -44,7 +44,7 @@ RDEPEND="${DEPEND}"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-4.9.3-darwin.patch
+	epatch "${FILESDIR}"/${PN}-4.15.5-darwin.patch
 
 	if [[ ${PV} == *9999* ]]; then
 		python2 build.py prepare || die
