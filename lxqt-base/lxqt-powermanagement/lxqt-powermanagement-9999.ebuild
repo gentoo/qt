@@ -30,7 +30,3 @@ DEPEND="dev-qt/qtcore:4
 	x11-libs/libX11
 	x11-libs/libxcb
 	sys-power/upower"
-
-src_install(){
-	cmake-utils_src_install
-}
