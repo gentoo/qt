@@ -30,3 +30,8 @@ RDEPEND="dev-qt/qtcore:4
 	x11-libs/libXcursor
 	x11-libs/libXfixes"
 DEPEND="${RDEPEND}"
+
+src_prepare() {
+        epatch "$FILESDIR"/${P}-add-qtlibdir.patch
+}
+
