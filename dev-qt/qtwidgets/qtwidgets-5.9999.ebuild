@@ -27,5 +27,4 @@ RDEPEND="${DEPEND}"
 QT5_TARGET_SUBDIRS=(
 	src/tools/uic
 	src/widgets
-	src/plugins/accessible
 )
