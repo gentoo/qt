@@ -40,6 +40,8 @@ RDEPEND="
 	~lxqt-base/lxqt-session-${PV}
 	~x11-misc/pcmanfm-qt-${PV}"
 
+S=${WORKDIR}
+
 pkg_postinst() {
 	readme.gentoo_pkg_postinst
 }
