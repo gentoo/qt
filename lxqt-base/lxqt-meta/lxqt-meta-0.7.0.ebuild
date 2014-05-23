@@ -35,7 +35,7 @@ RDEPEND="
 	~lxqt-base/lxqt-config-randr-${PV}
 	>=lxde-base/lxde-icon-theme-0.5
 	~lxqt-base/lxqt-common-${PV}
-	>=lxde-base/lxmenu-data-0.5.1
+	>=lxde-base/lxmenu-data-0.1.2
 	~lxqt-base/lxqt-panel-${PV}
 	~lxqt-base/lxqt-session-${PV}
 	~x11-misc/pcmanfm-qt-${PV}"

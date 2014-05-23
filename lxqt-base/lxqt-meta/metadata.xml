@@ -2,7 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <herd>lxde</herd>
-    <use>
-	        <flag name="sddm">Enable SDDM a QT Based Display Manager</flag>
-	</use>
+  <use>
+    <flag name="sddm">Enable SDDM a QT Based Display Manager</flag>
+    <flag name="upower">Pull in power management</flag>
+  </use>
 </pkgmetadata>
