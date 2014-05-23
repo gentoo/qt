@@ -2,17 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit qt4-build
+inherit qt4-build-multilib
 
 DESCRIPTION="Demonstration module and examples for the Qt toolkit"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
 	KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x64-macos"
 fi
+
 IUSE="dbus declarative kde multimedia opengl openvg phonon qt3support webkit xmlpatterns"
 
 DEPEND="
@@ -43,21 +44,18 @@ PATCHES=(
 	"${FILESDIR}/${PN}-4.6-plugandpaint.patch"
 )
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		demos
-		examples"
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		doc/src/images
-		include
-		src
-		tools"
+QT4_TARGET_DIRECTORIES="
+	demos
+	examples"
 
-	qt4-build_pkg_setup
-}
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	doc/src/images
+	include
+	src
+	tools"
 
 src_prepare() {
-	qt4-build_src_prepare
+	qt4-build-multilib_src_prepare
 
 	# Array mapping USE flags to subdirs
 	local flags_subdirs_map=(
@@ -105,12 +103,12 @@ src_configure() {
 		$(qt_use webkit)
 		$(qt_use xmlpatterns)"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }
 
 src_install() {
-	insinto "${QTDOCDIR#${EPREFIX}}"/src
+	insinto "${QT4_DOCDIR#${EPREFIX}}"/src
 	doins -r doc/src/images
 
-	qt4-build_src_install
+	qt4-build-multilib_src_install
 }

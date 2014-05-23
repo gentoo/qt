@@ -4,15 +4,16 @@
 
 EAPI=5
 
-inherit qt4-build flag-o-matic
+inherit qt4-build-multilib
 
 DESCRIPTION="The WebKit module for the Qt toolkit"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
 	KEYWORDS="~amd64 ~arm ~ia64 ~mips ~ppc ~ppc64 ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
+
 IUSE="+gstreamer icu +jit"
 
 # libxml2[!icu?] is needed for bugs 407315 and 411091
@@ -38,21 +39,17 @@ PATCHES=(
 	"${FILESDIR}/4.8.2-javascriptcore-x32.patch"
 )
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/3rdparty/webkit/Source/JavaScriptCore
-		src/3rdparty/webkit/Source/WebCore
-		src/3rdparty/webkit/Source/WebKit/qt"
+QT4_TARGET_DIRECTORIES="
+	src/3rdparty/webkit/Source/JavaScriptCore
+	src/3rdparty/webkit/Source/WebCore
+	src/3rdparty/webkit/Source/WebKit/qt"
 
-	QT4_EXTRACT_DIRECTORIES="
-		include
-		src"
+QT4_EXTRACT_DIRECTORIES="
+	include
+	src"
 
-	QCONFIG_ADD="webkit"
-	QCONFIG_DEFINE="QT_WEBKIT"
-
-	qt4-build_pkg_setup
-}
+QCONFIG_ADD="webkit"
+QCONFIG_DEFINE="QT_WEBKIT"
 
 src_prepare() {
 	# Fix version number in generated pkgconfig file, bug 406443
@@ -68,7 +65,7 @@ src_prepare() {
 			src/3rdparty/webkit/Source/JavaScriptCore/JavaScriptCore.pri || die
 	fi
 
-	qt4-build_src_prepare
+	qt4-build-multilib_src_prepare
 }
 
 src_configure() {
@@ -79,5 +76,5 @@ src_configure() {
 		$(qt_use jit javascript-jit)
 		$(use gstreamer || echo -DENABLE_VIDEO=0)"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }

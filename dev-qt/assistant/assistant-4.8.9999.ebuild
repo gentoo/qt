@@ -4,10 +4,10 @@
 
 EAPI=5
 
-inherit eutils qt4-build
+inherit eutils qt4-build-multilib
 
 DESCRIPTION="Tool for viewing on-line documentation in Qt help file format"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
@@ -29,21 +29,17 @@ PATCHES=(
 	"${FILESDIR}/${PN}-4.8.2+gcc-4.7.patch"
 )
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="tools/assistant/tools/assistant"
-	QT4_EXTRACT_DIRECTORIES="
-		include
-		src
-		tools"
-
-	qt4-build_pkg_setup
-}
+QT4_TARGET_DIRECTORIES="tools/assistant/tools/assistant"
+QT4_EXTRACT_DIRECTORIES="
+	include
+	src
+	tools"
 
 src_prepare() {
 	# bug 401173
 	use webkit || PATCHES+=("${FILESDIR}/disable-webkit.patch")
 
-	qt4-build_src_prepare
+	qt4-build-multilib_src_prepare
 }
 
 src_configure() {
@@ -54,11 +50,11 @@ src_configure() {
 		-fontconfig -no-multimedia -no-opengl -no-phonon -no-svg -no-xmlpatterns
 		$(qt_use webkit)"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }
 
 src_install() {
-	qt4-build_src_install
+	qt4-build-multilib_src_install
 
 	doicon tools/assistant/tools/assistant/images/assistant.png
 	make_desktop_entry assistant Assistant assistant 'Qt;Development;Documentation'

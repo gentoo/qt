@@ -4,23 +4,23 @@
 
 EAPI=5
 
-inherit qt4-build
+inherit qt4-build-multilib
 
 DESCRIPTION="Cross-platform application development framework"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
+
 IUSE="+glib iconv icu qt3support ssl"
 
 DEPEND="
 	sys-libs/zlib
 	glib? ( dev-libs/glib:2 )
 	icu? ( >=dev-libs/icu-49:= )
-	ssl? ( dev-libs/openssl )
-	!<x11-libs/cairo-1.10.2-r2
+	ssl? ( dev-libs/openssl:0 )
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
@@ -31,41 +31,39 @@ PATCHES=(
 	"${FILESDIR}/moc-boost-lexical-cast.patch"
 )
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/tools/bootstrap
-		src/tools/moc
-		src/tools/rcc
-		src/tools/uic
-		src/corelib
-		src/xml
-		src/network
-		src/plugins/codecs
-		tools/linguist/lconvert
-		tools/linguist/lrelease
-		tools/linguist/lupdate"
+QT4_TARGET_DIRECTORIES="
+	src/tools/bootstrap
+	src/tools/moc
+	src/tools/rcc
+	src/tools/uic
+	src/corelib
+	src/xml
+	src/network
+	src/plugins/codecs
+	tools/linguist/lconvert
+	tools/linguist/lrelease
+	tools/linguist/lupdate"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include
-		src/plugins/plugins.pro
-		src/plugins/qpluginbase.pri
-		src/src.pro
-		src/3rdparty/des
-		src/3rdparty/harfbuzz
-		src/3rdparty/md4
-		src/3rdparty/md5
-		src/3rdparty/sha1
-		src/3rdparty/easing
-		src/3rdparty/zlib_dependency.pri
-		src/declarative
-		src/gui
-		src/script
-		tools/shared
-		tools/linguist/shared
-		translations"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include
+	src/plugins/plugins.pro
+	src/plugins/qpluginbase.pri
+	src/src.pro
+	src/3rdparty/des
+	src/3rdparty/harfbuzz
+	src/3rdparty/md4
+	src/3rdparty/md5
+	src/3rdparty/sha1
+	src/3rdparty/easing
+	src/3rdparty/zlib_dependency.pri
+	src/declarative
+	src/gui
+	src/script
+	tools/shared
+	tools/linguist/shared
+	translations"
 
-	qt4-build_pkg_setup
-}
+QCONFIG_DEFINE="QT_ZLIB"
 
 src_prepare() {
 	# Don't pre-strip, bug 235026
@@ -73,7 +71,7 @@ src_prepare() {
 		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
 	done
 
-	qt4-build_src_prepare
+	qt4-build-multilib_src_prepare
 
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
@@ -103,7 +101,7 @@ src_configure() {
 		$(use ssl && echo -openssl-linked || echo -no-openssl)
 		$(qt_use qt3support)"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }
 
 src_install() {
@@ -114,8 +112,8 @@ src_install() {
 	emake INSTALL_ROOT="${D}" install_mkspecs
 
 	# install private headers
-	insinto "${QTHEADERDIR#${EPREFIX}}"/QtCore/private
-	find "${S}"/src/corelib -type f -name "*_p.h" -exec doins {} +
+	insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtCore/private
+	find "${S}"/src/corelib -type f -name "*_p.h" -exec doins '{}' +
 
 	# use freshly built libraries
 	local DYLD_FPATH=
@@ -125,7 +123,7 @@ src_install() {
 		LD_LIBRARY_PATH="${S}/lib" \
 		"${S}"/bin/lrelease translations/*.ts \
 		|| die "generating translations failed"
-	insinto "${QTTRANSDIR#${EPREFIX}}"
+	insinto "${QT4_TRANSLATIONDIR#${EPREFIX}}"
 	doins translations/*.qm
 
 	setqtenv
@@ -142,32 +140,30 @@ src_install() {
 	EOF
 	doenvd "${T}"/44qt4
 
-	dodir "${QTDATADIR#${EPREFIX}}"/mkspecs/gentoo
-	mv "${D}/${QTDATADIR}"/mkspecs/qconfig.pri "${D}${QTDATADIR}"/mkspecs/gentoo \
-		|| die "failed to move qconfig.pri"
+	dodir "${QT4_DATADIR#${EPREFIX}}"/mkspecs/gentoo
+	mv "${D}${QT4_DATADIR}"/mkspecs/{qconfig.pri,gentoo/} || die
 
 	# Framework hacking
 	if use aqua && [[ ${CHOST#*-darwin} -ge 9 ]]; then
 		# TODO: do this better
 		sed -i -e '2a#include <QtCore/Gentoo/gentoo-qconfig.h>\n' \
-				"${D}${QTLIBDIR}"/QtCore.framework/Headers/qconfig.h \
+				"${D}${QT4_LIBDIR}"/QtCore.framework/Headers/qconfig.h \
 			|| die "sed for qconfig.h failed."
-		dosym "${QTHEADERDIR#${EPREFIX}}"/Gentoo "${QTLIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo
+		dosym "${QT4_HEADERDIR#${EPREFIX}}"/Gentoo "${QT4_LIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo
 	else
 		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
-				"${D}${QTHEADERDIR}"/QtCore/qconfig.h \
-				"${D}${QTHEADERDIR}"/Qt/qconfig.h \
+				"${D}${QT4_HEADERDIR}"/QtCore/qconfig.h \
+				"${D}${QT4_HEADERDIR}"/Qt/qconfig.h \
 			|| die "sed for qconfig.h failed"
 	fi
 
-	QCONFIG_DEFINE="QT_ZLIB"
 	install_qconfigs
 
 	# remove .la files
 	prune_libtool_files
 
-	keepdir "${QTSYSCONFDIR#${EPREFIX}}"
-
-	# Framework magic
+	# framework magic
 	fix_includes
+
+	keepdir "${QT4_SYSCONFDIR#${EPREFIX}}"
 }

@@ -2,17 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit qt4-build
+inherit qt4-build-multilib
 
 DESCRIPTION="The network bearer plugins for the Qt toolkit"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd"
 fi
+
 IUSE="connman networkmanager"
 
 DEPEND="
@@ -25,23 +26,23 @@ RDEPEND="${DEPEND}
 	networkmanager? ( net-misc/networkmanager )
 "
 
-pkg_setup() {
-	QT4_EXTRACT_DIRECTORIES="
-		include/QtCore
-		include/QtDBus
-		include/QtNetwork
-		src/corelib
-		src/dbus
-		src/network
-		src/plugins/bearer
-		src/plugins/qpluginbase.pri"
+QT4_EXTRACT_DIRECTORIES="
+	include/QtCore
+	include/QtDBus
+	include/QtNetwork
+	src/corelib
+	src/dbus
+	src/network
+	src/plugins/bearer
+	src/plugins/qpluginbase.pri"
 
+pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/plugins/bearer/generic
 		$(use connman && echo src/plugins/bearer/connman)
 		$(use networkmanager && echo src/plugins/bearer/networkmanager)"
 
-	qt4-build_pkg_setup
+	qt4-build-multilib_pkg_setup
 }
 
 src_configure() {
@@ -54,5 +55,5 @@ src_configure() {
 		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }

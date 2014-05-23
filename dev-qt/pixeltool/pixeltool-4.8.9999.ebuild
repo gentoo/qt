@@ -4,10 +4,10 @@
 
 EAPI=5
 
-inherit qt4-build
+inherit qt4-build-multilib
 
 DESCRIPTION="Qt screen magnifier"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
@@ -23,16 +23,12 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="tools/pixeltool"
-	QT4_EXTRACT_DIRECTORIES="
-		include
-		src/corelib
-		src/gui
-		tools/pixeltool"
-
-	qt4-build_pkg_setup
-}
+QT4_TARGET_DIRECTORIES="tools/pixeltool"
+QT4_EXTRACT_DIRECTORIES="
+	include
+	src/corelib
+	src/gui
+	tools/pixeltool"
 
 src_configure() {
 	myconf+="
@@ -41,5 +37,5 @@ src_configure() {
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }

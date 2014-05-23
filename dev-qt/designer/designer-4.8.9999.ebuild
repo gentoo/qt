@@ -4,10 +4,10 @@
 
 EAPI=5
 
-inherit eutils qt4-build
+inherit eutils qt4-build-multilib
 
 DESCRIPTION="WYSIWYG tool for designing and building Qt-based GUIs"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
@@ -28,18 +28,14 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="tools/designer"
-	QT4_EXTRACT_DIRECTORIES="
-		include
-		src
-		tools"
-
-	qt4-build_pkg_setup
-}
+QT4_TARGET_DIRECTORIES="tools/designer"
+QT4_EXTRACT_DIRECTORIES="
+	include
+	src
+	tools"
 
 src_prepare() {
-	qt4-build_src_prepare
+	qt4-build-multilib_src_prepare
 
 	local plugin
 	for plugin in ${DESIGNER_PLUGINS}; do
@@ -55,11 +51,11 @@ src_configure() {
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }
 
 src_install() {
-	qt4-build_src_install
+	qt4-build-multilib_src_install
 
 	# qt-creator
 	# some qt-creator headers are located
@@ -69,9 +65,9 @@ src_install() {
 	# So instead of installing both, we create the private folder
 	# and drop tools/designer/src/lib/* headers in it.
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		insinto "${QTLIBDIR#${EPREFIX}}"/QtDesigner.framework/Headers/private/
+		insinto "${QT4_LIBDIR#${EPREFIX}}"/QtDesigner.framework/Headers/private/
 	else
-		insinto "${QTHEADERDIR#${EPREFIX}}"/QtDesigner/private/
+		insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtDesigner/private/
 	fi
 	doins "${S}"/tools/designer/src/lib/shared/*
 	doins "${S}"/tools/designer/src/lib/sdk/*

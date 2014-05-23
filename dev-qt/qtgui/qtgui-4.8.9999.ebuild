@@ -4,10 +4,10 @@
 
 EAPI=5
 
-inherit eutils qt4-build
+inherit eutils qt4-build-multilib
 
 DESCRIPTION="The GUI module for the Qt toolkit"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
@@ -69,20 +69,16 @@ PATCHES=(
 	"${FILESDIR}/${PN}-4.7.3-cups.patch"
 )
 
+QT4_TARGET_DIRECTORIES="
+	src/gui
+	src/scripttools
+	src/plugins/imageformats/gif
+	src/plugins/imageformats/ico
+	src/plugins/imageformats/jpeg
+	src/plugins/imageformats/tga
+	src/plugins/inputmethods"
+
 pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/gui
-		src/scripttools
-		src/plugins/imageformats/gif
-		src/plugins/imageformats/ico
-		src/plugins/imageformats/jpeg
-		src/plugins/imageformats/tga
-		src/plugins/inputmethods"
-
-	QT4_EXTRACT_DIRECTORIES="
-		include
-		src"
-
 	use accessibility && QT4_TARGET_DIRECTORIES+=" src/plugins/accessible/widgets"
 	use mng && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/mng"
 	use tiff && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/tiff"
@@ -91,13 +87,15 @@ pkg_setup() {
 	# mac version does not contain qtconfig?
 	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES} ${QT4_EXTRACT_DIRECTORIES}"
+	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+		include
+		src"
 
-	qt4-build_pkg_setup
+	qt4-build-multilib_pkg_setup
 }
 
 src_prepare() {
-	qt4-build_src_prepare
+	qt4-build-multilib_src_prepare
 
 	# Add -xvideo to the list of accepted configure options
 	sed -i -e 's:|-xinerama|:&-xvideo|:' configure
@@ -123,9 +121,10 @@ src_configure() {
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl"
 
-	[[ ${CHOST} == *86*-apple-darwin* ]] && myconf+=" -no-ssse3" #367045
+	# bug 367045
+	[[ ${CHOST} == *86*-apple-darwin* ]] && myconf+=" -no-ssse3"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 
 	if use gtkstyle; then
 		sed -i -e 's:-I/usr/include/qt4 ::' src/gui/Makefile || die "sed failed"
@@ -162,15 +161,15 @@ src_install() {
 			QT_XINPUT QT_XKB QT_XRANDR QT_XRENDER QT_XSYNC
 			$(use xv && echo QT_XVIDEO)"
 
-	qt4-build_src_install
+	qt4-build-multilib_src_install
 
 	# install private headers
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		insinto "${QTLIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
+		insinto "${QT4_LIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
 	else
-		insinto "${QTHEADERDIR#${EPREFIX}}"/QtGui/private
+		insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtGui/private
 	fi
-	find "${S}"/src/gui -type f -name '*_p.h' -exec doins {} +
+	find "${S}"/src/gui -type f -name '*_p.h' -exec doins '{}' +
 
 	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
 		# rerun to get links to headers right
@@ -187,7 +186,7 @@ src_install() {
 
 	# bug 388551
 	if use gtkstyle; then
-		local tempfile=${T}/${PN}${SLOT}.sh
+		local tempfile=${T}/${PN}4.sh
 		cat <<-EOF > "${tempfile}"
 		export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
 		EOF
@@ -197,7 +196,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	qt4-build_pkg_postinst
+	qt4-build-multilib_pkg_postinst
 
 	# raster is the default graphicssystem, set it on first install
 	eselect qtgraphicssystem set raster --use-old

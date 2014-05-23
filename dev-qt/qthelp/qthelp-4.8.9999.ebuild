@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit eutils qt4-build
+inherit qt4-build-multilib
 
 DESCRIPTION="The Help module for the Qt toolkit"
 SRC_URI+="
@@ -13,7 +13,6 @@ SRC_URI+="
 		http://dev.gentoo.org/~pesa/distfiles/qt-assistant-compat-headers-4.7.tar.gz
 	)"
 
-SLOT="4"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
@@ -33,31 +32,32 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		tools/assistant/lib/fulltextsearch
-		tools/assistant/lib
-		tools/assistant/tools/qhelpgenerator
-		tools/assistant/tools/qcollectiongenerator
-		tools/assistant/tools/qhelpconverter
-		tools/qdoc3"
-	QT4_EXTRACT_DIRECTORIES="
-		demos
-		doc
-		examples
-		include
-		src
-		tools"
+QT4_TARGET_DIRECTORIES="
+	tools/assistant/lib/fulltextsearch
+	tools/assistant/lib
+	tools/assistant/tools/qhelpgenerator
+	tools/assistant/tools/qcollectiongenerator
+	tools/assistant/tools/qhelpconverter
+	tools/qdoc3"
 
+QT4_EXTRACT_DIRECTORIES="
+	demos
+	doc
+	examples
+	include
+	src
+	tools"
+
+pkg_setup() {
 	use compat && QT4_TARGET_DIRECTORIES+="
 		tools/assistant/compat
 		tools/assistant/compat/lib"
 
-	qt4-build_pkg_setup
+	qt4-build-multilib_pkg_setup
 }
 
 src_unpack() {
-	qt4-build_src_unpack
+	qt4-build-multilib_src_unpack
 
 	# compat version
 	# http://blog.qt.digia.com/blog/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
@@ -71,9 +71,9 @@ src_unpack() {
 }
 
 src_prepare() {
-	qt4-build_src_prepare
+	use compat && PATCHES+=("${FILESDIR}/${PN}-4.8.5-fix-compat.patch")
 
-	use compat && epatch "${FILESDIR}"/${PN}-4.8.5-fix-compat.patch
+	qt4-build-multilib_src_prepare
 
 	# bug 348034
 	sed -i -e '/^sub-qdoc3\.depends/d' doc/doc.pri || die
@@ -87,18 +87,18 @@ src_configure() {
 		-no-multimedia -no-opengl -no-phonon -no-qt3support -no-svg -no-webkit -no-xmlpatterns
 		-no-nas-sound -no-cups -no-nis -fontconfig"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }
 
 src_compile() {
 	# help libQtHelp find freshly built libQtCLucene (bug #289811)
-	export LD_LIBRARY_PATH="${S}/lib:${QTLIBDIR}"
+	export LD_LIBRARY_PATH="${S}/lib:${QT4_LIBDIR}"
 	export DYLD_LIBRARY_PATH="${S}/lib:${S}/lib/QtHelp.framework"
 
-	qt4-build_src_compile
+	qt4-build-multilib_src_compile
 
 	# ugly hack to build docs
-	"${S}"/bin/qmake "LIBS+=-L${QTLIBDIR}" "CONFIG+=nostrip" || die
+	"${S}"/bin/qmake "LIBS+=-L${QT4_LIBDIR}" "CONFIG+=nostrip" || die
 
 	if use doc; then
 		emake docs
@@ -109,19 +109,19 @@ src_compile() {
 }
 
 src_install() {
-	qt4-build_src_install
+	qt4-build-multilib_src_install
 
 	emake INSTALL_ROOT="${D}" install_qchdocs
 
 	# do not compress .qch files
-	docompress -x "${QTDOCDIR}"/qch
+	docompress -x "${QT4_DOCDIR}"/qch
 
 	if use doc; then
 		emake INSTALL_ROOT="${D}" install_htmldocs
 	fi
 
 	if use compat; then
-		insinto "${QTDATADIR#${EPREFIX}}"/mkspecs/features
+		insinto "${QT4_DATADIR#${EPREFIX}}"/mkspecs/features
 		doins tools/assistant/compat/features/assistant.prf
 	fi
 }

@@ -2,17 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit qt4-build
+inherit qt4-build-multilib
 
 DESCRIPTION="The Multimedia module for the Qt toolkit"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
 	KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x86-macos"
 fi
+
 IUSE="alsa"
 
 DEPEND="
@@ -26,24 +27,20 @@ PATCHES=(
 	"${FILESDIR}/${PN}-4.8.0-alsa.patch"
 )
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/multimedia"
+QT4_TARGET_DIRECTORIES="
+	src/multimedia"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include/Qt
-		include/QtCore
-		include/QtGui
-		include/QtMultimedia
-		src/src.pro
-		src/corelib
-		src/gui"
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/Qt
+	include/QtCore
+	include/QtGui
+	include/QtMultimedia
+	src/src.pro
+	src/corelib
+	src/gui"
 
-	QCONFIG_ADD="multimedia"
-	QCONFIG_DEFINE="QT_MULTIMEDIA"
-
-	qt4-build_pkg_setup
-}
+QCONFIG_ADD="multimedia"
+QCONFIG_DEFINE="QT_MULTIMEDIA"
 
 src_configure() {
 	myconf+="
@@ -56,5 +53,5 @@ src_configure() {
 		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }

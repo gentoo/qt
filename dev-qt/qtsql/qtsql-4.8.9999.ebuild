@@ -2,17 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit multilib qt4-build
+inherit multilib qt4-build-multilib
 
 DESCRIPTION="The SQL module for the Qt toolkit"
-SLOT="4"
+
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
+
 IUSE="firebird freetds mysql oci8 odbc postgres qt3support +sqlite"
 
 REQUIRED_USE="
@@ -31,22 +32,18 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-pkg_setup() {
-	QT4_TARGET_DIRECTORIES="
-		src/sql
-		src/plugins/sqldrivers"
+QT4_TARGET_DIRECTORIES="
+	src/sql
+	src/plugins/sqldrivers"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include/Qt
-		include/QtCore
-		include/QtSql
-		src/src.pro
-		src/corelib
-		src/plugins
-		src/tools/tools.pro"
-
-	qt4-build_pkg_setup
-}
+QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
+	include/Qt
+	include/QtCore
+	include/QtSql
+	src/src.pro
+	src/corelib
+	src/plugins
+	src/tools/tools.pro"
 
 src_configure() {
 	myconf+="
@@ -69,5 +66,5 @@ src_configure() {
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
 		-no-glib"
 
-	qt4-build_src_configure
+	qt4-build-multilib_src_configure
 }
