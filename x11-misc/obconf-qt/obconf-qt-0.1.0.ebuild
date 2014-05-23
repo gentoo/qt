@@ -27,3 +27,5 @@ RDEPEND="dev-libs/glib:2
 	x11-wm/openbox:3"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
+
+S=${WORKDIR}
