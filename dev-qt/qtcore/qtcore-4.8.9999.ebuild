@@ -105,29 +105,13 @@ src_configure() {
 }
 
 src_install() {
-	dobin bin/{qmake,moc,rcc,uic,lconvert,lrelease,lupdate}
-
-	install_directories src/{corelib,xml,network,plugins/codecs}
-
-	emake INSTALL_ROOT="${D}" install_mkspecs
+	emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
 
 	# install private headers
 	insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtCore/private
 	find "${S}"/src/corelib -type f -name "*_p.h" -exec doins '{}' +
 
-	# use freshly built libraries
-	local DYLD_FPATH=
-	[[ -d "${S}"/lib/QtCore.framework ]] \
-		&& DYLD_FPATH=$(for x in "${S}"/lib/*.framework; do echo -n ":$x"; done)
-	DYLD_LIBRARY_PATH="${S}/lib${DYLD_FPATH}" \
-		LD_LIBRARY_PATH="${S}/lib" \
-		"${S}"/bin/lrelease translations/*.ts \
-		|| die "generating translations failed"
-	insinto "${QT4_TRANSLATIONDIR#${EPREFIX}}"
-	doins translations/*.qm
-
-	setqtenv
-	fix_library_files
+	qt4-build-multilib_src_install
 
 	# List all the multilib libdirs
 	local libdirs=
@@ -157,13 +141,17 @@ src_install() {
 			|| die "sed for qconfig.h failed"
 	fi
 
-	install_qconfigs
+	# use freshly built libraries
+	local DYLD_FPATH=
+	[[ -d "${S}"/lib/QtCore.framework ]] \
+		&& DYLD_FPATH=$(for x in "${S}"/lib/*.framework; do echo -n ":$x"; done)
+	DYLD_LIBRARY_PATH="${S}/lib${DYLD_FPATH}" \
+		LD_LIBRARY_PATH="${S}/lib" \
+		"${S}"/bin/lrelease translations/*.ts \
+		|| die "generating translations failed"
 
-	# remove .la files
-	prune_libtool_files
-
-	# framework magic
-	fix_includes
+	insinto "${QT4_TRANSLATIONDIR#${EPREFIX}}"
+	doins translations/*.qm
 
 	keepdir "${QT4_SYSCONFDIR#${EPREFIX}}"
 }
