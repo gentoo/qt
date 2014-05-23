@@ -71,6 +71,7 @@ PDEPEND="
 
 QT5_TARGET_SUBDIRS=(
 	src/gui
+	src/platformheaders
 	src/platformsupport
 	src/plugins/generic
 	src/plugins/imageformats
