@@ -24,3 +24,5 @@ IUSE=""
 RDEPEND="dev-qt/qtgui:4
 	lxqt-base/liblxqt"
 DEPEND="${RDEPEND}"
+
+S=${WORKDIR}
