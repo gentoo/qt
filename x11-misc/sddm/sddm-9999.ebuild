@@ -8,6 +8,7 @@ inherit cmake-utils git-r3 toolchain-funcs
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
 EGIT_REPO_URI="git://github.com/${PN}/${PN}.git"
+KEYWORDS=""
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"

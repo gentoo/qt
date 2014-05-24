@@ -5,10 +5,6 @@
     <email>jauhien@gentoo.org</email>
     <name>Jauhien Piatlicki</name>
   </maintainer>
-  <maintainer>
-    <email>teknocratdefunct@riseup.net</email>
-    <name>Harvey Mittens</name>
-  </maintainer>
   <use>
     <flag name="upower">Use <pkg>sys-power/upower</pkg> for power management</flag>
   </use>
