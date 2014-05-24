@@ -7,53 +7,44 @@ inherit cmake-utils toolchain-funcs
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
-
-if [[ ${PV} = *9999* ]]; then
-	inherit git-2
-	EGIT_REPO_URI="git://github.com/sddm/sddm.git"
-	KEYWORDS=""
-else
-	SRC_URI="http://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
-fi
+SRC_URI="http://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+KEYWORDS="~amd64 ~x86"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
-IUSE="+qt4 qt5 +upower"
-REQUIRED_USE="^^ ( qt4 qt5 )"
+IUSE="+qt4 qt5 systemd +upower"
+REQUIRED_USE="^^ ( qt4 qt5 )
+	?? ( upower systemd )"
 
-RDEPEND="
-	upower? ( || ( sys-power/upower  sys-apps/systemd ) )
-	sys-auth/pambase
-	x11-libs/libxcb[xkb]
-	qt4? ( dev-qt/qtdeclarative:4 )
+RDEPEND="sys-libs/pam
+	x11-libs/libxcb[xkb(-)]
+	qt4? ( dev-qt/qtdeclarative:4
+		   dev-qt/qtdbus:4 )
 	qt5? ( dev-qt/qtdeclarative:5
-	       dev-qt/qtdbus:5 )"
+		   dev-qt/qtdbus:5 )
+	systemd? ( sys-apps/systemd:= )
+	upower? ( sys-power/upower:= )"
 DEPEND="${RDEPEND}
-	>=sys-devel/gcc-4.7.0"
+	>=sys-devel/gcc-4.7.0
+	virtual/pkgconfig"
+
+PATCHES=(
+	"${FILESDIR}/${P}-cmake.patch"
+	"${FILESDIR}/${P}-clang.patch"
+)
 
 pkg_pretend() {
-	[[ $(gcc-version) < 4.7 ]] && \
-		die 'The active compiler needs to be gcc 4.7 (or newer)'
-}
-
-src_prepare() {
-
-	#	epatch "${FILESDIR}/sddm-pm-utils-support.patch"
-
-	# respect our cflags
-	sed -e 's|-Wall -march=native||' \
-		-e 's|-O2||' \
-		-i CMakeLists.txt || die 'sed failed'
-	# use our location
-	sed -e 's|AuthDir=/var/run/xauth|AuthDir=/run/sddm|' \
-		-i data/sddm.conf.in || die
-	# Replace XSession file with lxdm version
-	cp -a "${FILESDIR}"/Xsession data/scripts || die
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		[[ $(gcc-version) < 4.7 ]] && \
+			die 'The active compiler needs to be gcc 4.7 (or newer)'
+	fi
 }
 
 src_configure() {
-	local mycmakeargs=( $(cmake-utils_use_use qt5 QT5) )
+	local mycmakeargs=(
+		$(cmake-utils_use_use qt5 QT5)
+		$(cmake-utils_use_use systemd)
+		$(cmake-utils_use_use upower)
+	)
 	cmake-utils_src_configure
 }
-
