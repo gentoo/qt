@@ -29,3 +29,8 @@ QT5_TARGET_SUBDIRS=(
 	src/widgets
 	src/plugins/accessible
 )
+
+PATCHES=(
+	# bug 511388
+	"${FILESDIR}/0001-Ensure-the-QMenu-is-polished-before-creating-the-nat.patch"
+)

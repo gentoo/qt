@@ -1,0 +1,37 @@
+From df3720527dddad4c04ad1a6b7c07f4bd66495053 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20Gr=C3=A4=C3=9Flin?= <mgraesslin@kde.org>
+Date: Mon, 28 Apr 2014 09:42:10 +0200
+Subject: Ensure the QMenu is polished before creating the native window
+
+Call ::ensurePolished from QMenu::exec before the native window gets
+created. This ensures that the style handles the menu before its too
+late. E.g. a style which wants to create RGBA menus needs to add the
+appropriate flag before the native window gets created. Without this
+change the style cannot change to RGBA as the native window has already
+been created and changing the format used by QWindow is not possible
+after QWindow::create was called.
+
+Change-Id: Ic861037a438b4cb74c59a00be0ef2d633db538ed
+Reviewed-by: Friedemann Kleint <Friedemann.Kleint@digia.com>
+Reviewed-by: Gabriel de Dietrich <gabriel.dedietrich@digia.com>
+Reviewed-by: David Edmundson <davidedmundson@kde.org>
+Reviewed-by: Frederik Gladhorn <frederik.gladhorn@digia.com>
+---
+ src/widgets/widgets/qmenu.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/widgets/widgets/qmenu.cpp b/src/widgets/widgets/qmenu.cpp
+index 403ebe7..7e48bad 100644
+--- a/src/widgets/widgets/qmenu.cpp
++++ b/src/widgets/widgets/qmenu.cpp
+@@ -2177,6 +2177,7 @@ QAction *QMenu::exec()
+ QAction *QMenu::exec(const QPoint &p, QAction *action)
+ {
+     Q_D(QMenu);
++    ensurePolished();
+     createWinId();
+     QEventLoop eventLoop;
+     d->eventLoop = &eventLoop;
+-- 
+1.9.3
+
