@@ -21,7 +21,7 @@ LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 IUSE=""
 
-DEPEND="lxqt-base/libqtxdg
+DEPEND="razorqt-base/libqtxdg
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXcursor

@@ -24,7 +24,7 @@ IUSE=""
 RDEPEND="dev-qt/qtcore:4
 	dev-qt/qtgui:4
 	lxqt-base/liblxqt
-	lxqt-base/libqtxdg
+	razorqt-base/libqtxdg
 	sys-libs/zlib
 	x11-libs/libXcursor
 	x11-libs/libXfixes"

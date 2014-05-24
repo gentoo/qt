@@ -25,7 +25,7 @@ RDEPEND="dev-qt/qtcore:4
 	dev-qt/qtdbus:4
 	dev-qt/qtgui:4
 	lxqt-base/liblxqt
-	lxqt-base/libqtxdg
+	razorqt-base/libqtxdg
 	sys-auth/polkit-qt
 	x11-libs/libX11"
 DEPEND="${RDEPEND}

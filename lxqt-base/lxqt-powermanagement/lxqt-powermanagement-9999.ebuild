@@ -26,7 +26,7 @@ DEPEND="dev-qt/qtcore:4
 	dev-qt/qtgui:4
 	dev-qt/qtsvg:4
 	lxqt-base/liblxqt
-	lxqt-base/libqtxdg
+	razorqt-base/libqtxdg
 	x11-libs/libX11
 	x11-libs/libxcb
 	sys-power/upower"

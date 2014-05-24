@@ -26,7 +26,7 @@ REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
 
 DEPEND="lxqt-base/liblxqt
 	lxqt-base/liblxqt-mount
-	lxqt-base/libqtxdg
+	razorqt-base/libqtxdg
 	lxqt-base/libsysstat
 	lxqt-base/lxqt-globalkeys
 	dev-qt/qtcore:4
