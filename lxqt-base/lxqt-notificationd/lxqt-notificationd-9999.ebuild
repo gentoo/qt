@@ -22,7 +22,7 @@ SLOT="0"
 IUSE=""
 
 DEPEND="lxqt-base/liblxqt
-	lxqt-base/libqtxdg
+	razorqt-base/libqtxdg
 	dev-qt/qtcore:4
 	dev-qt/qtdbus:4
 	dev-qt/qtgui:4"

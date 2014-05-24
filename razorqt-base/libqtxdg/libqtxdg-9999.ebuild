@@ -2,32 +2,49 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 inherit cmake-utils
 
 DESCRIPTION="A Qt implementation of XDG standards"
-HOMEPAGE="http://razor-qt.org/"
+HOMEPAGE="http://www.lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
-	inherit git-2
-	EGIT_REPO_URI="git://github.com/Razor-qt/razor-qt.git"
-	EGIT_BRANCH="master"
-	KEYWORDS=""
+	inherit git-r3
+	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
 else
-	SRC_URI="https://github.com/downloads/Razor-qt/razor-qt/razorqt-${PV}.tar.bz2"
+	SRC_URI="http://lxqt.org/downloads/${PN}/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/razorqt-${PV}"
 fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE=""
+IUSE="+qt4 qt5 test"
+REQUIRED_USE="^^ ( qt4 qt5 )"
 
-DEPEND="sys-apps/file
-	dev-qt/qtcore:4
-	dev-qt/qtgui:4
-	!x11-wm/razorqt"
-RDEPEND="${DEPEND}
+CDEPEND="
+	sys-apps/file
+	qt4? (
+		dev-qt/qtcore:4
+		dev-qt/qtgui:4
+	)
+	qt5? (
+		dev-qt/qtcore:5
+		dev-qt/qtwidgets:5
+		dev-qt/qtxml:5
+		dev-qt/linguist-tools:5
+	)"
+DEPEND="${CDEPEND}
+	test? (
+		qt4? ( dev-qt/qttest:4 )
+		qt5? ( dev-qt/qttest:5 )
+	)"
+RDEPEND="${CDEPEND}
 	x11-misc/xdg-utils"
 
-CMAKE_USE_DIR=${S}/libraries/qtxdg
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_use qt5 QT5)
+		$(cmake-utils_use test BUILD_TESTS)
+	)
+	cmake-utils_src_configure
+}

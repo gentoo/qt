@@ -22,7 +22,7 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="lxqt-base/liblxqt
-	lxqt-base/libqtxdg
+	razorqt-base/libqtxdg
 	lxqt-base/lxqt-globalkeys
 	>=lxde-base/menu-cache-0.5.1
 	dev-qt/qtcore:4
