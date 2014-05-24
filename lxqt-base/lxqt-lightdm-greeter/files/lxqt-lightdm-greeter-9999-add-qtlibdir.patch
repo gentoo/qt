@@ -1,0 +1,11 @@
+--- a/CMakeLists.txt	2014-05-10 10:26:40.000000000 +0900
++++ b/CMakeLists.txt	2014-05-10 10:27:55.486000000 +0900
+@@ -65,7 +65,7 @@
+     configure_file(test/lightdm.conf test/lightdm.conf)
+ endif()
+ 
+-#link_directories( ${LIGHTDM_QT_LIBRARY_DIRS} )
++link_directories( ${LIGHTDM_QT_LIBRARY_DIRS} )
+ 
+ add_executable ( lxqt-lightdm-greeter
+                  ${lxqt-lightdm-greeter_SRCS}
