@@ -24,6 +24,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
+	~dev-qt/qttranslations-${PV}
 	qt3support? ( ~dev-qt/qtgui-${PV}[aqua=,debug=,glib=,qt3support] )
 "
 
@@ -48,7 +49,6 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include
 	src/plugins/plugins.pro
 	src/plugins/qpluginbase.pri
-	src/src.pro
 	src/3rdparty/des
 	src/3rdparty/harfbuzz
 	src/3rdparty/md4
@@ -59,9 +59,8 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	src/declarative
 	src/gui
 	src/script
-	tools/shared
-	tools/linguist/shared
-	translations"
+	tools/linguist
+	tools/shared"
 
 QCONFIG_DEFINE="QT_ZLIB"
 
@@ -135,18 +134,6 @@ src_install() {
 				"${D}${QT4_HEADERDIR}"/Qt/qconfig.h \
 			|| die "sed for qconfig.h failed"
 	fi
-
-	# use freshly built libraries
-	local DYLD_FPATH=
-	[[ -d "${S}"/lib/QtCore.framework ]] \
-		&& DYLD_FPATH=$(for x in "${S}"/lib/*.framework; do echo -n ":$x"; done)
-	DYLD_LIBRARY_PATH="${S}/lib${DYLD_FPATH}" \
-		LD_LIBRARY_PATH="${S}/lib" \
-		"${S}"/bin/lrelease translations/*.ts \
-		|| die "generating translations failed"
-
-	insinto "${QT4_TRANSLATIONDIR#${EPREFIX}}"
-	doins translations/*.qm
 
 	keepdir "${QT4_SYSCONFDIR#${EPREFIX}}"
 }

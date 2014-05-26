@@ -41,8 +41,10 @@ case ${PV} in
 		;;
 esac
 
-IUSE="aqua debug pch"
-[[ ${CATEGORY}/${PN} != dev-qt/qtxmlpatterns ]] && IUSE+=" +exceptions"
+if [[ ${PN} != qttranslations ]]; then
+	IUSE="aqua debug pch"
+	[[ ${PN} != qtxmlpatterns ]] && IUSE+=" +exceptions"
+fi
 
 DEPEND="virtual/pkgconfig"
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
@@ -93,7 +95,7 @@ qt4-build-multilib_src_unpack() {
 		ewarn
 	fi
 
-	if [[ ${CATEGORY}/${PN} == dev-qt/qtwebkit ]]; then
+	if [[ ${PN} == qtwebkit ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
 			ewarn
@@ -153,18 +155,18 @@ qt4-build-multilib_src_prepare() {
 		QTDIR="." ./bin/syncqt || die "syncqt failed"
 	fi
 
-	if [[ ${CATEGORY}/${PN} != dev-qt/qtcore ]]; then
+	if [[ ${PN} != qtcore ]]; then
 		skip_qmake_build
 		skip_project_generation
-		symlink_binaries_to_buildtree
+		symlink_tools_to_buildtree
 	fi
 
 	# skip X11 tests in non-gui packages to avoid spurious dependencies
-	if has ${PN} qtbearer qtcore qtdbus qtscript qtsql qttest qtxmlpatterns; then
+	if has ${PN} qtbearer qtcore qtdbus qtscript qtsql qttest qttranslations qtxmlpatterns; then
 		sed -i -e '/^if.*PLATFORM_X11.*CFG_GUI/,/^fi$/d' configure || die
 	fi
 
-	if use aqua; then
+	if use_if_iuse aqua; then
 		# provide a proper macx-g++-64
 		use x64-macos && ln -s macx-g++ mkspecs/$(qt_mkspecs_dir)
 
@@ -327,7 +329,7 @@ qt4-build-multilib_src_configure() {
 	conf+=" -platform $(qt_mkspecs_dir)"
 
 	# debug/release
-	if use debug; then
+	if use_if_iuse debug; then
 		conf+=" -debug"
 	else
 		conf+=" -release"
@@ -341,7 +343,7 @@ qt4-build-multilib_src_configure() {
 	use prefix || conf+=" -no-rpath"
 
 	# precompiled headers don't work on hardened, where the flag is masked
-	conf+=" $(qt_use pch)"
+	conf+=" $(in_iuse pch && qt_use pch || echo -no-pch)"
 
 	# -reduce-relocations
 	# This flag seems to introduce major breakage to applications,
@@ -356,7 +358,7 @@ qt4-build-multilib_src_configure() {
 		conf+=" -liconv"
 	fi
 
-	if use aqua; then
+	if use_if_iuse aqua; then
 		# On (snow) leopard use the new (frameworked) cocoa code.
 		if [[ ${CHOST##*-darwin} -ge 9 ]]; then
 			conf+=" -cocoa -framework"
@@ -366,7 +368,7 @@ qt4-build-multilib_src_configure() {
 			conf+=" -F${QT4_LIBDIR}"
 
 			# We are crazy and build cocoa + qt3support :-)
-			if use qt3support; then
+			if use_if_iuse qt3support; then
 				sed -e "/case \"\$PLATFORM,\$CFG_MAC_COCOA\" in/,/;;/ s|CFG_QT3SUPPORT=\"no\"|CFG_QT3SUPPORT=\"yes\"|" \
 					-i configure || die
 			fi
@@ -416,7 +418,7 @@ qt4-build-multilib_src_compile() {
 # Runs tests only in target directories.
 qt4-build-multilib_src_test() {
 	# QtMultimedia does not have any test suite (bug #332299)
-	[[ ${CATEGORY}/${PN} == dev-qt/qtmultimedia ]] && return
+	[[ ${PN} == qtmultimedia ]] && return
 
 	local dir
 	for dir in ${QT4_TARGET_DIRECTORIES}; do
@@ -549,7 +551,7 @@ install_qconfigs() {
 # @DESCRIPTION:
 # Generates gentoo-specific qconfig.{h,pri}.
 generate_qconfigs() {
-	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} || ${CATEGORY}/${PN} == dev-qt/qtcore ]]; then
+	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} || -n ${QCONFIG_DEFINE} || ${PN} == qtcore ]]; then
 		local x qconfig_add qconfig_remove qconfig_new
 		for x in "${ROOT}${QT4_DATADIR}"/mkspecs/gentoo/*-qconfig.pri; do
 			[[ -f ${x} ]] || continue
@@ -620,13 +622,16 @@ skip_project_generation() {
 	sed -i -e "s:echo \"Finding:exit 0\n\necho \"Finding:g" "${S}"/configure || die
 }
 
-# @FUNCTION: symlink_binaries_to_buildtree
+# @FUNCTION: symlink_tools_to_buildtree
 # @INTERNAL
 # @DESCRIPTION:
 # Symlinks generated binaries to buildtree, so they can be used during compilation time.
-symlink_binaries_to_buildtree() {
-	for bin in qmake moc uic rcc; do
-		ln -s "${QT4_BINDIR}"/${bin} "${S}"/bin/ || die "symlinking ${bin} to ${S}/bin failed"
+symlink_tools_to_buildtree() {
+	local bin
+	for bin in "${QT4_BINDIR}"/{qmake,moc,rcc,uic}; do
+		if [[ -e ${bin} ]]; then
+			ln -s "${bin}" "${S}"/bin/ || die "failed to symlink ${bin}"
+		fi
 	done
 }
 
@@ -663,7 +668,7 @@ fix_library_files() {
 # For MacOS X we need to add some symlinks when frameworks are
 # being used, to avoid complications with some more or less stupid packages.
 fix_includes() {
-	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
+	if use_if_iuse aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
 		local frw dest f h rdir
 		# Some packages tend to include <Qt/...>
 		dodir "${QT4_HEADERDIR#${EPREFIX}}"/Qt
@@ -717,7 +722,7 @@ qt_mkspecs_dir() {
 		*-netbsd*)
 			spec=netbsd ;;
 		*-darwin*)
-			if use aqua; then
+			if use_if_iuse aqua; then
 				# mac with carbon/cocoa
 				spec=macx
 			else
