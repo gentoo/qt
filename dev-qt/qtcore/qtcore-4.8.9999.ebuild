@@ -19,7 +19,7 @@ IUSE="+glib iconv icu qt3support ssl"
 DEPEND="
 	sys-libs/zlib
 	glib? ( dev-libs/glib:2 )
-	icu? ( >=dev-libs/icu-49:= )
+	icu? ( dev-libs/icu:= )
 	ssl? ( dev-libs/openssl:0 )
 "
 RDEPEND="${DEPEND}"
@@ -66,11 +66,6 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 QCONFIG_DEFINE="QT_ZLIB"
 
 src_prepare() {
-	# Don't pre-strip, bug 235026
-	for i in kr jp cn tw; do
-		echo "CONFIG+=nostrip" >> "${S}"/src/plugins/codecs/${i}/${i}.pro
-	done
-
 	qt4-build-multilib_src_prepare
 
 	# bug 172219
