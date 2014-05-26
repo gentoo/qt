@@ -22,6 +22,7 @@ IUSE="gstreamer libxml2 multimedia opengl printsupport qml udev webp widgets xsl
 
 RDEPEND="
 	dev-db/sqlite:3
+	dev-libs/icu:=
 	>=dev-qt/qtcore-${PV}:5[debug=,icu]
 	>=dev-qt/qtgui-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
