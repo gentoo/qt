@@ -415,7 +415,7 @@ qt4-build-multilib_src_compile() {
 
 # @FUNCTION: qt4-build-multilib_src_test
 # @DESCRIPTION:
-# Runs tests only in target directories.
+# Runs unit tests in all QT4_TARGET_DIRECTORIES.
 qt4-build-multilib_src_test() {
 	# QtMultimedia does not have any test suite (bug #332299)
 	[[ ${PN} == qtmultimedia ]] && return
@@ -428,9 +428,16 @@ qt4-build-multilib_src_test() {
 
 # @FUNCTION: qt4-build-multilib_src_install
 # @DESCRIPTION:
-# Perform the actual installation including some library fixes.
+# Performs the actual installation, running 'emake install'
+# inside all QT4_TARGET_DIRECTORIES, and installing qconfigs.
 qt4-build-multilib_src_install() {
-	install_directories ${QT4_TARGET_DIRECTORIES}
+	local dir
+	for dir in ${QT4_TARGET_DIRECTORIES}; do
+		pushd ${dir} >/dev/null || die
+		emake INSTALL_ROOT="${D}" install
+		popd >/dev/null || die
+	done
+
 	install_qconfigs
 	fix_library_files
 	fix_includes
@@ -493,19 +500,6 @@ qt4_prepare_env() {
 	unset QMAKESPEC
 
 	export XDG_CONFIG_HOME="${T}"
-}
-
-# @FUNCTION: install_directories
-# @USAGE: < directories >
-# @INTERNAL
-# @DESCRIPTION:
-# Runs emake install in the given directories, which are separated by spaces.
-install_directories() {
-	for x in "$@"; do
-		pushd "${S}"/${x} >/dev/null || die
-		emake INSTALL_ROOT="${D}" install
-		popd >/dev/null || die
-	done
 }
 
 # @ECLASS-VARIABLE: QCONFIG_ADD
