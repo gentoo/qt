@@ -167,12 +167,9 @@ qt4-build-multilib_src_prepare() {
 	fi
 
 	if use_if_iuse aqua; then
-		# provide a proper macx-g++-64
-		use x64-macos && ln -s macx-g++ mkspecs/$(qt_mkspecs_dir)
-
 		sed -e '/^CONFIG/s:app_bundle::' \
 			-e '/^CONFIG/s:plugin_no_soname:plugin_with_soname absolute_library_soname:' \
-			-i mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
+			-i mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 	fi
 
 	# Bug 261632
@@ -216,7 +213,7 @@ qt4-build-multilib_src_prepare() {
 		|| die "sed config.tests failed"
 
 	# Bug 172219
-	sed -e 's:/X11R6/:/:' -i mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
+	sed -e 's:/X11R6/:/:' -i mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 
 	if [[ ${CHOST} == *-darwin* ]]; then
 		# Set FLAGS *and* remove -arch, since our gcc-apple is multilib
@@ -278,12 +275,12 @@ qt4-build-multilib_src_prepare() {
 
 	# we need some patches for Solaris
 	sed -i -e '/^QMAKE_LFLAGS_THREAD/a\QMAKE_LFLAGS_DYNAMIC_LIST = -Wl,--dynamic-list,' \
-		mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
+		mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 	# use GCC over SunStudio
 	sed -i -e '/PLATFORM=solaris-cc/s/cc/g++/' configure || die
 	# do not flirt with non-Prefix stuff, we're quite possessive
 	sed -i -e '/^QMAKE_\(LIB\|INC\)DIR\(_X11\|_OPENGL\|\)\t/s/=.*$/=/' \
-		mkspecs/$(qt_mkspecs_dir)/qmake.conf || die
+		mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 
 	# apply patches
 	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
@@ -326,7 +323,7 @@ qt4-build-multilib_src_configure() {
 		*) die "$(tc-arch) is unsupported by this eclass. Please file a bug." ;;
 	esac
 
-	conf+=" -platform $(qt_mkspecs_dir)"
+	conf+=" -platform $(qt4_get_mkspec)"
 
 	# debug/release
 	if use_if_iuse debug; then
@@ -506,7 +503,7 @@ qt4_prepare_env() {
 	QT4_SYSCONFDIR=${EPREFIX}/etc/qt4
 	QMAKE_LIBDIR_QT=${QT4_LIBDIR}
 
-	PLATFORM=$(qt_mkspecs_dir)
+	PLATFORM=$(qt4_get_mkspec)
 	unset QMAKESPEC
 
 	export XDG_CONFIG_HOME="${T}"
@@ -710,58 +707,69 @@ fix_includes() {
 	fi
 }
 
-# @FUNCTION: qt_mkspecs_dir
+# @FUNCTION: qt4_get_mkspec
 # @RETURN: the specs-directory w/o path
 # @INTERNAL
 # @DESCRIPTION:
 # Allows us to define which mkspecs dir we want to use.
-qt_mkspecs_dir() {
+qt4_get_mkspec() {
 	local spec=
 
-	case "${CHOST}" in
+	case ${CHOST} in
+		*-linux*)
+			spec=linux ;;
+		*-darwin*)
+			use_if_iuse aqua &&
+				spec=macx ||   # mac with carbon/cocoa
+				spec=darwin ;; # darwin/mac with X11
 		*-freebsd*|*-dragonfly*)
 			spec=freebsd ;;
-		*-openbsd*)
-			spec=openbsd ;;
 		*-netbsd*)
 			spec=netbsd ;;
-		*-darwin*)
-			if use_if_iuse aqua; then
-				# mac with carbon/cocoa
-				spec=macx
-			else
-				# darwin/mac with x11
-				spec=darwin
-			fi
-			;;
+		*-openbsd*)
+			spec=openbsd ;;
+		*-aix*)
+			spec=aix ;;
+		hppa*-hpux*)
+			spec=hpux ;;
+		ia64*-hpux*)
+			spec=hpuxi ;;
 		*-solaris*)
 			spec=solaris ;;
-		*-linux-*|*-linux)
-			spec=linux ;;
 		*)
-			die "${FUNCNAME}(): Unknown CHOST '${CHOST}'" ;;
+			die "${FUNCNAME}(): Unsupported CHOST '${CHOST}'" ;;
 	esac
 
-	case "$(tc-getCXX)" in
+	case $(tc-getCXX) in
 		*g++*)
 			spec+=-g++ ;;
-		*icpc*)
-			spec+=-icc ;;
 		*clang*)
-			spec+=-clang ;;
+			if [[ -d ${S}/mkspecs/unsupported/${spec}-clang ]]; then
+				spec=unsupported/${spec}-clang
+			else
+				ewarn "${spec}-clang mkspec does not exist, falling back to ${spec}-g++"
+				spec+=-g++
+			fi ;;
+		*icpc*)
+			if [[ -d ${S}/mkspecs/${spec}-icc ]]; then
+				spec+=-icc
+			else
+				ewarn "${spec}-icc mkspec does not exist, falling back to ${spec}-g++"
+				spec+=-g++
+			fi ;;
 		*)
-			die "${FUNCNAME}(): Unknown compiler '$(tc-getCXX)'" ;;
+			die "${FUNCNAME}(): Unsupported compiler '$(tc-getCXX)'" ;;
 	esac
 
-	# Add -64 for 64bit profiles
-	if use x64-freebsd ||
-		use amd64-linux ||
+	# Add -64 for 64-bit prefix profiles
+	if use amd64-linux || use ia64-linux || use ppc64-linux ||
 		use x64-macos ||
-		use x64-solaris ||
-		use sparc64-solaris
+		use sparc64-freebsd || use x64-freebsd || use x64-openbsd ||
+		use ia64-hpux ||
+		use sparc64-solaris || use x64-solaris
 	then
-		spec+=-64
+		[[ -d ${S}/mkspecs/${spec}-64 ]] && spec+=-64
 	fi
 
-	echo "${spec}"
+	echo ${spec}
 }
