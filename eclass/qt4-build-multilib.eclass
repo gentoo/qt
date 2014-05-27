@@ -705,10 +705,9 @@ fix_includes() {
 }
 
 # @FUNCTION: qt4_get_mkspec
-# @RETURN: the specs-directory w/o path
 # @INTERNAL
 # @DESCRIPTION:
-# Allows us to define which mkspecs dir we want to use.
+# Returns the right mkspec for the current CHOST/CXX combination.
 qt4_get_mkspec() {
 	local spec=
 
