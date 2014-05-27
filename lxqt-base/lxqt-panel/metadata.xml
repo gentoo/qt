@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <herd>lxde</herd>
-  <herd>qt</herd>
+  <herd>lxqt</herd>
   <use>
-    <flag name='clock'>Add clock panel applet</flag>
-    <flag name='colorpicker'>Add colorpicker panel applet</flag>
-    <flag name='cpuload'>Add CPU load panel applet; depends on
-      <pkg>sys-libs/libstatgrab</pkg></flag>
-    <flag name='desktopswitch'>Add desktop switch panel applet</flag>
-    <flag name='kbindicator'>Add keyboard indicator panel applet</flag>
-    <flag name='mainmenu'>Add main menu panel applet</flag>
-    <flag name='mount'>Add external storage mounting panel applet; depends on
-      <pkg>sys-fs/udisks</pkg></flag>
-    <flag name='networkmonitor'>Add network monitor panel applet; depends on
-      <pkg>sys-libs/libstatgrab</pkg></flag>
-    <flag name='quicklaunch'>Add quicklaunch panel applet</flag>
-    <flag name='screensaver'>Add screensaver panel applet</flag>
-    <flag name='sensors'>Add sensors panel applet; depends on
-      <pkg>sys-apps/lm_sensors</pkg></flag>
-    <flag name='showdesktop'>Add show desktop panel applet</flag>
-	<flag name='sysstat'>Add system statistics panel applet</flag>
-    <flag name='taskbar'>Add taskbar panel applet</flag>
-    <flag name='tray'>Add system tray panel applet</flag>
-    <flag name='volume'>Add volume mixer panel applet; depends on either
-      <pkg>media-libs/alsa-lib</pkg> or <pkg>media-sound/pulseaudio</pkg></flag>
-    <flag name='worldclock'>Add world clock panel applet; depends on
-      <pkg>dev-libs/icu</pkg></flag>
+    <flag name="clock">Build clock plugin</flag>
+    <flag name="colorpicker">Build colorpicker plugin</flag>
+    <flag name="cpuload">Build cpuload plugin</flag>
+    <flag name="desktopswitch">Build desktopswitch plugin</flag>
+    <flag name="dom">Build dom plugin</flag>
+    <flag name="kbindicator">Build kbindicator plugin</flag>
+    <flag name="mainmenu">Build mainmenu plugin</flag>
+    <flag name="mount">Build mount plugin</flag>
+    <flag name="networkmonitor">Build networkmonitor plugin</flag>
+    <flag name="quicklaunch">Build quicklaunch plugin</flag>
+    <flag name="screensaver">Build screensaver plugin</flag>
+    <flag name="sensors">Build sensors plugin</flag>
+    <flag name="showdesktop">Build showdesktop plugin</flag>
+    <flag name="sysstat">Build sysstat plugin</flag>
+    <flag name="taskbar">Build taskbar plugin</flag>
+    <flag name="teatime">Build teatime plugin</flag>
+    <flag name="tray">Build tray plugin</flag>
+    <flag name="volume">Build volume plugin</flag>
+    <flag name="worldclock">Build worldclock plugin</flag>
   </use>
 </pkgmetadata>

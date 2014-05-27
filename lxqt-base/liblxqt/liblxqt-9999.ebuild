@@ -5,23 +5,22 @@
 EAPI=5
 inherit cmake-utils
 
-DESCRIPTION="Common base library for the LXDE-Qt desktop environment"
+DESCRIPTION="Common base library for the LXQt desktop environment"
 HOMEPAGE="http://www.lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
-	KEYWORDS=""
 else
-	SRC_URI="mirror://sourceforge/lxde/${P}.tar.bz2"
+	SRC_URI="http://lxqt.org/downloads/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
+	S=${WORKDIR}
 fi
 
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
-IUSE=""
 
-DEPEND="razorqt-base/libqtxdg
+DEPEND=">=razorqt-base/libqtxdg-0.5.3
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXcursor

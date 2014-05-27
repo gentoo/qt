@@ -5,21 +5,20 @@
 EAPI=5
 inherit cmake-utils
 
-DESCRIPTION="LXDE-Qt PolKit authentication agent"
+DESCRIPTION="LXQt PolKit authentication agent"
 HOMEPAGE="http://www.lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
-	KEYWORDS=""
 else
-	SRC_URI="mirror://sourceforge/lxde/${P}.tar.bz2"
+	SRC_URI="http://lxqt.org/downloads/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
+	S=${WORKDIR}
 fi
 
-LICENSE="LGPL-2.1+"
+LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
-IUSE=""
 
 RDEPEND="dev-qt/qtcore:4
 	dev-qt/qtdbus:4
@@ -30,3 +29,8 @@ RDEPEND="dev-qt/qtcore:4
 	x11-libs/libX11"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
+
+src_install(){
+	cmake-utils_src_install
+	doman man/*.1
+}
