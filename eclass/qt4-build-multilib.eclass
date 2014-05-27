@@ -503,9 +503,6 @@ qt4_prepare_env() {
 	QT4_SYSCONFDIR=${EPREFIX}/etc/qt4
 	QMAKE_LIBDIR_QT=${QT4_LIBDIR}
 
-	PLATFORM=$(qt4_get_mkspec)
-	unset QMAKESPEC
-
 	export XDG_CONFIG_HOME="${T}"
 }
 
