@@ -77,6 +77,10 @@ QT4_TARGET_DIRECTORIES="
 	src/plugins/imageformats/jpeg
 	src/plugins/imageformats/tga
 	src/plugins/inputmethods"
+QT4_EXTRACT_DIRECTORIES="
+	include
+	src
+	tools/qtconfig"
 
 pkg_setup() {
 	use accessibility && QT4_TARGET_DIRECTORIES+=" src/plugins/accessible/widgets"
@@ -84,12 +88,34 @@ pkg_setup() {
 	use tiff && QT4_TARGET_DIRECTORIES+=" src/plugins/imageformats/tiff"
 	use trace && QT4_TARGET_DIRECTORIES+=" src/plugins/graphicssystems/trace tools/qttracereplay"
 
-	# mac version does not contain qtconfig?
-	[[ ${CHOST} == *-darwin* ]] || QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
+	[[ ${CHOST} != *-darwin* ]] && QT4_TARGET_DIRECTORIES+=" tools/qtconfig"
 
-	QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-		include
-		src"
+	QCONFIG_ADD="
+		mitshm tablet x11sm xcursor xfixes xinput xkb xrandr xrender xshape xsync
+		fontconfig system-freetype gif png system-png jpeg system-jpeg
+		$(usev accessibility)
+		$(usev cups)
+		$(use mng && echo system-mng)
+		$(usev nas)
+		$(usev nis)
+		$(use tiff && echo system-tiff)
+		$(usev xinerama)
+		$(use xv && echo xvideo)"
+	QCONFIG_REMOVE="no-freetype no-gif no-jpeg no-png no-gui"
+	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY)
+			$(use cups && echo QT_CUPS)
+			$(use egl && echo QT_EGL)
+			QT_FONTCONFIG QT_FREETYPE
+			$(use gtkstyle && echo QT_STYLE_GTK)
+			QT_IMAGEFORMAT_JPEG QT_IMAGEFORMAT_PNG
+			$(use mng && echo QT_IMAGEFORMAT_MNG)
+			$(use nas && echo QT_NAS)
+			$(use nis && echo QT_NIS)
+			$(use tiff && echo QT_IMAGEFORMAT_TIFF)
+			QT_SESSIONMANAGER QT_SHAPE QT_TABLET QT_XCURSOR QT_XFIXES
+			$(use xinerama && echo QT_XINERAMA)
+			QT_XINPUT QT_XKB QT_XRANDR QT_XRENDER QT_XSYNC
+			$(use xv && echo QT_XVIDEO)"
 
 	qt4-build-multilib_pkg_setup
 }
@@ -134,42 +160,17 @@ src_configure() {
 }
 
 src_install() {
-	QCONFIG_ADD="
-		mitshm tablet x11sm xcursor xfixes xinput xkb xrandr xrender xshape xsync
-		fontconfig system-freetype gif png system-png jpeg system-jpeg
-		$(usev accessibility)
-		$(usev cups)
-		$(use mng && echo system-mng)
-		$(usev nas)
-		$(usev nis)
-		$(use tiff && echo system-tiff)
-		$(usev xinerama)
-		$(use xv && echo xvideo)"
-	QCONFIG_REMOVE="no-freetype no-gif no-jpeg no-png no-gui"
-	QCONFIG_DEFINE="$(use accessibility && echo QT_ACCESSIBILITY)
-			$(use cups && echo QT_CUPS)
-			$(use egl && echo QT_EGL)
-			QT_FONTCONFIG QT_FREETYPE
-			$(use gtkstyle && echo QT_STYLE_GTK)
-			QT_IMAGEFORMAT_JPEG QT_IMAGEFORMAT_PNG
-			$(use mng && echo QT_IMAGEFORMAT_MNG)
-			$(use nas && echo QT_NAS)
-			$(use nis && echo QT_NIS)
-			$(use tiff && echo QT_IMAGEFORMAT_TIFF)
-			QT_SESSIONMANAGER QT_SHAPE QT_TABLET QT_XCURSOR QT_XFIXES
-			$(use xinerama && echo QT_XINERAMA)
-			QT_XINPUT QT_XKB QT_XRANDR QT_XRENDER QT_XSYNC
-			$(use xv && echo QT_XVIDEO)"
-
 	qt4-build-multilib_src_install
 
 	# touch the available graphics systems
 	dodir /usr/share/qt4/graphicssystems
 	echo "default" > "${ED}"/usr/share/qt4/graphicssystems/raster || die
-	touch "${ED}"/usr/share/qt4/graphicssystems/native || die
+	echo "" > "${ED}"/usr/share/qt4/graphicssystems/native || die
 
-	newicon tools/qtconfig/images/appicon.png qtconfig.png
-	make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
+	if has tools/qtconfig ${QT4_TARGET_DIRECTORIES}; then
+		newicon tools/qtconfig/images/appicon.png qtconfig.png
+		make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
+	fi
 
 	# bug 388551
 	if use gtkstyle; then
