@@ -40,10 +40,8 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include/Qt
 	include/QtCore
 	include/QtSql
-	src/src.pro
 	src/corelib
-	src/plugins
-	src/tools/tools.pro"
+	src/plugins"
 
 src_configure() {
 	myconf+="
