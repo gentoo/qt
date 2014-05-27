@@ -91,10 +91,6 @@ src_configure() {
 }
 
 src_compile() {
-	# help libQtHelp find freshly built libQtCLucene (bug #289811)
-	export LD_LIBRARY_PATH="${S}/lib:${QT4_LIBDIR}"
-	export DYLD_LIBRARY_PATH="${S}/lib:${S}/lib/QtHelp.framework"
-
 	qt4-build-multilib_src_compile
 
 	# ugly hack to build docs
