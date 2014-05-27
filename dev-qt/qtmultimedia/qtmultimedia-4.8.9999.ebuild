@@ -35,7 +35,6 @@ QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include/QtCore
 	include/QtGui
 	include/QtMultimedia
-	src/src.pro
 	src/corelib
 	src/gui"
 
