@@ -5,21 +5,20 @@
 EAPI=5
 inherit cmake-utils
 
-DESCRIPTION="Openbox window manager configuration"
+DESCRIPTION="Openbox window manager configuration tool"
 HOMEPAGE="http://www.lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
-	KEYWORDS=""
 else
-	SRC_URI="mirror://sourceforge/lxde/${P}.tar.bz2"
+	SRC_URI="http://lxqt.org/downloads/${PN}/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
+	S=${WORKDIR}
 fi
 
-LICENSE="GPL-3"
+LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
-IUSE=""
 
 RDEPEND="dev-libs/glib:2
 	dev-qt/qtcore:4

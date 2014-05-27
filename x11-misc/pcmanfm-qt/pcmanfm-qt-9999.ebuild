@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/x11-misc/pcmanfm-qt/pcmanfm-qt-9999.ebuild,v 1.2 2013/04/29 18:59:04 hwoarang Exp $
+# $Header: $
 
 EAPI=5
 
@@ -9,32 +9,31 @@ inherit cmake-utils multilib readme.gentoo
 if [[ "${PV}" == "9999" ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}"
-	KEYWORDS=""
 else
 	SRC_URI="http://lxqt.org/downloads/${PV}/${P}.tar.xz"
-	S="${WORKDIR}"/${P}-Source
 	KEYWORDS="~amd64 ~x86"
+	S="${WORKDIR}"
 fi
 
-DESCRIPTION="Fast lightweight tabbed filemanager (Qt4 port)"
+DESCRIPTION="Fast lightweight tabbed filemanager (Qt port)"
 HOMEPAGE="http://pcmanfm.sourceforge.net/"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
-IUSE=""
 
-COMMON_DEPEND=">=dev-libs/glib-2.18:2
-	dev-qt/qtgui:4
+CDEPEND=">=dev-libs/glib-2.18:2
+	dev-qt/qtcore:4
 	dev-qt/qtdbus:4
-	>=lxde-base/menu-cache-0.3.2
+	dev-qt/qtgui:4
+	>=lxde-base/menu-cache-0.4.1
 	>=x11-libs/libfm-1.2.0"
-RDEPEND="${COMMON_DEPEND}
+RDEPEND="${CDEPEND}
 	virtual/eject
 	virtual/freedesktop-icon-theme"
-DEPEND="${COMMON_DEPEND}
+DEPEND="${CDEPEND}
 	>=dev-util/intltool-0.40
-	virtual/pkgconfig
-	sys-devel/gettext"
+	sys-devel/gettext
+	virtual/pkgconfig"
 
 src_prepare() {
 	# fix multilib

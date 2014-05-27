@@ -11,19 +11,23 @@ HOMEPAGE="http://www.lxqt.org/"
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
-	KEYWORDS=""
 else
 	SRC_URI="http://lxqt.org/downloads/${PN}/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
+	S=${WORKDIR}
 fi
 
-LICENSE="GPL-3"
+LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
-IUSE=""
 
-RDEPEND="dev-libs/glib:2
-	dev-qt/qtcore:4
+RDEPEND="dev-qt/qtcore:4
+	dev-qt/qtdbus
 	dev-qt/qtgui:4
+	dev-libs/glib:2
+	media-libs/libexif
+	>=x11-libs/libfm-1.2
+	x11-libs/libX11
+	x11-libs/libXfixes
 	x11-misc/pcmanfm-qt"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
