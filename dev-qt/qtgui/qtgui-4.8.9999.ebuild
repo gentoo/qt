@@ -67,6 +67,7 @@ PDEPEND="qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=] )"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.7.3-cups.patch"
+	"${FILESDIR}/${PN}-4.8.6-disable-gtk-theme-check.patch" # bug 491226
 )
 
 QT4_TARGET_DIRECTORIES="
@@ -128,7 +129,8 @@ src_prepare() {
 }
 
 src_configure() {
-	myconf="$(qt_use accessibility)
+	myconf+="
+		$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
 		$(qt_use mng libmng system)
@@ -139,9 +141,7 @@ src_configure() {
 		$(qt_use qt3support)
 		$(qt_use gtkstyle)
 		$(qt_use xinerama)
-		$(qt_use xv xvideo)"
-
-	myconf+="
+		$(qt_use xv xvideo)
 		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
@@ -170,16 +170,6 @@ src_install() {
 	if has tools/qtconfig ${QT4_TARGET_DIRECTORIES}; then
 		newicon tools/qtconfig/images/appicon.png qtconfig.png
 		make_desktop_entry qtconfig 'Qt Configuration Tool' qtconfig 'Qt;Settings;DesktopSettings'
-	fi
-
-	# bug 388551
-	if use gtkstyle; then
-		local tempfile=${T}/${PN}4.sh
-		cat <<-EOF > "${tempfile}"
-		export GTK2_RC_FILES=\${HOME}/.gtkrc-2.0
-		EOF
-		insinto /etc/profile.d
-		doins "${tempfile}"
 	fi
 }
 
