@@ -75,7 +75,7 @@ src_prepare() {
 
 	qt4-build-multilib_src_prepare
 
-	# bug 348034
+	# prevent rebuild of QtCore and QtXml (bug 348034)
 	sed -i -e '/^sub-qdoc3\.depends/d' doc/doc.pri || die
 }
 
@@ -93,8 +93,9 @@ src_configure() {
 src_compile() {
 	qt4-build-multilib_src_compile
 
-	# ugly hack to build docs
-	"${S}"/bin/qmake "LIBS+=-L${QT4_LIBDIR}" "CONFIG+=nostrip" || die
+	# this generates a top-level Makefile containing the targets
+	# used below to build and install the documentation
+	"${S}"/bin/qmake || die
 
 	if use doc; then
 		emake docs
