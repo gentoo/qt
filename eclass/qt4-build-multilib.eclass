@@ -313,7 +313,7 @@ qt4-build-multilib_src_configure() {
 		-shared -fast -largefile -stl -verbose
 		-nomake examples -nomake demos"
 
-	# Convert tc-arch to the values supported by Qt
+	# convert tc-arch to the values supported by Qt
 	case $(tc-arch) in
 		amd64|x64-*)		  conf+=" -arch x86_64" ;;
 		ppc*-macos)		  conf+=" -arch ppc" ;;
@@ -437,6 +437,16 @@ qt4-build-multilib_src_install() {
 		emake INSTALL_ROOT="${D}" install
 		popd >/dev/null || die
 	done
+
+	# install private headers of a few modules
+	if has ${PN} qtcore qtdeclarative qtgui qtscript; then
+		local moduledir=${PN#qt}
+		local modulename=Qt$(tr 'a-z' 'A-Z' <<< ${moduledir:0:1})${moduledir:1}
+		[[ ${moduledir} == core ]] && moduledir=corelib
+
+		insinto "${QT4_HEADERDIR#${EPREFIX}}"/${modulename}/private
+		find "${S}"/src/${moduledir} -type f -name '*_p.h' -exec doins '{}' + || die
+	fi
 
 	install_qconfigs
 	fix_library_files

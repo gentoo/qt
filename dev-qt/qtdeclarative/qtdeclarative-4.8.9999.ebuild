@@ -60,17 +60,3 @@ src_configure() {
 		$(qt_use webkit)"
 	qt4-build-multilib_src_configure
 }
-
-src_install() {
-	qt4-build-multilib_src_install
-
-	# install private headers
-	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		insinto "${QT4_LIBDIR#${EPREFIX}}"/QtDeclarative.framework/Headers/private
-		# ran for the 2nd time, need it for the updated headers
-		fix_includes
-	else
-		insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtDeclarative/private
-	fi
-	find "${S}"/src/declarative/ -type f -name "*_p.h" -exec doins '{}' +
-}

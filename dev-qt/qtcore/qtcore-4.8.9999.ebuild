@@ -99,13 +99,9 @@ src_configure() {
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
-
-	# install private headers
-	insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtCore/private
-	find "${S}"/src/corelib -type f -name "*_p.h" -exec doins '{}' +
-
 	qt4-build-multilib_src_install
+
+	emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
 
 	# List all the multilib libdirs
 	local libdirs=

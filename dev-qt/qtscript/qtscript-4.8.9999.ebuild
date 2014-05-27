@@ -21,9 +21,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-	src/script"
-
+QT4_TARGET_DIRECTORIES="src/script"
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include/Qt
 	include/QtCore
@@ -46,12 +44,4 @@ src_configure() {
 		-no-gtkstyle"
 
 	qt4-build-multilib_src_configure
-}
-
-src_install() {
-	qt4-build-multilib_src_install
-
-	# install private headers
-	insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtScript/private
-	find "${S}"/src/script -type f -name "*_p.h" -exec doins '{}' +
 }

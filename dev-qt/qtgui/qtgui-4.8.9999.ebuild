@@ -163,19 +163,6 @@ src_install() {
 
 	qt4-build-multilib_src_install
 
-	# install private headers
-	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		insinto "${QT4_LIBDIR#${EPREFIX}}"/QtGui.framework/Headers/private/
-	else
-		insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtGui/private
-	fi
-	find "${S}"/src/gui -type f -name '*_p.h' -exec doins '{}' +
-
-	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		# rerun to get links to headers right
-		fix_includes
-	fi
-
 	# touch the available graphics systems
 	dodir /usr/share/qt4/graphicssystems
 	echo "default" > "${ED}"/usr/share/qt4/graphicssystems/raster || die
