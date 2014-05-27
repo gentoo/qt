@@ -14,27 +14,26 @@ else
 	KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~x64-macos"
 fi
 
-IUSE="dbus declarative kde multimedia opengl openvg phonon qt3support webkit xmlpatterns"
+IUSE="dbus declarative kde multimedia opengl openvg phonon webkit xmlpatterns"
 
 DEPEND="
 	~dev-qt/designer-${PV}[aqua=,debug=]
-	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support?]
-	~dev-qt/qtgui-${PV}[aqua=,debug=,qt3support?]
+	~dev-qt/qtcore-${PV}[aqua=,debug=]
+	~dev-qt/qtgui-${PV}[aqua=,debug=]
 	~dev-qt/qthelp-${PV}[aqua=,debug=]
 	~dev-qt/qtscript-${PV}[aqua=,debug=]
-	~dev-qt/qtsql-${PV}[aqua=,debug=,qt3support?]
+	~dev-qt/qtsql-${PV}[aqua=,debug=]
 	~dev-qt/qtsvg-${PV}[aqua=,debug=]
 	~dev-qt/qttest-${PV}[aqua=,debug=]
 	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=] )
 	declarative? ( ~dev-qt/qtdeclarative-${PV}[aqua=,debug=,webkit?] )
 	multimedia? ( ~dev-qt/qtmultimedia-${PV}[aqua=,debug=] )
-	opengl? ( ~dev-qt/qtopengl-${PV}[aqua=,debug=,qt3support?] )
-	openvg? ( ~dev-qt/qtopenvg-${PV}[aqua=,debug=,qt3support?] )
+	opengl? ( ~dev-qt/qtopengl-${PV}[aqua=,debug=] )
+	openvg? ( ~dev-qt/qtopenvg-${PV}[aqua=,debug=] )
 	phonon? (
 		kde? ( media-libs/phonon[aqua=] )
 		!kde? ( || ( ~dev-qt/qtphonon-${PV}[aqua=,debug=] media-libs/phonon[aqua=] ) )
 	)
-	qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=] )
 	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=] )
 	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${PV}[aqua=,debug=] )
 "
@@ -84,11 +83,9 @@ src_prepare() {
 		fi
 	done
 
-	if ! use qt3support; then
-		einfo "Disabling qt3support examples"
-		sed -i -e '/QT_CONFIG, qt3support/d' \
-			examples/graphicsview/graphicsview.pro || die
-	fi
+	# Remove bogus dependency on qt3support (bug 510042)
+	sed -i -e 's/contains(QT_CONFIG, qt3support)://' \
+		examples/graphicsview/graphicsview.pro || die
 }
 
 src_configure() {
@@ -99,7 +96,6 @@ src_configure() {
 		$(qt_use opengl)
 		$(qt_use openvg)
 		$(qt_use phonon) -no-phonon-backend
-		$(qt_use qt3support)
 		$(qt_use webkit)
 		$(qt_use xmlpatterns)"
 
