@@ -66,7 +66,7 @@ DEPEND="${RDEPEND}
 PDEPEND="qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=] )"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.7.3-cups.patch"
+	"${FILESDIR}/${PN}-4.7.3-cups.patch" # bug 323257
 	"${FILESDIR}/${PN}-4.8.6-disable-gtk-theme-check.patch" # bug 491226
 )
 
