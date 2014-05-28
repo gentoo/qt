@@ -125,7 +125,7 @@ src_prepare() {
 	qt4-build-multilib_src_prepare
 
 	# Add -xvideo to the list of accepted configure options
-	sed -i -e 's:|-xinerama|:&-xvideo|:' configure
+	sed -i -e 's:|-xinerama|:&-xvideo|:' configure || die
 }
 
 src_configure() {
@@ -151,12 +151,6 @@ src_configure() {
 	[[ ${CHOST} == *86*-apple-darwin* ]] && myconf+=" -no-ssse3"
 
 	qt4-build-multilib_src_configure
-
-	if use gtkstyle; then
-		sed -i -e 's:-I/usr/include/qt4 ::' src/gui/Makefile || die "sed failed"
-	fi
-
-	sed -i -e 's:-I/usr/include/qt4/QtGui ::' src/gui/Makefile || die "sed failed"
 }
 
 src_install() {
