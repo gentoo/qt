@@ -40,7 +40,10 @@ QT4_TARGET_DIRECTORIES="
 	src/corelib
 	src/network
 	src/xml
-	src/plugins/codecs
+	src/plugins/codecs/cn
+	src/plugins/codecs/jp
+	src/plugins/codecs/kr
+	src/plugins/codecs/tw
 	tools/linguist/lconvert
 	tools/linguist/lrelease
 	tools/linguist/lupdate"
