@@ -30,7 +30,3 @@ src_configure() {
 	cd translations || die
 	"${QT4_BINDIR}"/qmake || die
 }
-
-src_compile() {
-	emake -C translations
-}
