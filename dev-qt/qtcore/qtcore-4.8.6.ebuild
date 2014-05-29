@@ -38,8 +38,8 @@ QT4_TARGET_DIRECTORIES="
 	src/tools/rcc
 	src/tools/uic
 	src/corelib
-	src/xml
 	src/network
+	src/xml
 	src/plugins/codecs
 	tools/linguist/lconvert
 	tools/linguist/lrelease
@@ -48,11 +48,11 @@ QT4_TARGET_DIRECTORIES="
 QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
 	include
 	src/3rdparty/des
+	src/3rdparty/easing
 	src/3rdparty/harfbuzz
 	src/3rdparty/md4
 	src/3rdparty/md5
 	src/3rdparty/sha1
-	src/3rdparty/easing
 	src/3rdparty/zlib_dependency.pri
 	src/declarative
 	src/gui
@@ -68,14 +68,14 @@ src_prepare() {
 	# bug 172219
 	sed -i -e "s:CXXFLAGS.*=:CXXFLAGS=${CXXFLAGS} :" \
 		-e "s:LFLAGS.*=:LFLAGS=${LDFLAGS} :" \
-		"${S}"/qmake/Makefile.unix || die "sed qmake/Makefile.unix failed"
+		qmake/Makefile.unix || die "sed qmake/Makefile.unix failed"
 
 	# bug 427782
-	sed -i -e "/^CPPFLAGS/s/-g//" \
-		"${S}"/qmake/Makefile.unix || die "sed qmake/Makefile.unix CPPFLAGS failed"
-	sed -i -e "s/setBootstrapVariable QMAKE_CFLAGS_RELEASE/QMakeVar set QMAKE_CFLAGS_RELEASE/" \
-		-e "s/setBootstrapVariable QMAKE_CXXFLAGS_RELEASE/QMakeVar set QMAKE_CXXFLAGS_RELEASE/" \
-		"${S}"/configure || die "sed configure setBootstrapVariable failed"
+	sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
+		qmake/Makefile.unix || die "sed CPPFLAGS in qmake/Makefile.unix failed"
+	sed -i -e 's/setBootstrapVariable QMAKE_CFLAGS_RELEASE/QMakeVar set QMAKE_CFLAGS_RELEASE/' \
+		-e 's/setBootstrapVariable QMAKE_CXXFLAGS_RELEASE/QMakeVar set QMAKE_CXXFLAGS_RELEASE/' \
+		configure || die "sed configure setBootstrapVariable failed"
 }
 
 src_configure() {
@@ -119,8 +119,9 @@ src_install() {
 		# TODO: do this better
 		sed -i -e '2a#include <QtCore/Gentoo/gentoo-qconfig.h>\n' \
 				"${D}${QT4_LIBDIR}"/QtCore.framework/Headers/qconfig.h \
-			|| die "sed for qconfig.h failed."
-		dosym "${QT4_HEADERDIR#${EPREFIX}}"/Gentoo "${QT4_LIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo
+			|| die "sed for qconfig.h failed"
+		dosym "${QT4_HEADERDIR#${EPREFIX}}"/Gentoo \
+			"${QT4_LIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo
 	else
 		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
 				"${D}${QT4_HEADERDIR}"/QtCore/qconfig.h \
