@@ -35,8 +35,6 @@ DEPEND="dev-qt/qtcore:4
 	~razorqt-base/libqtxdg-${PV}
 	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
-	mainmenu? ( || ( sys-auth/consolekit[policykit(-)]
-		sys-apps/systemd[policykit(-)] ) )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
 	sysstat? ( ~lxqt-base/libsysstat-${PV} )
