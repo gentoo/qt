@@ -189,21 +189,16 @@ qt4-build-multilib_src_prepare() {
 		filter-flags -fgraphite-identity
 	fi
 
-	# Respect CC, CXX, {C,CXX,LD}FLAGS in .qmake.cache
-	sed -e "/^SYSTEM_VARIABLES=/i \
-		CC='$(tc-getCC)'\n\
-		CXX='$(tc-getCXX)'\n\
-		CFLAGS='${CFLAGS}'\n\
-		CXXFLAGS='${CXXFLAGS}'\n\
-		LDFLAGS='${LDFLAGS}'\n\
-		QMakeVar set QMAKE_CFLAGS_RELEASE\n\
-		QMakeVar set QMAKE_CFLAGS_DEBUG\n\
-		QMakeVar set QMAKE_CXXFLAGS_RELEASE\n\
-		QMakeVar set QMAKE_CXXFLAGS_DEBUG\n\
-		QMakeVar set QMAKE_LFLAGS_RELEASE\n\
-		QMakeVar set QMAKE_LFLAGS_DEBUG\n"\
-		-i configure \
-		|| die "sed SYSTEM_VARIABLES failed"
+	# Reset QMAKE_*FLAGS_{RELEASE,DEBUG} variables,
+	# or they will override user's flags (.qmake.cache)
+	sed -i -e '/^SYSTEM_VARIABLES=/ i \
+		QMakeVar set QMAKE_CFLAGS_RELEASE\
+		QMakeVar set QMAKE_CFLAGS_DEBUG\
+		QMakeVar set QMAKE_CXXFLAGS_RELEASE\
+		QMakeVar set QMAKE_CXXFLAGS_DEBUG\
+		QMakeVar set QMAKE_LFLAGS_RELEASE\
+		QMakeVar set QMAKE_LFLAGS_DEBUG\n' \
+		configure || die "sed SYSTEM_VARIABLES failed"
 
 	# Respect CC, CXX, LINK and *FLAGS in config.tests
 	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
@@ -292,6 +287,10 @@ qt4-build-multilib_src_prepare() {
 # @DESCRIPTION:
 # Runs configure and generates Makefiles for all QT4_TARGET_DIRECTORIES.
 qt4-build-multilib_src_configure() {
+	# toolchain setup
+	tc-export CC CXX
+	export LD="$(tc-getCXX)"
+
 	# configure arguments
 	local conf="
 		-prefix ${QT4_PREFIX}
@@ -385,8 +384,8 @@ qt4-build-multilib_src_configure() {
 		pushd ${dir} >/dev/null || die
 		einfo "Running qmake in: ${dir}"
 		"${S}"/bin/qmake \
-			"LIBS+=-L${QT4_LIBDIR}" \
-			"CONFIG+=nostrip" \
+			LIBS+=-L"${QT4_LIBDIR}" \
+			CONFIG+=nostrip \
 			|| die "qmake failed"
 		popd >/dev/null || die
 	done
@@ -399,13 +398,7 @@ qt4-build-multilib_src_compile() {
 	local dir
 	for dir in ${QT4_TARGET_DIRECTORIES}; do
 		pushd ${dir} >/dev/null || die
-		emake \
-			AR="$(tc-getAR) cqs" \
-			CC="$(tc-getCC)" \
-			CXX="$(tc-getCXX)" \
-			LINK="$(tc-getCXX)" \
-			RANLIB=":" \
-			STRIP=":"
+		emake
 		popd >/dev/null || die
 	done
 }
