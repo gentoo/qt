@@ -93,10 +93,6 @@ src_configure() {
 src_compile() {
 	qt4-build-multilib_src_compile
 
-	# this generates a top-level Makefile containing the targets
-	# used below to build and install the documentation
-	"${S}"/bin/qmake || die
-
 	if use doc; then
 		emake docs
 	elif [[ ${QT4_BUILD_TYPE} == release ]]; then

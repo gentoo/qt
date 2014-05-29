@@ -380,7 +380,7 @@ qt4-build-multilib_src_configure() {
 	./configure ${conf} || die "configure failed"
 
 	local dir
-	for dir in ${QT4_TARGET_DIRECTORIES}; do
+	for dir in . ${QT4_TARGET_DIRECTORIES}; do
 		pushd ${dir} >/dev/null || die
 		einfo "Running qmake in: ${dir}"
 		"${S}"/bin/qmake \
