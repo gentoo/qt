@@ -116,8 +116,8 @@ qt4-build-multilib_src_unpack() {
 			local tarball="${MY_P}.tar.gz" target= targets=
 			# On MacOS we need src/gui/kernel/qapplication_mac.mm for platform detection
 			for target in \
-				bin config.tests configure LICENSE.GPL3 LICENSE.LGPL mkspecs \
-				projects.pro qmake src/{qbase,qt_install,qt_targets}.pri \
+				bin config.tests configure doc/doc.pri LICENSE.GPL3 mkspecs projects.pro qmake \
+				src/{plugins/qpluginbase,qbase,qt_install,qt_targets}.pri {src/src,tools/tools}.pro \
 				$([[ ${CHOST} == *-apple-darwin* ]] && echo src/gui/kernel/qapplication_mac.mm) \
 				${QT4_EXTRACT_DIRECTORIES}
 			do
