@@ -25,7 +25,6 @@ x11-terms/qterminal
 # possible additions:
 # net-p2p/transmission or qbittorrent
 # app-emulation/q4wine
-# app-emulation/qtemu
 # app-text/calibre
 #
 # see also http://wiki.gentoo.org/wiki/Qt_Desktop_applications
