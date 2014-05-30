@@ -11,8 +11,7 @@ HOMEPAGE="http://lxqt.org/"
 
 LICENSE="metapackage"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="-minimal powermanagement"
+IUSE="+icons lightdm lximage -minimal +policykit powermanagement sddm ssh-askpass"
 
 S="${WORKDIR}"
 
@@ -22,7 +21,6 @@ DOC_CONTENTS="
 	http://wiki.lxde.org/en/LXDE-Qt"
 
 RDEPEND="
-	>=lxde-base/lxde-icon-theme-0.5
 	>=lxde-base/lxmenu-data-0.1.2
 	~lxqt-base/lxqt-about-${PV}
 	~lxqt-base/lxqt-common-${PV}
@@ -30,16 +28,29 @@ RDEPEND="
 	~lxqt-base/lxqt-config-randr-${PV}
 	~lxqt-base/lxqt-notificationd-${PV}
 	~lxqt-base/lxqt-panel-${PV}
-	~lxqt-base/lxqt-policykit-${PV}
 	~lxqt-base/lxqt-qtplugin-${PV}
 	~lxqt-base/lxqt-runner-${PV}
 	~lxqt-base/lxqt-session-${PV}
 	~x11-misc/pcmanfm-qt-${PV}
+	icons? (
+		>=lxde-base/lxde-icon-theme-0.5 )
+	lightdm? (
+		x11-misc/lightdm )
+	lximage? (
+		~media-gfx/lximage-qt-${PV} )
 	!minimal? (
 		x11-wm/openbox
-		>=x11-misc/obconf-qt-${PV} )
+		~x11-misc/obconf-qt-${PV} )
+	policykit? (
+		~lxqt-base/lxqt-policykit-${PV}
+		|| ( sys-auth/consolekit[policykit(-)]
+			sys-apps/systemd[policykit(-)] ) )
 	powermanagement? (
 		~lxqt-base/lxqt-powermanagement-${PV} )
+	sddm? (
+		~x11-misc/sddm-${PV} )
+	ssh-askpass? (
+		~net-misc/lxqt-openssh-askpass-${PV} )
 "
 
 pkg_postinst() {
