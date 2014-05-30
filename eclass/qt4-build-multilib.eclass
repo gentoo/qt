@@ -182,6 +182,10 @@ qt4-build-multilib_src_prepare() {
 		filter-flags -fgraphite-identity
 	fi
 
+	# Read also AR from the environment
+	sed -i -e 's/^SYSTEM_VARIABLES="/&AR /' \
+		configure || die "sed SYSTEM_VARIABLES failed"
+
 	# Reset QMAKE_*FLAGS_{RELEASE,DEBUG} variables,
 	# or they will override user's flags (.qmake.cache)
 	sed -i -e '/^SYSTEM_VARIABLES=/ i \
@@ -191,7 +195,7 @@ qt4-build-multilib_src_prepare() {
 		QMakeVar set QMAKE_CXXFLAGS_DEBUG\
 		QMakeVar set QMAKE_LFLAGS_RELEASE\
 		QMakeVar set QMAKE_LFLAGS_DEBUG\n' \
-		configure || die "sed SYSTEM_VARIABLES failed"
+		configure || die "sed QMAKE_*FLAGS_{RELEASE,DEBUG} failed"
 
 	# Respect CC, CXX, LINK and *FLAGS in config.tests
 	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
@@ -281,7 +285,8 @@ qt4-build-multilib_src_prepare() {
 # Runs configure and generates Makefiles for all QT4_TARGET_DIRECTORIES.
 qt4-build-multilib_src_configure() {
 	# toolchain setup
-	tc-export CC CXX
+	tc-export CC CXX OBJCOPY STRIP
+	export AR="$(tc-getAR) cqs"
 	export LD="$(tc-getCXX)"
 
 	# configure arguments
