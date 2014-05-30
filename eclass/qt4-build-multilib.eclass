@@ -64,13 +64,6 @@ qt4-build-multilib_pkg_setup() {
 		ewarn "Downgrading Qt is completely unsupported and can break your system!"
 		ewarn
 	fi
-
-	PATH="${S}/bin${PATH:+:}${PATH}"
-	if [[ ${CHOST} != *-darwin* ]]; then
-		LD_LIBRARY_PATH="${S}/lib${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}"
-	else
-		DYLD_LIBRARY_PATH="${S}/lib${DYLD_LIBRARY_PATH:+:}${DYLD_LIBRARY_PATH}"
-	fi
 }
 
 # @ECLASS-VARIABLE: QT4_EXTRACT_DIRECTORIES
@@ -378,6 +371,12 @@ qt4-build-multilib_src_configure() {
 
 	einfo "Configuring with:" ${conf}
 	./configure ${conf} || die "configure failed"
+
+	# configure is stupid and assigns QMAKE_LFLAGS twice,
+	# thus the previous -rpath-link flag gets overwritten
+	# and some packages (e.g. qthelp) fail to link
+	sed -i -e '/^QMAKE_LFLAGS =/ s:$: $$QMAKE_LFLAGS:' \
+		.qmake.cache || die "sed .qmake.cache failed"
 
 	local dir
 	for dir in . ${QT4_TARGET_DIRECTORIES}; do

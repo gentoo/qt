@@ -93,6 +93,10 @@ src_configure() {
 src_compile() {
 	qt4-build-multilib_src_compile
 
+	# qhelpgenerator needs libQtHelp.so.4
+	export LD_LIBRARY_PATH=${S}/lib
+	export DYLD_LIBRARY_PATH=${S}/lib:${S}/lib/QtHelp.framework
+
 	if use doc; then
 		emake docs
 	elif [[ ${QT4_BUILD_TYPE} == release ]]; then
