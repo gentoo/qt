@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-inherit cmake-utils git-r3 toolchain-funcs
+inherit cmake-utils git-r3 toolchain-funcs user
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
@@ -47,4 +47,9 @@ src_configure() {
 		$(cmake-utils_use_use qt5 QT5)
 	)
 	cmake-utils_src_configure
+}
+
+pkg_setup() {
+	enewgroup ${PN}
+	enewuser ${PN} -1 -1 /var/lib/sddm ${PN}
 }
