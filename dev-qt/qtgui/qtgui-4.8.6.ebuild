@@ -118,8 +118,6 @@ pkg_setup() {
 			$(use xinerama && echo QT_XINERAMA)
 			QT_XINPUT QT_XKB QT_XRANDR QT_XRENDER QT_XSYNC
 			$(use xv && echo QT_XVIDEO)"
-
-	qt4-build-multilib_pkg_setup
 }
 
 src_prepare() {

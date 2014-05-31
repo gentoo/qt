@@ -52,8 +52,6 @@ pkg_setup() {
 	use compat && QT4_TARGET_DIRECTORIES+="
 		tools/assistant/compat
 		tools/assistant/compat/lib"
-
-	qt4-build-multilib_pkg_setup
 }
 
 src_unpack() {

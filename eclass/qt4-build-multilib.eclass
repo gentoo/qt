@@ -51,20 +51,7 @@ if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	DEPEND+=" dev-lang/perl"
 fi
 
-EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
-
-# @FUNCTION: qt4-build-multilib_pkg_setup
-# @DESCRIPTION:
-# Sets up PATH and LD_LIBRARY_PATH.
-qt4-build-multilib_pkg_setup() {
-	# Warn users of possible breakage when downgrading to a previous release.
-	# Downgrading revisions within the same release is safe.
-	if has_version ">${CATEGORY}/${P}-r9999:4"; then
-		ewarn
-		ewarn "Downgrading Qt is completely unsupported and can break your system!"
-		ewarn
-	fi
-}
+EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install pkg_postinst pkg_postrm
 
 # @ECLASS-VARIABLE: QT4_EXTRACT_DIRECTORIES
 # @DEFAULT_UNSET

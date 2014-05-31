@@ -40,8 +40,6 @@ pkg_setup() {
 		src/plugins/bearer/generic
 		$(use connman && echo src/plugins/bearer/connman)
 		$(use networkmanager && echo src/plugins/bearer/networkmanager)"
-
-	qt4-build-multilib_pkg_setup
 }
 
 src_configure() {

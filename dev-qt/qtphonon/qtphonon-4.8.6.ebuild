@@ -45,8 +45,6 @@ QCONFIG_ADD="phonon"
 pkg_setup() {
 	QCONFIG_DEFINE="QT_PHONON
 		$(use aqua || echo QT_GSTREAMER)"
-
-	qt4-build-multilib_pkg_setup
 }
 
 src_configure() {

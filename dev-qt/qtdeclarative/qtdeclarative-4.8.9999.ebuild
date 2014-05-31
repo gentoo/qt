@@ -48,8 +48,6 @@ QCONFIG_DEFINE="QT_DECLARATIVE"
 pkg_setup() {
 	use webkit && QT4_TARGET_DIRECTORIES+="
 		src/3rdparty/webkit/Source/WebKit/qt/declarative"
-
-	qt4-build-multilib_pkg_setup
 }
 
 src_configure() {
