@@ -108,10 +108,6 @@ qt4-build-multilib_src_unpack() {
 qt4-build-multilib_src_prepare() {
 	qt4_prepare_env
 
-	if [[ ${QT4_BUILD_TYPE} == live ]]; then
-		QTDIR="." ./bin/syncqt || die "syncqt failed"
-	fi
-
 	if [[ ${PN} != qtcore ]]; then
 		skip_qmake_build
 		skip_project_generation
