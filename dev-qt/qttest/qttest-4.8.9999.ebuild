@@ -21,13 +21,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-QT4_TARGET_DIRECTORIES="
-	src/testlib"
-
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/QtTest
-	include/QtCore
-	src/corelib"
+QT4_TARGET_DIRECTORIES="src/testlib"
 
 src_configure() {
 	myconf+="

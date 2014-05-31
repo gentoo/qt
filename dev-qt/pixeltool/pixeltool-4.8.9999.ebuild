@@ -24,11 +24,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="tools/pixeltool"
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src/corelib
-	src/gui
-	tools/pixeltool"
 
 src_configure() {
 	myconf+="

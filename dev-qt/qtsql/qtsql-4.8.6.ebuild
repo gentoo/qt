@@ -36,13 +36,6 @@ QT4_TARGET_DIRECTORIES="
 	src/sql
 	src/plugins/sqldrivers"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/Qt
-	include/QtCore
-	include/QtSql
-	src/corelib
-	src/plugins"
-
 src_configure() {
 	myconf+="
 		$(qt_use firebird sql-ibase  plugin)

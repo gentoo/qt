@@ -22,9 +22,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="translations"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	src
-	tools"
 
 src_configure() {
 	cd translations || die

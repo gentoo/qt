@@ -22,12 +22,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/script"
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/Qt
-	include/QtCore
-	include/QtScript
-	src/3rdparty/javascriptcore
-	src/corelib"
 
 QCONFIG_ADD="script"
 QCONFIG_DEFINE="QT_SCRIPT"

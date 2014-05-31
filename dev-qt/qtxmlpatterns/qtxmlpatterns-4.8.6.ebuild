@@ -26,15 +26,6 @@ QT4_TARGET_DIRECTORIES="
 	tools/xmlpatterns
 	tools/xmlpatternsvalidator"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/QtCore
-	include/QtNetwork
-	include/QtXml
-	include/QtXmlPatterns
-	src/network
-	src/xml
-	src/corelib"
-
 QCONFIG_ADD="xmlpatterns"
 QCONFIG_DEFINE="QT_XMLPATTERNS"
 

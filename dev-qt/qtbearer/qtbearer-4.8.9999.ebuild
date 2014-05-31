@@ -26,15 +26,6 @@ RDEPEND="${DEPEND}
 	networkmanager? ( net-misc/networkmanager )
 "
 
-QT4_EXTRACT_DIRECTORIES="
-	include/QtCore
-	include/QtDBus
-	include/QtNetwork
-	src/corelib
-	src/dbus
-	src/network
-	src/plugins/bearer"
-
 pkg_setup() {
 	QT4_TARGET_DIRECTORIES="
 		src/plugins/bearer/generic

@@ -27,16 +27,6 @@ QT4_TARGET_DIRECTORIES="
 	src/openvg
 	src/plugins/graphicssystems/openvg"
 
-QT4_EXTRACT_DIRECTORIES="
-	include/QtCore
-	include/QtGui
-	include/QtOpenVG
-	src/corelib
-	src/gui
-	src/openvg
-	src/plugins
-	src/3rdparty"
-
 QCONFIG_ADD="openvg"
 QCONFIG_DEFINE="QT_OPENVG"
 

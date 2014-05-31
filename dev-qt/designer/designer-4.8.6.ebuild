@@ -29,10 +29,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="tools/designer"
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools"
 
 src_prepare() {
 	qt4-build-multilib_src_prepare

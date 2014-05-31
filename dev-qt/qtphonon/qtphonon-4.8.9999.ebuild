@@ -36,10 +36,6 @@ QT4_TARGET_DIRECTORIES="
 	src/phonon
 	src/plugins/phonon"
 
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src"
-
 QCONFIG_ADD="phonon"
 
 pkg_setup() {

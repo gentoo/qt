@@ -36,12 +36,6 @@ QT4_TARGET_DIRECTORIES="
 	tools/qml
 	tools/qmlplugindump"
 
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools
-	translations"
-
 QCONFIG_ADD="declarative"
 QCONFIG_DEFINE="QT_DECLARATIVE"
 

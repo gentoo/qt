@@ -44,10 +44,6 @@ QT4_TARGET_DIRECTORIES="
 	src/3rdparty/webkit/Source/WebCore
 	src/3rdparty/webkit/Source/WebKit/qt"
 
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src"
-
 QCONFIG_ADD="webkit"
 QCONFIG_DEFINE="QT_WEBKIT"
 

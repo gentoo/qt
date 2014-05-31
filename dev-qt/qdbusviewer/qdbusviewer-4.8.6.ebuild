@@ -24,10 +24,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="tools/qdbus/qdbusviewer"
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools/qdbus"
 
 src_configure() {
 	myconf+="

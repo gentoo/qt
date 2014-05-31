@@ -28,11 +28,6 @@ QT4_TARGET_DIRECTORIES="
 	src/tools/uic3
 	tools/porting"
 
-QT4_EXTRACT_DIRECTORIES="
-	src
-	include
-	tools"
-
 src_configure() {
 	myconf+="
 		-qt3support

@@ -78,10 +78,6 @@ QT4_TARGET_DIRECTORIES="
 	src/plugins/imageformats/jpeg
 	src/plugins/imageformats/tga
 	src/plugins/inputmethods"
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools/qtconfig"
 
 pkg_setup() {
 	use accessibility && QT4_TARGET_DIRECTORIES+=" src/plugins/accessible/widgets"

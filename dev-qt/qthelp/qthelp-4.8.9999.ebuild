@@ -40,14 +40,6 @@ QT4_TARGET_DIRECTORIES="
 	tools/assistant/tools/qhelpconverter
 	tools/qdoc3"
 
-QT4_EXTRACT_DIRECTORIES="
-	demos
-	doc
-	examples
-	include
-	src
-	tools"
-
 pkg_setup() {
 	use compat && QT4_TARGET_DIRECTORIES+="
 		tools/assistant/compat

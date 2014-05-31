@@ -24,10 +24,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="tools/linguist/linguist"
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools"
 
 src_configure() {
 	myconf+="

@@ -27,16 +27,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-4.8.0-alsa.patch"
 )
 
-QT4_TARGET_DIRECTORIES="
-	src/multimedia"
-
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/Qt
-	include/QtCore
-	include/QtGui
-	include/QtMultimedia
-	src/corelib
-	src/gui"
+QT4_TARGET_DIRECTORIES="src/multimedia"
 
 QCONFIG_ADD="multimedia"
 QCONFIG_DEFINE="QT_MULTIMEDIA"

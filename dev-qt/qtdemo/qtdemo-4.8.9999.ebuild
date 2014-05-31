@@ -47,12 +47,6 @@ QT4_TARGET_DIRECTORIES="
 	demos
 	examples"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	doc/src/images
-	include
-	src
-	tools"
-
 src_prepare() {
 	qt4-build-multilib_src_prepare
 

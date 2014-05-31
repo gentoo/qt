@@ -53,17 +53,11 @@ fi
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install pkg_postinst pkg_postrm
 
-# @ECLASS-VARIABLE: QT4_EXTRACT_DIRECTORIES
-# @DEFAULT_UNSET
-# @DESCRIPTION:
-# Space-separated list including the directories that will be extracted from
-# Qt tarball.
-
 # @ECLASS-VARIABLE: QT4_TARGET_DIRECTORIES
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# Arguments for build_target_directories. Takes the directories in which the
-# code should be compiled. This is a space-separated list.
+# Space-separated list of directories that will be configured,
+# compiled, and installed. All paths must be relative to ${S}.
 
 # @FUNCTION: qt4-build-multilib_src_unpack
 # @DESCRIPTION:
@@ -89,25 +83,8 @@ qt4-build-multilib_src_unpack() {
 	fi
 
 	case ${QT4_BUILD_TYPE} in
-		live)
-			git-r3_src_unpack
-			;;
-		release)
-			local tarball="${MY_P}.tar.gz" target= targets=
-			# On MacOS we need src/gui/kernel/qapplication_mac.mm for platform detection
-			for target in \
-				bin config.tests configure doc/doc.pri LICENSE.GPL3 mkspecs projects.pro qmake \
-				src/{plugins/qpluginbase,qbase,qt_install,qt_targets}.pri {src/src,tools/tools}.pro \
-				$([[ ${CHOST} == *-apple-darwin* ]] && echo src/gui/kernel/qapplication_mac.mm) \
-				${QT4_EXTRACT_DIRECTORIES}
-			do
-				targets+="${MY_P}/${target} "
-			done
-
-			ebegin "Unpacking parts of ${tarball}:" ${targets//${MY_P}\/}
-			tar -xzf "${DISTDIR}"/${tarball} ${targets}
-			eend $? || die "failed to unpack"
-			;;
+		live)    git-r3_src_unpack ;;
+		release) default ;;
 	esac
 }
 

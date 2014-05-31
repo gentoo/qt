@@ -48,21 +48,6 @@ QT4_TARGET_DIRECTORIES="
 	tools/linguist/lrelease
 	tools/linguist/lupdate"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include
-	src/3rdparty/des
-	src/3rdparty/easing
-	src/3rdparty/harfbuzz
-	src/3rdparty/md4
-	src/3rdparty/md5
-	src/3rdparty/sha1
-	src/3rdparty/zlib_dependency.pri
-	src/declarative
-	src/gui
-	src/script
-	tools/linguist
-	tools/shared"
-
 QCONFIG_DEFINE="QT_ZLIB"
 
 src_prepare() {

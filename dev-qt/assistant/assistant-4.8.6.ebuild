@@ -30,10 +30,6 @@ PATCHES=(
 )
 
 QT4_TARGET_DIRECTORIES="tools/assistant/tools/assistant"
-QT4_EXTRACT_DIRECTORIES="
-	include
-	src
-	tools"
 
 src_prepare() {
 	# bug 401173

@@ -33,13 +33,6 @@ QT4_TARGET_DIRECTORIES="
 	tools/qdbus/qdbusxml2cpp
 	tools/qdbus/qdbuscpp2xml"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/QtCore
-	include/QtDBus
-	include/QtXml
-	src/corelib
-	src/xml"
-
 QCONFIG_ADD="dbus dbus-linked"
 QCONFIG_DEFINE="QT_DBUS"
 

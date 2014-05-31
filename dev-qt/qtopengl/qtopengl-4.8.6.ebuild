@@ -29,16 +29,6 @@ QT4_TARGET_DIRECTORIES="
 	src/opengl
 	src/plugins/graphicssystems/opengl"
 
-QT4_EXTRACT_DIRECTORIES="
-	include/QtCore
-	include/QtGui
-	include/QtOpenGL
-	src/corelib
-	src/gui
-	src/opengl
-	src/plugins
-	src/3rdparty"
-
 QCONFIG_ADD="opengl"
 QCONFIG_DEFINE="QT_OPENGL"
 

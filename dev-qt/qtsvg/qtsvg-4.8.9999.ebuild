@@ -28,18 +28,6 @@ QT4_TARGET_DIRECTORIES="
 	src/plugins/imageformats/svg
 	src/plugins/iconengines/svgiconengine"
 
-QT4_EXTRACT_DIRECTORIES="${QT4_TARGET_DIRECTORIES}
-	include/QtSvg
-	include/Qt
-	include/QtGui
-	include/QtCore
-	include/QtXml
-	src/corelib
-	src/gui
-	src/plugins
-	src/xml
-	src/3rdparty"
-
 QCONFIG_ADD="svg"
 QCONFIG_DEFINE="QT_SVG"
 
