@@ -17,7 +17,7 @@ case ${EAPI} in
 	*)	die "qt4-build-multilib.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-inherit eutils flag-o-matic multilib toolchain-funcs # TODO multilib-minimal
+inherit eutils flag-o-matic multilib multilib-minimal toolchain-funcs
 
 HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
@@ -46,10 +46,10 @@ if [[ ${PN} != qttranslations ]]; then
 	[[ ${PN} != qtxmlpatterns ]] && IUSE+=" +exceptions"
 fi
 
-DEPEND="virtual/pkgconfig"
-if [[ ${QT4_BUILD_TYPE} == live ]]; then
-	DEPEND+=" dev-lang/perl"
-fi
+DEPEND="
+	dev-lang/perl
+	virtual/pkgconfig[${MULTILIB_USEDEP}]
+"
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install pkg_postinst pkg_postrm
 
@@ -106,12 +106,9 @@ qt4-build-multilib_src_unpack() {
 # Prepare the sources before the configure phase. Strip CFLAGS if necessary, and fix
 # the build system in order to respect CFLAGS/CXXFLAGS/LDFLAGS specified in make.conf.
 qt4-build-multilib_src_prepare() {
-	qt4_prepare_env
-
 	if [[ ${PN} != qtcore ]]; then
 		skip_qmake_build
 		skip_project_generation
-		symlink_tools_to_buildtree
 	fi
 
 	# skip X11 tests in non-gui packages to avoid spurious dependencies
@@ -244,6 +241,16 @@ qt4-build-multilib_src_prepare() {
 # @DESCRIPTION:
 # Runs configure and generates Makefiles for all QT4_TARGET_DIRECTORIES.
 qt4-build-multilib_src_configure() {
+	multilib-minimal_src_configure
+}
+
+multilib_src_configure() {
+	qt4_prepare_env
+
+	if [[ ${PN} != qtcore ]]; then
+		qt4_symlink_tools_to_build_dir
+	fi
+
 	# toolchain setup
 	tc-export CC CXX OBJCOPY STRIP
 	export AR="$(tc-getAR) cqs"
@@ -331,11 +338,11 @@ qt4-build-multilib_src_configure() {
 		fi
 	fi
 
+	# append module-specific arguments
 	conf+=" ${myconf}"
-	myconf=
 
 	einfo "Configuring with:" ${conf}
-	./configure ${conf} || die "configure failed"
+	"${S}"/configure ${conf} || die "configure failed"
 
 	# configure is stupid and assigns QMAKE_LFLAGS twice,
 	# thus the previous -rpath-link flag gets overwritten
@@ -345,12 +352,17 @@ qt4-build-multilib_src_configure() {
 
 	local dir
 	for dir in . ${QT4_TARGET_DIRECTORIES}; do
-		pushd ${dir} >/dev/null || die
+		mkdir -p "${dir}" || die
+		pushd "${dir}" >/dev/null || die
+
+		local projectdir=${PWD/#${BUILD_DIR}/${S}}
 		einfo "Running qmake in: ${dir}"
-		"${S}"/bin/qmake \
-			LIBS+=-L"${QT4_LIBDIR}" \
+		"${BUILD_DIR}"/bin/qmake \
 			CONFIG+=nostrip \
-			|| die "qmake failed"
+			LIBS+=-L"${QT4_LIBDIR}" \
+			"${projectdir}" \
+			|| die "qmake failed (${projectdir})"
+
 		popd >/dev/null || die
 	done
 }
@@ -359,6 +371,12 @@ qt4-build-multilib_src_configure() {
 # @DESCRIPTION:
 # Compiles the code in QT4_TARGET_DIRECTORIES.
 qt4-build-multilib_src_compile() {
+	multilib-minimal_src_compile
+}
+
+multilib_src_compile() {
+	qt4_prepare_env
+
 	local dir
 	for dir in ${QT4_TARGET_DIRECTORIES}; do
 		pushd ${dir} >/dev/null || die
@@ -371,8 +389,14 @@ qt4-build-multilib_src_compile() {
 # @DESCRIPTION:
 # Runs unit tests in all QT4_TARGET_DIRECTORIES.
 qt4-build-multilib_src_test() {
+	multilib-minimal_src_test
+}
+
+multilib_src_test() {
 	# QtMultimedia does not have any test suite (bug #332299)
 	[[ ${PN} == qtmultimedia ]] && return
+
+	qt4_prepare_env
 
 	local dir
 	for dir in ${QT4_TARGET_DIRECTORIES}; do
@@ -385,6 +409,12 @@ qt4-build-multilib_src_test() {
 # Performs the actual installation, running 'emake install'
 # inside all QT4_TARGET_DIRECTORIES, and installing qconfigs.
 qt4-build-multilib_src_install() {
+	multilib-minimal_src_install
+}
+
+multilib_src_install() {
+	qt4_prepare_env
+
 	local dir
 	for dir in ${QT4_TARGET_DIRECTORIES}; do
 		pushd ${dir} >/dev/null || die
@@ -577,15 +607,17 @@ skip_project_generation() {
 	sed -i -e "s:echo \"Finding:exit 0\n\necho \"Finding:g" "${S}"/configure || die
 }
 
-# @FUNCTION: symlink_tools_to_buildtree
+# @FUNCTION: qt4_symlink_tools_to_build_dir
 # @INTERNAL
 # @DESCRIPTION:
-# Symlinks generated binaries to buildtree, so they can be used during compilation time.
-symlink_tools_to_buildtree() {
+# Symlinks qtcore tools to BUILD_DIR, so they can be used during compilation.
+qt4_symlink_tools_to_build_dir() {
+	mkdir -p "${BUILD_DIR}"/bin || die
+
 	local bin
 	for bin in "${QT4_BINDIR}"/{qmake,moc,rcc,uic}; do
 		if [[ -e ${bin} ]]; then
-			ln -s "${bin}" "${S}"/bin/ || die "failed to symlink ${bin}"
+			ln -s "${bin}" "${BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
 		fi
 	done
 }
