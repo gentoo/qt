@@ -12,7 +12,7 @@ KEYWORDS=""
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
-IUSE="+qt4 qt5 systemd +upower"
+IUSE="consolekit +qt4 qt5 systemd +upower"
 REQUIRED_USE="^^ ( qt4 qt5 )
 	?? ( upower systemd )"
 
@@ -29,6 +29,8 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 src_prepare() {
+        use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
+
 	# respect user's cflags
 	sed -e 's|-Wall -march=native||' \
 		-e 's|-O2||' \
