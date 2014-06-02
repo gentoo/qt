@@ -51,5 +51,5 @@ src_configure() {
 
 pkg_setup() {
 	enewgroup ${PN}
-	enewuser ${PN} -1 -1 /var/lib/sddm ${PN}
+	enewuser ${PN} -1 -1 /var/lib/sddm ${PN} video
 }
