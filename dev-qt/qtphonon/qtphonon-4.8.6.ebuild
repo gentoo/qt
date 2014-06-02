@@ -17,18 +17,18 @@ fi
 IUSE="dbus qt3support"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[aqua=,debug=]
-	~dev-qt/qtgui-${PV}[aqua=,debug=,qt3support=]
-	!kde-base/phonon-kde
-	!kde-base/phonon-xine
-	!media-libs/phonon
-	!media-sound/phonon
-	aqua? ( ~dev-qt/qtopengl-${PV}[aqua,debug=,qt3support=] )
+	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtgui-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
+	aqua? ( ~dev-qt/qtopengl-${PV}[aqua,debug=,qt3support=,${MULTILIB_USEDEP}] )
 	!aqua? (
 		media-libs/gstreamer:0.10
 		media-plugins/gst-plugins-meta:0.10
 	)
-	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=] )
+	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	!kde-base/phonon-kde
+	!kde-base/phonon-xine
+	!media-libs/phonon
+	!media-sound/phonon
 "
 RDEPEND="${DEPEND}"
 

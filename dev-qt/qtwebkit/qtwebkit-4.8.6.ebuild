@@ -18,19 +18,19 @@ IUSE="+gstreamer icu +jit"
 
 # libxml2[!icu?] is needed for bugs 407315 and 411091
 DEPEND="
-	dev-db/sqlite:3
-	~dev-qt/qtcore-${PV}[aqua=,debug=,ssl]
-	~dev-qt/qtgui-${PV}[aqua=,debug=]
-	~dev-qt/qtxmlpatterns-${PV}[aqua=,debug=]
-	x11-libs/libX11
-	x11-libs/libXrender
+	dev-db/sqlite:3[${MULTILIB_USEDEP}]
+	~dev-qt/qtcore-${PV}[aqua=,debug=,ssl,${MULTILIB_USEDEP}]
+	~dev-qt/qtgui-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtxmlpatterns-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	x11-libs/libX11[${MULTILIB_USEDEP}]
+	x11-libs/libXrender[${MULTILIB_USEDEP}]
 	gstreamer? (
-		dev-libs/glib:2
-		dev-libs/libxml2:2[!icu?]
+		dev-libs/glib:2[${MULTILIB_USEDEP}]
+		dev-libs/libxml2:2[!icu?,${MULTILIB_USEDEP}]
 		>=media-libs/gstreamer-0.10.36:0.10
 		>=media-libs/gst-plugins-base-0.10.36:0.10
 	)
-	icu? ( dev-libs/icu:= )
+	icu? ( dev-libs/icu:=[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 

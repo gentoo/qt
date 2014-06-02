@@ -17,15 +17,15 @@ fi
 IUSE="+glib iconv icu qt3support ssl"
 
 DEPEND="
-	sys-libs/zlib
-	glib? ( dev-libs/glib:2 )
-	icu? ( dev-libs/icu:= )
-	ssl? ( dev-libs/openssl:0 )
+	sys-libs/zlib[${MULTILIB_USEDEP}]
+	glib? ( dev-libs/glib:2[${MULTILIB_USEDEP}] )
+	icu? ( dev-libs/icu:=[${MULTILIB_USEDEP}] )
+	ssl? ( dev-libs/openssl:0[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
 	~dev-qt/qttranslations-${PV}
-	qt3support? ( ~dev-qt/qtgui-${PV}[aqua=,debug=,glib=,qt3support] )
+	qt3support? ( ~dev-qt/qtgui-${PV}[aqua=,debug=,glib=,qt3support,${MULTILIB_USEDEP}] )
 "
 
 PATCHES=(

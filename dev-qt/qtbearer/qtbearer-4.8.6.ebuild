@@ -17,9 +17,9 @@ fi
 IUSE="connman networkmanager"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[aqua=,debug=]
-	connman? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=] )
-	networkmanager? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=] )
+	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	connman? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	networkmanager? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )

@@ -21,14 +21,14 @@ REQUIRED_USE="
 "
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=]
+	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
 	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
-	oci8? ( dev-db/oracle-instantclient-basic )
-	odbc? ( || ( dev-db/unixODBC dev-db/libiodbc ) )
+	oci8? ( dev-db/oracle-instantclient-basic[${MULTILIB_USEDEP}] )
+	odbc? ( || ( dev-db/unixODBC[${MULTILIB_USEDEP}] dev-db/libiodbc ) )
 	postgres? ( dev-db/postgresql-base )
-	sqlite? ( dev-db/sqlite:3 )
+	sqlite? ( dev-db/sqlite:3[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 

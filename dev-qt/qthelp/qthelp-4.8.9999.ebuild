@@ -22,12 +22,12 @@ fi
 IUSE="compat doc"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[aqua=,debug=]
-	~dev-qt/qtgui-${PV}[aqua=,debug=]
-	~dev-qt/qtsql-${PV}[aqua=,debug=,sqlite]
+	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtgui-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtsql-${PV}[aqua=,debug=,sqlite,${MULTILIB_USEDEP}]
 	compat? (
-		~dev-qt/qtdbus-${PV}[aqua=,debug=]
-		sys-libs/zlib
+		~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+		sys-libs/zlib[${MULTILIB_USEDEP}]
 	)
 "
 RDEPEND="${DEPEND}"

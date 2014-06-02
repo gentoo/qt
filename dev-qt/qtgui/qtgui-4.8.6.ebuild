@@ -23,47 +23,49 @@ REQUIRED_USE="
 # cairo[-qt4] is needed because of bug 454066
 RDEPEND="
 	app-admin/eselect-qtgraphicssystem
-	~dev-qt/qtcore-${PV}[aqua=,debug=,glib=,qt3support=]
-	~dev-qt/qtscript-${PV}[aqua=,debug=]
-	media-libs/fontconfig
-	media-libs/freetype:2
-	media-libs/libpng:0=
-	sys-libs/zlib
-	virtual/jpeg:0
+	~dev-qt/qtcore-${PV}[aqua=,debug=,glib=,qt3support=,${MULTILIB_USEDEP}]
+	~dev-qt/qtscript-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	media-libs/fontconfig[${MULTILIB_USEDEP}]
+	media-libs/freetype:2[${MULTILIB_USEDEP}]
+	media-libs/libpng:0=[${MULTILIB_USEDEP}]
+	sys-libs/zlib[${MULTILIB_USEDEP}]
+	virtual/jpeg:0[${MULTILIB_USEDEP}]
 	!aqua? (
-		x11-libs/libICE
-		x11-libs/libSM
-		x11-libs/libX11
-		x11-libs/libXcursor
-		x11-libs/libXext
-		x11-libs/libXfixes
-		x11-libs/libXi
-		x11-libs/libXrandr
-		x11-libs/libXrender
-		xinerama? ( x11-libs/libXinerama )
-		xv? ( x11-libs/libXv )
+		x11-libs/libICE[${MULTILIB_USEDEP}]
+		x11-libs/libSM[${MULTILIB_USEDEP}]
+		x11-libs/libX11[${MULTILIB_USEDEP}]
+		x11-libs/libXcursor[${MULTILIB_USEDEP}]
+		x11-libs/libXext[${MULTILIB_USEDEP}]
+		x11-libs/libXfixes[${MULTILIB_USEDEP}]
+		x11-libs/libXi[${MULTILIB_USEDEP}]
+		x11-libs/libXrandr[${MULTILIB_USEDEP}]
+		x11-libs/libXrender[${MULTILIB_USEDEP}]
+		xinerama? ( x11-libs/libXinerama[${MULTILIB_USEDEP}] )
+		xv? ( x11-libs/libXv[${MULTILIB_USEDEP}] )
 	)
-	cups? ( net-print/cups )
-	egl? ( media-libs/mesa[egl] )
-	glib? ( dev-libs/glib:2 )
+	cups? ( net-print/cups[${MULTILIB_USEDEP}] )
+	egl? ( media-libs/mesa[egl,${MULTILIB_USEDEP}] )
+	glib? ( dev-libs/glib:2[${MULTILIB_USEDEP}] )
 	gtkstyle? (
-		x11-libs/cairo[-qt4]
-		x11-libs/gtk+:2[aqua=]
+		x11-libs/cairo[-qt4,${MULTILIB_USEDEP}]
+		x11-libs/gtk+:2[aqua=,${MULTILIB_USEDEP}]
 	)
-	mng? ( >=media-libs/libmng-1.0.9:= )
-	nas? ( >=media-libs/nas-1.5 )
-	tiff? ( media-libs/tiff:0 )
+	mng? ( >=media-libs/libmng-1.0.9:=[${MULTILIB_USEDEP}] )
+	nas? ( >=media-libs/nas-1.5[${MULTILIB_USEDEP}] )
+	tiff? ( media-libs/tiff:0[${MULTILIB_USEDEP}] )
 	!<dev-qt/qthelp-4.8.5:4
 "
 DEPEND="${RDEPEND}
 	!aqua? (
-		x11-proto/inputproto
-		x11-proto/xextproto
-		xinerama? ( x11-proto/xineramaproto )
-		xv? ( x11-proto/videoproto )
+		x11-proto/inputproto[${MULTILIB_USEDEP}]
+		x11-proto/xextproto[${MULTILIB_USEDEP}]
+		xinerama? ( x11-proto/xineramaproto[${MULTILIB_USEDEP}] )
+		xv? ( x11-proto/videoproto[${MULTILIB_USEDEP}] )
 	)
 "
-PDEPEND="qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=] )"
+PDEPEND="
+	qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-4.7.3-cups.patch" # bug 323257

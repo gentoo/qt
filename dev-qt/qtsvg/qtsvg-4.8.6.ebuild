@@ -17,9 +17,9 @@ fi
 IUSE="+accessibility"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[aqua=,debug=]
-	~dev-qt/qtgui-${PV}[accessibility=,aqua=,debug=]
-	sys-libs/zlib
+	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtgui-${PV}[accessibility=,aqua=,debug=,${MULTILIB_USEDEP}]
+	sys-libs/zlib[${MULTILIB_USEDEP}]
 "
 RDEPEND="${DEPEND}"
 

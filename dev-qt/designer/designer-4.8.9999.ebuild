@@ -18,13 +18,13 @@ DESIGNER_PLUGINS="declarative phonon qt3support webkit"
 IUSE="${DESIGNER_PLUGINS}"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[aqua=,debug=]
-	~dev-qt/qtgui-${PV}[aqua=,debug=]
-	~dev-qt/qtscript-${PV}[aqua=,debug=]
-	declarative? ( ~dev-qt/qtdeclarative-${PV}[aqua=,debug=] )
-	phonon? ( ~dev-qt/qtphonon-${PV}[aqua=,debug=] )
-	qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=] )
-	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=] )
+	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtgui-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtscript-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	declarative? ( ~dev-qt/qtdeclarative-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	phonon? ( ~dev-qt/qtphonon-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 

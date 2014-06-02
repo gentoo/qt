@@ -17,25 +17,25 @@ fi
 IUSE="dbus declarative kde multimedia opengl openvg phonon webkit xmlpatterns"
 
 DEPEND="
-	~dev-qt/designer-${PV}[aqua=,debug=]
-	~dev-qt/qtcore-${PV}[aqua=,debug=]
-	~dev-qt/qtgui-${PV}[aqua=,debug=]
-	~dev-qt/qthelp-${PV}[aqua=,debug=]
-	~dev-qt/qtscript-${PV}[aqua=,debug=]
-	~dev-qt/qtsql-${PV}[aqua=,debug=]
-	~dev-qt/qtsvg-${PV}[aqua=,debug=]
-	~dev-qt/qttest-${PV}[aqua=,debug=]
-	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=] )
-	declarative? ( ~dev-qt/qtdeclarative-${PV}[aqua=,debug=,webkit?] )
-	multimedia? ( ~dev-qt/qtmultimedia-${PV}[aqua=,debug=] )
-	opengl? ( ~dev-qt/qtopengl-${PV}[aqua=,debug=] )
-	openvg? ( ~dev-qt/qtopenvg-${PV}[aqua=,debug=] )
+	~dev-qt/designer-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtgui-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qthelp-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtscript-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtsql-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qtsvg-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	~dev-qt/qttest-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
+	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	declarative? ( ~dev-qt/qtdeclarative-${PV}[aqua=,debug=,webkit?,${MULTILIB_USEDEP}] )
+	multimedia? ( ~dev-qt/qtmultimedia-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	opengl? ( ~dev-qt/qtopengl-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	openvg? ( ~dev-qt/qtopenvg-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 	phonon? (
 		kde? ( media-libs/phonon[aqua=] )
-		!kde? ( || ( ~dev-qt/qtphonon-${PV}[aqua=,debug=] media-libs/phonon[aqua=] ) )
+		!kde? ( || ( ~dev-qt/qtphonon-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] media-libs/phonon[aqua=] ) )
 	)
-	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=] )
-	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${PV}[aqua=,debug=] )
+	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 
