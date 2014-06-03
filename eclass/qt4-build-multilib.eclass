@@ -637,11 +637,11 @@ qt4_symlink_tools_to_build_dir() {
 # @FUNCTION: fix_library_files
 # @INTERNAL
 # @DESCRIPTION:
-# Fixes the paths in *.la, *.prl, *.pc, as they are wrong due to sandbox and
+# Fixes the paths in *.prl and *.pc, as they are wrong due to sandbox, and
 # moves the *.pc files into the pkgconfig directory.
 fix_library_files() {
 	local libfile
-	for libfile in "${D}"/${QT4_LIBDIR}/{*.la,*.prl,pkgconfig/*.pc}; do
+	for libfile in "${D}"/${QT4_LIBDIR}/{*.prl,pkgconfig/*.pc}; do
 		if [[ -e ${libfile} ]]; then
 			sed -i -e "s:${S}/lib:${QT4_LIBDIR}:g" ${libfile} || die "sed on ${libfile} failed"
 		fi
