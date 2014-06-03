@@ -86,8 +86,6 @@ src_configure() {
 src_install() {
 	qt4-build-multilib_src_install
 
-	emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
-
 	# List all the multilib libdirs
 	local libdirs=
 	for libdir in $(get_all_libdirs); do

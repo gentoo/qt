@@ -396,12 +396,18 @@ multilib_src_install() {
 
 	qt4_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
+	if [[ ${PN} == qtcore ]]; then
+		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake}"
+		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
+	fi
+
 	# install private headers of a few modules
 	if has ${PN} qtcore qtdeclarative qtgui qtscript; then
 		local moduledir=${PN#qt}
 		local modulename=Qt$(tr 'a-z' 'A-Z' <<< ${moduledir:0:1})${moduledir:1}
 		[[ ${moduledir} == core ]] && moduledir=corelib
 
+		einfo "Installing private headers into ${QT4_HEADERDIR}/${modulename}/private"
 		insinto "${QT4_HEADERDIR#${EPREFIX}}"/${modulename}/private
 		find "${S}"/src/${moduledir} -type f -name '*_p.h' -exec doins '{}' + || die
 	fi
