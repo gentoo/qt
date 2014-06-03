@@ -107,13 +107,15 @@ qt4-build-multilib_src_unpack() {
 # the build system in order to respect CFLAGS/CXXFLAGS/LDFLAGS specified in make.conf.
 qt4-build-multilib_src_prepare() {
 	if [[ ${PN} != qtcore ]]; then
-		skip_qmake_build
-		skip_project_generation
+		# avoid unnecessary qmake recompilations
+		sed -i -e 's/^if true;/if false;/' configure \
+			|| die "sed failed (skip qmake bootstrap)"
 	fi
 
 	# skip X11 tests in non-gui packages to avoid spurious dependencies
 	if has ${PN} qtbearer qtcore qtdbus qtscript qtsql qttest qttranslations qtxmlpatterns; then
-		sed -i -e '/^if.*PLATFORM_X11.*CFG_GUI/,/^fi$/d' configure || die
+		sed -i -e '/^if.*PLATFORM_X11.*CFG_GUI/,/^fi$/d' configure \
+			|| die "sed failed (skip X11 tests)"
 	fi
 
 	if use_if_iuse aqua; then
@@ -296,6 +298,10 @@ multilib_src_configure() {
 		conf+=" -release"
 	fi
 	conf+=" -no-separate-debug-info"
+
+	# skip recursive processing of .pro files at the end of configure
+	# (we run qmake by ourselves), thus saving quite a bit of time
+	conf+=" -dont-process"
 
 	# exceptions USE flag
 	conf+=" $(in_iuse exceptions && qt_use exceptions || echo -exceptions)"
@@ -601,22 +607,6 @@ generate_qconfigs() {
 				"${ROOT}${QT4_HEADERDIR}" 2>/dev/null
 		fi
 	fi
-}
-
-# @FUNCTION: skip_qmake_build
-# @INTERNAL
-# @DESCRIPTION:
-# Patches configure to skip qmake compilation, as it's already installed by qtcore.
-skip_qmake_build() {
-	sed -i -e "s:if true:if false:g" "${S}"/configure || die
-}
-
-# @FUNCTION: skip_project_generation
-# @INTERNAL
-# @DESCRIPTION:
-# Exit the script early by throwing in an exit before all of the .pro files are scanned.
-skip_project_generation() {
-	sed -i -e "s:echo \"Finding:exit 0\n\necho \"Finding:g" "${S}"/configure || die
 }
 
 # @FUNCTION: qt4_symlink_tools_to_build_dir
