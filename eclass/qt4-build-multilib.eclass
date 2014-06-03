@@ -350,21 +350,8 @@ multilib_src_configure() {
 	sed -i -e '/^QMAKE_LFLAGS =/ s:$: $$QMAKE_LFLAGS:' \
 		.qmake.cache || die "sed .qmake.cache failed"
 
-	local dir
-	for dir in . ${QT4_TARGET_DIRECTORIES}; do
-		mkdir -p "${dir}" || die
-		pushd "${dir}" >/dev/null || die
-
-		local projectdir=${PWD/#${BUILD_DIR}/${S}}
-		einfo "Running qmake in: ${dir}"
-		"${BUILD_DIR}"/bin/qmake \
-			CONFIG+=nostrip \
-			LIBS+=-L"${QT4_LIBDIR}" \
-			"${projectdir}" \
-			|| die "qmake failed (${projectdir})"
-
-		popd >/dev/null || die
-	done
+	qt4_qmake
+	qt4_foreach_target_subdir qt4_qmake
 }
 
 # @FUNCTION: qt4-build-multilib_src_compile
@@ -377,12 +364,7 @@ qt4-build-multilib_src_compile() {
 multilib_src_compile() {
 	qt4_prepare_env
 
-	local dir
-	for dir in ${QT4_TARGET_DIRECTORIES}; do
-		pushd ${dir} >/dev/null || die
-		emake
-		popd >/dev/null || die
-	done
+	qt4_foreach_target_subdir emake
 }
 
 # @FUNCTION: qt4-build-multilib_src_test
@@ -398,10 +380,7 @@ multilib_src_test() {
 
 	qt4_prepare_env
 
-	local dir
-	for dir in ${QT4_TARGET_DIRECTORIES}; do
-		emake -j1 check -C ${dir}
-	done
+	qt4_foreach_target_subdir emake -j1 check
 }
 
 # @FUNCTION: qt4-build-multilib_src_install
@@ -415,12 +394,7 @@ qt4-build-multilib_src_install() {
 multilib_src_install() {
 	qt4_prepare_env
 
-	local dir
-	for dir in ${QT4_TARGET_DIRECTORIES}; do
-		pushd ${dir} >/dev/null || die
-		emake INSTALL_ROOT="${D}" install
-		popd >/dev/null || die
-	done
+	qt4_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
 	# install private headers of a few modules
 	if has ${PN} qtcore qtdeclarative qtgui qtscript; then
@@ -491,6 +465,38 @@ qt4_prepare_env() {
 	QMAKE_LIBDIR_QT=${QT4_LIBDIR}
 
 	export XDG_CONFIG_HOME="${T}"
+}
+
+# @FUNCTION: qt4_foreach_target_subdir
+# @INTERNAL
+# @DESCRIPTION:
+# Executes the given command inside each directory listed in QT4_TARGET_DIRECTORIES.
+qt4_foreach_target_subdir() {
+	local subdir
+	for subdir in ${QT4_TARGET_DIRECTORIES}; do
+		mkdir -p "${subdir}" || die
+		pushd "${subdir}" >/dev/null || die
+
+		einfo "Running $* ${subdir:+in ${subdir}}"
+		"$@"
+
+		popd >/dev/null || die
+	done
+}
+
+# @FUNCTION: qt4_qmake
+# @INTERNAL
+# @DESCRIPTION:
+# Helper function that runs qmake in the current target subdir.
+# Intended to be called by qt4_foreach_target_subdir().
+qt4_qmake() {
+	local projectdir=${PWD/#${BUILD_DIR}/${S}}
+
+	"${BUILD_DIR}"/bin/qmake \
+		CONFIG+=nostrip \
+		LIBS+=-L"${QT4_LIBDIR}" \
+		"${projectdir}" \
+		|| die "qmake failed (${projectdir})"
 }
 
 # @ECLASS-VARIABLE: QCONFIG_ADD
