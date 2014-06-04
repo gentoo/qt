@@ -53,6 +53,21 @@ DEPEND="
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install pkg_postinst pkg_postrm
 
+# @ECLASS-VARIABLE: PATCHES
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Array variable containing all the patches to be applied. This variable
+# is expected to be defined in the global scope of ebuilds. Make sure to
+# specify the full path. This variable is used in src_prepare phase.
+#
+# Example:
+# @CODE
+#	PATCHES=(
+#		"${FILESDIR}/mypatch.patch"
+#		"${FILESDIR}/mypatch2.patch"
+#	)
+# @CODE
+
 # @ECLASS-VARIABLE: QT4_TARGET_DIRECTORIES
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -63,6 +78,21 @@ EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_i
 # @DESCRIPTION:
 # Set to false to reduce build output during compilation.
 : ${QT4_VERBOSE_BUILD:=true}
+
+# @ECLASS-VARIABLE: QCONFIG_ADD
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# List of options that must be added to QT_CONFIG in qconfig.pri
+
+# @ECLASS-VARIABLE: QCONFIG_REMOVE
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# List of options that must be removed from QT_CONFIG in qconfig.pri
+
+# @ECLASS-VARIABLE: QCONFIG_DEFINE
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# List of macros that must be defined in QtCore/qconfig.h
 
 # @FUNCTION: qt4-build-multilib_src_unpack
 # @DESCRIPTION:
@@ -92,19 +122,6 @@ qt4-build-multilib_src_unpack() {
 		release) default ;;
 	esac
 }
-
-# @ECLASS-VARIABLE: PATCHES
-# @DEFAULT_UNSET
-# @DESCRIPTION:
-# PATCHES array variable containing all various patches to be applied.
-# This variable is expected to be defined in global scope of ebuild.
-# Make sure to specify the full path. This variable is utilised in
-# src_prepare() phase.
-#
-# @CODE
-#   PATCHES=( "${FILESDIR}/mypatch.patch"
-#             "${FILESDIR}/patches_folder/" )
-# @CODE
 
 # @FUNCTION: qt4-build-multilib_src_prepare
 # @DESCRIPTION:
@@ -520,21 +537,6 @@ qt4_qmake() {
 		"${projectdir}" \
 		|| die "qmake failed (${projectdir})"
 }
-
-# @ECLASS-VARIABLE: QCONFIG_ADD
-# @DESCRIPTION:
-# List options that need to be added to QT_CONFIG in qconfig.pri
-: ${QCONFIG_ADD:=}
-
-# @ECLASS-VARIABLE: QCONFIG_REMOVE
-# @DESCRIPTION:
-# List options that need to be removed from QT_CONFIG in qconfig.pri
-: ${QCONFIG_REMOVE:=}
-
-# @ECLASS-VARIABLE: QCONFIG_DEFINE
-# @DESCRIPTION:
-# List variables that should be defined at the top of QtCore/qconfig.h
-: ${QCONFIG_DEFINE:=}
 
 # @FUNCTION: install_qconfigs
 # @INTERNAL
