@@ -119,9 +119,11 @@ qt4-build-multilib_src_prepare() {
 	fi
 
 	if use_if_iuse aqua; then
-		sed -e '/^CONFIG/s:app_bundle::' \
+		sed -i \
+			-e '/^CONFIG/s:app_bundle::' \
 			-e '/^CONFIG/s:plugin_no_soname:plugin_with_soname absolute_library_soname:' \
-			-i mkspecs/$(qt4_get_mkspec)/qmake.conf || die
+			mkspecs/$(qt4_get_mkspec)/qmake.conf \
+			|| die "sed failed (aqua)"
 	fi
 
 	# Bug 261632
@@ -167,34 +169,19 @@ qt4-build-multilib_src_prepare() {
 	sed -e 's:/X11R6/:/:' -i mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 
 	if [[ ${CHOST} == *-darwin* ]]; then
-		# Set FLAGS *and* remove -arch, since our gcc-apple is multilib
-		# crippled (by design) :/
-		local mac_gpp_conf=
-		if [[ -f mkspecs/common/mac-g++.conf ]]; then
-			# qt < 4.8 has mac-g++.conf
-			mac_gpp_conf="mkspecs/common/mac-g++.conf"
-		elif [[ -f mkspecs/common/g++-macx.conf ]]; then
-			# qt >= 4.8 has g++-macx.conf
-			mac_gpp_conf="mkspecs/common/g++-macx.conf"
-		else
-			die "no known conf file for mac found"
-		fi
-		sed \
+		# Set FLAGS and remove -arch, since our gcc-apple is multilib crippled (by design)
+		sed -i \
 			-e "s:QMAKE_CFLAGS_RELEASE.*=.*:QMAKE_CFLAGS_RELEASE=${CFLAGS}:" \
 			-e "s:QMAKE_CXXFLAGS_RELEASE.*=.*:QMAKE_CXXFLAGS_RELEASE=${CXXFLAGS}:" \
 			-e "s:QMAKE_LFLAGS_RELEASE.*=.*:QMAKE_LFLAGS_RELEASE=-headerpad_max_install_names ${LDFLAGS}:" \
 			-e "s:-arch\s\w*::g" \
-			-i ${mac_gpp_conf} \
-			|| die "sed ${mac_gpp_conf} failed"
+			mkspecs/common/g++-macx.conf \
+			|| die "sed g++-macx.conf failed"
 
 		# Fix configure's -arch settings that appear in qmake/Makefile and also
 		# fix arch handling (automagically duplicates our -arch arg and breaks
 		# pch). Additionally disable Xarch support.
-		local mac_gcc_confs="${mac_gpp_conf}"
-		if [[ -f mkspecs/common/gcc-base-macx.conf ]]; then
-			mac_gcc_confs+=" mkspecs/common/gcc-base-macx.conf"
-		fi
-		sed \
+		sed -i \
 			-e "s:-arch i386::" \
 			-e "s:-arch ppc::" \
 			-e "s:-arch x86_64::" \
@@ -204,14 +191,15 @@ qt4-build-multilib_src_prepare() {
 			-e "s:CFG_MAC_XARCH=yes:CFG_MAC_XARCH=no:g" \
 			-e "s:-Xarch_x86_64::g" \
 			-e "s:-Xarch_ppc64::g" \
-			-i configure ${mac_gcc_confs} \
+			configure mkspecs/common/gcc-base-macx.conf mkspecs/common/g++-macx.conf \
 			|| die "sed -arch/-Xarch failed"
 
 		# On Snow Leopard don't fall back to 10.5 deployment target.
 		if [[ ${CHOST} == *-apple-darwin10 ]]; then
-			sed -e "s:QMakeVar set QMAKE_MACOSX_DEPLOYMENT_TARGET.*:QMakeVar set QMAKE_MACOSX_DEPLOYMENT_TARGET 10.6:g" \
+			sed -i \
+				-e "s:QMakeVar set QMAKE_MACOSX_DEPLOYMENT_TARGET.*:QMakeVar set QMAKE_MACOSX_DEPLOYMENT_TARGET 10.6:g" \
 				-e "s:-mmacosx-version-min=10.[0-9]:-mmacosx-version-min=10.6:g" \
-				-i configure ${mac_gpp_conf} \
+				configure mkspecs/common/g++-macx.conf \
 				|| die "sed deployment target failed"
 		fi
 	fi
