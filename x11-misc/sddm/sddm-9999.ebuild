@@ -12,7 +12,7 @@ KEYWORDS=""
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
-IUSE="+qt4 qt5 systemd +upower"
+IUSE="consolekit +qt4 qt5 systemd +upower"
 REQUIRED_USE="^^ ( qt4 qt5 )
 	?? ( upower systemd )"
 
@@ -29,6 +29,8 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 src_prepare() {
+	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
+
 	# respect user's cflags
 	sed -e 's|-Wall -march=native||' \
 		-e 's|-O2||' \
@@ -47,6 +49,18 @@ src_configure() {
 		$(cmake-utils_use_use qt5 QT5)
 	)
 	cmake-utils_src_configure
+}
+
+pkg_postinst() {
+	if use consolekit; then
+		ewarn "This display manager doesn't have native built-in ConsoleKit support."
+		ewarn "In order to use ConsoleKit pam module with this display manager,"
+		ewarn "you should remove the \"nox11\" parameter from pm_ck_connector.so"
+		ewarn "line in /etc/pam.d/system-login"
+	fi
+	ewarn "Add the sddm user manually to the video group"
+	ewarn "if you experience flickering or other rendering issues of sddm-greeter"
+	ewarn "see https://github.com/gentoo/qt/pull/52"
 }
 
 pkg_setup() {
