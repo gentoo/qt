@@ -297,12 +297,12 @@ multilib_src_configure() {
 		# build shared libraries
 		-shared
 
-		# misc stuff
-		-fast -largefile
-
 		# skip recursive processing of .pro files at the end of configure
 		# (we run qmake by ourselves), thus saving quite a bit of time
 		-dont-process
+
+		# always enable large file support
+		-largefile
 
 		# exceptions USE flag
 		$(in_iuse exceptions && qt_use exceptions || echo -exceptions)
