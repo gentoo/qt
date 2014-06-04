@@ -59,6 +59,11 @@ EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_i
 # Space-separated list of directories that will be configured,
 # compiled, and installed. All paths must be relative to ${S}.
 
+# @ECLASS-VARIABLE: QT4_VERBOSE_BUILD
+# @DESCRIPTION:
+# Set to false to reduce build output during compilation.
+: ${QT4_VERBOSE_BUILD:=true}
+
 # @FUNCTION: qt4-build-multilib_src_unpack
 # @DESCRIPTION:
 # Unpacks the sources.
@@ -124,6 +129,12 @@ qt4-build-multilib_src_prepare() {
 			-e '/^CONFIG/s:plugin_no_soname:plugin_with_soname absolute_library_soname:' \
 			mkspecs/$(qt4_get_mkspec)/qmake.conf \
 			|| die "sed failed (aqua)"
+
+		# we are crazy and build cocoa + qt3support
+		if { ! in_iuse qt3support || use qt3support; } && [[ ${CHOST##*-darwin} -ge 9 ]]; then
+			sed -i -e "/case \"\$PLATFORM,\$CFG_MAC_COCOA\" in/,/;;/ s|CFG_QT3SUPPORT=\"no\"|CFG_QT3SUPPORT=\"yes\"|" \
+				configure || die "sed failed (cocoa + qt3support)"
+		fi
 	fi
 
 	# Bug 261632
@@ -246,97 +257,108 @@ multilib_src_configure() {
 	export AR="$(tc-getAR) cqs"
 	export LD="$(tc-getCXX)"
 
-	# configure arguments
-	local conf="
-		-prefix ${QT4_PREFIX}
-		-bindir ${QT4_BINDIR}
-		-libdir ${QT4_LIBDIR}
-		-docdir ${QT4_DOCDIR}
-		-headerdir ${QT4_HEADERDIR}
-		-plugindir ${QT4_PLUGINDIR}
-		-importdir ${QT4_IMPORTDIR}
-		-datadir ${QT4_DATADIR}
-		-translationdir ${QT4_TRANSLATIONDIR}
-		-sysconfdir ${QT4_SYSCONFDIR}
-		-examplesdir ${QT4_EXAMPLESDIR}
-		-demosdir ${QT4_DEMOSDIR}
-		-opensource -confirm-license
-		-shared -fast -largefile -stl -verbose
-		-nomake examples -nomake demos"
-
 	# convert tc-arch to the values supported by Qt
+	local arch=
 	case $(tc-arch) in
-		amd64|x64-*)		  conf+=" -arch x86_64" ;;
-		ppc*-macos)		  conf+=" -arch ppc" ;;
-		ppc*)			  conf+=" -arch powerpc" ;;
-		sparc*)			  conf+=" -arch sparc" ;;
-		x86-macos)		  conf+=" -arch x86" ;;
-		x86*)			  conf+=" -arch i386" ;;
-		alpha|arm|ia64|mips|s390) conf+=" -arch $(tc-arch)" ;;
-		hppa|sh)		  conf+=" -arch generic" ;;
-		*) die "$(tc-arch) is unsupported by this eclass. Please file a bug." ;;
+		amd64|x64-*)		  arch=x86_64 ;;
+		ppc*-macos)		  arch=ppc ;;
+		ppc*)			  arch=powerpc ;;
+		sparc*)			  arch=sparc ;;
+		x86-macos)		  arch=x86 ;;
+		x86*)			  arch=i386 ;;
+		alpha|arm|ia64|mips|s390) arch=$(tc-arch) ;;
+		hppa|sh)		  arch=generic ;;
+		*) die "qt4-build-multilib.eclass: unsupported tc-arch '$(tc-arch)'" ;;
 	esac
 
-	conf+=" -platform $(qt4_get_mkspec)"
+	# configure arguments
+	local conf=(
+		# installation paths
+		-prefix "${QT4_PREFIX}"
+		-bindir "${QT4_BINDIR}"
+		-libdir "${QT4_LIBDIR}"
+		-docdir "${QT4_DOCDIR}"
+		-headerdir "${QT4_HEADERDIR}"
+		-plugindir "${QT4_PLUGINDIR}"
+		-importdir "${QT4_IMPORTDIR}"
+		-datadir "${QT4_DATADIR}"
+		-translationdir "${QT4_TRANSLATIONDIR}"
+		-sysconfdir "${QT4_SYSCONFDIR}"
+		-examplesdir "${QT4_EXAMPLESDIR}"
+		-demosdir "${QT4_DEMOSDIR}"
 
-	# debug/release
-	if use_if_iuse debug; then
-		conf+=" -debug"
-	else
-		conf+=" -release"
-	fi
-	conf+=" -no-separate-debug-info"
+		# debug/release
+		$(use_if_iuse debug && echo -debug || echo -release)
+		-no-separate-debug-info
 
-	# skip recursive processing of .pro files at the end of configure
-	# (we run qmake by ourselves), thus saving quite a bit of time
-	conf+=" -dont-process"
+		# licensing stuff
+		-opensource -confirm-license
 
-	# exceptions USE flag
-	conf+=" $(in_iuse exceptions && qt_use exceptions || echo -exceptions)"
+		# build shared libraries
+		-shared
 
-	# disable rpath (bug 380415), except on prefix (bug 417169)
-	use prefix || conf+=" -no-rpath"
+		# misc stuff
+		-fast -largefile
 
-	# precompiled headers don't work on hardened, where the flag is masked
-	conf+=" $(in_iuse pch && qt_use pch || echo -no-pch)"
+		# skip recursive processing of .pro files at the end of configure
+		# (we run qmake by ourselves), thus saving quite a bit of time
+		-dont-process
 
-	# -reduce-relocations
-	# This flag seems to introduce major breakage to applications,
-	# mostly to be seen as a core dump with the message "QPixmap: Must
-	# construct a QApplication before a QPaintDevice" on Solaris.
-	#   -- Daniel Vergien
-	[[ ${CHOST} != *-solaris* ]] && conf+=" -reduce-relocations"
+		# exceptions USE flag
+		$(in_iuse exceptions && qt_use exceptions || echo -exceptions)
 
-	# this one is needed for all systems with a separate -liconv, apart from
-	# Darwin, for which the sources already cater for -liconv
-	if use !elibc_glibc && [[ ${CHOST} != *-darwin* ]]; then
-		conf+=" -liconv"
-	fi
+		# build STL support
+		-stl
+
+		# architecture/platform (mkspec)
+		-arch ${arch}
+		-platform $(qt4_get_mkspec)
+
+		# prefer system libraries
+		-system-zlib
+
+		# exclude examples and demos from default build
+		-nomake examples
+		-nomake demos
+
+		# disable rpath on non-prefix (bugs 380415 and 417169)
+		$(use prefix || echo -no-rpath)
+
+		# verbosity of the configure and build phases
+		-verbose $(${QT4_VERBOSE_BUILD} || echo -silent)
+
+		# precompiled headers don't work on hardened, where the flag is masked
+		$(in_iuse pch && qt_use pch || echo -no-pch)
+
+		# enable linker optimizations to reduce relocations, except on Solaris
+		# where this flag seems to introduce major breakage to applications,
+		# mostly to be seen as a core dump with the message:
+		# "QPixmap: Must construct a QApplication before a QPaintDevice"
+		$([[ ${CHOST} != *-solaris* ]] && echo -reduce-relocations)
+
+		# this one is needed for all systems with a separate -liconv, apart from
+		# Darwin, for which the sources already cater for -liconv
+		$(use !elibc_glibc && [[ ${CHOST} != *-darwin* ]] && echo -liconv)
+	)
 
 	if use_if_iuse aqua; then
-		# On (snow) leopard use the new (frameworked) cocoa code.
 		if [[ ${CHOST##*-darwin} -ge 9 ]]; then
-			conf+=" -cocoa -framework"
-			# We need the source's headers, not the installed ones.
-			conf+=" -I${S}/include"
-			# Add hint for the framework location.
-			conf+=" -F${QT4_LIBDIR}"
-
-			# We are crazy and build cocoa + qt3support :-)
-			if use_if_iuse qt3support; then
-				sed -e "/case \"\$PLATFORM,\$CFG_MAC_COCOA\" in/,/;;/ s|CFG_QT3SUPPORT=\"no\"|CFG_QT3SUPPORT=\"yes\"|" \
-					-i configure || die
-			fi
+			conf+=(
+				# on (snow) leopard use the new (frameworked) cocoa code
+				-cocoa -framework
+				# add hint for the framework location
+				-F"${QT4_LIBDIR}"
+			)
 		else
-			conf+=" -no-framework"
+			conf+=(-no-framework)
 		fi
 	fi
 
 	# append module-specific arguments
-	conf+=" ${myconf}"
+	conf+=(${myconf})
 
-	einfo "Configuring with:" ${conf}
-	"${S}"/configure ${conf} || die "configure failed"
+	einfo "Configuring with: ${conf[@]}"
+	"${S}"/configure "${conf[@]}" || die "configure failed"
 
 	# configure is stupid and assigns QMAKE_LFLAGS twice,
 	# thus the previous -rpath-link flag gets overwritten
@@ -712,7 +734,7 @@ qt4_get_mkspec() {
 		*-solaris*)
 			spec=solaris ;;
 		*)
-			die "${FUNCNAME}(): Unsupported CHOST '${CHOST}'" ;;
+			die "qt4-build-multilib.eclass: unsupported CHOST '${CHOST}'" ;;
 	esac
 
 	case $(tc-getCXX) in
@@ -733,7 +755,7 @@ qt4_get_mkspec() {
 				spec+=-g++
 			fi ;;
 		*)
-			die "${FUNCNAME}(): Unsupported compiler '$(tc-getCXX)'" ;;
+			die "qt4-build-multilib.eclass: unsupported compiler '$(tc-getCXX)'" ;;
 	esac
 
 	# Add -64 for 64-bit prefix profiles
