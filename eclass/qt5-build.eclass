@@ -17,7 +17,7 @@ case ${EAPI} in
 	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-inherit eutils flag-o-matic multilib toolchain-funcs versionator virtualx
+inherit eutils flag-o-matic multilib toolchain-funcs virtualx
 
 HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
@@ -152,7 +152,7 @@ qt5-build_pkg_setup() {
 # @DESCRIPTION:
 # Unpacks the sources.
 qt5-build_src_unpack() {
-	if ! version_is_at_least 4.4 $(gcc-version); then
+	if [[ $(gcc-major-version) -lt 4 ]] || [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 4 ]]; then
 		ewarn
 		ewarn "Using a GCC version lower than 4.4 is not supported."
 		ewarn
@@ -221,11 +221,11 @@ qt5-build_src_prepare() {
 	fi
 
 	if [[ ${PN} != qtcore ]]; then
-		qt5_symlink_tools_to_buildtree
+		qt5_symlink_tools_to_build_dir
 	fi
 
-	# Apply patches
-	[[ -n ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
+	# apply patches
+	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
 	epatch_user
 }
 
@@ -239,7 +239,7 @@ qt5-build_src_configure() {
 	export LD="$(tc-getCXX)"
 
 	mkdir -p "${QT5_BUILD_DIR}" || die
-	pushd "${QT5_BUILD_DIR}" > /dev/null || die
+	pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
 	if [[ ${QT5_MODULE} == qtbase ]]; then
 		qt5_base_configure
@@ -247,7 +247,7 @@ qt5-build_src_configure() {
 
 	qt5_foreach_target_subdir qt5_qmake
 
-	popd > /dev/null || die
+	popd >/dev/null || die
 }
 
 # @FUNCTION: qt5-build_src_compile
@@ -295,10 +295,10 @@ qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
 	if [[ ${PN} == qtcore ]]; then
-		pushd "${QT5_BUILD_DIR}" > /dev/null || die
+		pushd "${QT5_BUILD_DIR}" >/dev/null || die
 		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake,syncqt}"
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
-		popd > /dev/null || die
+		popd >/dev/null || die
 
 		# create an empty Gentoo/gentoo-qconfig.h
 		dodir "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
@@ -398,11 +398,35 @@ qt5_prepare_env() {
 	fi
 }
 
-# @FUNCTION: qt5_symlink_tools_to_buildtree
+# @FUNCTION: qt5_foreach_target_subdir
 # @INTERNAL
 # @DESCRIPTION:
-# Symlinks qtcore tools to buildtree, so they can be used when building other modules.
-qt5_symlink_tools_to_buildtree() {
+# Executes the arguments inside each directory listed in QT5_TARGET_SUBDIRS.
+qt5_foreach_target_subdir() {
+	[[ -z ${QT5_TARGET_SUBDIRS[@]} ]] && QT5_TARGET_SUBDIRS=("")
+
+	local subdir
+	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
+		if [[ ${EBUILD_PHASE} == test ]]; then
+			subdir=tests/auto${subdir#src}
+			[[ -d ${S}/${subdir} ]] || continue
+		fi
+
+		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
+		pushd "${QT5_BUILD_DIR}/${subdir}" >/dev/null || die
+
+		einfo "Running $* ${subdir:+in ${subdir}}"
+		"$@"
+
+		popd >/dev/null || die
+	done
+}
+
+# @FUNCTION: qt5_symlink_tools_to_build_dir
+# @INTERNAL
+# @DESCRIPTION:
+# Symlinks qtcore tools to QT5_BUILD_DIR, so they can be used when building other modules.
+qt5_symlink_tools_to_build_dir() {
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
 
 	local bin
@@ -513,30 +537,6 @@ qt5_qmake() {
 
 	"${QT5_BUILD_DIR}"/bin/qmake "${projectdir}" \
 		|| die "qmake failed (${projectdir})"
-}
-
-# @FUNCTION: qt5_foreach_target_subdir
-# @INTERNAL
-# @DESCRIPTION:
-# Executes the arguments inside each directory listed in QT5_TARGET_SUBDIRS.
-qt5_foreach_target_subdir() {
-	[[ -z ${QT5_TARGET_SUBDIRS[@]} ]] && QT5_TARGET_SUBDIRS=("")
-
-	local subdir
-	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
-		if [[ ${EBUILD_PHASE} == test ]]; then
-			subdir=tests/auto${subdir#src}
-			[[ -d ${S}/${subdir} ]] || continue
-		fi
-
-		mkdir -p "${QT5_BUILD_DIR}/${subdir}" || die
-		pushd "${QT5_BUILD_DIR}/${subdir}" > /dev/null || die
-
-		einfo "Running $* ${subdir:+in ${subdir}}"
-		"$@"
-
-		popd > /dev/null || die
-	done
 }
 
 # @FUNCTION: qt5_install_module_qconfigs

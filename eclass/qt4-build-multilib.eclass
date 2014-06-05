@@ -251,7 +251,6 @@ qt4-build-multilib_src_prepare() {
 
 	# apply patches
 	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
-	debug-print "$FUNCNAME: applying user patches"
 	epatch_user
 }
 
@@ -523,6 +522,21 @@ qt4_foreach_target_subdir() {
 	done
 }
 
+# @FUNCTION: qt4_symlink_tools_to_build_dir
+# @INTERNAL
+# @DESCRIPTION:
+# Symlinks qtcore tools to BUILD_DIR, so they can be used during compilation.
+qt4_symlink_tools_to_build_dir() {
+	mkdir -p "${BUILD_DIR}"/bin || die
+
+	local bin
+	for bin in "${QT4_BINDIR}"/{qmake,moc,rcc,uic}; do
+		if [[ -e ${bin} ]]; then
+			ln -s "${bin}" "${BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
+		fi
+	done
+}
+
 # @FUNCTION: qt4_qmake
 # @INTERNAL
 # @DESCRIPTION:
@@ -619,21 +633,6 @@ generate_qconfigs() {
 				"${ROOT}${QT4_HEADERDIR}" 2>/dev/null
 		fi
 	fi
-}
-
-# @FUNCTION: qt4_symlink_tools_to_build_dir
-# @INTERNAL
-# @DESCRIPTION:
-# Symlinks qtcore tools to BUILD_DIR, so they can be used during compilation.
-qt4_symlink_tools_to_build_dir() {
-	mkdir -p "${BUILD_DIR}"/bin || die
-
-	local bin
-	for bin in "${QT4_BINDIR}"/{qmake,moc,rcc,uic}; do
-		if [[ -e ${bin} ]]; then
-			ln -s "${bin}" "${BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
-		fi
-	done
 }
 
 # @FUNCTION: fix_library_files
