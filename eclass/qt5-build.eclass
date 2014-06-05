@@ -61,7 +61,7 @@ EGIT_REPO_URI=(
 	"git://gitorious.org/qt/${QT5_MODULE}.git"
 	"https://git.gitorious.org/qt/${QT5_MODULE}.git"
 )
-[[ ${QT5_BUILD_TYPE} == "live" ]] && inherit git-r3
+[[ ${QT5_BUILD_TYPE} == live ]] && inherit git-r3
 
 IUSE="debug test"
 
@@ -69,8 +69,8 @@ DEPEND="
 	>=dev-lang/perl-5.14
 	virtual/pkgconfig
 "
-if [[ ${PN} != "qttest" ]]; then
-	if [[ ${QT5_MODULE} == "qtbase" ]]; then
+if [[ ${PN} != qttest ]]; then
+	if [[ ${QT5_MODULE} == qtbase ]]; then
 		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
 	else
 		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5[debug=] )"
@@ -158,7 +158,7 @@ qt5-build_src_unpack() {
 		ewarn
 	fi
 
-	if [[ ${PN} == "qtwebkit" ]]; then
+	if [[ ${PN} == qtwebkit ]]; then
 		eshopts_push -s extglob
 		if is-flagq '-g?(gdb)?([1-9])'; then
 			ewarn
@@ -183,7 +183,7 @@ qt5-build_src_unpack() {
 qt5-build_src_prepare() {
 	qt5_prepare_env
 
-	if [[ ${QT5_MODULE} == "qtbase" ]]; then
+	if [[ ${QT5_MODULE} == qtbase ]]; then
 		# Avoid unnecessary qmake recompilations
 		sed -i -re "s|^if true;.*(\[ '\!').*(\"\\\$outpath/bin/qmake\".*)|if \1 -e \2 then|" \
 			configure || die "sed failed (skip qmake bootstrap)"
@@ -220,7 +220,7 @@ qt5-build_src_prepare() {
 			|| die "sed failed (config.tests)"
 	fi
 
-	if [[ ${PN} != "qtcore" ]]; then
+	if [[ ${PN} != qtcore ]]; then
 		qt5_symlink_tools_to_buildtree
 	fi
 
@@ -241,7 +241,7 @@ qt5-build_src_configure() {
 	mkdir -p "${QT5_BUILD_DIR}" || die
 	pushd "${QT5_BUILD_DIR}" > /dev/null || die
 
-	if [[ ${QT5_MODULE} == "qtbase" ]]; then
+	if [[ ${QT5_MODULE} == qtbase ]]; then
 		qt5_base_configure
 	fi
 
@@ -294,7 +294,7 @@ qt5-build_src_test() {
 qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
-	if [[ ${PN} == "qtcore" ]]; then
+	if [[ ${PN} == qtcore ]]; then
 		pushd "${QT5_BUILD_DIR}" > /dev/null || die
 		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake,syncqt}"
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
@@ -328,7 +328,7 @@ qt5-build_pkg_postinst() {
 # @DESCRIPTION:
 # Regenerate configuration when the package is completely removed.
 qt5-build_pkg_postrm() {
-	if [[ -z ${REPLACED_BY_VERSION} && ${PN} != "qtcore" ]]; then
+	if [[ -z ${REPLACED_BY_VERSION} && ${PN} != qtcore ]]; then
 		qt5_regenerate_global_qconfigs
 	fi
 }
@@ -392,7 +392,7 @@ qt5_prepare_env() {
 	QT5_TESTSDIR=${QT5_DATADIR}/tests
 	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
 
-	if [[ ${QT5_MODULE} == "qtbase" ]]; then
+	if [[ ${QT5_MODULE} == qtbase ]]; then
 		# see mkspecs/features/qt_config.prf
 		export QMAKEMODULES="${QT5_BUILD_DIR}/mkspecs/modules:${S}/mkspecs/modules:${QT5_ARCHDATADIR}/mkspecs/modules"
 	fi
@@ -524,7 +524,7 @@ qt5_foreach_target_subdir() {
 
 	local subdir
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
-		if [[ ${EBUILD_PHASE} == "test" ]]; then
+		if [[ ${EBUILD_PHASE} == test ]]; then
 			subdir=tests/auto${subdir#src}
 			[[ -d ${S}/${subdir} ]] || continue
 		fi
