@@ -4,11 +4,12 @@
 
 EAPI="2"
 
-inherit autotools multilib eutils flag-o-matic subversion
+inherit autotools multilib eutils flag-o-matic git-r3
 
 DESCRIPTION="Collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol"
 HOMEPAGE="http://www.gnupg.org/aegypten/"
-ESVN_REPO_URI="svn://cvs.gnupg.org/pinentry/trunk"
+EGIT_REPO_URI="git://git.gnupg.org/pinentry.git"
+EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 KEYWORDS=""
