@@ -9,7 +9,6 @@ inherit autotools multilib eutils flag-o-matic git-r3
 DESCRIPTION="Collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol"
 HOMEPAGE="http://www.gnupg.org/aegypten/"
 EGIT_REPO_URI="git://git.gnupg.org/pinentry.git"
-EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 KEYWORDS=""
