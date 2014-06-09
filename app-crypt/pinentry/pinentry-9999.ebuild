@@ -1,93 +1,103 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/app-crypt/pinentry/pinentry-0.8.3.ebuild,v 1.5 2014/04/03 19:40:59 haubi Exp $
 
-EAPI="2"
+EAPI=5
 
-inherit autotools multilib eutils flag-o-matic git-r3
+inherit autotools multilib eutils flag-o-matic git-r3 toolchain-funcs
 
 DESCRIPTION="Collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol"
-HOMEPAGE="http://www.gnupg.org/aegypten/"
+HOMEPAGE="http://gnupg.org/aegypten2/index.html"
 EGIT_REPO_URI="git://git.gnupg.org/pinentry.git"
 
 LICENSE="GPL-2"
-KEYWORDS=""
 SLOT="0"
-IUSE="caps gtk ncurses qt4 static"
+KEYWORDS=""
+IUSE="gtk ncurses qt4 caps static"
 
-DEPEND="
+RDEPEND="
+	app-admin/eselect-pinentry
 	caps? ( sys-libs/libcap )
-	static? ( sys-libs/ncurses )
-	!static? (
-		gtk? ( x11-libs/gtk+:2 )
-		!gtk? (
-			!qt4? ( sys-libs/ncurses )
-		)
-		ncurses? ( sys-libs/ncurses )
-		qt4? ( dev-qt/qtgui:4 )
-	)
+	gtk? ( x11-libs/gtk+:2 )
+	ncurses? ( sys-libs/ncurses )
+	qt4? ( >=dev-qt/qtgui-4.4.1:4 )
+	static? ( >=sys-libs/ncurses-5.7-r5[static-libs,-gpm] )
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	sys-devel/gettext
+	gtk? ( virtual/pkgconfig )
+	qt4? ( virtual/pkgconfig )
+	ppc-aix? ( dev-libs/gnulib )
+"
+REQUIRED_USE="
+	|| ( ncurses gtk qt4 )
+	gtk? ( !static )
+	qt4? ( !static )
+	static? ( ncurses )
+"
 
-pkg_setup() {
-	if use static; then
-		append-ldflags -static
-		if use gtk || use qt4; then
-			ewarn
-			ewarn "The static USE flag is only supported with the ncurses USE flags, disabling the gtk and qt4 USE flags."
-			ewarn
-		fi
-	fi
-}
+DOCS=( AUTHORS ChangeLog NEWS README THANKS TODO )
 
 src_prepare() {
+	if use qt4; then
+		local f
+		for f in qt4/*.moc; do
+			"${EPREFIX}"/usr/bin/moc ${f/.moc/.h} > ${f} || die
+		done
+	fi
+	epatch "${FILESDIR}/${PN}-0.8.2-ncurses.patch"
+	epatch "${FILESDIR}/${PN}-0.8.2-texi.patch"
+	sed -i 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/g' configure.ac || die
 	eautoreconf
-	elibtoolize
 }
 
 src_configure() {
-	local myconf=""
+	use static && append-ldflags -static
 
-	if use gtk || use ncurses || use qt4; then
-		myconf="--enable-pinentry-curses --enable-fallback-curses"
-	elif use static; then
-		myconf="--enable-pinentry-curses --enable-fallback-curses --disable-pinentry-gtk2 --disable-pinentry-qt --disable-pinentry-qt4"
+	if [[ ${CHOST} == *-aix* ]] ; then
+		append-flags -I"${EPREFIX}/usr/$(get_libdir)/gnulib/include"
+		append-ldflags -L"${EPREFIX}/usr/$(get_libdir)/gnulib/$(get_libdir)"
+		append-libs -lgnu
 	fi
+
+	# Issues finding qt on multilib systems
+	export QTLIB="${QTDIR}/$(get_libdir)"
 
 	econf \
 		--disable-dependency-tracking \
 		--enable-maintainer-mode \
 		--disable-pinentry-gtk \
 		$(use_enable gtk pinentry-gtk2) \
-		$(use_enable qt4 pinentry-qt4) \
+		--disable-pinentry-qt \
 		$(use_enable ncurses pinentry-curses) \
 		$(use_enable ncurses fallback-curses) \
+		$(use_enable qt4 pinentry-qt4) \
 		$(use_with caps libcap) \
-		${myconf}
+		--without-x
 }
 
 src_compile() {
-	# Generated meta-object files manually
-	if use qt4; then
-		moc qt4/pinentrydialog.h -o qt4/pinentrydialog.moc && \
-		moc qt4/qsecurelineedit.h -o qt4/qsecurelineedit.moc \
-		|| die "failed to regenerate .moc files"
-	fi
-
-	emake || die "emake failed"
+	emake AR="$(tc-getAR)"
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "make install failed"
-	dodoc AUTHORS ChangeLog NEWS README THANKS TODO || die "dodoc failed"
+	default
+	rm -f "${ED}"/usr/bin/pinentry || die
 }
 
 pkg_postinst() {
-	elog "We no longer install pinentry-curses and pinentry-qt SUID root by default."
-	elog "Linux kernels >=2.6.9 support memory locking for unprivileged processes."
-	elog "The soft resource limit for memory locking specifies the limit an"
-	elog "unprivileged process may lock into memory. You can also use POSIX"
-	elog "capabilities to allow pinentry to lock memory. To do so activate the caps"
-	elog "USE flag and add the CAP_IPC_LOCK capability to the permitted set of"
-	elog "your users."
+	if ! has_version 'app-crypt/pinentry' || has_version '<app-crypt/pinentry-0.7.3'; then
+		elog "We no longer install pinentry-curses and pinentry-qt SUID root by default."
+		elog "Linux kernels >=2.6.9 support memory locking for unprivileged processes."
+		elog "The soft resource limit for memory locking specifies the limit an"
+		elog "unprivileged process may lock into memory. You can also use POSIX"
+		elog "capabilities to allow pinentry to lock memory. To do so activate the caps"
+		elog "USE flag and add the CAP_IPC_LOCK capability to the permitted set of"
+		elog "your users."
+	fi
+	eselect pinentry update ifunset
+}
+
+pkg_postrm() {
+	eselect pinentry update ifunset
 }
