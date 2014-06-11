@@ -28,7 +28,4 @@ DEPEND="dev-qt/qtcore:4
 	x11-misc/compton"
 RDEPEND="${DEPEND}"
 
-src_unpack() {
-	default
-	S=${WORKDIR}
-}
+S=${WORKDIR}
