@@ -12,7 +12,7 @@ HOMEPAGE="http://qt-project.org/wiki/QtWayland"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 IUSE="egl qml wayland-compositor xcomposite"
