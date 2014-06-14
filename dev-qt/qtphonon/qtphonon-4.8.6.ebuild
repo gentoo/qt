@@ -21,8 +21,8 @@ DEPEND="
 	~dev-qt/qtgui-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
 	aqua? ( ~dev-qt/qtopengl-${PV}[aqua,debug=,qt3support=,${MULTILIB_USEDEP}] )
 	!aqua? (
-		media-libs/gstreamer:0.10
-		media-plugins/gst-plugins-meta:0.10
+		media-libs/gstreamer:0.10[${MULTILIB_USEDEP}]
+		media-plugins/gst-plugins-meta:0.10[${MULTILIB_USEDEP}]
 	)
 	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 	!kde-base/phonon-kde
