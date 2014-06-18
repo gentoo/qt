@@ -16,11 +16,7 @@ else
 	S=${WORKDIR}/${MY_P}
 fi
 
-PLOCALES="cs_CZ de_DE el_GR es_ES es_VE fa_IR fr_FR hu_HU id_ID it_IT ja_JP
-ka_GE nl_NL pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sr_BA sr_RS sv_SE uk_UA
-zh_CN zh_TW"
-
-inherit l10n multilib qt4-r2 ${VCS_ECLASS}
+inherit multilib qt4-r2 ${VCS_ECLASS}
 
 DESCRIPTION="Qt WebKit web browser"
 HOMEPAGE="http://www.qupzilla.com/"
@@ -58,13 +54,4 @@ src_configure() {
 	# export USE_WEBGL=$(use webgl && echo true || echo false)
 
 	eqmake4
-}
-
-src_install() {
-	qt4-r2_src_install
-	l10n_for_each_disabled_locale_do rm_loc
-}
-
-rm_loc() {
-	rm "${D}"/usr/share/${PN}/locale/${1}.qm || die
 }
