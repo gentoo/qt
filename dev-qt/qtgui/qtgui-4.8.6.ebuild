@@ -70,6 +70,7 @@ PDEPEND="
 PATCHES=(
 	"${FILESDIR}/${PN}-4.7.3-cups.patch" # bug 323257
 	"${FILESDIR}/${PN}-4.8.5-dont-crash-on-broken-GIF-images.patch" # bug 508984
+	"${FILESDIR}/${PN}-4.8.6-cleanlooks-floating-point-exception.patch" # bug 507124
 	"${FILESDIR}/${PN}-4.8.6-disable-gtk-theme-check.patch" # bug 491226
 )
 
