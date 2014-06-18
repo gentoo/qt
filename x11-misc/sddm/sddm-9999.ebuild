@@ -17,6 +17,7 @@ REQUIRED_USE="^^ ( qt4 qt5 )
 	?? ( upower systemd )"
 
 RDEPEND="sys-libs/pam
+	sys-auth/qauth[qt4?,qt5?]
 	x11-libs/libxcb[xkb(-)]
 	qt4? ( dev-qt/qtdeclarative:4
 		   dev-qt/qtdbus:4 )
