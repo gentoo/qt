@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 if [[ ${PV} == "9999" ]]; then
 	VCS_ECLASS=git-2
@@ -16,9 +16,7 @@ else
 	S=${WORKDIR}/${MY_P}
 fi
 
-PLOCALES="cs_CZ de_DE el_GR es_ES es_VE fa_IR fr_FR hu_HU id_ID it_IT ja_JP
-ka_GE nl_NL pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sr_BA sr_RS sv_SE uk_UA
-zh_CN zh_TW"
+PLOCALES="ar_SA bg_BG ca_ES cs_CZ de_DE el_GR es_ES es_MX es_VE eu_ES fa_IR fi_FI fr_FR gl_ES he_IL hu_HU id_ID it_IT ja_JP ka_GE lg lv_LV nl_NL nqo pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sr@ijekavianlatin sr@ijekavian sr@latin sr sv_SE tr_TR uk_UA uz@Latn zh_CN zh_TW"
 
 inherit l10n multilib qt4-r2 ${VCS_ECLASS}
 
@@ -38,11 +36,21 @@ DEPEND="
 	dbus? ( >=dev-qt/qtdbus-4.7:4 )"
 RDEPEND="${DEPEND}"
 
-DOCS="AUTHORS BUILDING CHANGELOG FAQ README.md"
+DOCS=( AUTHORS BUILDING CHANGELOG FAQ README.md )
 
 src_prepare() {
+	rm_loc() {
+		sed -i -e "/${1}.ts/d" translations/translations.pri || die
+		rm translations/${1}.ts || die
+	}
 	# remove outdated copies of localizations:
-	rm -rf bin/locale || die
+	rm -r bin/locale || die
+	# remove empty locale
+	rm translations/empty.ts || die
+
+	l10n_find_plocales_changes "translations" "" ".ts"
+	l10n_for_each_disabled_locale_do rm_loc
+	qt4-r2_src_prepare
 }
 
 src_configure() {
@@ -62,9 +70,4 @@ src_configure() {
 
 src_install() {
 	qt4-r2_src_install
-	l10n_for_each_disabled_locale_do rm_loc
-}
-
-rm_loc() {
-	rm "${D}"/usr/share/${PN}/locale/${1}.qm || die
 }
