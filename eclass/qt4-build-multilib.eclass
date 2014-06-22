@@ -470,12 +470,22 @@ qt4-build-multilib_pkg_postrm() {
 # @FUNCTION: qt_use
 # @USAGE: <flag> [feature] [enableval]
 # @DESCRIPTION:
-# This will echo "-${enableval}-${feature}" if <flag> is enabled, or
-# "-no-${feature}" if it's disabled. If [feature] is not specified,
-# <flag> will be used for that. If [enableval] is not specified, the
-# "-${enableval}" prefix is omitted.
+# Outputs "-${enableval}-${feature}" if <flag> is enabled, "-no-${feature}"
+# otherwise. If [feature] is not specified, <flag> is used in its place.
+# If [enableval] is not specified, the "-${enableval}" prefix is omitted.
 qt_use() {
 	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+}
+
+# @FUNCTION: qt_native_use
+# @USAGE: <flag> [feature] [enableval]
+# @DESCRIPTION:
+# Outputs "-${enableval}-${feature}" if <flag> is enabled and we are currently
+# building for the native ABI, "-no-${feature}" otherwise. If [feature] is not
+# specified, <flag> is used in its place. If [enableval] is not specified,
+# the "-${enableval}" prefix is omitted.
+qt_native_use() {
+	multilib_is_native_abi && use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
 }
 
 
