@@ -38,13 +38,13 @@ QT4_TARGET_DIRECTORIES="
 
 src_configure() {
 	myconf+="
-		$(qt_use firebird sql-ibase  plugin)
-		$(qt_use freetds  sql-tds    plugin)
-		$(qt_use mysql    sql-mysql  plugin) $(use mysql && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
-		$(qt_use oci8     sql-oci    plugin) $(use oci8 && echo "-I${ORACLE_HOME}/include -L${ORACLE_HOME}/$(get_libdir)")
-		$(qt_use odbc     sql-odbc   plugin) $(use odbc && echo "-I${EPREFIX}/usr/include/iodbc")
-		$(qt_use postgres sql-psql   plugin) $(use postgres && echo "-I${EPREFIX}/usr/include/postgresql/pgsql")
-		$(qt_use sqlite   sql-sqlite plugin) $(use sqlite && echo -system-sqlite)
+		$(qt_native_use firebird sql-ibase  plugin)
+		$(qt_native_use freetds  sql-tds    plugin)
+		$(qt_native_use mysql    sql-mysql  plugin) $(use mysql && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
+		$(qt_use        oci8     sql-oci    plugin) $(use oci8 && echo "-I${ORACLE_HOME}/include -L${ORACLE_HOME}/$(get_libdir)")
+		$(qt_use        odbc     sql-odbc   plugin) $(use odbc && echo "-I${EPREFIX}/usr/include/iodbc")
+		$(qt_native_use postgres sql-psql   plugin) $(use postgres && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/postgresql/pgsql")
+		$(qt_use        sqlite   sql-sqlite plugin) $(use sqlite && echo -system-sqlite)
 		-no-sql-db2
 		-no-sql-sqlite2
 		-no-sql-symsql
