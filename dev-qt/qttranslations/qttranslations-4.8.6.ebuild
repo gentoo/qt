@@ -23,7 +23,8 @@ RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="translations"
 
-src_configure() {
-	cd translations || die
-	"${QT4_BINDIR}"/qmake || die
+multilib_src_configure() {
+	qt4_prepare_env
+	qt4_symlink_tools_to_build_dir
+	qt4_foreach_target_subdir qt4_qmake
 }
