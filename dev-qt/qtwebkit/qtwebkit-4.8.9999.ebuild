@@ -35,7 +35,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.8.1-no-use-ld-gold.patch"
 	"${FILESDIR}/4.8.2-javascriptcore-x32.patch"
 )
 
