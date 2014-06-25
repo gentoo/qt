@@ -99,7 +99,7 @@ pkg_setup() {
 		$(use evdev	|| echo QT_NO_EVDEV)
 		$(use gles2	&& echo QT_OPENGL_ES QT_OPENGL_ES_2)
 		$(use jpeg	|| echo QT_NO_IMAGEFORMAT_JPEG)
-		$(use opengl	|| echo QT_NO_OPENGL)
+		$(use opengl	&& echo QT_OPENGL || echo QT_NO_OPENGL)
 		$(use png	|| echo QT_NO_IMAGEFORMAT_PNG)
 	)
 
