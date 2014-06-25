@@ -24,6 +24,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/0001-Remove-dependency-on-unused-sql-module.patch"
+)
+
 src_prepare() {
 	qt_use_disable_mod qml quick src/src.pro
 
