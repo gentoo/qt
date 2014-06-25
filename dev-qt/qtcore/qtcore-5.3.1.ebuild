@@ -35,17 +35,6 @@ QT5_TARGET_SUBDIRS=(
 )
 QCONFIG_DEFINE=( QT_ZLIB )
 
-PATCHES=(
-	# bug 451456
-	"${FILESDIR}/0001-fix-default-QMAKE_PKGCONFIG_LIBDIR.patch"
-	"${FILESDIR}/0002-enable-path-replacement-in-installed-qml-plugin-prl-.patch"
-	"${FILESDIR}/0003-properly-replace-windows-paths-in-installed-qml-plug.patch"
-	"${FILESDIR}/0004-don-t-attempt-to-replace-include-paths-in-meta-files.patch"
-	"${FILESDIR}/0005-reshuffle-code-for-clarity.patch"
-	"${FILESDIR}/0006-de-duplicate-setup-of-libdir-replacement-in-prl-file.patch"
-	"${FILESDIR}/0007-snuff-L-I-with-system-paths-when-installing-meta-fil.patch"
-)
-
 pkg_setup() {
 	QCONFIG_REMOVE=(
 		$(usev !glib)
