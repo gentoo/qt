@@ -14,9 +14,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# FIXME: qdeclarativeview designer plugin is automagic
-
-IUSE="+opengl webkit +xml"
+IUSE="designer +opengl webkit +xml"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
@@ -25,6 +23,10 @@ DEPEND="
 	>=dev-qt/qtscript-${PV}:5[debug=]
 	>=dev-qt/qtsql-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
+	designer? (
+		>=dev-qt/designer-${PV}:5[debug=]
+		>=dev-qt/qtdeclarative-${PV}:5[debug=]
+	)
 	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
 	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=,widgets] )
 	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5[debug=] )
@@ -32,6 +34,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	qt_use_disable_mod designer designer \
+		src/plugins/plugins.pro
+
 	qt_use_disable_mod opengl opengl \
 		src/imports/imports.pro \
 		tools/qml/qml.pri
