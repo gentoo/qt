@@ -17,7 +17,9 @@ fi
 IUSE="designer +opengl webkit +xml"
 
 DEPEND="
+	>=dev-qt/designer-${PV}:5[debug=]
 	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtdeclarative-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
 	>=dev-qt/qtscript-${PV}:5[debug=]
