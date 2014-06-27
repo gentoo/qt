@@ -24,6 +24,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-5.3.1-prefer-qpa.patch" )
+
 QT5_TARGET_SUBDIRS=(
 	src/tools/uic
 	src/widgets
