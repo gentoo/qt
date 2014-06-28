@@ -407,9 +407,6 @@ qt4-build-multilib_src_test() {
 }
 
 multilib_src_test() {
-	# QtMultimedia does not have any test suite (bug #332299)
-	[[ ${PN} == qtmultimedia ]] && return
-
 	qt4_prepare_env
 
 	qt4_foreach_target_subdir emake -j1 check
