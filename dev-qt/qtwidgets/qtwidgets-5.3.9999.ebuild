@@ -24,6 +24,11 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	# http://blog.martin-graesslin.com/blog/2014/06/where-are-my-systray-icons/
+	"${FILESDIR}/${PN}-5.3.1-prefer-qpa.patch"
+)
+
 QT5_TARGET_SUBDIRS=(
 	src/tools/uic
 	src/widgets
