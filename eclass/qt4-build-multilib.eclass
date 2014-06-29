@@ -415,7 +415,7 @@ multilib_src_test() {
 # @FUNCTION: qt4-build-multilib_src_install
 # @DESCRIPTION:
 # Performs the actual installation, running 'emake install'
-# inside all QT4_TARGET_DIRECTORIES, and installing qconfigs.
+# in all QT4_TARGET_DIRECTORIES, and installing qconfigs.
 qt4-build-multilib_src_install() {
 	multilib-minimal_src_install
 }
@@ -430,6 +430,19 @@ multilib_src_install() {
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
 	fi
 
+	install_qconfigs
+	fix_library_files
+	fix_includes
+}
+
+multilib_src_install_all() {
+	qt4-build-multilib_src_install_all
+}
+
+# @FUNCTION: qt4-build-multilib_src_install_all
+# @DESCRIPTION:
+# Common install phase for all multilib ABIs.
+qt4-build-multilib_src_install_all() {
 	# install private headers of a few modules
 	if has ${PN} qtcore qtdeclarative qtgui qtscript; then
 		local moduledir=${PN#qt}
@@ -440,10 +453,6 @@ multilib_src_install() {
 		insinto "${QT4_HEADERDIR#${EPREFIX}}"/${modulename}/private
 		find "${S}"/src/${moduledir} -type f -name '*_p.h' -exec doins '{}' + || die
 	fi
-
-	install_qconfigs
-	fix_library_files
-	fix_includes
 
 	# remove .la files since we are building only shared libraries
 	prune_libtool_files
