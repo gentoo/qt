@@ -31,5 +31,5 @@ RDEPEND="${DEPEND}"
 
 src_install(){
 	cmake-utils_src_install
-	doman man/*.1 lxqt-config-cursor/man/*.1 lxqt-config-appearance/man/*.1
+	doman man/*.1 liblxqt-config-cursor/man/*.1 lxqt-config-appearance/man/*.1
 }
