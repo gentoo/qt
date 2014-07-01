@@ -14,15 +14,14 @@ else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
 
-IUSE="firebird freetds mysql oci8 odbc postgres qt3support +sqlite"
+IUSE="freetds mysql oci8 odbc postgres qt3support +sqlite"
 
 REQUIRED_USE="
-	|| ( firebird freetds mysql oci8 odbc postgres sqlite )
+	|| ( freetds mysql oci8 odbc postgres sqlite )
 "
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
-	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
 	oci8? ( dev-db/oracle-instantclient-basic[${MULTILIB_USEDEP}] )
@@ -38,7 +37,6 @@ QT4_TARGET_DIRECTORIES="
 
 src_configure() {
 	myconf+="
-		$(qt_native_use firebird sql-ibase  plugin)
 		$(qt_native_use freetds  sql-tds    plugin)
 		$(qt_native_use mysql    sql-mysql  plugin) $(use mysql && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
 		$(qt_use        oci8     sql-oci    plugin) $(use oci8 && echo "-I${ORACLE_HOME}/include -L${ORACLE_HOME}/$(get_libdir)")
@@ -46,6 +44,7 @@ src_configure() {
 		$(qt_native_use postgres sql-psql   plugin) $(use postgres && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/postgresql/pgsql")
 		$(qt_use        sqlite   sql-sqlite plugin) $(use sqlite && echo -system-sqlite)
 		-no-sql-db2
+		-no-sql-ibase
 		-no-sql-sqlite2
 		-no-sql-symsql
 		$(qt_use qt3support)

@@ -16,15 +16,14 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="firebird freetds mysql oci8 odbc postgres +sqlite"
+IUSE="freetds mysql oci8 odbc postgres +sqlite"
 
 REQUIRED_USE="
-	|| ( firebird freetds mysql oci8 odbc postgres sqlite )
+	|| ( freetds mysql oci8 odbc postgres sqlite )
 "
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	firebird? ( dev-db/firebird )
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/mysql )
 	oci8? ( dev-db/oracle-instantclient-basic )
@@ -41,7 +40,6 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
-		$(qt_use firebird sql-ibase  plugin)
 		$(qt_use freetds  sql-tds    plugin)
 		$(qt_use mysql    sql-mysql  plugin)
 		$(qt_use oci8     sql-oci    plugin)
