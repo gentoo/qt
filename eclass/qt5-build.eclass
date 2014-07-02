@@ -307,6 +307,9 @@ qt5-build_src_install() {
 		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
 			|| die "sed failed (qconfig.h)"
+
+		mv -f "${D}${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/qconfig.pri \
+			"${D}${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/qconfig.pri.orig
 	fi
 
 	qt5_install_module_qconfigs
@@ -585,10 +588,17 @@ qt5_regenerate_global_qconfigs() {
 
 	einfo "Updating QT_CONFIG in qconfig.pri"
 
+	local qconfig_pri_orig=${ROOT%/}${QT5_ARCHDATADIR}/mkspecs/qconfig.pri.orig
 	local qconfig_pri=${ROOT%/}${QT5_ARCHDATADIR}/mkspecs/qconfig.pri
-	if [[ -f ${qconfig_pri} ]]; then
+
+	if [[ ! -f ${qconfig_pri_orig} ]] && [[ -f ${qconfig_pri} ]]; then
+		# Support old installations where qtcore installed mkspecs/qconfig.pri
+		cp -p ${qconfig_pri} ${qconfig_pri_orig}
+		ewarn "${qconfig_pri_orig} did not exist, using ${qconfig_pri} as fallback. Consider re-emerge-ing dev-qt/qtcore."
+	fi
+	if [[ -f ${qconfig_pri_orig} ]]; then
 		local x qconfig_add= qconfig_remove=
-		local qt_config=$(sed -n 's/^QT_CONFIG\s*+=\s*//p' "${qconfig_pri}")
+		local qt_config=$(sed -n 's/^QT_CONFIG\s*+=\s*//p' "${qconfig_pri_orig}")
 		local new_qt_config=
 
 		# generate list of QT_CONFIG entries from the existing list,
@@ -606,9 +616,10 @@ qt5_regenerate_global_qconfigs() {
 		done
 
 		# now replace the existing QT_CONFIG with the generated list
+		cp -p ${qconfig_pri_orig} ${qconfig_pri}
 		sed -i -e "s/^QT_CONFIG\s*+=.*/QT_CONFIG +=${new_qt_config}/" \
 			"${qconfig_pri}" || eerror "Failed to sed QT_CONFIG in ${qconfig_pri}"
 	else
-		ewarn "${qconfig_pri} does not exist or is not a regular file"
+		ewarn "${qconfig_pri_orig} does not exist or is not a regular file"
 	fi
 }
