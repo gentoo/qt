@@ -7,6 +7,7 @@ EAPI=5
 inherit eutils qt4-build-multilib
 
 DESCRIPTION="The GUI module for the Qt toolkit"
+SRC_URI+=" http://dev.gentoo.org/~pesa/patches/${PN}-systemtrayicon-plugin-system.patch"
 
 if [[ ${QT4_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
@@ -68,10 +69,12 @@ PDEPEND="
 "
 
 PATCHES=(
+	"${DISTDIR}/${PN}-systemtrayicon-plugin-system.patch" # bug 503880
 	"${FILESDIR}/${PN}-4.7.3-cups.patch" # bug 323257
+	"${FILESDIR}/${PN}-4.8.5-cleanlooks-floating-point-exception.patch" # bug 507124
+	"${FILESDIR}/${PN}-4.8.5-disable-gtk-theme-check.patch" # bug 491226
 	"${FILESDIR}/${PN}-4.8.5-dont-crash-on-broken-GIF-images.patch" # bug 508984
-	"${FILESDIR}/${PN}-4.8.6-cleanlooks-floating-point-exception.patch" # bug 507124
-	"${FILESDIR}/${PN}-4.8.6-disable-gtk-theme-check.patch" # bug 491226
+	"${FILESDIR}/${PN}-4.8.5-qclipboard-delay.patch" # bug 514968
 )
 
 QT4_TARGET_DIRECTORIES="
