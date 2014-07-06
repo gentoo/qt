@@ -17,14 +17,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
 RDEPEND="
-	>=dev-db/sqlite-3.7.17
+	>=dev-db/sqlite-3.8.5
 	|| ( media-video/mplayer media-video/mplayer2 )
 	>=dev-qt/qtcore-4.8:4
 	>=dev-qt/qtgui-4.8:4
 	>=dev-qt/qtsql-4.8:4[sqlite]
 "
 DEPEND="${RDEPEND}
-	>=sys-devel/gcc-4.4.7
+	>=sys-devel/gcc-4.7.4
 	virtual/pkgconfig
 "
 
@@ -32,8 +32,8 @@ pkg_setup() {
 	if [[ ${MERGE_TYPE} != "binary" ]]; then
 		local major=$(gcc-major-version)
 		local minor=$(gcc-minor-version)
-		if (( major < 4 || ( major == 4 && minor < 4 ) )); then
-			die "gcc 4.4.7 or newer is required"
+		if (( major < 4 || ( major == 4 && minor < 7 ) )); then
+			die "gcc 4.7.4 or newer is required"
 		fi
 	fi
 }
