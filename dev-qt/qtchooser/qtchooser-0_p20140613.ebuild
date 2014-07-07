@@ -37,6 +37,8 @@ src_test() {
 src_install() {
 	qtchooser_make INSTALL_ROOT="${D}" install
 
+	keepdir /etc/xdg/qtchooser
+
 	# TODO: bash and zsh completion
 	# newbashcomp scripts/${PN}.bash ${PN}
 }
