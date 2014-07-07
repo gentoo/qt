@@ -6,30 +6,37 @@ EAPI=5
 
 inherit toolchain-funcs
 
-MY_P=${P}-g4717841
-
 DESCRIPTION="Qt4/Qt5 version chooser"
 HOMEPAGE="https://qt.gitorious.org/qt/qtchooser"
-SRC_URI="http://macieira.org/${PN}/${MY_P}.tar.gz"
+SRC_URI="http://dev.gentoo.org/~pesa/distfiles/${P}.tar.xz"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 DEPEND="test? ( dev-qt/qttest )"
 RDEPEND="!<dev-qt/qtcore-4.8.6:4"
 
-S=${WORKDIR}/${MY_P}
+qtchooser_make() {
+	emake \
+		CXX="$(tc-getCXX)" \
+		LFLAGS="${LDFLAGS}" \
+		prefix="${EPREFIX}/usr" \
+		"$@"
+}
 
 src_compile() {
-	emake CXX="$(tc-getCXX)" LFLAGS="${LDFLAGS}"
+	qtchooser_make
 }
 
 src_test() {
-	emake CXX="$(tc-getCXX)" LFLAGS="${LDFLAGS}" check
+	qtchooser_make check
 }
 
 src_install() {
-	emake INSTALL_ROOT="${D}" install
+	qtchooser_make INSTALL_ROOT="${D}" install
+
+	# TODO: bash and zsh completion
+	# newbashcomp scripts/${PN}.bash ${PN}
 }
