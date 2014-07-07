@@ -29,7 +29,9 @@ PDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/moc-boost-lexical-cast.patch"
+	"${FILESDIR}/${PN}-4.8.5-moc-boost-lexical-cast.patch"
+	"${FILESDIR}/${PN}-4.8.5-honor-ExcludeSocketNotifiers-in-glib-event-loop.patch" # bug 514968
+	"${FILESDIR}/${PN}-4.8.5-qeventdispatcher-recursive.patch" # bug 514968
 )
 
 QT4_TARGET_DIRECTORIES="
