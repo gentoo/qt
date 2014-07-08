@@ -95,10 +95,3 @@ multilib_src_configure() {
 	)
 	qt4_multilib_src_configure
 }
-
-multilib_src_install_all() {
-	qt4_multilib_src_install_all
-
-	insinto "${QT4_DOCDIR#${EPREFIX}}"/src
-	doins -r doc/src/images
-}
