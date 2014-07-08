@@ -63,13 +63,13 @@ src_prepare() {
 	qt4-build-multilib_src_prepare
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-webkit
 		-system-sqlite
 		$(qt_use icu)
 		$(qt_use jit javascript-jit)
-		$(use gstreamer || echo -DENABLE_VIDEO=0)"
-
-	qt4-build-multilib_src_configure
+		$(use gstreamer || echo -DENABLE_VIDEO=0)
+	)
+	qt4_multilib_src_configure
 }

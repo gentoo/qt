@@ -38,19 +38,19 @@ src_prepare() {
 	qt4-build-multilib_src_prepare
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-fontconfig -no-multimedia -no-opengl -no-phonon -no-svg -no-xmlpatterns
-		$(qt_use webkit)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use webkit)
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
 	doicon tools/assistant/tools/assistant/images/assistant.png
 	make_desktop_entry assistant Assistant assistant 'Qt;Development;Documentation'

@@ -23,14 +23,14 @@ RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="src/testlib"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-no-xkb -no-fontconfig -no-xrender -no-xrandr -no-xfixes -no-xcursor
 		-no-xinerama -no-xshape -no-sm -no-opengl
 		-no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff
-		-no-accessibility -no-fontconfig -no-glib -no-svg"
-
-	qt4-build-multilib_src_configure
+		-no-accessibility -no-fontconfig -no-glib -no-svg
+	)
+	qt4_multilib_src_configure
 }

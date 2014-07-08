@@ -68,8 +68,8 @@ src_prepare() {
 		configure || die "sed configure setBootstrapVariable failed"
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-no-accessibility -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon
 		-no-phonon-backend -no-svg -no-webkit -no-script -no-scripttools -no-declarative
 		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg
@@ -80,13 +80,13 @@ src_configure() {
 		$(qt_use iconv)
 		$(qt_use icu)
 		$(use ssl && echo -openssl-linked || echo -no-openssl)
-		$(qt_use qt3support)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use qt3support)
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
 	# List all the multilib libdirs
 	local libdirs=

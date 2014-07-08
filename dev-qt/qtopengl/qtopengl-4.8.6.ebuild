@@ -32,19 +32,18 @@ QT4_TARGET_DIRECTORIES="
 QCONFIG_ADD="opengl"
 QCONFIG_DEFINE="QT_OPENGL"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-opengl
 		$(qt_use qt3support)
-		$(qt_use egl)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use egl)
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
-	# touch the available graphics systems
 	dodir /usr/share/qt4/graphicssystems
 	echo "experimental" > "${ED}"/usr/share/qt4/graphicssystems/opengl || die
 }

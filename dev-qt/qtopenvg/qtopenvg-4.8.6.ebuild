@@ -30,18 +30,17 @@ QT4_TARGET_DIRECTORIES="
 QCONFIG_ADD="openvg"
 QCONFIG_DEFINE="QT_OPENVG"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-openvg -egl
-		$(qt_use qt3support)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use qt3support)
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install() {
+	qt4_multilib_src_install
 
-	# touch the available graphics systems
 	dodir /usr/share/qt4/graphicssystems
 	echo "experimental" > "${ED}"/usr/share/qt4/graphicssystems/openvg || die
 }

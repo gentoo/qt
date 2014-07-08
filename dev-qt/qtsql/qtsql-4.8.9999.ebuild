@@ -35,8 +35,8 @@ QT4_TARGET_DIRECTORIES="
 	src/sql
 	src/plugins/sqldrivers"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		$(qt_native_use freetds  sql-tds    plugin)
 		$(qt_native_use mysql    sql-mysql  plugin) $(use mysql && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
 		$(qt_use        oci8     sql-oci    plugin) $(use oci8 && echo "-I${ORACLE_HOME}/include -L${ORACLE_HOME}/$(get_libdir)")
@@ -54,7 +54,7 @@ src_configure() {
 		-no-cups -no-dbus -no-gtkstyle -no-nas-sound -no-opengl
 		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
 		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
-		-no-glib"
-
-	qt4-build-multilib_src_configure
+		-no-glib
+	)
+	qt4_multilib_src_configure
 }

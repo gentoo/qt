@@ -26,8 +26,8 @@ QT4_TARGET_DIRECTORIES="src/script"
 QCONFIG_ADD="script"
 QCONFIG_DEFINE="QT_SCRIPT"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		$(qt_use iconv)
 		$(qt_use jit javascript-jit)
 		-no-xkb -no-fontconfig -no-xrender -no-xrandr -no-xfixes -no-xcursor -no-xinerama
@@ -35,7 +35,7 @@ src_configure() {
 		-no-libpng -no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff
 		-no-accessibility -no-fontconfig -no-glib -no-opengl -no-svg
-		-no-gtkstyle"
-
-	qt4-build-multilib_src_configure
+		-no-gtkstyle
+	)
+	qt4_multilib_src_configure
 }

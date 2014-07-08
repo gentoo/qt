@@ -33,15 +33,15 @@ pkg_setup() {
 		$(use networkmanager && echo src/plugins/bearer/networkmanager)"
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		$(use connman || use networkmanager || echo -no-dbus)
 		-no-accessibility -no-xmlpatterns -no-multimedia -no-audio-backend -no-phonon
 		-no-phonon-backend -no-svg -no-webkit -no-script -no-scripttools -no-declarative
 		-system-zlib -no-gif -no-libtiff -no-libpng -no-libmng -no-libjpeg
 		-no-cups -no-gtkstyle -no-nas-sound -no-opengl
 		-no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes
-		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb"
-
-	qt4-build-multilib_src_configure
+		-no-xrandr -no-xrender -no-mitshm -no-fontconfig -no-freetype -no-xinput -no-xkb
+	)
+	qt4_multilib_src_configure
 }

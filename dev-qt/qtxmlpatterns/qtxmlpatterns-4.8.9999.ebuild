@@ -29,8 +29,9 @@ QT4_TARGET_DIRECTORIES="
 QCONFIG_ADD="xmlpatterns"
 QCONFIG_DEFINE="QT_XMLPATTERNS"
 
-src_configure() {
-	myconf+=" -xmlpatterns"
-
-	qt4-build-multilib_src_configure
+multilib_src_configure() {
+	local myconf=(
+		-xmlpatterns
+	)
+	qt4_multilib_src_configure
 }

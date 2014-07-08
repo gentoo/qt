@@ -39,16 +39,17 @@ QT4_TARGET_DIRECTORIES="
 QCONFIG_ADD="phonon"
 
 pkg_setup() {
-	QCONFIG_DEFINE="QT_PHONON
+	QCONFIG_DEFINE="
+		QT_PHONON
 		$(use aqua || echo QT_GSTREAMER)"
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-phonon -phonon-backend
 		-no-opengl -no-svg
 		$(qt_use dbus qdbus)
-		$(qt_use qt3support)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use qt3support)
+	)
+	qt4_multilib_src_configure
 }

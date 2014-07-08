@@ -54,7 +54,16 @@ RDEPEND="
 	dev-qt/qtchooser
 "
 
-EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install pkg_postinst pkg_postrm
+
+# src_{configure,compile,test,install} are inherited from multilib-minimal
+EXPORT_FUNCTIONS src_unpack src_prepare pkg_postinst pkg_postrm
+
+multilib_src_configure()	{ qt4_multilib_src_configure; }
+multilib_src_compile()		{ qt4_multilib_src_compile; }
+multilib_src_test()		{ qt4_multilib_src_test; }
+multilib_src_install()		{ qt4_multilib_src_install; }
+multilib_src_install_all()	{ qt4_multilib_src_install_all; }
+
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
@@ -257,14 +266,7 @@ qt4-build-multilib_src_prepare() {
 	epatch_user
 }
 
-# @FUNCTION: qt4-build-multilib_src_configure
-# @DESCRIPTION:
-# Runs configure and generates Makefiles for all QT4_TARGET_DIRECTORIES.
-qt4-build-multilib_src_configure() {
-	multilib-minimal_src_configure
-}
-
-multilib_src_configure() {
+qt4_multilib_src_configure() {
 	qt4_prepare_env
 
 	if [[ ${PN} != qtcore ]]; then
@@ -373,8 +375,10 @@ multilib_src_configure() {
 		fi
 	fi
 
-	# append module-specific arguments
-	conf+=(${myconf})
+	conf+=(
+		# module-specific options
+		"${myconf[@]}"
+	)
 
 	einfo "Configuring with: ${conf[@]}"
 	"${S}"/configure "${conf[@]}" || die "configure failed"
@@ -389,41 +393,19 @@ multilib_src_configure() {
 	qt4_foreach_target_subdir qt4_qmake
 }
 
-# @FUNCTION: qt4-build-multilib_src_compile
-# @DESCRIPTION:
-# Compiles the code in QT4_TARGET_DIRECTORIES.
-qt4-build-multilib_src_compile() {
-	multilib-minimal_src_compile
-}
-
-multilib_src_compile() {
+qt4_multilib_src_compile() {
 	qt4_prepare_env
 
 	qt4_foreach_target_subdir emake
 }
 
-# @FUNCTION: qt4-build-multilib_src_test
-# @DESCRIPTION:
-# Runs unit tests in all QT4_TARGET_DIRECTORIES.
-qt4-build-multilib_src_test() {
-	multilib-minimal_src_test
-}
-
-multilib_src_test() {
+qt4_multilib_src_test() {
 	qt4_prepare_env
 
 	qt4_foreach_target_subdir emake -j1 check
 }
 
-# @FUNCTION: qt4-build-multilib_src_install
-# @DESCRIPTION:
-# Performs the actual installation, running 'emake install'
-# in all QT4_TARGET_DIRECTORIES, and installing qconfigs.
-qt4-build-multilib_src_install() {
-	multilib-minimal_src_install
-}
-
-multilib_src_install() {
+qt4_multilib_src_install() {
 	qt4_prepare_env
 
 	qt4_foreach_target_subdir emake INSTALL_ROOT="${D}" install
@@ -438,14 +420,7 @@ multilib_src_install() {
 	fix_includes
 }
 
-multilib_src_install_all() {
-	qt4-build-multilib_src_install_all
-}
-
-# @FUNCTION: qt4-build-multilib_src_install_all
-# @DESCRIPTION:
-# Common install phase for all multilib ABIs.
-qt4-build-multilib_src_install_all() {
+qt4_multilib_src_install_all() {
 	# install private headers of a few modules
 	if has ${PN} qtcore qtdeclarative qtgui qtscript; then
 		local moduledir=${PN#qt}

@@ -44,11 +44,12 @@ pkg_setup() {
 		src/3rdparty/webkit/Source/WebKit/qt/declarative"
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-declarative -no-gtkstyle
 		$(qt_use accessibility)
 		$(qt_use qt3support)
-		$(qt_use webkit)"
-	qt4-build-multilib_src_configure
+		$(qt_use webkit)
+	)
+	qt4_multilib_src_configure
 }

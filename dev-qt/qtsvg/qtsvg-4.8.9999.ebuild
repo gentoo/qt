@@ -31,8 +31,8 @@ QT4_TARGET_DIRECTORIES="
 QCONFIG_ADD="svg"
 QCONFIG_DEFINE="QT_SVG"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-svg
 		$(qt_use accessibility)
 		-no-xkb  -no-xrender
@@ -40,7 +40,7 @@ src_configure() {
 		-no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif -no-libpng
 		-no-libmng -no-libjpeg -no-openssl -system-zlib -no-webkit -no-phonon
 		-no-qt3support -no-xmlpatterns -no-freetype -no-libtiff
-		-no-fontconfig -no-glib -no-gtkstyle"
-
-	qt4-build-multilib_src_configure
+		-no-fontconfig -no-glib -no-gtkstyle
+	)
+	qt4_multilib_src_configure
 }

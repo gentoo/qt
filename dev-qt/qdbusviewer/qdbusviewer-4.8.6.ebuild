@@ -25,18 +25,18 @@ RDEPEND="${DEPEND}"
 
 QT4_TARGET_DIRECTORIES="tools/qdbus/qdbusviewer"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
-		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl"
-
-	qt4-build-multilib_src_configure
+		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
 	newicon tools/qdbus/qdbusviewer/images/qdbusviewer-128.png qdbusviewer.png
 	make_desktop_entry qdbusviewer QDBusViewer qdbusviewer 'Qt;Development'

@@ -126,8 +126,8 @@ src_prepare() {
 	sed -i -e 's:|-xinerama|:&-xvideo|:' configure || die
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		$(qt_use accessibility)
 		$(qt_use cups)
 		$(qt_use glib)
@@ -143,18 +143,15 @@ src_configure() {
 		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
-		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl"
-
-	# bug 367045
-	[[ ${CHOST} == *86*-apple-darwin* ]] && myconf+=" -no-ssse3"
-
-	qt4-build-multilib_src_configure
+		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl
+		$([[ ${CHOST} == *86*-apple-darwin* ]] && echo -no-ssse3) # bug 367045
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
-	# touch the available graphics systems
 	dodir /usr/share/qt4/graphicssystems
 	echo "default" > "${ED}"/usr/share/qt4/graphicssystems/raster || die
 	echo "" > "${ED}"/usr/share/qt4/graphicssystems/native || die

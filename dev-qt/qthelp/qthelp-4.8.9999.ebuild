@@ -69,23 +69,23 @@ src_prepare() {
 	sed -i -e '/^sub-qdoc3\.depends/d' doc/doc.pri || die
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-system-libpng -system-libjpeg -system-zlib
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-no-multimedia -no-opengl -no-phonon -no-qt3support -no-svg -no-webkit -no-xmlpatterns
-		-no-nas-sound -no-cups -no-nis -fontconfig"
-
-	qt4-build-multilib_src_configure
+		-no-nas-sound -no-cups -no-nis -fontconfig
+	)
+	qt4_multilib_src_configure
 }
 
-src_compile() {
-	qt4-build-multilib_src_compile
+multilib_src_compile() {
+	qt4_multilib_src_compile
 
 	# qhelpgenerator needs libQtHelp.so.4
-	export LD_LIBRARY_PATH=${S}/lib
-	export DYLD_LIBRARY_PATH=${S}/lib:${S}/lib/QtHelp.framework
+	export LD_LIBRARY_PATH=${BUILD_DIR}/lib
+	export DYLD_LIBRARY_PATH=${BUILD_DIR}/lib:${BUILD_DIR}/lib/QtHelp.framework
 
 	if use doc; then
 		emake docs
@@ -95,8 +95,8 @@ src_compile() {
 	fi
 }
 
-src_install() {
-	qt4-build-multilib_src_install
+multilib_src_install() {
+	qt4_multilib_src_install
 
 	emake INSTALL_ROOT="${D}" install_qchdocs
 

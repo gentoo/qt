@@ -82,8 +82,8 @@ src_prepare() {
 		examples/graphicsview/graphicsview.pro || die
 }
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		$(qt_use dbus)
 		$(qt_use declarative)
 		$(qt_use multimedia) -no-audio-backend
@@ -91,14 +91,14 @@ src_configure() {
 		$(qt_use openvg)
 		$(qt_use phonon) -no-phonon-backend
 		$(qt_use webkit)
-		$(qt_use xmlpatterns)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use xmlpatterns)
+	)
+	qt4_multilib_src_configure
 }
 
-src_install() {
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
+
 	insinto "${QT4_DOCDIR#${EPREFIX}}"/src
 	doins -r doc/src/images
-
-	qt4-build-multilib_src_install
 }

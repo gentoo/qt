@@ -28,10 +28,10 @@ QT4_TARGET_DIRECTORIES="
 	src/tools/uic3
 	tools/porting"
 
-src_configure() {
-	myconf+="
+multilib_src_configure() {
+	local myconf=(
 		-qt3support
-		$(qt_use accessibility)"
-
-	qt4-build-multilib_src_configure
+		$(qt_use accessibility)
+	)
+	qt4_multilib_src_configure
 }

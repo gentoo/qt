@@ -36,8 +36,9 @@ QT4_TARGET_DIRECTORIES="
 QCONFIG_ADD="dbus dbus-linked"
 QCONFIG_DEFINE="QT_DBUS"
 
-src_configure() {
-	myconf+=" -dbus-linked"
-
-	qt4-build-multilib_src_configure
+multilib_src_configure() {
+	local myconf=(
+		-dbus-linked
+	)
+	qt4_multilib_src_configure
 }
