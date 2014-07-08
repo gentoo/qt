@@ -50,9 +50,6 @@ DEPEND="
 	dev-lang/perl
 	virtual/pkgconfig[${MULTILIB_USEDEP}]
 "
-RDEPEND="
-	dev-qt/qtchooser
-"
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_test src_install pkg_postinst pkg_postrm
 
