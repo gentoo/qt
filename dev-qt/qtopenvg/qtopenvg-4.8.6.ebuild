@@ -38,8 +38,8 @@ multilib_src_configure() {
 	qt4_multilib_src_configure
 }
 
-multilib_src_install() {
-	qt4_multilib_src_install
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
 	dodir /usr/share/qt4/graphicssystems
 	echo "experimental" > "${ED}"/usr/share/qt4/graphicssystems/openvg || die
