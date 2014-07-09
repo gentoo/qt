@@ -9,5 +9,4 @@ dev-qt/qtnetwork:5
 dev-qt/qtquickcontrols:5
 dev-qt/qtsql:5
 dev-qt/qttest:5
-dev-qt/qtwebkit:5
 dev-qt/qtwidgets:5
