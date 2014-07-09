@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit qt5-build
 
-DESCRIPTION="QDoc is a tool used by Qt to generate software documentation"
+DESCRIPTION="Qt documentation generator"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
