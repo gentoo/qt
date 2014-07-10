@@ -50,23 +50,8 @@ multilib_src_configure() {
 	qt4_multilib_src_configure
 }
 
-multilib_src_install() {
-	qt4_multilib_src_install
-
-	# qt-creator
-	# some qt-creator headers are located
-	# under /usr/include/qt4/QtDesigner/private.
-	# those headers are just includes of the headers
-	# which are located under tools/designer/src/lib/*
-	# So instead of installing both, we create the private folder
-	# and drop tools/designer/src/lib/* headers in it.
-	if use aqua && [[ ${CHOST##*-darwin} -ge 9 ]]; then
-		insinto "${QT4_LIBDIR#${EPREFIX}}"/QtDesigner.framework/Headers/private/
-	else
-		insinto "${QT4_HEADERDIR#${EPREFIX}}"/QtDesigner/private/
-	fi
-	doins "${S}"/tools/designer/src/lib/shared/*
-	doins "${S}"/tools/designer/src/lib/sdk/*
+multilib_src_install_all() {
+	qt4_multilib_src_install_all
 
 	doicon tools/designer/src/designer/images/designer.png
 	make_desktop_entry designer Designer designer 'Qt;Development;GUIDesigner'
