@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 
 inherit python-any-r1 qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="WebKit rendering library for the Qt5 toolkit"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

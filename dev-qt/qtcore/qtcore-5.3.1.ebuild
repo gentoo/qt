@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="Cross-platform application development framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

@@ -8,7 +8,7 @@ QT5_MODULE="qttools"
 
 inherit qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="Extra tools for working with Qt help files"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit multilib qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="SQL abstraction library for the Qt5 tooolkit"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build virtualx
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="Set of QML types for adding visual effects to user interfaces"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
