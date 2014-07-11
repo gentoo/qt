@@ -496,13 +496,14 @@ qt5_base_configure() {
 		# don't strip
 		-no-strip
 
-		# precompiled headers aren't really useful for us
+		# precompiled headers are not that useful for us
 		# and cause problems on hardened, so turn them off
 		-no-pch
 
-		# reduce relocations in libraries through extra linker optimizations
-		# requires GNU ld >= 2.18
-		-reduce-relocations
+		# reduced relocations cause major breakage on at least arm and ppc, so we
+		# don't specify anything and let configure figure out if they are supported,
+		# see also https://bugreports.qt-project.org/browse/QTBUG-36129
+		#-reduce-relocations
 
 		# disable all SQL drivers by default, override in qtsql
 		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
