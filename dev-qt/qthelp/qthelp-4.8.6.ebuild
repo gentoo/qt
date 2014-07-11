@@ -83,32 +83,28 @@ multilib_src_configure() {
 multilib_src_compile() {
 	qt4_multilib_src_compile
 
-	# qhelpgenerator needs libQtHelp.so.4
-	export LD_LIBRARY_PATH=${BUILD_DIR}/lib
-	export DYLD_LIBRARY_PATH=${BUILD_DIR}/lib:${BUILD_DIR}/lib/QtHelp.framework
-
-	if use doc; then
+	# release tarballs are shipped with prebuilt docs
+	if [[ ${QT4_BUILD_TYPE} == live ]] && multilib_is_native_abi; then
+		# qhelpgenerator needs libQtHelp.so.4
+		export LD_LIBRARY_PATH=${BUILD_DIR}/lib
+		export DYLD_LIBRARY_PATH=${BUILD_DIR}/lib:${BUILD_DIR}/lib/QtHelp.framework
 		emake docs
-	elif [[ ${QT4_BUILD_TYPE} == release ]]; then
-		# live ebuild cannot build qch_docs, it will build them through emake docs
-		emake qch_docs
 	fi
 }
 
 multilib_src_install() {
 	qt4_multilib_src_install
 
-	emake INSTALL_ROOT="${D}" install_qchdocs
-
-	# do not compress .qch files
-	docompress -x "${QT4_DOCDIR}"/qch
-
-	if use doc; then
-		emake INSTALL_ROOT="${D}" install_htmldocs
-	fi
-
 	if use compat; then
 		insinto "${QT4_DATADIR#${EPREFIX}}"/mkspecs/features
 		doins tools/assistant/compat/features/assistant.prf
+	fi
+
+	if multilib_is_native_abi; then
+		emake INSTALL_ROOT="${D}" install_qchdocs
+		use doc && emake INSTALL_ROOT="${D}" install_htmldocs
+
+		# do not compress .qch files
+		docompress -x "${QT4_DOCDIR}"/qch
 	fi
 }
