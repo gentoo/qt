@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit qt5-build
 
-DESCRIPTION="Network abstraction library for the Qt5 toolkit"
+DESCRIPTION="Network abstraction library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

@@ -9,7 +9,7 @@ VIRTUALX_REQUIRED="test"
 
 inherit qt5-build
 
-DESCRIPTION="OpenGL and 3D rendering library for the Qt5 toolkit"
+DESCRIPTION="OpenGL and 3D rendering library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

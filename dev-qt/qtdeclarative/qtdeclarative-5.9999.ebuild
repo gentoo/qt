@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build
 
-DESCRIPTION="Declarative framework for building dynamic user interfaces"
+DESCRIPTION="The QML and Quick modules for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

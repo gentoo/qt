@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit qt5-build
 
-DESCRIPTION="The GUI module and platform plugins for the Qt5 toolkit"
+DESCRIPTION="The GUI module and platform plugins for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

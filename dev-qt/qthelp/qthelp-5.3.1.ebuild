@@ -8,7 +8,7 @@ QT5_MODULE="qttools"
 
 inherit qt5-build
 
-DESCRIPTION="The Help module for the Qt5 toolkit"
+DESCRIPTION="The Help module for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

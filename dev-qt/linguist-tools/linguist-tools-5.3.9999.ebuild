@@ -8,7 +8,7 @@ QT5_MODULE="qttools"
 
 inherit qt5-build
 
-DESCRIPTION="Extra tools for working with Qt translation data files"
+DESCRIPTION="Tools for working with Qt translation data files"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

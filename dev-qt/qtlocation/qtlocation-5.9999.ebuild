@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build
 
-DESCRIPTION="Physical position determination library for the Qt5 toolkit"
+DESCRIPTION="Physical position determination library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

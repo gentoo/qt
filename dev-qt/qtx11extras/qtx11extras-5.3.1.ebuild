@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build
 
-DESCRIPTION="Linux/X11-specific support library for the Qt5 toolkit"
+DESCRIPTION="Linux/X11-specific support library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

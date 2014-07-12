@@ -8,7 +8,7 @@ QT5_MODULE="qtbase"
 
 inherit qt5-build
 
-DESCRIPTION="SAX and DOM implementation library for the Qt5 toolkit"
+DESCRIPTION="SAX and DOM implementation library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

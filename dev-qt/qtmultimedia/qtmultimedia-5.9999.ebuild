@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build
 
-DESCRIPTION="The Qt toolkit is a comprehensive C++ application development framework"
+DESCRIPTION="The Qt framework is a comprehensive C++ application development framework"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
