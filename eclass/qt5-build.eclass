@@ -151,9 +151,9 @@ qt5-build_pkg_setup() {
 # @DESCRIPTION:
 # Unpacks the sources.
 qt5-build_src_unpack() {
-	if [[ $(gcc-major-version) -lt 4 ]] || [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 4 ]]; then
+	if [[ $(gcc-major-version) -lt 4 ]] || [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 5 ]]; then
 		ewarn
-		ewarn "Using a GCC version lower than 4.4 is not supported."
+		ewarn "Using a GCC version lower than 4.5 is not supported."
 		ewarn
 	fi
 
