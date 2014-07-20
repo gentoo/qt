@@ -6,6 +6,7 @@
 		<flag name="exceptions">Add support for exceptions - like catching them
 			inside the event loop (recommended by Nokia)</flag>
 		<flag name="qml">Build QML/QtQuick bindings</flag>
+		<flag name="widgets">Provides additional multimedia-related widgets and controls. </flag>
 	</use>
 	<upstream>
 		<bugs-to>https://bugreports.qt-project.org/</bugs-to>

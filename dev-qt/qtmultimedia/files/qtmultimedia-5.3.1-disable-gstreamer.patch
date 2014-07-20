@@ -1,0 +1,14 @@
+--- qtmultimedia.pro	2014-07-20 06:39:43.664220316 +0100
++++ qtmultimedia.pro	2014-07-20 06:39:49.774323347 +0100
+@@ -21,11 +21,6 @@
+ } else {
+     qtCompileTest(alsa)
+     qtCompileTest(pulseaudio)
+-    qtCompileTest(gstreamer) {
+-        qtCompileTest(gstreamer_photography)
+-        qtCompileTest(gstreamer_encodingprofiles)
+-        qtCompileTest(gstreamer_appsrc)
+-    }
+     qtCompileTest(resourcepolicy)
+     qtCompileTest(gpu_vivante)
+ }
