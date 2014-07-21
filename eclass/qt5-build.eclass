@@ -107,11 +107,6 @@ case ${QT5_BUILD_TYPE} in
 	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
 esac
 
-# @ECLASS-VARIABLE: QT5_VERBOSE_BUILD
-# @DESCRIPTION:
-# Set to false to reduce build output during compilation.
-: ${QT5_VERBOSE_BUILD:=true}
-
 # @ECLASS-VARIABLE: QCONFIG_ADD
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -467,31 +462,70 @@ qt5_base_configure() {
 		# licensing stuff
 		-opensource -confirm-license
 
+		# let configure automatically figure out if C++11 is supported
+		#-c++11
+
 		# build shared libraries
 		-shared
 
-		# disabling accessibility support is not recommended by upstream,
-		# as it will break QStyle and may break other internal parts of Qt
+		# generate only a top-level Makefile
+		-process
+
+		# always enable large file support
+		-largefile
+
+		# disabling accessibility is not recommended by upstream, as
+		# it will break QStyle and may break other internal parts of Qt
 		-accessibility
+
+		# disable all SQL drivers by default, override in qtsql
+		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
+		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
+
+		# obsolete flag, does nothing
+		#-qml-debug
 
 		# use pkg-config to detect include and library paths
 		-pkg-config
 
-		# prefer system libraries
+		# prefer system libraries (only common deps here)
 		-system-zlib
 		-system-pcre
-		-system-xcb
-		-system-xkbcommon
+
+		# don't specify -no-gif because there is no way to override it later
+		#-no-gif
+
+		# disable everything to prevent automagic deps (part 1)
+		-no-mtdev -no-journald -no-libpng -no-libjpeg
+		-no-freetype -no-harfbuzz -no-openssl -no-xinput2
+		-no-xcb-xlib -no-glib -no-pulseaudio -no-alsa
+
+		# disable gtkstyle because it adds qt4 include paths to the compiler
+		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
+		-no-gtkstyle
 
 		# exclude examples and tests from default build
 		-nomake examples
 		-nomake tests
+		-no-compile-examples
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
 		$(use prefix || echo -no-rpath)
 
-		# verbosity of the configure and build phases
-		-verbose $(${QT5_VERBOSE_BUILD} || echo -silent)
+		# print verbose information about each configure test
+		-verbose
+
+		# doesn't actually matter since we override CXXFLAGS
+		#-no-optimized-qmake
+
+		# obsolete flag, does nothing
+		#-nis
+
+		# always enable iconv support
+		-iconv
+
+		# disable everything to prevent automagic deps (part 2)
+		-no-cups -no-evdev -no-icu -no-fontconfig -no-dbus
 
 		# don't strip
 		-no-strip
@@ -505,16 +539,26 @@ qt5_base_configure() {
 		# see also https://bugreports.qt-project.org/browse/QTBUG-36129
 		#-reduce-relocations
 
-		# disable all SQL drivers by default, override in qtsql
-		-no-sql-db2 -no-sql-ibase -no-sql-mysql -no-sql-oci -no-sql-odbc
-		-no-sql-psql -no-sql-sqlite -no-sql-sqlite2 -no-sql-tds
-
 		# disable all platform plugins by default, override in qtgui
-		-no-xcb -no-xrender -no-eglfs -no-directfb -no-linuxfb -no-kms
+		-no-xcb -no-eglfs -no-directfb -no-linuxfb -no-kms
 
-		# disable gtkstyle because it adds qt4 include paths to the compiler
-		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
-		-no-gtkstyle
+		# disable undocumented X11-related flags, override in qtgui
+		# (not shown in ./configure -help output)
+		-no-sm -no-xkb -no-xrender
+
+		# disable obsolete/unused X11-related flags
+		# (not shown in ./configure -help output)
+		-no-mitshm -no-xcursor -no-xfixes -no-xinerama -no-xinput
+		-no-xrandr -no-xshape -no-xsync -no-xvideo
+
+		# typedef qreal to double (warning: changing this flag breaks the ABI)
+		-qreal double
+
+		# disable opengl and egl by default, override in qtgui and qtopengl
+		-no-opengl -no-egl
+
+		# use upstream default
+		#-no-system-proxies
 
 		# do not build with -Werror
 		-no-warnings-are-errors
