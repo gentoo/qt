@@ -33,21 +33,14 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/rcc
 	src/corelib
 )
-QCONFIG_DEFINE=( QT_ZLIB )
 
-pkg_setup() {
-	QCONFIG_REMOVE=(
-		$(usev !glib)
-		$(usev !icu)
-	)
-
-	qt5-build_pkg_setup
-}
+QT5_GENTOO_CONFIG=(
+	::ZLIB
+)
 
 src_configure() {
 	local myconf=(
 		$(qt_use glib)
-		-iconv
 		$(qt_use icu)
 	)
 	qt5-build_src_configure

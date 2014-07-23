@@ -33,53 +33,15 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/rcc
 	src/corelib
 )
-QCONFIG_DEFINE=( QT_ZLIB )
 
-pkg_setup() {
-	QCONFIG_REMOVE=(
-		$(usev !glib)
-		$(usev !icu)
-	)
-
-	qt5-build_pkg_setup
-}
+QT5_GENTOO_CONFIG=(
+	::ZLIB
+)
 
 src_configure() {
 	local myconf=(
 		$(qt_use glib)
-		-iconv
 		$(qt_use icu)
 	)
 	qt5-build_src_configure
 }
-
-# Test dependencies
-#
-# kernel/qobject/test/test.pro: network
-# kernel/qpointer/qpointer.pro: widgets (opt)
-# kernel/qmetaproperty/qmetaproperty.pro: gui
-# kernel/qeventloop/qeventloop.pro: network
-# kernel/qsocketnotifier/qsocketnotifier.pro: network
-# kernel/qsignalmapper/qsignalmapper.pro: gui?
-# kernel/qmetaobject/qmetaobject.pro: gui
-# kernel/qmetaobjectbuilder/qmetaobjectbuilder.pro: gui
-# kernel/qmimedata/qmimedata.pro: gui?
-# codecs/qtextcodec/test/test.pro: gui?
-# xml/qxmlstream/qxmlstream.pro: xml network
-# itemmodels/qabstractitemmodel/qabstractitemmodel.pro: gui?
-# itemmodels/qitemselectionmodel/qitemselectionmodel.pro: widgets
-# itemmodels/qabstractproxymodel/qabstractproxymodel.pro: gui?
-# itemmodels/qsortfilterproxymodel/qsortfilterproxymodel.pro: gui widgets
-# itemmodels/qidentityproxymodel/qidentityproxymodel.pro: gui?
-# itemmodels/qitemmodel/qitemmodel.pro: widgets sql
-# statemachine/qstatemachine/qstatemachine.pro: gui widgets (opt)
-# animation/qparallelanimationgroup/qparallelanimationgroup.pro: gui
-# animation/qpauseanimation/qpauseanimation.pro: gui
-# animation/qpropertyanimation/qpropertyanimation.pro: gui widgets
-# io/qiodevice/qiodevice.pro: network
-# io/qsettings/qsettings.pro: gui
-# io/qprocess/testGuiProcess/testGuiProcess.pro: widgets
-# io/qprocess/test/test.pro: network
-# io/qtextstream/test/test.pro: network
-# io/qdatastream/qdatastream.pro: gui?
-# io/qfile/test/test.pro: network
