@@ -107,6 +107,14 @@ case ${QT5_BUILD_TYPE} in
 	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
 esac
 
+# @ECLASS-VARIABLE: QT5_GENTOO_CONFIG
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Array of <useflag:feature:macro> triplets that are evaluated in src_install
+# to generate the per-package list of enabled QT_CONFIG features and macro
+# definitions, which are then merged together with all other Qt5 packages
+# installed on the system to obtain the global qconfig.{h,pri} files.
+
 # @ECLASS-VARIABLE: QCONFIG_ADD
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -294,12 +302,16 @@ qt5-build_src_install() {
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
 		popd >/dev/null || die
 
-		# create an empty Gentoo/gentoo-qconfig.h
-		dodir "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
-		: > "${D}${QT5_HEADERDIR}"/Gentoo/gentoo-qconfig.h
+		# install an empty Gentoo/gentoo-qconfig.h in ${D}
+		# so that it's placed under package manager control
+		> "${T}"/gentoo-qconfig.h
+		(
+			insinto "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
+			doins "${T}"/gentoo-qconfig.h
+		)
 
 		# include gentoo-qconfig.h at the beginning of QtCore/qconfig.h
-		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
+		sed -i -e '1a#include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
 			|| die "sed failed (qconfig.h)"
 	fi
@@ -589,9 +601,25 @@ qt5_qmake() {
 # Creates and installs gentoo-specific ${PN}-qconfig.{h,pri} files.
 qt5_install_module_qconfigs() {
 	local x
+	for x in "${QT5_GENTOO_CONFIG[@]}"; do
+		local flag=${x%%:*}
+		x=${x#${flag}:}
+		local feature=${x%%:*}
+		x=${x#${feature}:}
+		local macro=${x}
+		macro=$(tr 'a-z-' 'A-Z_' <<< "${macro}")
+
+		if [[ -z ${flag} ]] || use ${flag}; then
+			[[ -n ${feature} ]] && QCONFIG_ADD+=("${feature}")
+			[[ -n ${macro} ]] && QCONFIG_DEFINE+=("QT_${macro}")
+		else
+			[[ -n ${feature} ]] && QCONFIG_REMOVE+=("${feature}")
+			[[ -n ${macro} ]] && QCONFIG_DEFINE+=("QT_NO_${macro}")
+		fi
+	done
 
 	# qconfig.h
-	: > "${T}"/${PN}-qconfig.h
+	> "${T}"/${PN}-qconfig.h
 	for x in "${QCONFIG_DEFINE[@]}"; do
 		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
 	done
@@ -601,7 +629,7 @@ qt5_install_module_qconfigs() {
 	)
 
 	# qconfig.pri
-	: > "${T}"/${PN}-qconfig.pri
+	> "${T}"/${PN}-qconfig.pri
 	[[ -n ${QCONFIG_ADD[@]} ]] && echo "QCONFIG_ADD=${QCONFIG_ADD[@]}" \
 		>> "${T}"/${PN}-qconfig.pri
 	[[ -n ${QCONFIG_REMOVE[@]} ]] && echo "QCONFIG_REMOVE=${QCONFIG_REMOVE[@]}" \
@@ -615,8 +643,8 @@ qt5_install_module_qconfigs() {
 # @FUNCTION: qt5_regenerate_global_qconfigs
 # @INTERNAL
 # @DESCRIPTION:
-# Generates gentoo-specific qconfig.{h,pri}.
-# Don't die here because dying in pkg_post{inst,rm} just makes things worse.
+# Generates Gentoo-specific qconfig.{h,pri} according to the build configuration.
+# Don't call die here because dying in pkg_post{inst,rm} only makes things worse.
 qt5_regenerate_global_qconfigs() {
 	einfo "Regenerating gentoo-qconfig.h"
 
