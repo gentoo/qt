@@ -5,6 +5,5 @@
   <herd>qt</herd>
    <use>
         <flag name="automount">Support Automounting Removable Media</flag>
-		<flag name="udisks">Udisks Support"</flag>
    </use>
 </pkgmetadata>
