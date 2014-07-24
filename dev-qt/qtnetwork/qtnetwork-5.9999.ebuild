@@ -35,6 +35,12 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/bearer/generic
 )
 
+QT5_GENTOO_CONFIG=(
+	ssl::SSL
+	ssl::OPENSSL
+	ssl:openssl-linked:LINKED_OPENSSL
+)
+
 pkg_setup() {
 	qt5-build_pkg_setup
 
