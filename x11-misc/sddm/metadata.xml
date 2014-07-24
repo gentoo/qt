@@ -6,8 +6,6 @@
     <name>Jauhien Piatlicki</name>
   </maintainer>
   <use>
-    <flag name="upower">Use <pkg>sys-power/upower</pkg> for power
-    management</flag>
     <flag name="consolekit">Enable ConsoleKit support</flag>
   </use>
   <longdescription lang="en">
