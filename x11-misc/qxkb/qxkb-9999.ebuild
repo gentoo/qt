@@ -20,4 +20,9 @@ DEPEND="x11-libs/libxkbfile
 	dev-qt/qtsvg:4"
 RDEPEND="${DEPEND}"
 
-#todo: translations
+src_prepare() {
+	sed -i -e 's:../language:${CMAKE_SOURCE_DIR}/language:' \
+		CMakeLists.txt || die
+
+	cmake-utils_src_prepare
+}
