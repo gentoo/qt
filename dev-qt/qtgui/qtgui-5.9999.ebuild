@@ -78,34 +78,40 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/platforms
 )
 
-pkg_setup() {
-	QCONFIG_ADD=(
-		$(use accessibility && echo accessibility-atspi-bridge)
-		$(usev egl && use xcb && echo egl_x11)
-		$(usev eglfs)
-		$(usev evdev && echo mtdev)
-		fontconfig
-		$(use gles2 && echo opengles2)
-		$(use harfbuzz && echo system-harfbuzz)
-		$(usev kms)
-		$(usev opengl)
-		$(use udev && echo libudev)
-		$(usev xcb && echo xcb-plugin xcb-render xcb-sm xcb-xlib)
-	)
-	QCONFIG_DEFINE=(
-		$(use accessibility && echo QT_ACCESSIBILITY_ATSPI_BRIDGE || echo QT_NO_ACCESSIBILITY_ATSPI_BRIDGE)
-		$(use egl	|| echo QT_NO_EGL QT_NO_EGL_X11)
-		$(use eglfs	|| echo QT_NO_EGLFS)
-		$(use evdev	|| echo QT_NO_EVDEV)
-		$(use gles2	&& echo QT_OPENGL_ES QT_OPENGL_ES_2)
-		$(use jpeg	|| echo QT_NO_IMAGEFORMAT_JPEG)
-		$(use opengl	&& echo QT_OPENGL || echo QT_NO_OPENGL)
-		$(use png	|| echo QT_NO_IMAGEFORMAT_PNG)
-	)
+QT5_GENTOO_CONFIG=(
+	accessibility:accessibility-atspi-bridge
+	egl
+	eglfs
+	evdev
+	evdev:mtdev:
+	:fontconfig
+	:system-freetype:FREETYPE
+	gles2::OPENGL_ES
+	gles2:opengles2:OPENGL_ES_2
+	harfbuzz:system-harfbuzz:HARFBUZZ
+	jpeg:system-jpeg:IMAGEFORMAT_JPEG
+	!jpeg:no-jpeg:
+	kms:kms:
+	opengl
+	png:png:
+	png:system-png:IMAGEFORMAT_PNG
+	!png:no-png:
+	udev:libudev:
+	xcb:xcb:
+	xcb:xcb-glx:
+	xcb:xcb-plugin:
+	xcb:xcb-render:
+	xcb:xcb-sm:
+	xcb:xcb-xlib:
+)
 
+pkg_setup() {
 	use opengl && QT5_TARGET_SUBDIRS+=(src/openglextensions)
 	use ibus   && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
 	use xcb	   && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
+
+	# egl_x11 is activated when both egl and xcb are enabled
+	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
 
 	qt5-build_pkg_setup
 }
