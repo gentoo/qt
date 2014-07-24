@@ -18,6 +18,12 @@ IUSE="debug"
 DEPEND="x11-libs/libxkbfile
 	dev-qt/qtgui:4
 	dev-qt/qtsvg:4"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	x11-apps/setxkbmap"
 
-#todo: translations
+src_prepare() {
+	sed -i -e 's:../language:${CMAKE_SOURCE_DIR}/language:' \
+		CMakeLists.txt || die
+
+	cmake-utils_src_prepare
+}
