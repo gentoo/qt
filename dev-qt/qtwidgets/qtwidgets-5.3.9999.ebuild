@@ -34,3 +34,7 @@ QT5_TARGET_SUBDIRS=(
 	src/widgets
 	src/plugins/accessible
 )
+
+QT5_GENTOO_CONFIG=(
+	!:no-widgets:
+)

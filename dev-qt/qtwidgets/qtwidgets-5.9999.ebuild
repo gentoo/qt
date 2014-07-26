@@ -28,3 +28,7 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/uic
 	src/widgets
 )
+
+QT5_GENTOO_CONFIG=(
+	!:no-widgets:
+)
