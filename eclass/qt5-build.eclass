@@ -411,7 +411,7 @@ qt5_prepare_env() {
 qt5_foreach_target_subdir() {
 	[[ -z ${QT5_TARGET_SUBDIRS[@]} ]] && QT5_TARGET_SUBDIRS=("")
 
-	local subdir
+	local ret=0 subdir=
 	for subdir in "${QT5_TARGET_SUBDIRS[@]}"; do
 		if [[ ${EBUILD_PHASE} == test ]]; then
 			subdir=tests/auto${subdir#src}
@@ -423,9 +423,12 @@ qt5_foreach_target_subdir() {
 
 		einfo "Running $* ${subdir:+in ${subdir}}"
 		"$@"
+		((ret+=$?))
 
 		popd >/dev/null || die
 	done
+
+	return ${ret}
 }
 
 # @FUNCTION: qt5_symlink_tools_to_build_dir
