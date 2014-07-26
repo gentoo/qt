@@ -13,8 +13,10 @@ KEYWORDS=""
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
 IUSE="consolekit +qt4 qt5 systemd +upower"
-REQUIRED_USE="^^ ( qt4 qt5 )
-	?? ( upower systemd )"
+REQUIRED_USE="
+	^^ ( qt4 qt5 )
+	?? ( upower systemd )
+"
 
 RDEPEND="sys-libs/pam
 	sys-auth/qauth[qt4?,qt5?]
@@ -24,10 +26,17 @@ RDEPEND="sys-libs/pam
 	qt5? ( dev-qt/qtdeclarative:5
 		   dev-qt/qtdbus:5 )
 	systemd? ( sys-apps/systemd:= )
-	upower? ( sys-power/upower:= )"
+	upower? ( || ( sys-power/upower:= sys-power/upower-pm-utils ) )"
 DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.7.0
 	virtual/pkgconfig"
+
+pkg_pretend() {
+	if [[ ${MERGE_TYPE} != binary ]]; then
+		[[ $(gcc-version) < 4.7 ]] && \
+			die 'The active compiler needs to be gcc 4.7 (or newer)'
+	fi
+}
 
 src_prepare() {
 	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
@@ -36,13 +45,6 @@ src_prepare() {
 	sed -e 's|-Wall -march=native||' \
 		-e 's|-O2||' \
 		-i CMakeLists.txt || die 'sed failed'
-}
-
-pkg_pretend() {
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		[[ $(gcc-version) < 4.7 ]] && \
-			die 'The active compiler needs to be gcc 4.7 (or newer)'
-	fi
 }
 
 src_configure() {
