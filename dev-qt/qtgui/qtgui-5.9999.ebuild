@@ -107,6 +107,7 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-render:
 	xcb:xcb-sm:
 	xcb:xcb-xlib:
+	xcb:xinput2:
 )
 
 pkg_setup() {
