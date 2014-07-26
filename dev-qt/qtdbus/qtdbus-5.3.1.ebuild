@@ -30,7 +30,11 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/qdbusxml2cpp
 	src/tools/qdbuscpp2xml
 )
-QCONFIG_ADD=( dbus dbus-linked )
+
+QT5_GENTOO_CONFIG=(
+	:dbus
+	:dbus-linked:
+)
 
 src_configure() {
 	local myconf=(
