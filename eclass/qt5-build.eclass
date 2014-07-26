@@ -609,7 +609,7 @@ qt5_install_module_qconfigs() {
 		local macro=${x}
 		macro=$(tr 'a-z-' 'A-Z_' <<< "${macro}")
 
-		if [[ -z ${flag} ]] || use ${flag}; then
+		if [[ -z ${flag} ]] || { [[ ${flag} != '!' ]] && use ${flag}; }; then
 			[[ -n ${feature} ]] && QCONFIG_ADD+=("${feature}")
 			[[ -n ${macro} ]] && QCONFIG_DEFINE+=("QT_${macro}")
 		else
