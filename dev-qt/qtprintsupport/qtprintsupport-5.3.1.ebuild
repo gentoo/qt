@@ -34,12 +34,9 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/printsupport
 )
 
-pkg_setup() {
-	QCONFIG_ADD=(
-		$(usev cups)
-	)
-	qt5-build_pkg_setup
-}
+QT5_GENTOO_CONFIG=(
+	cups
+)
 
 src_configure() {
 	local myconf=(
