@@ -85,9 +85,13 @@ QT5_GENTOO_CONFIG=(
 	evdev:mtdev:
 	:fontconfig
 	:system-freetype:FREETYPE
+	!:no-freetype:
+	!gif:no-gif:
 	gles2::OPENGL_ES
 	gles2:opengles2:OPENGL_ES_2
+	!:no-gui:
 	harfbuzz:system-harfbuzz:HARFBUZZ
+	!harfbuzz:no-harfbuzz:
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
 	kms:kms:
