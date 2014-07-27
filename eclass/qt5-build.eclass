@@ -261,7 +261,8 @@ qt5-build_src_test() {
 	EOF
 	chmod +x "${testrunner}"
 
-	qt5_foreach_target_subdir qt5_qmake
+	# '-after SUBDIRS-=cmake' disables broken tests - bug #474004
+	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake
 	qt5_foreach_target_subdir emake
 
 	_test_runner() {
@@ -579,7 +580,7 @@ qt5_base_configure() {
 qt5_qmake() {
 	local projectdir=${PWD/#${QT5_BUILD_DIR}/${S}}
 
-	"${QT5_BUILD_DIR}"/bin/qmake "${projectdir}" \
+	"${QT5_BUILD_DIR}"/bin/qmake "${projectdir}" "$@" \
 		|| die "qmake failed (${projectdir})"
 }
 
