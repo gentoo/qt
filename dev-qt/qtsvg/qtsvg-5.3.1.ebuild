@@ -25,3 +25,10 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	test? ( >=dev-qt/qtxml-${PV}:5[debug=] )
 "
+
+src_prepare() {
+	# remove target - broken tests - bug #474004
+	sed -e "/installed_cmake.depends = cmake/d" -i tests/auto/auto.pro
+
+	qt5-build_src_prepare
+}
