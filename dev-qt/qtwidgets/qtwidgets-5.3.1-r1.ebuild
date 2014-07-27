@@ -16,11 +16,14 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE=""
+IUSE="gles2 +opengl +png"
+REQUIRED_USE="
+	gles2? ( opengl )
+"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
+	~dev-qt/qtgui-${PV}[debug=,gles2=,opengl=,png=]
 "
 RDEPEND="${DEPEND}"
 
@@ -38,3 +41,18 @@ QT5_TARGET_SUBDIRS=(
 QT5_GENTOO_CONFIG=(
 	!:no-widgets:
 )
+
+src_configure() {
+	local gl="-no-opengl"
+	if use gles2; then
+		gl="-opengl es2"
+	elif use opengl; then
+		gl="-opengl desktop"
+	fi
+
+	local myconf=(
+		${gl}
+		$(qt_use png libpng system)
+	)
+	qt5-build_src_configure
+}
