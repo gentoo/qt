@@ -121,11 +121,6 @@ pkg_setup() {
 }
 
 src_configure() {
-	local dbus="-no-dbus"
-	if use accessibility && use xcb; then
-		dbus="-dbus"
-	fi
-
 	local gl="-no-opengl"
 	if use gles2; then
 		gl="-opengl es2"
@@ -134,7 +129,7 @@ src_configure() {
 	fi
 
 	local myconf=(
-		${dbus}
+		$(use accessibility && use xcb && echo -dbus-linked)
 		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
