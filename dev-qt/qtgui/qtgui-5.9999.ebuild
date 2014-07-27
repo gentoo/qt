@@ -105,7 +105,7 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-glx:
 	xcb:xcb-plugin:
 	xcb:xcb-render:
-	xcb:xcb-sm:
+	xcb:xcb-sm:SESSIONMANAGER
 	xcb:xcb-xlib:
 	xcb:xinput2:
 )
