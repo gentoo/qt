@@ -115,21 +115,6 @@ esac
 # definitions, which are then merged together with all other Qt5 packages
 # installed on the system to obtain the global qconfig.{h,pri} files.
 
-# @ECLASS-VARIABLE: QCONFIG_ADD
-# @DEFAULT_UNSET
-# @DESCRIPTION:
-# Array of options that must be added to QT_CONFIG in qconfig.pri
-
-# @ECLASS-VARIABLE: QCONFIG_REMOVE
-# @DEFAULT_UNSET
-# @DESCRIPTION:
-# Array of options that must be removed from QT_CONFIG in qconfig.pri
-
-# @ECLASS-VARIABLE: QCONFIG_DEFINE
-# @DEFAULT_UNSET
-# @DESCRIPTION:
-# Array of macros that must be defined in QtCore/qconfig.h
-
 # @ECLASS-VARIABLE: VIRTUALX_REQUIRED
 # @DESCRIPTION:
 # For proper description see virtualx.eclass man page.
