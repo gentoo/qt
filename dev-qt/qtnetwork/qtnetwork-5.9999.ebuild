@@ -50,8 +50,8 @@ pkg_setup() {
 
 src_configure() {
 	local myconf=(
-		$(use connman || use networkmanager && echo -dbus-linked || echo -no-dbus)
-		$(use ssl && echo -openssl-linked || echo -no-openssl)
+		$(use connman || use networkmanager && echo -dbus-linked)
+		$(use ssl && echo -openssl-linked)
 	)
 	qt5-build_src_configure
 }
