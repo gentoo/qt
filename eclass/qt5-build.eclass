@@ -184,17 +184,6 @@ qt5-build_src_prepare() {
 		sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
 			qmake/Makefile.unix || die "sed failed (CPPFLAGS for qmake build)"
 
-		# Reset QMAKE_*FLAGS_{RELEASE,DEBUG} variables,
-		# or they will override user's flags (bug 427782)
-		sed -i -e '/^SYSTEM_VARIABLES=/ i \
-			QMakeVar set QMAKE_CFLAGS_RELEASE\
-			QMakeVar set QMAKE_CFLAGS_DEBUG\
-			QMakeVar set QMAKE_CXXFLAGS_RELEASE\
-			QMakeVar set QMAKE_CXXFLAGS_DEBUG\
-			QMakeVar set QMAKE_LFLAGS_RELEASE\
-			QMakeVar set QMAKE_LFLAGS_DEBUG\n' \
-			configure || die "sed failed (QMAKE_*FLAGS_{RELEASE,DEBUG})"
-
 		# Respect CXX in configure
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
@@ -577,7 +566,28 @@ qt5_base_configure() {
 qt5_qmake() {
 	local projectdir=${PWD/#${QT5_BUILD_DIR}/${S}}
 
-	"${QT5_BUILD_DIR}"/bin/qmake "${projectdir}" "$@" \
+	"${QT5_BUILD_DIR}"/bin/qmake \
+		QMAKE_AR="$(tc-getAR) cqs" \
+		QMAKE_CC="$(tc-getCC)" \
+		QMAKE_LINK_C="$(tc-getCC)" \
+		QMAKE_LINK_C_SHLIB="$(tc-getCC)" \
+		QMAKE_CXX="$(tc-getCXX)" \
+		QMAKE_LINK="$(tc-getCXX)" \
+		QMAKE_LINK_SHLIB="$(tc-getCXX)" \
+		QMAKE_OBJCOPY="$(tc-getOBJCOPY)" \
+		QMAKE_RANLIB= \
+		QMAKE_STRIP="$(tc-getSTRIP)" \
+		QMAKE_CFLAGS="${CFLAGS}" \
+		QMAKE_CFLAGS_RELEASE= \
+		QMAKE_CFLAGS_DEBUG= \
+		QMAKE_CXXFLAGS="${CXXFLAGS}" \
+		QMAKE_CXXFLAGS_RELEASE= \
+		QMAKE_CXXFLAGS_DEBUG= \
+		QMAKE_LFLAGS="${LDFLAGS}" \
+		QMAKE_LFLAGS_RELEASE= \
+		QMAKE_LFLAGS_DEBUG= \
+		"${projectdir}" \
+		"$@" \
 		|| die "qmake failed (${projectdir})"
 }
 
