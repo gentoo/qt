@@ -108,6 +108,7 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-sm:SESSIONMANAGER
 	xcb:xcb-xlib:
 	xcb:xinput2:
+	xcb::XKB
 )
 
 pkg_setup() {
@@ -145,7 +146,9 @@ src_configure() {
 		$(qt_use kms)
 		$(qt_use png libpng system)
 		$(qt_use udev libudev)
-		$(use xcb && echo -xcb -xcb-xlib -xinput2 -xrender -sm)
+		$(qt_use xcb xcb system)
+		$(qt_use xcb xkbcommon system)
+		$(use xcb && echo -sm -xcb-xlib -xinput2 -xkb -xrender)
 	)
 	qt5-build_src_configure
 }
