@@ -526,6 +526,9 @@ qt5_base_configure() {
 		# see also https://bugreports.qt-project.org/browse/QTBUG-36129
 		#-reduce-relocations
 
+		# let configure automatically detect if GNU gold is available
+		#-use-gold-linker
+
 		# disable all platform plugins by default, override in qtgui
 		-no-xcb -no-eglfs -no-directfb -no-linuxfb -no-kms
 
