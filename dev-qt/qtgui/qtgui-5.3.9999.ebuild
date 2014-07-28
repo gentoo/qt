@@ -99,12 +99,13 @@ QT5_GENTOO_CONFIG=(
 	png:png:
 	png:system-png:IMAGEFORMAT_PNG
 	!png:no-png:
+	::SESSIONMANAGER
 	udev:libudev:
 	xcb:xcb:
 	xcb:xcb-glx:
 	xcb:xcb-plugin:
 	xcb:xcb-render:
-	xcb:xcb-sm:SESSIONMANAGER
+	xcb:xcb-sm:
 	xcb:xcb-xlib:
 	xcb:xinput2:
 	xcb::XKB
@@ -144,10 +145,11 @@ src_configure() {
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
 		$(qt_use png libpng system)
+		-sm
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon system)
-		$(use xcb && echo -sm -xcb-xlib -xinput2 -xkb -xrender)
+		$(use xcb && echo -xcb-xlib -xinput2 -xkb -xrender)
 	)
 	qt5-build_src_configure
 }
