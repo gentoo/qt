@@ -469,9 +469,6 @@ qt5_base_configure() {
 		# build shared libraries
 		-shared
 
-		# generate only a top-level Makefile
-		-process
-
 		# always enable large file support
 		-largefile
 
