@@ -534,12 +534,16 @@ qt5_base_configure() {
 
 		# disable undocumented X11-related flags, override in qtgui
 		# (not shown in ./configure -help output)
-		-no-sm -no-xkb -no-xrender
+		-no-xkb -no-xrender
 
 		# disable obsolete/unused X11-related flags
 		# (not shown in ./configure -help output)
 		-no-mitshm -no-xcursor -no-xfixes -no-xinerama -no-xinput
 		-no-xrandr -no-xshape -no-xsync -no-xvideo
+
+		# always enable session management support: it doesn't need extra deps
+		# at configure time and turning it off is dangerous, see bug 518262
+		-sm
 
 		# typedef qreal to double (warning: changing this flag breaks the ABI)
 		-qreal double
