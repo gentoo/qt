@@ -483,9 +483,18 @@ qt5_base_configure() {
 		#-no-gif
 
 		# disable everything to prevent automagic deps (part 1)
-		-no-mtdev -no-journald -no-libpng -no-libjpeg
-		-no-freetype -no-harfbuzz -no-openssl -no-xinput2
-		-no-xcb-xlib -no-glib -no-pulseaudio -no-alsa
+		-no-mtdev
+		-no-journald
+		-no-libpng -no-libjpeg
+		-no-freetype -no-harfbuzz
+		-no-openssl
+		-no-xinput2 -no-xcb-xlib
+
+		# always enable glib event loop support
+		-glib
+
+		# disable everything to prevent automagic deps (part 2)
+		-no-pulseaudio -no-alsa
 
 		# disable gtkstyle because it adds qt4 include paths to the compiler
 		# command line if x11-libs/cairo is built with USE=qt4 (bug 433826)
@@ -511,7 +520,7 @@ qt5_base_configure() {
 		# always enable iconv support
 		-iconv
 
-		# disable everything to prevent automagic deps (part 2)
+		# disable everything to prevent automagic deps (part 3)
 		-no-cups -no-evdev -no-icu -no-fontconfig -no-dbus
 
 		# don't strip

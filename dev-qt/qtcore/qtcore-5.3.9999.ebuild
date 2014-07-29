@@ -16,13 +16,13 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="+glib icu"
+IUSE="icu"
 
 DEPEND="
+	dev-libs/glib:2
 	>=dev-libs/libpcre-8.30[pcre16]
 	sys-libs/zlib
 	virtual/libiconv
-	glib? ( dev-libs/glib:2 )
 	icu? ( dev-libs/icu:= )
 "
 RDEPEND="${DEPEND}"
@@ -36,7 +36,6 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
-		$(qt_use glib)
 		$(qt_use icu)
 	)
 	qt5-build_src_configure

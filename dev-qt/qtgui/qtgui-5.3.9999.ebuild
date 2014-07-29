@@ -18,7 +18,7 @@ fi
 
 # TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
-IUSE="accessibility egl eglfs evdev +gif gles2 +glib harfbuzz ibus jpeg kms +opengl +png udev +xcb"
+IUSE="accessibility egl eglfs evdev +gif gles2 harfbuzz ibus jpeg kms +opengl +png udev +xcb"
 REQUIRED_USE="
 	egl? ( evdev opengl )
 	eglfs? ( egl )
@@ -27,14 +27,14 @@ REQUIRED_USE="
 "
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}[debug=,glib=]
+	dev-libs/glib:2
+	~dev-qt/qtcore-${PV}[debug=]
 	media-libs/fontconfig
 	media-libs/freetype:2
 	sys-libs/zlib
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
-	glib? ( dev-libs/glib:2 )
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:0= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
@@ -139,7 +139,6 @@ src_configure() {
 		-system-freetype
 		$(use gif || echo -no-gif)
 		${gl}
-		$(qt_use glib)
 		$(qt_use harfbuzz harfbuzz system)
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
