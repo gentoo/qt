@@ -34,10 +34,6 @@ QT5_TARGET_SUBDIRS=(
 	src/corelib
 )
 
-QT5_GENTOO_CONFIG=(
-	::ZLIB
-)
-
 src_configure() {
 	local myconf=(
 		$(qt_use glib)
