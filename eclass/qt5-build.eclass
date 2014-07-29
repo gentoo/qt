@@ -371,7 +371,7 @@ qt5_prepare_env() {
 	QT5_TRANSLATIONDIR=${QT5_DATADIR}/translations
 	QT5_EXAMPLESDIR=${QT5_DATADIR}/examples
 	QT5_TESTSDIR=${QT5_DATADIR}/tests
-	QT5_SYSCONFDIR=${EPREFIX}/etc/qt5
+	QT5_SYSCONFDIR=${EPREFIX}/etc/xdg
 
 	if [[ ${QT5_MODULE} == qtbase ]]; then
 		# see mkspecs/features/qt_config.prf
