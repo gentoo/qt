@@ -65,7 +65,7 @@ EGIT_REPO_URI=(
 IUSE="debug test"
 
 DEPEND="
-	>=dev-lang/perl-5.14
+	dev-lang/perl
 	virtual/pkgconfig
 "
 if [[ ${PN} != qttest ]]; then
@@ -612,7 +612,12 @@ qt5_qmake() {
 # @DESCRIPTION:
 # Creates and installs gentoo-specific ${PN}-qconfig.{h,pri} files.
 qt5_install_module_qconfigs() {
-	local x
+	local x qconfig_add= qconfig_remove=
+
+	> "${T}"/${PN}-qconfig.h
+	> "${T}"/${PN}-qconfig.pri
+
+	# generate qconfig_{add,remove} and ${PN}-qconfig.h
 	for x in "${QT5_GENTOO_CONFIG[@]}"; do
 		local flag=${x%%:*}
 		x=${x#${flag}:}
@@ -622,30 +627,23 @@ qt5_install_module_qconfigs() {
 		macro=$(tr 'a-z-' 'A-Z_' <<< "${macro}")
 
 		if [[ -z ${flag} ]] || { [[ ${flag} != '!' ]] && use ${flag}; }; then
-			[[ -n ${feature} ]] && QCONFIG_ADD+=("${feature}")
-			[[ -n ${macro} ]] && QCONFIG_DEFINE+=("QT_${macro}")
+			[[ -n ${feature} ]] && qconfig_add+=" ${feature}"
+			[[ -n ${macro} ]] && echo "#define QT_${macro}" >> "${T}"/${PN}-qconfig.h
 		else
-			[[ -n ${feature} ]] && QCONFIG_REMOVE+=("${feature}")
-			[[ -n ${macro} ]] && QCONFIG_DEFINE+=("QT_NO_${macro}")
+			[[ -n ${feature} ]] && qconfig_remove+=" ${feature}"
+			[[ -n ${macro} ]] && echo "#define QT_NO_${macro}" >> "${T}"/${PN}-qconfig.h
 		fi
 	done
 
-	# qconfig.h
-	> "${T}"/${PN}-qconfig.h
-	for x in "${QCONFIG_DEFINE[@]}"; do
-		echo "#define ${x}" >> "${T}"/${PN}-qconfig.h
-	done
+	# install ${PN}-qconfig.h
 	[[ -s ${T}/${PN}-qconfig.h ]] && (
 		insinto "${QT5_HEADERDIR#${EPREFIX}}"/Gentoo
 		doins "${T}"/${PN}-qconfig.h
 	)
 
-	# qconfig.pri
-	> "${T}"/${PN}-qconfig.pri
-	[[ -n ${QCONFIG_ADD[@]} ]] && echo "QCONFIG_ADD=${QCONFIG_ADD[@]}" \
-		>> "${T}"/${PN}-qconfig.pri
-	[[ -n ${QCONFIG_REMOVE[@]} ]] && echo "QCONFIG_REMOVE=${QCONFIG_REMOVE[@]}" \
-		>> "${T}"/${PN}-qconfig.pri
+	# generate and install ${PN}-qconfig.pri
+	[[ -n ${qconfig_add} ]] && echo "QCONFIG_ADD=${qconfig_add}" >> "${T}"/${PN}-qconfig.pri
+	[[ -n ${qconfig_remove} ]] && echo "QCONFIG_REMOVE=${qconfig_remove}" >> "${T}"/${PN}-qconfig.pri
 	[[ -s ${T}/${PN}-qconfig.pri ]] && (
 		insinto "${QT5_ARCHDATADIR#${EPREFIX}}"/mkspecs/gentoo
 		doins "${T}"/${PN}-qconfig.pri
