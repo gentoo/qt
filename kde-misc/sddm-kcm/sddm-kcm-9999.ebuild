@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/sddm/sddm-kcm"
 EGIT_REPO_URI="git://github.com/sddm/sddm-kcm.git"
 
 LICENSE="GPL-2+"
-SLOT="0"
+SLOT="4"
 KEYWORDS=""
 IUSE=""
 
