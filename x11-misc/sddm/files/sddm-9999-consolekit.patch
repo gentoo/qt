@@ -1,19 +1,13 @@
---- data/scripts/Xsession
-+++ data/scripts/Xsession
-@@ -74,13 +74,13 @@
+diff --git a/data/scripts/Xsession b/data/scripts/Xsession
+index a5d270d..4b48524 100755
+--- a/data/scripts/Xsession
++++ b/data/scripts/Xsession
+@@ -74,7 +74,7 @@ case $session in
      exec xterm -geometry 80x24-0-0
-     ;;
-   custom)
--    exec $HOME/.xsession
-+    exec ck-launch-session $HOME/.xsession
-     ;;
-   default)
--    exec /usr/bin/startkde
-+    exec ck-launch-session /usr/bin/startkde
      ;;
    *)
 -    eval exec "$session"
-+    eval ck-launch-session "$session"
++    eval exec ck-launch-session "$session"
      ;;
  esac
  exec xmessage -center -buttons OK:0 -default OK "Sorry, cannot execute $session. Check $DESKTOP_SESSION.desktop."
