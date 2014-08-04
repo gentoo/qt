@@ -17,7 +17,9 @@ IUSE="+qt4 qt5"
 
 REQUIRED_USE="^^ ( qt4 qt5 )"
 
-DEPEND="virtual/pam"
+DEPEND="virtual/pam
+	qt4? ( dev-qt/qtdeclarative:4 )
+	qt5? ( dev-qt/qtdeclarative:5 )"
 RDEPEND="${DEPEND}"
 
 src_configure() {
