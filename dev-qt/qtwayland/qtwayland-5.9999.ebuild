@@ -36,9 +36,7 @@ src_configure() {
 		echo "CONFIG += wayland-compositor" >> "${QT5_BUILD_DIR}"/.qmake.cache
 	fi
 
-	if ! use xcomposite; then
-		echo "CONFIG += done_config_xcomposite" >> "${QT5_BUILD_DIR}"/.qmake.cache
-	fi
+	qt_use_compile_test xcomposite
 
 	qt5-build_src_configure
 }
