@@ -12,19 +12,16 @@ KEYWORDS=""
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
 SLOT="0"
-IUSE="consolekit +qt4 qt5 systemd +upower"
-REQUIRED_USE="
-	^^ ( qt4 qt5 )
-	?? ( upower systemd )
-"
+IUSE="consolekit systemd +upower"
+REQUIRED_USE="?? ( upower systemd )"
 
 RDEPEND="sys-libs/pam
-	sys-auth/qauth[qt4?,qt5?]
+	sys-auth/qauth[qt5(-)]
 	x11-libs/libxcb[xkb(-)]
-	qt4? ( dev-qt/qtdeclarative:4
-		   dev-qt/qtdbus:4 )
-	qt5? ( dev-qt/qtdeclarative:5
-		   dev-qt/qtdbus:5 )
+	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
+	dev-qt/qtdeclarative:5
+	dev-qt/linguist-tools:5
 	systemd? ( sys-apps/systemd:= )
 	upower? ( || ( sys-power/upower:= sys-power/upower-pm-utils ) )"
 DEPEND="${RDEPEND}
@@ -38,6 +35,13 @@ pkg_pretend() {
 	fi
 }
 
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_no systemd SYSTEMD)
+	)
+	cmake-utils_src_configure
+}
+
 src_prepare() {
 	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
 
@@ -45,13 +49,6 @@ src_prepare() {
 	sed -e 's|-Wall -march=native||' \
 		-e 's|-O2||' \
 		-i CMakeLists.txt || die 'sed failed'
-}
-
-src_configure() {
-	local mycmakeargs=(
-		$(cmake-utils_use_use qt5 QT5)
-	)
-	cmake-utils_src_configure
 }
 
 pkg_postinst() {
