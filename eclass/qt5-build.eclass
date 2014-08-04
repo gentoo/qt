@@ -292,22 +292,19 @@ qt5-build_src_install() {
 	fi
 
 	qt5_install_module_qconfigs
-
-	# remove .la files since we are building only shared libraries
 	prune_libtool_files
 }
 
 # @FUNCTION: qt5-build_pkg_postinst
 # @DESCRIPTION:
-# Regenerate configuration, plus throw a message about possible
-# breakages and proposed solutions.
+# Regenerate configuration after installation or upgrade/downgrade.
 qt5-build_pkg_postinst() {
 	qt5_regenerate_global_qconfigs
 }
 
 # @FUNCTION: qt5-build_pkg_postrm
 # @DESCRIPTION:
-# Regenerate configuration when the package is completely removed.
+# Regenerate configuration when a module is completely removed.
 qt5-build_pkg_postrm() {
 	if [[ -z ${REPLACED_BY_VERSION} && ${PN} != qtcore ]]; then
 		qt5_regenerate_global_qconfigs
@@ -315,14 +312,38 @@ qt5-build_pkg_postrm() {
 }
 
 # @FUNCTION: qt_use
-# @USAGE: <flag> [feature] [enableval]
+# @USAGE: <flag> [feature] [enableopt]
 # @DESCRIPTION:
-# This will echo "-${enableval}-${feature}" if <flag> is enabled, or
-# "-no-${feature}" if it's disabled. If [feature] is not specified,
-# <flag> will be used for that. If [enableval] is not specified, the
-# "-${enableval}" prefix is omitted.
+# <flag> is the name of a flag in IUSE.
+#
+# Echoes "-${enableopt}-${feature}" if <flag> is enabled, or "-no-${feature}"
+# if it is disabled. If [feature] is not specified, it defaults to the value
+# of <flag>. If [enableopt] is not specified, the whole "-${enableopt}" prefix
+# is omitted.
 qt_use() {
+	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
+
 	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+}
+
+# @FUNCTION: qt_use_compile_test
+# @USAGE: <flag> [config]
+# @DESCRIPTION:
+# <flag> is the name of a flag in IUSE.
+# [config] is the argument of qtCompileTest, defaults to <flag>.
+#
+# This function is useful to disable optional dependencies that are checked
+# at qmake-time using the qtCompileTest() function. If <flag> is disabled,
+# the compile test is skipped and the dependency is assumed to be unavailable,
+# i.e. the corresponding feature will be disabled. Note that all invocations
+# of this function must happen before calling qt5-build_src_configure.
+qt_use_compile_test() {
+	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
+
+	if ! use "$1"; then
+		mkdir -p "${QT5_BUILD_DIR}" || die
+		echo "CONFIG += done_config_${2:-$1}" >> "${QT5_BUILD_DIR}"/.qmake.cache || die
+	fi
 }
 
 # @FUNCTION: qt_use_disable_mod
@@ -337,15 +358,15 @@ qt_use() {
 # This can be useful to avoid an automagic dependency when the module
 # is present on the system but the corresponding USE flag is disabled.
 qt_use_disable_mod() {
-	[[ $# -ge 3 ]] || die "${FUNCNAME}() requires at least 3 arguments"
+	[[ $# -ge 3 ]] || die "${FUNCNAME}() requires at least three arguments"
 
 	local flag=$1
 	local module=$2
 	shift 2
 
-	use "${flag}" && return
-
-	echo "$@" | xargs sed -i -e "s/qtHaveModule(${module})/false/g" || die
+	if ! use "${flag}"; then
+		echo "$@" | xargs sed -i -e "s/qtHaveModule(${module})/false/g" || die
+	fi
 }
 
 
