@@ -35,13 +35,6 @@ pkg_pretend() {
 	fi
 }
 
-src_configure() {
-	local mycmakeargs=(
-		$(cmake-utils_use_no systemd SYSTEMD)
-	)
-	cmake-utils_src_configure
-}
-
 src_prepare() {
 	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
 
@@ -49,6 +42,13 @@ src_prepare() {
 	sed -e 's|-Wall -march=native||' \
 		-e 's|-O2||' \
 		-i CMakeLists.txt || die 'sed failed'
+}
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_no systemd SYSTEMD)
+	)
+	cmake-utils_src_configure
 }
 
 pkg_postinst() {
