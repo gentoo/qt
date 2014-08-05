@@ -14,25 +14,49 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# FIXME: probably lots of automagic deps
-# TODO: qt-widgets can be made optional
-# TODO: opengl, xv
+IUSE="alsa +gstreamer openal opengl +pulseaudio qml widgets"
+REQUIRED_USE="?? ( alsa pulseaudio )"
 
-IUSE="alsa gstreamer openal pulseaudio qml"
-
-DEPEND="
+RDEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	alsa? ( media-libs/alsa-lib )
 	gstreamer? (
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-bad:0.10
 		media-libs/gst-plugins-base:0.10
 	)
-	openal? ( media-libs/openal )
 	pulseaudio? ( media-sound/pulseaudio )
-	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
+	qml? (
+		>=dev-qt/qtdeclarative-${PV}:5[debug=]
+		openal? ( media-libs/openal )
+	)
+	widgets? (
+		>=dev-qt/qtwidgets-${PV}:5[debug=]
+		opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
+	)
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	x11-proto/videoproto
+"
+
+src_prepare() {
+	qt_use_compile_test alsa
+	qt_use_compile_test gstreamer
+	qt_use_compile_test openal
+	qt_use_compile_test pulseaudio
+
+	qt_use_disable_mod opengl opengl \
+		src/multimediawidgets/multimediawidgets.pro
+
+	qt_use_disable_mod qml quick \
+		src/src.pro
+
+	qt_use_disable_mod widgets widgets \
+		src/src.pro \
+		src/gsttools/gsttools.pro \
+		src/plugins/gstreamer/common.pri
+
+	qt5-build_src_prepare
+}
