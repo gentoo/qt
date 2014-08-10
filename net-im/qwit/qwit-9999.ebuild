@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-im/qwit/qwit-1.1_beta.ebuild,v 1.1 2010/07/15 13:40:54 hwoarang Exp $
 
-EAPI="2"
+EAPI=5
 
 inherit qt4-r2 subversion
 
@@ -17,14 +17,18 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DOCS="AUTHORS"
-
-DEPEND="dev-qt/qtgui:4"
+DEPEND="
+	dev-qt/qtcore:4
+	dev-qt/qtgui:4
+"
 RDEPEND="${DEPEND}
-	dev-libs/qoauth"
+	dev-libs/qoauth
+"
 
 S=${WORKDIR}/${MY_P}
 
+DOCS=(AUTHORS)
+
 src_configure() {
-	eqmake4 ${PN}.pro PREFIX=/usr
+	eqmake4 PREFIX=/usr
 }
