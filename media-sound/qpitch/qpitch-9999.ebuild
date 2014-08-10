@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=5
 
 inherit cmake-utils subversion
 
@@ -15,9 +15,11 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-qt/qtgui:4
+DEPEND="
+	dev-qt/qtgui:4
 	>=media-libs/portaudio-19_pre20071207
-	>=sci-libs/fftw-3.1.0"
+	>=sci-libs/fftw-3.1.0
+"
 RDEPEND="${DEPEND}"
 
 DOCS=(README changelog)
