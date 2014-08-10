@@ -1,5 +1,6 @@
 # Welcome to the qt overlay!
 
+[![Repoman Status](https://travis-ci.org/gentoo/qt.png)](https://travis-ci.org/gentoo/qt)
 
 This is where the Gentoo Qt team develops and maintains ebuilds for
 experimental Qt versions (pre-releases and "live" code from git) and
@@ -31,8 +32,3 @@ Bugs should be reported on https://bugs.gentoo.org. Be sure to include
 
 Users wanting to contribute should first read the
 [Qt4 ebuild guide](http://www.gentoo.org/proj/en/desktop/qt/qt4-based-ebuild-howto.xml).
-
-
-*Happy Qting!*
-
-*The Gentoo Qt team*
