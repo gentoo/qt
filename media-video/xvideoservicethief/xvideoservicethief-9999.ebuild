@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=5
 
 LANGS="br ca cs da de es fr gl hu it ja ko nl pl ro ru sv"
 
@@ -28,10 +28,11 @@ RDEPEND="dev-qt/qtgui:4
 	media-video/flvstreamer"
 
 S=${WORKDIR}
-TRANSLATIONSDIR="${S}/resources"
+TRANSLATIONSDIR=${S}/resources
 
 src_prepare() {
 	subversion_src_prepare
+
 	# fix translations
 	mv "${S}"/resources/translations/${MY_PN}_cz.ts \
 		"${S}"/resources/translations/${MY_PN}_cs.ts || die
@@ -59,11 +60,10 @@ src_compile() {
 }
 
 src_install() {
-	dobin bin/xvst || die "dobin failed"
-	insinto /usr/share/pixmaps/
-	newins resources/images/InformationLogo.png xvst.png || die "newins failed"
-	make_desktop_entry /usr/bin/xvst xVideoServiceThief xvst 'Qt;AudioVideo;Video' \
-		|| die "make_desktop_entry failed"
+	dobin bin/xvst
+	insinto /usr/share/pixmaps
+	newins resources/images/InformationLogo.png xvst.png
+	make_desktop_entry /usr/bin/xvst xVideoServiceThief xvst 'Qt;AudioVideo;Video'
 
 	# install plugins
 	local dest=/usr/share/${PN}/plugins
