@@ -36,12 +36,12 @@ case ${PV} in
 		EGIT_BRANCH="dev"
 		;;
 	5.?.9999)
-		# git stable branch
+		# git stable branches (5.x)
 		QT5_BUILD_TYPE="live"
 		EGIT_BRANCH=${PV%.9999}
 		;;
 	*_alpha*|*_beta*|*_rc*)
-		# pre-releases
+		# development releases
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV/_/-}
 		SRC_URI="http://download.qt-project.org/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
