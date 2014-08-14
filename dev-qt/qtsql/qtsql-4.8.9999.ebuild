@@ -23,10 +23,10 @@ REQUIRED_USE="
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
 	freetds? ( dev-db/freetds )
-	mysql? ( virtual/mysql )
+	mysql? ( virtual/mysql:= )
 	oci8? ( dev-db/oracle-instantclient-basic[${MULTILIB_USEDEP}] )
 	odbc? ( || ( dev-db/unixODBC[${MULTILIB_USEDEP}] dev-db/libiodbc[${MULTILIB_USEDEP}] ) )
-	postgres? ( dev-db/postgresql-base )
+	postgres? ( dev-db/postgresql-base:* )
 	sqlite? ( dev-db/sqlite:3[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
