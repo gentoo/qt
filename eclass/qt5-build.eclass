@@ -209,15 +209,14 @@ qt5-build_src_prepare() {
 # @DESCRIPTION:
 # Runs qmake, possibly preceded by ./configure.
 qt5-build_src_configure() {
-	# toolchain setup
-	tc-export CC CXX RANLIB STRIP
-	# qmake-generated Makefiles use LD/LINK for linking
-	export LD="$(tc-getCXX)"
-
 	mkdir -p "${QT5_BUILD_DIR}" || die
 	pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
 	if [[ ${QT5_MODULE} == qtbase ]]; then
+		# toolchain setup
+		tc-export CC CXX RANLIB STRIP
+		export LD="$(tc-getCXX)"
+
 		qt5_base_configure
 	fi
 
