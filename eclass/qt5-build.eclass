@@ -189,10 +189,8 @@ qt5-build_src_prepare() {
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
 		# Respect toolchain and flags in config.tests
-		find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
-			sed -ri -e '/CXXFLAGS=/ s/"(\$CXXFLAGS) (\$PARAM)"/"\2 \1"/' \
-				-e '/LFLAGS=/ s/"(\$LFLAGS) (\$PARAM)"/"\2 \1"/' \
-				-e '/bin\/qmake/ s/-nocache //' \
+		find config.tests/unix -name '*.test' -type f -print0 \
+			| xargs -0 sed -i -e '/bin\/qmake/ s/-nocache //' \
 			|| die "sed failed (config.tests)"
 	fi
 
