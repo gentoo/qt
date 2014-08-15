@@ -184,7 +184,7 @@ qt5-build_src_prepare() {
 		sed -i -e '/^CPPFLAGS\s*=/ s/-g //' \
 			qmake/Makefile.unix || die "sed failed (CPPFLAGS for qmake build)"
 
-		# Respect CXX in configure
+		# Respect CXX in {bsymbolic_functions,fvisibility,precomp}.test
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
