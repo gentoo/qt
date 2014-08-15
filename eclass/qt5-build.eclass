@@ -209,20 +209,11 @@ qt5-build_src_prepare() {
 # @DESCRIPTION:
 # Runs qmake, possibly preceded by ./configure.
 qt5-build_src_configure() {
-	mkdir -p "${QT5_BUILD_DIR}" || die
-	pushd "${QT5_BUILD_DIR}" >/dev/null || die
-
 	if [[ ${QT5_MODULE} == qtbase ]]; then
-		# toolchain setup
-		tc-export CC CXX RANLIB STRIP
-		export LD="$(tc-getCXX)"
-
 		qt5_base_configure
 	fi
 
 	qt5_foreach_target_subdir qt5_qmake
-
-	popd >/dev/null || die
 }
 
 # @FUNCTION: qt5-build_src_compile
@@ -446,6 +437,10 @@ qt5_symlink_tools_to_build_dir() {
 # @DESCRIPTION:
 # Runs ./configure for modules belonging to qtbase.
 qt5_base_configure() {
+	# setup toolchain variables used by configure
+	tc-export CC CXX RANLIB STRIP
+	export LD="$(tc-getCXX)"
+
 	# configure arguments
 	local conf=(
 		# installation paths
@@ -590,8 +585,13 @@ qt5_base_configure() {
 		"${myconf[@]}"
 	)
 
+	mkdir -p "${QT5_BUILD_DIR}" || die
+	pushd "${QT5_BUILD_DIR}" >/dev/null || die
+
 	einfo "Configuring with: ${conf[@]}"
 	"${S}"/configure "${conf[@]}" || die "configure failed"
+
+	popd >/dev/null || die
 }
 
 # @FUNCTION: qt5_qmake
