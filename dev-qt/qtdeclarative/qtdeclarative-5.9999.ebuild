@@ -14,8 +14,9 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="gles2 +localstorage +widgets +xml"
+IUSE="gles2 localstorage +widgets xml"
 
+# qtgui[gles2=] is needed because of bug 504322
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=,gles2=,opengl]

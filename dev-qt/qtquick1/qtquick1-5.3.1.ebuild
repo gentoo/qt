@@ -14,7 +14,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="designer +opengl webkit +xml"
+IUSE="designer +opengl webkit xml"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
