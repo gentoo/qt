@@ -16,11 +16,12 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="opengl"
+IUSE="+opengl +ssl"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=,opengl=]
+	>=dev-qt/qtnetwork-${PV}:5[debug=,ssl=]
 "
 RDEPEND="${DEPEND}"
 
