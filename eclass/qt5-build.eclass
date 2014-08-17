@@ -76,7 +76,7 @@ if [[ ${PN} != qttest ]]; then
 	fi
 fi
 
-EXPORT_FUNCTIONS pkg_setup src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
+EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
@@ -122,18 +122,8 @@ esac
 # for tests you should proceed with setting VIRTUALX_REQUIRED=test.
 : ${VIRTUALX_REQUIRED:=manual}
 
-# @FUNCTION: qt5-build_pkg_setup
-# @DESCRIPTION:
-# Warns and/or dies if the user is trying to downgrade Qt.
-qt5-build_pkg_setup() {
-	# Warn users of possible breakage when downgrading to a previous release.
-	# Downgrading revisions within the same release is safe.
-	if has_version ">${CATEGORY}/${P}-r9999:5"; then
-		ewarn
-		ewarn "Downgrading Qt is completely unsupported and can break your system!"
-		ewarn
-	fi
-}
+
+######  Phase functions  ######
 
 # @FUNCTION: qt5-build_src_unpack
 # @DESCRIPTION:
@@ -298,6 +288,9 @@ qt5-build_pkg_postrm() {
 		qt5_regenerate_global_qconfigs
 	fi
 }
+
+
+######  Public helpers  ######
 
 # @FUNCTION: qt_use
 # @USAGE: <flag> [feature] [enableopt]

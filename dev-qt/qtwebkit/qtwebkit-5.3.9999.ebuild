@@ -60,11 +60,6 @@ DEPEND="${RDEPEND}
 	sys-devel/flex
 "
 
-pkg_setup() {
-	python-any-r1_pkg_setup
-	qt5-build_pkg_setup
-}
-
 src_prepare() {
 	use gstreamer    || epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
 	use libxml2      || sed -i -e '/config_libxml2: WEBKIT_CONFIG += use_libxml2/d' \

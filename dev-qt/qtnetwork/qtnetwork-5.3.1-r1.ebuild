@@ -42,8 +42,6 @@ QT5_GENTOO_CONFIG=(
 )
 
 pkg_setup() {
-	qt5-build_pkg_setup
-
 	use connman && QT5_TARGET_SUBDIRS+=(src/plugins/bearer/connman)
 	use networkmanager && QT5_TARGET_SUBDIRS+=(src/plugins/bearer/networkmanager)
 }

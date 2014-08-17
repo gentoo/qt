@@ -118,8 +118,6 @@ pkg_setup() {
 
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
-
-	qt5-build_pkg_setup
 }
 
 src_configure() {
