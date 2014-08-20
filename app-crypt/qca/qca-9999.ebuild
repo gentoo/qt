@@ -68,6 +68,11 @@ src_configure() {
 		$(with_plugin_use pkcs11)
 		$(with_plugin_use softstore)
 	)
+	if use qt4; then
+		mycmakeargs+=(-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/qt4/plugins/crypto")
+	else
+		mycmakeargs+=(-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/qt5/plugins/crypto")
+	fi
 
 	cmake-utils_src_configure
 }
