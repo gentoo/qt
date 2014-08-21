@@ -35,7 +35,7 @@ RDEPEND="
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
-	harfbuzz? ( >=media-libs/harfbuzz-0.9.28:= )
+	harfbuzz? ( >=media-libs/harfbuzz-0.9.32:= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
