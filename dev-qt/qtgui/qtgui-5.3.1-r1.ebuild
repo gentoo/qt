@@ -35,17 +35,17 @@ RDEPEND="
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
-	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:0= )
+	harfbuzz? ( >=media-libs/harfbuzz-0.9.12:= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
-		virtual/libudev:0=
+		virtual/libudev:=
 		x11-libs/libdrm
 	)
 	opengl? ( virtual/opengl )
 	png? ( media-libs/libpng:0= )
-	udev? ( virtual/libudev:0= )
+	udev? ( virtual/libudev:= )
 	xcb? (
 		x11-libs/libICE
 		x11-libs/libSM
