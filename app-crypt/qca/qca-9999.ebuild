@@ -13,7 +13,9 @@ EGIT_REPO_URI="git://anongit.kde.org/${PN}.git"
 LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS=""
+
 IUSE="botan debug doc examples gcrypt gpg logger nss openssl pkcs11 +qt4 qt5 sasl softstore test"
+REQUIRED_USE="^^ ( qt4 qt5 )"
 
 RDEPEND="
 	!app-crypt/qca-cyrus-sasl
@@ -45,7 +47,6 @@ DEPEND="${RDEPEND}
 		qt5? ( dev-qt/qttest:5 )
 	)
 "
-REQUIRED_USE="^^ ( qt4 qt5 )"
 
 DOCS=( README TODO )
 
@@ -55,7 +56,8 @@ qca_plugin_use() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/$(usev qt4 || usev qt5)/plugins/crypto"
+		-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/$(usex qt4 qt4 qt5)/plugins/crypto"
+		-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}/usr/$(usex qt4 share $(get_libdir))/$(usex qt4 qt4 qt5)/mkspecs/features"
 		$(cmake-utils_use qt4 QT4_BUILD)
 		$(qca_plugin_use botan)
 		$(qca_plugin_use gcrypt)
