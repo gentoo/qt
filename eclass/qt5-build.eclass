@@ -217,6 +217,10 @@ qt5-build_src_compile() {
 qt5-build_src_test() {
 	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
 
+	# '-after SUBDIRS-=cmake' disables broken tests - bug #474004
+	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake
+	qt5_foreach_target_subdir emake
+
 	# create a custom testrunner script that correctly sets
 	# {,DY}LD_LIBRARY_PATH before executing the given test
 	local testrunner=${QT5_BUILD_DIR}/gentoo-testrunner
@@ -228,18 +232,14 @@ qt5-build_src_test() {
 	EOF
 	chmod +x "${testrunner}"
 
-	# '-after SUBDIRS-=cmake' disables broken tests - bug #474004
-	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake
-	qt5_foreach_target_subdir emake
-
-	_test_runner() {
+	_qt5_test_runner() {
 		qt5_foreach_target_subdir emake TESTRUNNER="'${testrunner}'" check
 	}
 
 	if [[ ${VIRTUALX_REQUIRED} == test ]]; then
-		VIRTUALX_COMMAND="_test_runner" virtualmake
+		VIRTUALX_COMMAND="_qt5_test_runner" virtualmake
 	else
-		_test_runner
+		_qt5_test_runner
 	fi
 }
 
