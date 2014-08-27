@@ -19,8 +19,15 @@ esac
 
 inherit eutils flag-o-matic multilib toolchain-funcs virtualx
 
-HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
-LICENSE="|| ( LGPL-2.1 GPL-3 )"
+QT5_MINOR_VERSION=${PV#*.}
+QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
+
+HOMEPAGE="https://qt-project.org/"
+if [[ ${QT5_MINOR_VERSION} -ge 4 ]]; then
+	LICENSE="|| ( LGPL-2.1 LGPL-3 )"
+else
+	LICENSE="|| ( LGPL-2.1 GPL-3 )"
+fi
 SLOT="5"
 
 # @ECLASS-VARIABLE: QT5_MODULE
