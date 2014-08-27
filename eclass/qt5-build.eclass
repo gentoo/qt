@@ -186,8 +186,8 @@ qt5-build_src_prepare() {
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
 		# Respect toolchain and flags in config.tests
-		find config.tests/unix -name '*.test' -type f -print0 \
-			| xargs -0 sed -i -e '/bin\/qmake/ s/-nocache //' \
+		find config.tests/unix -name '*.test' -type f \
+			-execdir sed -i -e '/bin\/qmake/ s/-nocache //' '{}' + \
 			|| die "sed failed (config.tests)"
 	fi
 
@@ -258,8 +258,11 @@ qt5-build_src_install() {
 
 	if [[ ${PN} == qtcore ]]; then
 		pushd "${QT5_BUILD_DIR}" >/dev/null || die
-		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake,syncqt}"
-		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
+
+		set -- emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
+		einfo "Running $*"
+		"$@"
+
 		popd >/dev/null || die
 
 		# install an empty Gentoo/gentoo-qconfig.h in ${D}
