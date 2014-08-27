@@ -163,11 +163,13 @@ qt5-build_src_unpack() {
 
 # @FUNCTION: qt5-build_src_prepare
 # @DESCRIPTION:
-# Prepares the sources before the configure phase.
+# Prepares the environment and patches the sources if necessary.
 qt5-build_src_prepare() {
 	qt5_prepare_env
 
 	if [[ ${QT5_MODULE} == qtbase ]]; then
+		qt5_symlink_tools_to_build_dir
+
 		# Avoid unnecessary qmake recompilations
 		sed -i -re "s|^if true;.*(\[ '\!').*(\"\\\$outpath/bin/qmake\".*)|if \1 -e \2 then|" \
 			configure || die "sed failed (skip qmake bootstrap)"
@@ -191,10 +193,6 @@ qt5-build_src_prepare() {
 			|| die "sed failed (config.tests)"
 	fi
 
-	if [[ ${PN} != qtcore ]]; then
-		qt5_symlink_tools_to_build_dir
-	fi
-
 	# apply patches
 	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
 	epatch_user
@@ -202,7 +200,8 @@ qt5-build_src_prepare() {
 
 # @FUNCTION: qt5-build_src_configure
 # @DESCRIPTION:
-# Runs qmake, possibly preceded by ./configure.
+# Runs qmake in the target directories. For packages
+# in qtbase, ./configure is also run before qmake.
 qt5-build_src_configure() {
 	if [[ ${QT5_MODULE} == qtbase ]]; then
 		qt5_base_configure
@@ -213,14 +212,14 @@ qt5-build_src_configure() {
 
 # @FUNCTION: qt5-build_src_compile
 # @DESCRIPTION:
-# Compiles the code in target directories.
+# Runs emake in the target directories.
 qt5-build_src_compile() {
 	qt5_foreach_target_subdir emake
 }
 
 # @FUNCTION: qt5-build_src_test
 # @DESCRIPTION:
-# Runs tests in target directories.
+# Runs tests in the target directories.
 qt5-build_src_test() {
 	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
 
@@ -252,7 +251,7 @@ qt5-build_src_test() {
 
 # @FUNCTION: qt5-build_src_install
 # @DESCRIPTION:
-# Performs the actual installation of target directories.
+# Runs emake install in the target directories.
 qt5-build_src_install() {
 	qt5_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
@@ -421,14 +420,17 @@ qt5_foreach_target_subdir() {
 # @FUNCTION: qt5_symlink_tools_to_build_dir
 # @INTERNAL
 # @DESCRIPTION:
-# Symlinks qtcore tools to QT5_BUILD_DIR, so they can be used when building other modules.
+# Symlinks qmake and a few other tools to QT5_BUILD_DIR,
+# so that they can be used when building other modules.
 qt5_symlink_tools_to_build_dir() {
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
 
+	[[ ${PN} == qtcore ]] && return
+
 	local bin
-	for bin in "${QT5_BINDIR}"/{qmake,moc,rcc,uic,qdoc,qdbuscpp2xml,qdbusxml2cpp}; do
+	for bin in "${QT5_BINDIR}"/{qmake,moc,rcc,qlalr,uic,qdbuscpp2xml,qdbusxml2cpp,qdoc}; do
 		if [[ -e ${bin} ]]; then
-			ln -s "${bin}" "${QT5_BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
+			ln -s "${bin}" "${QT5_BUILD_DIR}"/bin || die "failed to symlink ${bin}"
 		fi
 	done
 }
@@ -586,7 +588,6 @@ qt5_base_configure() {
 		"${myconf[@]}"
 	)
 
-	mkdir -p "${QT5_BUILD_DIR}" || die
 	pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
 	einfo "Configuring with: ${conf[@]}"
@@ -602,8 +603,14 @@ qt5_base_configure() {
 # Intended to be called by qt5_foreach_target_subdir().
 qt5_qmake() {
 	local projectdir=${PWD/#${QT5_BUILD_DIR}/${S}}
+	local qmakepath=
+	if [[ ${QT5_MODULE} == qtbase ]]; then
+		qmakepath=${QT5_BUILD_DIR}/bin
+	else
+		qmakepath=${QT5_BINDIR}
+	fi
 
-	"${QT5_BUILD_DIR}"/bin/qmake \
+	"${qmakepath}"/qmake \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
 		QMAKE_LINK_C="$(tc-getCC)" \
