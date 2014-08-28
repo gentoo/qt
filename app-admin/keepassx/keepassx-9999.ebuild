@@ -8,7 +8,9 @@ inherit qt4-r2 cmake-utils git-2
 
 DESCRIPTION="Qt password manager compatible with its Win32 and Pocket PC versions."
 HOMEPAGE="http://keepassx.sourceforge.net/"
-EGIT_REPO_URI="git://gitorious.org/${PN}/${PN}"
+EGIT_REPO_URI="git://keepassx.org/${PN}.git
+	https://github.com/${PN}/${PN}
+"
 
 LICENSE="LGPL-2.1 GPL-2 GPL-3"
 SLOT="0"
