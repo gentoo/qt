@@ -423,16 +423,23 @@ qt5_foreach_target_subdir() {
 # Symlinks qmake and a few other tools to QT5_BUILD_DIR,
 # so that they can be used when building other modules.
 qt5_symlink_tools_to_build_dir() {
+	local tool= tools=()
+	if [[ ${PN} != qtcore ]]; then
+		tools+=(qmake moc rcc qlalr)
+		[[ ${PN} != qdoc ]] && tools+=(qdoc)
+		[[ ${PN} != qtdbus ]] && tools+=(qdbuscpp2xml qdbusxml2cpp)
+		[[ ${PN} != qtwidgets ]] && tools+=(uic)
+	fi
+
 	mkdir -p "${QT5_BUILD_DIR}"/bin || die
+	pushd "${QT5_BUILD_DIR}"/bin >/dev/null || die
 
-	[[ ${PN} == qtcore ]] && return
-
-	local bin
-	for bin in "${QT5_BINDIR}"/{qmake,moc,rcc,qlalr,uic,qdbuscpp2xml,qdbusxml2cpp,qdoc}; do
-		if [[ -e ${bin} ]]; then
-			ln -s "${bin}" "${QT5_BUILD_DIR}"/bin || die "failed to symlink ${bin}"
-		fi
+	for tool in "${tools[@]}"; do
+		[[ -e ${QT5_BINDIR}/${tool} ]] || continue
+		ln -s "${QT5_BINDIR}/${tool}" . || die "failed to symlink ${tool}"
 	done
+
+	popd >/dev/null || die
 }
 
 # @FUNCTION: qt5_base_configure
