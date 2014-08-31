@@ -23,7 +23,7 @@ REQUIRED_USE="
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
 	freetds? ( dev-db/freetds )
-	mysql? ( virtual/mysql:= )
+	mysql? ( >=virtual/mysql-5.6-r2:=[${MULTILIB_USEDEP}] )
 	oci8? ( dev-db/oracle-instantclient-basic[${MULTILIB_USEDEP}] )
 	odbc? ( || ( dev-db/unixODBC[${MULTILIB_USEDEP}] dev-db/libiodbc[${MULTILIB_USEDEP}] ) )
 	postgres? ( dev-db/postgresql-base:* )
@@ -38,7 +38,7 @@ QT4_TARGET_DIRECTORIES="
 multilib_src_configure() {
 	local myconf=(
 		$(qt_native_use freetds  sql-tds    plugin)
-		$(qt_native_use mysql    sql-mysql  plugin) $(use mysql && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
+		$(qt_use        mysql    sql-mysql  plugin) $(use mysql && echo "-I${EPREFIX}/usr/include/mysql -L${EPREFIX}/usr/$(get_libdir)/mysql")
 		$(qt_use        oci8     sql-oci    plugin) $(use oci8 && echo "-I${ORACLE_HOME}/include -L${ORACLE_HOME}/$(get_libdir)")
 		$(qt_use        odbc     sql-odbc   plugin) $(use odbc && echo "-I${EPREFIX}/usr/include/iodbc")
 		$(qt_native_use postgres sql-psql   plugin) $(use postgres && multilib_is_native_abi && echo "-I${EPREFIX}/usr/include/postgresql/pgsql")
