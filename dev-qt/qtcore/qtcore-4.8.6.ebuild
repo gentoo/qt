@@ -17,10 +17,10 @@ fi
 IUSE="+glib iconv icu qt3support ssl"
 
 DEPEND="
-	sys-libs/zlib[${MULTILIB_USEDEP}]
+	>=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}]
 	glib? ( dev-libs/glib:2[${MULTILIB_USEDEP}] )
 	icu? ( dev-libs/icu:=[${MULTILIB_USEDEP}] )
-	ssl? ( dev-libs/openssl:0[${MULTILIB_USEDEP}] )
+	ssl? ( >=dev-libs/openssl-1.0.1h-r2:0[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
 PDEPEND="
