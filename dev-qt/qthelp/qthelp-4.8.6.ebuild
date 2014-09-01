@@ -27,7 +27,7 @@ DEPEND="
 	~dev-qt/qtsql-${PV}[aqua=,debug=,sqlite,${MULTILIB_USEDEP}]
 	compat? (
 		~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
-		sys-libs/zlib[${MULTILIB_USEDEP}]
+		>=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}]
 	)
 "
 RDEPEND="${DEPEND}"
