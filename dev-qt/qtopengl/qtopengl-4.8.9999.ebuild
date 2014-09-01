@@ -19,9 +19,9 @@ IUSE="egl qt3support"
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,qt3support=,${MULTILIB_USEDEP}]
 	~dev-qt/qtgui-${PV}[aqua=,debug=,egl=,qt3support=,${MULTILIB_USEDEP}]
-	x11-libs/libX11[${MULTILIB_USEDEP}]
-	x11-libs/libXrender[${MULTILIB_USEDEP}]
-	virtual/opengl[${MULTILIB_USEDEP}]
+	>=x11-libs/libX11-1.5.0-r1[${MULTILIB_USEDEP}]
+	>=x11-libs/libXrender-0.9.7-r1[${MULTILIB_USEDEP}]
+	>=virtual/opengl-7.0-r1[${MULTILIB_USEDEP}]
 "
 RDEPEND="${DEPEND}"
 
