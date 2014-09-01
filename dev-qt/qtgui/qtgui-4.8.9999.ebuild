@@ -26,42 +26,42 @@ RDEPEND="
 	app-admin/eselect-qtgraphicssystem
 	~dev-qt/qtcore-${PV}[aqua=,debug=,glib=,qt3support=,${MULTILIB_USEDEP}]
 	~dev-qt/qtscript-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
-	media-libs/fontconfig[${MULTILIB_USEDEP}]
-	media-libs/freetype:2[${MULTILIB_USEDEP}]
+	>=media-libs/fontconfig-2.10.2-r1[${MULTILIB_USEDEP}]
+	>=media-libs/freetype-2.4.11-r1:2[${MULTILIB_USEDEP}]
 	media-libs/libpng:0=[${MULTILIB_USEDEP}]
-	sys-libs/zlib[${MULTILIB_USEDEP}]
+	>=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}]
 	virtual/jpeg:0[${MULTILIB_USEDEP}]
 	!aqua? (
-		x11-libs/libICE[${MULTILIB_USEDEP}]
-		x11-libs/libSM[${MULTILIB_USEDEP}]
-		x11-libs/libX11[${MULTILIB_USEDEP}]
-		x11-libs/libXcursor[${MULTILIB_USEDEP}]
-		x11-libs/libXext[${MULTILIB_USEDEP}]
-		x11-libs/libXfixes[${MULTILIB_USEDEP}]
-		x11-libs/libXi[${MULTILIB_USEDEP}]
-		x11-libs/libXrandr[${MULTILIB_USEDEP}]
-		x11-libs/libXrender[${MULTILIB_USEDEP}]
-		xinerama? ( x11-libs/libXinerama[${MULTILIB_USEDEP}] )
-		xv? ( x11-libs/libXv[${MULTILIB_USEDEP}] )
+		>=x11-libs/libICE-1.0.8-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libSM-1.2.1-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libX11-1.5.0-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libXcursor-1.1.13-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libXext-1.3.1-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libXfixes-5.0-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libXi-1.6.2-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libXrandr-1.4.0-r1[${MULTILIB_USEDEP}]
+		>=x11-libs/libXrender-0.9.7-r1[${MULTILIB_USEDEP}]
+		xinerama? ( >=x11-libs/libXinerama-1.1.2-r1[${MULTILIB_USEDEP}] )
+		xv? ( >=x11-libs/libXv-1.0.7-r1[${MULTILIB_USEDEP}] )
 	)
 	cups? ( net-print/cups[${MULTILIB_USEDEP}] )
 	egl? ( media-libs/mesa[egl,${MULTILIB_USEDEP}] )
 	glib? ( dev-libs/glib:2[${MULTILIB_USEDEP}] )
 	gtkstyle? (
-		x11-libs/cairo[-qt4,${MULTILIB_USEDEP}]
-		x11-libs/gtk+:2[aqua=,${MULTILIB_USEDEP}]
+		>=x11-libs/cairo-1.12[-qt4,${MULTILIB_USEDEP}]
+		>=x11-libs/gtk+-2.24.23-r1:2[aqua=,${MULTILIB_USEDEP}]
 	)
-	mng? ( >=media-libs/libmng-1.0.9:=[${MULTILIB_USEDEP}] )
-	nas? ( >=media-libs/nas-1.5[${MULTILIB_USEDEP}] )
-	tiff? ( media-libs/tiff:0[${MULTILIB_USEDEP}] )
+	mng? ( >=media-libs/libmng-1.0.10-r2:=[${MULTILIB_USEDEP}] )
+	nas? ( >=media-libs/nas-1.9.3-r1[${MULTILIB_USEDEP}] )
+	tiff? ( >=media-libs/tiff-4.0.3-r2:0[${MULTILIB_USEDEP}] )
 	!<dev-qt/qthelp-4.8.5:4
 "
 DEPEND="${RDEPEND}
 	!aqua? (
-		x11-proto/inputproto[${MULTILIB_USEDEP}]
-		x11-proto/xextproto[${MULTILIB_USEDEP}]
-		xinerama? ( x11-proto/xineramaproto[${MULTILIB_USEDEP}] )
-		xv? ( x11-proto/videoproto[${MULTILIB_USEDEP}] )
+		>=x11-proto/inputproto-2.2-r1[${MULTILIB_USEDEP}]
+		>=x11-proto/xextproto-7.2.1-r1[${MULTILIB_USEDEP}]
+		xinerama? ( >=x11-proto/xineramaproto-1.2.1-r1[${MULTILIB_USEDEP}] )
+		xv? ( >=x11-proto/videoproto-2.3.1-r1[${MULTILIB_USEDEP}] )
 	)
 "
 PDEPEND="
