@@ -129,6 +129,7 @@ src_configure() {
 
 	local myconf=(
 		$(use accessibility && use xcb && echo -dbus-linked)
+		$(use ibus && echo -dbus-linked)
 		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
