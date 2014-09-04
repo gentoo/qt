@@ -7,11 +7,11 @@ KDE_REQUIRED="optional"
 inherit cmake-utils kde4-base
 
 DESCRIPTION="A set of widget styles for Qt and GTK2"
-HOMEPAGE="https://github.com/QtCurve/qtcurve"
+HOMEPAGE="https://projects.kde.org/projects/playground/base/qtcurve"
 
 if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/QtCurve/qtcurve.git"
+	EGIT_REPO_URI="git://anongit.kde.org/qtcurve.git"
 	KEYWORDS=""
 else
 	SRC_URI="https://github.com/QtCurve/${PN}/archive/${PV}.tar.gz  -> ${P}.tar.gz
