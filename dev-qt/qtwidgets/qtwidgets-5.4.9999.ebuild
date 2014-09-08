@@ -16,14 +16,15 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="gles2 +opengl +png"
+# keep IUSE defaults in sync with qtgui
+IUSE="gles2 +opengl +png +xcb"
 REQUIRED_USE="
 	gles2? ( opengl )
 "
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,gles2=,opengl=,png=]
+	~dev-qt/qtgui-${PV}[debug=,gles2=,opengl=,png=,xcb?]
 "
 RDEPEND="${DEPEND}"
 
@@ -45,8 +46,12 @@ src_configure() {
 	fi
 
 	local myconf=(
+		# copied from qtgui
 		${gl}
 		$(qt_use png libpng system)
+		$(qt_use xcb xcb system)
+		$(qt_use xcb xkbcommon system)
+		$(use xcb && echo -xcb-xlib -xinput2 -xkb -xrender)
 	)
 	qt5-build_src_configure
 }
