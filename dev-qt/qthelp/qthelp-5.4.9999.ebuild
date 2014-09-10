@@ -22,7 +22,7 @@ DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtsql-${PV}:5[debug=]
+	>=dev-qt/qtsql-${PV}:5[debug=,sqlite]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 "
 RDEPEND="${DEPEND}"
@@ -30,4 +30,7 @@ RDEPEND="${DEPEND}"
 QT5_TARGET_SUBDIRS=(
 	src/assistant/clucene
 	src/assistant/help
+	src/assistant/qcollectiongenerator
+	src/assistant/qhelpconverter
+	src/assistant/qhelpgenerator
 )
