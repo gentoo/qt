@@ -38,7 +38,9 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/sqldrivers
 )
 
-PATCHES=( "${FILESDIR}/${PN}-pathfiltering.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-5.3.1-path-filtering.patch"
+)
 
 src_configure() {
 	local myconf=(
