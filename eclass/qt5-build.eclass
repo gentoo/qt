@@ -71,6 +71,8 @@ EGIT_REPO_URI=(
 
 IUSE="debug test"
 
+[[ ${QT5_BUILD_TYPE} == release && ${QT5_MINOR_VERSION} -le 3 ]] && RESTRICT="test"
+
 DEPEND="
 	dev-lang/perl
 	virtual/pkgconfig
