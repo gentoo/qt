@@ -18,9 +18,9 @@ IUSE="debug qt4 qt5"
 REQUIRED_USE="^^ ( qt4 qt5 )"
 
 DEPEND="qt4? ( dev-qt/qtcore:4
-               dev-qt/qtgui:4 
-               x11-libs/libqxt 
-               x11-libs/qtermwidget )
+               dev-qt/qtgui:4
+               x11-libs/libqxt
+               x11-libs/qtermwidget[qt4] )
         qt5? ( dev-qt/qtcore:5
                   dev-qt/qtgui:5
                   dev-qt/linguist-tools:5
@@ -28,7 +28,7 @@ DEPEND="qt4? ( dev-qt/qtcore:4
 RDEPEND="${DEPEND}"
 
 src_configure() {
-    mycmakeargs=(
+    local mycmakeargs=(
         $(cmake-utils_use_use qt5 QT5)
         $(cmake-utils_use_use qt4 SYSTEM_QXT)
     )
