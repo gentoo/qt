@@ -8,7 +8,7 @@ inherit cmake-utils
 DESCRIPTION="A Qt implementation of XDG standards"
 HOMEPAGE="http://www.lxqt.org/"
 
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
 else
@@ -18,7 +18,7 @@ fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="+qt4 qt5 test"
+IUSE="+qt4 qt5 qtmimetypes test"
 REQUIRED_USE="^^ ( qt4 qt5 )"
 
 CDEPEND="
@@ -26,6 +26,7 @@ CDEPEND="
 	qt4? (
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4
+		qtmimetypes? ( dev-qt/qtmimetypes )
 	)
 	qt5? (
 		dev-qt/qtcore:5
@@ -39,10 +40,11 @@ DEPEND="${CDEPEND}
 		qt5? ( dev-qt/qttest:5 )
 	)"
 RDEPEND="${CDEPEND}
-	x11-misc/xdg-utils"
+	!qtmimetypes? ( x11-misc/xdg-utils )"
 
 src_configure() {
 	local mycmakeargs=(
+		$(cmake-utils_use_use qtmimetypes)
 		$(cmake-utils_use_use qt5 QT5)
 		$(cmake-utils_use test BUILD_TESTS)
 	)

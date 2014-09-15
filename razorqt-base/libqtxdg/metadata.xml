@@ -7,4 +7,10 @@
     <email>jauhien@gentoo.org</email>
     <name>Jauhien Piatlicki</name>
   </maintainer>
+  <use>
+  	<flag name='qtmimetypes'>Support for <pkg>dev-qt/qtmimetypes</pkg> package 
+	instead of the older <pkg>x11-misc/xdg-utils</pkg> functionality, 
+	this use flag is required for LXQT functionality however not for RazorQT
+    </flag>
+  </use>
 </pkgmetadata>

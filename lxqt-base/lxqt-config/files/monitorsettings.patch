@@ -1,0 +1,23 @@
+--- lxqt-config-monitor/monitorsettingsdialog.cpp	2014-09-10 19:26:37.858635143 -0400
++++ lxqt-config-monitor/monitorsettingsdialog.cpp	2014-09-10 19:26:25.594635363 -0400
+@@ -115,7 +115,7 @@
+     mode = monitor->monitorInfo->modes[i];
+     ok = true;
+     Q_FOREACH(MonitorWidget * monitor2, monitors) {
+-      ok &= monitor2->monitorInfo->modes.contains(mode);
++      ok = ok && monitor2->monitorInfo->modes.contains(mode);
+     }
+     if(ok)
+       break;
+@@ -233,7 +233,10 @@
+   }
+   else {
+     ui.tabWidget->removeTab(0);
+-    ui.tabWidget->tabBar()->hide();
++    //tabBar is protected so we cannot call hide directly
++    //ui.tabWidget->tabBar()->hide();
++    QTabBar *tabBar = qFindChild<QTabBar *>(ui.tabWidget);
++    tabBar->hide();
+   }
+ 
+   adjustSize();
