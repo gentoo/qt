@@ -225,8 +225,8 @@ qt5-build_src_compile() {
 qt5-build_src_test() {
 	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
 
-	# '-after SUBDIRS-=cmake' disables broken tests - bug #474004
-	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake
+	# '-after SUBDIRS-=...' disables broken cmake tests (bug 474004)
+	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake SUBDIRS-=installed_cmake
 	qt5_foreach_target_subdir emake
 
 	# create a custom testrunner script that correctly sets
