@@ -26,7 +26,6 @@ RDEPEND="
 	)
 	qml? (
 		>=dev-qt/qtdeclarative-${PV}:5[debug=]
-		>=dev-qt/qtgui-${PV}:5[debug=]
 		>=dev-qt/qtnetwork-${PV}:5[debug=]
 	)
 "
