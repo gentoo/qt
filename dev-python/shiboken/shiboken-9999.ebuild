@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-python/shiboken/shiboken-1.2.2.ebuild,v 1.4 2014/09/20 23:15:39 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-python/shiboken/shiboken-1.2.2.ebuild,v 1.5 2014/09/20 23:58:11 pesa Exp $
 
 EAPI=5
 
@@ -18,9 +18,12 @@ EGIT_REPO_URI=(
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
+
 IUSE="test"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="
+	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-qt/qtcore:4
