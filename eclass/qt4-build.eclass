@@ -23,7 +23,7 @@ else
 	QT4_BUILD_TYPE="release"
 fi
 
-HOMEPAGE="http://qt-project.org/ http://qt.digia.com/"
+HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 
 case ${QT4_BUILD_TYPE} in
@@ -36,7 +36,7 @@ case ${QT4_BUILD_TYPE} in
 		;;
 	release)
 		MY_P=qt-everywhere-opensource-src-${PV/_/-}
-		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
+		SRC_URI="http://download.qt-project.org/archive/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
 		S=${WORKDIR}/${MY_P}
 		;;
 esac

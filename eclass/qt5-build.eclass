@@ -22,7 +22,7 @@ inherit eutils flag-o-matic multilib toolchain-funcs virtualx
 QT5_MINOR_VERSION=${PV#*.}
 QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
 
-HOMEPAGE="https://qt-project.org/"
+HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
 if [[ ${QT5_MINOR_VERSION} -ge 4 ]]; then
 	LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 else
@@ -58,7 +58,7 @@ case ${PV} in
 		# official stable releases
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV}
-		SRC_URI="http://download.qt-project.org/official_releases/qt/${PV%.*}/${PV}/submodules/${MY_P}.tar.xz"
+		SRC_URI="http://download.qt-project.org/archive/qt/${PV%.*}/${PV}/submodules/${MY_P}.tar.xz"
 		S=${WORKDIR}/${MY_P}
 		;;
 esac
