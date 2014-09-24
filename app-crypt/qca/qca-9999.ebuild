@@ -56,7 +56,7 @@ qca_plugin_use() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/$(usex qt4 qt4 qt5)/plugins/crypto"
+		-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/$(usex qt4 qt4 qt5)/plugins"
 		-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}/usr/$(usex qt4 share $(get_libdir))/$(usex qt4 qt4 qt5)/mkspecs/features"
 		$(cmake-utils_use qt4 QT4_BUILD)
 		$(qca_plugin_use botan)
