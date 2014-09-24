@@ -16,7 +16,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="webkit"
+IUSE="declarative webkit"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
@@ -25,6 +25,7 @@ DEPEND="
 	>=dev-qt/qtprintsupport-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	>=dev-qt/qtxml-${PV}:5[debug=]
+	declarative? ( >=dev-qt/qtdeclarative-${PV}:5[debug=,widgets] )
 	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
@@ -34,6 +35,9 @@ QT5_TARGET_SUBDIRS=(
 )
 
 src_prepare() {
+	qt_use_disable_mod declarative quickwidgets \
+		src/designer/src/plugins/plugins.pro
+
 	qt_use_disable_mod webkit webkitwidgets \
 		src/designer/src/plugins/plugins.pro
 
