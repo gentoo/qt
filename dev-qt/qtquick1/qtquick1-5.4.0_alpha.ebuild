@@ -28,7 +28,7 @@ DEPEND="
 		>=dev-qt/qtdeclarative-${PV}:5[debug=]
 	)
 	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
-	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=,widgets] )
+	webkit? ( >=dev-qt/qtwebkit-${PV}:5[debug=] )
 	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5[debug=] )
 "
 RDEPEND="${DEPEND}"
