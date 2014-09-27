@@ -4,6 +4,8 @@
 
 EAPI=5
 
+QT5_MODULE="qtlocation"
+
 inherit qt5-build
 
 DESCRIPTION="Physical position determination library for the Qt5 framework"
@@ -14,8 +16,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# FIXME: src/3rdparty/poly2tri doesn't respect CXX and CXXFLAGS
-# TODO: plugins (geoclue-satellite, gypsy)
+# TODO: src/plugins/position/gypsy
 IUSE="geoclue qml"
 
 RDEPEND="
@@ -24,17 +25,16 @@ RDEPEND="
 		app-misc/geoclue:0
 		dev-libs/glib:2
 	)
-	qml? (
-		>=dev-qt/qtdeclarative-${PV}:5[debug=]
-		>=dev-qt/qtnetwork-${PV}:5[debug=]
-	)
+	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
 "
 DEPEND="${RDEPEND}"
 
-src_prepare() {
-	qt_use_compile_test geoclue
-	qt_use_disable_mod qml quick \
-		src/src.pro
+QT5_TARGET_SUBDIRS=(
+	src/positioning
+	src/plugins/position/positionpoll
+)
 
-	qt5-build_src_prepare
+pkg_setup() {
+	use geoclue && QT5_TARGET_SUBDIRS+=(src/plugins/position/geoclue)
+	use qml && QT5_TARGET_SUBDIRS+=(src/imports/positioning)
 }
