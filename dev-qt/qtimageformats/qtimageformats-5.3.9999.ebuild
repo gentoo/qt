@@ -11,7 +11,7 @@ DESCRIPTION="Additional format plugins for the Qt image I/O system"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 IUSE=""
