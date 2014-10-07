@@ -71,7 +71,8 @@ EGIT_REPO_URI=(
 
 IUSE="debug test"
 
-[[ ${QT5_BUILD_TYPE} == release && ${QT5_MINOR_VERSION} -le 3 ]] && RESTRICT="test"
+[[ ${PN} == qtwebkit ]] && RESTRICT="mirror" # bug 524584
+[[ ${QT5_BUILD_TYPE} == release && ${QT5_MINOR_VERSION} -le 3 ]] && RESTRICT="test" # bug 457182
 
 DEPEND="
 	dev-lang/perl
