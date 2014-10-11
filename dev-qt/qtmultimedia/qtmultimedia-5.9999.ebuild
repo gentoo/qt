@@ -14,7 +14,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="+alsa +gstreamer openal +opengl pulseaudio qml widgets"
+IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
 
 # "widgets? ( qtgui[opengl=] )" because of bug 518542 comment 2
 RDEPEND="
@@ -34,7 +34,7 @@ RDEPEND="
 	)
 	widgets? (
 		>=dev-qt/qtgui-${PV}:5[debug=,opengl=]
-		>=dev-qt/qtwidgets-${PV}:5[debug=]
+		>=dev-qt/qtwidgets-${PV}:5[debug=,opengl=]
 		opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
 	)
 "
