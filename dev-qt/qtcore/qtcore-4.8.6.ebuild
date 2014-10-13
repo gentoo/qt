@@ -28,6 +28,11 @@ PDEPEND="
 	qt3support? ( ~dev-qt/qtgui-${PV}[aqua=,debug=,glib=,qt3support,${MULTILIB_USEDEP}] )
 "
 
+MULTILIB_WRAPPED_HEADERS=(
+	/usr/include/qt4/Qt/qconfig.h
+	/usr/include/qt4/QtCore/qconfig.h
+)
+
 PATCHES=(
 	"${FILESDIR}/${PN}-4.8.5-moc-boost-lexical-cast.patch"
 	"${FILESDIR}/${PN}-4.8.5-honor-ExcludeSocketNotifiers-in-glib-event-loop.patch" # bug 514968
