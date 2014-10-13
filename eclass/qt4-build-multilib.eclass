@@ -554,18 +554,18 @@ install_qconfigs() {
 	local x
 	if [[ -n ${QCONFIG_ADD} || -n ${QCONFIG_REMOVE} ]]; then
 		for x in QCONFIG_ADD QCONFIG_REMOVE; do
-			[[ -n ${!x} ]] && echo ${x}=${!x} >> "${T}"/${PN}-qconfig.pri
+			[[ -n ${!x} ]] && echo ${x}=${!x} >> "${BUILD_DIR}"/${PN}-qconfig.pri
 		done
 		insinto ${QT4_DATADIR#${EPREFIX}}/mkspecs/gentoo
-		doins "${T}"/${PN}-qconfig.pri
+		doins "${BUILD_DIR}"/${PN}-qconfig.pri
 	fi
 
 	if [[ -n ${QCONFIG_DEFINE} ]]; then
 		for x in ${QCONFIG_DEFINE}; do
-			echo "#define ${x}" >> "${T}"/gentoo-${PN}-qconfig.h
+			echo "#define ${x}" >> "${BUILD_DIR}"/gentoo-${PN}-qconfig.h
 		done
 		insinto ${QT4_HEADERDIR#${EPREFIX}}/Gentoo
-		doins "${T}"/gentoo-${PN}-qconfig.h
+		doins "${BUILD_DIR}"/gentoo-${PN}-qconfig.h
 	fi
 }
 
