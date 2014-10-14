@@ -2,7 +2,13 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
   <herd>lxqt</herd>
+  <maintainer>
+    <email>jauhien@gentoo.org</email>
+    <name>Jauhien Piatlicki</name>
+  </maintainer>
   <use>
+    <flag name="admin">Install <pkg>lxqt-base/lxqt-admin</pkg>
+    administration tool</flag>
     <flag name="icons">Install <pkg>lxde-base/lxde-icon-theme</pkg>
     icon theme</flag>
     <flag name="lightdm">Install <pkg>x11-misc/lightdm</pkg>
