@@ -19,17 +19,37 @@ fi
 
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
+IUSE="+qt4 qt5"
+REQUIRED_USE="^^ ( qt4 qt5 )"
 
-DEPEND="dev-qt/qtcore:4
-	dev-qt/qtgui:4
+DEPEND="
+	qt4? (
+		~razorqt-base/libqtxdg-${PV}[qtmimetypes]
+		dev-qt/qtcore:4
+		dev-qt/qtgui:4
+	)
+	qt5? (
+		~razorqt-base/libqtxdg-${PV}[qt5]
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+	)
 	lxqt-base/liblxqt
-	razorqt-base/libqtxdg
 	sys-libs/zlib
 	x11-libs/libXcursor
 	x11-libs/libXfixes"
 RDEPEND="${DEPEND}"
 
-src_install(){
+#MonitorSettings Build Failure: https://github.com/lxde/lxde-qt/issues/275
+PATCHES=( "${FILESDIR}/monitorsettings.patch" )
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_use qt5 QT5)
+	)
+	cmake-utils_src_configure
+}
+
+src_install() {
 	cmake-utils_src_install
 	doman man/*.1 liblxqt-config-cursor/man/*.1 lxqt-config-appearance/man/*.1
 }
