@@ -16,6 +16,7 @@ IUSE="consolekit systemd +upower"
 REQUIRED_USE="?? ( upower systemd )"
 
 RDEPEND="sys-libs/pam
+	>=x11-base/xorg-server-1.15.1
 	x11-libs/libxcb[xkb(-)]
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -37,6 +38,7 @@ pkg_pretend() {
 
 src_prepare() {
 	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
+	use upower && epatch "${FILESDIR}/${P}-upower.patch"
 
 	# respect user's cflags
 	sed -e 's|-Wall -march=native||' \
