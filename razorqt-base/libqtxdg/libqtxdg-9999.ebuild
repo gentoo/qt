@@ -18,32 +18,25 @@ fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="+qt4 qt5 test"
-REQUIRED_USE="^^ ( qt4 qt5 )"
+IUSE="test"
 
 CDEPEND="
 	sys-apps/file
-	qt4? (
-		dev-qt/qtcore:4
-		dev-qt/qtgui:4
-	)
-	qt5? (
-		dev-qt/qtcore:5
-		dev-qt/qtwidgets:5
-		dev-qt/qtxml:5
-		dev-qt/linguist-tools:5
-	)"
+	dev-qt/qtcore:5
+	dev-qt/qtwidgets:5
+	dev-qt/qtxml:5
+	dev-qt/linguist-tools:5
+"
 DEPEND="${CDEPEND}
 	test? (
-		qt4? ( dev-qt/qttest:4 )
-		qt5? ( dev-qt/qttest:5 )
-	)"
+	dev-qt/qttest:5 )
+"
 RDEPEND="${CDEPEND}
 	x11-misc/xdg-utils"
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use_use qt5 QT5)
+		-DUSE_QT5=ON
 		$(cmake-utils_use test BUILD_TESTS)
 	)
 	cmake-utils_src_configure
