@@ -8,8 +8,8 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit eutils python-r1 toolchain-funcs
 
 DESCRIPTION="Python extension module generator for C and C++ libraries"
-HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro http://pypi.python.org/pypi/SIP"
-LICENSE="|| ( GPL-2 GPL-3 sip )"
+HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro https://pypi.python.org/pypi/SIP"
+LICENSE="|| ( GPL-2 GPL-3 SIP )"
 
 if [[ ${PV} == *9999* ]]; then
 	# live version from mercurial repo
@@ -72,10 +72,8 @@ src_configure() {
 	configuration() {
 		local myconf=(
 			"${PYTHON}" configure.py
-			--bindir="${EPREFIX}/usr/bin"
 			--destdir="$(python_get_sitedir)"
 			--incdir="$(python_get_includedir)"
-			--sipdir="${EPREFIX}/usr/share/sip"
 			$(use debug && echo --debug)
 			AR="$(tc-getAR) cqs"
 			CC="$(tc-getCC)"
