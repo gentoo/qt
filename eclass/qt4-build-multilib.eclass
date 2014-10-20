@@ -269,9 +269,7 @@ qt4-build-multilib_src_prepare() {
 qt4_multilib_src_configure() {
 	qt4_prepare_env
 
-	if [[ ${PN} != qtcore ]]; then
-		qt4_symlink_tools_to_build_dir
-	fi
+	qt4_symlink_tools_to_build_dir
 
 	# toolchain setup
 	tc-export CC CXX OBJCOPY STRIP
@@ -519,16 +517,23 @@ qt4_foreach_target_subdir() {
 # @FUNCTION: qt4_symlink_tools_to_build_dir
 # @INTERNAL
 # @DESCRIPTION:
-# Symlinks qtcore tools to BUILD_DIR, so they can be used during compilation.
+# Symlinks qtcore tools to BUILD_DIR,
+# so that they can be used when building other modules.
 qt4_symlink_tools_to_build_dir() {
-	mkdir -p "${BUILD_DIR}"/bin || die
+	local tool= tools=()
+	if [[ ${PN} != qtcore ]]; then
+		tools+=(qmake moc rcc uic)
+	fi
 
-	local bin
-	for bin in "${QT4_BINDIR}"/{qmake,moc,rcc,uic}; do
-		if [[ -e ${bin} ]]; then
-			ln -s "${bin}" "${BUILD_DIR}"/bin/ || die "failed to symlink ${bin}"
-		fi
+	mkdir -p "${BUILD_DIR}"/bin || die
+	pushd "${BUILD_DIR}"/bin >/dev/null || die
+
+	for tool in "${tools[@]}"; do
+		[[ -e ${QT4_BINDIR}/${tool} ]] || continue
+		ln -s "${QT4_BINDIR}/${tool}" . || die "failed to symlink ${tool}"
 	done
+
+	popd >/dev/null || die
 }
 
 # @FUNCTION: qt4_qmake
