@@ -158,10 +158,13 @@ eqmake4() {
 
 	[[ -n ${EQMAKE4_EXCLUDE} ]] && eshopts_pop
 
-	"${EPREFIX}"/usr/bin/qmake \
+	# determine qmake binary location
+	local qmake_path=${EPREFIX}/usr/$(get_libdir)/qt4/bin/qmake
+	[[ ! -x ${qmake_path} ]] && qmake_path=${EPREFIX}/usr/bin/qmake
+
+	"${qmake_path}" \
 		-makefile \
 		QTDIR="${EPREFIX}"/usr/$(get_libdir) \
-		QMAKE="${EPREFIX}"/usr/bin/qmake \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
 		QMAKE_CXX="$(tc-getCXX)" \
