@@ -28,8 +28,7 @@ CDEPEND="
 	dev-qt/linguist-tools:5
 "
 DEPEND="${CDEPEND}
-	test? (
-	dev-qt/qttest:5 )
+	test? ( dev-qt/qttest:5 )
 "
 RDEPEND="${CDEPEND}
 	x11-misc/xdg-utils"
