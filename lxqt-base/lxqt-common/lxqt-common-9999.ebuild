@@ -14,18 +14,14 @@ if [[ ${PV} = *9999* ]]; then
 else
 	SRC_URI="http://lxqt.org/downloads/lxqt/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
-	S=${WORKDIR}
 fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-DEPEND="lxqt-base/liblxqt
-	dev-qt/qtcore:4
-	dev-qt/qtgui:4
-	dev-qt/qtsvg:4"
+DEPEND="~lxqt-base/liblxqt-${PV}"
 RDEPEND="${DEPEND}"
-PDEPEND="lxqt-base/lxqt-session"
+PDEPEND="~lxqt-base/lxqt-session-${PV}"
 
 src_install() {
 	cmake-utils_src_install
