@@ -158,7 +158,11 @@ eqmake4() {
 
 	[[ -n ${EQMAKE4_EXCLUDE} ]] && eshopts_pop
 
-	"${EPREFIX}"/usr/bin/qmake \
+	# Determine the proper qmake location
+	local qmake_path=${EPREFIX}/usr/$(get_libdir)/qt4/bin/qmake
+	[[ ! -x ${qmake_path} ]] && qmake_path=${EPREFIX}/usr/bin/qmake
+
+	"${qmake_path}" \
 		-makefile \
 		QTDIR="${EPREFIX}"/usr/$(get_libdir) \
 		QMAKE="${EPREFIX}"/usr/bin/qmake \
