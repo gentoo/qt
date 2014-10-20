@@ -23,6 +23,7 @@ IUSE="test"
 CDEPEND="
 	sys-apps/file
 	dev-qt/qtcore:5
+	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtxml:5
 	dev-qt/linguist-tools:5
