@@ -16,7 +16,6 @@ SLOT="0"
 
 DEPEND="dev-libs/glib:2
 	dev-libs/liboobs
-	dev-qt/qtcore:4
-	dev-qt/qtgui:4
+	dev-qt/qtwidgets:5
 	~lxqt-base/liblxqt-${PV}"
 RDEPEND="${DEPEND}"
