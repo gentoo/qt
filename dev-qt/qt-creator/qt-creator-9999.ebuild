@@ -1,16 +1,16 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.0.0.ebuild,v 1.1 2013/12/19 22:31:44 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.2.2.ebuild,v 1.1 2014/10/14 23:34:31 pesa Exp $
 
 EAPI=5
 
 PLOCALES="cs de fr ja pl ru sl zh_CN zh_TW"
 
-inherit eutils l10n multilib qt4-r2
+inherit eutils l10n multilib qmake-utils
 
 DESCRIPTION="Lightweight IDE for C++/QML development centering around Qt"
 HOMEPAGE="http://qt-project.org/wiki/Category:Tools::QtCreator"
-LICENSE="LGPL-2.1"
+LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
@@ -29,26 +29,26 @@ fi
 SLOT="0"
 KEYWORDS=""
 
+# TODO: qbs:qbsprojectmanager, winrt (both require qt5)
 QTC_PLUGINS=(android autotools:autotoolsprojectmanager baremetal bazaar
-	clearcase cmake:cmakeprojectmanager cvs fakevim git ios mercurial
-	perforce python:pythoneditor qnx subversion valgrind)
+	clang:clangcodemodel clearcase cmake:cmakeprojectmanager cvs git
+	ios mercurial perforce python:pythoneditor qnx subversion valgrind)
 IUSE="debug doc examples test ${QTC_PLUGINS[@]%:*}"
 
 # minimum Qt version required
-QT_PV="4.8.0:4"
+QT_PV="4.8.5:4"
 
 CDEPEND="
 	=dev-libs/botan-1.10*[threads]
+	>=dev-qt/designer-${QT_PV}
 	>=dev-qt/qtcore-${QT_PV}[ssl]
 	>=dev-qt/qtdeclarative-${QT_PV}
-	|| (
-		( >=dev-qt/qtgui-4.8.5:4 dev-qt/designer:4 )
-		( >=dev-qt/qtgui-${QT_PV} <dev-qt/qtgui-4.8.5:4 )
-	)
+	>=dev-qt/qtgui-${QT_PV}
 	>=dev-qt/qthelp-${QT_PV}[doc?]
 	>=dev-qt/qtscript-${QT_PV}
 	>=dev-qt/qtsql-${QT_PV}
 	>=dev-qt/qtsvg-${QT_PV}
+	clang? ( >=sys-devel/clang-3.2:= )
 "
 DEPEND="${CDEPEND}
 	virtual/pkgconfig
@@ -70,13 +70,12 @@ PDEPEND="
 "
 
 src_prepare() {
-	qt4-r2_src_prepare
-
 	# disable unwanted plugins
 	for plugin in "${QTC_PLUGINS[@]#[+-]}"; do
 		if ! use ${plugin%:*}; then
 			einfo "Disabling ${plugin%:*} plugin"
-			sed -i -re "/^\s+${plugin#*:}\>/d" src/plugins/plugins.pro \
+			sed -i -re "/(^\s+|SUBDIRS\s*\+=\s*)${plugin#*:}\>/d" \
+				src/plugins/plugins.pro \
 				|| die "failed to disable ${plugin%:*} plugin"
 		fi
 	done
@@ -85,8 +84,7 @@ src_prepare() {
 	sed -i -e "/^LANGUAGES =/ s:=.*:= $(l10n_get_locales):" \
 		share/qtcreator/translations/translations.pro || die
 
-	# remove bundled qbs for now
-	# TODO: package it and re-enable the plugin
+	# remove bundled qbs
 	rm -rf src/shared/qbs || die
 }
 
@@ -95,6 +93,7 @@ src_configure() {
 			tests/*"
 	eqmake4 IDE_LIBRARY_BASENAME="$(get_libdir)" \
 		IDE_PACKAGE_MODE=1 \
+		LLVM_INSTALL_DIR="${EPREFIX}/usr" \
 		TEST=$(use test && echo 1 || echo 0) \
 		USE_SYSTEM_BOTAN=1
 }
@@ -106,7 +105,7 @@ src_test() {
 	EQMAKE4_EXCLUDE="valgrind/*"
 	eqmake4 IDE_LIBRARY_BASENAME="$(get_libdir)"
 
-	emake check
+	default
 }
 
 src_install() {

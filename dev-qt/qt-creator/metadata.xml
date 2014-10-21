@@ -11,9 +11,9 @@
 	<flag name="autotools">Enable autotools project manager plugin</flag>
 	<flag name="baremetal">Build plugin for bare metal devices</flag>
 	<flag name="bazaar">Add support for <pkg>dev-vcs/bzr</pkg> version control system</flag>
+	<flag name="clang">Build clang-based code model plugin</flag>
 	<flag name="clearcase">Add support for IBM ClearCase version control system (requires manual installation of ClearCase client)</flag>
 	<flag name="cmake">Enable cmake project manager plugin</flag>
-	<flag name="fakevim">Enable support for vim-like key bindings</flag>
 	<flag name="ios">Build plugin for Apple iOS devices</flag>
 	<flag name="mercurial">Add support for <pkg>dev-vcs/mercurial</pkg> version control system</flag>
 	<flag name="perforce">Add support for Perforce version control system (requires manual installation of Perforce client)</flag>
@@ -21,4 +21,8 @@
 	<flag name="qnx">Build plugin for QNX/Blackberry devices</flag>
 	<flag name="valgrind">Add support for memory debugging using <pkg>dev-util/valgrind</pkg></flag>
 </use>
+<upstream>
+	<bugs-to>https://bugreports.qt-project.org/</bugs-to>
+	<doc>http://qt-project.org/doc/qtcreator/</doc>
+</upstream>
 </pkgmetadata>
