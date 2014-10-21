@@ -38,7 +38,8 @@ DEPEND="
 	x11-libs/libXcursor
 	x11-libs/libXext
 	x11-libs/libXfixes"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	x11-apps/setxkbmap"
 
 src_install(){
 	cmake-utils_src_install
