@@ -14,15 +14,24 @@ if [[ ${PV} = *9999* ]]; then
 else
 	SRC_URI="http://lxqt.org/downloads/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
-	S=${WORKDIR}
 fi
 
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
-DEPEND="dev-qt/qtcore:4
-	dev-qt/qtdbus:4
-	dev-qt/qtgui:4
-	lxqt-base/liblxqt
-	x11-libs/libX11"
+DEPEND="
+	dev-qt/linguist-tools:5
+	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
+	dev-qt/qtgui:5
+	dev-qt/qtwidgets:5
+	dev-qt/qtx11extras:5
+	dev-qt/qtxml:5
+	~lxqt-base/liblxqt-${PV}
+	>=razorqt-base/libqtxdg-1.0.0
+	x11-libs/libICE
+	x11-libs/libSM
+	x11-libs/libX11
+	x11-libs/libXext
+"
 RDEPEND="${DEPEND}"
