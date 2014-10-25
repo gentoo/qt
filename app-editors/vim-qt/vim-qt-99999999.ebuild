@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="threads"
 inherit eutils fdo-mime flag-o-matic python-single-r1
 
@@ -11,10 +11,12 @@ DESCRIPTION="Qt GUI version of the Vim text editor"
 HOMEPAGE="https://bitbucket.org/equalsraf/vim-qt/wiki/Home"
 
 if [[ ${PV} == *9999* ]]; then
-	inherit git-2
-	EGIT_REPO_URI="https://bitbucket.org/equalsraf/${PN}.git
-		git://github.com/equalsraf/${PN}.git
-		git://gitorious.org/${PN}/${PN}.git"
+	inherit git-r3
+	EGIT_REPO_URI=(
+		"https://bitbucket.org/equalsraf/${PN}.git"
+		"https://github.com/equalsraf/${PN}.git"
+		"git://gitorious.org/${PN}/${PN}.git"
+	)
 	KEYWORDS=""
 else
 	SRC_URI="https://github.com/equalsraf/${PN}/archive/package-${PV}.tar.gz -> ${P}.tar.gz"
