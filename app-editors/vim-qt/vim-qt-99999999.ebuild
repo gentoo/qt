@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{2_6,2_7} )
 PYTHON_REQ_USE="threads"
-inherit eutils fdo-mime flag-o-matic python-any-r1
+inherit eutils fdo-mime flag-o-matic python-single-r1
 
 DESCRIPTION="Qt GUI version of the Vim text editor"
 HOMEPAGE="https://bitbucket.org/equalsraf/vim-qt/wiki/Home"
@@ -24,26 +24,32 @@ fi
 
 LICENSE="vim"
 SLOT="0"
-IUSE="acl cscope debug gpm lua nls perl python ruby"
+IUSE="acl cscope debug gpm lua luajit nls perl python ruby"
 
 RDEPEND="app-admin/eselect-vi
-	>=app-editors/vim-core-7.3.762[acl?]
+	>=app-editors/vim-core-7.4.417[acl?]
 	sys-libs/ncurses
 	>=dev-qt/qtcore-4.7.0:4
 	>=dev-qt/qtgui-4.7.0:4
 	acl? ( kernel_linux? ( sys-apps/acl ) )
 	cscope? ( dev-util/cscope )
 	gpm? ( sys-libs/gpm )
-	lua? ( dev-lang/lua )
+	lua? ( luajit? ( dev-lang/luajit )
+		!luajit? ( dev-lang/lua ) )
 	nls? ( virtual/libintl )
 	perl? ( >=dev-lang/perl-5.16.0 )
 	python? ( ${PYTHON_DEPS} )
-	ruby? ( || ( dev-lang/ruby:1.9 dev-lang/ruby:1.8 ) )"
-DEPEND="${RDEPEND}"
+	ruby? ( || ( dev-lang/ruby:2.0 dev-lang/ruby:1.9 ) )"
+DEPEND="${RDEPEND}
+	dev-util/ctags
+	sys-devel/autoconf
+	virtual/pkgconfig
+	nls? ( sys-devel/gettext )"
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 pkg_setup() {
 	export LC_COLLATE="C" # prevent locale brokenness bug #82186
-	use python && python-any-r1_pkg_setup
+	use python && python-single-r1_pkg_setup
 }
 
 src_configure() {
@@ -54,6 +60,7 @@ src_configure() {
 	myconf+=" $(use_enable gpm)"
 	myconf+=" $(use_enable nls)"
 	myconf+=" $(use_enable lua luainterp)"
+	myconf+=" $(use_with luajit)"
 	myconf+=" $(use_enable perl perlinterp)"
 	myconf+=" $(use_enable python pythoninterp)"
 	myconf+=" $(use_enable ruby rubyinterp)"
