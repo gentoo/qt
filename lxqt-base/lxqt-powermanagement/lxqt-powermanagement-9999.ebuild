@@ -19,7 +19,7 @@ fi
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
-RDEPEND="
+CDEPEND="
 	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -32,5 +32,7 @@ RDEPEND="
 	>=razorqt-base/libqtxdg-1.0.0
 	x11-libs/libX11
 	x11-libs/libxcb"
-DEPEND="${RDEPEND}
+DEPEND="${CDEPEND}
 	virtual/pkgconfig"
+RDEPEND="${CDEPEND}
+	sys-power/upower"
