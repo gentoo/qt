@@ -411,6 +411,22 @@ qt4_multilib_src_install() {
 	if [[ ${PN} == qtcore ]]; then
 		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake}"
 		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
+
+		einfo "Installing qtchooser spec file"
+		cat > "${T}"/qtchooser.conf <<-_EOF_
+			${QT4_BINDIR}
+			${QT4_LIBDIR}
+		_EOF_
+
+		(
+			insinto /etc/xdg/qtchooser
+			newins "${T}"/qtchooser.conf qt4-"${CHOST}".conf
+		)
+
+		if multilib_is_native_abi; then
+			dosym qt4-"${CHOST}".conf /etc/xdg/qtchooser/qt4.conf
+			dosym qt4.conf /etc/xdg/qtchooser/default.conf
+		fi
 	fi
 
 	install_qconfigs
