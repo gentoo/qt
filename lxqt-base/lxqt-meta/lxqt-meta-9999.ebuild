@@ -11,7 +11,7 @@ HOMEPAGE="http://lxqt.org/"
 
 LICENSE="metapackage"
 SLOT="0"
-IUSE="+icons lightdm lximage -minimal +policykit powermanagement sddm ssh-askpass"
+IUSE="admin +icons lightdm lximage -minimal +policykit powermanagement sddm ssh-askpass"
 
 S="${WORKDIR}"
 
@@ -32,6 +32,8 @@ RDEPEND="
 	~lxqt-base/lxqt-runner-${PV}
 	~lxqt-base/lxqt-session-${PV}
 	~x11-misc/pcmanfm-qt-${PV}
+	admin? (
+		~app-admin/lxqt-admin-${PV} )
 	icons? (
 		>=lxde-base/lxde-icon-theme-0.5 )
 	lightdm? (
