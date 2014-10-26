@@ -31,8 +31,7 @@ CDEPEND="
 DEPEND="${CDEPEND}
 	test? ( dev-qt/qttest:5 )
 "
-RDEPEND="${CDEPEND}
-	x11-misc/xdg-utils"
+RDEPEND="${CDEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
