@@ -279,6 +279,21 @@ qt5-build_src_install() {
 		sed -i -e '1a#include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
 			|| die "sed failed (qconfig.h)"
+
+		# install qtchooser configuration file
+		cat > "${T}/qt5-${CHOST}.conf" <<-_EOF_
+			${QT5_BINDIR}
+			${QT5_LIBDIR}
+		_EOF_
+
+		(
+			insinto /etc/xdg/qtchooser
+			doins "${T}/qt5-${CHOST}.conf"
+		)
+
+		# convenience symlinks
+		dosym qt5-"${CHOST}".conf /etc/xdg/qtchooser/5.conf
+		dosym qt5-"${CHOST}".conf /etc/xdg/qtchooser/qt5.conf
 	fi
 
 	qt5_install_module_qconfigs
