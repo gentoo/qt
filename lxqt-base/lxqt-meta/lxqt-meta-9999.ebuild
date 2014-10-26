@@ -25,7 +25,6 @@ RDEPEND="
 	~lxqt-base/lxqt-about-${PV}
 	~lxqt-base/lxqt-common-${PV}
 	~lxqt-base/lxqt-config-${PV}
-	~lxqt-base/lxqt-config-randr-${PV}
 	~lxqt-base/lxqt-notificationd-${PV}
 	~lxqt-base/lxqt-panel-${PV}
 	~lxqt-base/lxqt-qtplugin-${PV}
