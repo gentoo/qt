@@ -29,7 +29,7 @@ CDEPEND=">=dev-libs/glib-2.18:2
 	dev-qt/qtx11extras:5
 	>=lxde-base/menu-cache-0.4.1
 	>=x11-libs/libfm-1.2.0
-	x11-libs/libxcb
+	x11-libs/libxcb:=
 "
 RDEPEND="${CDEPEND}
 	virtual/eject

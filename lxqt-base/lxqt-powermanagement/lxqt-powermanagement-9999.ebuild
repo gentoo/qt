@@ -31,7 +31,7 @@ CDEPEND="
 	~lxqt-base/liblxqt-${PV}
 	>=razorqt-base/libqtxdg-1.0.0
 	x11-libs/libX11
-	x11-libs/libxcb"
+	x11-libs/libxcb:="
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
