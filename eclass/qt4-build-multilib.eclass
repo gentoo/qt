@@ -499,8 +499,8 @@ qt_native_use() {
 qt4_prepare_env() {
 	# setup installation directories
 	QT4_PREFIX=${EPREFIX}/usr
-	QT4_HEADERDIR=${QT4_PREFIX}/include/qt4
 	QT4_LIBDIR=${QT4_PREFIX}/$(get_libdir)/qt4
+	QT4_HEADERDIR=${QT4_LIBDIR}/include
 	QT4_PCDIR=${QT4_PREFIX}/$(get_libdir)/pkgconfig
 	QT4_BINDIR=${QT4_LIBDIR}/bin
 	QT4_PLUGINDIR=${QT4_LIBDIR}/plugins
