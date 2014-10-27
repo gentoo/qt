@@ -107,18 +107,17 @@ multilib_src_install_all() {
 	dodir "${QT4_DATADIR#${EPREFIX}}"/mkspecs/gentoo
 	mv "${D}${QT4_DATADIR}"/mkspecs/{qconfig.pri,gentoo/} || die
 
-	# Framework hacking
 	if use aqua && [[ ${CHOST#*-darwin} -ge 9 ]]; then
+		# Framework hacking
 		# TODO: do this better
-		sed -i -e '2a#include <QtCore/Gentoo/gentoo-qconfig.h>\n' \
-				"${D}${QT4_LIBDIR}"/QtCore.framework/Headers/qconfig.h \
+		sed -i -e '1i #include <QtCore/Gentoo/gentoo-qconfig.h>\n' \
+			"${D}${QT4_LIBDIR}"/QtCore.framework/Headers/qconfig.h \
 			|| die "sed for qconfig.h failed"
 		dosym "${QT4_HEADERDIR#${EPREFIX}}"/Gentoo \
 			"${QT4_LIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo
 	else
-		sed -i -e '2a#include <Gentoo/gentoo-qconfig.h>\n' \
-				"${D}${QT4_HEADERDIR}"/QtCore/qconfig.h \
-				"${D}${QT4_HEADERDIR}"/Qt/qconfig.h \
+		sed -i -e '1i #include <Gentoo/gentoo-qconfig.h>\n' \
+			"${D}${QT4_HEADERDIR}"/Qt{,Core}/qconfig.h \
 			|| die "sed for qconfig.h failed"
 	fi
 
