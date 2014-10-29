@@ -32,3 +32,10 @@ DEPEND="dev-libs/glib:2
 	x11-libs/libX11
 "
 RDEPEND="${DEPEND}"
+
+src_configure() {
+	local mycmakeargs=(
+		-DUSE_QT5=ON
+	)
+	cmake-utils_src_configure
+}
