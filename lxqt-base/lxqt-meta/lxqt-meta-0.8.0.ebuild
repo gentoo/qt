@@ -4,8 +4,6 @@
 
 EAPI=5
 
-inherit readme.gentoo
-
 DESCRIPTION="Meta ebuild for LXQt, the Lightweight Desktop Environment"
 HOMEPAGE="http://lxqt.org/"
 
@@ -15,11 +13,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="admin icons lightdm lximage -minimal +policykit powermanagement sddm ssh-askpass"
 
 S="${WORKDIR}"
-
-DOC_CONTENTS="
-	For your convenience you can review
-	http://www.gentoo.org/proj/en/desktop/lxde/lxde-howto.xml and
-	http://wiki.lxde.org/en/LXDE-Qt"
 
 RDEPEND="
 	>=lxde-base/lxmenu-data-0.1.2
@@ -54,7 +47,3 @@ RDEPEND="
 	ssh-askpass? (
 		~net-misc/lxqt-openssh-askpass-${PV} )
 "
-
-pkg_postinst() {
-	readme.gentoo_pkg_postinst
-}
