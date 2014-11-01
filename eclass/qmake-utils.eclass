@@ -218,9 +218,11 @@ eqmake5() {
 		-makefile \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
+		QMAKE_LINK_C="$(tc-getCC)" \
+		QMAKE_LINK_C_SHLIB="$(tc-getCC)" \
 		QMAKE_CXX="$(tc-getCXX)" \
 		QMAKE_LINK="$(tc-getCXX)" \
-		QMAKE_LINK_C="$(tc-getCC)" \
+		QMAKE_LINK_SHLIB="$(tc-getCXX)" \
 		QMAKE_OBJCOPY="$(tc-getOBJCOPY)" \
 		QMAKE_RANLIB= \
 		QMAKE_STRIP= \
