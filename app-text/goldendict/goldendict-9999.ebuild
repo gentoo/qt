@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-EGIT_REPO_URI="git://gitorious.org/goldendict/goldendict"
+EGIT_REPO_URI="https://github.com/goldendict/goldendict.git"
 LANGSLONG="ar_SA bg_BG cs_CZ de_DE el_GR lt_LT ru_RU zh_CN"
 
 inherit qt4-r2 git-r3
@@ -17,12 +17,15 @@ KEYWORDS=""
 IUSE="debug kde"
 
 RDEPEND=">=app-text/hunspell-1.2
+	dev-libs/eb
 	dev-qt/qtsingleapplication
+	media-libs/libao
 	media-libs/libogg
 	media-libs/libvorbis
 	sys-libs/zlib
 	x11-libs/libXtst
 	>=dev-qt/qtcore-4.5:4[exceptions]
+	>=dev-qt/qthelp-4.5:4[exceptions]
 	>=dev-qt/qtgui-4.5:4[exceptions]
 	>=dev-qt/qtwebkit-4.5:4[exceptions]
 	!kde? ( || (
@@ -34,8 +37,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 PATCHES=(
-	 "${FILESDIR}/${PN}-2602a03cd-gcc-4.7.patch"
-	 "${FILESDIR}/${PN}-2602a03cd-qtsingleapplication-unbundle.patch"
+	 "${FILESDIR}/${PN}-36a761108-qtsingleapplication-unbundle.patch"
 )
 
 src_prepare() {
