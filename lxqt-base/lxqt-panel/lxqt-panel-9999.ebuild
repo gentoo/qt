@@ -35,7 +35,6 @@ DEPEND="
 	>=lxde-base/menu-cache-0.3.3
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/liblxqt-mount-${PV}
-	>=lxqt-base/libsysstat-0.2.0
 	~lxqt-base/lxqt-globalkeys-${PV}
 	>=razorqt-base/libqtxdg-1.0.0
 	x11-libs/libX11
