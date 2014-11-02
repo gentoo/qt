@@ -18,16 +18,17 @@ fi
 
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
+IUSE="+udisks"
 
 DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
 	dev-qt/linguist-tools:5
 	~lxqt-base/liblxqt-${PV}
-	sys-fs/udisks:2
 	x11-libs/libX11
 	virtual/udev"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	udisks? ( sys-fs/udisks )"
 
 src_configure() {
 	local mycmakeargs=(
