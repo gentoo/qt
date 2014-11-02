@@ -35,4 +35,4 @@ CDEPEND="
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
-	sys-power/upower"
+	|| ( sys-power/upower sys-power/upower-pm-utils )"
