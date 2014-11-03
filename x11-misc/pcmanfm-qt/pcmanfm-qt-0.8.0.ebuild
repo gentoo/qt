@@ -32,6 +32,7 @@ CDEPEND=">=dev-libs/glib-2.18:2
 	x11-libs/libxcb:=
 "
 RDEPEND="${CDEPEND}
+	x11-misc/xdg-utils
 	virtual/eject
 	virtual/freedesktop-icon-theme"
 DEPEND="${CDEPEND}
