@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-crypt/pinentry/pinentry-0.8.3.ebuild,v 1.5 2014/04/03 19:40:59 haubi Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-crypt/pinentry/pinentry-0.8.4.ebuild,v 1.1 2014/10/08 06:39:06 alonbl Exp $
 
 EAPI=5
 
@@ -47,7 +47,6 @@ src_prepare() {
 	fi
 	epatch "${FILESDIR}/${PN}-0.8.2-ncurses.patch"
 	epatch "${FILESDIR}/${PN}-0.8.2-texi.patch"
-	sed -i 's/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/g' configure.ac || die
 	eautoreconf
 }
 
@@ -64,11 +63,10 @@ src_configure() {
 	export QTLIB="${QTDIR}/$(get_libdir)"
 
 	econf \
-		--disable-dependency-tracking \
-		--enable-maintainer-mode \
 		--disable-pinentry-gtk \
-		$(use_enable gtk pinentry-gtk2) \
 		--disable-pinentry-qt \
+		--enable-pinentry-tty \
+		$(use_enable gtk pinentry-gtk2) \
 		$(use_enable ncurses pinentry-curses) \
 		$(use_enable ncurses fallback-curses) \
 		$(use_enable qt4 pinentry-qt4) \
