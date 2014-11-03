@@ -29,7 +29,7 @@ DEPEND="
 		>=dev-db/unixODBC-2.3.2[${MULTILIB_USEDEP}]
 		>=dev-db/libiodbc-3.52.8[${MULTILIB_USEDEP}]
 	) )
-	postgres? ( dev-db/postgresql-base:* )
+	postgres? ( virtual/postgresql:* )
 	sqlite? ( >=dev-db/sqlite-3.8.3:3[${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
