@@ -16,7 +16,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="icu"
+IUSE="icu systemd"
 
 DEPEND="
 	dev-libs/glib:2
@@ -24,6 +24,7 @@ DEPEND="
 	sys-libs/zlib
 	virtual/libiconv
 	icu? ( dev-libs/icu:= )
+	systemd? ( sys-apps/systemd )
 "
 RDEPEND="${DEPEND}"
 
@@ -38,6 +39,7 @@ QT5_TARGET_SUBDIRS=(
 src_configure() {
 	local myconf=(
 		$(qt_use icu)
+		$(qt_use systemd journald)
 	)
 	qt5-build_src_configure
 }
