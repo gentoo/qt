@@ -42,10 +42,3 @@ pkg_pretend() {
 			die 'The active compiler needs to be gcc 4.8 (or newer)'
 	fi
 }
-
-src_configure() {
-	local mycmakeargs=(
-		-DUSE_QT5=ON
-	)
-	cmake-utils_src_configure
-}
