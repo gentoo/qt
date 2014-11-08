@@ -35,7 +35,7 @@ DEPEND="
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/liblxqt-mount-${PV}
 	~lxqt-base/lxqt-globalkeys-${PV}
-	>=razorqt-base/libqtxdg-1.0.0
+	>=dev-libs/libqtxdg-1.0.0
 	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )

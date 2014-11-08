@@ -33,7 +33,7 @@ RDEPEND="
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/lxqt-globalkeys-${PV}
 	>=lxde-base/menu-cache-0.5.1
-	>=razorqt-base/libqtxdg-1.0.0
+	>=dev-libs/libqtxdg-1.0.0
 	x11-libs/libX11"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"

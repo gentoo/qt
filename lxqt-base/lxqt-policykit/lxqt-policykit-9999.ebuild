@@ -29,7 +29,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	~lxqt-base/liblxqt-${PV}
-	>=razorqt-base/libqtxdg-1.0.0
+	>=dev-libs/libqtxdg-1.0.0
 	sys-auth/polkit-qt[qt5(-)]
 	x11-libs/libX11"
 DEPEND="${RDEPEND}

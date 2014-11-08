@@ -19,7 +19,7 @@ fi
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
-DEPEND=">=razorqt-base/libqtxdg-1.0.0
+DEPEND=">=dev-libs/libqtxdg-1.0.0
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXcursor
