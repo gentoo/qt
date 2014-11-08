@@ -18,6 +18,6 @@
 ~lxqt-base/lxqt-runner-9999
 ~lxqt-base/lxqt-session-9999
 ~net-misc/lxqt-openssh-askpass-9999
-~razorqt-base/libqtxdg-9999
+~dev-libs/libqtxdg-9999
 ~x11-misc/obconf-qt-9999
 x11-wm/openbox:3
