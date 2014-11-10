@@ -93,17 +93,6 @@ multilib_src_configure() {
 multilib_src_install_all() {
 	qt4_multilib_src_install_all
 
-	# List all the multilib libdirs
-	local libdirs=
-	for libdir in $(get_all_libdirs); do
-		libdirs+=":${EPREFIX}/usr/${libdir}/qt4"
-	done
-
-	cat <<-EOF > "${T}"/44qt4
-	LDPATH="${libdirs:1}"
-	EOF
-	doenvd "${T}"/44qt4
-
 	dodir "${QT4_DATADIR#${EPREFIX}}"/mkspecs/gentoo
 	mv "${D}${QT4_DATADIR}"/mkspecs/{qconfig.pri,gentoo/} || die
 }

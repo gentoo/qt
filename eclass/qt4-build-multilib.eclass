@@ -413,6 +413,12 @@ qt4_multilib_src_install() {
 		einfo "Running $*"
 		"$@"
 
+		# install env.d file
+		cat > "${T}/44qt4-${CHOST}" <<-_EOF_
+			LDPATH="${QT4_LIBDIR}"
+		_EOF_
+		doenvd "${T}/44qt4-${CHOST}"
+
 		# install qtchooser configuration file
 		cat > "${T}/qt4-${CHOST}.conf" <<-_EOF_
 			${QT4_BINDIR}
