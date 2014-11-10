@@ -106,6 +106,4 @@ multilib_src_install_all() {
 
 	dodir "${QT4_DATADIR#${EPREFIX}}"/mkspecs/gentoo
 	mv "${D}${QT4_DATADIR}"/mkspecs/{qconfig.pri,gentoo/} || die
-
-	keepdir "${QT4_SYSCONFDIR#${EPREFIX}}"
 }
