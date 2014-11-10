@@ -409,8 +409,9 @@ qt4_multilib_src_install() {
 	qt4_foreach_target_subdir emake INSTALL_ROOT="${D}" install
 
 	if [[ ${PN} == qtcore ]]; then
-		einfo "Running emake INSTALL_ROOT=${D} install_{mkspecs,qmake}"
-		emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
+		set -- emake INSTALL_ROOT="${D}" install_{mkspecs,qmake}
+		einfo "Running $*"
+		"$@"
 
 		# install qtchooser configuration file
 		cat > "${T}/qt4-${CHOST}.conf" <<-_EOF_
@@ -438,6 +439,21 @@ qt4_multilib_src_install() {
 }
 
 qt4_multilib_src_install_all() {
+	if [[ ${PN} == qtcore ]]; then
+		# include gentoo-qconfig.h at the beginning of Qt{,Core}/qconfig.h
+		if use aqua && [[ ${CHOST#*-darwin} -ge 9 ]]; then
+			sed -i -e '1i #include <QtCore/Gentoo/gentoo-qconfig.h>\n' \
+				"${D}${QT4_LIBDIR}"/QtCore.framework/Headers/qconfig.h \
+				|| die "sed failed (qconfig.h)"
+			dosym "${QT4_HEADERDIR#${EPREFIX}}"/Gentoo \
+				"${QT4_LIBDIR#${EPREFIX}}"/QtCore.framework/Headers/Gentoo
+		else
+			sed -i -e '1i #include <Gentoo/gentoo-qconfig.h>\n' \
+				"${D}${QT4_HEADERDIR}"/Qt{,Core}/qconfig.h \
+				|| die "sed failed (qconfig.h)"
+		fi
+	fi
+
 	# install private headers of a few modules
 	if has ${PN} qtcore qtdeclarative qtgui qtscript; then
 		local moduledir=${PN#qt}
