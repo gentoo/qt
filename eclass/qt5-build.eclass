@@ -276,7 +276,7 @@ qt5-build_src_install() {
 		)
 
 		# include gentoo-qconfig.h at the beginning of QtCore/qconfig.h
-		sed -i -e '1a#include <Gentoo/gentoo-qconfig.h>\n' \
+		sed -i -e '1i #include <Gentoo/gentoo-qconfig.h>\n' \
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
 			|| die "sed failed (qconfig.h)"
 
