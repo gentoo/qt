@@ -458,6 +458,9 @@ qt4_multilib_src_install_all() {
 				"${D}${QT4_HEADERDIR}"/Qt{,Core}/qconfig.h \
 				|| die "sed failed (qconfig.h)"
 		fi
+
+		dodir "${QT4_DATADIR#${EPREFIX}}"/mkspecs/gentoo
+		mv "${D}${QT4_DATADIR}"/mkspecs/{qconfig.pri,gentoo/} || die
 	fi
 
 	# install private headers of a few modules

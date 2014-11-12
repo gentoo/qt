@@ -89,10 +89,3 @@ multilib_src_configure() {
 	)
 	qt4_multilib_src_configure
 }
-
-multilib_src_install_all() {
-	qt4_multilib_src_install_all
-
-	dodir "${QT4_DATADIR#${EPREFIX}}"/mkspecs/gentoo
-	mv "${D}${QT4_DATADIR}"/mkspecs/{qconfig.pri,gentoo/} || die
-}
