@@ -1,18 +1,18 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-qt/qtchooser/qtchooser-0_p20140613.ebuild,v 1.1 2014/11/13 02:59:00 pesa Exp $
 
 EAPI=5
 
-inherit qmake-utils toolchain-funcs
+inherit qmake-utils toolchain-funcs git-r3
 
 DESCRIPTION="Qt4/Qt5 version chooser"
 HOMEPAGE="https://qt.gitorious.org/qt/qtchooser"
-SRC_URI="http://dev.gentoo.org/~pesa/distfiles/${P}.tar.xz"
+EGIT_REPO_URI="https://gitorious.org/qt/${PN}.git"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="qt5 test"
 
 DEPEND="qt5? ( test? (
