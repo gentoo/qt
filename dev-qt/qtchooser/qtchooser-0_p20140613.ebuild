@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit toolchain-funcs
+inherit qmake-utils toolchain-funcs
 
 DESCRIPTION="Qt4/Qt5 version chooser"
 HOMEPAGE="https://qt.gitorious.org/qt/qtchooser"
@@ -13,9 +13,12 @@ SRC_URI="http://dev.gentoo.org/~pesa/distfiles/${P}.tar.xz"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="test"
+IUSE="qt5 test"
 
-DEPEND="test? ( dev-qt/qttest )"
+DEPEND="qt5? ( test? (
+		dev-qt/qtcore:5
+		dev-qt/qttest:5
+	) )"
 RDEPEND="!<dev-qt/qtcore-4.8.6:4"
 
 qtchooser_make() {
@@ -31,6 +34,12 @@ src_compile() {
 }
 
 src_test() {
+	use qt5 || return
+
+	pushd tests/auto >/dev/null || die
+	eqmake5
+	popd >/dev/null || die
+
 	qtchooser_make check
 }
 
