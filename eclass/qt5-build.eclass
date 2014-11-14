@@ -261,11 +261,13 @@ qt5-build_src_install() {
 	if [[ ${PN} == qtcore ]]; then
 		pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
-		set -- emake INSTALL_ROOT="${D}" install_{mkspecs,qmake,syncqt}
+		set -- emake INSTALL_ROOT="${D}" install_{global_docs,mkspecs,qmake,syncqt}
 		einfo "Running $*"
 		"$@"
 
 		popd >/dev/null || die
+
+		docompress -x "${QT5_DOCDIR#${EPREFIX}}"/global
 
 		# install an empty Gentoo/gentoo-qconfig.h in ${D}
 		# so that it's placed under package manager control
