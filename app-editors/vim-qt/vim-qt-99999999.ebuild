@@ -3,9 +3,9 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{2_7,3_3} )
 PYTHON_REQ_USE="threads"
-inherit eutils fdo-mime flag-o-matic python-single-r1
+inherit eutils fdo-mime flag-o-matic prefix python-single-r1
 
 DESCRIPTION="Qt GUI version of the Vim text editor"
 HOMEPAGE="https://bitbucket.org/equalsraf/vim-qt/wiki/Home"
@@ -26,7 +26,10 @@ fi
 
 LICENSE="vim"
 SLOT="0"
-IUSE="acl cscope debug gpm lua luajit nls perl python ruby"
+IUSE="acl cscope debug gpm lua luajit nls perl python racket ruby"
+
+REQUIRED_USE="luajit? ( lua )
+	python? ( ${PYTHON_REQUIRED_USE} )"
 
 RDEPEND="app-admin/eselect-vi
 	>=app-editors/vim-core-7.4.417[acl?]
@@ -37,17 +40,17 @@ RDEPEND="app-admin/eselect-vi
 	cscope? ( dev-util/cscope )
 	gpm? ( sys-libs/gpm )
 	lua? ( luajit? ( dev-lang/luajit )
-		!luajit? ( dev-lang/lua ) )
+		!luajit? ( dev-lang/lua[deprecated] ) )
 	nls? ( virtual/libintl )
-	perl? ( >=dev-lang/perl-5.16.0 )
+	perl? ( dev-lang/perl )
 	python? ( ${PYTHON_DEPS} )
+	racket? ( dev-scheme/racket )
 	ruby? ( || ( dev-lang/ruby:2.0 dev-lang/ruby:1.9 ) )"
 DEPEND="${RDEPEND}
 	dev-util/ctags
 	sys-devel/autoconf
 	virtual/pkgconfig
 	nls? ( sys-devel/gettext )"
-REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 pkg_setup() {
 	export LC_COLLATE="C" # prevent locale brokenness bug #82186
@@ -57,27 +60,50 @@ pkg_setup() {
 src_configure() {
 	use debug && append-flags "-DDEBUG"
 
-	local myconf="--with-features=huge --enable-multibyte"
+	local myconf="--with-features=huge --disable-gpm --enable-multibyte"
 	myconf+=" $(use_enable acl)"
-	myconf+=" $(use_enable gpm)"
+	myconf+=" $(use_enable cscope)"
 	myconf+=" $(use_enable nls)"
 	myconf+=" $(use_enable lua luainterp)"
 	myconf+=" $(use_with luajit)"
 	myconf+=" $(use_enable perl perlinterp)"
-	myconf+=" $(use_enable python pythoninterp)"
+	myconf+=" $(use_enable racket mzschemeinterp)"
 	myconf+=" $(use_enable ruby rubyinterp)"
-	myconf+=" --enable-gui=qt --with-vim-name=qvim --with-x"
 
 	if ! use cscope ; then
 		sed -i -e '/# define FEAT_CSCOPE/d' src/feature.h || die 'sed failed'
 	fi
-	econf ${myconf}
+
+	# keep prefix env contained within the EPREFIX
+	use prefix && myconf+=" --without-local-dir"
+
+	if use python ; then
+		if [[ ${EPYTHON} == python3* ]] ; then
+			myconf+=" --enable-python3interp"
+			export vi_cv_path_python3="${PYTHON}"
+		else
+			myconf+=" --enable-pythoninterp"
+			export vi_cv_path_python="${PYTHON}"
+		fi
+	else
+		myconf+=" --disable-pythoninterp --disable-python3interp"
+	fi
+
+	econf ${myconf} --enable-gui=qt --with-vim-name=qvim --with-modified-by=Gentoo-${PVR}
 }
 
 src_install() {
 	dobin src/qvim
+	dosym qvim /usr/bin/qvimdiff
+
+	dodir /usr/share/man/man1
+	echo ".so vim.1" > "${ED}"/usr/share/man/man1/qvim.1
+	echo ".so vimdiff.1" > "${ED}"/usr/share/man/man1/qvimdiff.1
+
+	# track https://bitbucket.org/equalsraf/vim-qt/issue/93/include-desktop-file-in-source
+	# for inclusion of desktop file
+	newmenu "${FILESDIR}"/vim-qt.desktop vim-qt.desktop
 	doicon -s 64 src/qt/icons/vim-qt.png
-	make_desktop_entry qvim Vim-qt vim-qt "Qt;TextEditor;Development;"
 }
 
 pkg_postinst() {
