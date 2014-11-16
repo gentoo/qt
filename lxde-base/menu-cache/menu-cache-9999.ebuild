@@ -8,7 +8,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 inherit autotools-utils
 
 DESCRIPTION="A library creating and utilizing caches to speed up freedesktop.org application menus"
-HOMEPAGE="http://www.lxqt.org/"
+HOMEPAGE="http://lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3

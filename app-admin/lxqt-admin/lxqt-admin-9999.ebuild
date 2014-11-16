@@ -6,7 +6,7 @@ EAPI=5
 inherit cmake-utils
 
 DESCRIPTION="LXQt system administration tool"
-HOMEPAGE="http://www.lxqt.org/"
+HOMEPAGE="http://lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3

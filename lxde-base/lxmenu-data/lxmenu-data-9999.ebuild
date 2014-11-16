@@ -9,7 +9,7 @@ AUTOTOOLS_IN_SOURCE_BUILD=1
 inherit autotools-utils
 
 DESCRIPTION="Application menu resources"
-HOMEPAGE="http://www.lxqt.org/"
+HOMEPAGE="http://lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3

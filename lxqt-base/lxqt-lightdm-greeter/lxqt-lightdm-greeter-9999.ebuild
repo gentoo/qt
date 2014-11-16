@@ -7,7 +7,7 @@ EAPI=5
 inherit cmake-utils
 
 DESCRIPTION="LXDE-Qt system configuration control center"
-HOMEPAGE="http://www.lxqt.org/"
+HOMEPAGE="http://lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
