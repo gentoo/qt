@@ -26,7 +26,7 @@ fi
 
 LICENSE="vim"
 SLOT="0"
-IUSE="acl cscope debug gpm lua luajit nls perl python racket ruby"
+IUSE="acl cscope debug lua luajit nls perl python racket ruby"
 
 REQUIRED_USE="luajit? ( lua )
 	python? ( ${PYTHON_REQUIRED_USE} )"
@@ -38,7 +38,6 @@ RDEPEND="app-admin/eselect-vi
 	>=dev-qt/qtgui-4.7.0:4
 	acl? ( kernel_linux? ( sys-apps/acl ) )
 	cscope? ( dev-util/cscope )
-	gpm? ( sys-libs/gpm )
 	lua? ( luajit? ( dev-lang/luajit )
 		!luajit? ( dev-lang/lua[deprecated] ) )
 	nls? ( virtual/libintl )
@@ -53,8 +52,13 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )"
 
 pkg_setup() {
-	export LC_COLLATE="C" # prevent locale brokenness bug #82186
+	export LC_COLLATE="C" # prevent locale brokenness
 	use python && python-single-r1_pkg_setup
+}
+
+src_prepare() {
+	# Read vimrc from /etc/vim/
+	echo '#define SYS_VIMRC_FILE "'${EPREFIX}'/etc/vim/vimrc"' >> "${S}"/src/feature.h
 }
 
 src_configure() {
