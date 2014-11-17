@@ -164,7 +164,6 @@ eqmake4() {
 
 	"${qmake_path}" \
 		-makefile \
-		QTDIR="${EPREFIX}"/usr/$(get_libdir) \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
 		QMAKE_CXX="$(tc-getCXX)" \
