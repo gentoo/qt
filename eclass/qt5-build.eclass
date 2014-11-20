@@ -85,8 +85,12 @@ if [[ ${PN} != qttest ]]; then
 		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5[debug=] )"
 	fi
 fi
+RDEPEND="
+	dev-qt/qtchooser
+"
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install src_test pkg_postinst pkg_postrm
+
 
 # @ECLASS-VARIABLE: PATCHES
 # @DEFAULT_UNSET
