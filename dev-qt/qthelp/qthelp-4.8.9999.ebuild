@@ -52,8 +52,8 @@ src_unpack() {
 	# compat version
 	# http://blog.qt.digia.com/blog/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
 	if use compat; then
-		mv "${WORKDIR}"/qt-assistant-qassistantclient-library-compat-version-4.6.3 \
-			"${S}"/tools/assistant/compat || die
+		mv "${WORKDIR}"/qt-assistant-qassistantclient-library-compat-version-4.6.3 "${S}"/tools/assistant/compat || die
+		mv "${WORKDIR}"/QtAssistant "${S}"/include || die
 	fi
 }
 
@@ -78,7 +78,7 @@ multilib_src_configure() {
 
 	if use compat; then
 		# syncqt knows nothing about these headers (bug 529398)
-		cp -pr "${WORKDIR}"/QtAssistant "${BUILD_DIR}"/include || die
+		cp -pr "${S}"/include/QtAssistant "${BUILD_DIR}"/include || die
 	fi
 }
 
