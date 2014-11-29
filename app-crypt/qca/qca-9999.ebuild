@@ -16,6 +16,8 @@ KEYWORDS=""
 
 IUSE="botan debug doc examples gcrypt gpg logger nss openssl pkcs11 +qt4 qt5 sasl softstore test"
 
+REQUIRED_USE="|| ( qt4 qt5 )"
+
 RDEPEND="
 	!app-crypt/qca-cyrus-sasl
 	!app-crypt/qca-gnupg
