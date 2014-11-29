@@ -101,7 +101,7 @@ src_compile() {
 
 	if use doc; then
 		pushd "${BUILD_DIR}" > /dev/null
-		doxygen Doxyfile || die
+		doxygen . || die
 		popd > /dev/null
 	fi
 }
@@ -115,8 +115,8 @@ src_install() {
 
 	if use doc; then
 		pushd "${BUILD_DIR}" > /dev/null
-		dohtml apidocs/html/*
-		popd >/dev/null
+		dodoc -r html
+		popd > /dev/null
 	fi
 
 	if use examples; then
