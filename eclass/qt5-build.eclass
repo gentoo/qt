@@ -23,11 +23,7 @@ QT5_MINOR_VERSION=${PV#*.}
 QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
 
 HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
-if [[ ${QT5_MINOR_VERSION} -ge 4 ]]; then
-	LICENSE="|| ( LGPL-2.1 LGPL-3 )"
-else
-	LICENSE="|| ( LGPL-2.1 GPL-3 )"
-fi
+LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 SLOT="5"
 
 # @ECLASS-VARIABLE: QT5_MODULE
@@ -72,7 +68,7 @@ EGIT_REPO_URI=(
 IUSE="debug test"
 
 [[ ${PN} == qtwebkit ]] && RESTRICT+=" mirror" # bug 524584
-[[ ${QT5_BUILD_TYPE} == release && ${QT5_MINOR_VERSION} -le 3 ]] && RESTRICT+=" test" # bug 457182
+[[ ${QT5_BUILD_TYPE} == release ]] && RESTRICT+=" test" # bug 457182
 
 DEPEND="
 	dev-lang/perl
