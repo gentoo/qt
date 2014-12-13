@@ -4,7 +4,11 @@
 
 EAPI=5
 KDE_REQUIRED="optional"
-inherit cmake-utils kde4-base
+inherit cmake-utils kde4-base multilib
+KDE_AUTODEPS=false
+KDE_DEBUG=false
+KDE_HANDBOOK=false # needed for kde5.eclass, but misinterpreted by kde4-base.eclass
+inherit kde5
 
 DESCRIPTION="A set of widget styles for Qt and GTK2"
 HOMEPAGE="https://projects.kde.org/projects/playground/base/qtcurve"
@@ -21,9 +25,11 @@ fi
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="+X gtk kde nls +qt4 qt5 windeco"
+IUSE="+X gtk kde kf5 nls +qt4 qt5 windeco"
 REQUIRED_USE="gtk? ( X )
-	windeco? ( kde X )
+	kde? ( qt4 X )
+	kf5? ( qt5 )
+	windeco? ( kde )
 	|| ( gtk qt4 qt5 )"
 
 RDEPEND="X? ( x11-libs/libxcb
@@ -32,18 +38,24 @@ RDEPEND="X? ( x11-libs/libxcb
 	gtk? ( x11-libs/gtk+:2 )
 	qt4? ( dev-qt/qtdbus:4
 		dev-qt/qtgui:4
-		dev-qt/qtsvg:4
-	)
+		dev-qt/qtsvg:4 )
 	qt5? ( dev-qt/qtdeclarative:5
 		dev-qt/qtgui:5
 		dev-qt/qtsvg:5
 		dev-qt/qtwidgets:5
 		X? ( dev-qt/qtdbus:5
-			dev-qt/qtx11extras:5 )
-	)
+			dev-qt/qtx11extras:5 ) )
 	kde? ( $(add_kdebase_dep systemsettings)
-		windeco? ( $(add_kdebase_dep kwin) )
-	)
+		windeco? ( $(add_kdebase_dep kwin) ) )
+	kf5? ( $(add_frameworks_dep karchive)
+		$(add_frameworks_dep kconfig)
+		$(add_frameworks_dep kconfigwidgets)
+		$(add_frameworks_dep ki18n)
+		$(add_frameworks_dep kdelibs4support)
+		$(add_frameworks_dep kio)
+		$(add_frameworks_dep kwidgetsaddons)
+		$(add_frameworks_dep kxmlgui)
+		dev-libs/extra-cmake-modules )
 	!x11-themes/gtk-engines-qtcurve"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
@@ -60,12 +72,14 @@ pkg_setup() {
 src_configure() {
 	local mycmakeargs
 	mycmakeargs=(
+		-DLIB_INSTALL_DIR=/usr/$(get_libdir)
 		$(cmake-utils_use_enable gtk GTK2)
 		$(cmake-utils_use_enable qt4 QT4)
 		$(cmake-utils_use_enable qt5 QT5)
 		$(cmake-utils_use X QTC_ENABLE_X11 )
 		$(cmake-utils_use kde QTC_QT4_ENABLE_KDE )
 		$(cmake-utils_use windeco QTC_QT4_ENABLE_KWIN )
+		$(cmake-utils_use kf5 QTC_QT5_ENABLE_KDE )
 		$(cmake-utils_use nls QTC_INSTALL_PO )
 	)
 	cmake-utils_src_configure
