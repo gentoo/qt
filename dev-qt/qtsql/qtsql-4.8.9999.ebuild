@@ -26,8 +26,8 @@ DEPEND="
 	mysql? ( >=virtual/mysql-5.6-r2:=[${MULTILIB_USEDEP}] )
 	oci8? ( >=dev-db/oracle-instantclient-basic-11.2.0.4[${MULTILIB_USEDEP}] )
 	odbc? ( || (
-		>=dev-db/unixODBC-2.3.2[${MULTILIB_USEDEP}]
-		>=dev-db/libiodbc-3.52.8[${MULTILIB_USEDEP}]
+		>=dev-db/unixODBC-2.3.2-r2[${MULTILIB_USEDEP}]
+		>=dev-db/libiodbc-3.52.8-r2[${MULTILIB_USEDEP}]
 	) )
 	postgres? ( virtual/postgresql:* )
 	sqlite? ( >=dev-db/sqlite-3.8.3:3[${MULTILIB_USEDEP}] )
