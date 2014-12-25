@@ -19,11 +19,25 @@ fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
-IUSE=""
+IUSE="qt4 +qt5"
+REQUIRED_USE="^^ ( qt4 qt5 )"
 
-DEPEND="dev-qt/qtcore:4
-	dev-qt/qtdbus:4
-	dev-qt/qtgui:4
-	x11-libs/libX11
-	x11-misc/compton"
-RDEPEND="${DEPEND}"
+RDEPEND="x11-libs/libX11
+	x11-misc/compton
+	qt4? ( dev-qt/qtcore:4
+		dev-qt/qtdbus:4
+		dev-qt/qtgui:4 )
+	qt5? ( dev-qt/linguist-tools:5
+		dev-qt/qtcore:5
+		dev-qt/qtdbus:5
+		dev-qt/qtwidgets:5 )"
+DEPEND="${RDEPEND}
+	dev-libs/libconfig
+	virtual/pkgconfig"
+
+src_configure() {
+	local mycmakeargs=(
+		$( cmake-utils_use_use qt5 QT5 )
+	)
+	cmake-utils_src_configure
+}
