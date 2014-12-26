@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit eutils python-r1 toolchain-funcs
 
 DESCRIPTION="Python extension module generator for C and C++ libraries"
-HOMEPAGE="http://www.riverbankcomputing.co.uk/software/sip/intro https://pypi.python.org/pypi/SIP"
+HOMEPAGE="http://www.riverbankcomputing.com/software/sip/intro https://pypi.python.org/pypi/SIP"
 LICENSE="|| ( GPL-2 GPL-3 SIP )"
 
 if [[ ${PV} == *9999* ]]; then
@@ -19,7 +19,7 @@ elif [[ ${PV} == *_pre* ]]; then
 	# development snapshot
 	HG_REVISION=
 	MY_P=${PN}-${PV%_pre*}-snapshot-${HG_REVISION}
-	SRC_URI="http://dev.gentoo.org/~hwoarang/distfiles/${MY_P}.tar.gz"
+	SRC_URI="http://dev.gentoo.org/~pesa/distfiles/${MY_P}.tar.gz"
 	S=${WORKDIR}/${MY_P}
 else
 	# official release
@@ -64,14 +64,13 @@ src_prepare() {
 		eerror
 		die "sub-slot sanity check failed"
 	fi
-
-	python_copy_sources
 }
 
 src_configure() {
 	configuration() {
 		local myconf=(
-			"${PYTHON}" configure.py
+			"${PYTHON}"
+			"${S}"/configure.py
 			--destdir="$(python_get_sitedir)"
 			--incdir="$(python_get_includedir)"
 			$(use debug && echo --debug)
@@ -90,7 +89,7 @@ src_configure() {
 			STRIP=
 		)
 		echo "${myconf[@]}"
-		"${myconf[@]}"
+		"${myconf[@]}" || die
 	}
 	python_foreach_impl run_in_build_dir configuration
 }
@@ -106,6 +105,6 @@ src_install() {
 	}
 	python_foreach_impl run_in_build_dir installation
 
-	dodoc NEWS
-	use doc && dohtml -r doc/html/*
+	dodoc ChangeLog NEWS
+	use doc && dodoc -r doc/html
 }
