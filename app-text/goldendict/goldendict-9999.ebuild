@@ -30,7 +30,7 @@ RDEPEND=">=app-text/hunspell-1.2
 	>=dev-qt/qtwebkit-4.5:4[exceptions]
 	!kde? ( || (
 		>=dev-qt/qtphonon-4.5:4[exceptions]
-		media-libs/phonon
+		media-libs/phonon[qt4]
 	) )
 	kde? ( media-libs/phonon )"
 DEPEND="${RDEPEND}
