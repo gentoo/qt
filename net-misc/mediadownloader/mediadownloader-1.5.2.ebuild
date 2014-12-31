@@ -22,7 +22,7 @@ DEPEND="
 	dev-qt/qtgui:4
 	dev-qt/qtopengl:4
 	dev-qt/qtwebkit:4
-	kde? ( media-libs/phonon )
-	!kde? ( || ( dev-qt/qtphonon media-libs/phonon ) )
+	kde? ( media-libs/phonon[qt4] )
+	!kde? ( || ( dev-qt/qtphonon media-libs/phonon[qt4] ) )
 "
 RDEPEND="${DEPEND}"
