@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="lastfm"
 
-DEPEND="media-libs/phonon
+DEPEND="media-libs/phonon[qt4]
 	dev-qt/qtcore:4
 	dev-qt/qtgui:4
 	lastfm? ( media-libs/liblastfm )"
