@@ -32,7 +32,7 @@ REQUIRED_USE="luajit? ( lua )
 	python? ( ${PYTHON_REQUIRED_USE} )"
 
 RDEPEND=">=app-admin/eselect-vi-1.1.8
-	>=app-editors/vim-core-7.4.417[acl?]
+	>=app-editors/vim-core-7.4.560[acl?]
 	sys-libs/ncurses
 	>=dev-qt/qtcore-4.7.0:4
 	>=dev-qt/qtgui-4.7.0:4
