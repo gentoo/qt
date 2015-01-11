@@ -59,6 +59,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
 	dev-lang/ruby
+	dev-util/gperf
 	sys-devel/bison
 	sys-devel/flex
 "
