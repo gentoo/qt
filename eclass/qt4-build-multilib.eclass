@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -36,7 +36,7 @@ case ${PV} in
 	*)
 		QT4_BUILD_TYPE="release"
 		MY_P=qt-everywhere-opensource-src-${PV/_/-}
-		SRC_URI="http://download.qt-project.org/archive/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
+		SRC_URI="http://download.qt.io/official_releases/qt/${PV%.*}/${PV}/${MY_P}.tar.gz"
 		S=${WORKDIR}/${MY_P}
 		;;
 esac
@@ -272,10 +272,14 @@ qt4_multilib_src_configure() {
 
 	qt4_symlink_tools_to_build_dir
 
-	# toolchain setup
-	tc-export CC CXX OBJCOPY STRIP
-	export AR="$(tc-getAR) cqs"
-	export LD="$(tc-getCXX)"
+	# toolchain setup ('local -x' because of bug 532510)
+	local -x \
+		AR="$(tc-getAR) cqs" \
+		CC=$(tc-getCC) \
+		CXX=$(tc-getCXX) \
+		LD=$(tc-getCXX) \
+		OBJCOPY=$(tc-getOBJCOPY) \
+		STRIP=$(tc-getSTRIP)
 
 	# convert tc-arch to the values supported by Qt
 	local arch=
