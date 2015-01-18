@@ -7,7 +7,6 @@ EAPI=5
 inherit qt5-build
 
 DESCRIPTION="Wayland platform plugin for Qt"
-HOMEPAGE="http://qt-project.org/wiki/QtWayland"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
