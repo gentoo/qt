@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -58,7 +58,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	use compat && PATCHES+=("${FILESDIR}/${PN}-4.8.5-fix-compat.patch")
+	use compat && PATCHES+=("${FILESDIR}/${PN}-4.8.6-fix-compat.patch")
 
 	qt4-build-multilib_src_prepare
 
