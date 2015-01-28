@@ -1,8 +1,8 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 inherit qt4-r2 git-2
 
@@ -15,13 +15,13 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug doc static-libs test"
 
-COMMON_DEPEND="app-crypt/qca:2[debug?]"
+COMMON_DEPEND="app-crypt/qca:2[debug?,qt4(+)]"
 DEPEND="${COMMON_DEPEND}
 	doc? ( app-doc/doxygen )
 	test? ( dev-qt/qttest:4 )
 "
 RDEPEND="${COMMON_DEPEND}
-	|| ( ~app-crypt/qca-9999:2[debug?,openssl,qt4] <app-crypt/qca-ossl-9999:2[debug?] )
+	|| ( app-crypt/qca-ossl:2[debug?] app-crypt/qca:2[debug?,openssl] )
 "
 
 DOCS="README CHANGELOG"
