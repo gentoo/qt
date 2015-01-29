@@ -4,8 +4,9 @@
 
 EAPI=5
 
-# for mulibuild support, until merged to master
+# for multibuild support, until merged to master
 EGIT_BRANCH="qt5"
+
 inherit multilib cmake-utils multibuild git-r3
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
@@ -59,14 +60,7 @@ qca_plugin_use() {
 }
 
 pkg_setup() {
-	MULTIBUILD_VARIANTS=()
-	if use qt4; then
-		MULTIBUILD_VARIANTS+=(qt4)
-	fi
-
-	if use qt5; then
-		MULTIBUILD_VARIANTS+=(qt5)
-	fi
+	MULTIBUILD_VARIANTS=( $(usev qt4) $(usev qt5) )
 }
 
 src_configure() {
@@ -109,24 +103,21 @@ src_compile() {
 	multibuild_foreach_variant cmake-utils_src_compile
 }
 
+src_test() {
+	multibuild_foreach_variant cmake-utils_src_test
+}
+
 src_install() {
 	multibuild_foreach_variant cmake-utils_src_install
 
 	if use doc; then
 		pushd "${BUILD_DIR}" >/dev/null
 		doxygen Doxyfile.in || die
-		dohtml apidocs/html/*
+		dodoc -r apidocs/html
 		popd >/dev/null
 	fi
 
 	if use examples; then
-		insinto /usr/share/doc/${PF}
-		doins -r "${S}"/examples
+		dodoc -r "${S}"/examples
 	fi
-
-	cmake-utils_src_install
-}
-
-src_test() {
-	multibuild_foreach_variant cmake-utils_src_test
 }
