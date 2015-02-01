@@ -17,12 +17,12 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="cups"
+IUSE="cups opengl"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=]
-	~dev-qt/qtwidgets-${PV}[debug=]
+	~dev-qt/qtgui-${PV}[debug=,opengl=]
+	~dev-qt/qtwidgets-${PV}[debug=,opengl=]
 	cups? ( >=net-print/cups-1.4 )
 "
 DEPEND="${RDEPEND}
