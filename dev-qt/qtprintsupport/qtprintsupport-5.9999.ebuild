@@ -17,7 +17,8 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="cups opengl"
+# keep IUSE defaults in sync with qtgui
+IUSE="cups +opengl"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
