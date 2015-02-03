@@ -20,7 +20,8 @@ DEPEND="
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4 )
 	qt5? ( dev-qt/qtcore:5
-		dev-qt/qtgui:5 )"
+		dev-qt/qtgui:5
+		dev-qt/qtwidgets:5 )"
 RDEPEND="${DEPEND}"
 
 src_configure() {
