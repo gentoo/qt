@@ -31,6 +31,5 @@ DEPEND="
 	kde-frameworks/kwindowsystem:5
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/lxqt-common-${PV}
-	x11-libs/libX11
 "
 RDEPEND="${DEPEND}"
