@@ -20,16 +20,17 @@ LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
 DEPEND="
+	>=dev-libs/libqtxdg-1.0.0
+	dev-qt/linguist-tools:5
 	dev-qt/qtconcurrent:5
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
-	dev-qt/linguist-tools:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	kde-frameworks/kwindowsystem:5
 	~lxqt-base/liblxqt-${PV}
-	>=dev-libs/libqtxdg-1.0.0
 	sys-libs/zlib
 	x11-libs/libICE
 	x11-libs/libSM
