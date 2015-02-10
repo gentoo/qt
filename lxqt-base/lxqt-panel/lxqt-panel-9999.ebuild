@@ -51,7 +51,7 @@ src_configure() {
 	local mycmakeargs i y
 	for i in clock colorpicker cpuload desktopswitch dom kbindicator mainmenu mount \
 		networkmonitor quicklaunch screensaver sensors showdesktop sysstat \
-		taskbar teatime tray volume worldclock; do
+		taskbar tray volume worldclock; do
 		y=$(tr '[:lower:]' '[:upper:]' <<< "${i}")
 		mycmakeargs+=( $(cmake-utils_use ${i} ${y}_PLUGIN) )
 	done
