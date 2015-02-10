@@ -20,12 +20,6 @@ LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
 DEPEND=">=dev-libs/libqtxdg-1.0.0
-	x11-libs/libX11
-	x11-libs/libXcomposite
-	x11-libs/libXcursor
-	x11-libs/libXdamage
-	x11-libs/libXfixes
-	x11-libs/libXrender
 	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -33,6 +27,13 @@ DEPEND=">=dev-libs/libqtxdg-1.0.0
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	kde-frameworks/kwindowsystem:5
+	x11-libs/libX11
+	x11-libs/libXcomposite
+	x11-libs/libXcursor
+	x11-libs/libXdamage
+	x11-libs/libXfixes
+	x11-libs/libXrender
 "
 RDEPEND="${DEPEND}"
 
