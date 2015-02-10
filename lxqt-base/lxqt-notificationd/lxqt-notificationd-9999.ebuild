@@ -28,6 +28,7 @@ DEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	kde-frameworks/kwindowsystem:5
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/lxqt-common-${PV}
 	x11-libs/libX11
