@@ -19,8 +19,8 @@ fi
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
-RDEPEND="
-	dev-libs/glib:2
+RDEPEND="dev-libs/glib:2
+	>=dev-libs/libqtxdg-1.0.0
 	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -32,9 +32,7 @@ RDEPEND="
 	kde-frameworks/kwindowsystem:5
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/lxqt-globalkeys-${PV}
-	>=lxde-base/menu-cache-0.5.1
-	>=dev-libs/libqtxdg-1.0.0
-	x11-libs/libX11"
+	>=lxde-base/menu-cache-0.5.1"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 

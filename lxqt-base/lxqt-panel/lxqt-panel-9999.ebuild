@@ -38,13 +38,15 @@ DEPEND="
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/liblxqt-mount-${PV}
 	~lxqt-base/lxqt-globalkeys-${PV}
+	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
-	sysstat? ( ~lxqt-base/libsysstat-${PV} )
+	sysstat? ( =lxqt-base/libsysstat-0.3* )
 	volume? ( alsa? ( media-libs/alsa-lib )
 		pulseaudio? ( media-sound/pulseaudio ) )"
 RDEPEND="${DEPEND}
+	dev-qt/qtsvg:5
 	>=lxde-base/lxmenu-data-0.1.2"
 
 src_configure() {

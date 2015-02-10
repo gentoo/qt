@@ -30,8 +30,7 @@ RDEPEND="
 	dev-qt/qtxml:5
 	~lxqt-base/liblxqt-${PV}
 	>=dev-libs/libqtxdg-1.0.0
-	sys-auth/polkit-qt[qt5(-)]
-	x11-libs/libX11"
+	sys-auth/polkit-qt[qt5(-)]"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 

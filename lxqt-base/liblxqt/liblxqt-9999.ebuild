@@ -28,12 +28,6 @@ DEPEND=">=dev-libs/libqtxdg-1.0.0
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	kde-frameworks/kwindowsystem:5
-	x11-libs/libX11
-	x11-libs/libXcomposite
-	x11-libs/libXcursor
-	x11-libs/libXdamage
-	x11-libs/libXfixes
-	x11-libs/libXrender
 "
 RDEPEND="${DEPEND}"
 
