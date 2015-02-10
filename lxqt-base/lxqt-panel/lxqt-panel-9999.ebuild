@@ -20,10 +20,11 @@ LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 IUSE="+alsa +clock colorpicker cpuload +desktopswitch dom +kbindicator +mainmenu
 	+mount networkmonitor pulseaudio +quicklaunch screensaver sensors
-	+showdesktop sysstat +taskbar teatime +tray +volume worldclock"
+	+showdesktop sysstat +taskbar +tray +volume worldclock"
 REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
 
 DEPEND="
+	>=dev-libs/libqtxdg-1.0.0
 	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -31,20 +32,18 @@ DEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	kde-frameworks/kguiaddons:5
 	kde-frameworks/kwindowsystem:5
 	>=lxde-base/menu-cache-0.3.3
 	~lxqt-base/liblxqt-${PV}
 	~lxqt-base/liblxqt-mount-${PV}
 	~lxqt-base/lxqt-globalkeys-${PV}
-	>=dev-libs/libqtxdg-1.0.0
-	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
 	sysstat? ( ~lxqt-base/libsysstat-${PV} )
 	volume? ( alsa? ( media-libs/alsa-lib )
-		pulseaudio? ( media-sound/pulseaudio ) )
-	worldclock? ( dev-libs/icu:= )"
+		pulseaudio? ( media-sound/pulseaudio ) )"
 RDEPEND="${DEPEND}
 	>=lxde-base/lxmenu-data-0.1.2"
 
