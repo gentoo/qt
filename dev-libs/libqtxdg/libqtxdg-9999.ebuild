@@ -14,7 +14,6 @@ if [[ ${PV} = *9999* ]]; then
 else
 	SRC_URI="http://downloads.lxqt.org/${PN}/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${PN}"
 fi
 
 LICENSE="LGPL-2.1"
