@@ -9,7 +9,8 @@ HOMEPAGE="http://lxqt.org/"
 
 LICENSE="metapackage"
 SLOT="0"
-IUSE="admin +icons lightdm lximage -minimal +policykit powermanagement sddm ssh-askpass"
+IUSE="admin +filemanager +icons lightdm lximage -minimal +policykit powermanagement
+	sddm ssh-askpass"
 
 S="${WORKDIR}"
 
@@ -24,15 +25,16 @@ RDEPEND="
 	~lxqt-base/lxqt-qtplugin-${PV}
 	~lxqt-base/lxqt-runner-${PV}
 	~lxqt-base/lxqt-session-${PV}
-	~x11-misc/pcmanfm-qt-${PV}
 	admin? (
 		~lxqt-base/lxqt-admin-${PV} )
+	filemanager? (
+		~x11-misc/pcmanfm-qt-${PV} )
 	icons? (
 		>=lxde-base/lxde-icon-theme-0.5 )
 	lightdm? (
 		x11-misc/lightdm )
 	lximage? (
-		~media-gfx/lximage-qt-${PV} )
+		media-gfx/lximage-qt )
 	!minimal? (
 		x11-wm/openbox
 		x11-misc/obconf-qt )
