@@ -21,6 +21,7 @@ SLOT="0"
 
 DEPEND="dev-libs/glib:2
 	dev-libs/liboobs
+	>=dev-libs/libqtxdg-1.0.0
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
@@ -28,7 +29,7 @@ DEPEND="dev-libs/glib:2
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	~lxqt-base/liblxqt-${PV}
-	>=dev-libs/libqtxdg-1.0.0
+	kde-frameworks/kwindowsystem:5
 	x11-libs/libX11
 "
 RDEPEND="${DEPEND}"
