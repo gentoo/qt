@@ -12,7 +12,7 @@ if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}.git"
 else
-	SRC_URI="http://lxqt.org/downloads/${PN}/${PV}/${P}.tar.xz"
+	SRC_URI="http://downloads.lxqt.org/${PN}/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${PN}"
 fi
