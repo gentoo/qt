@@ -25,7 +25,7 @@ RDEPEND="
 	~lxqt-base/lxqt-session-${PV}
 	~x11-misc/pcmanfm-qt-${PV}
 	admin? (
-		~app-admin/lxqt-admin-${PV} )
+		~lxqt-base/lxqt-admin-${PV} )
 	icons? (
 		>=lxde-base/lxde-icon-theme-0.5 )
 	lightdm? (
@@ -44,5 +44,5 @@ RDEPEND="
 	sddm? (
 		~x11-misc/sddm-${PV} )
 	ssh-askpass? (
-		~net-misc/lxqt-openssh-askpass-${PV} )
+		~lxqt-base/lxqt-openssh-askpass-${PV} )
 "
