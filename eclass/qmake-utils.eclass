@@ -51,6 +51,25 @@ qmake-utils_find_pro_file() {
 	esac
 }
 
+# @FUNCTION qt4_get_bindir
+# @DESCRIPTION:
+# Get the correct location of Qt4's installed binaries.
+qt4_get_bindir() {
+	local qtbindir=${EPREFIX}/usr/$(get_libdir)/qt4/bin
+	if [[ -x ${qtbindir} ]]; then
+		echo ${qtbindir}
+	else
+		echo ${EPREFIX}/usr/bin
+	fi
+}
+
+# @FUNCTION qt5_get_bindir
+# @DESCRIPTION:
+# Get the correct location of Qt5's installed binaries.
+qt5_get_bindir() {
+	echo ${EPREFIX}/usr/$(get_libdir)/qt5/bin
+}
+
 # @VARIABLE: EQMAKE4_EXCLUDE
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -158,11 +177,7 @@ eqmake4() {
 
 	[[ -n ${EQMAKE4_EXCLUDE} ]] && eshopts_pop
 
-	# determine qmake binary location
-	local qmake_path=${EPREFIX}/usr/$(get_libdir)/qt4/bin/qmake
-	[[ ! -x ${qmake_path} ]] && qmake_path=${EPREFIX}/usr/bin/qmake
-
-	"${qmake_path}" \
+	"$(qt4_get_bindir)"/qmake \
 		-makefile \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
@@ -213,7 +228,7 @@ eqmake5() {
 
 	ebegin "Running qmake"
 
-	"${EPREFIX}"/usr/$(get_libdir)/qt5/bin/qmake \
+	"$(qt5_get_bindir)"/qmake \
 		-makefile \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
