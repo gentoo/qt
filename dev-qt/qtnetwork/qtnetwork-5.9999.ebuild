@@ -16,12 +16,13 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="connman networkmanager +ssl"
+IUSE="connman libproxy networkmanager +ssl"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
 	sys-libs/zlib
 	connman? ( ~dev-qt/qtdbus-${PV}[debug=] )
+	libproxy? ( net-libs/libproxy )
 	networkmanager? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	ssl? ( dev-libs/openssl:0[-bindist] )
 "
@@ -36,6 +37,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 QT5_GENTOO_CONFIG=(
+	libproxy
 	ssl::SSL
 	ssl::OPENSSL
 	ssl:openssl-linked:LINKED_OPENSSL
@@ -49,6 +51,7 @@ pkg_setup() {
 src_configure() {
 	local myconf=(
 		$(use connman || use networkmanager && echo -dbus-linked)
+		$(qt_use libproxy)
 		$(use ssl && echo -openssl-linked)
 	)
 	qt5-build_src_configure

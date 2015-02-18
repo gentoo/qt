@@ -532,7 +532,7 @@ qt5_base_configure() {
 		-no-journald
 		-no-libpng -no-libjpeg
 		-no-freetype -no-harfbuzz
-		-no-openssl
+		-no-openssl -no-libproxy
 		-no-xinput2 -no-xcb-xlib
 
 		# always enable glib event loop support
