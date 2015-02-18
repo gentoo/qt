@@ -16,6 +16,25 @@ _QMAKE_UTILS_ECLASS=1
 
 inherit eutils multilib toolchain-funcs
 
+# @FUNCTION: qt4_get_bindir
+# @DESCRIPTION:
+# Echoes the directory where Qt4 binaries are installed.
+qt4_get_bindir() {
+	local qtbindir=${EPREFIX}/usr/$(get_libdir)/qt4/bin
+	if [[ -d ${qtbindir} ]]; then
+		echo ${qtbindir}
+	else
+		echo ${EPREFIX}/usr/bin
+	fi
+}
+
+# @FUNCTION: qt5_get_bindir
+# @DESCRIPTION:
+# Echoes the directory where Qt5 binaries are installed.
+qt5_get_bindir() {
+	echo ${EPREFIX}/usr/$(get_libdir)/qt5/bin
+}
+
 # @FUNCTION: qmake-utils_find_pro_file
 # @RETURN: zero or one qmake .pro file names
 # @INTERNAL
@@ -49,25 +68,6 @@ qmake-utils_find_pro_file() {
 		done
 		;;
 	esac
-}
-
-# @FUNCTION qt4_get_bindir
-# @DESCRIPTION:
-# Get the correct location of Qt4's installed binaries.
-qt4_get_bindir() {
-	local qtbindir=${EPREFIX}/usr/$(get_libdir)/qt4/bin
-	if [[ -x ${qtbindir} ]]; then
-		echo ${qtbindir}
-	else
-		echo ${EPREFIX}/usr/bin
-	fi
-}
-
-# @FUNCTION qt5_get_bindir
-# @DESCRIPTION:
-# Get the correct location of Qt5's installed binaries.
-qt5_get_bindir() {
-	echo ${EPREFIX}/usr/$(get_libdir)/qt5/bin
 }
 
 # @VARIABLE: EQMAKE4_EXCLUDE
