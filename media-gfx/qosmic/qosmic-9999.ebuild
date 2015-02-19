@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 inherit qt4-r2 subversion
 
 DESCRIPTION="A cosmic recursive flame fractal editor"
