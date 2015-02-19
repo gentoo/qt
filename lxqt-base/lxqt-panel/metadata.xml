@@ -18,7 +18,6 @@
     <flag name="showdesktop">Build showdesktop plugin</flag>
     <flag name="sysstat">Build sysstat plugin</flag>
     <flag name="taskbar">Build taskbar plugin</flag>
-    <flag name="teatime">Build teatime plugin</flag>
     <flag name="tray">Build tray plugin</flag>
     <flag name="volume">Build volume plugin</flag>
     <flag name="worldclock">Build worldclock plugin</flag>
