@@ -24,6 +24,7 @@ IUSE="+alsa +clock colorpicker cpuload +desktopswitch dom +kbindicator +mainmenu
 REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
 
 DEPEND="
+	dev-libs/glib:2
 	>=dev-libs/libqtxdg-1.0.0
 	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
@@ -39,6 +40,9 @@ DEPEND="
 	~lxqt-base/liblxqt-mount-${PV}
 	~lxqt-base/lxqt-globalkeys-${PV}
 	x11-libs/libX11
+	x11-libs/libXcomposite
+	x11-libs/libXdamage
+	x11-libs/libXrender
 	cpuload? ( sys-libs/libstatgrab )
 	networkmonitor? ( sys-libs/libstatgrab )
 	sensors? ( sys-apps/lm_sensors )
