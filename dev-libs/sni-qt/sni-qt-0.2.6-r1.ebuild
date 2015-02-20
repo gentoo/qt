@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit cmake-utils
+inherit cmake-multilib
 
 DESCRIPTION="A Qt plugin which turns all QSystemTrayIcon into StatusNotifierItems"
 HOMEPAGE="https://launchpad.net/sni-qt"
@@ -16,13 +16,13 @@ KEYWORDS="~amd64"
 IUSE="test"
 
 RDEPEND="
-	dev-libs/libdbusmenu-qt[qt4(+)]
-	dev-qt/qtcore:4
-	dev-qt/qtdbus:4
-	dev-qt/qtgui:4
+	dev-libs/libdbusmenu-qt:4[${MULTILIB_USEDEP}]
+	dev-qt/qtcore:4[${MULTILIB_USEDEP}]
+	dev-qt/qtdbus:4[${MULTILIB_USEDEP}]
+	dev-qt/qtgui:4[${MULTILIB_USEDEP}]
 "
 DEPEND="${RDEPEND}
-	test? ( dev-qt/qttest:4 )
+	test? ( dev-qt/qttest:4[${MULTILIB_USEDEP}] )
 "
 
 src_prepare() {
@@ -31,4 +31,9 @@ src_prepare() {
 	fi
 
 	cmake-utils_src_prepare
+}
+
+multilib_src_configure() {
+	mycmakeargs=( -DQT_QMAKE_EXECUTABLE=/usr/$(get_libdir)/qt4/bin/qmake )
+	cmake-utils_src_configure
 }
