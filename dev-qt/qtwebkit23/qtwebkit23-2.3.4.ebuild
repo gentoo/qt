@@ -5,7 +5,7 @@
 EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
-inherit eutils multilib python-any-r1
+inherit eutils multilib python-any-r1 toolchain-funcs
 
 DESCRIPTION="The WebKit module for the Qt toolkit"
 HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
@@ -60,14 +60,26 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	# bug 458222
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
+
+	sed -i -e "/QMAKE_CXXFLAGS_RELEASE/d" Source/WTF/WTF.pro Source/JavaScriptCore/Target.pri || die
 }
 
 src_compile() {
 	export QTDIR=/usr/$(get_libdir)/qt4/
+	export CC=$(tc-getCC)
+	export CXX=$(tc-getCXX)
 	Tools/Scripts/build-webkit --qt --release --no-webkit2 \
 		$(use gstreamer || echo --no-video) \
 		--makeargs="${MAKEOPTS}" \
-		--qmakearg="CONFIG+=production_build CONFIG+=nostrip" || die
+		--qmakearg="CONFIG+=production_build CONFIG+=nostrip" \
+		QMAKE_CC=\"$(tc-getCC)\" \
+		QMAKE_CXX=\"$(tc-getCXX)\" \
+		QMAKE_CFLAGS=\"${CFLAGS}\" \
+		QMAKE_CXXFLAGS=\"${CXXFLAGS}\" \
+		QMAKE_CFLAGS_RELEASE=\"\" \
+		QMAKE_CXXFLAGS_RELEASE=\"\" \
+		QMAKE_LFLAGS+=\"${LDFLAGS}\" \
+		QMAKE_LINK=\"$(tc-getCXX)\" || die
 }
 
 src_install() {
