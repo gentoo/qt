@@ -17,7 +17,7 @@ LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS=""
 
-IUSE="botan debug doc examples gcrypt gpg logger nss openssl pkcs11 +qt4 qt5 sasl softstore test"
+IUSE="botan debug doc examples gcrypt gpg logger nss +openssl pkcs11 +qt4 qt5 sasl softstore test"
 REQUIRED_USE="|| ( qt4 qt5 )"
 
 RDEPEND="
