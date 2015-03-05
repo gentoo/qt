@@ -62,6 +62,7 @@ DEPEND="${RDEPEND}
 	dev-util/gperf
 	sys-devel/bison
 	sys-devel/flex
+	virtual/rubygems
 "
 
 src_prepare() {
