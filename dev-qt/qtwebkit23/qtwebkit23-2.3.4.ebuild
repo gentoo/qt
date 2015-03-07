@@ -16,11 +16,9 @@ SLOT="4"
 KEYWORDS="~amd64"
 
 IUSE="+gstreamer"
-# libxml2[!icu] is needed for bugs 407315 and 411091
-# https://bugs.webkit.org/show_bug.cgi?id=82824
 RDEPEND="
 	>=dev-db/sqlite-3.8.3:3
-	dev-libs/libxml2:2[-icu]
+	dev-libs/libxml2:2
 	dev-libs/libxslt
 	dev-qt/qtcore:4[ssl]
 	dev-qt/qtdeclarative:4
@@ -62,6 +60,8 @@ src_prepare() {
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
 
 	sed -i -e "/QMAKE_CXXFLAGS_RELEASE/d" Source/WTF/WTF.pro Source/JavaScriptCore/Target.pri || die
+
+	epatch "${FILESDIR}"/${PN}-2.3.4-use-correct-typedef.patch
 }
 
 src_compile() {
