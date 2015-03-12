@@ -31,6 +31,6 @@ src_prepare() {
 
 src_configure() {
 	CMAKE_BUILD_TYPE="Release"
-	mycmakeargs="-D GUI=QT"
+	mycmakeargs="-D GUI=QT -D CMAKE_CXX_FLAGS='-DUSE_FREETYPE2'"
 	cmake-utils_src_configure
 }
