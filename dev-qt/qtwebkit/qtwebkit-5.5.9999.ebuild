@@ -24,6 +24,7 @@ REQUIRED_USE="?? ( gstreamer gstreamer010 multimedia )"
 RDEPEND="
 	dev-db/sqlite:3
 	dev-libs/icu:=
+	>=dev-libs/leveldb-1.18-r1
 	dev-libs/libxml2:2
 	dev-libs/libxslt
 	>=dev-qt/qtcore-${PV}:5[debug=,icu]
@@ -64,6 +65,8 @@ DEPEND="${RDEPEND}
 	sys-devel/flex
 	virtual/rubygems
 "
+
+PATCHES=( "${FILESDIR}/${PN}-5.4.1-leveldb.patch" )
 
 src_prepare() {
 	if use gstreamer010; then
