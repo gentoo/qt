@@ -69,6 +69,9 @@ DEPEND="${RDEPEND}
 PATCHES=( "${FILESDIR}/${PN}-5.4.1-leveldb.patch" )
 
 src_prepare() {
+	# ensure bundled library cannot be used
+	rm -r Source/ThirdParty/leveldb || die
+
 	if use gstreamer010; then
 		epatch "${FILESDIR}/${PN}-5.3.2-use-gstreamer010.patch"
 	elif ! use gstreamer; then
