@@ -291,7 +291,7 @@ qt4_multilib_src_configure() {
 		x86-macos)		  arch=x86 ;;
 		x86*)			  arch=i386 ;;
 		alpha|arm|ia64|mips|s390) arch=$(tc-arch) ;;
-		arm64|hppa|sh)	  arch=generic ;;
+		arm64|hppa|sh)		  arch=generic ;;
 		*) die "qt4-build-multilib.eclass: unsupported tc-arch '$(tc-arch)'" ;;
 	esac
 
