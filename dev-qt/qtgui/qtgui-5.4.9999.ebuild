@@ -69,6 +69,8 @@ PDEPEND="
 	ibus? ( app-i18n/ibus )
 "
 
+PATCHES=( "${FILESDIR}/${PN}-5.4.1-CVE-2015-0295.patch" )
+
 QT5_TARGET_SUBDIRS=(
 	src/gui
 	src/platformheaders
