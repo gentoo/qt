@@ -15,18 +15,19 @@ else
 fi
 
 DESIGNER_PLUGINS="declarative phonon qt3support webkit"
-IUSE="${DESIGNER_PLUGINS}"
+IUSE="${DESIGNER_PLUGINS} kde"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
 	~dev-qt/qtgui-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
 	~dev-qt/qtscript-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
 	declarative? ( ~dev-qt/qtdeclarative-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
-	phonon? ( ~dev-qt/qtphonon-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
+	phonon? ( !kde? ( ~dev-qt/qtphonon-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] ) )
 	qt3support? ( ~dev-qt/qt3support-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 	webkit? ( ~dev-qt/qtwebkit-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
 "
 RDEPEND="${DEPEND}"
+PDEPEND="phonon? ( kde? ( media-libs/phonon[designer,qt4] ) )"
 
 QT4_TARGET_DIRECTORIES="tools/designer"
 
@@ -35,8 +36,13 @@ src_prepare() {
 
 	local plugin
 	for plugin in ${DESIGNER_PLUGINS}; do
-		use ${plugin} || sed -i -e "/\<${plugin}\>/d" \
-			tools/designer/src/plugins/plugins.pro || die
+		if use ${plugin} ; then
+			if [[ ${plugin} == phonon ]] && use kde ; then
+				continue
+			fi
+			sed -i -e "/\<${plugin}\>/d" \
+				tools/designer/src/plugins/plugins.pro || die
+		fi
 	done
 }
 
