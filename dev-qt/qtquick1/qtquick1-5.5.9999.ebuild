@@ -24,7 +24,7 @@ DEPEND="
 	>=dev-qt/qtsql-${PV}:5[debug=]
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	designer? (
-		>=dev-qt/designer-${PV}:5[debug=]
+		~dev-qt/designer-${PV}:5[debug=]
 		>=dev-qt/qtdeclarative-${PV}:5[debug=]
 	)
 	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
