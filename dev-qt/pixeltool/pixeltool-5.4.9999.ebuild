@@ -13,7 +13,7 @@ DESCRIPTION="Qt screen magnifier"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~arm ~hppa ~x86"
 fi
 
 IUSE=""

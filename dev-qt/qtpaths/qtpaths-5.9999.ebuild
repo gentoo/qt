@@ -13,7 +13,7 @@ DESCRIPTION="Tool to query Qt path information"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~arm ~hppa ~x86"
 fi
 
 IUSE=""

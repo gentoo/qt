@@ -11,7 +11,7 @@ DESCRIPTION="The QML and Quick modules for the Qt5 framework"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~arm ~hppa ~x86"
 fi
 
 IUSE="gles2 localstorage +widgets xml"

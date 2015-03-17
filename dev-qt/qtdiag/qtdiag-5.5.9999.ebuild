@@ -13,7 +13,7 @@ DESCRIPTION="Tool for reporting diagnostic information about Qt and its environm
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64 ~arm ~hppa ~x86"
 fi
 
 IUSE="+opengl +ssl"
