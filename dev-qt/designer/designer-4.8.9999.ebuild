@@ -36,10 +36,7 @@ src_prepare() {
 
 	local plugin
 	for plugin in ${DESIGNER_PLUGINS}; do
-		if use ${plugin} ; then
-			if [[ ${plugin} == phonon ]] && use kde ; then
-				continue
-			fi
+		if ! use ${plugin} || ( [[ ${plugin} == phonon ]] && use kde ); then
 			sed -i -e "/\<${plugin}\>/d" \
 				tools/designer/src/plugins/plugins.pro || die
 		fi
