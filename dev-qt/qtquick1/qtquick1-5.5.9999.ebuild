@@ -16,6 +16,7 @@ fi
 
 IUSE="designer +opengl webkit xml"
 
+# bug 542698 for pinned designer dependency
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
