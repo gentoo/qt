@@ -658,6 +658,7 @@ qt5_qmake() {
 		QMAKE_LFLAGS="${LDFLAGS}" \
 		QMAKE_LFLAGS_RELEASE= \
 		QMAKE_LFLAGS_DEBUG= \
+		$(use debug && echo "CONFIG+=debug" || echo "CONFIG-=debug") \
 		"${projectdir}" \
 		"$@" \
 		|| die "qmake failed (${projectdir})"
