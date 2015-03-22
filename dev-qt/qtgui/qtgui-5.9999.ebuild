@@ -52,7 +52,7 @@ RDEPEND="
 		>=x11-libs/libX11-1.5
 		>=x11-libs/libXi-1.6
 		x11-libs/libXrender
-		>=x11-libs/libxcb-1.10:=[xkb]
+		>=x11-libs/libxcb-1.11:=[xkb]
 		>=x11-libs/libxkbcommon-0.4.1[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
@@ -68,6 +68,8 @@ DEPEND="${RDEPEND}
 PDEPEND="
 	ibus? ( app-i18n/ibus )
 "
+
+PATCHES=( "${FILESDIR}/${P}_enable_threaded_mesa.patch" )
 
 QT5_TARGET_SUBDIRS=(
 	src/gui
