@@ -1,0 +1,12 @@
+--- src/plugins/platforms/xcb/gl_integrations/xcb_glx/qglxintegration.cpp.org	2015-03-22 11:07:52.452181309 +0100
++++ src/plugins/platforms/xcb/gl_integrations/xcb_glx/qglxintegration.cpp	2015-03-22 11:08:26.955178981 +0100
+@@ -618,9 +618,6 @@
+ // a fundamental flaw with multithreaded access to xcb, but mesa doesn't. The blacklist should be
+ // reevaluated once that patch is released in some version of xcb.
+ static const char *qglx_threadedgl_blacklist_vendor[] = {
+-    "Mesa Project and SGI",                // QTCREATORBUG-10875 (crash in creator)
+-                                           // QTBUG-34492 (flickering in fullscreen)
+-                                           // QTBUG-38221
+     0
+ };
+ 
