@@ -20,7 +20,7 @@ IUSE="connman libproxy networkmanager +ssl"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	sys-libs/zlib
+	>=sys-libs/zlib-1.2.5
 	connman? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	libproxy? ( net-libs/libproxy )
 	networkmanager? ( ~dev-qt/qtdbus-${PV}[debug=] )
