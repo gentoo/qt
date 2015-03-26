@@ -48,7 +48,7 @@ RDEPEND="
 	egl? ( media-libs/mesa[egl,${MULTILIB_USEDEP}] )
 	glib? ( dev-libs/glib:2[${MULTILIB_USEDEP}] )
 	gtkstyle? (
-		>=x11-libs/cairo-1.12[-qt4,${MULTILIB_USEDEP}]
+		>=x11-libs/cairo-1.12[-qt4(-),${MULTILIB_USEDEP}]
 		>=x11-libs/gtk+-2.24.23-r1:2[aqua=,${MULTILIB_USEDEP}]
 	)
 	mng? ( >=media-libs/libmng-1.0.10-r2:=[${MULTILIB_USEDEP}] )
