@@ -72,6 +72,7 @@ PATCHES=(
 	"${DISTDIR}/${PN}-systemtrayicon-plugin-system.patch" # bug 503880
 	"${FILESDIR}/${PN}-4.7.3-cups.patch" # bug 323257
 	"${FILESDIR}/${PN}-4.8.5-disable-gtk-theme-check.patch" # bug 491226
+	"${FILESDIR}/${PN}-4.8.5-qclipboard-delay.patch" # bug 514968
 )
 
 QT4_TARGET_DIRECTORIES="
