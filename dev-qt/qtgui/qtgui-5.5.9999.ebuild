@@ -30,12 +30,12 @@ RDEPEND="
 	dev-libs/glib:2
 	~dev-qt/qtcore-${PV}[debug=]
 	media-libs/fontconfig
-	media-libs/freetype:2
-	sys-libs/zlib
+	>=media-libs/freetype-2.5.5:2
+	>=sys-libs/zlib-1.2.5
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
-	harfbuzz? ( >=media-libs/harfbuzz-0.9.32:= )
+	harfbuzz? ( >=media-libs/harfbuzz-0.9.38:= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (

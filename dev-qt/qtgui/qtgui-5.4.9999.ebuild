@@ -31,7 +31,7 @@ RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
 	media-libs/fontconfig
 	media-libs/freetype:2
-	sys-libs/zlib
+	>=sys-libs/zlib-1.2.5
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gles2? ( media-libs/mesa[gles2] )
