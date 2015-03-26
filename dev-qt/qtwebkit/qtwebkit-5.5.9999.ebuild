@@ -34,7 +34,7 @@ RDEPEND="
 	>=dev-qt/qtwidgets-${PV}:5[debug=]
 	media-libs/fontconfig:1.0
 	media-libs/libpng:0=
-	sys-libs/zlib
+	>=sys-libs/zlib-1.2.5
 	virtual/jpeg:0
 	virtual/opengl
 	x11-libs/libX11
