@@ -20,8 +20,8 @@ IUSE="icu systemd"
 
 DEPEND="
 	dev-libs/glib:2
-	>=dev-libs/libpcre-8.30[pcre16]
-	sys-libs/zlib
+	>=dev-libs/libpcre-8.35[pcre16]
+	>=sys-libs/zlib-1.2.5
 	virtual/libiconv
 	icu? ( dev-libs/icu:= )
 	systemd? ( sys-apps/systemd )
