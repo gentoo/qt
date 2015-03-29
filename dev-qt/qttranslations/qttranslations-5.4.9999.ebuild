@@ -18,6 +18,6 @@ IUSE=""
 
 DEPEND="
 	>=dev-qt/linguist-tools-${PV}:5
-	>=dev-qt/qtcore-${PV}:5[debug=]
+	>=dev-qt/qtcore-${PV}:5
 "
-RDEPEND="${DEPEND}"
+RDEPEND=""
