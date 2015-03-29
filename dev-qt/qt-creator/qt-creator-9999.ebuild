@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.3.1.ebuild,v 1.1 2015/02/24 17:54:24 pesa Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.3.2.ebuild,v 1.3 2015/03/29 13:57:41 pesa Exp $
 
 EAPI=5
 
@@ -15,8 +15,8 @@ LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI=(
-		"git://gitorious.org/${PN}/${PN}.git"
-		"https://git.gitorious.org/${PN}/${PN}.git"
+		"git://code.qt.io/${PN}/${PN}.git"
+		"https://code.qt.io/git/${PN}/${PN}.git"
 	)
 else
 	MY_PV=${PV/_/-}
@@ -57,7 +57,7 @@ RDEPEND="
 	>=dev-qt/qtxml-${QT_PV}
 	>=sys-devel/gdb-7.4[client(+),python]
 	clang? ( >=sys-devel/clang-3.2:= )
-	qbs? ( >=dev-util/qbs-1.3.3[qt5] )
+	qbs? ( >=dev-util/qbs-1.3.4 )
 "
 DEPEND="${RDEPEND}
 	>=dev-qt/linguist-tools-${QT_PV}
