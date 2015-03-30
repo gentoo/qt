@@ -13,8 +13,8 @@ MY_P="${PN}-qt4.8+${PV}"
 DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="http://qt-project.org/wiki/PySide"
 EGIT_REPO_URI=(
-	"git://gitorious.org/pyside/${PN}.git"
-	"https://git.gitorious.org/pyside/${PN}.git"
+	"git://code.qt.io/pyside/${PN}.git"
+	"https://code.qt.io/git/pyside/${PN}.git"
 )
 
 LICENSE="LGPL-2.1"

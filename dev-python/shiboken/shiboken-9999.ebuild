@@ -11,8 +11,8 @@ inherit cmake-utils multilib python-r1 git-r3
 DESCRIPTION="A tool for creating Python bindings for C++ libraries"
 HOMEPAGE="http://qt-project.org/wiki/PySide"
 EGIT_REPO_URI=(
-	"git://gitorious.org/pyside/${PN}.git"
-	"https://git.gitorious.org/pyside/${PN}.git"
+	"git://code.qt.io/pyside/${PN}.git"
+	"https://code.qt.io/git/pyside/${PN}.git"
 )
 
 LICENSE="LGPL-2.1"
