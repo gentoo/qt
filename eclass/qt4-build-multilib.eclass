@@ -27,8 +27,9 @@ case ${PV} in
 	4.?.9999)
 		QT4_BUILD_TYPE="live"
 		EGIT_REPO_URI=(
-			"git://gitorious.org/qt/qt.git"
-			"https://git.gitorious.org/qt/qt.git"
+			"git://code.qt.io/qt/qt.git"
+			"https://code.qt.io/git/qt/qt.git"
+			"https://github.com/qtproject/qt.git"
 		)
 		EGIT_BRANCH=${PV%.9999}
 		inherit git-r3
