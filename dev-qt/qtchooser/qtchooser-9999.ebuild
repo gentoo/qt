@@ -7,8 +7,12 @@ EAPI=5
 inherit qmake-utils toolchain-funcs git-r3
 
 DESCRIPTION="Qt4/Qt5 version chooser"
-HOMEPAGE="https://qt.gitorious.org/qt/qtchooser"
-EGIT_REPO_URI="https://gitorious.org/qt/${PN}.git"
+HOMEPAGE="https://code.qt.io/cgit/qt/qtchooser.git/"
+EGIT_REPO_URI=(
+	"git://code.qt.io/qt/${PN}.git"
+	"https://code.qt.io/git/qt/${PN}.git"
+	"https://github.com/qtproject/${PN}.git"
+)
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
