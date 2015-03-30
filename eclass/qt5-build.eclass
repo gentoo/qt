@@ -60,8 +60,9 @@ case ${PV} in
 esac
 
 EGIT_REPO_URI=(
-	"git://gitorious.org/qt/${QT5_MODULE}.git"
-	"https://git.gitorious.org/qt/${QT5_MODULE}.git"
+	"git://code.qt.io/qt/${QT5_MODULE}.git"
+	"https://code.qt.io/git/qt/${QT5_MODULE}.git"
+	"https://github.com/qtproject/${QT5_MODULE}.git"
 )
 [[ ${QT5_BUILD_TYPE} == live ]] && inherit git-r3
 
