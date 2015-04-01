@@ -1,5 +1,5 @@
 # set for Qt5 Add-on modules
-# http://qt-project.org/wiki/Qt_5_Structure
+# http://doc.qt.io/qt-5/qtmodules.html
 
 #dev-qt/qt3d:5
 dev-qt/qtconcurrent:5

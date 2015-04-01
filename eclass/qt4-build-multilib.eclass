@@ -19,7 +19,7 @@ esac
 
 inherit eutils flag-o-matic multilib multilib-minimal toolchain-funcs
 
-HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
+HOMEPAGE="https://www.qt.io/"
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="4"
 

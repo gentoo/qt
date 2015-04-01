@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit eutils multilib python-any-r1 toolchain-funcs
 
 DESCRIPTION="The WebKit module for the Qt toolkit"
-HOMEPAGE="https://www.qt.io/ https://qt-project.org/"
+HOMEPAGE="https://www.qt.io/"
 SRC_URI="http://dev.gentoo.org/~kensington/distfiles/qtwebkit23-2.3.4.tar.xz"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"

@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python{2_7,3_3,3_4} )
 inherit cmake-utils multilib python-r1 git-r3
 
 DESCRIPTION="A tool for creating Python bindings for C++ libraries"
-HOMEPAGE="http://qt-project.org/wiki/PySide"
+HOMEPAGE="https://wiki.qt.io/Pyside"
 EGIT_REPO_URI=(
 	"git://code.qt.io/pyside/${PN}.git"
 	"https://code.qt.io/git/pyside/${PN}.git"

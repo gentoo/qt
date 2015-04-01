@@ -9,7 +9,7 @@ PLOCALES="cs de fr ja pl ru sl uk zh_CN zh_TW"
 inherit eutils l10n multilib qmake-utils virtualx
 
 DESCRIPTION="Lightweight IDE for C++/QML development centering around Qt"
-HOMEPAGE="http://qt-project.org/wiki/Category:Tools::QtCreator"
+HOMEPAGE="http://doc.qt.io/qtcreator/"
 LICENSE="|| ( LGPL-2.1 LGPL-3 )"
 
 if [[ ${PV} == *9999 ]]; then
