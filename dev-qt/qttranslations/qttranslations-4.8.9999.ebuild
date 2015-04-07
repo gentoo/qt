@@ -36,7 +36,7 @@ multilib_src_compile() {
 }
 
 multilib_src_test() {
-	multilib_is_native_abi && qt4_multilib_src_test
+	:
 }
 
 multilib_src_install() {
