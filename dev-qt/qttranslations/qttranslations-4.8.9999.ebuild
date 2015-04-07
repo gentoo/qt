@@ -19,7 +19,7 @@ IUSE=""
 DEPEND="
 	~dev-qt/qtcore-${PV}
 "
-RDEPEND="${DEPEND}"
+RDEPEND=""
 
 QT4_TARGET_DIRECTORIES="translations"
 
