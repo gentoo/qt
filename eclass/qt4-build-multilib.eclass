@@ -215,8 +215,12 @@ qt4-build-multilib_src_prepare() {
 			'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
 		|| die "sed config.tests failed"
 
-	# Bug 172219
-	sed -e 's:/X11R6/:/:' -i mkspecs/$(qt4_get_mkspec)/qmake.conf || die
+	# Delete references to the obsolete /usr/X11R6 directory
+	# On prefix, this also prevents looking at non-prefix stuff
+	sed -i -re '/^QMAKE_(LIB|INC)DIR(_X11|_OPENGL|)\s+/ s/=.*/=/' \
+		mkspecs/common/linux.conf \
+		mkspecs/$(qt4_get_mkspec)/qmake.conf \
+		|| die "sed QMAKE_(LIB|INC)DIR failed"
 
 	if [[ ${CHOST} == *-darwin* ]]; then
 		# Set FLAGS and remove -arch, since our gcc-apple is multilib crippled (by design)
@@ -254,7 +258,7 @@ qt4-build-multilib_src_prepare() {
 		fi
 	fi
 
-	# this is needed for all systems with a separate -liconv, except
+	# This is needed for all systems with a separate -liconv, except
 	# Darwin, for which the sources already cater for -liconv
 	if use !elibc_glibc && [[ ${CHOST} != *-darwin* ]]; then
 		sed -i -e 's|mac:\(LIBS += -liconv\)|\1|g' \
@@ -266,10 +270,6 @@ qt4-build-multilib_src_prepare() {
 		sed -i -e '/^QMAKE_LFLAGS_THREAD/a QMAKE_LFLAGS_DYNAMIC_LIST = -Wl,--dynamic-list,' \
 			mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 	fi
-
-	# do not flirt with non-Prefix stuff, we're quite possessive
-	sed -i -e '/^QMAKE_\(LIB\|INC\)DIR\(_X11\|_OPENGL\|\)\t/s/=.*$/=/' \
-		mkspecs/$(qt4_get_mkspec)/qmake.conf || die
 
 	# apply patches
 	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
