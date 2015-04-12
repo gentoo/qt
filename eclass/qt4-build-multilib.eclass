@@ -257,14 +257,15 @@ qt4-build-multilib_src_prepare() {
 	# this is needed for all systems with a separate -liconv, except
 	# Darwin, for which the sources already cater for -liconv
 	if use !elibc_glibc && [[ ${CHOST} != *-darwin* ]]; then
-		sed -e 's|mac:\(LIBS += -liconv\)|\1|g' \
-			-i config.tests/unix/iconv/iconv.pro \
+		sed -i -e 's|mac:\(LIBS += -liconv\)|\1|g' \
+			config.tests/unix/iconv/iconv.pro \
 			|| die "sed iconv.pro failed"
 	fi
 
-	# we need some patches for Solaris
-	sed -i -e '/^QMAKE_LFLAGS_THREAD/a\QMAKE_LFLAGS_DYNAMIC_LIST = -Wl,--dynamic-list,' \
-		mkspecs/$(qt4_get_mkspec)/qmake.conf || die
+	if [[ ${CHOST} == *-solaris* ]]; then
+		sed -i -e '/^QMAKE_LFLAGS_THREAD/a QMAKE_LFLAGS_DYNAMIC_LIST = -Wl,--dynamic-list,' \
+			mkspecs/$(qt4_get_mkspec)/qmake.conf || die
+	fi
 
 	# do not flirt with non-Prefix stuff, we're quite possessive
 	sed -i -e '/^QMAKE_\(LIB\|INC\)DIR\(_X11\|_OPENGL\|\)\t/s/=.*$/=/' \
