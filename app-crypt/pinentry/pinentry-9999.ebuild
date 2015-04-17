@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit autotools multilib eutils flag-o-matic git-r3 toolchain-funcs
+inherit qmake-utils autotools multilib eutils flag-o-matic git-r3 toolchain-funcs
 
 DESCRIPTION="Collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol"
 HOMEPAGE="http://gnupg.org/aegypten2/index.html"
@@ -13,10 +13,10 @@ EGIT_REPO_URI="git://git.gnupg.org/pinentry.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="gtk ncurses qt4 caps static"
+IUSE="clipboard gtk ncurses qt4 caps static"
 
 RDEPEND="
-	app-admin/eselect-pinentry
+	app-eselect/eselect-pinentry
 	caps? ( sys-libs/libcap )
 	gtk? ( x11-libs/gtk+:2 )
 	ncurses? ( sys-libs/ncurses )
@@ -42,7 +42,7 @@ src_prepare() {
 	if use qt4; then
 		local f
 		for f in qt4/*.moc; do
-			"${EPREFIX}"/usr/bin/moc ${f/.moc/.h} > ${f} || die
+			"$(qt4_get_bindir)"/moc ${f/.moc/.h} > ${f} || die
 		done
 	fi
 	epatch "${FILESDIR}/${PN}-0.8.2-ncurses.patch"
@@ -63,15 +63,13 @@ src_configure() {
 	export QTLIB="${QTDIR}/$(get_libdir)"
 
 	econf \
-		--disable-pinentry-gtk \
-		--disable-pinentry-qt \
 		--enable-pinentry-tty \
 		$(use_enable gtk pinentry-gtk2) \
 		$(use_enable ncurses pinentry-curses) \
 		$(use_enable ncurses fallback-curses) \
 		$(use_enable qt4 pinentry-qt4) \
-		$(use_with caps libcap) \
-		--without-x
+		$(use qt4 && use_enable clipboard pinentry-qt4-clipboard) \
+		$(use_with caps libcap)
 }
 
 src_compile() {
