@@ -3,8 +3,10 @@
 # $Header: $
 
 EAPI=5
+
 KDE_REQUIRED="optional"
 inherit cmake-utils kde4-base multilib
+
 KDE_AUTODEPS=false
 KDE_DEBUG=false
 KDE_HANDBOOK=false # needed for kde5.eclass, but misinterpreted by kde4-base.eclass
@@ -18,7 +20,7 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="git://anongit.kde.org/qtcurve.git"
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/QtCurve/${PN}/archive/${PV}.tar.gz  -> ${P}.tar.gz
+	SRC_URI="https://github.com/QtCurve/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz
 		https://github.com/QtCurve/${PN}/commit/69047935dd4a9549d238cbc457e9c3cfa37386ae.patch -> ${P}-old_config_file.patch"
 	KEYWORDS="~alpha ~amd64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 fi
@@ -47,15 +49,15 @@ RDEPEND="X? ( x11-libs/libxcb
 			dev-qt/qtx11extras:5 ) )
 	kde? ( $(add_kdebase_dep systemsettings)
 		windeco? ( $(add_kdebase_dep kwin) ) )
-	kf5? ( $(add_frameworks_dep karchive)
+	kf5? ( $(add_frameworks_dep extra-cmake-modules)
+		$(add_frameworks_dep karchive)
 		$(add_frameworks_dep kconfig)
 		$(add_frameworks_dep kconfigwidgets)
 		$(add_frameworks_dep ki18n)
 		$(add_frameworks_dep kdelibs4support)
 		$(add_frameworks_dep kio)
 		$(add_frameworks_dep kwidgetsaddons)
-		$(add_frameworks_dep kxmlgui)
-		dev-libs/extra-cmake-modules )
+		$(add_frameworks_dep kxmlgui) )
 	!x11-themes/gtk-engines-qtcurve"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
