@@ -95,8 +95,8 @@ QT5_GENTOO_CONFIG=(
 	!gif:no-gif:
 	gles2::OPENGL_ES
 	gles2:opengles2:OPENGL_ES_2
-	gtkstyle
-	gtkstyle:gtk2
+	gtkstyle:gtkstyle:
+	gtkstyle:gtk2:STYLE_GTK
 	!:no-gui:
 	harfbuzz:system-harfbuzz:HARFBUZZ
 	!harfbuzz:no-harfbuzz:
