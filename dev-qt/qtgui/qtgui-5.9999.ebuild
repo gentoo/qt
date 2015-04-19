@@ -40,7 +40,7 @@ RDEPEND="
 		!!x11-libs/cairo[qt4]
 	)
 	gles2? ( media-libs/mesa[gles2] )
-	harfbuzz? ( >=media-libs/harfbuzz-0.9.38:= )
+	harfbuzz? ( >=media-libs/harfbuzz-0.9.40:= )
 	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
