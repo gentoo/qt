@@ -13,7 +13,7 @@ DESCRIPTION="Multi-threading concurrence support library for the Qt5 framework"
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~arm ~hppa ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~x86"
 fi
 
 IUSE=""

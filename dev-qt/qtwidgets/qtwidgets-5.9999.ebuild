@@ -13,7 +13,7 @@ DESCRIPTION="Set of UI elements for creating classic desktop-style user interfac
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
 else
-	KEYWORDS="~amd64 ~arm ~hppa ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~x86"
 fi
 
 # keep IUSE defaults in sync with qtgui
