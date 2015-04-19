@@ -119,8 +119,8 @@ QT5_GENTOO_CONFIG=(
 )
 
 pkg_setup() {
-	use gtkstyle && QT5_TARGET_SUBDIRS+=(src/plugins/platformthemes/gtk2)
 	use opengl   && QT5_TARGET_SUBDIRS+=(src/openglextensions)
+	use gtkstyle && QT5_TARGET_SUBDIRS+=(src/plugins/platformthemes/gtk2)
 	use ibus     && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
 	use xcb	     && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
 
