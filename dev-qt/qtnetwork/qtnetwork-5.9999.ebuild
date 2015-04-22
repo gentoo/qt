@@ -16,7 +16,7 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~x86"
 fi
 
-IUSE="connman libproxy networkmanager +ssl"
+IUSE="bindist connman libproxy networkmanager +ssl"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
@@ -24,7 +24,7 @@ DEPEND="
 	connman? ( ~dev-qt/qtdbus-${PV}[debug=] )
 	libproxy? ( net-libs/libproxy )
 	networkmanager? ( ~dev-qt/qtdbus-${PV}[debug=] )
-	ssl? ( dev-libs/openssl:0[-bindist] )
+	ssl? ( dev-libs/openssl:0[bindist=] )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )
