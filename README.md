@@ -7,11 +7,10 @@ experimental Qt versions (pre-releases and "live" code from git) and
 Qt-related packages. For your convenience we provide some sets and
 `package.keyword` files.
 
-The overlay is hosted on Github and on the official Gentoo Overlays
-infrastructure at:
+The overlay is hosted on Github and on the official Gentoo infrastructure at:
 
 - https://github.com/gentoo/qt
-- https://git.overlays.gentoo.org/gitweb/?p=proj/qt.git
+- https://gitweb.gentoo.org/proj/qt.git
 
 You don't need to emerge the Qt ebuilds specifically, they are normally pulled
 in as dependencies for packages that use Qt. But you may want to have all of
