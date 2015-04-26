@@ -47,13 +47,17 @@ QCONFIG_ADD="webkit"
 QCONFIG_DEFINE="QT_WEBKIT"
 
 src_prepare() {
-	# Fix version number in generated pkgconfig file, bug 406443
-	sed -i -e 's/^isEmpty(QT_BUILD_TREE)://' \
-		src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro || die
-
 	# Remove -Werror from CXXFLAGS
 	sed -i -e '/QMAKE_CXXFLAGS\s*+=/ s:-Werror::g' \
 		src/3rdparty/webkit/Source/WebKit.pri || die
+
+	# Fix version number in generated pkgconfig file (bug 406443)
+	sed -i -e 's/^isEmpty(QT_BUILD_TREE)://' \
+		src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro || die
+
+	# Prevent automagic dependency on qt-mobility (bug 547350)
+	sed -i -e 's/contains(MOBILITY_CONFIG,\s*\w\+)/false/' \
+		src/3rdparty/webkit/Source/WebCore/features.pri || die
 
 	if use icu; then
 		sed -i -e '/CONFIG\s*+=\s*text_breaking_with_icu/ s:^#\s*::' \
