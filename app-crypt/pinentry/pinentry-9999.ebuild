@@ -46,7 +46,6 @@ src_prepare() {
 		done
 	fi
 	epatch "${FILESDIR}/${PN}-0.8.2-ncurses.patch"
-	epatch "${FILESDIR}/${PN}-0.8.2-texi.patch"
 	eautoreconf
 }
 
