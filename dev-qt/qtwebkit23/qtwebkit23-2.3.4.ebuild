@@ -9,7 +9,7 @@ inherit eutils multilib python-any-r1 toolchain-funcs
 
 DESCRIPTION="The WebKit module for the Qt toolkit"
 HOMEPAGE="https://www.qt.io/"
-SRC_URI="http://dev.gentoo.org/~kensington/distfiles/qtwebkit23-2.3.4.tar.xz"
+SRC_URI="http://dev.gentoo.org/~kensington/distfiles/${P}.tar.xz"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="4"
@@ -65,24 +65,27 @@ src_prepare() {
 }
 
 src_compile() {
-	export QTDIR=/usr/$(get_libdir)/qt4/
+	export QTDIR=/usr/$(get_libdir)/qt4
 	export CC=$(tc-getCC)
 	export CXX=$(tc-getCXX)
-	Tools/Scripts/build-webkit --qt --release --no-webkit2 \
+
+	Tools/Scripts/build-webkit \
+		--qt --release --no-webkit2 \
 		$(use gstreamer || echo --no-video) \
 		--makeargs="${MAKEOPTS}" \
-		--qmakearg="CONFIG+=production_build CONFIG+=nostrip" \
+		--qmakearg="CONFIG+=production_build CONFIG+=nostrip DEFINES+=HAVE_QTTESTLIB=0" \
 		QMAKE_CC=\"$(tc-getCC)\" \
-		QMAKE_CXX=\"$(tc-getCXX)\" \
 		QMAKE_CFLAGS=\"${CFLAGS}\" \
-		QMAKE_CXXFLAGS=\"${CXXFLAGS}\" \
 		QMAKE_CFLAGS_RELEASE=\"\" \
+		QMAKE_CXX=\"$(tc-getCXX)\" \
+		QMAKE_CXXFLAGS=\"${CXXFLAGS}\" \
 		QMAKE_CXXFLAGS_RELEASE=\"\" \
+		QMAKE_LINK=\"$(tc-getCXX)\" \
 		QMAKE_LFLAGS+=\"${LDFLAGS}\" \
-		QMAKE_LINK=\"$(tc-getCXX)\" || die
+		|| die
 }
 
 src_install() {
-	cd "WebKitBuild/Release" || die
+	cd WebKitBuild/Release || die
 	emake INSTALL_ROOT="${D}" install
 }
