@@ -339,6 +339,18 @@ qt4_multilib_src_configure() {
 		-arch ${arch}
 		-platform $(qt4_get_mkspec)
 
+		# instruction set support
+		$(is-flagq -mno-mmx	&& echo -no-mmx)
+		$(is-flagq -mno-3dnow	&& echo -no-3dnow)
+		$(is-flagq -mno-sse	&& echo -no-sse)
+		$(is-flagq -mno-sse2	&& echo -no-sse2)
+		$(is-flagq -mno-sse3	&& echo -no-sse3)
+		$(is-flagq -mno-ssse3	&& echo -no-ssse3)
+		$(is-flagq -mno-sse4.1	&& echo -no-sse4.1)
+		$(is-flagq -mno-sse4.2	&& echo -no-sse4.2)
+		$(is-flagq -mno-avx	&& echo -no-avx)
+		$(is-flagq -mfpu=*	&& ! is-flagq -mfpu=*neon* && echo -no-neon)
+
 		# prefer system libraries
 		-system-zlib
 
