@@ -198,7 +198,7 @@ qt4-build-multilib_src_prepare() {
 		configure || die "sed SYSTEM_VARIABLES failed"
 
 	# Reset QMAKE_*FLAGS_{RELEASE,DEBUG} variables,
-	# or they will override user's flags (.qmake.cache)
+	# or they will override the user's flags (via .qmake.cache)
 	sed -i -e '/^SYSTEM_VARIABLES=/ i \
 		QMakeVar set QMAKE_CFLAGS_RELEASE\
 		QMakeVar set QMAKE_CFLAGS_DEBUG\
@@ -208,12 +208,16 @@ qt4-build-multilib_src_prepare() {
 		QMakeVar set QMAKE_LFLAGS_DEBUG\n' \
 		configure || die "sed QMAKE_*FLAGS_{RELEASE,DEBUG} failed"
 
-	# Respect CC, CXX, LINK and *FLAGS in config.tests
+	# Drop -nocache from qmake invocation in all configure tests, to ensure that the
+	# correct toolchain and build flags are picked up from config.tests/.qmake.cache
 	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
-		sed -i -e "/bin\/qmake/ s: \"\$SRCDIR/: \
-			'QMAKE_CC=$(tc-getCC)'    'QMAKE_CXX=$(tc-getCXX)'      'QMAKE_LINK=$(tc-getCXX)' \
-			'QMAKE_CFLAGS+=${CFLAGS}' 'QMAKE_CXXFLAGS+=${CXXFLAGS}' 'QMAKE_LFLAGS+=${LDFLAGS}'&:" \
-		|| die "sed config.tests failed"
+		sed -i -e '/bin\/qmake/s/ -nocache//' || die "sed -nocache failed"
+
+	# compile.test needs additional patching so that it doesn't create another cache file
+	# inside the test subdir, which would incorrectly override config.tests/.qmake.cache
+	sed -i -e '/echo.*QT_BUILD_TREE.*\.qmake\.cache/d' \
+		-e '/bin\/qmake/s/ "$SRCDIR/ "QT_BUILD_TREE=$OUTDIR"&/' \
+		config.tests/unix/compile.test || die "sed compile.test failed"
 
 	# Delete references to the obsolete /usr/X11R6 directory
 	# On prefix, this also prevents looking at non-prefix stuff
