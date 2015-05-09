@@ -9,7 +9,7 @@ inherit qt4-build-multilib
 DESCRIPTION="The Help module for the Qt toolkit"
 SRC_URI+="
 	compat? (
-		ftp://ftp.qt.nokia.com/qt/source/qt-assistant-qassistantclient-library-compat-src-4.6.3.tar.gz
+		http://download.qt.io/archive/qt/4.6/qt-assistant-qassistantclient-library-compat-src-4.6.3.tar.gz
 		http://dev.gentoo.org/~pesa/distfiles/qt-assistant-compat-headers-4.7.tar.gz
 	)"
 
@@ -50,15 +50,19 @@ src_unpack() {
 	qt4-build-multilib_src_unpack
 
 	# compat version
-	# http://blog.qt.digia.com/blog/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
+	# http://blog.qt.io/blog/2010/06/22/qt-assistant-compat-version-available-as-extra-source-package/
 	if use compat; then
 		mv "${WORKDIR}"/qt-assistant-qassistantclient-library-compat-version-4.6.3 "${S}"/tools/assistant/compat || die
 		mv "${WORKDIR}"/QtAssistant "${S}"/include || die
+		find "${S}"/tools/assistant/compat -type f -execdir chmod a-x '{}' + || die
 	fi
 }
 
 src_prepare() {
-	use compat && PATCHES+=("${FILESDIR}/${PN}-4.8.6-fix-compat.patch")
+	use compat && PATCHES+=(
+		"${FILESDIR}/${PN}-4.8.6-compat-install.patch"
+		"${FILESDIR}/${PN}-4.8.6-compat-syncqt.patch"
+	)
 
 	qt4-build-multilib_src_prepare
 
@@ -75,11 +79,6 @@ multilib_src_configure() {
 		-no-nas-sound -no-cups -no-nis -fontconfig
 	)
 	qt4_multilib_src_configure
-
-	if use compat; then
-		# syncqt knows nothing about these headers (bug 529398)
-		cp -pr "${S}"/include/QtAssistant "${BUILD_DIR}"/include || die
-	fi
 }
 
 multilib_src_compile() {
