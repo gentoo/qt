@@ -14,7 +14,7 @@ else
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
 
-IUSE="iconv +jit"
+IUSE="+jit"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[aqua=,debug=,${MULTILIB_USEDEP}]
@@ -28,7 +28,6 @@ QCONFIG_DEFINE="QT_SCRIPT"
 
 multilib_src_configure() {
 	local myconf=(
-		$(qt_use iconv)
 		$(qt_use jit javascript-jit)
 		-no-xkb -no-fontconfig -no-xrender -no-xrandr -no-xfixes -no-xcursor -no-xinerama
 		-no-xshape -no-sm -no-opengl -no-nas-sound -no-dbus -no-cups -no-nis -no-gif
