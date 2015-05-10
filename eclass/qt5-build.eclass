@@ -389,6 +389,7 @@ qt_use_disable_mod() {
 # Prepares the environment for building Qt.
 qt5_prepare_env() {
 	# setup installation directories
+	# note: keep paths in sync with qmake-utils.eclass
 	QT5_PREFIX=${EPREFIX}/usr
 	QT5_HEADERDIR=${QT5_PREFIX}/include/qt5
 	QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)

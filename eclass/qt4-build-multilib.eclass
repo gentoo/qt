@@ -538,6 +538,7 @@ qt_native_use() {
 # Prepares the environment for building Qt.
 qt4_prepare_env() {
 	# setup installation directories
+	# note: keep paths in sync with qmake-utils.eclass
 	QT4_PREFIX=${EPREFIX}/usr
 	QT4_HEADERDIR=${QT4_PREFIX}/include/qt4
 	QT4_LIBDIR=${QT4_PREFIX}/$(get_libdir)/qt4
