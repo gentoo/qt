@@ -145,7 +145,6 @@ multilib_src_configure() {
 		-no-sql-mysql -no-sql-psql -no-sql-ibase -no-sql-sqlite -no-sql-sqlite2 -no-sql-odbc
 		-sm -xshape -xsync -xcursor -xfixes -xrandr -xrender -mitshm -xinput -xkb
 		-fontconfig -no-svg -no-webkit -no-phonon -no-opengl
-		$([[ ${CHOST} == *86*-apple-darwin* ]] && echo -no-ssse3) # bug 367045
 	)
 	qt4_multilib_src_configure
 }
