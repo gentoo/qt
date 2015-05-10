@@ -187,12 +187,6 @@ qt4-build-multilib_src_prepare() {
 		append-flags -mminimal-toc
 	fi
 
-	# Bug 417105
-	# graphite on gcc 4.7 causes miscompilations
-	if [[ $(gcc-version) == "4.7" ]]; then
-		filter-flags -fgraphite-identity
-	fi
-
 	# Read also AR from the environment
 	sed -i -e 's/^SYSTEM_VARIABLES="/&AR /' \
 		configure || die "sed SYSTEM_VARIABLES failed"
@@ -355,6 +349,9 @@ qt4_multilib_src_configure() {
 		$(is-flagq -mno-avx	&& echo -no-avx)
 		$(is-flagq -mfpu=*	&& ! is-flagq -mfpu=*neon* && echo -no-neon)
 
+		# bug 367045
+		$([[ ${CHOST} == *86*-apple-darwin* ]] && echo -no-ssse3)
+
 		# prefer system libraries
 		-system-zlib
 
@@ -376,10 +373,6 @@ qt4_multilib_src_configure() {
 		# mostly to be seen as a core dump with the message:
 		# "QPixmap: Must construct a QApplication before a QPaintDevice"
 		$([[ ${CHOST} != *-solaris* ]] && echo -reduce-relocations)
-
-		# this one is needed for all systems with a separate -liconv, apart from
-		# Darwin, for which the sources already cater for -liconv
-		$(use !elibc_glibc && [[ ${CHOST} != *-darwin* ]] && echo -liconv)
 	)
 
 	if use_if_iuse aqua; then
