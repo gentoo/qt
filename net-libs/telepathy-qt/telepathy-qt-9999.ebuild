@@ -5,16 +5,18 @@
 EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
-EGIT_REPO_URI=( "git://anongit.freedesktop.org/telepathy/${PN}" )
-inherit python-any-r1 cmake-utils virtualx git-r3 multibuild
+inherit python-any-r1 cmake-utils virtualx multibuild git-r3
 
-DESCRIPTION="Qt4 bindings for the Telepathy D-Bus protocol"
+DESCRIPTION="Qt bindings for the Telepathy D-Bus protocol"
 HOMEPAGE="http://telepathy.freedesktop.org/"
+EGIT_REPO_URI=( "git://anongit.freedesktop.org/telepathy/${PN}" )
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS=""
 IUSE="debug farstream +qt4 qt5 test"
+
+REQUIRED_USE="|| ( qt4 qt5 )"
 
 RDEPEND="
 	farstream? (
