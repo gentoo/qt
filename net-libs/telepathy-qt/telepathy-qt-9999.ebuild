@@ -41,7 +41,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	test? (
 		dev-libs/dbus-glib
-		dev-libs/glib
+		dev-libs/glib:2
 		dev-python/dbus-python
 		qt4? ( dev-qt/qttest:4 )
 		qt5? ( dev-qt/qttest:5 )
