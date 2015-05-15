@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build
 
-DESCRIPTION="Application scripting library for the Qt5 framework"
+DESCRIPTION="Application scripting library for the Qt5 framework (deprecated)"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

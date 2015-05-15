@@ -6,7 +6,7 @@ EAPI=5
 
 inherit qt5-build
 
-DESCRIPTION="Legacy declarative framework for Qt4 compatibility for building dynamic user interfaces"
+DESCRIPTION="Legacy declarative UI module for the Qt5 framework (deprecated)"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python2_7 )
 
 inherit python-any-r1 qt5-build
 
-DESCRIPTION="WebKit rendering library for the Qt5 framework"
+DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
 
 if [[ ${QT5_BUILD_TYPE} == live ]]; then
 	KEYWORDS=""
