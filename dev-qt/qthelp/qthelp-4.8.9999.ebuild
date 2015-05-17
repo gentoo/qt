@@ -3,7 +3,6 @@
 # $Header: $
 
 EAPI=5
-
 inherit qt4-build-multilib
 
 DESCRIPTION="The Help module for the Qt toolkit"
@@ -13,9 +12,7 @@ SRC_URI+="
 		http://dev.gentoo.org/~pesa/distfiles/qt-assistant-compat-headers-4.7.tar.gz
 	)"
 
-if [[ ${QT4_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
+if [[ ${QT4_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos"
 fi
 

@@ -3,14 +3,11 @@
 # $Header: $
 
 EAPI=5
-
 inherit qt4-build-multilib
 
 DESCRIPTION="The Declarative module for the Qt toolkit"
 
-if [[ ${QT4_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
+if [[ ${QT4_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos"
 fi
 

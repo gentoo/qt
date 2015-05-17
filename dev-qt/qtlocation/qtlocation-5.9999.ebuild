@@ -3,14 +3,11 @@
 # $Header: $
 
 EAPI=5
-
 inherit qt5-build
 
 DESCRIPTION="The Location module for the Qt5 framework"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 

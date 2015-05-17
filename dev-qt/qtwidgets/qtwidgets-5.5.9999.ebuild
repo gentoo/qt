@@ -3,17 +3,13 @@
 # $Header: $
 
 EAPI=5
-
 QT5_MODULE="qtbase"
-
 inherit qt5-build
 
 DESCRIPTION="Set of UI elements for creating classic desktop-style user interfaces for the Qt5 framework"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
 # keep IUSE defaults in sync with qtgui

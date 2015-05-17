@@ -3,17 +3,13 @@
 # $Header: $
 
 EAPI=5
-
 QT5_MODULE="qttools"
-
 inherit qt5-build
 
 DESCRIPTION="Interface to Qt applications communicating over D-Bus"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~hppa ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
 IUSE=""

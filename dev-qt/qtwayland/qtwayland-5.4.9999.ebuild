@@ -3,15 +3,12 @@
 # $Header: $
 
 EAPI=5
-
 inherit qt5-build
 
 DESCRIPTION="Wayland platform plugin for Qt"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~hppa ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
 IUSE="egl qml wayland-compositor xcomposite"

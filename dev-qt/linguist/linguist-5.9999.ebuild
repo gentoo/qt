@@ -3,17 +3,13 @@
 # $Header: $
 
 EAPI=5
-
 QT5_MODULE="qttools"
-
 inherit qt5-build
 
 DESCRIPTION="Graphical tool for translating Qt applications"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
 IUSE=""

@@ -3,14 +3,11 @@
 # $Header: $
 
 EAPI=5
-
 inherit eutils qt4-build-multilib
 
 DESCRIPTION="Graphical tool that lets you introspect D-Bus objects and messages"
 
-if [[ ${QT4_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
+if [[ ${QT4_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x64-solaris ~x86-solaris"
 fi
 

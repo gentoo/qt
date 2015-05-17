@@ -3,9 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.4.0.ebuild,v 1.4 2015/05/04 19:50:14 pesa Exp $
 
 EAPI=5
-
 PLOCALES="cs de fr ja pl ru sl uk zh_CN zh_TW"
-
 inherit eutils l10n multilib qmake-utils virtualx
 
 DESCRIPTION="Lightweight IDE for C++/QML development centering around Qt"
@@ -23,11 +21,11 @@ else
 	MY_P=${PN}-opensource-src-${MY_PV}
 	[[ ${MY_PV} == ${PV} ]] && MY_REL=official || MY_REL=development
 	SRC_URI="http://download.qt.io/${MY_REL}_releases/${PN/-}/${PV%.*}/${MY_PV}/${MY_P}.tar.gz"
+	KEYWORDS="~amd64 ~arm ~x86"
 	S=${WORKDIR}/${MY_P}
 fi
 
 SLOT="0"
-KEYWORDS=""
 
 QTC_PLUGINS=('android:android|qmakeandroidsupport' autotools:autotoolsprojectmanager baremetal
 	bazaar clang:clangcodemodel clearcase cmake:cmakeprojectmanager cvs git ios mercurial

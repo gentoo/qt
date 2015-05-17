@@ -3,18 +3,14 @@
 # $Header: $
 
 EAPI=5
-
 QT5_MODULE="qtbase"
 VIRTUALX_REQUIRED="test"
-
 inherit qt5-build
 
 DESCRIPTION="Unit testing library for the Qt5 framework"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
 IUSE=""

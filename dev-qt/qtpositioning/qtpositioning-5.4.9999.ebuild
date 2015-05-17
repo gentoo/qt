@@ -3,17 +3,13 @@
 # $Header: $
 
 EAPI=5
-
 QT5_MODULE="qtlocation"
-
 inherit qt5-build
 
 DESCRIPTION="Physical position determination library for the Qt5 framework"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~hppa ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
 # TODO: src/plugins/position/gypsy

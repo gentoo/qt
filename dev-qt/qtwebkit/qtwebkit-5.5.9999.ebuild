@@ -3,17 +3,13 @@
 # $Header: $
 
 EAPI=5
-
 PYTHON_COMPAT=( python2_7 )
-
 inherit python-any-r1 qt5-build
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 
 # TODO: qttestlib, geolocation, orientation/sensors
