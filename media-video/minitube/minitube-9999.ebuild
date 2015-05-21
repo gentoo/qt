@@ -7,7 +7,7 @@ PLOCALES="ar ca ca_ES da de_DE el en es es_AR es_ES fi fi_FI fr gl he_IL hr hu
 ia id it jv ka_GE nb nl nn pl pl_PL pt pt_BR ro ru sk sl sq sr sv_SE tr uk_UA
 zh_CN"
 
-EGIT_REPO_URI="git://gitorious.org/minitube/minitube.git"
+EGIT_REPO_URI="https://github.com/flaviotordini/minitube.git"
 inherit l10n qt4-r2 git-2
 
 DESCRIPTION="Qt4 YouTube Client"
