@@ -36,6 +36,22 @@ S=${WORKDIR}/${PN}
 
 DOCS="AUTHORS CHANGES TODO"
 
+pkg_pretend() {
+	if [[ -z ${MINITUBE_GOOGLE_API_KEY} ]]; then
+		eerror ""
+		eerror "Since version 2.4, you need to generate a Google API Key to use"
+		eerror "with this application. Please head over to"
+		eerror "https://console.developers.google.com/ and"
+		eerror "https://github.com/flaviotordini/minitube/blob/master/README.md"
+		eerror "for more information. Once you have generated your key,"
+		eerror "please export it to your environment ie :"
+		eerror "'export MINITUBE_GOOGLE_API_KEY=\"YourAPIKeyHere\""
+		eerror "and then try to merge this package again"
+		eerror ""
+		die "MINITUBE_GOOGLE_API_KEY env variable not defined!"
+	fi
+}
+
 src_prepare() {
 	qt4-r2_src_prepare
 
@@ -51,6 +67,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-1.9-gcc47.patch
 	# Enable video downloads. Bug #491344
 	use download && { echo "DEFINES += APP_DOWNLOADS" >> ${PN}.pro; }
+	echo "DEFINES += APP_GOOGLE_API_KEY=${MINITUBE_GOOGLE_API_KEY}" >> ${PN}.pro
 }
 
 src_install() {
