@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-qt/qtwebkit/qtwebkit-4.8.6-r1.ebuild,v 1.1 2014/11/15 02:38:53 pesa Exp $
 
@@ -78,7 +78,12 @@ multilib_src_compile() {
 		--makeargs="${MAKEOPTS}"
 		--$(usex debug debug release)
 		--$(usex gstreamer video no-video)
+		# disable WebKit2 since it requires Qt5
 		--no-webkit2
+		# prevent automagic dependency on qt-mobility (bug 547350)
+		--no-geolocation
+		--no-device-orientation
+		--no-orientation-events
 		# copied from eqmake4
 		QMAKE_AR="'$(tc-getAR) cqs'"
 		QMAKE_CC="'$(tc-getCC)'"
