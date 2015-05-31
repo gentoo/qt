@@ -1,0 +1,13 @@
+Avoid insecure RPATH wrt bug #466216.
+
+--- Tools/qmake/mkspecs/features/unix/default_post.prf
++++ Tools/qmake/mkspecs/features/unix/default_post.prf
+@@ -60,8 +60,6 @@
+     }
+ }
+ 
+-contains(TEMPLATE, app): CONFIG += rpath
+-
+ CONFIG(debug, debug|release)|force_debug_info|separate_debug_info {
+     # Make ld not cache the symbol tables of input files in memory to avoid memory exhaustion during the linking phase.
+     !force_static_libs_as_shared:config_gnuld: QMAKE_LFLAGS += -Wl,--no-keep-memory

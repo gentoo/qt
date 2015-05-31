@@ -62,7 +62,10 @@ DEPEND="${RDEPEND}
 	virtual/rubygems
 "
 
-PATCHES=( "${FILESDIR}/${PN}-5.4.1-leveldb.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-5.4.1-leveldb.patch"
+	"${FILESDIR}/${PN}-5.4.1-rpath.patch"
+)
 
 src_prepare() {
 	# ensure bundled library cannot be used
