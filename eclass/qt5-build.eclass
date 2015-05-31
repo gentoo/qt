@@ -191,10 +191,6 @@ qt5-build_src_prepare() {
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
-		# -fuse-ld is a gcc switch, not an ld switch (bug #541262)
-		sed -i -e '/linkerSupportsFlag $TEST_COMPILER -fuse-ld=gold/s/linker/compiler/' \
-			configure || die "sed failed (-fuse-ld)"
-
 		# Respect toolchain and flags in config.tests
 		find config.tests/unix -name '*.test' -type f \
 			-execdir sed -i -e '/bin\/qmake/ s/-nocache //' '{}' + \
