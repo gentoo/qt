@@ -10,6 +10,9 @@
 # @BLURB: Common functions for qmake-based packages.
 # @DESCRIPTION:
 # Utility eclass providing wrapper functions for Qt4 and Qt5 qmake.
+#
+# This eclass does not set any metadata variables nor export any phase
+# functions. It can be inherited safely.
 
 if [[ -z ${_QMAKE_UTILS_ECLASS} ]]; then
 _QMAKE_UTILS_ECLASS=1
