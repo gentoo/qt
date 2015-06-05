@@ -28,6 +28,7 @@ CDEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	kde-frameworks/solid:5
 	~lxqt-base/liblxqt-${PV}
 	>=dev-libs/libqtxdg-1.0.0
 	x11-libs/libX11
