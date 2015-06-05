@@ -25,6 +25,7 @@ REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
 
 DEPEND="
 	dev-libs/glib:2
+	dev-libs/libdbusmenu-qt[qt5]
 	>=dev-libs/libqtxdg-1.0.0
 	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
