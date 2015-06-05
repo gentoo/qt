@@ -20,7 +20,7 @@ LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
 DEPEND="
-	>=dev-libs/libqtxdg-1.0.0
+	~dev-libs/libqtxdg-${PV}
 	dev-qt/linguist-tools:5
 	dev-qt/qtconcurrent:5
 	dev-qt/qtcore:5
