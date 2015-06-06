@@ -22,10 +22,9 @@ DEPEND="
 		>=media-plugins/gst-plugins-meta-0.10-r9:0.10[${MULTILIB_USEDEP}]
 	)
 	dbus? ( ~dev-qt/qtdbus-${PV}[aqua=,debug=,${MULTILIB_USEDEP}] )
-	!kde-base/phonon-kde
-	!kde-base/phonon-xine
+	!kde-apps/phonon-kde
 	!media-libs/phonon
-	!media-sound/phonon
+	!media-libs/phonon-gstreamer
 "
 RDEPEND="${DEPEND}"
 
