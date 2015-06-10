@@ -13,13 +13,12 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
-# keep IUSE defaults in sync with qtgui
-IUSE="cups +opengl"
+IUSE="cups gles2"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,opengl=]
-	~dev-qt/qtwidgets-${PV}[debug=,opengl=]
+	~dev-qt/qtgui-${PV}[debug=,gles2=]
+	~dev-qt/qtwidgets-${PV}[debug=,gles2=]
 	cups? ( >=net-print/cups-1.4 )
 "
 DEPEND="${RDEPEND}
@@ -38,6 +37,7 @@ QT5_GENTOO_CONFIG=(
 src_configure() {
 	local myconf=(
 		$(qt_use cups)
+		-opengl $(usex gles2 es2 desktop)
 	)
 	qt5-build_src_configure
 }

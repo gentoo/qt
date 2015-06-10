@@ -12,11 +12,11 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="+opengl +ssl"
+IUSE="+ssl"
 
 DEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=,opengl=]
+	>=dev-qt/qtgui-${PV}:5[debug=]
 	>=dev-qt/qtnetwork-${PV}:5[debug=,ssl=]
 "
 RDEPEND="${DEPEND}"

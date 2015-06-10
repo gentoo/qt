@@ -16,7 +16,7 @@ IUSE="egl qml wayland-compositor xcomposite"
 DEPEND="
 	>=dev-libs/wayland-1.3.0
 	>=dev-qt/qtcore-${PV}:5[debug=]
-	>=dev-qt/qtgui-${PV}:5[debug=,egl=,opengl]
+	>=dev-qt/qtgui-${PV}:5[debug=,egl=]
 	media-libs/mesa[egl?]
 	>=x11-libs/libxkbcommon-0.2.0
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )

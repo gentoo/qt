@@ -17,8 +17,8 @@ IUSE="gles2"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,gles2=,opengl]
-	~dev-qt/qtwidgets-${PV}[debug=,gles2=,opengl]
+	~dev-qt/qtgui-${PV}[debug=,gles2=]
+	~dev-qt/qtwidgets-${PV}[debug=,gles2=]
 	virtual/opengl
 "
 RDEPEND="${DEPEND}"

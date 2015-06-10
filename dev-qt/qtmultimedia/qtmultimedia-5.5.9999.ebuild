@@ -13,7 +13,6 @@ fi
 
 IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
 
-# "widgets? ( qtgui[opengl=] )" because of bug 518542 comment 2
 RDEPEND="
 	>=dev-qt/qtcore-${PV}:5[debug=]
 	>=dev-qt/qtgui-${PV}:5[debug=]
@@ -30,8 +29,7 @@ RDEPEND="
 		openal? ( media-libs/openal )
 	)
 	widgets? (
-		>=dev-qt/qtgui-${PV}:5[debug=,opengl=]
-		>=dev-qt/qtwidgets-${PV}:5[debug=,opengl=]
+		>=dev-qt/qtwidgets-${PV}:5[debug=]
 		opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
 	)
 "

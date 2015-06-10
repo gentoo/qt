@@ -3,7 +3,7 @@
 <pkgmetadata>
 	<herd>qt</herd>
 	<use>
-		<flag name="gles2">Use OpenGL ES 2.0 instead of desktop OpenGL</flag>
+		<flag name="gles2">Use GLES 2.0 or later instead of full OpenGL</flag>
 		<flag name="gtkstyle">Build a Qt style called GTK+ that mimics the active
 			GTK+ theme</flag>
 	</use>

@@ -14,11 +14,10 @@ fi
 
 # TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
-IUSE="accessibility egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +opengl +png udev +xcb"
+IUSE="accessibility egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +png udev +xcb"
 REQUIRED_USE="
-	egl? ( evdev opengl )
+	egl? ( evdev )
 	eglfs? ( egl )
-	gles2? ( opengl )
 	kms? ( egl gles2 )
 "
 
@@ -28,6 +27,7 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/freetype:2
 	>=sys-libs/zlib-1.2.5
+	virtual/opengl
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gtkstyle? (
@@ -44,7 +44,6 @@ RDEPEND="
 		virtual/libudev:=
 		x11-libs/libdrm
 	)
-	opengl? ( virtual/opengl )
 	png? ( media-libs/libpng:0= )
 	udev? ( virtual/libudev:= )
 	xcb? (
@@ -72,6 +71,7 @@ PDEPEND="
 
 QT5_TARGET_SUBDIRS=(
 	src/gui
+	src/openglextensions
 	src/platformheaders
 	src/platformsupport
 	src/plugins/generic
@@ -99,7 +99,7 @@ QT5_GENTOO_CONFIG=(
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
 	kms:kms:
-	opengl
+	:opengl
 	png:png:
 	png:system-png:IMAGEFORMAT_PNG
 	!png:no-png:
@@ -115,7 +115,6 @@ QT5_GENTOO_CONFIG=(
 )
 
 pkg_setup() {
-	use opengl   && QT5_TARGET_SUBDIRS+=(src/openglextensions)
 	use gtkstyle && QT5_TARGET_SUBDIRS+=(src/plugins/platformthemes/gtk2)
 	use ibus     && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
 	use xcb	     && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
@@ -125,28 +124,21 @@ pkg_setup() {
 }
 
 src_configure() {
-	local gl="-no-opengl"
-	if use gles2; then
-		gl="-opengl es2"
-	elif use opengl; then
-		gl="-opengl desktop"
-	fi
-
 	local myconf=(
-		$(use accessibility && use xcb && echo -dbus-linked)
-		$(use ibus && echo -dbus-linked)
+		$(use accessibility && usex xcb -dbus-linked '')
+		$(usex ibus -dbus-linked '')
 		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
 		$(qt_use evdev mtdev)
 		-fontconfig
 		-system-freetype
-		$(use gif || echo -no-gif)
-		${gl}
+		$(usex gif '' -no-gif)
 		$(qt_use gtkstyle)
 		$(qt_use harfbuzz harfbuzz system)
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
+		-opengl $(usex gles2 es2 desktop)
 		$(qt_use png libpng system)
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)

@@ -13,14 +13,11 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 # keep IUSE defaults in sync with qtgui
-IUSE="gles2 gtkstyle +opengl +png +xcb"
-REQUIRED_USE="
-	gles2? ( opengl )
-"
+IUSE="gles2 gtkstyle +png +xcb"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}[debug=]
-	~dev-qt/qtgui-${PV}[debug=,gles2=,gtkstyle=,opengl=,png=,xcb?]
+	~dev-qt/qtgui-${PV}[debug=,gles2=,gtkstyle=,png=,xcb?]
 "
 RDEPEND="${DEPEND}"
 
@@ -34,17 +31,9 @@ QT5_GENTOO_CONFIG=(
 )
 
 src_configure() {
-	local gl="-no-opengl"
-	if use gles2; then
-		gl="-opengl es2"
-	elif use opengl; then
-		gl="-opengl desktop"
-	fi
-
 	local myconf=(
-		# copied from qtgui
-		${gl}
 		$(qt_use gtkstyle)
+		-opengl $(usex gles2 es2 desktop)
 		$(qt_use png libpng system)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon system)
