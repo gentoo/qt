@@ -23,7 +23,7 @@ QT5_MINOR_VERSION=${PV#*.}
 QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
 
 HOMEPAGE="https://www.qt.io/"
-LICENSE="|| ( LGPL-2.1 LGPL-3 )"
+LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
 SLOT="5"
 
 # @ECLASS-VARIABLE: QT5_MODULE
@@ -225,8 +225,6 @@ qt5-build_src_compile() {
 # @DESCRIPTION:
 # Runs tests in the target directories.
 qt5-build_src_test() {
-	echo ">>> Test phase [QtTest]: ${CATEGORY}/${PF}"
-
 	# '-after SUBDIRS-=...' disables broken cmake tests (bug 474004)
 	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake SUBDIRS-=installed_cmake
 	qt5_foreach_target_subdir emake
