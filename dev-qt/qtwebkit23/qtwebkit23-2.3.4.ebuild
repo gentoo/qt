@@ -109,4 +109,7 @@ multilib_src_compile() {
 
 multilib_src_install() {
 	emake INSTALL_ROOT="${D}" install -C $(usex debug Debug Release)
+
+	# move pkgconfig file to the correct location
+	mv "${ED}"/usr/$(get_libdir){/qt4/pkgconfig,} || die
 }
