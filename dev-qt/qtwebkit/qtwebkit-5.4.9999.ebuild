@@ -23,11 +23,11 @@ RDEPEND="
 	>=dev-libs/leveldb-1.18-r1
 	dev-libs/libxml2:2
 	dev-libs/libxslt
-	>=dev-qt/qtcore-${PV}:5[debug=,icu]
-	>=dev-qt/qtgui-${PV}:5[debug=]
-	>=dev-qt/qtnetwork-${PV}:5[debug=]
-	>=dev-qt/qtsql-${PV}:5[debug=]
-	>=dev-qt/qtwidgets-${PV}:5[debug=]
+	>=dev-qt/qtcore-${PV}:5[icu]
+	>=dev-qt/qtgui-${PV}:5
+	>=dev-qt/qtnetwork-${PV}:5
+	>=dev-qt/qtsql-${PV}:5
+	>=dev-qt/qtwidgets-${PV}:5
 	media-libs/fontconfig:1.0
 	media-libs/libpng:0=
 	>=sys-libs/zlib-1.2.5
@@ -46,10 +46,10 @@ RDEPEND="
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-base:0.10
 	)
-	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5[debug=,widgets] )
-	opengl? ( >=dev-qt/qtopengl-${PV}:5[debug=] )
-	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5[debug=] )
-	qml? ( >=dev-qt/qtdeclarative-${PV}:5[debug=] )
+	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5[widgets] )
+	opengl? ( >=dev-qt/qtopengl-${PV}:5 )
+	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5 )
+	qml? ( >=dev-qt/qtdeclarative-${PV}:5 )
 	udev? ( virtual/udev )
 	webp? ( media-libs/libwebp:0= )
 "

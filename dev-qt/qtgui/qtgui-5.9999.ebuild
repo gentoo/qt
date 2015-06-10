@@ -23,7 +23,7 @@ REQUIRED_USE="
 
 RDEPEND="
 	dev-libs/glib:2
-	~dev-qt/qtcore-${PV}[debug=]
+	~dev-qt/qtcore-${PV}
 	media-libs/fontconfig
 	>=media-libs/freetype-2.5.5:2
 	>=sys-libs/zlib-1.2.5
@@ -37,7 +37,7 @@ RDEPEND="
 	)
 	gles2? ( media-libs/mesa[gles2] )
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.40:= )
-	ibus? ( ~dev-qt/qtdbus-${PV}[debug=] )
+	ibus? ( ~dev-qt/qtdbus-${PV} )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
@@ -58,12 +58,12 @@ RDEPEND="
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
 		x11-libs/xcb-util-wm
-		accessibility? ( ~dev-qt/qtdbus-${PV}[debug=] )
+		accessibility? ( ~dev-qt/qtdbus-${PV} )
 	)
 "
 DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
-	test? ( ~dev-qt/qtnetwork-${PV}[debug=] )
+	test? ( ~dev-qt/qtnetwork-${PV} )
 "
 PDEPEND="
 	ibus? ( app-i18n/ibus )

@@ -15,11 +15,11 @@ fi
 IUSE="bindist connman libproxy networkmanager +ssl"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}[debug=]
+	~dev-qt/qtcore-${PV}
 	>=sys-libs/zlib-1.2.5
-	connman? ( ~dev-qt/qtdbus-${PV}[debug=] )
+	connman? ( ~dev-qt/qtdbus-${PV} )
 	libproxy? ( net-libs/libproxy )
-	networkmanager? ( ~dev-qt/qtdbus-${PV}[debug=] )
+	networkmanager? ( ~dev-qt/qtdbus-${PV} )
 	ssl? ( dev-libs/openssl:0[bindist=] )
 "
 RDEPEND="${DEPEND}

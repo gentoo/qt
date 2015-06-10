@@ -77,9 +77,9 @@ DEPEND="
 "
 if [[ ${PN} != qttest ]]; then
 	if [[ ${QT5_MODULE} == qtbase ]]; then
-		DEPEND+=" test? ( ~dev-qt/qttest-${PV}[debug=] )"
+		DEPEND+=" test? ( ~dev-qt/qttest-${PV} )"
 	else
-		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5[debug=] )"
+		DEPEND+=" test? ( >=dev-qt/qttest-${PV}:5 )"
 	fi
 fi
 RDEPEND="
