@@ -368,7 +368,7 @@ qt4_multilib_src_configure() {
 		-nomake demos
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
-		$(use prefix || echo -no-rpath)
+		$(usex prefix '' -no-rpath)
 
 		# verbosity of the configure and build phases
 		-verbose $(${QT4_VERBOSE_BUILD} || echo -silent)
@@ -531,22 +531,30 @@ qt4-build-multilib_pkg_postrm() {
 # @FUNCTION: qt_use
 # @USAGE: <flag> [feature] [enableval]
 # @DESCRIPTION:
+# <flag> is the name of a flag in IUSE.
+#
 # Outputs "-${enableval}-${feature}" if <flag> is enabled, "-no-${feature}"
 # otherwise. If [feature] is not specified, <flag> is used in its place.
 # If [enableval] is not specified, the "-${enableval}" prefix is omitted.
 qt_use() {
-	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
+
+	usex "$1" "${3:+-$3}-${2:-$1}" "-no-${2:-$1}"
 }
 
 # @FUNCTION: qt_native_use
 # @USAGE: <flag> [feature] [enableval]
 # @DESCRIPTION:
+# <flag> is the name of a flag in IUSE.
+#
 # Outputs "-${enableval}-${feature}" if <flag> is enabled and we are currently
 # building for the native ABI, "-no-${feature}" otherwise. If [feature] is not
 # specified, <flag> is used in its place. If [enableval] is not specified,
 # the "-${enableval}" prefix is omitted.
 qt_native_use() {
-	multilib_is_native_abi && use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
+
+	multilib_is_native_abi && qt_use "$@" || echo "-no-${2:-$1}"
 }
 
 
