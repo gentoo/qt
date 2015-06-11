@@ -470,7 +470,10 @@ qt4_multilib_src_install() {
 		mv "${pcfile}" "${ED}"/usr/$(get_libdir)/pkgconfig || die
 	done
 	eshopts_pop
-	rmdir "${D}/${QT4_LIBDIR}"/pkgconfig || die
+	
+	if [[ -d "${D}/${QT4_LIBDIR}"/pkgconfig ]]; then
+		rm -rf "${D}/${QT4_LIBDIR}"/pkgconfig || die
+	fi
 
 	qt4_install_module_qconfigs
 	qt4_symlink_framework_headers
