@@ -332,7 +332,7 @@ qt5-build_pkg_postrm() {
 qt_use() {
 	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
 
-	use "$1" && echo "${3:+-$3}-${2:-$1}" || echo "-no-${2:-$1}"
+	usex "$1" "${3:+-$3}-${2:-$1}" "-no-${2:-$1}"
 }
 
 # @FUNCTION: qt_use_compile_test
@@ -491,7 +491,7 @@ qt5_base_configure() {
 		-testsdir "${QT5_TESTSDIR}"
 
 		# debug/release
-		$(use debug && echo -debug || echo -release)
+		$(usex debug -debug -release)
 		-no-separate-debug-info
 
 		# licensing stuff
@@ -552,7 +552,7 @@ qt5_base_configure() {
 		-no-compile-examples
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
-		$(use prefix || echo -no-rpath)
+		$(usex prefix '' -no-rpath)
 
 		# print verbose information about each configure test
 		-verbose
