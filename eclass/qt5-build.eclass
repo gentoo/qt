@@ -321,14 +321,13 @@ qt5-build_pkg_postrm() {
 ######  Public helpers  ######
 
 # @FUNCTION: qt_use
-# @USAGE: <flag> [feature] [enableopt]
+# @USAGE: <flag> [feature] [enableval]
 # @DESCRIPTION:
 # <flag> is the name of a flag in IUSE.
 #
-# Echoes "-${enableopt}-${feature}" if <flag> is enabled, or "-no-${feature}"
-# if it is disabled. If [feature] is not specified, it defaults to the value
-# of <flag>. If [enableopt] is not specified, the whole "-${enableopt}" prefix
-# is omitted.
+# Outputs "-${enableval}-${feature}" if <flag> is enabled, "-no-${feature}"
+# otherwise. If [feature] is not specified, <flag> is used in its place.
+# If [enableval] is not specified, the "-${enableval}" prefix is omitted.
 qt_use() {
 	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
 
@@ -516,6 +515,17 @@ qt5_base_configure() {
 
 		# obsolete flag, does nothing
 		#-qml-debug
+
+		# instruction set support
+		$(is-flagq -mno-sse2    && echo -no-sse2)
+		$(is-flagq -mno-sse3    && echo -no-sse3)
+		$(is-flagq -mno-ssse3   && echo -no-ssse3)
+		$(is-flagq -mno-sse4.1  && echo -no-sse4.1)
+		$(is-flagq -mno-sse4.2  && echo -no-sse4.2)
+		$(is-flagq -mno-avx     && echo -no-avx)
+		$(is-flagq -mno-avx2    && echo -no-avx2)
+		$(is-flagq -mno-dsp     && echo -no-mips_dsp)
+		$(is-flagq -mno-dspr2   && echo -no-mips_dspr2)
 
 		# use pkg-config to detect include and library paths
 		-pkg-config
