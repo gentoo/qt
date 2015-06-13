@@ -171,9 +171,20 @@ qt4-build-multilib_src_prepare() {
 		fi
 	fi
 
+	if [[ ${PN} == qtdeclarative ]]; then
+		# Bug 551560
+		# gcc-4.8 ICE with -Os, fixed in 4.9
+		if use x86 && [[ $(gcc-version) == 4.8 ]]; then
+			replace-flags -Os -O2
+		fi
+	fi
+
 	if [[ ${PN} == qtwebkit ]]; then
 		# Bug 550780
-		filter-flags -fgraphite-identity -floop-strip-mine
+		# various ICEs with graphite-related flags, gcc-5 works
+		if [[ $(gcc-major-version) -lt 5 ]]; then
+			filter-flags -fgraphite-identity -floop-strip-mine
+		fi
 	fi
 
 	# Bug 261632
@@ -198,8 +209,8 @@ qt4-build-multilib_src_prepare() {
 
 	# Drop -nocache from qmake invocation in all configure tests, to ensure that the
 	# correct toolchain and build flags are picked up from config.tests/.qmake.cache
-	find config.tests/unix -name '*.test' -type f -print0 | xargs -0 \
-		sed -i -e '/bin\/qmake/s/ -nocache//' || die "sed -nocache failed"
+	find config.tests/unix -name '*.test' -type f -execdir \
+		sed -i -e '/bin\/qmake/s/-nocache//' '{}' + || die "sed -nocache failed"
 
 	# compile.test needs additional patching so that it doesn't create another cache file
 	# inside the test subdir, which would incorrectly override config.tests/.qmake.cache
@@ -285,21 +296,21 @@ qt4_multilib_src_configure() {
 		CC=$(tc-getCC) \
 		CXX=$(tc-getCXX) \
 		LD=$(tc-getCXX) \
+		MAKEFLAGS=${MAKEOPTS} \
 		OBJCOPY=$(tc-getOBJCOPY) \
+		OBJDUMP=$(tc-getOBJDUMP) \
 		STRIP=$(tc-getSTRIP)
 
 	# convert tc-arch to the values supported by Qt
-	local arch=
-	case $(tc-arch) in
-		amd64|x64-*)		  arch=x86_64 ;;
-		ppc*-macos)		  arch=ppc ;;
-		ppc*)			  arch=powerpc ;;
-		sparc*)			  arch=sparc ;;
-		x86-macos)		  arch=x86 ;;
-		x86*)			  arch=i386 ;;
-		alpha|arm|ia64|mips|s390) arch=$(tc-arch) ;;
-		arm64|hppa|sh)		  arch=generic ;;
-		*) die "qt4-build-multilib.eclass: unsupported tc-arch '$(tc-arch)'" ;;
+	local arch=$(tc-arch)
+	case ${arch} in
+		amd64|x64-*)	arch=x86_64 ;;
+		arm64|hppa)	arch=generic ;;
+		ppc*-macos)	arch=ppc ;;
+		ppc*)		arch=powerpc ;;
+		sparc*)		arch=sparc ;;
+		x86-macos)	arch=x86 ;;
+		x86*)		arch=i386 ;;
 	esac
 
 	# configure arguments
@@ -462,15 +473,10 @@ qt4_multilib_src_install() {
 		fi
 	fi
 
-	# move pkgconfig files to the correct location
-	eshopts_push -s nullglob
-	local pcfile
-	for pcfile in "${D}/${QT4_LIBDIR}"/pkgconfig/*.pc; do
-		dodir /usr/$(get_libdir)/pkgconfig
-		mv "${pcfile}" "${ED}"/usr/$(get_libdir)/pkgconfig || die
-	done
-	eshopts_pop
-	rmdir "${D}/${QT4_LIBDIR}"/pkgconfig || die
+	# move pkgconfig directory to the correct location
+	if [[ -d ${D}${QT4_LIBDIR}/pkgconfig ]]; then
+		mv "${D}${QT4_LIBDIR}"/pkgconfig "${ED}usr/$(get_libdir)" || die
+	fi
 
 	qt4_install_module_qconfigs
 	qt4_symlink_framework_headers
@@ -754,7 +760,7 @@ qt4_symlink_framework_headers() {
 			dosym "${rdir}"/${f}/Headers "${dest}"
 
 			# Link normal headers as well.
-			for hdr in "${D}/${QT4_LIBDIR}/${f}"/Headers/*; do
+			for hdr in "${D}${QT4_LIBDIR}/${f}"/Headers/*; do
 				h=$(basename ${hdr})
 				dosym "../${rdir}"/${f}/Headers/${h} \
 					"${QT4_HEADERDIR#${EPREFIX}}"/Qt/${h}
