@@ -489,8 +489,9 @@ qt5_base_configure() {
 		-examplesdir "${QT5_EXAMPLESDIR}"
 		-testsdir "${QT5_TESTSDIR}"
 
-		# debug/release
-		$(usex debug -debug -release)
+		# configure in release mode by default,
+		# override via the CONFIG qmake variable
+		-release
 		-no-separate-debug-info
 
 		# licensing stuff
@@ -649,6 +650,8 @@ qt5_qmake() {
 	fi
 
 	"${qmakepath}"/qmake \
+		CONFIG+=$(usex debug debug release) \
+		CONFIG-=$(usex debug release debug) \
 		QMAKE_AR="$(tc-getAR) cqs" \
 		QMAKE_CC="$(tc-getCC)" \
 		QMAKE_LINK_C="$(tc-getCC)" \
