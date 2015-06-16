@@ -88,11 +88,6 @@ multilib_src_install_all()	{ qt4_multilib_src_install_all; }
 # Space-separated list of directories that will be configured,
 # compiled, and installed. All paths must be relative to ${S}.
 
-# @ECLASS-VARIABLE: QT4_VERBOSE_BUILD
-# @DESCRIPTION:
-# Set to false to reduce build output during compilation.
-: ${QT4_VERBOSE_BUILD:=true}
-
 # @ECLASS-VARIABLE: QCONFIG_ADD
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -381,8 +376,8 @@ qt4_multilib_src_configure() {
 		# disable rpath on non-prefix (bugs 380415 and 417169)
 		$(usex prefix '' -no-rpath)
 
-		# verbosity of the configure and build phases
-		-verbose $(${QT4_VERBOSE_BUILD} || echo -silent)
+		# print verbose information about each configure test
+		-verbose
 
 		# precompiled headers don't work on hardened, where the flag is masked
 		$(in_iuse pch && qt_use pch || echo -no-pch)
