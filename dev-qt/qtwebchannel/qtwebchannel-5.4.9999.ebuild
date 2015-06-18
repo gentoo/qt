@@ -3,14 +3,11 @@
 # $Header: $
 
 EAPI=5
-
 inherit qt5-build
 
-DESCRIPTION="Support library for integrating Qt5 C++ and QML applications with HTML/JavaScript clients"
+DESCRIPTION="Qt5 framework module for integrating C++ and QML applications with HTML/JavaScript clients"
 
-if [[ ${QT5_BUILD_TYPE} == live ]]; then
-	KEYWORDS=""
-else
+if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
