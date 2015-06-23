@@ -81,6 +81,8 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/generic
 	src/plugins/imageformats
 	src/plugins/platforms
+	src/plugins/platforminputcontexts
+	src/plugins/platformthemes
 )
 
 QT5_GENTOO_CONFIG=(
@@ -119,19 +121,16 @@ QT5_GENTOO_CONFIG=(
 	xcb::XKB
 )
 
-pkg_setup() {
-	use gtkstyle && QT5_TARGET_SUBDIRS+=(src/plugins/platformthemes/gtk2)
-	use ibus     && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/ibus)
-	use xcb	     && QT5_TARGET_SUBDIRS+=(src/plugins/platforminputcontexts/compose)
-
+src_prepare() {
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
-}
 
-src_prepare() {
 	# avoid automagic dep on qtdbus
 	use dbus || sed -i -e 's/contains(QT_CONFIG, dbus)/false/' \
 		src/platformsupport/platformsupport.pro || die
+
+	qt_use_disable_mod ibus dbus \
+		src/plugins/platforminputcontexts/platforminputcontexts.pro
 
 	# avoid automagic dep on qtnetwork
 	use tuio || sed -i -e '/SUBDIRS += tuiotouch/d' \
