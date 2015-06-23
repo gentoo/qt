@@ -142,7 +142,7 @@ src_configure() {
 		$(qt_use png libpng system)
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
-		$(qt_use xcb xkbcommon system)
+		$(qt_use xcb xkbcommon-x11 system)
 		$(use xcb && echo -xcb-xlib -xinput2 -xkb -xrender)
 	)
 	qt5-build_src_configure
