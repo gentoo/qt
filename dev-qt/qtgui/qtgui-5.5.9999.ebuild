@@ -12,9 +12,10 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
-# TODO: directfb, linuxfb, offscreen (auto-depends on X11)
+# TODO: directfb, linuxfb, offscreen (auto-depends on X11), libinput
 
-IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +png tslib udev +xcb"
+IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle +harfbuzz
+	ibus jpeg kms +png tslib tuio udev +xcb"
 REQUIRED_USE="
 	accessibility? ( dbus xcb )
 	egl? ( evdev )
@@ -48,6 +49,7 @@ RDEPEND="
 	)
 	png? ( media-libs/libpng:0= )
 	tslib? ( x11-libs/tslib )
+	tuio? ( ~dev-qt/qtnetwork-${PV} )
 	udev? ( virtual/libudev:= )
 	xcb? (
 		x11-libs/libICE
@@ -130,6 +132,10 @@ src_prepare() {
 	# avoid automagic dep on qtdbus
 	use dbus || sed -i -e 's/contains(QT_CONFIG, dbus)/false/' \
 		src/platformsupport/platformsupport.pro || die
+
+	# avoid automagic dep on qtnetwork
+	use tuio || sed -i -e '/SUBDIRS += tuiotouch/d' \
+		src/plugins/generic/generic.pro || die
 
 	qt5-build_src_prepare
 }
