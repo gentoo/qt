@@ -14,10 +14,12 @@ fi
 
 # TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
-IUSE="accessibility egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +png tslib udev +xcb"
+IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +png tslib udev +xcb"
 REQUIRED_USE="
+	accessibility? ( dbus xcb )
 	egl? ( evdev )
 	eglfs? ( egl )
+	ibus? ( dbus )
 	kms? ( egl gles2 )
 "
 
@@ -28,6 +30,7 @@ RDEPEND="
 	>=media-libs/freetype-2.5.5:2
 	>=sys-libs/zlib-1.2.5
 	virtual/opengl
+	dbus? ( ~dev-qt/qtdbus-${PV} )
 	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	gtkstyle? (
@@ -37,7 +40,6 @@ RDEPEND="
 	)
 	gles2? ( media-libs/mesa[gles2] )
 	harfbuzz? ( >=media-libs/harfbuzz-0.9.40:= )
-	ibus? ( ~dev-qt/qtdbus-${PV} )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
@@ -59,7 +61,6 @@ RDEPEND="
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
 		x11-libs/xcb-util-wm
-		accessibility? ( ~dev-qt/qtdbus-${PV} )
 	)
 "
 DEPEND="${RDEPEND}
@@ -125,10 +126,17 @@ pkg_setup() {
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
 }
 
+src_prepare() {
+	# avoid automagic dep on qtdbus
+	use dbus || sed -i -e 's/contains(QT_CONFIG, dbus)/false/' \
+		src/platformsupport/platformsupport.pro || die
+
+	qt5-build_src_prepare
+}
+
 src_configure() {
 	local myconf=(
-		$(use accessibility && usex xcb -dbus-linked '')
-		$(usex ibus -dbus-linked '')
+		$(usex dbus -dbus-linked '')
 		$(qt_use egl)
 		$(qt_use eglfs)
 		$(qt_use evdev)
