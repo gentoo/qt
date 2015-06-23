@@ -17,10 +17,11 @@
 		<flag name="kms">Build the KMS platform plugin</flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
-		<flag name="trace">
-			Build the 'trace' graphicssystem engine which allows to record
+		<flag name="trace">Build the 'trace' graphicssystem engine which allows to record
 			all drawing operations into a trace buffer. The trace can be replayed
 			later with the qttracereplay tool.</flag>
+		<flag name="tslib">Enable support for touchscreen devices via
+			<pkg>x11-libs/tslib</pkg></flag>
 	</use>
 	<upstream>
 		<bugs-to>https://bugreports.qt.io/</bugs-to>

@@ -14,7 +14,7 @@ fi
 
 # TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
-IUSE="accessibility egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +png udev +xcb"
+IUSE="accessibility egl eglfs evdev +gif gles2 gtkstyle +harfbuzz ibus jpeg kms +png tslib udev +xcb"
 REQUIRED_USE="
 	egl? ( evdev )
 	eglfs? ( egl )
@@ -45,6 +45,7 @@ RDEPEND="
 		x11-libs/libdrm
 	)
 	png? ( media-libs/libpng:0= )
+	tslib? ( x11-libs/tslib )
 	udev? ( virtual/libudev:= )
 	xcb? (
 		x11-libs/libICE
@@ -103,6 +104,7 @@ QT5_GENTOO_CONFIG=(
 	png:png:
 	png:system-png:IMAGEFORMAT_PNG
 	!png:no-png:
+	tslib
 	udev:libudev:
 	xcb:xcb:
 	xcb:xcb-glx:
@@ -140,6 +142,7 @@ src_configure() {
 		$(qt_use kms)
 		-opengl $(usex gles2 es2 desktop)
 		$(qt_use png libpng system)
+		$(qt_use tslib)
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon-x11 system)
