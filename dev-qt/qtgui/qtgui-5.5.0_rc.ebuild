@@ -15,13 +15,12 @@ fi
 # TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
 IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle
-	ibus jpeg kms libinput +png tslib tuio +udev +xcb"
+	ibus jpeg libinput +png tslib tuio +udev +xcb"
 REQUIRED_USE="
 	accessibility? ( dbus xcb )
 	egl? ( evdev )
 	eglfs? ( egl )
 	ibus? ( dbus )
-	kms? ( egl gles2 )
 	libinput? ( udev )
 "
 
@@ -43,11 +42,6 @@ RDEPEND="
 	)
 	gles2? ( media-libs/mesa[gles2] )
 	jpeg? ( virtual/jpeg:0 )
-	kms? (
-		media-libs/mesa[gbm]
-		virtual/libudev:=
-		x11-libs/libdrm
-	)
 	libinput? (
 		dev-libs/libinput:=
 		x11-libs/libxkbcommon
@@ -109,7 +103,6 @@ QT5_GENTOO_CONFIG=(
 	!:no-harfbuzz:
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
-	kms:kms:
 	libinput
 	libinput:xkbcommon-evdev:
 	:opengl
@@ -159,7 +152,6 @@ src_configure() {
 		$(qt_use gtkstyle)
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
-		$(qt_use kms)
 		$(qt_use libinput)
 		$(qt_use libinput xkbcommon-evdev)
 		-opengl $(usex gles2 es2 desktop)
