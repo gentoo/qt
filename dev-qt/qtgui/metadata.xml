@@ -11,7 +11,6 @@
 		<flag name="gles2">Use GLES 2.0 or later instead of full OpenGL</flag>
 		<flag name="glib">Enable <pkg>dev-libs/glib</pkg> eventloop support</flag>
 		<flag name="gtkstyle">Build a Qt style called GTK+ that mimics the active GTK+ theme</flag>
-		<flag name="harfbuzz">Use <pkg>media-libs/harfbuzz</pkg> for text shaping</flag>
 		<flag name="ibus">Build the IBus input method plugin</flag>
 		<flag name="kms">Build the KMS platform plugin</flag>
 		<flag name="libinput">Enable input device support via <pkg>dev-libs/libinput</pkg></flag>

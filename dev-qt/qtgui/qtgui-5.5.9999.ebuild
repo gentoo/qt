@@ -14,7 +14,7 @@ fi
 
 # TODO: directfb, linuxfb, offscreen (auto-depends on X11)
 
-IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle +harfbuzz
+IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle
 	ibus jpeg kms libinput +png tslib tuio +udev +xcb"
 REQUIRED_USE="
 	accessibility? ( dbus xcb )
@@ -30,6 +30,7 @@ RDEPEND="
 	~dev-qt/qtcore-${PV}
 	media-libs/fontconfig
 	>=media-libs/freetype-2.5.5:2
+	>=media-libs/harfbuzz-0.9.40:=
 	>=sys-libs/zlib-1.2.5
 	virtual/opengl
 	dbus? ( ~dev-qt/qtdbus-${PV} )
@@ -41,7 +42,6 @@ RDEPEND="
 		!!x11-libs/cairo[qt4]
 	)
 	gles2? ( media-libs/mesa[gles2] )
-	harfbuzz? ( >=media-libs/harfbuzz-0.9.40:= )
 	jpeg? ( virtual/jpeg:0 )
 	kms? (
 		media-libs/mesa[gbm]
@@ -105,8 +105,8 @@ QT5_GENTOO_CONFIG=(
 	gtkstyle:gtkstyle:
 	gtkstyle:gtk2:STYLE_GTK
 	!:no-gui:
-	harfbuzz:system-harfbuzz:HARFBUZZ
-	!harfbuzz:no-harfbuzz:
+	:system-harfbuzz:HARFBUZZ
+	!:no-harfbuzz:
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
 	kms:kms:
@@ -157,7 +157,7 @@ src_configure() {
 		-system-freetype
 		$(usex gif '' -no-gif)
 		$(qt_use gtkstyle)
-		$(qt_use harfbuzz harfbuzz system)
+		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
 		$(qt_use kms)
 		$(qt_use libinput)
