@@ -542,7 +542,7 @@ qt5_base_configure() {
 		-no-freetype -no-harfbuzz
 		-no-openssl
 		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-libproxy)
-		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-xkbcommon-evdev)
+		$([[ ${QT5_MINOR_VERSION} -ge 5 ]] && echo -no-xkbcommon-{x11,evdev})
 		-no-xinput2 -no-xcb-xlib
 
 		# don't specify -no-gif because there is no way to override it later
