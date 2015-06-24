@@ -12,14 +12,13 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
-# TODO: directfb, linuxfb
+# TODO: directfb, linuxfb, kms integration in eglfs
 
 IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle
 	ibus jpeg libinput +png tslib tuio +udev +xcb"
 REQUIRED_USE="
 	|| ( eglfs xcb )
 	accessibility? ( dbus xcb )
-	egl? ( evdev )
 	eglfs? ( egl )
 	ibus? ( dbus )
 	libinput? ( udev )
