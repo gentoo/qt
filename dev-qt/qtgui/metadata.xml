@@ -14,6 +14,7 @@
 		<flag name="harfbuzz">Use <pkg>media-libs/harfbuzz</pkg> for text shaping</flag>
 		<flag name="ibus">Build the IBus input method plugin</flag>
 		<flag name="kms">Build the KMS platform plugin</flag>
+		<flag name="libinput">Enable input device support via <pkg>dev-libs/libinput</pkg></flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that
 			this does not mean you can compile pure Qt3 programs with Qt4.</flag>
 		<flag name="trace">Build the 'trace' graphicssystem engine which allows to record
