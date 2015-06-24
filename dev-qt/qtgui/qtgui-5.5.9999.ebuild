@@ -53,8 +53,8 @@ RDEPEND="
 	xcb? (
 		x11-libs/libICE
 		x11-libs/libSM
-		>=x11-libs/libX11-1.5
-		>=x11-libs/libXi-1.6
+		x11-libs/libX11
+		>=x11-libs/libXi-1.7.4
 		x11-libs/libXrender
 		>=x11-libs/libxcb-1.10:=[xkb]
 		>=x11-libs/libxkbcommon-0.4.1[X]
