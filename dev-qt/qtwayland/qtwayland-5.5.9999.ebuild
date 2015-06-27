@@ -14,7 +14,7 @@ fi
 IUSE="egl qml wayland-compositor xcomposite"
 
 DEPEND="
-	>=dev-libs/wayland-1.3.0
+	>=dev-libs/wayland-1.4.0
 	>=dev-qt/qtcore-${PV}:5
 	>=dev-qt/qtgui-${PV}:5[egl=]
 	media-libs/mesa[egl?]
