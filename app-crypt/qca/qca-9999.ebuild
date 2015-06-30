@@ -4,14 +4,11 @@
 
 EAPI=5
 
-# for multibuild support, until merged to master
-EGIT_BRANCH="qt5"
-
-inherit multilib cmake-utils multibuild git-r3
+inherit cmake-utils multibuild qmake-utils git-r3
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="http://delta.affinix.com/qca/"
-EGIT_REPO_URI="git://anongit.kde.org/${PN}"
+EGIT_REPO_URI=("git://anongit.kde.org/${PN}.git")
 
 LICENSE="LGPL-2.1"
 SLOT="2"
@@ -56,7 +53,7 @@ DOCS=( README TODO )
 PATCHES=( "${FILESDIR}/${PN}-disable-pgp-test.patch" )
 
 qca_plugin_use() {
-	echo "-DWITH_${2:-$1}_PLUGIN=$(use $1 && echo yes || echo no)"
+	echo -DWITH_${2:-$1}_PLUGIN=$(usex "$1")
 }
 
 pkg_setup() {
@@ -66,6 +63,8 @@ pkg_setup() {
 src_configure() {
 	myconfigure() {
 		local mycmakeargs=(
+			-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}$(${MULTIBUILD_VARIANT}_get_mkspecsdir)/features"
+			-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}$(${MULTIBUILD_VARIANT}_get_plugindir)"
 			$(qca_plugin_use botan)
 			$(qca_plugin_use gcrypt)
 			$(qca_plugin_use gpg gnupg)
@@ -78,19 +77,8 @@ src_configure() {
 			$(cmake-utils_use_build test TESTS)
 		)
 
-		if [[ ${MULTIBUILD_VARIANT} = qt4 ]]; then
-			mycmakeargs+=(
-				-DQT4_BUILD=ON
-				-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/qt4/plugins"
-				-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}/usr/share/qt4/mkspecs/features"
-			)
-		fi
-
-		if [[ ${MULTIBUILD_VARIANT} = qt5 ]]; then
-			mycmakeargs+=(
-				-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/qt5/plugins"
-				-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}/usr/$(get_libdir)/qt5/mkspecs/features"
-			)
+		if [[ ${MULTIBUILD_VARIANT} == qt4 ]]; then
+			mycmakeargs+=(-DQT4_BUILD=ON)
 		fi
 
 		cmake-utils_src_configure
@@ -104,17 +92,22 @@ src_compile() {
 }
 
 src_test() {
-	multibuild_foreach_variant cmake-utils_src_test
+	mytest() {
+		local -x QCA_PLUGIN_PATH="${BUILD_DIR}/lib/qca"
+		cmake-utils_src_test
+	}
+
+	multibuild_foreach_variant mytest
 }
 
 src_install() {
 	multibuild_foreach_variant cmake-utils_src_install
 
 	if use doc; then
-		pushd "${BUILD_DIR}" >/dev/null
+		pushd "${BUILD_DIR}" >/dev/null || die
 		doxygen Doxyfile.in || die
 		dodoc -r apidocs/html
-		popd >/dev/null
+		popd >/dev/null || die
 	fi
 
 	if use examples; then
