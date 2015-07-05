@@ -640,7 +640,8 @@ qt4_qmake() {
 		CONFIG+=nostrip \
 		LIBS+=-L"${QT4_LIBDIR}" \
 		"${projectdir}" \
-		|| die "qmake failed (${projectdir})"
+		"$@" \
+		|| die "qmake failed (${projectdir#${S}/})"
 }
 
 # @FUNCTION: qt4_install_module_qconfigs

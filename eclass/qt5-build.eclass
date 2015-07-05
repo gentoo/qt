@@ -684,7 +684,7 @@ qt5_qmake() {
 		QMAKE_LFLAGS_DEBUG= \
 		"${projectdir}" \
 		"$@" \
-		|| die "qmake failed (${projectdir})"
+		|| die "qmake failed (${projectdir#${S}/})"
 }
 
 # @FUNCTION: qt5_install_module_qconfigs
