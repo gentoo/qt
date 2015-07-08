@@ -17,14 +17,16 @@ case ${EAPI} in
 	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
-inherit eutils flag-o-matic multilib toolchain-funcs virtualx
-
-QT5_MINOR_VERSION=${PV#*.}
-QT5_MINOR_VERSION=${QT5_MINOR_VERSION%%.*}
+inherit eutils flag-o-matic multilib toolchain-funcs versionator virtualx
 
 HOMEPAGE="https://www.qt.io/"
 LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
-SLOT="5"
+
+# IMPORTANT: add a subslot dependency to your package only if you are sure
+#            that it uses some private Qt APIs (most likely it does not)
+SLOT=5/$(get_version_component_range 1-2)
+
+QT5_MINOR_VERSION=$(get_version_component_range 2)
 
 # @ECLASS-VARIABLE: QT5_MODULE
 # @DESCRIPTION:
