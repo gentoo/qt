@@ -64,7 +64,7 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}/${PN}-5.4.1-leveldb.patch"
-	"${FILESDIR}/${PN}-5.4.1-rpath.patch"
+	"${FILESDIR}/${PN}-5.5.0-rpath.patch"
 )
 
 src_prepare() {
