@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="alsa +gstreamer openal +opengl pulseaudio qml widgets"
+IUSE="alsa +gstreamer openal opengl pulseaudio qml widgets"
 
 RDEPEND="
 	>=dev-qt/qtcore-${PV}:5
@@ -34,10 +34,14 @@ RDEPEND="
 	)
 "
 DEPEND="${RDEPEND}
-	x11-proto/videoproto
+	gstreamer? ( x11-proto/videoproto )
 "
 
 src_prepare() {
+	# do not rely on qtbase configuration
+	sed -i -e 's/contains(QT_CONFIG, \(alsa\|pulseaudio\))://' \
+		qtmultimedia.pro || die
+
 	qt_use_compile_test alsa
 	qt_use_compile_test gstreamer
 	qt_use_compile_test openal
@@ -47,7 +51,8 @@ src_prepare() {
 		src/multimediawidgets/multimediawidgets.pro
 
 	qt_use_disable_mod qml quick \
-		src/src.pro
+		src/src.pro \
+		src/plugins/plugins.pro
 
 	qt_use_disable_mod widgets widgets \
 		src/src.pro \
