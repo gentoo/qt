@@ -64,12 +64,17 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}/${PN}-5.4.1-leveldb.patch"
-	"${FILESDIR}/${PN}-5.5.0-rpath.patch"
 )
 
 src_prepare() {
 	# ensure bundled library cannot be used
 	rm -r Source/ThirdParty/leveldb || die
+
+	# bug 466216
+	sed -i -e '/CONFIG +=/s/rpath//' \
+		Source/WebKit/qt/declarative/{experimental/experimental,public}.pri \
+		Tools/qmake/mkspecs/features/{force_static_libs_as_shared,unix/default_post}.prf \
+		|| die
 
 	if use gstreamer010; then
 		epatch "${FILESDIR}/${PN}-5.3.2-use-gstreamer010.patch"
