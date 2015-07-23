@@ -51,6 +51,10 @@ DEPEND="${RDEPEND}
 	virtual/perl-Getopt-Long
 "
 
+PATCHES=(
+	"${FILESDIR}/use-correct-icu-typedef.patch"
+)
+
 src_prepare() {
 	# examples cause a sandbox violation (bug 458222)
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
@@ -60,7 +64,8 @@ src_prepare() {
 		Source/WTF/WTF.pro \
 		Source/JavaScriptCore/Target.pri || die
 
-	epatch "${FILESDIR}"/${PN}-2.3.4-use-correct-typedef.patch
+	# apply patches
+	[[ ${PATCHES[@]} ]] && epatch "${PATCHES[@]}"
 	epatch_user
 }
 
