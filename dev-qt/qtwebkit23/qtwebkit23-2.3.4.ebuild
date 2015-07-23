@@ -79,7 +79,7 @@ multilib_src_compile() {
 		--qt
 		# tell the build system where to find the qmake binary for the current ABI
 		--qmake="$(qt4_get_bindir)"/qmake
-		--qmakearg="CONFIG+=nostrip CONFIG+=production_build DEFINES+=HAVE_QTTESTLIB=0"
+		--qmakearg="CONFIG+=nostrip DEFINES+=HAVE_QTTESTLIB=0"
 		--makeargs="${MAKEOPTS}"
 		--$(usex debug debug release)
 		--$(usex gstreamer video no-video)
