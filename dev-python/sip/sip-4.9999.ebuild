@@ -33,23 +33,25 @@ IUSE="debug doc"
 
 DEPEND="${PYTHON_DEPS}"
 RDEPEND="${DEPEND}"
-
 [[ ${PV} == *9999* ]] && DEPEND+="
-	=dev-lang/python-2*
 	sys-devel/bison
 	sys-devel/flex
 	doc? ( dev-python/sphinx[$(python_gen_usedep 'python2*')] )
 "
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+[[ ${PV} == *9999* ]] && REQUIRED_USE+="
+	|| ( $(python_gen_useflags 'python2*') )
+"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-4.15.5-darwin.patch
 
 	if [[ ${PV} == *9999* ]]; then
-		python2 build.py prepare || die
+		python_setup 'python2*'
+		"${PYTHON}" build.py prepare || die
 		if use doc; then
-			python2 build.py doc || die
+			"${PYTHON}" build.py doc || die
 		fi
 	fi
 
