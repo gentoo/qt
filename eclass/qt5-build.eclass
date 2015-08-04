@@ -227,8 +227,10 @@ qt5-build_src_compile() {
 # @DESCRIPTION:
 # Runs tests in the target directories.
 qt5-build_src_test() {
-	# '-after SUBDIRS-=...' disables broken cmake tests (bug 474004)
-	qt5_foreach_target_subdir qt5_qmake -after SUBDIRS-=cmake SUBDIRS-=installed_cmake
+	# disable broken cmake tests (bug 474004)
+	local myqmakeargs=("${myqmakeargs[@]}" -after SUBDIRS-=cmake SUBDIRS-=installed_cmake)
+
+	qt5_foreach_target_subdir qt5_qmake
 	qt5_foreach_target_subdir emake
 
 	# create a custom testrunner script that correctly sets
@@ -663,6 +665,7 @@ qt5_qmake() {
 	fi
 
 	"${qmakepath}"/qmake \
+		"${projectdir}" \
 		CONFIG+=$(usex debug debug release) \
 		CONFIG-=$(usex debug release debug) \
 		QMAKE_AR="$(tc-getAR) cqs" \
@@ -684,8 +687,7 @@ qt5_qmake() {
 		QMAKE_LFLAGS="${LDFLAGS}" \
 		QMAKE_LFLAGS_RELEASE= \
 		QMAKE_LFLAGS_DEBUG= \
-		"${projectdir}" \
-		"$@" \
+		"${myqmakeargs[@]}" \
 		|| die "qmake failed (${projectdir#${S}/})"
 }
 
