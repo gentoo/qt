@@ -63,9 +63,8 @@ src_prepare() {
 }
 
 src_configure() {
-	if use gstreamer; then
-		qt5_qmake GST_VERSION=0.10
-	else
-		qt5-build_src_configure
-	fi
+	local myqmakeargs=(
+		$(usex gstreamer 'GST_VERSION=0.10' '')
+	)
+	qt5-build_src_configure
 }
