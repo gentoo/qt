@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-qt/qt-creator/qt-creator-3.4.0.ebuild,v 1.4 2015/05/04 19:50:14 pesa Exp $
+# $Id$
 
 EAPI=5
 PLOCALES="cs de fr ja pl ru sl uk zh_CN zh_TW"
@@ -9,6 +9,7 @@ inherit eutils l10n multilib qmake-utils virtualx
 DESCRIPTION="Lightweight IDE for C++/QML development centering around Qt"
 HOMEPAGE="http://doc.qt.io/qtcreator/"
 LICENSE="|| ( LGPL-2.1 LGPL-3 )"
+SLOT="0"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
@@ -24,8 +25,6 @@ else
 	KEYWORDS="~amd64 ~arm ~x86"
 	S=${WORKDIR}/${MY_P}
 fi
-
-SLOT="0"
 
 QTC_PLUGINS=('android:android|qmakeandroidsupport' autotools:autotoolsprojectmanager baremetal
 	bazaar clang:clangcodemodel clearcase cmake:cmakeprojectmanager cvs git ios mercurial

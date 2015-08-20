@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/minitube/minitube-1.9.ebuild,v 1.2 2012/11/17 19:17:31 hwoarang Exp $
+# $Id$
 
 EAPI=4
 PLOCALES="ar ca ca_ES da de_DE el en es es_AR es_ES fi fi_FI fr gl he_IL hr hu
