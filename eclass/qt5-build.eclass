@@ -197,6 +197,10 @@ qt5-build_src_prepare() {
 		find config.tests/unix -name '*.test' -type f \
 			-execdir sed -i -e '/bin\/qmake/ s/-nocache //' '{}' + \
 			|| die "sed failed (config.tests)"
+
+		# Don't add -O3 to CXXFLAGS (bug 549140)
+		sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
+			src/{corelib/corelib,gui/gui}.pro || die "sed failed (optimize_full)"
 	fi
 
 	# apply patches
