@@ -4,7 +4,7 @@
 #
 language: python
 python:
-    - "3.4"
+    - pypy
 env:
     - PORTAGE_VER="2.2.20.1"
 before_script:
@@ -29,7 +29,7 @@ before_script:
     - if ! cmp -n $SIZE -s .travis.yml .travis.yml.upstream; then  echo -e "\e[31m !!! .travis.yml outdated! Update available https://github.com/mrueg/repoman-travis \e[0m" > /tmp/update ; fi
     - cd travis-overlay
 script:
-    - ./../spinner.sh "python ../portage-${PORTAGE_VER}/bin/repoman full -d"
+    - ./../spinner.sh "./../portage-${PORTAGE_VER}/bin/repoman full -d"
 # You can append own scripts after this line
 notifications:
   irc:
