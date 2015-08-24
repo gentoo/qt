@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="gles2 localstorage +widgets xml"
+IUSE="gles2 +jit localstorage +widgets xml"
 
 # qtgui[gles2=] is needed because of bug 504322
 DEPEND="
@@ -26,6 +26,8 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	use jit || epatch "${FILESDIR}"/${PN}-5.4.2-disable-jit.patch
+
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
 
