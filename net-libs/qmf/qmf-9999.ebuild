@@ -13,7 +13,7 @@ if [[ ${PV} == *9999 ]]; then
 		"https://code.qt.io/git/qt-labs/messagingframework.git"
 	)
 else
-	SRC_URI="http://dev.gentoo.org/~pesa/distfiles/${P}.tar.gz"
+	SRC_URI="https://dev.gentoo.org/~pesa/distfiles/${P}.tar.gz"
 	S=${WORKDIR}/qt-labs-messagingframework
 fi
 
@@ -36,10 +36,9 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	test? ( >=dev-qt/qttest-4.8:4 )
-	!!<net-libs/qmf-2.0_p201209
 "
 
-DOCS=(CHANGES)
+DOCS=( CHANGES )
 PATCHES=(
 	"${FILESDIR}/${PN}-4.0.2-tests.patch"
 )
@@ -78,7 +77,6 @@ src_configure() {
 }
 
 src_test() {
-	echo ">>> Test phase [QTest]: ${CATEGORY}/${PF}"
 	cd "${S}"/tests
 
 	export QMF_DATA=${T}
@@ -103,7 +101,7 @@ src_install() {
 	if use doc; then
 		emake docs
 
-		dohtml -r doc/html/*
+		dodoc -r doc/html
 		dodoc doc/html/qmf.qch
 		docompress -x /usr/share/doc/${PF}/qmf.qch
 	fi
