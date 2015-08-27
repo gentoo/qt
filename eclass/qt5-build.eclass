@@ -546,6 +546,7 @@ qt5_base_configure() {
 		# disable everything to prevent automagic deps (part 1)
 		-no-mtdev
 		-no-journald
+		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-syslog)
 		-no-libpng -no-libjpeg
 		-no-freetype -no-harfbuzz
 		-no-openssl
@@ -608,7 +609,8 @@ qt5_base_configure() {
 		#-use-gold-linker
 
 		# disable all platform plugins by default, override in qtgui
-		-no-xcb -no-eglfs -no-directfb -no-linuxfb -no-kms
+		-no-xcb -no-eglfs -no-kms -no-directfb -no-linuxfb
+		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-mirclient)
 
 		# disable undocumented X11-related flags, override in qtgui
 		# (not shown in ./configure -help output)
