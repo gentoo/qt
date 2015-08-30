@@ -9,7 +9,7 @@ inherit qt5-build
 DESCRIPTION="Bluetooth support library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 IUSE="qml"
