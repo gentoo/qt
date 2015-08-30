@@ -10,7 +10,8 @@
 			inside the event loop (recommended by upstream)</flag>
 		<flag name="gles2">Use GLES 2.0 or later instead of full OpenGL</flag>
 		<flag name="glib">Enable integration with the <pkg>dev-libs/glib</pkg> event loop</flag>
-		<flag name="gtkstyle">Build a Qt style called GTK+ that mimics the active GTK+ theme</flag>
+		<flag name="gtk">Build the GTK platform theme plugin</flag>
+		<flag name="gtkstyle">Build a widgets style that mimics the active GTK+ theme</flag>
 		<flag name="ibus">Build the IBus input method plugin</flag>
 		<flag name="libinput">Enable support for input devices via <pkg>dev-libs/libinput</pkg></flag>
 		<flag name="qt3support">Enable the Qt3Support libraries for Qt4. Note that

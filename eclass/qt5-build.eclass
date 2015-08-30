@@ -562,10 +562,7 @@ qt5_base_configure() {
 
 		# disable everything to prevent automagic deps (part 2)
 		-no-pulseaudio -no-alsa
-
-		# override in qtgui and qtwidgets where x11-libs/cairo[qt4] is blocked
-		# to avoid adding qt4 include paths (bug 433826)
-		-no-gtkstyle
+		$([[ ${QT5_MINOR_VERSION} -ge 7 ]] && echo -no-gtk || echo -no-gtkstyle)
 
 		# exclude examples and tests from default build
 		-nomake examples
