@@ -44,17 +44,16 @@ RDEPEND="
 	>=dev-qt/qthelp-${QT_PV}
 	>=dev-qt/qtnetwork-${QT_PV}[ssl]
 	>=dev-qt/qtprintsupport-${QT_PV}
-	>=dev-qt/qtquick1-${QT_PV}
 	>=dev-qt/qtquickcontrols-${QT_PV}
 	>=dev-qt/qtscript-${QT_PV}
-	>=dev-qt/qtsql-${QT_PV}
+	>=dev-qt/qtsql-${QT_PV}[sqlite]
 	>=dev-qt/qtsvg-${QT_PV}
 	>=dev-qt/qtwidgets-${QT_PV}
 	>=dev-qt/qtx11extras-${QT_PV}
 	>=dev-qt/qtxml-${QT_PV}
 	>=sys-devel/gdb-7.5[client,python]
 	clang? ( >=sys-devel/clang-3.2:= )
-	qbs? ( >=dev-util/qbs-1.4.0-r1 )
+	qbs? ( >=dev-util/qbs-1.4.2 )
 	systemd? ( sys-apps/systemd:= )
 	webkit? ( >=dev-qt/qtwebkit-${QT_PV} )
 "
@@ -80,6 +79,15 @@ PDEPEND="
 	subversion? ( dev-vcs/subversion )
 	valgrind? ( dev-util/valgrind )
 "
+
+src_unpack() {
+	if [[ $(gcc-major-version) -lt 4 ]] || [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 7 ]]; then
+		eerror "GCC version 4.7 or later is required to build Qt Creator"
+		die "GCC >= 4.7 required"
+	fi
+
+	default
+}
 
 src_prepare() {
 	# disable unwanted plugins
