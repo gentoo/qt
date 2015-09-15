@@ -27,6 +27,11 @@ DEPEND="${RDEPEND}
 	test? ( dev-qt/qttest:4 )
 "
 
+src_prepare() {
+	 use test || \
+		 sed -e "/^set(QT_REQUIRED_MODULES/s/QtTest//" -i CMakeLists.txt || die
+}
+
 src_configure() {
 	local mycmakeargs=(
 		$(cmake-utils_use_with test TESTS)
