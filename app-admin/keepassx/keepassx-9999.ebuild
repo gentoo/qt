@@ -19,13 +19,23 @@ KEYWORDS=""
 IUSE="debug test"
 
 RDEPEND="dev-libs/libgcrypt:=
-	dev-qt/qtcore:4[qt3support]
-	dev-qt/qtgui:4[qt3support]
+	dev-qt/qtcore:5
+	dev-qt/qtgui:5
+	dev-qt/qtwidgets:5
 	sys-libs/zlib
 "
 DEPEND="${RDEPEND}
-	test? ( dev-qt/qttest:4 )
+	dev-qt/linguist-tools:5
+	dev-qt/qtconcurrent:5
+	test? ( dev-qt/qttest:5 )
 "
+
+src_prepare() {
+	 use test || \
+		sed -e "/^find_package(Qt5Test/d" -i CMakeLists.txt || die
+
+	 cmake-utils_src_prepare
+}
 
 src_configure() {
 	local mycmakeargs=(
