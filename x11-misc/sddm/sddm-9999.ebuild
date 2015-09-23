@@ -10,62 +10,66 @@ HOMEPAGE="https://github.com/sddm/sddm"
 EGIT_REPO_URI="git://github.com/${PN}/${PN}.git"
 KEYWORDS=""
 
-LICENSE="GPL-2+ MIT CC-BY-3.0 public-domain"
+LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="consolekit systemd +upower"
-REQUIRED_USE="?? ( upower systemd )"
+IUSE="consolekit +pam systemd"
 
-RDEPEND="sys-libs/pam
-	>=x11-base/xorg-server-1.15.1
-	x11-libs/libxcb[xkb(-)]
-	dev-qt/qtcore:5
+RDEPEND="dev-qt/qtcore:5
 	dev-qt/qtdbus:5
+	dev-qt/qtgui:5
 	dev-qt/qtdeclarative:5
+	dev-qt/qtnetwork:5
 	dev-qt/linguist-tools:5
 	dev-qt/qttest:5
+	>=x11-base/xorg-server-1.15.1
+	x11-libs/libxcb[xkb(-)]
+	consolekit? ( >=sys-auth/consolekit-0.9.4 )
+	pam? ( sys-libs/pam )
 	systemd? ( sys-apps/systemd:= )
-	upower? ( || ( sys-power/upower sys-power/upower-pm-utils ) )"
+	!systemd? ( || ( sys-power/upower sys-power/upower-pm-utils ) )"
+
 DEPEND="${RDEPEND}
-	>=sys-devel/gcc-4.7.0
+	dev-python/docutils
 	virtual/pkgconfig"
 
 pkg_pretend() {
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		[[ $(gcc-version) < 4.7 ]] && \
+	if [[ ${MERGE_TYPE} != binary  && $(tc-getCC) == *gcc* ]]; then
+		if [[ $(gcc-major-version) -lt 4 || $(gcc-major-version) == 4 && $(gcc-minor-version) -lt 7 ]] ; then
 			die 'The active compiler needs to be gcc 4.7 (or newer)'
+		fi
 	fi
 }
 
 src_prepare() {
-	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
-	use upower && epatch "${FILESDIR}/${P}-upower.patch"
+	cmake-utils_src_prepare
 
-	# respect user's cflags
-	sed -e 's|-Wall -march=native||' \
-		-e 's|-O2||' \
-		-i CMakeLists.txt || die 'sed failed'
+	epatch "${FILESDIR}/${P}-respect-user-flags.patch"
+	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
 }
 
 src_configure() {
 	local mycmakeargs=(
+		$(cmake-utils_use_no pam PAM)
 		$(cmake-utils_use_no systemd SYSTEMD)
-	)
+		-DBUILD_MAN_PAGES=ON
+		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
+		)
+
+	cmake-utils_src_configure
+}
+
+src_configure() {
+	local mycmakeargs=(
+		$(cmake-utils_use_no pam PAM)
+		$(cmake-utils_use_no systemd SYSTEMD)
+		-DBUILD_MAN_PAGES=ON
+		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
+		)
+
 	cmake-utils_src_configure
 }
 
 pkg_postinst() {
-	if use consolekit; then
-		ewarn "This display manager doesn't have native built-in ConsoleKit support."
-		ewarn "In order to use ConsoleKit pam module with this display manager,"
-		ewarn "you should remove the \"nox11\" parameter from pm_ck_connector.so"
-		ewarn "line in /etc/pam.d/system-login"
-	fi
-	ewarn "Add the sddm user manually to the video group"
-	ewarn "if you experience flickering or other rendering issues of sddm-greeter"
-	ewarn "see https://github.com/gentoo/qt/pull/52"
-}
-
-pkg_setup() {
 	enewgroup ${PN}
-	enewuser ${PN} -1 -1 /var/lib/sddm ${PN}
+	enewuser ${PN} -1 -1 /var/lib/${PN} ${PN} video
 }
