@@ -23,6 +23,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
+	>=dev-qt/qtnetwork-${PV}:5
 "
 
 src_prepare() {
