@@ -36,7 +36,7 @@ RDEPEND="
 	>=app-eselect/eselect-vi-1.1.8
 	>=dev-qt/qtcore-4.7.0:4
 	>=dev-qt/qtgui-4.7.0:4
-	sys-libs/ncurses
+	sys-libs/ncurses:0
 	acl? ( kernel_linux? ( sys-apps/acl ) )
 	cscope? ( dev-util/cscope )
 	lua? ( luajit? ( dev-lang/luajit )
