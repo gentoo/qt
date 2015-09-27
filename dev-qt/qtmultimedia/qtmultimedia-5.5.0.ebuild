@@ -11,7 +11,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="alsa +gstreamer openal pulseaudio qml widgets"
+IUSE="alsa gstreamer gstreamer010 openal pulseaudio qml widgets"
+REQUIRED_USE="?? ( gstreamer gstreamer010 )"
 
 RDEPEND="
 	>=dev-qt/qtcore-${PV}:5
@@ -19,6 +20,11 @@ RDEPEND="
 	>=dev-qt/qtnetwork-${PV}:5
 	alsa? ( media-libs/alsa-lib )
 	gstreamer? (
+		media-libs/gstreamer:1.0
+		media-libs/gst-plugins-bad:1.0
+		media-libs/gst-plugins-base:1.0
+	)
+	gstreamer010? (
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-bad:0.10
 		media-libs/gst-plugins-base:0.10
@@ -61,7 +67,8 @@ src_prepare() {
 
 src_configure() {
 	local myqmakeargs=(
-		$(usex gstreamer 'GST_VERSION=0.10' '')
+		$(usex gstreamer 'GST_VERSION=1.0' '')
+		$(usex gstreamer010 'GST_VERSION=0.10' '')
 	)
 	qt5-build_src_configure
 }
