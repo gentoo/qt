@@ -44,6 +44,10 @@ pkg_setup() {
 	use networkmanager && QT5_TARGET_SUBDIRS+=(src/plugins/bearer/networkmanager)
 }
 
+src_prepare() {
+	epatch "${FILESDIR}"/${PN}-5.5-socklen_t.patch
+}
+
 src_configure() {
 	local myconf=(
 		$(use connman || use networkmanager && echo -dbus-linked)
