@@ -35,10 +35,12 @@ RDEPEND="dev-libs/openssl:0
 	>=dev-qt/qtconcurrent-5.5:5
 	>=dev-qt/qtcore-5.5:5
 	>=dev-qt/qtgui-5.5:5
+	>=dev-qt/qtnetwork-5.5:5
 	>=dev-qt/qtprintsupport-5.5:5
 	>=dev-qt/qtscript-5.5:5
 	>=dev-qt/qtsql-5.5:5[sqlite]
 	>=dev-qt/qtwebengine-5.5:5[widgets]
+	>=dev-qt/qtwidgets-5.5:5
 	x11-libs/libX11
 	dbus? ( >=dev-qt/qtdbus-5.5:5 )
 	gnome-keyring? ( gnome-base/gnome-keyring )"
