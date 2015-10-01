@@ -20,7 +20,6 @@ LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
 CDEPEND="
-	dev-qt/linguist-tools:5
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
@@ -34,6 +33,7 @@ CDEPEND="
 	x11-libs/libX11
 	x11-libs/libxcb:="
 DEPEND="${CDEPEND}
+	dev-qt/linguist-tools:5
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
 	|| ( sys-power/upower sys-power/upower-pm-utils )"
