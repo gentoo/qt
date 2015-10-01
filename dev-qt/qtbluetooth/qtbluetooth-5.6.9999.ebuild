@@ -22,8 +22,8 @@ RDEPEND="
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5 )
 "
 DEPEND="${RDEPEND}
-	virtual/pkgconfig
 	>=dev-qt/qtnetwork-${PV}:5
+	virtual/pkgconfig
 "
 
 src_prepare() {
