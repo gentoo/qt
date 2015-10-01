@@ -33,13 +33,13 @@ RDEPEND="dev-libs/glib:2
 	x11-libs/pango
 	qt4? ( dev-qt/qtcore:4
 		dev-qt/qtgui:4 )
-	qt5? ( dev-qt/linguist-tools:5
-		dev-qt/qtcore:5
+	qt5? ( dev-qt/qtcore:5
 		dev-qt/qtdbus:5
 		dev-qt/qtgui:5
 		dev-qt/qtwidgets:5
 		dev-qt/qtx11extras:5 )"
 DEPEND="${RDEPEND}
+	qt5? ( dev-qt/linguist-tools:5 )
 	virtual/pkgconfig"
 
 src_configure() {
