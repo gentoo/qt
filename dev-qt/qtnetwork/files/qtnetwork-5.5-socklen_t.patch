@@ -1,0 +1,17 @@
+diff -Naur a/qtbase-opensource-src-5.5.0/mkspecs/linux-g++/qplatformdefs.h b/qtbase-opensource-src-5.5.0/mkspecs/linux-g++/qplatformdefs.h
+--- a/qtbase-opensource-src-5.5.0/mkspecs/linux-g++/qplatformdefs.h	2015-06-29 17:05:08.000000000 -0300
++++ b/qtbase-opensource-src-5.5.0/mkspecs/linux-g++/qplatformdefs.h	2015-09-29 10:16:03.283745918 -0300
+@@ -78,10 +78,10 @@
+ 
+ #undef QT_SOCKLEN_T
+ 
+-#if defined(__GLIBC__) && (__GLIBC__ >= 2)
+-#define QT_SOCKLEN_T            socklen_t
+-#else
++#if defined(__GLIBC__) && (__GLIBC__ < 2)
+ #define QT_SOCKLEN_T            int
++#else
++#define QT_SOCKLEN_T            socklen_t
+ #endif
+ 
+ #if defined(_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)
