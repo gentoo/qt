@@ -27,6 +27,10 @@ RDEPEND="${DEPEND}
 	networkmanager? ( net-misc/networkmanager )
 "
 
+PATCHES=(
+	"${FILESDIR}/${PN}-5.5-socklen_t.patch" # bug 554556
+)
+
 QT5_TARGET_SUBDIRS=(
 	src/network
 	src/plugins/bearer/generic
