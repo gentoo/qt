@@ -32,19 +32,19 @@ SLOT="0"
 IUSE="dbus debug gnome-keyring nonblockdialogs"
 
 RDEPEND="dev-libs/openssl:0
-	x11-libs/libX11
-	gnome-keyring? ( gnome-base/gnome-keyring )
+	>=dev-qt/qtconcurrent-5.5:5
 	>=dev-qt/qtcore-5.5:5
 	>=dev-qt/qtgui-5.5:5
-	>=dev-qt/qtconcurrent-5.5:5
 	>=dev-qt/qtprintsupport-5.5:5
 	>=dev-qt/qtscript-5.5:5
 	>=dev-qt/qtsql-5.5:5[sqlite]
 	>=dev-qt/qtwebengine-5.5:5[widgets]
-	dbus? ( >=dev-qt/qtdbus-5.5:5 )"
+	x11-libs/libX11
+	dbus? ( >=dev-qt/qtdbus-5.5:5 )
+	gnome-keyring? ( gnome-base/gnome-keyring )"
 DEPEND="${RDEPEND}
-	virtual/pkgconfig
-	>=dev-qt/linguist-tools-5.5:5"
+	>=dev-qt/linguist-tools-5.5:5
+	virtual/pkgconfig"
 
 DOCS=( AUTHORS BUILDING CHANGELOG FAQ README.md )
 
