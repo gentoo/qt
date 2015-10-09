@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="alsa +gstreamer openal opengl pulseaudio qml widgets"
+IUSE="alsa +gstreamer openal pulseaudio qml widgets"
 
 RDEPEND="
 	>=dev-qt/qtcore-${PV}:5
@@ -29,8 +29,8 @@ RDEPEND="
 		openal? ( media-libs/openal )
 	)
 	widgets? (
+		>=dev-qt/qtopengl-${PV}:5
 		>=dev-qt/qtwidgets-${PV}:5
-		opengl? ( >=dev-qt/qtopengl-${PV}:5 )
 	)
 "
 DEPEND="${RDEPEND}
@@ -46,9 +46,6 @@ src_prepare() {
 	qt_use_compile_test gstreamer
 	qt_use_compile_test openal
 	qt_use_compile_test pulseaudio
-
-	qt_use_disable_mod opengl opengl \
-		src/multimediawidgets/multimediawidgets.pro
 
 	qt_use_disable_mod qml quick \
 		src/src.pro \
