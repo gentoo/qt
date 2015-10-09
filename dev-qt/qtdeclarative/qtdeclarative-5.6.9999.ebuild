@@ -31,11 +31,10 @@ src_prepare() {
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
 
-	use widgets || sed -i -e 's/contains(QT_CONFIG, no-widgets)/true/' \
-		src/qmltest/qmltest.pro || die
-
 	qt_use_disable_mod widgets widgets \
 		src/src.pro \
+		src/qmltest/qmltest.pro \
+		tests/auto/auto.pro \
 		tools/tools.pro \
 		tools/qmlscene/qmlscene.pro \
 		tools/qml/qml.pro
