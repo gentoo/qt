@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="designer opengl webkit xml"
+IUSE="designer gles2 opengl webkit xml"
 
 # see bug 542698 for pinned dev-qt/designer dependency
 DEPEND="
@@ -25,7 +25,10 @@ DEPEND="
 		~dev-qt/designer-${PV}
 		>=dev-qt/qtdeclarative-${PV}:5
 	)
-	opengl? ( >=dev-qt/qtopengl-${PV}:5 )
+	opengl? (
+		>=dev-qt/qtgui-${PV}:5[gles2=]
+		>=dev-qt/qtopengl-${PV}:5
+	)
 	webkit? ( >=dev-qt/qtwebkit-${PV}:5 )
 	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5 )
 "
