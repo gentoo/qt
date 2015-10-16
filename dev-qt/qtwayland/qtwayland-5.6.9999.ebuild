@@ -19,7 +19,9 @@ DEPEND="
 	>=dev-qt/qtgui-${PV}:5[egl=]
 	media-libs/mesa[egl?]
 	>=x11-libs/libxkbcommon-0.2.0
-	qml? ( >=dev-qt/qtdeclarative-${PV}:5 )
+	wayland-compositor? (
+		qml? ( >=dev-qt/qtdeclarative-${PV}:5 )
+	)
 	xcomposite? (
 		x11-libs/libX11
 		x11-libs/libXcomposite
@@ -33,6 +35,7 @@ src_configure() {
 	fi
 
 	qt_use_compile_test xcomposite
+	qt_use_disable_mod qml quick src/compositor/compositor_api/compositor_api.pri
 
 	qt5-build_src_configure
 }
