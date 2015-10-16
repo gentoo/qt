@@ -17,4 +17,6 @@ RDEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}[xcb]
 "
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	test? ( ~dev-qt/qtwidgets-${PV} )
+"
