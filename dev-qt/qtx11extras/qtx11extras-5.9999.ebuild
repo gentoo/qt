@@ -16,6 +16,5 @@ IUSE=""
 RDEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}[xcb]
-	~dev-qt/qtwidgets-${PV}
 "
 DEPEND="${RDEPEND}"
