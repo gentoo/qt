@@ -14,7 +14,7 @@ fi
 
 # TODO: qttestlib, geolocation, orientation/sensors
 
-IUSE="gstreamer gstreamer010 multimedia opengl printsupport qml udev webp"
+IUSE="gstreamer gstreamer010 multimedia opengl printsupport qml webp"
 REQUIRED_USE="?? ( gstreamer gstreamer010 multimedia )"
 
 RDEPEND="
@@ -50,7 +50,6 @@ RDEPEND="
 	opengl? ( >=dev-qt/qtopengl-${PV}:5 )
 	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5 )
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5 )
-	udev? ( virtual/udev )
 	webp? ( media-libs/libwebp:0= )
 "
 DEPEND="${RDEPEND}
@@ -89,8 +88,6 @@ src_prepare() {
 		Tools/qmake/mkspecs/features/features.prf || die
 	use qml          || sed -i -e '/have?(QTQUICK): SUBDIRS += declarative/d' \
 		Source/QtWebKit.pro || die
-	use udev         || sed -i -e '/linux: WEBKIT_CONFIG += gamepad/d' \
-		Tools/qmake/mkspecs/features/features.prf || die
 	use webp         || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
 
