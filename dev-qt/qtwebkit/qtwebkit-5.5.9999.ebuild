@@ -12,9 +12,9 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 
-# TODO: qttestlib, geolocation, orientation/sensors
+# TODO: qttestlib
 
-IUSE="gstreamer gstreamer010 multimedia opengl printsupport qml webp"
+IUSE="geolocation gstreamer gstreamer010 multimedia opengl orientation printsupport qml webchannel webp"
 REQUIRED_USE="?? ( gstreamer gstreamer010 multimedia )"
 
 RDEPEND="
@@ -36,6 +36,7 @@ RDEPEND="
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXrender
+	geolocation? ( >=dev-qt/qtpositioning-${PV}:5 )
 	gstreamer? (
 		dev-libs/glib:2
 		media-libs/gstreamer:1.0
@@ -48,8 +49,10 @@ RDEPEND="
 	)
 	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5[widgets] )
 	opengl? ( >=dev-qt/qtopengl-${PV}:5 )
+	orientation? ( >=dev-qt/qtsensors-${PV}:5 )
 	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5 )
 	qml? ( >=dev-qt/qtdeclarative-${PV}:5 )
+	webchannel? ( >=dev-qt/qtwebchannel-${PV}:5 )
 	webp? ( media-libs/libwebp:0= )
 "
 DEPEND="${RDEPEND}
@@ -75,18 +78,21 @@ src_prepare() {
 		Tools/qmake/mkspecs/features/{force_static_libs_as_shared,unix/default_post}.prf \
 		|| die
 
+	qt_use_disable_mod geolocation positioning Tools/qmake/mkspecs/features/features.prf
+	qt_use_disable_mod multimedia multimediawidgets Tools/qmake/mkspecs/features/features.prf
+	qt_use_disable_mod orientation sensors Tools/qmake/mkspecs/features/features.prf
+	qt_use_disable_mod printsupport printsupport Tools/qmake/mkspecs/features/features.prf
+	qt_use_disable_mod qml quick Tools/qmake/mkspecs/features/features.prf
+	qt_use_disable_mod webchannel webchannel Source/WebKit2/WebKit2.pri
+
 	if use gstreamer010; then
 		epatch "${FILESDIR}/${PN}-5.3.2-use-gstreamer010.patch"
 	elif ! use gstreamer; then
 		epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
 	fi
 
-	qt_use_disable_mod multimedia multimediawidgets Tools/qmake/mkspecs/features/features.prf
 	use opengl       || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	qt_use_disable_mod printsupport printsupport Tools/qmake/mkspecs/features/features.prf
-	use qml          || sed -i -e '/have?(QTQUICK): SUBDIRS += declarative/d' \
-		Source/QtWebKit.pro || die
 	use webp         || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
 
