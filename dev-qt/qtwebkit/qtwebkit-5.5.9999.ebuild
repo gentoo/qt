@@ -80,12 +80,11 @@ src_prepare() {
 	elif ! use gstreamer; then
 		epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
 	fi
-	use multimedia   || sed -i -e '/WEBKIT_CONFIG += video use_qt_multimedia/d' \
-		Tools/qmake/mkspecs/features/features.prf || die
+
+	qt_use_disable_mod multimedia multimediawidgets Tools/qmake/mkspecs/features/features.prf
 	use opengl       || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
-	use printsupport || sed -i -e '/WEBKIT_CONFIG += have_qtprintsupport/d' \
-		Tools/qmake/mkspecs/features/features.prf || die
+	qt_use_disable_mod printsupport printsupport Tools/qmake/mkspecs/features/features.prf
 	use qml          || sed -i -e '/have?(QTQUICK): SUBDIRS += declarative/d' \
 		Source/QtWebKit.pro || die
 	use webp         || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
