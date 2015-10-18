@@ -35,7 +35,7 @@ IUSE="doc systemd test webkit ${QTC_PLUGINS[@]%:*}"
 QT_PV="5.4.0:5"
 
 RDEPEND="
-	=dev-libs/botan-1.10*[threads]
+	=dev-libs/botan-1.10*[-bindist,threads]
 	>=dev-qt/designer-${QT_PV}
 	>=dev-qt/qtconcurrent-${QT_PV}
 	>=dev-qt/qtcore-${QT_PV}
@@ -52,7 +52,7 @@ RDEPEND="
 	>=dev-qt/qtx11extras-${QT_PV}
 	>=dev-qt/qtxml-${QT_PV}
 	>=sys-devel/gdb-7.5[client,python]
-	clang? ( >=sys-devel/clang-3.2:= )
+	clang? ( >=sys-devel/clang-3.6:= )
 	qbs? ( >=dev-util/qbs-1.4.2 )
 	systemd? ( sys-apps/systemd:= )
 	webkit? ( >=dev-qt/qtwebkit-${QT_PV} )
@@ -86,7 +86,11 @@ src_unpack() {
 		die "GCC >= 4.7 required"
 	fi
 
-	default
+	if [[ ${PV} == *9999 ]]; then
+		git-r3_src_unpack
+	else
+		default
+	fi
 }
 
 src_prepare() {
@@ -106,10 +110,9 @@ src_prepare() {
 	fi
 
 	# disable broken or unreliable tests
-	sed -i -e '/lexer/d' tests/auto/cplusplus/cplusplus.pro || die
-	sed -i -e '/dumpers\.pro/d' tests/auto/debugger/debugger.pro || die
+	sed -i -e '/SUBDIRS/ s/\<dumpers\>//' tests/auto/debugger/debugger.pro || die
 	sed -i -e '/CONFIG -=/ s/$/ testcase/' tests/auto/extensionsystem/pluginmanager/correctplugins1/plugin?/plugin?.pro || die
-	sed -i -e '/parsertests\.pro/d' tests/auto/valgrind/memcheck/memcheck.pro || die
+	sed -i -e '/SUBDIRS/ s/\<memcheck\>//' tests/auto/valgrind/valgrind.pro || die
 
 	# fix translations
 	sed -i -e "/^LANGUAGES =/ s:=.*:= $(l10n_get_locales):" \
@@ -122,8 +125,8 @@ src_prepare() {
 src_configure() {
 	eqmake5 IDE_LIBRARY_BASENAME="$(get_libdir)" \
 		IDE_PACKAGE_MODE=1 \
-		LLVM_INSTALL_DIR="${EPREFIX}/usr" \
-		QBS_INSTALL_DIR="${EPREFIX}/usr" \
+		$(use clang && echo LLVM_INSTALL_DIR="${EPREFIX}/usr") \
+		$(use qbs && echo QBS_INSTALL_DIR="${EPREFIX}/usr") \
 		CONFIG+=qbs_disable_rpath \
 		CONFIG+=qbs_enable_project_file_updates \
 		$(use systemd && echo CONFIG+=journald) \
