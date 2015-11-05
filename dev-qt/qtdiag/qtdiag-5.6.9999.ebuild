@@ -15,9 +15,9 @@ fi
 IUSE="+ssl"
 
 DEPEND="
-	>=dev-qt/qtcore-${PV}:5
-	>=dev-qt/qtgui-${PV}:5
-	>=dev-qt/qtnetwork-${PV}:5[ssl=]
+	~dev-qt/qtcore-${PV}:5
+	~dev-qt/qtgui-${PV}:5
+	~dev-qt/qtnetwork-${PV}:5[ssl=]
 "
 RDEPEND="${DEPEND}"
 

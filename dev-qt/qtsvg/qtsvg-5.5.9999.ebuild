@@ -14,11 +14,11 @@ fi
 IUSE=""
 
 RDEPEND="
-	>=dev-qt/qtcore-${PV}:5
-	>=dev-qt/qtgui-${PV}:5
-	>=dev-qt/qtwidgets-${PV}:5
+	~dev-qt/qtcore-${PV}:5
+	~dev-qt/qtgui-${PV}:5
+	~dev-qt/qtwidgets-${PV}:5
 	>=sys-libs/zlib-1.2.5
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtxml-${PV}:5 )
+	test? ( ~dev-qt/qtxml-${PV}:5 )
 "

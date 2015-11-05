@@ -15,9 +15,9 @@ IUSE="alsa egl gstreamer gstreamer010 openal pulseaudio qml widgets"
 REQUIRED_USE="?? ( gstreamer gstreamer010 )"
 
 RDEPEND="
-	>=dev-qt/qtcore-${PV}:5
-	>=dev-qt/qtgui-${PV}:5
-	>=dev-qt/qtnetwork-${PV}:5
+	~dev-qt/qtcore-${PV}:5
+	~dev-qt/qtgui-${PV}:5
+	~dev-qt/qtnetwork-${PV}:5
 	alsa? ( media-libs/alsa-lib )
 	gstreamer? (
 		dev-libs/glib:2
@@ -33,14 +33,14 @@ RDEPEND="
 	)
 	pulseaudio? ( media-sound/pulseaudio )
 	qml? (
-		>=dev-qt/qtdeclarative-${PV}:5
-		egl? ( >=dev-qt/qtgui-${PV}:5[egl,gles2] )
-		!egl? ( >=dev-qt/qtgui-${PV}:5[-egl] )
+		~dev-qt/qtdeclarative-${PV}:5
+		egl? ( ~dev-qt/qtgui-${PV}:5[egl,gles2] )
+		!egl? ( ~dev-qt/qtgui-${PV}:5[-egl] )
 		openal? ( media-libs/openal )
 	)
 	widgets? (
-		>=dev-qt/qtopengl-${PV}:5
-		>=dev-qt/qtwidgets-${PV}:5
+		~dev-qt/qtopengl-${PV}:5
+		~dev-qt/qtwidgets-${PV}:5
 	)
 "
 DEPEND="${RDEPEND}

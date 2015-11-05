@@ -15,22 +15,22 @@ IUSE="designer gles2 opengl webkit xml"
 
 # see bug 542698 for pinned dev-qt/designer dependency
 DEPEND="
-	>=dev-qt/qtcore-${PV}:5
-	>=dev-qt/qtgui-${PV}:5
-	>=dev-qt/qtnetwork-${PV}:5
-	>=dev-qt/qtscript-${PV}:5
-	>=dev-qt/qtsql-${PV}:5
-	>=dev-qt/qtwidgets-${PV}:5
+	~dev-qt/qtcore-${PV}:5
+	~dev-qt/qtgui-${PV}:5
+	~dev-qt/qtnetwork-${PV}:5
+	~dev-qt/qtscript-${PV}:5
+	~dev-qt/qtsql-${PV}:5
+	~dev-qt/qtwidgets-${PV}:5
 	designer? (
 		~dev-qt/designer-${PV}
-		>=dev-qt/qtdeclarative-${PV}:5
+		~dev-qt/qtdeclarative-${PV}:5
 	)
 	opengl? (
-		>=dev-qt/qtgui-${PV}:5[gles2=]
-		>=dev-qt/qtopengl-${PV}:5
+		~dev-qt/qtgui-${PV}:5[gles2=]
+		~dev-qt/qtopengl-${PV}:5
 	)
-	webkit? ( >=dev-qt/qtwebkit-${PV}:5 )
-	xml? ( >=dev-qt/qtxmlpatterns-${PV}:5 )
+	webkit? ( ~dev-qt/qtwebkit-${PV}:5 )
+	xml? ( ~dev-qt/qtxmlpatterns-${PV}:5 )
 "
 RDEPEND="${DEPEND}"
 

@@ -15,14 +15,14 @@ fi
 IUSE="declarative webkit"
 
 DEPEND="
-	>=dev-qt/qtcore-${PV}:5
-	>=dev-qt/qtgui-${PV}:5
-	>=dev-qt/qtnetwork-${PV}:5
-	>=dev-qt/qtprintsupport-${PV}:5
-	>=dev-qt/qtwidgets-${PV}:5
-	>=dev-qt/qtxml-${PV}:5
-	declarative? ( >=dev-qt/qtdeclarative-${PV}:5[widgets] )
-	webkit? ( >=dev-qt/qtwebkit-${PV}:5 )
+	~dev-qt/qtcore-${PV}:5
+	~dev-qt/qtgui-${PV}:5
+	~dev-qt/qtnetwork-${PV}:5
+	~dev-qt/qtprintsupport-${PV}:5
+	~dev-qt/qtwidgets-${PV}:5
+	~dev-qt/qtxml-${PV}:5
+	declarative? ( ~dev-qt/qtdeclarative-${PV}:5[widgets] )
+	webkit? ( ~dev-qt/qtwebkit-${PV}:5 )
 "
 RDEPEND="${DEPEND}"
 
