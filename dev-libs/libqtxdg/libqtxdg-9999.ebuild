@@ -37,7 +37,7 @@ RDEPEND="${CDEPEND}
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use_build test TESTS)
+		-DBUILD_TESTS=$(usex test)
 	)
 	cmake-utils_src_configure
 }
