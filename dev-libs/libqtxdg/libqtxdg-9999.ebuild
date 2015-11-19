@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=5
-inherit cmake-utils
+inherit cmake-utils virtualx
 
 DESCRIPTION="A Qt implementation of XDG standards"
 HOMEPAGE="http://lxqt.org/"
@@ -40,4 +40,8 @@ src_configure() {
 		-DBUILD_TESTS=$(usex test)
 	)
 	cmake-utils_src_configure
+}
+
+src_test() {
+	VIRTUALX_COMMAND="cmake-utils_src_test" virtualmake
 }
