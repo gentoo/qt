@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="alsa egl gstreamer gstreamer010 openal pulseaudio qml widgets"
+IUSE="alsa gles2 gstreamer gstreamer010 openal pulseaudio qml widgets"
 REQUIRED_USE="?? ( gstreamer gstreamer010 )"
 
 RDEPEND="
@@ -34,8 +34,8 @@ RDEPEND="
 	pulseaudio? ( media-sound/pulseaudio )
 	qml? (
 		~dev-qt/qtdeclarative-${PV}:5
-		egl? ( ~dev-qt/qtgui-${PV}:5[egl,gles2] )
-		!egl? ( ~dev-qt/qtgui-${PV}:5[-egl] )
+		gles2? ( ~dev-qt/qtgui-${PV}:5[egl,gles2] )
+		!gles2? ( ~dev-qt/qtgui-${PV}:5[-egl] )
 		openal? ( media-libs/openal )
 	)
 	widgets? (
