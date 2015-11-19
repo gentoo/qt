@@ -37,7 +37,6 @@ RDEPEND="${CDEPEND}
 
 src_configure() {
 	local mycmakeargs=(
-		-DUSE_QT4=OFF
 		$(cmake-utils_use_build test TESTS)
 	)
 	cmake-utils_src_configure
