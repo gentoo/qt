@@ -6,7 +6,7 @@ EAPI=4
 
 inherit multilib qt4-r2 git-2
 
-DESCRIPTION="The Qt eXTension library provides cross-platform utility classes for the Qt toolkit"
+DESCRIPTION="Extension library providing cross-platform utility classes for the Qt toolkit"
 HOMEPAGE="http://libqxt.org/"
 EGIT_REPO_URI="https://bitbucket.org/${PN}/${PN}.git"
 
