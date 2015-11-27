@@ -7,7 +7,7 @@ EAPI=5
 inherit qt4-r2 git-2
 
 DESCRIPTION="A Qt-based library for OAuth support"
-HOMEPAGE="http://wiki.github.com/ayoy/qoauth"
+HOMEPAGE="https://wiki.github.com/ayoy/qoauth"
 EGIT_REPO_URI="git://github.com/ayoy/${PN}"
 
 LICENSE="LGPL-2.1"
@@ -21,7 +21,7 @@ DEPEND="${COMMON_DEPEND}
 	test? ( dev-qt/qttest:4 )
 "
 RDEPEND="${COMMON_DEPEND}
-	|| ( app-crypt/qca-ossl:2[debug?] app-crypt/qca:2[debug?,openssl] )
+	app-crypt/qca:2[openssl]
 "
 
 DOCS="README CHANGELOG"
