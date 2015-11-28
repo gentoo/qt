@@ -2,29 +2,26 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=4
+EAPI=6
 
-inherit multilib qt4-r2 git-2
+inherit qmake-utils git-r3
 
 DESCRIPTION="Extension library providing cross-platform utility classes for the Qt toolkit"
-HOMEPAGE="http://libqxt.org/"
+HOMEPAGE="https://bitbucket.org/libqxt/libqxt/wiki/Home"
 EGIT_REPO_URI="https://bitbucket.org/${PN}/${PN}.git"
 
 LICENSE="|| ( CPL-1.0 LGPL-2.1 )"
 SLOT="0"
 KEYWORDS=""
-IUSE="berkdb debug doc sql ssl web xscreensaver zeroconf"
+IUSE="berkdb debug doc sql web xscreensaver zeroconf"
 
 COMMON_DEPEND="
-	x11-libs/libXrandr
-	dev-qt/qtcore:4
+	dev-qt/designer:4
+	dev-qt/qtcore:4[ssl]
 	dev-qt/qtgui:4
-	berkdb? ( >=sys-libs/db-4.6 )
+	x11-libs/libXrandr
+	berkdb? ( >=sys-libs/db-4.6:= )
 	sql? ( dev-qt/qtsql:4 )
-	ssl? (
-		>=dev-libs/openssl-0.9.8
-		dev-qt/qtcore:4[ssl]
-	)
 	zeroconf? ( net-dns/avahi[mdnsresponder-compat] )
 "
 DEPEND="${COMMON_DEPEND}
@@ -34,13 +31,13 @@ RDEPEND="${COMMON_DEPEND}
 	xscreensaver? ( x11-libs/libXScrnSaver )
 "
 
-DOCS="AUTHORS CHANGES README"
+DOCS=( AUTHORS CHANGES README )
 PATCHES=(
 	"${FILESDIR}/${PN}-use-system-qdoc3.patch"
 )
 
 src_prepare() {
-	qt4-r2_src_prepare
+	default
 
 	# remove insecure runpath
 	sed -i -e '/^QMAKE_RPATHDIR /d' src/qxtlibs.pri || die
@@ -53,12 +50,11 @@ src_configure() {
 		-prefix "${EPREFIX}/usr"
 		-libdir "${EPREFIX}/usr/$(get_libdir)"
 		-docdir "${EPREFIX}/usr/share/doc/${PF}"
-		-qmake-bin "${EPREFIX}/usr/bin/qmake"
+		-qmake-bin "$(qt4_get_bindir)/qmake"
 		$(use debug && echo -debug || echo -release)
 		$(use berkdb || echo -no-db -nomake berkeley)
 		$(use doc || echo -nomake docs)
 		$(use sql || echo -nomake sql)
-		$(use ssl || echo -no-openssl)
 		$(use web || echo -nomake web)
 		$(use zeroconf || echo -no-zeroconf -nomake zeroconf)
 	)
@@ -69,12 +65,9 @@ src_configure() {
 }
 
 src_compile() {
-	qt4-r2_src_compile
+	default
 
-	if use doc; then
-		einfo "Building documentation"
-		emake docs
-	fi
+	use doc && emake docs
 }
 
 pkg_postinst() {
