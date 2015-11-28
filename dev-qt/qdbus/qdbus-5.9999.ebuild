@@ -15,9 +15,9 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5
-	~dev-qt/qtdbus-${PV}:5
-	~dev-qt/qtxml-${PV}:5
+	~dev-qt/qtcore-${PV}
+	~dev-qt/qtdbus-${PV}
+	~dev-qt/qtxml-${PV}
 "
 RDEPEND="${DEPEND}"
 

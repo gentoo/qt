@@ -14,11 +14,11 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5
-	~dev-qt/qtdeclarative-${PV}:5
-	~dev-qt/qtgui-${PV}:5
-	~dev-qt/qtnetwork-${PV}:5
-	~dev-qt/qtpositioning-${PV}:5
+	~dev-qt/qtcore-${PV}
+	~dev-qt/qtdeclarative-${PV}
+	~dev-qt/qtgui-${PV}
+	~dev-qt/qtnetwork-${PV}
+	~dev-qt/qtpositioning-${PV}
 "
 RDEPEND="${DEPEND}"
 

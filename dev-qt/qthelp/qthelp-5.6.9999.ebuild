@@ -15,11 +15,11 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5
-	~dev-qt/qtgui-${PV}:5
-	~dev-qt/qtnetwork-${PV}:5
-	~dev-qt/qtsql-${PV}:5[sqlite]
-	~dev-qt/qtwidgets-${PV}:5
+	~dev-qt/qtcore-${PV}
+	~dev-qt/qtgui-${PV}
+	~dev-qt/qtnetwork-${PV}
+	~dev-qt/qtsql-${PV}[sqlite]
+	~dev-qt/qtwidgets-${PV}
 "
 RDEPEND="${DEPEND}"
 

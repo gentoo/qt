@@ -14,7 +14,7 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/linguist-tools-${PV}:5
-	~dev-qt/qtcore-${PV}:5
+	~dev-qt/linguist-tools-${PV}
+	~dev-qt/qtcore-${PV}
 "
 RDEPEND=""

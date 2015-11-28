@@ -23,11 +23,11 @@ RDEPEND="
 	>=dev-libs/leveldb-1.18-r1
 	dev-libs/libxml2:2
 	dev-libs/libxslt
-	~dev-qt/qtcore-${PV}:5[icu]
-	~dev-qt/qtgui-${PV}:5
-	~dev-qt/qtnetwork-${PV}:5
-	~dev-qt/qtsql-${PV}:5
-	~dev-qt/qtwidgets-${PV}:5
+	~dev-qt/qtcore-${PV}[icu]
+	~dev-qt/qtgui-${PV}
+	~dev-qt/qtnetwork-${PV}
+	~dev-qt/qtsql-${PV}
+	~dev-qt/qtwidgets-${PV}
 	media-libs/fontconfig:1.0
 	media-libs/libpng:0=
 	>=sys-libs/zlib-1.2.5
@@ -36,7 +36,7 @@ RDEPEND="
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXrender
-	geolocation? ( ~dev-qt/qtpositioning-${PV}:5 )
+	geolocation? ( ~dev-qt/qtpositioning-${PV} )
 	gstreamer? (
 		dev-libs/glib:2
 		media-libs/gstreamer:1.0
@@ -47,12 +47,12 @@ RDEPEND="
 		media-libs/gstreamer:0.10
 		media-libs/gst-plugins-base:0.10
 	)
-	multimedia? ( ~dev-qt/qtmultimedia-${PV}:5[widgets] )
-	opengl? ( ~dev-qt/qtopengl-${PV}:5 )
-	orientation? ( ~dev-qt/qtsensors-${PV}:5 )
-	printsupport? ( ~dev-qt/qtprintsupport-${PV}:5 )
-	qml? ( ~dev-qt/qtdeclarative-${PV}:5 )
-	webchannel? ( ~dev-qt/qtwebchannel-${PV}:5 )
+	multimedia? ( ~dev-qt/qtmultimedia-${PV}[widgets] )
+	opengl? ( ~dev-qt/qtopengl-${PV} )
+	orientation? ( ~dev-qt/qtsensors-${PV} )
+	printsupport? ( ~dev-qt/qtprintsupport-${PV} )
+	qml? ( ~dev-qt/qtdeclarative-${PV} )
+	webchannel? ( ~dev-qt/qtwebchannel-${PV} )
 	webp? ( media-libs/libwebp:0= )
 "
 DEPEND="${RDEPEND}
