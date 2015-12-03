@@ -25,7 +25,7 @@ DEPEND="
 	oci8? ( dev-db/oracle-instantclient-basic )
 	odbc? ( || ( dev-db/unixODBC dev-db/libiodbc ) )
 	postgres? ( dev-db/postgresql:* )
-	sqlite? ( >=dev-db/sqlite-3.8.8.2:3 )
+	sqlite? ( >=dev-db/sqlite-3.8.10.2:3 )
 "
 RDEPEND="${DEPEND}"
 
