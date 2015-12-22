@@ -1,16 +1,16 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 EAPI=5
 
-inherit cmake-utils readme.gentoo
+inherit cmake-utils multilib readme.gentoo
 
 if [[ "${PV}" == "9999" ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/lxde/${PN}.git"
+	EGIT_REPO_URI="git://git.lxde.org/git/lxde/${PN}"
 else
-	SRC_URI="https://downloads.lxqt.org/${PV}/${P}.tar.xz"
+	SRC_URI="http://downloads.lxqt.org/lxqt/${PV}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
 fi
 
@@ -20,13 +20,14 @@ HOMEPAGE="http://pcmanfm.sourceforge.net/"
 LICENSE="GPL-2 LGPL-2.1+"
 SLOT="0"
 
-CDEPEND="dev-libs/libfm-qt
+CDEPEND=">=dev-libs/glib-2.18:2
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
-	x11-libs/libX11
+	>=lxde-base/menu-cache-0.4.1
+	>=x11-libs/libfm-1.2.0
 	x11-libs/libxcb:=
 "
 RDEPEND="${CDEPEND}
@@ -38,6 +39,13 @@ DEPEND="${CDEPEND}
 	>=dev-util/intltool-0.40
 	sys-devel/gettext
 	virtual/pkgconfig"
+
+src_prepare() {
+	# fix multilib
+	sed -i -e "/LIBRARY\ DESTINATION/s:lib:$(get_libdir):" \
+		libfm-qt/CMakeLists.txt || die
+	cmake-utils_src_prepare
+}
 
 src_install() {
 	cmake-utils_src_install
