@@ -381,21 +381,25 @@ qt_use_disable_mod() {
 qt5_prepare_env() {
 	# setup installation directories
 	# note: keep paths in sync with qmake-utils.eclass
-	declare -g -r QT5_PREFIX=${EPREFIX}/usr
-	declare -g -r QT5_HEADERDIR=${QT5_PREFIX}/include/qt5
-	declare -g -r QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)
-	declare -g -r QT5_ARCHDATADIR=${QT5_PREFIX}/$(get_libdir)/qt5
-	declare -g -r QT5_BINDIR=${QT5_ARCHDATADIR}/bin
-	declare -g -r QT5_PLUGINDIR=${QT5_ARCHDATADIR}/plugins
-	declare -g -r QT5_LIBEXECDIR=${QT5_ARCHDATADIR}/libexec
-	declare -g -r QT5_IMPORTDIR=${QT5_ARCHDATADIR}/imports
-	declare -g -r QT5_QMLDIR=${QT5_ARCHDATADIR}/qml
-	declare -g -r QT5_DATADIR=${QT5_PREFIX}/share/qt5
-	declare -g -r QT5_DOCDIR=${QT5_PREFIX}/share/doc/qt-${PV}
-	declare -g -r QT5_TRANSLATIONDIR=${QT5_DATADIR}/translations
-	declare -g -r QT5_EXAMPLESDIR=${QT5_DATADIR}/examples
-	declare -g -r QT5_TESTSDIR=${QT5_DATADIR}/tests
-	declare -g -r QT5_SYSCONFDIR=${EPREFIX}/etc/xdg
+	QT5_PREFIX=${EPREFIX}/usr
+	QT5_HEADERDIR=${QT5_PREFIX}/include/qt5
+	QT5_LIBDIR=${QT5_PREFIX}/$(get_libdir)
+	QT5_ARCHDATADIR=${QT5_PREFIX}/$(get_libdir)/qt5
+	QT5_BINDIR=${QT5_ARCHDATADIR}/bin
+	QT5_PLUGINDIR=${QT5_ARCHDATADIR}/plugins
+	QT5_LIBEXECDIR=${QT5_ARCHDATADIR}/libexec
+	QT5_IMPORTDIR=${QT5_ARCHDATADIR}/imports
+	QT5_QMLDIR=${QT5_ARCHDATADIR}/qml
+	QT5_DATADIR=${QT5_PREFIX}/share/qt5
+	QT5_DOCDIR=${QT5_PREFIX}/share/doc/qt-${PV}
+	QT5_TRANSLATIONDIR=${QT5_DATADIR}/translations
+	QT5_EXAMPLESDIR=${QT5_DATADIR}/examples
+	QT5_TESTSDIR=${QT5_DATADIR}/tests
+	QT5_SYSCONFDIR=${EPREFIX}/etc/xdg
+	readonly QT5_PREFIX QT5_HEADERDIR QT5_LIBDIR QT5_ARCHDATADIR \
+		QT5_BINDIR QT5_PLUGINDIR QT5_LIBEXECDIR QT5_IMPORTDIR \
+		QT5_QMLDIR QT5_DATADIR QT5_DOCDIR QT5_TRANSLATIONDIR \
+		QT5_EXAMPLESDIR QT5_TESTSDIR QT5_SYSCONFDIR
 
 	if [[ ${QT5_MODULE} == qtbase ]]; then
 		# see mkspecs/features/qt_config.prf
