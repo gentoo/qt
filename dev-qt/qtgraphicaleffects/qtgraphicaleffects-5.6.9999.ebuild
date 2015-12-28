@@ -3,7 +3,8 @@
 # $Id$
 
 EAPI=5
-inherit qt5-build virtualx
+VIRTUALX_REQUIRED="test"
+inherit qt5-build
 
 DESCRIPTION="Set of QML types for adding visual effects to user interfaces"
 
@@ -20,8 +21,3 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	test? ( ~dev-qt/qtgui-${PV} )
 "
-
-src_test() {
-	local VIRTUALX_COMMAND="qt5-build_src_test"
-	virtualmake
-}
