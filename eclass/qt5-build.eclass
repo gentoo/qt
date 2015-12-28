@@ -23,14 +23,6 @@ esac
 # SRC_URI and EGIT_REPO_URI. Must be defined before inheriting the eclass.
 : ${QT5_MODULE:=${PN}}
 
-# @ECLASS-VARIABLE: QT5_BUILD_DIR
-# @DESCRIPTION:
-# Build directory for out-of-source builds.
-case ${QT5_BUILD_TYPE} in
-	live)    : ${QT5_BUILD_DIR:=${S}_build} ;;
-	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
-esac
-
 # @ECLASS-VARIABLE: QT5_TARGET_SUBDIRS
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -102,6 +94,14 @@ EGIT_REPO_URI=(
 	"https://github.com/qtproject/${QT5_MODULE}.git"
 )
 [[ ${QT5_BUILD_TYPE} == live ]] && inherit git-r3
+
+# @ECLASS-VARIABLE: QT5_BUILD_DIR
+# @DESCRIPTION:
+# Build directory for out-of-source builds.
+case ${QT5_BUILD_TYPE} in
+	live)    : ${QT5_BUILD_DIR:=${S}_build} ;;
+	release) : ${QT5_BUILD_DIR:=${S}} ;; # workaround for bug 497312
+esac
 
 IUSE="debug test"
 
