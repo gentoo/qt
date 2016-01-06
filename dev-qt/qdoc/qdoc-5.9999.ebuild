@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=6
-QT5_MODULE="qtbase"
+QT5_MODULE="qttools"
 inherit qt5-build
 
 DESCRIPTION="Qt documentation generator"
@@ -21,5 +21,5 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/tools/qdoc
+	src/qdoc
 )
