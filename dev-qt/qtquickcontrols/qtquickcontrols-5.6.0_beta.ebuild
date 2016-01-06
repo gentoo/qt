@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 inherit qt5-build
 
 DESCRIPTION="Set of controls used in conjunction with Qt Quick to build complete interfaces"

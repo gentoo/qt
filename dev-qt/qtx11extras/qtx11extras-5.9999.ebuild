@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 inherit qt5-build
 
 DESCRIPTION="Linux/X11-specific support library for the Qt5 framework"
