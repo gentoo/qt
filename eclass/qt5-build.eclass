@@ -50,7 +50,7 @@ inherit eutils flag-o-matic toolchain-funcs versionator virtualx
 HOMEPAGE="https://www.qt.io/"
 LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
 
-declare -r QT5_MINOR_VERSION=$(get_version_component_range 2)
+readonly QT5_MINOR_VERSION=$(get_version_component_range 2)
 
 if [[ ${QT5_MINOR_VERSION} -ge 6 ]]; then
 	# IMPORTANT: add a subslot dependency to your package only if you are sure
