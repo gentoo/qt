@@ -601,7 +601,7 @@ qt5_base_configure() {
 
 		# disable all platform plugins by default, override in qtgui
 		-no-xcb -no-eglfs -no-kms -no-directfb -no-linuxfb
-		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-mirclient -no-qpa-platform-guard)
+		$([[ ${QT5_MINOR_VERSION} -ge 6 ]] && echo -no-mirclient)
 
 		# disable undocumented X11-related flags, override in qtgui
 		# (not shown in ./configure -help output)
