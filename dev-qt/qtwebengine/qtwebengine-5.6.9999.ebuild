@@ -16,24 +16,44 @@ IUSE="bindist geolocation +system-ffmpeg +system-icu widgets"
 
 RDEPEND="
 	app-arch/snappy
+	dev-libs/glib:2
+	dev-libs/nspr
 	dev-libs/nss
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtwebchannel-${PV}
-	~dev-qt/qtxmlpatterns-${PV}
+	~dev-qt/qtgui-${PV}
+	~dev-qt/qtnetwork-${PV}
+	~dev-qt/qtwebchannel-${PV}[qml]
+	dev-libs/expat
 	dev-libs/jsoncpp
 	dev-libs/libevent
 	dev-libs/libxml2
 	dev-libs/libxslt
+	media-libs/alsa-lib
 	media-libs/flac
+	media-libs/fontconfig
+	media-libs/freetype
+	media-libs/harfbuzz:=
+	media-libs/libpng:0=
+	>=media-libs/libvpx-1.4
 	media-libs/libwebp
 	media-libs/opus
 	media-libs/speex
 	net-libs/libsrtp
-	>=media-libs/libvpx-1.4
+	sys-apps/dbus
+	sys-apps/pciutils
+	sys-libs/libcap
 	sys-libs/zlib
+	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXcursor
+	x11-libs/libXdamage
+	x11-libs/libXext
+	x11-libs/libXfixes
+	x11-libs/libXi
+	x11-libs/libXrandr
+	x11-libs/libXrender
+	x11-libs/libXScrnSaver
 	x11-libs/libXtst
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
 	system-ffmpeg? ( media-video/ffmpeg:= )
@@ -42,6 +62,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
+	dev-util/re2c
 "
 
 src_prepare() {
