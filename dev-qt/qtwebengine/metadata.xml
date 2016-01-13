@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>qt</herd>
+	<use>
+		<flag name="geolocation">Enable physical position determination
+			via <pkg>dev-qt/qtpositioning</pkg></flag>
+		<flag name="system-ffmpeg">Use the system-wide <pkg>media-video/ffmpeg</pkg>
+			instead of bundled.</flag>
+		<flag name="system-icu">Use the system-wide <pkg>dev-libs/icu</pkg>
+			instead of bundled.</flag>
+		<flag name="widgets">Enable QtWidgets support</flag>
+	</use>
+	<upstream>
+		<bugs-to>https://bugreports.qt.io/</bugs-to>
+		<doc>http://doc.qt.io/</doc>
+	</upstream>
+</pkgmetadata>
