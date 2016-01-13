@@ -62,8 +62,10 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
+	dev-util/gperf
 	dev-util/ninja
 	dev-util/re2c
+	sys-devel/bison
 "
 
 src_prepare() {
