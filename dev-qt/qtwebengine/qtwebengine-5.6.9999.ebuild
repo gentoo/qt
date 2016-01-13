@@ -62,6 +62,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
+	dev-util/ninja
 	dev-util/re2c
 "
 
@@ -77,6 +78,7 @@ src_prepare() {
 }
 
 src_configure() {
+	export NINJA_PATH="/usr/bin/ninja"
 	local myqmakeargs=(
 		$(usex bindist '' 'WEBENGINE_CONFIG+="use_proprietary_codecs"')
 		$(usex system-ffmpeg 'WEBENGINE_CONFIG+="use_system_ffmpeg"' '')
