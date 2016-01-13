@@ -66,7 +66,7 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
-	qt_use_disable_mod geolocation positionint \
+	qt_use_disable_mod geolocation positioning \
 		src/core/core_common.pri \
 		src/core/core_gyp_generator.pro
 	qt_use_disable_mod widgets widgets \
