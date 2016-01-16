@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -97,11 +97,4 @@ src_configure() {
 src_install() {
 	emake INSTALL_ROOT="${D}" install
 	einstalldocs
-}
-
-pkg_postinst() {
-	if has_version www-plugins/adobe-flash; then
-		ewarn "For using adobe flash plugin you may need to run"
-		ewarn "    \"paxctl-ng -m /usr/bin/qupzilla\""
-	fi
 }
