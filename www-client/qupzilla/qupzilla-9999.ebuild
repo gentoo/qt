@@ -18,8 +18,8 @@ else
 fi
 
 PLOCALES="ar_SA bg_BG ca_ES cs_CZ de_DE el_GR es_ES es_MX es_VE eu_ES fa_IR fi_FI fr_FR gl_ES he_IL hr_HR hu_HU id_ID it_IT ja_JP ka_GE lg lv_LV nl_NL nqo pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sr sr@ijekavian sr@ijekavianlatin sr@latin sv_SE tr_TR uk_UA uz@Latn zh_CN zh_TW"
-PLUGINS_HASH='7c66cb2efbd18eacbd04ba211162b1a042e5b759'
-PLUGINS_VERSION='2015.06.05' # if there are no updates, we can use the older archive
+PLUGINS_HASH='7b037cc326921cefbfc6b5e54e2091eb4191e73f'
+PLUGINS_VERSION='2015.10.02' # if there are no updates, we can use the older archive
 
 inherit eutils l10n multilib qmake-utils ${VCS_ECLASS}
 
