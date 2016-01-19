@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
 fi
 
-# TODO: directfb, linuxfb, kms integration in eglfs
+# TODO: directfb, linuxfb
 
 IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtkstyle
 	ibus jpeg libinput +png tslib tuio +udev +xcb"
@@ -35,6 +35,10 @@ RDEPEND="
 	virtual/opengl
 	dbus? ( ~dev-qt/qtdbus-${PV} )
 	egl? ( media-libs/mesa[egl] )
+	eglfs? (
+		media-libs/mesa[gbm]
+		x11-libs/libdrm
+	)
 	evdev? ( sys-libs/mtdev )
 	gtkstyle? (
 		x11-libs/gtk+:2
@@ -89,6 +93,8 @@ QT5_GENTOO_CONFIG=(
 	accessibility:accessibility-atspi-bridge
 	egl
 	eglfs
+	eglfs:eglfs_egldevice:
+	eglfs:eglfs_gbm:
 	evdev
 	evdev:mtdev:
 	:fontconfig
@@ -145,6 +151,7 @@ src_configure() {
 		$(usex dbus -dbus-linked '')
 		$(qt_use egl)
 		$(qt_use eglfs)
+		$(use eglfs && echo -gbm -kms)
 		$(qt_use evdev)
 		$(qt_use evdev mtdev)
 		-fontconfig
