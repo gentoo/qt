@@ -26,7 +26,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	use jit || epatch "${FILESDIR}"/${PN}-5.4.2-disable-jit.patch
+	use jit || PATCHES+=("${FILESDIR}/${PN}-5.4.2-disable-jit.patch")
 
 	use localstorage || sed -i -e '/localstorage/d' \
 		src/imports/imports.pro || die
