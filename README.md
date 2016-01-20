@@ -21,7 +21,7 @@ customize it to your own wishes.
 
 KDE users should note that at this point they need to use the
 `media-libs/phonon` package instead of `dev-qt/qtphonon`. This is the reason
-why `qtphonon` is commented out in the qt4 and qt4-live sets.
+why `dev-qt/qtphonon` is commented out in the `qt4` set.
 
 If you have questions, you can find us on IRC in #gentoo-qt on Freenode or at
 [qt@gentoo.org](mailto:qt@gentoo.org).
