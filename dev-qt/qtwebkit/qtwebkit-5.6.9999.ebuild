@@ -88,13 +88,13 @@ src_prepare() {
 		Source/WebKit2/WebKit2.pri
 
 	if use gstreamer010; then
-		epatch "${FILESDIR}/${PN}-5.3.2-use-gstreamer010.patch"
+		PATCHES+=("${FILESDIR}/${PN}-5.3.2-use-gstreamer010.patch")
 	elif ! use gstreamer; then
-		epatch "${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch"
+		PATCHES+=("${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch")
 	fi
 
 	# bug 562396
-	use jit || epatch "${FILESDIR}/${PN}-5.5.1-disable-jit.patch"
+	use jit || PATCHES+=("${FILESDIR}/${PN}-5.5.1-disable-jit.patch")
 
 	use opengl || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
