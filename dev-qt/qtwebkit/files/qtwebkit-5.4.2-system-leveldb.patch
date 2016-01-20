@@ -1,7 +1,7 @@
 Correct header location so system dev-libs/leveldb can be detected.
 
---- Tools/qmake/config.tests/leveldb/leveldb.cpp
-+++ Tools/qmake/config.tests/leveldb/leveldb.cpp
+--- a/Tools/qmake/config.tests/leveldb/leveldb.cpp
++++ b/Tools/qmake/config.tests/leveldb/leveldb.cpp
 @@ -19,7 +19,7 @@
  
  #include <leveldb/db.h>
