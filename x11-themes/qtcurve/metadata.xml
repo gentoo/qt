@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <herd>qt</herd>
-  <use>
-    <flag name="kde">Enable KDE4 support. This adds a QtCurve configuration
+	<maintainer type="project">
+		<email>qt@gentoo.org</email>
+		<name>Gentoo Qt Project</name>
+	</maintainer>
+	<use>
+		<flag name="kde">Enable KDE4 support. This adds a QtCurve configuration
       module to KDE's SystemSettings</flag>
-    <flag name="kf5">Enable KDE Frameworks 5 support</flag>
-    <flag name="windeco">Enable window decoration for KWin</flag>
-  </use>
+		<flag name="kf5">Enable KDE Frameworks 5 support</flag>
+		<flag name="windeco">Enable window decoration for KWin</flag>
+	</use>
 </pkgmetadata>
