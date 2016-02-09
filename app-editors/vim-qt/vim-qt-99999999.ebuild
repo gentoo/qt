@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -42,10 +42,10 @@ RDEPEND="
 	lua? ( luajit? ( dev-lang/luajit )
 		!luajit? ( dev-lang/lua[deprecated] ) )
 	nls? ( virtual/libintl )
-	perl? ( dev-lang/perl )
+	perl? ( dev-lang/perl:= )
 	python? ( ${PYTHON_DEPS} )
 	racket? ( dev-scheme/racket )
-	ruby? ( || ( dev-lang/ruby:2.0 dev-lang/ruby:1.9 ) )"
+	ruby? ( dev-lang/ruby:2.0 )"
 DEPEND="${RDEPEND}
 	dev-util/ctags
 	sys-devel/autoconf
