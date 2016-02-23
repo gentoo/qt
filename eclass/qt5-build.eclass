@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -52,10 +52,15 @@ esac
 inherit eutils flag-o-matic toolchain-funcs versionator virtualx
 
 HOMEPAGE="https://www.qt.io/"
-LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
 
 QT5_MINOR_VERSION=$(get_version_component_range 2)
 readonly QT5_MINOR_VERSION
+
+if [[ ${QT5_MINOR_VERSION} -ge 7 ]]; then
+	LICENSE="|| ( GPL-2 GPL-3 LGPL-3 ) FDL-1.3"
+else
+	LICENSE="|| ( LGPL-2.1 LGPL-3 ) FDL-1.3"
+fi
 
 if [[ ${QT5_MINOR_VERSION} -ge 6 ]]; then
 	SLOT=5/$(get_version_component_range 1-2)
