@@ -277,7 +277,15 @@ qt5-build_src_install() {
 	if [[ ${PN} == qtcore ]]; then
 		pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
-		set -- emake INSTALL_ROOT="${D}" install_{global_docs,mkspecs,qmake,syncqt}
+		local qmake_install_target=install_qmake
+		if [[ ${QT5_MINOR_VERSION} -ge 7 ]]; then
+			# qmake/qmake-aux.pro
+			qmake_install_target=sub-qmake-qmake-aux-pro-install_subtargets
+		fi
+
+		set -- emake INSTALL_ROOT="${D}" \
+			${qmake_install_target} \
+			install_{syncqt,mkspecs,global_docs}
 		einfo "Running $*"
 		"$@"
 
