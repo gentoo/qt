@@ -209,7 +209,7 @@ qt5-build_src_prepare() {
 		# compiler support for extended instruction sets (bug 552942)
 		if [[ ${QT5_MINOR_VERSION} -ge 5 ]]; then
 			find config.tests/common -name '*.pro' -type f -execdir \
-				sed -i -e '/else:QMAKE_CXXFLAGS\s*+=/ d' '{}' + || die
+				sed -i -e '/QMAKE_CXXFLAGS\s*+=/ d' '{}' + || die
 		fi
 	fi
 
