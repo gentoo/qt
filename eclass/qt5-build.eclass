@@ -199,7 +199,7 @@ qt5-build_src_prepare() {
 
 		# Respect toolchain and flags in config.tests
 		find config.tests/unix -name '*.test' -type f -execdir \
-			sed -i -e '/bin\/qmake/ s/-nocache //' '{}' + || die
+			sed -i -re '/(bin\/qmake|QMAKE")/ s/-nocache //' '{}' + || die
 
 		# Don't add -O3 to CXXFLAGS (bug 549140)
 		sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
