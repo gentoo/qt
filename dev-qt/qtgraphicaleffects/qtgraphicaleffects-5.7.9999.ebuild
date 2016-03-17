@@ -17,7 +17,6 @@ IUSE=""
 RDEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
+	~dev-qt/qtgui-${PV}
 "
-DEPEND="${RDEPEND}
-	test? ( ~dev-qt/qtgui-${PV} )
-"
+DEPEND="${RDEPEND}"
