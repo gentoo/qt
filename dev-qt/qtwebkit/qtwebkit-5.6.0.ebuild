@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python2_7 )
 inherit python-any-r1 qt5-build
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
-SRC_URI="https://download.qt.io/development_releases/qt/${PV%.*}/${PV}-rc/submodules/${PN}-opensource-src-${PV}.tar.xz"
+SRC_URI="https://download.qt.io/community_releases/${PV%.*}/${PV}/${PN}-opensource-src-${PV}.tar.xz"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
