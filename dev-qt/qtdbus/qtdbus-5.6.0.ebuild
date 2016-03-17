@@ -20,6 +20,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${P}-deadlock.patch" )
+
 QT5_TARGET_SUBDIRS=(
 	src/dbus
 	src/tools/qdbusxml2cpp
