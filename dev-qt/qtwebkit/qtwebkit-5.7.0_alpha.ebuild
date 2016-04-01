@@ -4,7 +4,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
-inherit python-any-r1 qt5-build
+inherit python-any-r1 qmake-utils qt5-build
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
 
@@ -103,6 +103,9 @@ src_prepare() {
 
 	# bug 458222
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
+
+	# bug 577574
+	"$(qt5_get_bindir)"/syncqt.pl -version ${PV} Source/sync.profile
 
 	qt5-build_src_prepare
 }
