@@ -105,7 +105,7 @@ src_prepare() {
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
 
 	# bug 577574
-	"$(qt5_get_bindir)"/syncqt.pl -version ${PV} Source/sync.profile
+	"$(qt5_get_bindir)"/syncqt.pl -version ${PV%_*} Source/sync.profile
 
 	qt5-build_src_prepare
 }
