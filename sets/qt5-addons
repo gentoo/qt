@@ -11,7 +11,6 @@ dev-qt/qtlocation:5
 dev-qt/qtopengl:5
 dev-qt/qtpositioning:5
 dev-qt/qtprintsupport:5
-dev-qt/qtquick1:5
 dev-qt/qtscript:5
 dev-qt/qtsensors:5
 dev-qt/qtserialport:5
