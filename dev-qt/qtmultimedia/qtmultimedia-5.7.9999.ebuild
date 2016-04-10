@@ -16,7 +16,7 @@ REQUIRED_USE="?? ( gstreamer gstreamer010 )"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}
-	~dev-qt/qtgui-${PV}
+	~dev-qt/qtgui-${PV}[gles2=]
 	~dev-qt/qtnetwork-${PV}
 	alsa? ( media-libs/alsa-lib )
 	gstreamer? (
@@ -34,13 +34,12 @@ RDEPEND="
 	pulseaudio? ( media-sound/pulseaudio )
 	qml? (
 		~dev-qt/qtdeclarative-${PV}
-		gles2? ( ~dev-qt/qtgui-${PV}[egl,gles2] )
-		!gles2? ( ~dev-qt/qtgui-${PV}[-egl] )
+		gles2? ( ~dev-qt/qtgui-${PV}[egl] )
 		openal? ( media-libs/openal )
 	)
 	widgets? (
 		~dev-qt/qtopengl-${PV}
-		~dev-qt/qtwidgets-${PV}
+		~dev-qt/qtwidgets-${PV}[gles2=]
 	)
 "
 DEPEND="${RDEPEND}
