@@ -24,6 +24,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-5.5.1-libsystemd.patch" # bug 578316
+)
+
 QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap
 	src/tools/moc
