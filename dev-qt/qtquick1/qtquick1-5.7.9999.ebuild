@@ -13,7 +13,6 @@ fi
 
 IUSE="designer gles2 opengl webkit xml"
 
-# see bug 542698 for pinned dev-qt/designer dependency
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
