@@ -56,7 +56,7 @@ RDEPEND="
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
-	system-ffmpeg? ( media-video/ffmpeg:= )
+	system-ffmpeg? ( =media-video/ffmpeg-2*:= )
 	system-icu? ( dev-libs/icu:= )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
