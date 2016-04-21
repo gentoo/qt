@@ -6,36 +6,33 @@ EAPI=6
 QT5_MODULE="qttools"
 inherit qt5-build
 
-DESCRIPTION="WYSIWYG tool for designing and building Qt-based GUIs"
+DESCRIPTION="Tool for viewing on-line documentation in Qt help file format"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
+	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="declarative webkit"
+IUSE="webkit"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
+	~dev-qt/qthelp-${PV}
 	~dev-qt/qtnetwork-${PV}
 	~dev-qt/qtprintsupport-${PV}
+	~dev-qt/qtsql-${PV}[sqlite]
 	~dev-qt/qtwidgets-${PV}
-	~dev-qt/qtxml-${PV}
-	declarative? ( ~dev-qt/qtdeclarative-${PV}[widgets] )
-	webkit? ( ~dev-qt/qtwebkit-${PV} )
+	webkit? ( >=dev-qt/qtwebkit-5.6:5 )
 "
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/designer
+	src/assistant/assistant
 )
 
 src_prepare() {
-	qt_use_disable_mod declarative quickwidgets \
-		src/designer/src/plugins/plugins.pro
-
 	qt_use_disable_mod webkit webkitwidgets \
-		src/designer/src/plugins/plugins.pro
+		src/assistant/assistant/assistant.pro
 
 	qt5-build_src_prepare
 }
