@@ -7,8 +7,8 @@
 	</maintainer>
 	<use>
 		<flag name="gles2">Use GLES 2.0 or later instead of full OpenGL</flag>
-		<flag name="gstreamer">Enable audio support via <pkg>media-libs/gstreamer:1.0</pkg></flag>
-		<flag name="gstreamer010">Enable audio support via <pkg>media-libs/gstreamer:0.10</pkg></flag>
+		<flag name="gstreamer">Enable audio support via <pkg>media-libs/gstreamer</pkg> using SLOT 1.0</flag>
+		<flag name="gstreamer010">Enable audio support via <pkg>media-libs/gstreamer</pkg> using SLOT 0.10</flag>
 		<flag name="qml">Build QML/QtQuick bindings and imports</flag>
 		<flag name="widgets">Build the QtMultimediaWidgets module</flag>
 	</use>
