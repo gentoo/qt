@@ -21,7 +21,7 @@ DEPEND="
 	>=sys-libs/zlib-1.2.5
 	virtual/libiconv
 	icu? ( dev-libs/icu:= )
-	systemd? ( sys-apps/systemd )
+	systemd? ( sys-apps/systemd:= )
 "
 RDEPEND="${DEPEND}"
 
