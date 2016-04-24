@@ -84,7 +84,7 @@ case ${PV} in
 		QT5_BUILD_TYPE="release"
 		MY_P=${QT5_MODULE}-opensource-src-${PV/_/-}
 		SRC_URI="https://download.qt.io/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
-		S=${WORKDIR}/${MY_P%-alpha}
+		S=${WORKDIR}/${MY_P}
 		;;
 	*)
 		# official stable release
@@ -557,9 +557,11 @@ qt5_base_configure() {
 		# use pkg-config to detect include and library paths
 		-pkg-config
 
-		# prefer system libraries (only common deps here)
+		# prefer system libraries (only common hard deps here)
 		-system-zlib
 		-system-pcre
+		# TODO after bug 581054
+		#$([[ ${QT5_MINOR_VERSION} -ge 7 ]] && echo -system-doubleconversion)
 
 		# disable everything to prevent automagic deps (part 1)
 		-no-mtdev
@@ -571,7 +573,7 @@ qt5_base_configure() {
 		-no-xkbcommon-x11 -no-xkbcommon-evdev
 		-no-xinput2 -no-xcb-xlib
 
-		# don't specify -no-gif because there is no way to override it later
+		# cannot use -no-gif because there is no way to override it later
 		#-no-gif
 
 		# always enable glib event loop support

@@ -14,6 +14,7 @@ fi
 
 IUSE="icu systemd"
 
+# TODO after bug 581054: dev-libs/double-conversion:=
 DEPEND="
 	dev-libs/glib:2
 	>=dev-libs/libpcre-8.35[pcre16]
