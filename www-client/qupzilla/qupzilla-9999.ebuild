@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 MY_PN="QupZilla"
 MY_P=${MY_PN}-${PV}
 
@@ -65,8 +65,6 @@ src_prepare() {
 		rm translations/${1}.ts || die
 	}
 
-	epatch_user
-
 	# remove outdated prebuilt localizations
 	rm -rf bin/locale || die
 
@@ -78,6 +76,8 @@ src_prepare() {
 
 	l10n_find_plocales_changes "translations" "" ".ts"
 	l10n_for_each_disabled_locale_do rm_loc
+
+	default
 }
 
 src_configure() {
