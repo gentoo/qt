@@ -65,9 +65,6 @@ src_prepare() {
 		rm translations/${1}.ts || die
 	}
 
-	# patch bundled but changed QTSA for Qt-5.5, see bugs 548470 and 489142
-	epatch "${FILESDIR}"/qtsingleapplication-QDataStream.patch
-
 	epatch_user
 
 	# remove outdated prebuilt localizations
