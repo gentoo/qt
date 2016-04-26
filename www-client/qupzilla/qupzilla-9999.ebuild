@@ -23,7 +23,7 @@ PLUGINS_VERSION='2015.10.02' # if there are no updates, we can use the older arc
 
 inherit eutils l10n multilib qmake-utils ${VCS_ECLASS}
 
-DESCRIPTION="Qt WebKit web browser"
+DESCRIPTION="A cross-platform web browser using Qt WebEngine"
 HOMEPAGE="http://www.qupzilla.com/"
 SRC_URI+="https://github.com/${MY_PN}/${PN}-plugins/archive/${PLUGINS_HASH}.tar.gz -> ${PN}-plugins-${PLUGINS_VERSION}.tar.gz"
 
