@@ -631,8 +631,7 @@ qt5_base_configure() {
 		-no-xkb -no-xrender
 
 		# disable obsolete/unused X11-related flags
-		# (not shown in ./configure -help output)
-		-no-mitshm -no-xcursor -no-xfixes -no-xrandr -no-xshape -no-xsync
+		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -no-mitshm -no-xcursor -no-xfixes -no-xrandr -no-xshape -no-xsync)
 
 		# always enable session management support: it doesn't need extra deps
 		# at configure time and turning it off is dangerous, see bug 518262
