@@ -537,7 +537,7 @@ qt5_base_configure() {
 		-shared
 
 		# always enable large file support
-		-largefile
+		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -largefile)
 
 		# disabling accessibility is not recommended by upstream, as
 		# it will break QStyle and may break other internal parts of Qt
