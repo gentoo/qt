@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 MY_PN="QupZilla"
 MY_P=${MY_PN}-${PV}
 
@@ -17,13 +17,13 @@ else
 	S=${WORKDIR}/${MY_P}
 fi
 
-PLOCALES="ar_SA bg_BG ca_ES cs_CZ de_DE el_GR es_ES es_MX es_VE eu_ES fa_IR fi_FI fr_FR gl_ES he_IL hr_HR hu_HU id_ID it_IT ja_JP ka_GE lg lv_LV nl_NL nqo pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sr sr@ijekavian sr@ijekavianlatin sr@latin sv_SE tr_TR uk_UA uz@Latn zh_CN zh_TW"
+PLOCALES="ar_SA bg_BG ca_ES cs_CZ da_DK de_DE el_GR es_ES es_MX es_VE eu_ES fa_IR fi_FI fr_FR gl_ES he_IL hr_HR hu_HU id_ID it_IT ja_JP ka_GE lg lt lv_LV nl_NL nqo pl_PL pt_BR pt_PT ro_RO ru_RU sk_SK sr sr@ijekavian sr@ijekavianlatin sr@latin sv_SE tr_TR uk_UA uz@Latn zh_CN zh_TW"
 PLUGINS_HASH='7b037cc326921cefbfc6b5e54e2091eb4191e73f'
 PLUGINS_VERSION='2015.10.02' # if there are no updates, we can use the older archive
 
 inherit eutils l10n multilib qmake-utils ${VCS_ECLASS}
 
-DESCRIPTION="Qt WebKit web browser"
+DESCRIPTION="A cross-platform web browser using Qt WebEngine"
 HOMEPAGE="http://www.qupzilla.com/"
 SRC_URI+="https://github.com/${MY_PN}/${PN}-plugins/archive/${PLUGINS_HASH}.tar.gz -> ${PN}-plugins-${PLUGINS_VERSION}.tar.gz"
 
@@ -65,11 +65,6 @@ src_prepare() {
 		rm translations/${1}.ts || die
 	}
 
-	# patch bundled but changed QTSA for Qt-5.5, see bugs 548470 and 489142
-	epatch "${FILESDIR}"/qtsingleapplication-QDataStream.patch
-
-	epatch_user
-
 	# remove outdated prebuilt localizations
 	rm -rf bin/locale || die
 
@@ -81,6 +76,8 @@ src_prepare() {
 
 	l10n_find_plocales_changes "translations" "" ".ts"
 	l10n_for_each_disabled_locale_do rm_loc
+
+	default
 }
 
 src_configure() {
