@@ -15,7 +15,7 @@ IUSE="qml +ssl"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
-	~dev-qt/qtnetwork-${PV}[ssl?]
+	~dev-qt/qtnetwork-${PV}[ssl=]
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 
 "
@@ -23,11 +23,6 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	qt_use_disable_mod qml quick src/src.pro
-
-	if ! use ssl; then
-		sed -i -e '/contains(QT_CONFIG.*ssl)/ c\false{' \
-			src/websockets/websockets.pro || die
-	fi
 
 	qt5-build_src_prepare
 }
