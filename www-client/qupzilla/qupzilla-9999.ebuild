@@ -10,8 +10,8 @@ PLOCALES="ar_SA bg_BG ca_ES cs_CZ da_DK de_DE el_GR es_ES es_MX es_VE eu_ES
 	sr@ijekavian sr@ijekavianlatin sr@latin sv_SE tr_TR uk_UA uz@Latn
 	zh_CN zh_TW"
 
-PLUGINS_HASH='7b037cc326921cefbfc6b5e54e2091eb4191e73f'
-PLUGINS_VERSION='2015.10.02' # if there are no updates, we can use the older archive
+PLUGINS_HASH='c332d306c0f6cf645c75eaf198d2fc5e12339e9e'
+PLUGINS_VERSION='2016.05.02' # if there are no updates, we can use the older archive
 
 inherit l10n qmake-utils
 
