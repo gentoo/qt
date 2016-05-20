@@ -55,7 +55,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
 
-DOCS=( AUTHORS BUILDING CHANGELOG FAQ README.md )
+DOCS=( AUTHORS BUILDING.md CHANGELOG FAQ README.md )
 
 src_unpack() {
 	if [[ ${PV} == *9999 ]]; then
