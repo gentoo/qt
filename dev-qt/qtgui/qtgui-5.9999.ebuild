@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-# TODO: directfb, linuxfb
+# TODO: linuxfb
 
 IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtk
 	ibus jpeg libinput +png tslib tuio +udev +xcb"
