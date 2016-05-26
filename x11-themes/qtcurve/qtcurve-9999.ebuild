@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 KDE_REQUIRED="optional"
-inherit cmake-utils kde4-base multilib
+inherit cmake-utils kde4-base
 
 KDE_AUTODEPS=false
 KDE_DEBUG=false
