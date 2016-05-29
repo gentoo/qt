@@ -21,7 +21,10 @@ DEPEND="
 	~dev-qt/qttest-${PV}
 	localstorage? ( ~dev-qt/qtsql-${PV} )
 	widgets? ( ~dev-qt/qtwidgets-${PV}[gles2=] )
-	xml? ( ~dev-qt/qtxmlpatterns-${PV} )
+	xml? (
+		~dev-qt/qtnetwork-${PV}
+		~dev-qt/qtxmlpatterns-${PV}
+	)
 "
 RDEPEND="${DEPEND}"
 
@@ -41,7 +44,8 @@ src_prepare() {
 
 	qt_use_disable_mod xml xmlpatterns \
 		src/imports/imports.pro \
-		tests/auto/quick/quick.pro
+		tests/auto/quick/quick.pro \
+		tests/auto/quick/examples/examples.pro
 
 	qt5-build_src_prepare
 }
