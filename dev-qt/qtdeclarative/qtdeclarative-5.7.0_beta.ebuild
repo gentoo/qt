@@ -26,7 +26,9 @@ DEPEND="
 		~dev-qt/qtxmlpatterns-${PV}
 	)
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!<dev-qt/qtquickcontrols-5.7:5
+"
 
 src_prepare() {
 	use jit || PATCHES+=("${FILESDIR}/${PN}-5.4.2-disable-jit.patch")
