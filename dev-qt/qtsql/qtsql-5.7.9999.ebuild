@@ -4,7 +4,7 @@
 
 EAPI=6
 QT5_MODULE="qtbase"
-inherit multilib qt5-build
+inherit qt5-build
 
 DESCRIPTION="SQL abstraction library for the Qt5 tooolkit"
 
