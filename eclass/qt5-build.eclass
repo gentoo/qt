@@ -594,9 +594,6 @@ qt5_base_configure() {
 		# print verbose information about each configure test
 		-verbose
 
-		# obsolete flag, does nothing
-		#-nis
-
 		# always enable iconv support
 		-iconv
 
