@@ -48,7 +48,7 @@ src_configure() {
 	local myconf=(
 		$(use connman || use networkmanager && echo -dbus-linked)
 		$(qt_use libproxy)
-		$(use ssl && echo -openssl-linked)
+		$(usex ssl -openssl-linked '')
 	)
 	qt5-build_src_configure
 }
