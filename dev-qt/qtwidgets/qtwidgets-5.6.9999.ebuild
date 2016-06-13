@@ -37,7 +37,7 @@ src_configure() {
 		$(qt_use png libpng system)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon system)
-		$(use xcb && echo -xcb-xlib -xinput2 -xkb -xrender)
+		$(usex xcb '-xcb-xlib -xinput2 -xkb -xrender' '')
 	)
 	qt5-build_src_configure
 }
