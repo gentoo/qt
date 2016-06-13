@@ -152,7 +152,7 @@ src_configure() {
 		$(usex dbus -dbus-linked '')
 		$(qt_use egl)
 		$(qt_use eglfs)
-		$(use eglfs && echo -gbm -kms)
+		$(usex eglfs '-gbm -kms' '')
 		$(qt_use evdev)
 		$(qt_use evdev mtdev)
 		-fontconfig
@@ -169,7 +169,7 @@ src_configure() {
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon-x11 system)
-		$(use xcb && echo -xcb-xlib -xinput2 -xkb -xrender)
+		$(usex xcb '-xcb-xlib -xinput2 -xkb -xrender' '')
 	)
 	qt5-build_src_configure
 }
