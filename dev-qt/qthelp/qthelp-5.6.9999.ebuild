@@ -6,7 +6,7 @@ EAPI=6
 QT5_MODULE="qttools"
 inherit qt5-build
 
-DESCRIPTION="The Help module for the Qt5 framework"
+DESCRIPTION="Qt5 module for integrating online documentation into applications"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
