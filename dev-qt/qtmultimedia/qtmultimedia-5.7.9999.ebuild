@@ -5,7 +5,7 @@
 EAPI=6
 inherit qt5-build
 
-DESCRIPTION="The Multimedia module for the Qt5 framework"
+DESCRIPTION="Multimedia (audio, video, radio, camera) library for the Qt5 framework"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
