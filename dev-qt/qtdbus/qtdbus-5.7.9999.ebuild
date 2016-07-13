@@ -6,7 +6,7 @@ EAPI=6
 QT5_MODULE="qtbase"
 inherit qt5-build
 
-DESCRIPTION="The D-Bus module for the Qt5 framework"
+DESCRIPTION="Qt5 module for inter-process communication over the D-Bus protocol"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
