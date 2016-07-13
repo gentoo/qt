@@ -6,6 +6,7 @@ EAPI=6
 inherit qt5-build
 
 DESCRIPTION="Chart component library for the Qt5 framework"
+LICENSE="GPL-3"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64"

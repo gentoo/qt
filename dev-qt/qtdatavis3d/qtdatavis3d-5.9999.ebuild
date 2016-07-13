@@ -6,6 +6,7 @@ EAPI=6
 inherit qt5-build
 
 DESCRIPTION="3D data visualization library for the Qt5 framework"
+LICENSE="GPL-3"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
