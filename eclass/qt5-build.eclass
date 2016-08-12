@@ -114,7 +114,7 @@ esac
 IUSE="debug test"
 
 [[ ${PN} == qtwebkit ]] && RESTRICT+=" mirror" # bug 524584
-#[[ ${QT5_BUILD_TYPE} == release ]] && RESTRICT+=" test" # bug 457182
+[[ ${QT5_BUILD_TYPE} == release ]] && RESTRICT+=" test" # bug 457182
 
 DEPEND="
 	dev-lang/perl
