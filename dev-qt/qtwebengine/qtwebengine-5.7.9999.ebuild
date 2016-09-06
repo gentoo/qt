@@ -35,7 +35,7 @@ RDEPEND="
 	media-libs/freetype
 	media-libs/harfbuzz:=
 	media-libs/libpng:0=
-	>=media-libs/libvpx-1.4:=
+	>=media-libs/libvpx-1.5:=[svc]
 	media-libs/libwebp:=
 	media-libs/mesa
 	media-libs/opus
