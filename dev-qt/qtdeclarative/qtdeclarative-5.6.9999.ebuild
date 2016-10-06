@@ -16,7 +16,7 @@ fi
 IUSE="gles2 +jit localstorage +widgets xml"
 
 # qtgui[gles2=] is needed because of bug 504322
-COMMON_DEPEND="
+RDEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}[gles2=]
 	~dev-qt/qtnetwork-${PV}
@@ -28,11 +28,8 @@ COMMON_DEPEND="
 		~dev-qt/qtxmlpatterns-${PV}
 	)
 "
-DEPEND="${COMMON_DEPEND}
+DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
-"
-RDEPEND="${COMMON_DEPEND}
-	!<dev-qt/qtquickcontrols-5.7:5
 "
 
 src_prepare() {
