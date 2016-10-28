@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
-inherit cmake-utils git-2
+inherit cmake-utils git-r3
 
 DESCRIPTION="A library for mapping JSON data to QVariant objects"
 HOMEPAGE="http://qjson.sourceforge.net"
@@ -31,8 +31,8 @@ DOCS=( ChangeLog README.md )
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use qt4 QT4_BUILD)
-		$(cmake-utils_use test QJSON_BUILD_TESTS)
+		-DQT4_BUILD=$(usex qt4)
+		-DQJSON_BUILD_TESTS=$(usex test)
 	)
 
 	cmake-utils_src_configure
