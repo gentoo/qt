@@ -1,16 +1,16 @@
---- goldendict.pro.orig	2014-11-02 12:42:07.845942253 +0800
-+++ goldendict.pro	2014-11-02 12:44:22.965590774 +0800
-@@ -24,7 +24,8 @@
+--- a/goldendict.pro
++++ b/goldendict.pro
+@@ -36,7 +36,8 @@
+ QT += sql
  CONFIG += exceptions \
      rtti \
-     stl \
--    help
-+    help \
+-    stl
++    stl \
 +    qtsingleapplication
  OBJECTS_DIR = build
  UI_DIR = build
  MOC_DIR = build
-@@ -548,5 +549,3 @@
+@@ -632,5 +633,3 @@
  TS_OUT ~= s/.ts/.qm/g
  PRE_TARGETDEPS += $$TS_OUT
  
