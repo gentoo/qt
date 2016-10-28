@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 inherit cmake-utils
 
 if [[ ${PV} == 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/scarpin0/${PN}.git"
-	inherit git-2
+	inherit git-r3
 	KEYWORDS=""
 	SYSTEMD_VERSION=">=sys-apps/systemd-207"
 else
@@ -47,9 +47,9 @@ DOCS=( README.md )
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use qt4 BUILD_WITH_QT4)
-		$(cmake-utils_use test BUILD_QTSYSTEMD_TESTS)
-		$(cmake-utils_use qml BUILD_QTSYSTEMD_QMLPLUGIN)
+		-DBUILD_WITH_QT4=$(usex qt4)
+		-DBUILD_QTSYSTEMD_TESTS=$(usex test)
+		-DBUILD_QTSYSTEMD_QMLPLUGIN=$(usex qml)
 	)
 
 	cmake-utils_src_configure
