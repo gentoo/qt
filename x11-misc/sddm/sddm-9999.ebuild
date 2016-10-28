@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
-inherit cmake-utils git-r3 toolchain-funcs user
+EAPI=6
+inherit cmake-utils git-r3 user
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
@@ -14,12 +14,11 @@ LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
 IUSE="consolekit +pam systemd"
 
-RDEPEND="dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
-	dev-qt/qtdeclarative:5
-	dev-qt/qtnetwork:5
-	dev-qt/qttest:5
+RDEPEND=">=dev-qt/qtcore-5.6:5
+	>=dev-qt/qtdbus-5.6:5
+	>=dev-qt/qtgui-5.6:5
+	>=dev-qt/qtdeclarative-5.6:5
+	>=dev-qt/qtnetwork-5.6:5
 	>=x11-base/xorg-server-1.15.1
 	x11-libs/libxcb[xkb(-)]
 	consolekit? ( >=sys-auth/consolekit-0.9.4 )
@@ -29,7 +28,9 @@ RDEPEND="dev-qt/qtcore:5
 
 DEPEND="${RDEPEND}
 	dev-python/docutils
-	dev-qt/linguist-tools:5
+	>=dev-qt/linguist-tools-5.6:5
+	>=dev-qt/qttest-5.6:5
+	kde-frameworks/extra-cmake-modules
 	virtual/pkgconfig"
 
 pkg_pretend() {
@@ -41,27 +42,17 @@ pkg_pretend() {
 }
 
 src_prepare() {
+	# fix for flags handling and bug 563108
+	eapply "${FILESDIR}/${P}-respect-user-flags.patch"
+	use consolekit && eapply "${FILESDIR}/${P}-consolekit.patch"
+
 	cmake-utils_src_prepare
-
-	epatch "${FILESDIR}/${P}-respect-user-flags.patch"
-	use consolekit && epatch "${FILESDIR}/${P}-consolekit.patch"
 }
 
 src_configure() {
 	local mycmakeargs=(
-		$(cmake-utils_use_no pam PAM)
-		$(cmake-utils_use_no systemd SYSTEMD)
-		-DBUILD_MAN_PAGES=ON
-		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
-		)
-
-	cmake-utils_src_configure
-}
-
-src_configure() {
-	local mycmakeargs=(
-		$(cmake-utils_use_no pam PAM)
-		$(cmake-utils_use_no systemd SYSTEMD)
+		-DENABLE_PAM=$(usex pam)
+		-DNO_SYSTEMD=$(usex '!systemd')
 		-DBUILD_MAN_PAGES=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
 		)
@@ -71,5 +62,19 @@ src_configure() {
 
 pkg_postinst() {
 	enewgroup ${PN}
-	enewuser ${PN} -1 -1 /var/lib/${PN} ${PN} video
+	enewuser ${PN} -1 -1 /var/lib/${PN} ${PN},video
+
+	if use consolekit && use pam && [[ -e "${ROOT}"/etc/pam.d/system-login ]]; then
+		local line=$(grep "pam_ck_connector.*nox11" "${ROOT}"/etc/pam.d/system-login)
+		if [[ -z ${line} ]]; then
+			ewarn
+			ewarn "Erroneous /etc/pam.d/system-login settings detected!"
+			ewarn "Please restore 'nox11' option in the line containing pam_ck_connector:"
+			ewarn
+			ewarn "session      optional      pam_ck_connector.so nox11"
+			ewarn
+			ewarn "or 'emerge -1 sys-auth/pambase' and run etc-update."
+			ewarn
+		fi
+	fi
 }
