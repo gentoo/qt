@@ -1,13 +1,11 @@
 diff --git a/data/scripts/Xsession b/data/scripts/Xsession
-index a5d270d..4b48524 100755
+index 0c923a8..eae4f28 100755
 --- a/data/scripts/Xsession
 +++ b/data/scripts/Xsession
-@@ -74,7 +74,7 @@ case $session in
-     exec xterm -geometry 80x24-0-0
-     ;;
-   *)
--    eval exec "$session"
-+    eval exec ck-launch-session "$session"
-     ;;
- esac
- exec xmessage -center -buttons OK:0 -default OK "Sorry, cannot execute $session. Check $DESKTOP_SESSION.desktop."
+@@ -91,5 +91,5 @@ fi
+ if [ -z "$@" ]; then
+     exec xmessage -center -buttons OK:0 -default OK "Sorry, $DESKTOP_SESSION is no valid session."
+ else
+-    exec $@
++    exec ck-launch-session $@
+ fi
