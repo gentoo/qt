@@ -285,7 +285,7 @@ qt5-build_src_install() {
 
 		set -- emake INSTALL_ROOT="${D}" \
 			${qmake_install_target} \
-			install_{syncqt,mkspecs,global_docs}
+			install_{syncqt,mkspecs,docs}
 		einfo "Running $*"
 		"$@"
 
