@@ -75,7 +75,7 @@ src_install() {
 	domenu redist/${PN}.desktop
 	doicon redist/icons/${PN}.png
 
-	insinto /use/share/apps/${PN}/locale
+	insinto /usr/share/apps/${PN}/locale
 	doins locale/*.qm
 
 	insinto /usr/share/${PN}/help
