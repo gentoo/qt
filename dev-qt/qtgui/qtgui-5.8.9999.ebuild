@@ -15,7 +15,7 @@ fi
 # TODO: linuxfb
 
 IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtk
-	ibus jpeg libinput +png tslib tuio +udev +xcb"
+	ibus jpeg libinput +png tslib tuio +udev vnc +xcb"
 REQUIRED_USE="
 	|| ( eglfs xcb )
 	accessibility? ( dbus xcb )
@@ -56,6 +56,7 @@ RDEPEND="
 	tslib? ( x11-libs/tslib )
 	tuio? ( ~dev-qt/qtnetwork-${PV} )
 	udev? ( virtual/libudev:= )
+	vnc? ( ~dev-qt/qtnetwork-${PV} )
 	xcb? (
 		x11-libs/libICE
 		x11-libs/libSM
@@ -133,16 +134,16 @@ src_prepare() {
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
 
-	# avoid automagic dep on qtdbus
 	use dbus || sed -i -e 's/contains(QT_CONFIG, dbus)/false/' \
 		src/platformsupport/platformsupport.pro || die
+
+	qt_use_disable_config tuio udpsocket src/plugins/generic/generic.pro
 
 	qt_use_disable_mod ibus dbus \
 		src/plugins/platforminputcontexts/platforminputcontexts.pro
 
-	# avoid automagic dep on qtnetwork
-	use tuio || sed -i -e '/SUBDIRS += tuiotouch/d' \
-		src/plugins/generic/generic.pro || die
+	use vnc || sed -i -e '/SUBDIRS += vnc/d' \
+		src/plugins/platforms/platforms.pro || die
 
 	qt5-build_src_prepare
 }
