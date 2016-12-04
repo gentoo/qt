@@ -14,8 +14,8 @@ fi
 
 # TODO: linuxfb
 
-IUSE="accessibility dbus egl eglfs evdev +gif gles2 gtk
-	ibus jpeg libinput +png tslib tuio +udev vnc +xcb"
+IUSE="accessibility dbus egl eglfs evdev +gif gles2 ibus
+	jpeg libinput +png tslib tuio +udev vnc +xcb"
 REQUIRED_USE="
 	|| ( eglfs xcb )
 	accessibility? ( dbus xcb )
@@ -40,12 +40,6 @@ RDEPEND="
 		x11-libs/libdrm
 	)
 	evdev? ( sys-libs/mtdev )
-	gtk? (
-		x11-libs/gtk+:3
-		x11-libs/libX11
-		x11-libs/pango
-		!!x11-libs/cairo[qt4]
-	)
 	gles2? ( media-libs/mesa[gles2] )
 	jpeg? ( virtual/jpeg:0 )
 	libinput? (
@@ -88,7 +82,6 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/imageformats
 	src/plugins/platforms
 	src/plugins/platforminputcontexts
-	src/plugins/platformthemes
 )
 
 QT5_GENTOO_CONFIG=(
@@ -105,7 +98,6 @@ QT5_GENTOO_CONFIG=(
 	!gif:no-gif:
 	gles2::OPENGL_ES
 	gles2:opengles2:OPENGL_ES_2
-	gtk:gtk3:
 	!:no-gui:
 	:system-harfbuzz:HARFBUZZ
 	!:no-harfbuzz:
@@ -159,7 +151,6 @@ src_configure() {
 		-fontconfig
 		-system-freetype
 		$(usex gif '' -no-gif)
-		$(qt_use gtk)
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
 		$(qt_use libinput)
