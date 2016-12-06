@@ -71,6 +71,12 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
+PATCHES=(
+	"${FILESDIR}/${PN}-5.7.0-fix-system-ffmpeg.patch"
+	"${FILESDIR}/${PN}-5.7.0-icu58.patch"
+	"${FILESDIR}/${PN}-5.7.0-undef-madv_free.patch"
+)
+
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-paxmark-mksnapshot.patch" )
 
