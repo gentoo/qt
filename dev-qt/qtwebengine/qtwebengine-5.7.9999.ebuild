@@ -29,6 +29,7 @@ RDEPEND="
 	dev-libs/libevent:=
 	dev-libs/libxml2
 	dev-libs/libxslt
+	dev-libs/protobuf:=
 	media-libs/alsa-lib
 	media-libs/flac
 	media-libs/fontconfig
