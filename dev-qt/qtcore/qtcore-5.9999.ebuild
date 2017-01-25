@@ -19,8 +19,8 @@ DEPEND="
 	dev-libs/glib:2
 	>=dev-libs/libpcre-8.38[pcre16,unicode]
 	>=sys-libs/zlib-1.2.5
-	virtual/libiconv
 	icu? ( dev-libs/icu:= )
+	!icu? ( virtual/libiconv )
 	systemd? ( sys-apps/systemd:= )
 "
 RDEPEND="${DEPEND}"
@@ -36,6 +36,7 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
+		$(usex icu '-no-iconv' '-iconv')
 		$(qt_use icu)
 		$(qt_use systemd journald)
 	)
