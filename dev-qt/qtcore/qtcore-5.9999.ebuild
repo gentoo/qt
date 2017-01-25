@@ -14,8 +14,8 @@ fi
 
 IUSE="icu systemd"
 
-# TODO after bug 581054: dev-libs/double-conversion:=
 DEPEND="
+	dev-libs/double-conversion:=
 	dev-libs/glib:2
 	>=dev-libs/libpcre-8.38[pcre16,unicode]
 	>=sys-libs/zlib-1.2.5
@@ -36,6 +36,7 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
+		-system-doubleconversion
 		$(usex icu '-icu -no-iconv' '-iconv -no-icu')
 		$(qt_use systemd journald)
 	)
