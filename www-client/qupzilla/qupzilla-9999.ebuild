@@ -27,7 +27,7 @@ fi
 
 DESCRIPTION="A cross-platform web browser using QtWebEngine"
 HOMEPAGE="http://www.qupzilla.com/"
-SRC_URI+=" https://github.com/QupZilla/${PN}-plugins/archive/${PLUGINS_HASH}.tar.gz -> ${PN}-plugins-${PLUGINS_VERSION}.tar.gz"
+SRC_URI+="https://github.com/QupZilla/${PN}-plugins/archive/${PLUGINS_HASH}.tar.gz -> ${PN}-plugins-${PLUGINS_VERSION}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
