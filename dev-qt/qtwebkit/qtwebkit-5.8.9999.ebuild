@@ -88,9 +88,9 @@ src_prepare() {
 		Source/WebKit2/WebKit2.pri
 
 	if use gstreamer010; then
-		PATCHES+=("${FILESDIR}/${PN}-5.3.2-use-gstreamer010.patch")
+		PATCHES+=("${FILESDIR}/${PN}-5.8.0-use-gstreamer010.patch")
 	elif ! use gstreamer; then
-		PATCHES+=("${FILESDIR}/${PN}-5.2.1-disable-gstreamer.patch")
+		PATCHES+=("${FILESDIR}/${PN}-5.8.0-disable-gstreamer.patch")
 	fi
 
 	# bug 562396
