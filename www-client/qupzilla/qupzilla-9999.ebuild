@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -34,26 +34,26 @@ SLOT="0"
 IUSE="dbus debug gnome-keyring kde libressl nonblockdialogs"
 
 RDEPEND="
-	>=dev-qt/qtconcurrent-5.6:5
-	>=dev-qt/qtcore-5.6:5
-	>=dev-qt/qtdeclarative-5.6:5[widgets]
-	>=dev-qt/qtgui-5.6:5
-	>=dev-qt/qtnetwork-5.6:5[ssl]
-	>=dev-qt/qtprintsupport-5.6:5
-	>=dev-qt/qtsql-5.6:5[sqlite]
-	>=dev-qt/qtwebchannel-5.6:5
-	>=dev-qt/qtwebengine-5.6:5[widgets]
-	>=dev-qt/qtwidgets-5.6:5
-	>=dev-qt/qtx11extras-5.6:5
+	>=dev-qt/qtconcurrent-5.8:5
+	>=dev-qt/qtcore-5.8:5
+	>=dev-qt/qtdeclarative-5.8:5[widgets]
+	>=dev-qt/qtgui-5.8:5
+	>=dev-qt/qtnetwork-5.8:5[ssl]
+	>=dev-qt/qtprintsupport-5.8:5
+	>=dev-qt/qtsql-5.8:5[sqlite]
+	>=dev-qt/qtwebchannel-5.8:5
+	>=dev-qt/qtwebengine-5.8:5[widgets]
+	>=dev-qt/qtwidgets-5.8:5
+	>=dev-qt/qtx11extras-5.8:5
 	x11-libs/libxcb:=
-	dbus? ( >=dev-qt/qtdbus-5.6:5 )
+	dbus? ( >=dev-qt/qtdbus-5.8:5 )
 	gnome-keyring? ( gnome-base/gnome-keyring )
 	kde? ( kde-frameworks/kwallet:5 )
 	libressl? ( dev-libs/libressl:= )
 	!libressl? ( dev-libs/openssl:0 )
 "
 DEPEND="${RDEPEND}
-	>=dev-qt/linguist-tools-5.6:5
+	>=dev-qt/linguist-tools-5.8:5
 	virtual/pkgconfig
 "
 
