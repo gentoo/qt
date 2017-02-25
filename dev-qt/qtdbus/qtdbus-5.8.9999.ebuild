@@ -49,15 +49,6 @@ src_configure() {
 	qt5-build_src_configure
 }
 
-src_install() {
-	QT5_TARGET_SUBDIRS=(
-		src/dbus
-		src/tools/qdbusxml2cpp
-		src/tools/qdbuscpp2xml
-	)
-	qt5-build_src_install
-}
-
 src_compile() {
 	hack() {
 		emake
@@ -66,4 +57,13 @@ src_compile() {
 		fi
 	}
 	qt5_foreach_target_subdir hack
+}
+
+src_install() {
+	QT5_TARGET_SUBDIRS=(
+		src/dbus
+		src/tools/qdbusxml2cpp
+		src/tools/qdbuscpp2xml
+	)
+	qt5-build_src_install
 }
