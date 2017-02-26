@@ -12,13 +12,21 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-IUSE=""
+IUSE="qml"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
+	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
 	src/qdoc
 )
+
+src_prepare() {
+	qt_use_disable_mod qml qmldevtools-private \
+		src/qdoc/qdoc.pro
+
+	qt5-build_src_prepare
+}
