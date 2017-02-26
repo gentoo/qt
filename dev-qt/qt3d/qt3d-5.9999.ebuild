@@ -15,6 +15,7 @@ fi
 IUSE=""
 
 DEPEND="
+	~dev-qt/qtconcurrent-${PV}
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
