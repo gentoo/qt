@@ -16,7 +16,6 @@ IUSE=""
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
-	~dev-qt/qtxml-${PV}
 "
 RDEPEND="${DEPEND}"
 
