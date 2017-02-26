@@ -18,7 +18,7 @@ RDEPEND="
 	~dev-qt/qtconcurrent-${PV}
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdbus-${PV}
-	>=net-wireless/bluez-5
+	>=net-wireless/bluez-5:=
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
 DEPEND="${RDEPEND}
