@@ -11,13 +11,13 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# TODO: egl, gamepad, tools
-IUSE=""
+# TODO: gamepad, tools
+IUSE="gles2"
 
 DEPEND="
 	~dev-qt/qtconcurrent-${PV}
 	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdeclarative-${PV}
+	~dev-qt/qtdeclarative-${PV}[gles2=]
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
 	>=media-libs/assimp-3.1.1
