@@ -18,5 +18,12 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
+	>=media-libs/assimp-3.1.1
 "
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	rm -r src/3rdparty/assimp/{code,contrib,include} || die
+
+	qt5-build_src_prepare
+}
