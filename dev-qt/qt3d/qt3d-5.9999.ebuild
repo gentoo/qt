@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# TODO: egl, qml, tools
+# TODO: egl, gamepad, qml, tools
 IUSE=""
 
 DEPEND="
