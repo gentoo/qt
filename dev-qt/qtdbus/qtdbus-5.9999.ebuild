@@ -53,7 +53,7 @@ src_compile() {
 	hack() {
 		emake
 		if [[ ${subdir} = "src/corelib" ]]; then
-			rm "${S}"/lib/libQt5Core* || die
+			rm "${QT5_BUILD_DIR}"/lib/libQt5Core* || die
 		fi
 	}
 	qt5_foreach_target_subdir hack
