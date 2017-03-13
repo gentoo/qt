@@ -1,44 +1,52 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
-inherit cmake-utils python-r1 git-r3
+inherit cmake-utils llvm python-r1 git-r3
 
-DESCRIPTION="A tool for creating Python bindings for C++ libraries"
-HOMEPAGE="https://wiki.qt.io/Pyside"
+DESCRIPTION="Tool for creating Python bindings for C++ libraries"
+HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI=(
 	"git://code.qt.io/pyside/${PN}.git"
 	"https://code.qt.io/git/pyside/${PN}.git"
 )
+#FIXME: Switch to the clang-enabled "dev" branch once stable.
+EGIT_BRANCH="5.6"
 
 LICENSE="LGPL-2.1"
-SLOT="0"
+SLOT="2"
 KEYWORDS=""
 IUSE="test"
-
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+# Minimum version of Qt required.
+QT_PV="5.6*:5"
+
+#FIXME: Add "sys-devel/clang:*" after switching to the "dev" branch.
 RDEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
-	dev-qt/qtcore:5
-	dev-qt/qtxml:5
-	dev-qt/qtxmlpatterns:5
+	=dev-qt/qtcore-${QT_PV}
+	=dev-qt/qtxml-${QT_PV}
+	=dev-qt/qtxmlpatterns-${QT_PV}
 "
 DEPEND="${RDEPEND}
 	test? (
-		dev-qt/qtgui:5
-		dev-qt/qttest:5
+		=dev-qt/qtgui-${QT_PV}
+		=dev-qt/qttest-${QT_PV}
 	)
 "
 
 DOCS=( AUTHORS )
 
 src_prepare() {
+	#FIXME: Uncomment after switching to the "dev" branch.
+	# sed -i -e "/^find_library(CLANG_LIBRARY/ s~/lib)$~/$(get_libdir))~" CMakeLists.txt || die
+
 	if use prefix; then
 		cp "${FILESDIR}"/rpath.cmake . || die
 		sed -i -e '1iinclude(rpath.cmake)' CMakeLists.txt || die
@@ -60,6 +68,13 @@ src_configure() {
 				-DUSE_PYTHON_VERSION=3
 			)
 		fi
+
+		#FIXME: Uncomment after switching to the "dev" branch.
+		#FIXME: "CMakeLists.txt" currently requires that callers manually set
+		#this environment variable to the absolute path of the directory
+		#containing clang libraries rather than magically finding this path
+		#(e.g., via "find_package(CLang)"). If this changes, remove this option.
+		# CLANG_INSTALL_DIR="$(get_llvm_prefix)" cmake-utils_src_configure
 
 		cmake-utils_src_configure
 	}
