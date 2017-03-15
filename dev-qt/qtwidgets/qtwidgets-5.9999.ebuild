@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -43,7 +43,7 @@ src_configure() {
 		$(qt_use png libpng system)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon system)
-		$(usex xcb '-xcb-xlib -xinput2 -xkb -xrender' '')
+		$(usex xcb '-xcb-xlib -xinput2 -xkb' '')
 	)
 	qt5-build_src_configure
 }
