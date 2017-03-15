@@ -35,7 +35,6 @@ QT5_TARGET_SUBDIRS=(
 
 src_configure() {
 	local myconf=(
-		-system-doubleconversion
 		$(qt_use icu)
 		$(qt_use !icu iconv)
 		$(qt_use systemd journald)
