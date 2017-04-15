@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -55,7 +55,6 @@ RDEPEND="
 		x11-libs/libSM
 		x11-libs/libX11
 		>=x11-libs/libXi-1.7.4
-		x11-libs/libXrender
 		>=x11-libs/libxcb-1.10:=[xkb]
 		>=x11-libs/libxkbcommon-0.4.1[X]
 		x11-libs/xcb-util-image
@@ -118,7 +117,6 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-xlib:
 	xcb:xinput2:
 	xcb::XKB
-	xcb:xrender
 )
 
 src_prepare() {
@@ -160,7 +158,7 @@ src_configure() {
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon-x11 system)
-		$(usex xcb '-xcb-xlib -xinput2 -xkb -xrender' '')
+		$(usex xcb '-xcb-xlib -xinput2 -xkb' '')
 	)
 	qt5-build_src_configure
 }
