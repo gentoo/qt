@@ -28,6 +28,7 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap
 	src/tools/moc
 	src/tools/rcc
+	src/tools/qfloat16-tables
 	src/corelib
 	src/tools/qlalr
 	doc
