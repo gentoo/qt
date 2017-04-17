@@ -16,8 +16,8 @@ IUSE="icu systemd"
 DEPEND="
 	dev-libs/double-conversion:=
 	dev-libs/glib:2
-	>=dev-libs/libpcre-8.38[pcre16,unicode]
-	>=sys-libs/zlib-1.2.5
+	dev-libs/libpcre2[pcre16,unicode]
+	sys-libs/zlib
 	icu? ( dev-libs/icu:= )
 	!icu? ( virtual/libiconv )
 	systemd? ( sys-apps/systemd:= )
