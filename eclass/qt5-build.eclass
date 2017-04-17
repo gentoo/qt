@@ -529,8 +529,7 @@ qt5_symlink_tools_to_build_dir() {
 # Runs ./configure for modules belonging to qtbase.
 qt5_base_configure() {
 	# setup toolchain variables used by configure
-	tc-export AR CC CXX OBJDUMP RANLIB STRIP
-	export LD="$(tc-getCXX)"
+	tc-export AR CC CXX LD OBJDUMP RANLIB STRIP
 
 	# configure arguments
 	local conf=(
