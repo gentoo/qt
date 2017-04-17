@@ -16,7 +16,7 @@ IUSE="icu systemd"
 DEPEND="
 	dev-libs/double-conversion:=
 	dev-libs/glib:2
-	>=dev-libs/libpcre-8.38[pcre16,unicode]
+	dev-libs/libpcre2[pcre16,unicode]
 	>=sys-libs/zlib-1.2.5
 	icu? ( dev-libs/icu:= )
 	!icu? ( virtual/libiconv )
@@ -28,6 +28,7 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/bootstrap
 	src/tools/moc
 	src/tools/rcc
+	src/tools/qfloat16-tables
 	src/corelib
 	src/tools/qlalr
 	doc
