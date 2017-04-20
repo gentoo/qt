@@ -630,7 +630,10 @@ qt5_base_configure() {
 		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -iconv)
 
 		# disable everything to prevent automagic deps (part 3)
-		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig -no-dbus
+		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig
+		# since 5.8, disabling dbus will issue a QT_NO_DBUS in QtCore/qconfig.h,
+		# thus specify runtime loading of libdbus to avoid deps and macro
+		$([[ ${QT5_MINOR_VERSION} -ge 8 ]] && echo -dbus-runtime || echo -no-dbus)
 
 		# let portage handle stripping
 		-no-strip
