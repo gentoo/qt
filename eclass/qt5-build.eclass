@@ -630,7 +630,7 @@ qt5_base_configure() {
 		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -iconv)
 
 		# disable everything to prevent automagic deps (part 3)
-		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig -no-dbus
+		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig
 
 		# let portage handle stripping
 		-no-strip
