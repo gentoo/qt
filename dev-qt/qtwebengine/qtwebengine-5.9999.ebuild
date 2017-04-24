@@ -86,7 +86,8 @@ src_prepare() {
 
 	qt_use_disable_mod geolocation positioning \
 		src/core/core_common.pri \
-		src/core/core_gyp_generator.pro
+		src/core/core_chromium.pri \
+		tools/qmake/mkspecs/features/configure.prf
 
 	qt_use_disable_mod widgets widgets src/src.pro
 
