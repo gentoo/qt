@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -6,7 +6,7 @@ EAPI=6
 inherit cmake-utils multibuild qmake-utils git-r3
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
-HOMEPAGE="http://delta.affinix.com/qca/"
+HOMEPAGE="https://userbase.kde.org/QCA"
 EGIT_REPO_URI=("git://anongit.kde.org/${PN}.git")
 
 LICENSE="LGPL-2.1"
