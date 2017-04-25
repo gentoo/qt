@@ -71,11 +71,6 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
-PATCHES=(
-	"${FILESDIR}/${PN}-5.7.0-fix-system-ffmpeg.patch"
-	"${FILESDIR}/${PN}-5.7.0-icu58.patch"
-)
-
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-paxmark-mksnapshot.patch" )
 
@@ -86,7 +81,8 @@ src_prepare() {
 
 	qt_use_disable_mod geolocation positioning \
 		src/core/core_common.pri \
-		src/core/core_gyp_generator.pro
+		src/core/core_chromium.pri \
+		tools/qmake/mkspecs/features/configure.prf
 
 	qt_use_disable_mod widgets widgets src/src.pro
 
