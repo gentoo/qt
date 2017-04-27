@@ -123,10 +123,14 @@ src_prepare() {
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
 
-	use dbus || sed -i -e 's/contains(QT_CONFIG, dbus)/false/' \
-		src/platformsupport/platformsupport.pro || die
+	use dbus || sed -i -e '1 i\DEFINES += QT_NO_DBUS' \
+		src/platformsupport/themes/themes.pro || die
 
 	qt_use_disable_config tuio udpsocket src/plugins/generic/generic.pro
+
+	qt_use_disable_config dbus dbus \
+		src/src.pro \
+		src/platformsupport/themes/genericunix/genericunix.pri
 
 	qt_use_disable_mod ibus dbus \
 		src/plugins/platforminputcontexts/platforminputcontexts.pro
@@ -139,7 +143,7 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
-		$(usex dbus -dbus-linked '')
+		$(usex dbus -dbus-linked '-no-dbus')
 		$(qt_use egl)
 		$(qt_use eglfs)
 		$(usex eglfs '-gbm -kms' '')
