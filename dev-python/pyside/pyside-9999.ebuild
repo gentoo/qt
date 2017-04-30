@@ -147,10 +147,8 @@ src_compile() {
 }
 
 src_test() {
-	local PYTHONDONTWRITEBYTECODE
-	export PYTHONDONTWRITEBYTECODE
-
-	VIRTUALX_COMMAND="cmake-utils_src_test" python_foreach_impl virtualmake
+	local -x PYTHONDONTWRITEBYTECODE
+	python_foreach_impl virtx cmake-utils_src_test
 }
 
 src_install() {
