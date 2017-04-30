@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
+PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 
 inherit cmake-utils python-r1 virtualx git-r3
 
@@ -16,7 +16,7 @@ EGIT_REPO_URI=(
 #FIXME: Switch to the clang-enabled "dev" branch once stable.
 EGIT_BRANCH="5.6"
 
-LICENSE="LGPL-2.1"
+LICENSE="|| ( GPL-2+ LGPL-3 )"
 SLOT="2"
 KEYWORDS=""
 
