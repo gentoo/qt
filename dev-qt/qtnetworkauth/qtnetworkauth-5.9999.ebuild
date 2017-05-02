@@ -14,10 +14,7 @@ fi
 IUSE=""
 
 DEPEND="
+	~dev-qt/qtcore-${PV}
 	~dev-qt/qtnetwork-${PV}
 "
 RDEPEND="${DEPEND}"
-
-src_prepare() {
-	qt5-build_src_prepare
-}
