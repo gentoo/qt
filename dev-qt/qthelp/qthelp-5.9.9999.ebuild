@@ -23,7 +23,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/assistant/clucene
 	src/assistant/help
 	src/assistant/qcollectiongenerator
 	src/assistant/qhelpconverter
