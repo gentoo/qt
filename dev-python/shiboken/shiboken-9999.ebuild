@@ -26,7 +26,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 QT_PV="5.6*:5"
 
 #FIXME: Add "sys-devel/clang:*" after switching to the "dev" branch.
-RDEPEND="
+DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
@@ -34,12 +34,7 @@ RDEPEND="
 	=dev-qt/qtxml-${QT_PV}
 	=dev-qt/qtxmlpatterns-${QT_PV}
 "
-DEPEND="${RDEPEND}
-	test? (
-		=dev-qt/qtgui-${QT_PV}
-		=dev-qt/qttest-${QT_PV}
-	)
-"
+RDEPEND="${DEPEND}"
 
 DOCS=( AUTHORS )
 
@@ -60,14 +55,7 @@ src_configure() {
 		local mycmakeargs=(
 			-DBUILD_TESTS=$(usex test)
 			-DPYTHON_EXECUTABLE="${PYTHON}"
-			-DPYTHON_SITE_PACKAGES="$(python_get_sitedir)"
 		)
-
-		if [[ ${EPYTHON} == python3* ]]; then
-			mycmakeargs+=(
-				-DUSE_PYTHON_VERSION=3
-			)
-		fi
 
 		#FIXME: Uncomment after switching to the "dev" branch.
 		#FIXME: "CMakeLists.txt" currently requires that callers manually set
