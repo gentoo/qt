@@ -24,7 +24,8 @@ IUSE="concurrent declarative designer gui help multimedia network opengl
 	printsupport script scripttools sql svg test testlib webchannel
 	webengine webkit websockets widgets x11extras xmlpatterns"
 
-# The requirements below were strongly inspired by their PyQt5 equivalents.
+# The requirements below were extracted from the output of
+# 'grep "set(.*_deps" "${S}"/PySide2/Qt*/CMakeLists.txt'
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	declarative? ( gui network )
@@ -33,17 +34,15 @@ REQUIRED_USE="
 	multimedia? ( gui network )
 	opengl? ( widgets )
 	printsupport? ( widgets )
-	scripttools? ( gui script )
+	scripttools? ( gui script widgets )
 	sql? ( widgets )
 	svg? ( widgets )
-	test? ( widgets )
 	testlib? ( widgets )
-	webchannel? ( network )
-	webengine? ( network webchannel widgets )
+	webengine? ( gui network webchannel widgets )
 	webkit? ( gui network printsupport widgets )
 	websockets? ( network )
 	widgets? ( gui )
-	xmlpatterns? ( network )
+	x11extras? ( gui )
 "
 
 # Minimum version of Qt required, derived from the CMakeLists.txt line:
