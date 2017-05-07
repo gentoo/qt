@@ -50,7 +50,7 @@ REQUIRED_USE="
 #   find_package(Qt5 ${QT_PV} REQUIRED COMPONENTS Core)
 QT_PV="5.6*:5"
 
-RDEPEND="
+DEPEND="
 	${PYTHON_DEPS}
 	>=dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
 	=dev-qt/qtcore-${QT_PV}
@@ -79,7 +79,7 @@ RDEPEND="
 	testlib? ( =dev-qt/qttest-${QT_PV} )
 	widgets? ( =dev-qt/qtwidgets-${QT_PV} )
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
 
 src_prepare() {
 	#FIXME: Remove the following "sed" patch after this upstream issue is closed:
@@ -102,7 +102,7 @@ src_configure() {
 	# For each line of the form "CHECK_PACKAGE_FOUND(${PACKAGE_NAME} opt)" in
 	# PySide2/CMakeLists.txt defining an optional dependency, an option of the
 	# form "-DCMAKE_DISABLE_FIND_PACKAGE_${PACKAGE_NAME}=$(usex !${USE_FLAG})"
-	# is passed to "cmake" here conditionally disabling this dependency.
+	# is passed to cmake here conditionally disabling this dependency.
 	local mycmakeargs=(
 		-DBUILD_TESTS=$(usex test)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Concurrent=$(usex !concurrent)
@@ -111,6 +111,7 @@ src_configure() {
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5UiTools=$(usex !designer)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Help=$(usex !help)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Multimedia=$(usex !multimedia)
+		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5MultimediaWidgets=$(usex !multimedia)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Network=$(usex !network)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5OpenGL=$(usex !opengl)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Qml=$(usex !declarative)

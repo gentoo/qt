@@ -11,7 +11,7 @@
 		<flag name="designer">Build QtDesigner and QtUiTools modules</flag>
 		<flag name="gui">Build QtGui module</flag>
 		<flag name="help">Build QtHelp module</flag>
-		<flag name="multimedia">Build QtMultimedia module</flag>
+		<flag name="multimedia">Build QtMultimedia and QtMultimediaWidgets modules</flag>
 		<flag name="network">Build QtNetwork module</flag>
 		<flag name="opengl">Build QtOpenGL module</flag>
 		<flag name="printsupport">Build QtPrintSupport module</flag>
