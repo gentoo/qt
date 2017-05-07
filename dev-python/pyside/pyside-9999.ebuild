@@ -136,6 +136,7 @@ src_configure() {
 	configuration() {
 		local mycmakeargs=(
 			"${mycmakeargs[@]}"
+			-DPYTHON_EXECUTABLE="${PYTHON}"
 		)
 		cmake-utils_src_configure
 	}
