@@ -24,6 +24,9 @@ PDEPEND="
 "
 
 QT5_TARGET_SUBDIRS=(
+	src/3rdparty/clipper
+	src/3rdparty/poly2tri
+	src/3rdparty/clip2tri
 	src/positioning
 	src/plugins/position/positionpoll
 )
