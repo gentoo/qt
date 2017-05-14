@@ -74,15 +74,10 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-paxmark-mksnapshot.patch" )
 
-	if use system-icu; then
-		# ensure build against system headers - bug #601264
-		rm -r src/3rdparty/chromium/third_party/icu/source || die
-	fi
-
 	qt_use_disable_mod geolocation positioning \
-		src/core/core_common.pri \
+		mkspecs/features/configure.prf \
 		src/core/core_chromium.pri \
-		tools/qmake/mkspecs/features/configure.prf
+		src/core/core_common.pri
 
 	qt_use_disable_mod widgets widgets src/src.pro
 
