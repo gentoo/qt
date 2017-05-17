@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_MODULE_EXAMPLES_SUBDIRS=("examples")
 inherit qt5-build
 
 DESCRIPTION="Multimedia (audio, video, radio, camera) library for the Qt5 framework"
@@ -11,6 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="alsa gles2 gstreamer openal pulseaudio qml widgets"
+REQUIRED_USE="examples? ( widgets )"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}
@@ -44,12 +46,15 @@ src_prepare() {
 
 	qt_use_disable_mod qml quick \
 		src/src.pro \
-		src/plugins/plugins.pro
+		src/plugins/plugins.pro \
+		examples/multimedia/multimedia.pro
 
 	qt_use_disable_mod widgets widgets \
 		src/src.pro \
 		src/gsttools/gsttools.pro \
-		src/plugins/gstreamer/common.pri
+		src/plugins/gstreamer/common.pri \
+		examples/multimedia/multimedia.pro \
+		examples/multimediawidgets/multimediawidgets.pro
 
 	qt5-build_src_prepare
 }
