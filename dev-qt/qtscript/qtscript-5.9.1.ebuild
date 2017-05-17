@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit qt5-build
 
 DESCRIPTION="Application scripting library for the Qt5 framework (deprecated)"
@@ -11,6 +12,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="+jit scripttools"
+
+REQUIRED_USE="examples? ( scripttools )"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
@@ -23,7 +26,8 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	qt_use_disable_mod scripttools widgets \
-		src/src.pro
+		src/src.pro \
+		examples/script/script.pro
 
 	qt5-build_src_prepare
 }
