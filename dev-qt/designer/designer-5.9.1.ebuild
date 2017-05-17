@@ -3,6 +3,7 @@
 
 EAPI=6
 QT5_MODULE="qttools"
+QT5_EXAMPLES_SUBDIRS=("examples/designer")
 inherit qt5-build
 
 DESCRIPTION="WYSIWYG tool for designing and building Qt-based GUIs"
