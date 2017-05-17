@@ -3,6 +3,7 @@
 
 EAPI=6
 QT5_MODULE="qtconnectivity"
+QT5_EXAMPLES_SUBDIRS=("examples/bluetooth")
 inherit qt5-build
 
 DESCRIPTION="Bluetooth support library for the Qt5 framework"
@@ -27,7 +28,9 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	sed -i -e 's/nfc//' src/src.pro || die
 
-	qt_use_disable_mod qml quick src/src.pro
+	qt_use_disable_mod qml quick \
+		src/src.pro \
+		examples/bluetooth/bluetooth.pro
 
 	qt5-build_src_prepare
 }
