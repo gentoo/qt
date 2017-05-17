@@ -13,7 +13,7 @@ fi
 
 # TODO: linuxfb
 
-IUSE="accessibility dbus egl eglfs evdev +gif gles2 ibus
+IUSE="accessibility dbus egl eglfs evdev examples +gif gles2 ibus
 	jpeg libinput +png tslib tuio +udev vnc +xcb"
 REQUIRED_USE="
 	|| ( eglfs xcb )
@@ -69,6 +69,9 @@ DEPEND="${RDEPEND}
 "
 PDEPEND="
 	ibus? ( app-i18n/ibus )
+	examples? (
+		~dev-qt/qtcore-examples-${PV}[gles2=]
+	)
 "
 
 PATCHES=( "${FILESDIR}/${P}-atspi.patch" )
