@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples/datavisualization")
 inherit qt5-build
 
 DESCRIPTION="3D data visualization library for the Qt5 framework"
@@ -25,7 +26,8 @@ src_prepare() {
 	sed -i -e '/requires.*widgets/d' qtdatavis3d.pro || die
 
 	qt_use_disable_mod qml quick \
-		src/src.pro
+		src/src.pro \
+		examples/datavisualization/datavisualization.pro
 
 	qt5-build_src_prepare
 }
