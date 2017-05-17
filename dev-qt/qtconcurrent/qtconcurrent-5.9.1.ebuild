@@ -11,12 +11,17 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-IUSE=""
+IUSE="examples"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 "
 RDEPEND="${DEPEND}"
+PDEPEND="
+	examples? (
+		~dev-qt/qtcore-examples-${PV}
+	)
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/concurrent
