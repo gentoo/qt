@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples/positioning")
 QT5_MODULE="qtlocation"
 inherit qt5-build
 
@@ -34,4 +35,9 @@ QT5_TARGET_SUBDIRS=(
 pkg_setup() {
 	use geoclue && QT5_TARGET_SUBDIRS+=(src/plugins/position/geoclue)
 	use qml && QT5_TARGET_SUBDIRS+=(src/imports/positioning)
+}
+
+src_prepare() {
+	qt_use_disable_mod qml quick \
+		examples/positioning/positioning.pro
 }
