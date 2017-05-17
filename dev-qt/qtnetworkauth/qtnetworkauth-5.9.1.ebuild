@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit qt5-build
 
 DESCRIPTION="Network authorization library for the Qt5 framework"
@@ -16,5 +17,8 @@ IUSE=""
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtnetwork-${PV}
+	examples? (
+		~dev-qt/qtwidgets-${PV}
+	)
 "
 RDEPEND="${DEPEND}"
