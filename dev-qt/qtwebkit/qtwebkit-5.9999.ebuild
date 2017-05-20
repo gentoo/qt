@@ -103,5 +103,9 @@ src_prepare() {
 	# bug 458222
 	sed -i -e '/SUBDIRS += examples/d' Source/QtWebKit.pro || die
 
+	if has_version ">dev-libs/icu-59"; then
+		PATCHES+=("${FILESDIR}/${PN}-5.9.0-icu-59.patch")
+	fi
+
 	qt5-build_src_prepare
 }

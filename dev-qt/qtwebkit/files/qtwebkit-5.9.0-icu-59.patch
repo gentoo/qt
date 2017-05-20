@@ -1,0 +1,51 @@
+# Fix building with ICU >=59.
+# Upstream bug: https://bugreports.qt.io/browse/QTBUG-60532
+
+--- a/Source/JavaScriptCore/API/JSStringRef.h	2017-05-20 02:25:19.018468751 +0300
++++ b/Source/JavaScriptCore/API/JSStringRef.h	2017-05-20 02:19:21.429663029 +0300
+@@ -32,6 +32,7 @@
+ #include <stdbool.h>
+ #endif
+ #include <stddef.h> /* for size_t */
++#include <uchar.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+@@ -43,7 +44,7 @@
+ @typedef JSChar
+ @abstract A Unicode character.
+ */
+-    typedef unsigned short JSChar;
++    typedef char16_t JSChar;
+ #else
+     typedef wchar_t JSChar;
+ #endif
+--- a/Source/WTF/wtf/TypeTraits.h	2017-05-20 02:24:57.289148982 +0300
++++ b/Source/WTF/wtf/TypeTraits.h	2017-05-20 02:19:07.630095023 +0300
+@@ -71,6 +71,7 @@
+     template<> struct IsInteger<long>               { static const bool value = true; };
+     template<> struct IsInteger<unsigned long>      { static const bool value = true; };
+     template<> struct IsInteger<long long>          { static const bool value = true; };
++    template<> struct IsInteger<char16_t>           { static const bool value = true; };
+     template<> struct IsInteger<unsigned long long> { static const bool value = true; };
+ #if !COMPILER(MSVC) || defined(_NATIVE_WCHAR_T_DEFINED)
+     template<> struct IsInteger<wchar_t>            { static const bool value = true; };
+--- a/Source/WebKit2/Shared/API/c/WKString.h	2017-05-20 02:24:36.419802296 +0300
++++ b/Source/WebKit2/Shared/API/c/WKString.h	2017-05-20 02:19:15.199858052 +0300
+@@ -31,6 +31,7 @@
+ #ifndef __cplusplus
+ #include <stdbool.h>
+ #endif
++#include <uchar.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+@@ -38,7 +39,7 @@
+ 
+ #if !defined(WIN32) && !defined(_WIN32) \
+     && !((defined(__CC_ARM) || defined(__ARMCC__)) && !defined(__linux__)) /* RVCT */
+-    typedef unsigned short WKChar;
++    typedef char16_t WKChar;
+ #else
+     typedef wchar_t WKChar;
+ #endif
