@@ -72,7 +72,7 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
-	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-paxmark-mksnapshot.patch" )
+	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.0-paxmark-mksnapshot.patch" )
 
 	qt_use_disable_mod geolocation positioning \
 		mkspecs/features/configure.prf \
