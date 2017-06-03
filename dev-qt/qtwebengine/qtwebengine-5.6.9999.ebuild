@@ -3,7 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
-inherit pax-utils python-any-r1 qt5-build
+inherit multiprocessing pax-utils python-any-r1 qt5-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt5 C++ and QML applications"
 
@@ -89,6 +89,7 @@ src_prepare() {
 
 src_configure() {
 	export NINJA_PATH=/usr/bin/ninja
+	export NINJAOPTS="-j$(makeopts_jobs) -l$(makeopts_loadavg "${MAKEOPTS}" 0)"
 
 	local myqmakeargs=(
 		$(usex bindist '' 'WEBENGINE_CONFIG+=use_proprietary_codecs')
