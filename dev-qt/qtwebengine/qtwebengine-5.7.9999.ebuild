@@ -24,12 +24,10 @@ RDEPEND="
 	~dev-qt/qtnetwork-${PV}
 	~dev-qt/qtwebchannel-${PV}[qml]
 	dev-libs/expat
-	dev-libs/jsoncpp:=
 	dev-libs/libevent:=
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf:=
-	media-libs/flac
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/harfbuzz:=
@@ -38,7 +36,6 @@ RDEPEND="
 	media-libs/libwebp:=
 	media-libs/mesa
 	media-libs/opus
-	media-libs/speex
 	net-libs/libsrtp:0=
 	sys-apps/dbus
 	sys-apps/pciutils
