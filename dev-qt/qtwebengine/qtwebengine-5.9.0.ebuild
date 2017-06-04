@@ -44,6 +44,7 @@ RDEPEND="
 	sys-apps/pciutils
 	sys-libs/libcap
 	sys-libs/zlib[minizip]
+	virtual/libudev
 	x11-libs/libdrm
 	x11-libs/libX11
 	x11-libs/libXcomposite
