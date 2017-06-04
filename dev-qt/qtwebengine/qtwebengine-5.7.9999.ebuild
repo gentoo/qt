@@ -77,6 +77,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-5.7.0-fix-system-ffmpeg.patch"
 	"${FILESDIR}/${PN}-5.7.0-icu58.patch"
 	"${FILESDIR}/${PN}-5.7.0-undef-madv_free.patch"
+	"${FILESDIR}/${PN}-5.7.1-gcc-7.patch"
 )
 
 src_prepare() {
