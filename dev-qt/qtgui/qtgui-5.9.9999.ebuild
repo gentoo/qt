@@ -123,8 +123,8 @@ src_prepare() {
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
 
-	use dbus || sed -i -e 's/contains(QT_CONFIG, dbus)/false/' \
-		src/platformsupport/platformsupport.pro || die
+	qt_use_disable_config dbus dbus \
+		src/platformsupport/themes/genericunix/genericunix.pri
 
 	qt_use_disable_config tuio udpsocket src/plugins/generic/generic.pro
 
