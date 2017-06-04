@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="bindist geolocation pax_kernel +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
 
 RDEPEND="
 	app-arch/snappy
@@ -29,7 +29,6 @@ RDEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf:=
-	media-libs/alsa-lib
 	media-libs/flac
 	media-libs/fontconfig
 	media-libs/freetype
@@ -57,7 +56,9 @@ RDEPEND="
 	x11-libs/libXrender
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
+	alsa? ( media-libs/alsa-lib )
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
+	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( dev-libs/icu:= )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
@@ -73,6 +74,9 @@ DEPEND="${RDEPEND}
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.0-paxmark-mksnapshot.patch" )
+
+	qt_use_disable_config alsa alsa src/core/config/linux.pri
+	qt_use_disable_config pulseaudio pulseaudio src/core/config/linux.pri
 
 	qt_use_disable_mod geolocation positioning \
 		mkspecs/features/configure.prf \

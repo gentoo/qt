@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
-IUSE="bindist geolocation pax_kernel +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
 
 RDEPEND="
 	app-arch/snappy
@@ -29,7 +29,6 @@ RDEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	dev-libs/protobuf:=
-	media-libs/alsa-lib
 	media-libs/flac
 	media-libs/fontconfig
 	media-libs/freetype
@@ -57,7 +56,9 @@ RDEPEND="
 	x11-libs/libXrender
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
+	alsa? ( media-libs/alsa-lib )
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
+	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( dev-libs/icu:= )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
@@ -72,6 +73,7 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES=(
+	"${FILESDIR}/${PN}-5.7.1-fix-audio-detection.patch"
 	"${FILESDIR}/${PN}-5.7.0-fix-system-ffmpeg.patch"
 	"${FILESDIR}/${PN}-5.7.0-icu58.patch"
 	"${FILESDIR}/${PN}-5.7.0-undef-madv_free.patch"
@@ -99,7 +101,9 @@ src_configure() {
 	export NINJAOPTS="-j$(makeopts_jobs) -l$(makeopts_loadavg "${MAKEOPTS}" 0)"
 
 	local myqmakeargs=(
+		$(usex alsa 'WEBENGINE_CONFIG+=use_alsa' '')
 		$(usex bindist '' 'WEBENGINE_CONFIG+=use_proprietary_codecs')
+		$(usex pulseaudio 'WEBENGINE_CONFIG+=use_pulseaudio' '')
 		$(usex system-ffmpeg 'WEBENGINE_CONFIG+=use_system_ffmpeg' '')
 		$(usex system-icu 'WEBENGINE_CONFIG+=use_system_icu' '')
 	)
