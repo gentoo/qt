@@ -22,7 +22,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/3rdparty
+	src/3rdparty/clipper
+	src/3rdparty/poly2tri
+	src/3rdparty/clip2tri
+	src/3rdparty/mapbox-gl-native
 	src/location
 	src/imports/location
 	src/plugins/geoservices
