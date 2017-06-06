@@ -48,6 +48,7 @@
 =dev-qt/qtsvg-5.9.1*
 =dev-qt/qttest-5.9.1*
 =dev-qt/qttranslations-5.9.1*
+=dev-qt/qtvirtualkeyboard-5.9.1*
 =dev-qt/qtwayland-5.9.1*
 =dev-qt/qtwebchannel-5.9.1*
 =dev-qt/qtwebengine-5.9.1*
