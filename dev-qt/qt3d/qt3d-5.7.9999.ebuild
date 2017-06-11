@@ -10,12 +10,23 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# TODO: egl, qml, tools
-IUSE=""
+# TODO: tools
+IUSE="gles2 qml"
 
 DEPEND="
+	~dev-qt/qtconcurrent-${PV}
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
+	sys-libs/zlib
+	qml? ( ~dev-qt/qtdeclarative-${PV}[gles2=] )
 "
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	qt5-build_src_prepare
+
+	if ! use qml; then
+		sed -i -e "/quick3d/s/^/#/" src/src.pro || die
+	fi
+}
