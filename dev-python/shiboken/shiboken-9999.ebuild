@@ -10,8 +10,8 @@ inherit cmake-utils llvm python-r1 git-r3
 DESCRIPTION="Tool for creating Python bindings for C++ libraries"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI=(
-	"git://code.qt.io/pyside/${PN}.git"
-	"https://code.qt.io/git/pyside/${PN}.git"
+	"git://code.qt.io/pyside/pyside-setup.git"
+	"https://code.qt.io/git/pyside/pyside-setup.git"
 )
 #FIXME: Switch to the clang-enabled "dev" branch once stable.
 EGIT_BRANCH="5.6"
@@ -35,6 +35,8 @@ DEPEND="
 	=dev-qt/qtxmlpatterns-${QT_PV}
 "
 RDEPEND="${DEPEND}"
+
+S=${WORKDIR}/${P}/sources/shiboken2
 
 DOCS=( AUTHORS )
 
