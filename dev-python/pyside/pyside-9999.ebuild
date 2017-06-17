@@ -10,8 +10,8 @@ inherit cmake-utils python-r1 virtualx git-r3
 DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI=(
-	"git://code.qt.io/pyside/${PN}.git"
-	"https://code.qt.io/git/pyside/${PN}.git"
+	"git://code.qt.io/pyside/pyside-setup.git"
+	"https://code.qt.io/git/pyside/pyside-setup.git"
 )
 #FIXME: Switch to the clang-enabled "dev" branch once stable.
 EGIT_BRANCH="5.6"
@@ -77,15 +77,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-src_prepare() {
-	#FIXME: Remove the following "sed" patch after this upstream issue is closed:
-	#    https://bugreports.qt.io/browse/PYSIDE-502
-	# Force the optional "Qt5Concurrent", "Qt5Gui", "Qt5Network",
-	# "Qt5PrintSupport", "Qt5Sql", "Qt5Test", and "Qt5Widgets" packages
-	# erroneously marked as mandatory to be optional.
-	sed -i -e 's/^\(CHECK_PACKAGE_FOUND(Qt5\(Concurrent\|Gui\|Network\|PrintSupport\|Sql\|Test\|Widgets\)\))$/\1 opt)/' \
-		PySide2/CMakeLists.txt || die
+S=${WORKDIR}/${P}/sources/pyside2
 
+src_prepare() {
 	if use prefix; then
 		cp "${FILESDIR}"/rpath.cmake . || die
 		sed -i -e '1iinclude(rpath.cmake)' CMakeLists.txt || die
@@ -95,10 +89,7 @@ src_prepare() {
 }
 
 src_configure() {
-	# For each line of the form "CHECK_PACKAGE_FOUND(${PACKAGE_NAME} opt)" in
-	# PySide2/CMakeLists.txt defining an optional dependency, an option of the
-	# form "-DCMAKE_DISABLE_FIND_PACKAGE_${PACKAGE_NAME}=$(usex !${USE_FLAG})"
-	# is passed to cmake here conditionally disabling this dependency.
+	# See COLLECT_MODULE_IF_FOUND macros in CMakeLists.txt
 	local mycmakeargs=(
 		-DBUILD_TESTS=$(usex test)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Concurrent=$(usex !concurrent)
