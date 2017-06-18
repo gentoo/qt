@@ -114,7 +114,7 @@ src_install() {
 	qt5-build_src_install
 
 	# bug 601472
-	if [[ ! -f ${D%/}/${QT5_LIBDIR}/libQt5WebEngine.so ]]; then
+	if [[ ! -f ${D%/}${QT5_LIBDIR}/libQt5WebEngine.so ]]; then
 		die "${CATEGORY}/${PF} failed to build anything. Please report to https://bugs.gentoo.org/"
 	fi
 
