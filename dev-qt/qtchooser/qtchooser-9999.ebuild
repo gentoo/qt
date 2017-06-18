@@ -6,10 +6,10 @@ EAPI=6
 inherit qmake-utils toolchain-funcs git-r3
 
 DESCRIPTION="Qt4/Qt5 version chooser"
-HOMEPAGE="https://code.qt.io/cgit/qt/qtchooser.git/"
+HOMEPAGE="https://code.qt.io/cgit/qtsdk/qtchooser.git/"
 EGIT_REPO_URI=(
-	"git://code.qt.io/qt/${PN}.git"
-	"https://code.qt.io/git/qt/${PN}.git"
+	"git://code.qt.io/qtsdk/${PN}.git"
+	"https://code.qt.io/git/qtsdk/${PN}.git"
 	"https://github.com/qtproject/${PN}.git"
 )
 
