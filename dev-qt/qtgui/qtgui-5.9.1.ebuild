@@ -71,6 +71,8 @@ PDEPEND="
 	ibus? ( app-i18n/ibus )
 "
 
+PATCHES=( "${FILESDIR}/${P}-atspi.patch" )
+
 QT5_TARGET_SUBDIRS=(
 	src/gui
 	src/openglextensions
