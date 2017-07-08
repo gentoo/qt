@@ -23,16 +23,16 @@ IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # Minimum version of Qt required.
-QT_PV="5.6*:5"
+QT_PV="5.6:5"
 
 #FIXME: Add "sys-devel/clang:*" after switching to the "dev" branch.
 DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
-	=dev-qt/qtcore-${QT_PV}
-	=dev-qt/qtxml-${QT_PV}
-	=dev-qt/qtxmlpatterns-${QT_PV}
+	>=dev-qt/qtcore-${QT_PV}
+	>=dev-qt/qtxml-${QT_PV}
+	>=dev-qt/qtxmlpatterns-${QT_PV}
 "
 RDEPEND="${DEPEND}"
 

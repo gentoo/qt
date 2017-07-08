@@ -47,33 +47,33 @@ REQUIRED_USE="
 
 # Minimum version of Qt required, derived from the CMakeLists.txt line:
 #   find_package(Qt5 ${QT_PV} REQUIRED COMPONENTS Core)
-QT_PV="5.6*:5"
+QT_PV="5.6:5"
 
 DEPEND="
 	${PYTHON_DEPS}
 	>=dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
-	=dev-qt/qtcore-${QT_PV}
-	=dev-qt/qtxml-${QT_PV}
-	concurrent? ( =dev-qt/qtconcurrent-${QT_PV} )
-	declarative? ( =dev-qt/qtdeclarative-${QT_PV}[widgets?] )
-	designer? ( =dev-qt/designer-${QT_PV} )
-	gui? ( =dev-qt/qtgui-${QT_PV} )
-	help? ( =dev-qt/qthelp-${QT_PV} )
-	multimedia? ( =dev-qt/qtmultimedia-${QT_PV}[widgets?] )
-	network? ( =dev-qt/qtnetwork-${QT_PV} )
-	opengl? ( =dev-qt/qtopengl-${QT_PV} )
-	printsupport? ( =dev-qt/qtprintsupport-${QT_PV} )
-	script? ( =dev-qt/qtscript-${QT_PV} )
-	sql? ( =dev-qt/qtsql-${QT_PV} )
-	svg? ( =dev-qt/qtsvg-${QT_PV} )
-	testlib? ( =dev-qt/qttest-${QT_PV} )
-	webchannel? ( =dev-qt/qtwebchannel-${QT_PV} )
-	webengine? ( =dev-qt/qtwebengine-${QT_PV}[widgets] )
-	webkit? ( =dev-qt/qtwebkit-${QT_PV}[printsupport] )
-	websockets? ( =dev-qt/qtwebsockets-${QT_PV} )
-	widgets? ( =dev-qt/qtwidgets-${QT_PV} )
-	x11extras? ( =dev-qt/qtx11extras-${QT_PV} )
-	xmlpatterns? ( =dev-qt/qtxmlpatterns-${QT_PV} )
+	>=dev-qt/qtcore-${QT_PV}
+	>=dev-qt/qtxml-${QT_PV}
+	concurrent? ( >=dev-qt/qtconcurrent-${QT_PV} )
+	declarative? ( >=dev-qt/qtdeclarative-${QT_PV}[widgets?] )
+	designer? ( >=dev-qt/designer-${QT_PV} )
+	gui? ( >=dev-qt/qtgui-${QT_PV} )
+	help? ( >=dev-qt/qthelp-${QT_PV} )
+	multimedia? ( >=dev-qt/qtmultimedia-${QT_PV}[widgets?] )
+	network? ( >=dev-qt/qtnetwork-${QT_PV} )
+	opengl? ( >=dev-qt/qtopengl-${QT_PV} )
+	printsupport? ( >=dev-qt/qtprintsupport-${QT_PV} )
+	script? ( >=dev-qt/qtscript-${QT_PV} )
+	sql? ( >=dev-qt/qtsql-${QT_PV} )
+	svg? ( >=dev-qt/qtsvg-${QT_PV} )
+	testlib? ( >=dev-qt/qttest-${QT_PV} )
+	webchannel? ( >=dev-qt/qtwebchannel-${QT_PV} )
+	webengine? ( >=dev-qt/qtwebengine-${QT_PV}[widgets] )
+	webkit? ( >=dev-qt/qtwebkit-${QT_PV}[printsupport] )
+	websockets? ( >=dev-qt/qtwebsockets-${QT_PV} )
+	widgets? ( >=dev-qt/qtwidgets-${QT_PV} )
+	x11extras? ( >=dev-qt/qtx11extras-${QT_PV} )
+	xmlpatterns? ( >=dev-qt/qtxmlpatterns-${QT_PV} )
 "
 RDEPEND="${DEPEND}"
 
