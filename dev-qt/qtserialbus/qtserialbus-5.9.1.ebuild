@@ -4,7 +4,7 @@
 EAPI=6
 inherit qt5-build
 
-DESCRIPTION="Support for CAN and potentially other serial buses."
+DESCRIPTION="Support for CAN and other serial buses"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc64 ~x86"
@@ -14,10 +14,6 @@ IUSE=""
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
-    ~dev-qt/qtserialport-${PV}
+	~dev-qt/qtserialport-${PV}
 "
 RDEPEND="${DEPEND}"
-
-src_prepare() {
-	qt5-build_src_prepare
-}
