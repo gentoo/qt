@@ -15,6 +15,7 @@ IUSE="qml"
 
 RDEPEND="
 	~dev-qt/qtcore-${PV}
+	~dev-qt/qtdbus-${PV}
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
 DEPEND="${RDEPEND}"
