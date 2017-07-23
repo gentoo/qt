@@ -33,11 +33,7 @@ src_prepare() {
 		src/plugins/shellintegration/ivi-shell/ivi-shell.pro \
 		tests/auto/compositor/compositor/compositor.pro
 
+	use xcomposite || rm -r config.tests/xcomposite || die
+
 	qt5-build_src_prepare
-}
-
-src_configure() {
-	qt_use_compile_test xcomposite
-
-	qt5-build_src_configure
 }
