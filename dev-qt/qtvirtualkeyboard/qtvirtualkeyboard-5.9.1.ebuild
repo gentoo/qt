@@ -2,11 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-
-PLOCALES="ar da de en es fa fi fr hi it nb pl pt ro ru sv"
-# TODO: forcing 3rdparty libs PLOCALES+=" ja ko zh_CN zh_TW"
-
-inherit qt5-build l10n
+inherit qt5-build
 
 DESCRIPTION="Virtual keyboard plugin for the Qt5 framework"
 
@@ -14,6 +10,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
+# TODO: unbudle libraries for more layouts
 IUSE="handwriting +spell +xcb"
 
 DEPEND="
@@ -31,12 +28,11 @@ src_configure() {
 		$(usex handwriting CONFIG+=lipi-toolkit "")
 		$(usex spell "" CONFIG+=disable-hunspell)
 		$(usex xcb "" CONFIG+=disable-desktop)
+		CONFIG+="lang-ar_AR lang-da_DK lang-de_DE lang-en_GB \
+                        lang-es_ES lang-fa_FA lang-fi_FI lang-fr_FR \
+                        lang-hi_IN lang-it_IT lang-nb_NO lang-pl_PL \
+                        lang-pt_PT lang-ro_RO lang-ru_RU lang-sv_SE"
 	)
-
-	local x
-	for x in $(l10n_get_locales); do
-		use linguas_${x} && myqmakeargs+=( CONFIG+=lang-${x} )
-	done
 
 	qt5-build_src_configure
 }
