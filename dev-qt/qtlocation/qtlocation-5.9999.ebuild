@@ -12,14 +12,18 @@ fi
 
 IUSE=""
 
-DEPEND="
+RDEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
 	~dev-qt/qtpositioning-${PV}
+	~dev-qt/qtsql-${PV}
+	sys-libs/zlib
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}
+	~dev-qt/qtconcurrent-${PV}
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/3rdparty/clipper
