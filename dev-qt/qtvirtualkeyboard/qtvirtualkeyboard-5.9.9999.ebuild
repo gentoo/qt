@@ -21,7 +21,7 @@ DEPEND="
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtsvg-${PV}
-	spell? ( app-text/hunspell )
+	spell? ( app-text/hunspell:= )
 	xcb? ( x11-libs/libxcb:= )
 "
 RDEPEND="${DEPEND}"
