@@ -30,7 +30,7 @@ src_prepare() {
 
 src_configure() {
 	local myqmakeargs=(
-		$(usex jit '' JAVASCRIPTCORE_JIT=no)
+		JAVASCRIPTCORE_JIT=$(usex jit 'yes' 'no')
 	)
 	qt5-build_src_configure
 }
