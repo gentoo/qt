@@ -13,8 +13,8 @@ fi
 
 # TODO: qttestlib
 
-IUSE="geolocation gstreamer gstreamer010 +jit multimedia opengl orientation printsupport qml webchannel webp"
-REQUIRED_USE="?? ( gstreamer gstreamer010 multimedia )"
+IUSE="geolocation gstreamer +jit multimedia opengl orientation printsupport qml webchannel webp"
+REQUIRED_USE="?? ( gstreamer multimedia )"
 
 RDEPEND="
 	dev-db/sqlite:3
@@ -40,11 +40,6 @@ RDEPEND="
 		dev-libs/glib:2
 		media-libs/gstreamer:1.0
 		media-libs/gst-plugins-base:1.0
-	)
-	gstreamer010? (
-		dev-libs/glib:2
-		media-libs/gstreamer:0.10
-		media-libs/gst-plugins-base:0.10
 	)
 	multimedia? ( ~dev-qt/qtmultimedia-${PV}[widgets] )
 	opengl? ( ~dev-qt/qtopengl-${PV} )
@@ -86,9 +81,7 @@ src_prepare() {
 		Source/WebKit2/Target.pri \
 		Source/WebKit2/WebKit2.pri
 
-	if use gstreamer010; then
-		PATCHES+=("${FILESDIR}/${PN}-5.8.0-use-gstreamer010.patch")
-	elif ! use gstreamer; then
+	if ! use gstreamer; then
 		PATCHES+=("${FILESDIR}/${PN}-5.8.0-disable-gstreamer.patch")
 	fi
 
