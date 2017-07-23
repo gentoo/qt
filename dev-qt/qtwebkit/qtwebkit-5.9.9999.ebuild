@@ -13,7 +13,7 @@ fi
 
 # TODO: qttestlib
 
-IUSE="geolocation gstreamer +jit multimedia opengl orientation printsupport qml webchannel webp"
+IUSE="geolocation gstreamer gles2 +jit multimedia opengl orientation printsupport qml webchannel webp"
 REQUIRED_USE="?? ( gstreamer multimedia )"
 
 RDEPEND="
@@ -42,7 +42,10 @@ RDEPEND="
 		media-libs/gst-plugins-base:1.0
 	)
 	multimedia? ( ~dev-qt/qtmultimedia-${PV}[widgets] )
-	opengl? ( ~dev-qt/qtopengl-${PV} )
+	opengl? (
+		~dev-qt/qtgui-${PV}[gles2=]
+		~dev-qt/qtopengl-${PV}
+	)
 	orientation? ( ~dev-qt/qtsensors-${PV} )
 	printsupport? ( ~dev-qt/qtprintsupport-${PV} )
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
