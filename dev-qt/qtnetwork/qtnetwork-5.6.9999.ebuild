@@ -19,7 +19,7 @@ DEPEND="
 	connman? ( ~dev-qt/qtdbus-${PV} )
 	libproxy? ( net-libs/libproxy )
 	networkmanager? ( ~dev-qt/qtdbus-${PV} )
-	ssl? ( dev-libs/openssl:0[bindist=] )
+	ssl? ( dev-libs/openssl:0=[bindist=] )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )
