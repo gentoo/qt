@@ -15,11 +15,12 @@ IUSE="widgets"
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgraphicaleffects-${PV}
 	~dev-qt/qtgui-${PV}
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	~dev-qt/qtgraphicaleffects-${PV}
+"
 
 src_prepare() {
 	qt_use_disable_mod widgets widgets \
