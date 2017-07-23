@@ -72,6 +72,8 @@ src_prepare() {
 		Tools/qmake/mkspecs/features/{force_static_libs_as_shared,unix/default_post}.prf \
 		|| die
 
+	qt_use_disable_config opengl opengl Tools/qmake/mkspecs/features/features.prf
+
 	qt_use_disable_mod geolocation positioning Tools/qmake/mkspecs/features/features.prf
 	qt_use_disable_mod multimedia multimediawidgets Tools/qmake/mkspecs/features/features.prf
 	qt_use_disable_mod orientation sensors Tools/qmake/mkspecs/features/features.prf
@@ -88,8 +90,6 @@ src_prepare() {
 	# bug 562396
 	use jit || PATCHES+=("${FILESDIR}/${PN}-5.5.1-disable-jit.patch")
 
-	use opengl || sed -i -e '/contains(QT_CONFIG, opengl): WEBKIT_CONFIG += use_3d_graphics/d' \
-		Tools/qmake/mkspecs/features/features.prf || die
 	use webp || sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
 		Tools/qmake/mkspecs/features/features.prf || die
 
