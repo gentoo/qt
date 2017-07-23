@@ -14,6 +14,7 @@ IUSE=""
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
+	~dev-qt/qtnetwork-${PV}
 	~dev-qt/qtserialport-${PV}
 "
 RDEPEND="${DEPEND}"
