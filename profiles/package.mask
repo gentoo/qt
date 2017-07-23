@@ -44,6 +44,7 @@
 =dev-qt/qtscxml-5.9.1*
 =dev-qt/qtsensors-5.9.1*
 =dev-qt/qtserialport-5.9.1*
+=dev-qt/qtspeech-5.9.1*
 =dev-qt/qtsql-5.9.1*
 =dev-qt/qtsvg-5.9.1*
 =dev-qt/qttest-5.9.1*
