@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="network widgets"
+IUSE="+network +widgets"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
