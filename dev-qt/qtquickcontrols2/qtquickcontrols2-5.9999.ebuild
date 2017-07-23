@@ -10,12 +10,20 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~x86"
 fi
 
-IUSE=""
+IUSE="widgets"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgraphicaleffects-${PV}
 	~dev-qt/qtgui-${PV}
+	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	qt_use_disable_mod widgets widgets \
+		src/imports/platform/platform.pro
+
+	qt5-build_src_prepare
+}
