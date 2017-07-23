@@ -11,12 +11,12 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE="+ssl widgets"
+IUSE="network widgets"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
-	~dev-qt/qtnetwork-${PV}[ssl=]
+	network? ( ~dev-qt/qtnetwork-${PV}[ssl] )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
 RDEPEND="${DEPEND}"
@@ -26,6 +26,9 @@ QT5_TARGET_SUBDIRS=(
 )
 
 src_prepare() {
+	qt_use_disable_mod network network \
+		src/qtdiag/qtdiag.pro
+
 	qt_use_disable_mod widgets widgets \
 		src/qtdiag/qtdiag.pro
 
