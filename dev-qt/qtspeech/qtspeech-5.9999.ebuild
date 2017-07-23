@@ -10,7 +10,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# TODO: flite plugin (doesn't build)
+# TODO: flite plugin - needs 2.0.0 (not yet in tree)
 IUSE=""
 
 RDEPEND="
