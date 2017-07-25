@@ -27,9 +27,7 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	rm -r src/3rdparty/assimp/{code,contrib,include} || die
 
-	qt5-build_src_prepare
+	qt_use_disable_mod qml quick src/src.pro
 
-	if ! use qml; then
-		sed -i -e "/quick3d/s/^/#/" src/src.pro || die
-	fi
+	qt5-build_src_prepare
 }
