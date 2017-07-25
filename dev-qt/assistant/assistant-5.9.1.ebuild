@@ -21,7 +21,7 @@ DEPEND="
 	~dev-qt/qtprintsupport-${PV}
 	~dev-qt/qtsql-${PV}[sqlite]
 	~dev-qt/qtwidgets-${PV}
-	webkit? ( ~dev-qt/qtwebkit-${PV} )
+	webkit? ( >=dev-qt/qtwebkit-5.9.1 )
 "
 RDEPEND="${DEPEND}"
 
