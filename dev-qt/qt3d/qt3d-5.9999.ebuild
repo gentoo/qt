@@ -18,7 +18,7 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
-	>=media-libs/assimp-3.1.1
+	>=media-libs/assimp-4.0.0
 	sys-libs/zlib
 	qml? ( ~dev-qt/qtdeclarative-${PV}[gles2=] )
 "
