@@ -26,9 +26,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
-	src/plugins/platformthemes
 	src/tools/uic
 	src/widgets
+	src/plugins/platformthemes
 )
 
 QT5_GENTOO_CONFIG=(
