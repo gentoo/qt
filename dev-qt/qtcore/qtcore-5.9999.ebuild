@@ -42,3 +42,25 @@ src_configure() {
 	)
 	qt5-build_src_configure
 }
+
+src_install() {
+	qt5-build_src_install
+
+	local flags=(
+			ALSA CUPS DBUS EGL EGLFS EGL_X11 EVDEV FONTCONFIG FREETYPE
+			HARFBUZZ IMAGEFORMAT_JPEG IMAGEFORMAT_PNG LIBPROXY MITSHM
+			OPENGL OPENSSL OPENVG PULSEAUDIO SHAPE SSL TSLIB XCURSOR
+			XFIXES XKB XRANDR XRENDER XSYNC ZLIB
+	)
+
+	for flag in ${flags[@]}; do
+		cat >> "${D%/}"/${QT5_HEADERDIR}/QtCore/qconfig.h <<- _EOF_ || die
+
+			#if defined(QT_NO_${flag}) && defined(QT_${flag})
+			# undef QT_NO_${flag}
+			#elif !defined(QT_NO_${flag}) && !defined(QT_${flag})
+			# define QT_NO_${flag}
+			#endif
+		_EOF_
+	done
+}
