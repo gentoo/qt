@@ -25,15 +25,14 @@ else
 fi
 
 DESCRIPTION="A cross-platform web browser using QtWebEngine"
-HOMEPAGE="http://www.qupzilla.com/"
+HOMEPAGE="https://www.qupzilla.com/"
 SRC_URI+=" https://github.com/QupZilla/${PN}-plugins/archive/${PLUGINS_HASH}.tar.gz -> ${PN}-plugins-${PLUGINS_VERSION}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="dbus debug gnome-keyring kde libressl nonblockdialogs"
+IUSE="dbus debug gnome-keyring kwallet libressl nonblockdialogs"
 
 RDEPEND="
-	>=dev-qt/qtconcurrent-5.8:5
 	>=dev-qt/qtcore-5.8:5
 	>=dev-qt/qtdeclarative-5.8:5[widgets]
 	>=dev-qt/qtgui-5.8:5
@@ -47,12 +46,13 @@ RDEPEND="
 	x11-libs/libxcb:=
 	dbus? ( >=dev-qt/qtdbus-5.8:5 )
 	gnome-keyring? ( gnome-base/gnome-keyring )
-	kde? ( kde-frameworks/kwallet:5 )
+	kwallet? ( kde-frameworks/kwallet:5 )
 	libressl? ( dev-libs/libressl:= )
-	!libressl? ( dev-libs/openssl:0 )
+	!libressl? ( dev-libs/openssl:0= )
 "
 DEPEND="${RDEPEND}
 	>=dev-qt/linguist-tools-5.8:5
+	>=dev-qt/qtconcurrent-5.8:5
 	virtual/pkgconfig
 "
 
@@ -95,7 +95,7 @@ src_configure() {
 		DEBUG_BUILD=$(usex debug true '') \
 		DISABLE_DBUS=$(usex dbus '' true) \
 		GNOME_INTEGRATION=$(usex gnome-keyring true '') \
-		KDE_INTEGRATION=$(usex kde true '') \
+		KDE_INTEGRATION=$(usex kwallet true '') \
 		NONBLOCK_JS_DIALOGS=$(usex nonblockdialogs true '')
 
 	eqmake5
