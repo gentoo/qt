@@ -1,9 +1,9 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit cmake-utils fdo-mime gnome2-utils git-r3
+inherit cmake-utils gnome2-utils xdg-utils git-r3
 
 # Upstream names the package PV-rX. We change that to
 # PV_pX so we can use portage revisions.
@@ -27,6 +27,7 @@ CDEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtxml:5
 	dbus? ( dev-qt/qtdbus:5 )
+	ico? ( >=media-gfx/icoutils-0.26.0 )
 "
 DEPEND="${CDEPEND}
 	dev-qt/linguist-tools:5
@@ -34,7 +35,6 @@ DEPEND="${CDEPEND}
 RDEPEND="${CDEPEND}
 	app-admin/sudo
 	>=sys-apps/which-2.19
-	ico? ( >=media-gfx/icoutils-0.26.0 )
 	iso? ( sys-fs/fuseiso )
 "
 
@@ -56,16 +56,12 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-pkg_preinst() {
-	gnome2_icon_savelist
-}
-
 pkg_postinst() {
-	fdo-mime_desktop_database_update
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
 }
 
 pkg_postrm() {
-	fdo-mime_desktop_database_update
 	gnome2_icon_cache_update
+	xdg_desktop_database_update
 }
