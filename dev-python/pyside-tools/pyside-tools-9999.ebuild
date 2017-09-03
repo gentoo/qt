@@ -19,10 +19,7 @@ inherit cmake-utils python-r1 virtualx git-r3
 
 DESCRIPTION="PySide development tools (lupdate, rcc, uic)"
 HOMEPAGE="https://wiki.qt.io/PySide2"
-EGIT_REPO_URI=(
-	"git://code.qt.io/pyside/${PN}.git"
-	"https://code.qt.io/git/pyside/${PN}.git"
-)
+EGIT_REPO_URI="https://code.qt.io/pyside/${PN}.git"
 #FIXME: Switch to the clang-enabled "dev" branch once stable.
 EGIT_BRANCH="5.6"
 
