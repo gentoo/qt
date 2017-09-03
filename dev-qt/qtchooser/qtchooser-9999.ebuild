@@ -7,7 +7,7 @@ inherit qmake-utils toolchain-funcs git-r3
 
 DESCRIPTION="Qt4/Qt5 version chooser"
 HOMEPAGE="https://code.qt.io/cgit/qtsdk/qtchooser.git/"
-EGIT_REPO_URI=("https://code.qt.io/qtsdk/qtchooser.git")
+EGIT_REPO_URI="https://code.qt.io/qtsdk/qtchooser.git"
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
