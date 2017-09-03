@@ -7,21 +7,17 @@ inherit qmake-utils toolchain-funcs git-r3
 
 DESCRIPTION="Qt4/Qt5 version chooser"
 HOMEPAGE="https://code.qt.io/cgit/qtsdk/qtchooser.git/"
-EGIT_REPO_URI=(
-	"git://code.qt.io/qtsdk/${PN}.git"
-	"https://code.qt.io/git/qtsdk/${PN}.git"
-	"https://github.com/qtproject/${PN}.git"
-)
+EGIT_REPO_URI=("https://code.qt.io/qtsdk/qtchooser.git")
 
 LICENSE="|| ( LGPL-2.1 GPL-3 )"
 SLOT="0"
 KEYWORDS=""
-IUSE="qt5 test"
+IUSE="test"
 
-DEPEND="qt5? ( test? (
+DEPEND="test? (
 		dev-qt/qtcore:5
 		dev-qt/qttest:5
-	) )"
+	)"
 RDEPEND="
 	!<dev-qt/assistant-4.8.6:4
 	!<dev-qt/designer-4.8.6:4
@@ -61,8 +57,6 @@ src_compile() {
 }
 
 src_test() {
-	use qt5 || return
-
 	pushd tests/auto >/dev/null || die
 	eqmake5
 	popd >/dev/null || die
