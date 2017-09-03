@@ -13,7 +13,7 @@ fi
 IUSE="egl +libinput xcomposite"
 
 DEPEND="
-	>=dev-libs/wayland-1.4.0
+	>=dev-libs/wayland-1.6.0
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}[egl=,libinput?]
