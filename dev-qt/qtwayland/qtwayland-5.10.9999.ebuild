@@ -10,14 +10,14 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-IUSE="egl +libinput xcomposite"
+IUSE="+libinput xcomposite"
 
 DEPEND="
 	>=dev-libs/wayland-1.6.0
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}[egl=,libinput?]
-	media-libs/mesa[egl?]
+	~dev-qt/qtgui-${PV}[egl,libinput?]
+	media-libs/mesa[egl]
 	>=x11-libs/libxkbcommon-0.2.0
 	xcomposite? (
 		x11-libs/libX11
