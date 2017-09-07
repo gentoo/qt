@@ -74,6 +74,9 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.0-paxmark-mksnapshot.patch" )
 
+	# bug 620444 - ensure local headers are used
+	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
+
 	qt_use_disable_config alsa alsa src/core/config/linux.pri
 	qt_use_disable_config pulseaudio pulseaudio src/core/config/linux.pri
 
