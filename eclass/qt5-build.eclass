@@ -615,12 +615,7 @@ qt5_base_configure() {
 		$([[ ${QT5_MINOR_VERSION} -lt 8 ]] && echo -iconv)
 
 		# disable everything to prevent automagic deps (part 3)
-		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig
-
-		# FIXME
-		# since 5.8, disabling dbus generates a QT_NO_DBUS in QtCore/qconfig.h,
-		# thus specify runtime loading of libdbus to avoid the #define
-		$([[ ${QT5_MINOR_VERSION} -ge 8 ]] && echo -dbus-runtime || echo -no-dbus)
+		-no-cups -no-evdev -no-tslib -no-icu -no-fontconfig -no-dbus
 
 		# let portage handle stripping
 		-no-strip
@@ -684,6 +679,12 @@ qt5_base_configure() {
 	"${S}"/configure "${conf[@]}" || die "configure failed"
 
 	popd >/dev/null || die
+
+	if [[ ${QT5_MINOR_VERSION} -ge 8 ]]; then
+		# a forwarding header is no longer created since 5.8, causing the system
+		# config to always be used. bug 599636
+		cp src/corelib/global/qconfig.h include/QtCore/ || die
+	fi
 }
 
 # @FUNCTION: qt5_qmake
