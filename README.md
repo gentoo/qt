@@ -19,10 +19,6 @@ recommend you copy the most applicable set to your `/etc/portage/sets/`
 directory, rename it (to prevent portage error on set redefinition), and
 customize it to your own wishes.
 
-KDE4 users should note that at this point they need to use the
-`media-libs/phonon` package instead of `dev-qt/qtphonon`. This is the reason
-why `dev-qt/qtphonon` is commented out in the `qt4` set.
-
 If you have questions, you can find us on IRC in #gentoo-qt on Freenode or at
 [qt@gentoo.org](mailto:qt@gentoo.org).
 
