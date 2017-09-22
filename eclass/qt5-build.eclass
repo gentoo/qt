@@ -193,10 +193,6 @@ qt5-build_src_prepare() {
 		sed -i -e "/^QMAKE_CONF_COMPILER=/ s:=.*:=\"$(tc-getCXX)\":" \
 			configure || die "sed failed (QMAKE_CONF_COMPILER)"
 
-		# Respect toolchain and flags in config.tests
-		find config.tests/unix -name '*.test' -type f -execdir \
-			sed -i -e 's/-nocache //' '{}' + || die
-
 		# Don't inject -msse/-mavx/... into CXXFLAGS when detecting
 		# compiler support for extended instruction sets (bug 552942)
 		find config.tests/common -name '*.pro' -type f -execdir \
@@ -679,12 +675,6 @@ qt5_base_configure() {
 	"${S}"/configure "${conf[@]}" || die "configure failed"
 
 	popd >/dev/null || die
-
-	if [[ ${QT5_MINOR_VERSION} -ge 8 ]]; then
-		# a forwarding header is no longer created since 5.8, causing the system
-		# config to always be used. bug 599636
-		cp src/corelib/global/qconfig.h include/QtCore/ || die
-	fi
 }
 
 # @FUNCTION: qt5_qmake
