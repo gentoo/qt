@@ -10,19 +10,23 @@ inherit cmake-utils llvm python-r1 git-r3
 DESCRIPTION="Tool for creating Python bindings for C++ libraries"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
-#FIXME: Switch to the clang-enabled "dev" branch once stable.
-EGIT_BRANCH="5.6"
+EGIT_BRANCH="5.9"
 
-LICENSE="|| ( GPL-2+ LGPL-3 ) GPL-3"
+# The "sources/shiboken2/libshiboken" directory is triple-licensed under the GPL
+# v2, v3+, and LGPL v3. All remaining files are licensed under the GPL v3 with
+# version 1.0 of a Qt-specific exception enabling shiboken2 output to be
+# arbitrarily relicensed. (TODO)
+LICENSE="|| ( GPL-2 GPL-3+ LGPL-3 ) GPL-3"
 SLOT="2"
 KEYWORDS=""
-IUSE="test"
+IUSE="numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # Minimum version of Qt required.
-QT_PV="5.6*:5"
+QT_PV="5.9*:5"
 
-#FIXME: Add "sys-devel/clang:*" after switching to the "dev" branch.
+#FIXME: Determine the maximum supported version of clang.
+#FIXME: Determine exactly which versions of numpy are supported.
 DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
@@ -30,6 +34,8 @@ DEPEND="
 	=dev-qt/qtcore-${QT_PV}
 	=dev-qt/qtxml-${QT_PV}
 	=dev-qt/qtxmlpatterns-${QT_PV}
+	>=sys-devel/clang-3.9.1:=
+	numpy? ( dev-python/numpy )
 "
 RDEPEND="${DEPEND}"
 
@@ -37,9 +43,17 @@ S=${WORKDIR}/${P}/sources/shiboken2
 
 DOCS=( AUTHORS )
 
+# Ensure the path returned by get_llvm_prefix() contains clang as well.
+llvm_check_deps() {
+	has_version "sys-devel/clang:${LLVM_SLOT}"
+}
+
 src_prepare() {
-	#FIXME: Uncomment after switching to the "dev" branch.
-	# sed -i -e "/^find_library(CLANG_LIBRARY/ s~/lib)$~/$(get_libdir))~" CMakeLists.txt || die
+	#FIXME: File an upstream issue requesting a sane way to disable NumPy support.
+	if ! use numpy; then
+		sed -i -e '/print(os\.path\.realpath(numpy))/d' \
+			libshiboken/CMakeLists.txt || die
+	fi
 
 	if use prefix; then
 		cp "${FILESDIR}"/rpath.cmake . || die
@@ -55,15 +69,8 @@ src_configure() {
 			-DBUILD_TESTS=$(usex test)
 			-DPYTHON_EXECUTABLE="${PYTHON}"
 		)
-
-		#FIXME: Uncomment after switching to the "dev" branch.
-		#FIXME: "CMakeLists.txt" currently requires that callers manually set
-		#this environment variable to the absolute path of the directory
-		#containing clang libraries rather than magically finding this path
-		#(e.g., via "find_package(CLang)"). If this changes, remove this option.
-		# CLANG_INSTALL_DIR="$(get_llvm_prefix)" cmake-utils_src_configure
-
-		cmake-utils_src_configure
+		# CMakeLists.txt expects LLVM_INSTALL_DIR as an environment variable.
+		LLVM_INSTALL_DIR="$(get_llvm_prefix)" cmake-utils_src_configure
 	}
 	python_foreach_impl configuration
 }
