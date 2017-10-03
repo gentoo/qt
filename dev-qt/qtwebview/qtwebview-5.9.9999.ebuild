@@ -17,6 +17,5 @@ DEPEND="
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtwebengine-${PV}
-
 "
 RDEPEND="${DEPEND}"
