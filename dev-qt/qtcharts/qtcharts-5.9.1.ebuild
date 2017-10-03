@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples/charts")
 inherit qt5-build
 
 DESCRIPTION="Chart component library for the Qt5 framework"
@@ -23,7 +24,8 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	qt_use_disable_mod qml quick \
-		src/src.pro
+		src/src.pro \
+		examples/charts/charts.pro
 
 	qt5-build_src_prepare
 }

@@ -5,39 +5,36 @@ EAPI=6
 QT5_MODULE="qtbase"
 inherit qt5-build
 
-DESCRIPTION="Qt5 module for inter-process communication over the D-Bus protocol"
+DESCRIPTION="Examples for cross-platform application development framework"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-IUSE="examples"
+IUSE="gles2"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
-	>=sys-apps/dbus-1.4.20
+	~dev-qt/qtgui-${PV}[gles2=]
+	~dev-qt/qtwidgets-${PV}[gles2=]
+	~dev-qt/qtnetwork-${PV}
+	~dev-qt/qtconcurrent-${PV}
+	~dev-qt/qtdbus-${PV}
+	~dev-qt/qtopengl-${PV}[gles2=]
+	~dev-qt/qtprintsupport-${PV}
+	~dev-qt/qtsql-${PV}
+	~dev-qt/qttest-${PV}
+	~dev-qt/qtxml-${PV}
 "
 RDEPEND="${DEPEND}"
-PDEPEND="
-	examples? (
-		~dev-qt/qtcore-examples-${PV}
-	)
-"
 
 QT5_TARGET_SUBDIRS=(
-	src/dbus
-	src/tools/qdbusxml2cpp
-	src/tools/qdbuscpp2xml
-)
-
-QT5_GENTOO_CONFIG=(
-	:dbus
-	:dbus-linked:
+	examples
 )
 
 src_configure() {
 	local myconf=(
-		-dbus-linked
+		-opengl $(usex gles2 es2 desktop)
 	)
 	qt5-build_src_configure
 }

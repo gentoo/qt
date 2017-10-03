@@ -3,6 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 python3_{4,5} )
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit python-any-r1 qt5-build
 
 DESCRIPTION="The QML and Quick modules for the Qt5 framework"
@@ -12,6 +13,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="gles2 +jit localstorage +widgets xml"
+
+REQUIRED_USE="examples? ( widgets )"
 
 # qtgui[gles2=] is needed because of bug 504322
 COMMON_DEPEND="
@@ -24,6 +27,9 @@ COMMON_DEPEND="
 	xml? (
 		~dev-qt/qtnetwork-${PV}
 		~dev-qt/qtxmlpatterns-${PV}
+	)
+	examples? (
+		~dev-qt/qtnetwork-${PV}
 	)
 "
 DEPEND="${COMMON_DEPEND}
@@ -45,7 +51,8 @@ src_prepare() {
 		tests/auto/auto.pro \
 		tools/tools.pro \
 		tools/qmlscene/qmlscene.pro \
-		tools/qml/qml.pro
+		tools/qml/qml.pro \
+		examples/quick/quick.pro
 
 	qt_use_disable_mod xml xmlpatterns \
 		src/imports/imports.pro \

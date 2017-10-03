@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit qt5-build
 
 DESCRIPTION="Set of next generation Qt Quick controls for the Qt5 framework"

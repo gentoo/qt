@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples/qt3d")
 inherit qt5-build
 
 DESCRIPTION="The 3D module for the Qt5 framework"

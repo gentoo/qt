@@ -3,6 +3,7 @@
 
 EAPI=6
 QT5_MODULE="qttools"
+QT5_EXAMPLES_SUBDIRS=("examples/assistant")
 inherit qt5-build
 
 DESCRIPTION="Tool for viewing on-line documentation in Qt help file format"

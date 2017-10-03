@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit qt5-build
 
 DESCRIPTION="Qt5 module for integrating C++ and QML applications with HTML/JavaScript clients"
@@ -12,9 +13,15 @@ fi
 
 IUSE="qml"
 
+REQUIRED_USE="examples? ( qml )"
+
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
+	examples? (
+		~dev-qt/qtwidgets-${PV}
+		~dev-qt/qtwebsockets-${PV}
+	)
 "
 RDEPEND="${DEPEND}"
 

@@ -3,6 +3,7 @@
 
 EAPI=6
 QT5_MODULE="qttools"
+QT5_EXAMPLES_SUBDIRS=("examples/help" "examples/uitools")
 inherit qt5-build
 
 DESCRIPTION="Qt5 module for integrating online documentation into applications"

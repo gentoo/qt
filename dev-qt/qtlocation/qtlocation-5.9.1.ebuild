@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples/location")
 inherit qt5-build
 
 DESCRIPTION="The Location module for the Qt5 framework"

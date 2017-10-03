@@ -3,6 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit multiprocessing pax-utils python-any-r1 qt5-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt5 C++ and QML applications"
@@ -12,6 +13,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
+
+REQUIRED_USE="examples? ( widgets )"
 
 RDEPEND="
 	app-arch/snappy:=
@@ -61,6 +64,9 @@ RDEPEND="
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( dev-libs/icu:= )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
+	examples? (
+		~dev-qt/qtprintsupport-${PV}
+	)
 "
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}

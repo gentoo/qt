@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+QT5_EXAMPLES_SUBDIRS=("examples")
 inherit qt5-build
 
 DESCRIPTION="Set of controls used in conjunction with Qt Quick to build complete interfaces"
@@ -12,11 +13,17 @@ fi
 
 IUSE="+widgets"
 
+REQUIRED_USE="examples? ( widgets )"
+
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
+	examples? (
+		~dev-qt/qtnetwork-${PV}
+		~dev-qt/qtsql-${PV}
+	)
 "
 RDEPEND="${DEPEND}"
 
