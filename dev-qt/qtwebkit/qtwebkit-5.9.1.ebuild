@@ -3,6 +3,7 @@
 
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
+QT_MIN_VER="5.9.1"
 inherit python-any-r1 qt5-build
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
@@ -22,11 +23,11 @@ RDEPEND="
 	>=dev-libs/leveldb-1.18-r1
 	dev-libs/libxml2:2
 	dev-libs/libxslt
-	~dev-qt/qtcore-${PV}[icu]
-	~dev-qt/qtgui-${PV}
-	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtsql-${PV}
-	~dev-qt/qtwidgets-${PV}
+	>=dev-qt/qtcore-${QT_MIN_VER}[icu]
+	>=dev-qt/qtgui-${QT_MIN_VER}
+	>=dev-qt/qtnetwork-${QT_MIN_VER}
+	>=dev-qt/qtsql-${QT_MIN_VER}
+	>=dev-qt/qtwidgets-${QT_MIN_VER}
 	media-libs/fontconfig:1.0
 	media-libs/libpng:0=
 	>=sys-libs/zlib-1.2.5
@@ -35,21 +36,21 @@ RDEPEND="
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXrender
-	geolocation? ( ~dev-qt/qtpositioning-${PV} )
+	geolocation? ( >=dev-qt/qtpositioning-${QT_MIN_VER} )
 	gstreamer? (
 		dev-libs/glib:2
 		media-libs/gstreamer:1.0
 		media-libs/gst-plugins-base:1.0
 	)
-	multimedia? ( ~dev-qt/qtmultimedia-${PV}[widgets] )
+	multimedia? ( >=dev-qt/qtmultimedia-${QT_MIN_VER}[widgets] )
 	opengl? (
-		~dev-qt/qtgui-${PV}[gles2=]
-		~dev-qt/qtopengl-${PV}
+		>=dev-qt/qtgui-${QT_MIN_VER}[gles2=]
+		>=dev-qt/qtopengl-${QT_MIN_VER}
 	)
-	orientation? ( ~dev-qt/qtsensors-${PV} )
-	printsupport? ( ~dev-qt/qtprintsupport-${PV} )
-	qml? ( ~dev-qt/qtdeclarative-${PV} )
-	webchannel? ( ~dev-qt/qtwebchannel-${PV} )
+	orientation? ( >=dev-qt/qtsensors-${QT_MIN_VER} )
+	printsupport? ( >=dev-qt/qtprintsupport-${QT_MIN_VER} )
+	qml? ( >=dev-qt/qtdeclarative-${QT_MIN_VER} )
+	webchannel? ( >=dev-qt/qtwebchannel-${QT_MIN_VER} )
 	webp? ( media-libs/libwebp:0= )
 "
 DEPEND="${RDEPEND}
