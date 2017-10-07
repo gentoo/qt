@@ -21,7 +21,7 @@ DEPEND="
 	~dev-qt/qtwidgets-${PV}
 	~dev-qt/qtxml-${PV}
 	declarative? ( ~dev-qt/qtdeclarative-${PV}[widgets] )
-	webkit? ( >=dev-qt/qtwebkit-5.9.1 )
+	webkit? ( >=dev-qt/qtwebkit-5.9.1:5 )
 "
 RDEPEND="${DEPEND}"
 
