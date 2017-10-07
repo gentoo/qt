@@ -14,7 +14,7 @@ fi
 
 # TODO: qttestlib
 
-IUSE="geolocation gstreamer gles2 +jit multimedia opengl orientation printsupport qml webchannel webp"
+IUSE="geolocation gstreamer gles2 +jit multimedia opengl orientation printsupport qml test webchannel webp"
 REQUIRED_USE="?? ( gstreamer multimedia )"
 
 RDEPEND="
@@ -60,6 +60,7 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	sys-devel/flex
 	virtual/rubygems
+	test? ( >=dev-qt/qttest-${QT_MIN_VER} )
 "
 
 PATCHES=(
