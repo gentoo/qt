@@ -54,7 +54,6 @@
 =dev-qt/qtwayland-5.9.1*
 =dev-qt/qtwebchannel-5.9.1*
 =dev-qt/qtwebengine-5.9.1*
-=dev-qt/qtwebkit-5.9.1*
 =dev-qt/qtwebsockets-5.9.1*
 =dev-qt/qtwidgets-5.9.1*
 =dev-qt/qtx11extras-5.9.1*
