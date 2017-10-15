@@ -10,21 +10,27 @@ inherit cmake-utils python-r1 virtualx git-r3
 DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
-#FIXME: Switch to the clang-enabled "dev" branch once stable.
-EGIT_BRANCH="5.6"
+EGIT_BRANCH="5.9"
 
-LICENSE="|| ( GPL-2+ LGPL-3 )"
+# See "sources/pyside2/PySide2/licensecomment.txt" for licensing details.
+LICENSE="|| ( GPL-2 GPL-3+ LGPL-3 )"
 SLOT="2"
 KEYWORDS=""
 
-IUSE="concurrent declarative designer gui help multimedia network opengl
-	printsupport script scripttools sql svg test testlib webchannel
-	webengine webkit websockets widgets x11extras xmlpatterns"
+#FIXME: Add support for a "speech" USE flag once an ebuild installing the
+#"Qt5TextToSpeech" module is added.
+IUSE="charts concurrent datavisualization declarative designer gui help
+	multimedia network opengl printsupport script scripttools sql svg test
+	testlib webchannel webengine webkit websockets widgets x11extras
+	xmlpatterns"
+	# speech
 
 # The requirements below were extracted from the output of
 # 'grep "set(.*_deps" "${S}"/PySide2/Qt*/CMakeLists.txt'
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
+	charts? ( widgets )
+	datavisualization? ( gui )
 	declarative? ( gui network )
 	designer? ( widgets )
 	help? ( widgets )
@@ -41,17 +47,20 @@ REQUIRED_USE="
 	widgets? ( gui )
 	x11extras? ( gui )
 "
+	# speech? ( multimedia )
 
 # Minimum version of Qt required, derived from the CMakeLists.txt line:
 #   find_package(Qt5 ${QT_PV} REQUIRED COMPONENTS Core)
-QT_PV="5.6*:5"
+QT_PV="5.9*:5"
 
 DEPEND="
 	${PYTHON_DEPS}
 	>=dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
 	=dev-qt/qtcore-${QT_PV}
 	=dev-qt/qtxml-${QT_PV}
+	charts? ( =dev-qt/qtcharts-${QT_PV} )
 	concurrent? ( =dev-qt/qtconcurrent-${QT_PV} )
+	datavisualization? ( =dev-qt/qtdatavis3d-${QT_PV} )
 	declarative? ( =dev-qt/qtdeclarative-${QT_PV}[widgets?] )
 	designer? ( =dev-qt/designer-${QT_PV} )
 	gui? ( =dev-qt/qtgui-${QT_PV} )
@@ -72,6 +81,7 @@ DEPEND="
 	x11extras? ( =dev-qt/qtx11extras-${QT_PV} )
 	xmlpatterns? ( =dev-qt/qtxmlpatterns-${QT_PV} )
 "
+	# speech? ( =dev-qt/qtspeech-${QT_PV} )
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${P}/sources/pyside2
@@ -89,7 +99,9 @@ src_configure() {
 	# See COLLECT_MODULE_IF_FOUND macros in CMakeLists.txt
 	local mycmakeargs=(
 		-DBUILD_TESTS=$(usex test)
+		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Charts=$(usex !charts)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Concurrent=$(usex !concurrent)
+		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5DataVisualization=$(usex !datavisualization)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Designer=$(usex !designer)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Gui=$(usex !gui)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Help=$(usex !help)
@@ -106,9 +118,9 @@ src_configure() {
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Sql=$(usex !sql)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Svg=$(usex !svg)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Test=$(usex !testlib)
+		# -DCMAKE_DISABLE_FIND_PACKAGE_Qt5TextToSpeech=$(usex !speech)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5UiTools=$(usex !designer)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebChannel=$(usex !webchannel)
-		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebEngine=$(usex !webengine)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebEngineWidgets=$(usex !webengine)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebKit=$(usex !webkit)
 		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebKitWidgets=$(usex !webkit)
