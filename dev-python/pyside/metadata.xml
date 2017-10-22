@@ -6,7 +6,9 @@
 		<name>Gentoo Qt Project</name>
 	</maintainer>
 	<use>
+		<flag name="charts">Build QtCharts module</flag>
 		<flag name="concurrent">Build QtConcurrent module</flag>
+		<flag name="datavis">Build QtDataVisualization module</flag>
 		<flag name="declarative">Build QtQml, QtQuick, and QtQuickWidgets modules</flag>
 		<flag name="designer">Build QtDesigner and QtUiTools modules</flag>
 		<flag name="gui">Build QtGui module</flag>
