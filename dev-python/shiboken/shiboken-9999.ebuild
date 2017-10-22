@@ -11,6 +11,7 @@ DESCRIPTION="Tool for creating Python bindings for C++ libraries"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
 EGIT_BRANCH="5.9"
+EGIT_SUBMODULES=()
 
 # The "sources/shiboken2/libshiboken" directory is triple-licensed under the GPL
 # v2, v3+, and LGPL v3. All remaining files are licensed under the GPL v3 with
