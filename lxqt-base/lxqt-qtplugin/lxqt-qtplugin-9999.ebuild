@@ -30,6 +30,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-qt/linguist-tools:5
 	>=dev-util/lxqt-build-tools-0.3.1
+	>=x11-libs/libfm-qt-${PV}
 "
 
 src_configure() {
