@@ -18,4 +18,7 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-DEPEND=">=dev-util/lxqt-build-tools-0.1.0"
+DEPEND="
+	>=dev-util/lxqt-build-tools-0.1.0
+	!!lxqt-base/lxqt-common
+"
