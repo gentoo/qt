@@ -33,6 +33,7 @@ DEPEND="${RDEPEND}
 	dev-qt/linguist-tools:5
 	>=dev-util/lxqt-build-tools-0.4.0
 	lxqt-base/liblxqt
+	media-libs/libexif
 	virtual/pkgconfig
 "
 
