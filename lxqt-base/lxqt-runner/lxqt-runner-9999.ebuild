@@ -29,7 +29,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	kde-frameworks/kwindowsystem:5
-	>=lxde-base/menu-cache-0.3.3
+	>=lxde-base/menu-cache-1.1.0
 	lxqt-base/liblxqt
 	lxqt-base/lxqt-globalkeys
 "
