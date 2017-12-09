@@ -97,9 +97,15 @@ src_configure() {
 	export NINJAFLAGS="${NINJAFLAGS:--j$(makeopts_jobs) -l$(makeopts_loadavg "${MAKEOPTS}" 0) -v}"
 
 	local myqmakeargs=(
-		$(usex bindist '' 'WEBENGINE_CONFIG+=use_proprietary_codecs')
-		$(usex system-ffmpeg 'WEBENGINE_CONFIG+=use_system_ffmpeg' '')
-		$(usex system-icu 'WEBENGINE_CONFIG+=use_system_icu' '')
+		--
+		-opus
+		-printing-and-pdf
+		-webp
+		$(usex alsa '-alsa' '')
+		$(usex bindist '' '-proprietary-codecs')
+		$(usex pulseaudio '-pulseaudio' '')
+		$(usex system-ffmpeg '-ffmpeg' '')
+		$(usex system-icu '-webengine-icu' '')
 	)
 	qt5-build_src_configure
 }
