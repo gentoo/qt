@@ -31,7 +31,6 @@ QT5_TARGET_SUBDIRS=(
 	src/tools/qfloat16-tables
 	src/corelib
 	src/tools/qlalr
-	src/tools/qvkgen
 	doc
 )
 

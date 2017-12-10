@@ -72,6 +72,7 @@ PDEPEND="
 "
 
 QT5_TARGET_SUBDIRS=(
+	src/tools/qvkgen
 	src/gui
 	src/openglextensions
 	src/platformheaders
