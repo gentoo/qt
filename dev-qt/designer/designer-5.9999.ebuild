@@ -3,7 +3,7 @@
 
 EAPI=6
 QT5_MODULE="qttools"
-inherit qt5-build
+inherit desktop gnome2-utils qt5-build
 
 DESCRIPTION="WYSIWYG tool for designing and building Qt-based GUIs"
 
@@ -37,4 +37,21 @@ src_prepare() {
 		src/designer/src/plugins/plugins.pro
 
 	qt5-build_src_prepare
+}
+
+src_install() {
+	qt5-build_src_install
+
+	doicon -s 128 src/designer/src/designer/images/designer.png
+	make_desktop_entry "${QT5_BINDIR}"/designer 'Qt 5 Designer' designer 'Qt;Development;GUIDesigner'
+}
+
+pkg_postinst() {
+	qt5-build_pkg_postinst
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	qt5-build_pkg_postrm
+	gnome2_icon_cache_update
 }
