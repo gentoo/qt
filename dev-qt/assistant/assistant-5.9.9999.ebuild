@@ -3,7 +3,7 @@
 
 EAPI=6
 QT5_MODULE="qttools"
-inherit qt5-build
+inherit desktop gnome2-utils qt5-build
 
 DESCRIPTION="Tool for viewing on-line documentation in Qt help file format"
 
@@ -34,4 +34,22 @@ src_prepare() {
 		src/assistant/assistant/assistant.pro
 
 	qt5-build_src_prepare
+}
+
+src_install() {
+	qt5-build_src_install
+
+	doicon -s 32 src/assistant/assistant/images/assistant.png
+	newicon -s 128 src/assistant/assistant/images/assistant-128.png assistant.png
+	make_desktop_entry assistant Assistant assistant 'Qt;Development;Documentation'
+}
+
+pkg_postinst() {
+	qt5-build_pkg_postinst
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	qt5-build_pkg_postrm
+	gnome2_icon_cache_update
 }
