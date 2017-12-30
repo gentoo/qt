@@ -50,14 +50,17 @@ llvm_check_deps() {
 src_prepare() {
 	#FIXME: File an upstream issue requesting a sane way to disable NumPy support.
 	if ! use numpy; then
-		sed -i -e '/print(os\.path\.realpath(numpy))/d' \
-			libshiboken/CMakeLists.txt || die
+		sed -i -e '/print(os\.path\.realpath(numpy))/d' libshiboken/CMakeLists.txt || die
 	fi
 
 	if use prefix; then
 		cp "${FILESDIR}"/rpath.cmake . || die
 		sed -i -e '1iinclude(rpath.cmake)' CMakeLists.txt || die
 	fi
+
+	# CMakeLists.txt assumes clang builtin includes are installed
+	# under LLVM_INSTALL_DIR. They are not on Gentoo. See bug 624682.
+	sed -i -e "/set(CLANG_BUILTIN_INCLUDES_DIR_PREFIX /s:\${CLANG_DIR}:${EPREFIX}/usr:" CMakeLists.txt || die
 
 	cmake-utils_src_prepare
 }
@@ -67,6 +70,7 @@ src_configure() {
 		local mycmakeargs=(
 			-DBUILD_TESTS=$(usex test)
 			-DPYTHON_EXECUTABLE="${PYTHON}"
+			-DPYTHON_SITE_PACKAGES="$(python_get_sitedir)"
 		)
 		# CMakeLists.txt expects LLVM_INSTALL_DIR as an environment variable.
 		LLVM_INSTALL_DIR="$(get_llvm_prefix)" cmake-utils_src_configure
