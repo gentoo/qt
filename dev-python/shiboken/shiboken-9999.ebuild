@@ -24,17 +24,15 @@ IUSE="numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # Minimum version of Qt required.
-QT_PV="5.9*:5"
+QT_PV="5.9.0:5"
 
-#FIXME: Determine the maximum supported version of clang.
-#FIXME: Determine exactly which versions of numpy are supported.
 DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
-	=dev-qt/qtcore-${QT_PV}
-	=dev-qt/qtxml-${QT_PV}
-	=dev-qt/qtxmlpatterns-${QT_PV}
+	>=dev-qt/qtcore-${QT_PV}
+	>=dev-qt/qtxml-${QT_PV}
+	>=dev-qt/qtxmlpatterns-${QT_PV}
 	>=sys-devel/clang-3.9.1:=
 	numpy? ( dev-python/numpy )
 "
