@@ -10,14 +10,20 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~hppa ~ppc64 ~x86"
 fi
 
-IUSE=""
+IUSE="jpeg2k mng"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
-	media-libs/jasper:=
-	media-libs/libmng:=
 	media-libs/libwebp:=
 	media-libs/tiff:0
+	jpeg2k? ( media-libs/jasper:= )
+	mng? ( media-libs/libmng:= )
 "
 RDEPEND="${DEPEND}"
+
+src_configure() {
+	qt_use_compile_test jpeg2k jasper
+	qt_use_compile_test mng libmng
+	qt5-build_src_configure
+}
