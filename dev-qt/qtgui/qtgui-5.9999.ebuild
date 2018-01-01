@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -29,7 +29,7 @@ RDEPEND="
 	~dev-qt/qtcore-${PV}
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
-	>=media-libs/harfbuzz-1.0.6:=
+	>=media-libs/harfbuzz-1.6.0:=
 	>=sys-libs/zlib-1.2.5
 	virtual/opengl
 	dbus? ( ~dev-qt/qtdbus-${PV} )
