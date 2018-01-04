@@ -92,8 +92,8 @@ src_prepare() {
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
 
-	qt_use_disable_config webengine-alsa alsa src/core/config/linux.pri
-	qt_use_disable_config webengine-pulseaudio pulseaudio src/core/config/linux.pri
+	qt_use_disable_config alsa webengine-alsa src/core/config/linux.pri
+	qt_use_disable_config pulseaudio webengine-pulseaudio src/core/config/linux.pri
 
 	qt_use_disable_mod geolocation positioning \
 		mkspecs/features/configure.prf \
