@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -15,6 +15,7 @@ IUSE="qml"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
+	sys-devel/clang:=
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
 RDEPEND="${DEPEND}"
@@ -26,6 +27,11 @@ QT5_TARGET_SUBDIRS=(
 src_prepare() {
 	qt_use_disable_mod qml qmldevtools-private \
 		src/qdoc/qdoc.pro
+
+	export LLVM_INSTALL_DIR="$(llvm-config --prefix)"
+	# this is normally loaded in qttools.pro, so skipped by using
+	# QT_TARGET_SUBDIRS causing build to fail
+	sed -e '1iload(qt_find_clang)\' -i src/qdoc/qdoc.pro || die
 
 	qt5-build_src_prepare
 }
