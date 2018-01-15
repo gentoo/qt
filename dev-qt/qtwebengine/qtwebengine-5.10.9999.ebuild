@@ -30,7 +30,7 @@ RDEPEND="
 	~dev-qt/qtwebchannel-${PV}[qml]
 	dev-libs/expat
 	dev-libs/libevent:=
-	dev-libs/libxml2
+	dev-libs/libxml2[icu]
 	dev-libs/libxslt
 	dev-libs/protobuf:=
 	dev-libs/re2:=
