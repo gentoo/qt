@@ -34,6 +34,13 @@ QT5_TARGET_SUBDIRS=(
 	doc
 )
 
+QT5_GENTOO_PRIVATE_CONFIG=(
+	!:network
+	!:sql
+	!:testlib
+	!:xml
+)
+
 src_configure() {
 	local myconf=(
 		$(qt_use icu)
