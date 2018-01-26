@@ -37,6 +37,10 @@ QT5_GENTOO_CONFIG=(
 	!:no-widgets:
 )
 
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:widgets
+)
+
 src_configure() {
 	local myconf=(
 		-opengl $(usex gles2 es2 desktop)
