@@ -33,6 +33,10 @@ QT5_TARGET_SUBDIRS=(
 	src/plugins/sqldrivers
 )
 
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:sql
+)
+
 src_configure() {
 	local myconf=(
 		$(qt_use freetds  sql-tds    plugin)
