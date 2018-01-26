@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -28,6 +28,11 @@ QT5_TARGET_SUBDIRS=(
 QT5_GENTOO_CONFIG=(
 	:dbus
 	:dbus-linked:
+)
+
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:dbus
+	:dbus-linked
 )
 
 src_configure() {
