@@ -27,3 +27,7 @@ DEPEND="${RDEPEND}
 QT5_TARGET_SUBDIRS=(
 	src/testlib
 )
+
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:testlib
+)
