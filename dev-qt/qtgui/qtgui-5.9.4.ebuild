@@ -119,6 +119,10 @@ QT5_GENTOO_CONFIG=(
 	xcb::XKB
 )
 
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:gui
+)
+
 src_prepare() {
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
