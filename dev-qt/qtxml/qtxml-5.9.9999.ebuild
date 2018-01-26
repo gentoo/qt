@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -22,4 +22,8 @@ DEPEND="${RDEPEND}
 
 QT5_TARGET_SUBDIRS=(
 	src/xml
+)
+
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:xml
 )
