@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -117,6 +117,10 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-xlib:
 	xcb:xinput2:
 	xcb::XKB
+)
+
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:gui
 )
 
 src_prepare() {
