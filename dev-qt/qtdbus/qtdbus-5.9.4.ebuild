@@ -30,6 +30,11 @@ QT5_GENTOO_CONFIG=(
 	:dbus-linked:
 )
 
+QT5_GENTOO_PRIVATE_CONFIG=(
+	:dbus
+	:dbus-linked
+)
+
 src_configure() {
 	local myconf=(
 		-dbus-linked
