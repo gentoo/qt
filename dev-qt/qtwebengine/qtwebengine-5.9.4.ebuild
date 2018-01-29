@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
-IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist geolocation pax_kernel pulseaudio spell +system-ffmpeg +system-icu widgets"
 
 RDEPEND="
 	app-arch/snappy:=
@@ -60,6 +60,7 @@ RDEPEND="
 	alsa? ( media-libs/alsa-lib )
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
 	pulseaudio? ( media-sound/pulseaudio:= )
+	spell? ( dev-qt/qtwebengine-dicts )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( dev-libs/icu:= )
 	widgets? (

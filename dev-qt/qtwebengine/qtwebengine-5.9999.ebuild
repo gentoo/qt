@@ -15,7 +15,7 @@ SRC_URI+=" system-icu? (
 	https://dev.gentoo.org/~chiitoo/distfiles/qtwebengine-5.10.0-icu-patches.tar.bz2
 )"
 
-IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist geolocation pax_kernel pulseaudio spell +system-ffmpeg +system-icu widgets"
 
 RDEPEND="
 	app-arch/snappy:=
@@ -64,6 +64,7 @@ RDEPEND="
 	alsa? ( media-libs/alsa-lib )
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
 	pulseaudio? ( media-sound/pulseaudio:= )
+	spell? ( dev-qt/qtwebengine-dicts )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( dev-libs/icu:= )
 	widgets? (
