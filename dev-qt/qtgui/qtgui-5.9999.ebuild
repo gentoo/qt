@@ -153,6 +153,7 @@ src_configure() {
 		-fontconfig
 		-system-freetype
 		$(usex gif '' -no-gif)
+		-gui
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
 		$(qt_use libinput)
