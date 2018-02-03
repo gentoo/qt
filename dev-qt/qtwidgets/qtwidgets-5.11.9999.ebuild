@@ -46,6 +46,7 @@ src_configure() {
 		-opengl $(usex gles2 es2 desktop)
 		$(qt_use gtk)
 		$(qt_use png libpng system)
+		-widgets
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon system)
 		$(usex xcb '-xcb-xlib -xinput2 -xkb' '')
