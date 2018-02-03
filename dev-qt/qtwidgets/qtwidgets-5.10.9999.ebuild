@@ -45,6 +45,7 @@ src_configure() {
 	local myconf=(
 		-opengl $(usex gles2 es2 desktop)
 		$(qt_use gtk)
+		-gui
 		$(qt_use png libpng system)
 		-widgets
 		$(qt_use xcb xcb system)
