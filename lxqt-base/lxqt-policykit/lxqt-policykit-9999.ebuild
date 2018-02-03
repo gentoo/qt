@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -28,7 +28,7 @@ RDEPEND="
 	dev-qt/qtxml:5
 	lxqt-base/liblxqt
 	>=dev-libs/libqtxdg-2.0.0
-	sys-auth/polkit-qt[qt5(-)]
+	>=sys-auth/polkit-qt-0.112.0_p20160416-r1
 "
 DEPEND="${RDEPEND}
 	dev-qt/linguist-tools:5
