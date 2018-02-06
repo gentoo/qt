@@ -39,6 +39,9 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
+	sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
+		src/multimedia/multimedia.pro || die
+
 	qt_use_disable_config openal openal \
 		src/imports/imports.pro
 

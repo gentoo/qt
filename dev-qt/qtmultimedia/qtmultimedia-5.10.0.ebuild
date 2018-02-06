@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -39,6 +39,9 @@ DEPEND="${RDEPEND}
 "
 
 src_prepare() {
+	sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
+		src/multimedia/multimedia.pro || die
+
 	qt_use_disable_config openal openal \
 		src/imports/imports.pro
 
