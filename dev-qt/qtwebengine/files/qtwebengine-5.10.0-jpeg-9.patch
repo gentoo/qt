@@ -1,0 +1,45 @@
+Fix build with jpeg-9. Bug #646456
+
+--- a/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/codec/fx_codec_jpeg.cpp
++++ b/src/3rdparty/chromium/third_party/pdfium/core/fxcodec/codec/fx_codec_jpeg.cpp
+@@ -74,11 +74,11 @@
+ }
+ 
+ static boolean _src_fill_buffer(j_decompress_ptr cinfo) {
+-  return 0;
++  return FALSE;
+ }
+ 
+ static boolean _src_resync(j_decompress_ptr cinfo, int desired) {
+-  return 0;
++  return FALSE;
+ }
+ 
+ static void _error_do_nothing(j_common_ptr cinfo) {}
+@@ -147,7 +147,7 @@
+     jpeg_destroy_decompress(&cinfo);
+     return false;
+   }
+-  int ret = jpeg_read_header(&cinfo, true);
++  int ret = jpeg_read_header(&cinfo, TRUE);
+   if (ret != JPEG_HEADER_OK) {
+     jpeg_destroy_decompress(&cinfo);
+     return false;
+@@ -231,7 +231,7 @@
+   }
+   cinfo.image_width = m_OrigWidth;
+   cinfo.image_height = m_OrigHeight;
+-  int ret = jpeg_read_header(&cinfo, true);
++  int ret = jpeg_read_header(&cinfo, TUE);
+   if (ret != JPEG_HEADER_OK)
+     return false;
+ 
+@@ -459,7 +459,7 @@
+   if (setjmp(ctx->m_JumpMark) == -1)
+     return 1;
+ 
+-  int ret = jpeg_read_header(&ctx->m_Info, true);
++  int ret = jpeg_read_header(&ctx->m_Info, TRUE);
+   if (ret == JPEG_SUSPENDED)
+     return 2;
+   if (ret != JPEG_HEADER_OK)
