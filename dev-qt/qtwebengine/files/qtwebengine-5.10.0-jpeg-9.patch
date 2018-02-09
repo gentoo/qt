@@ -30,7 +30,7 @@ Fix build with jpeg-9. Bug #646456
    cinfo.image_width = m_OrigWidth;
    cinfo.image_height = m_OrigHeight;
 -  int ret = jpeg_read_header(&cinfo, true);
-+  int ret = jpeg_read_header(&cinfo, TUE);
++  int ret = jpeg_read_header(&cinfo, TRUE);
    if (ret != JPEG_HEADER_OK)
      return false;
  
