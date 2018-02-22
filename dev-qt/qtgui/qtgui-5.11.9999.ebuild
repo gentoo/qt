@@ -29,7 +29,7 @@ RDEPEND="
 	~dev-qt/qtcore-${PV}
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
-	>=media-libs/harfbuzz-1.0.6:=
+	>=media-libs/harfbuzz-1.6.0:=
 	>=sys-libs/zlib-1.2.5
 	virtual/opengl
 	dbus? ( ~dev-qt/qtdbus-${PV} )

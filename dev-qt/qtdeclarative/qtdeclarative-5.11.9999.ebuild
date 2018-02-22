@@ -54,3 +54,11 @@ src_prepare() {
 
 	qt5-build_src_prepare
 }
+
+src_configure() {
+	local myqmakeargs=(
+		--
+		-qml-debug
+	)
+	qt5-build_src_configure
+}
