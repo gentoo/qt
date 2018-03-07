@@ -545,8 +545,8 @@ qt5_base_configure() {
 		-testsdir "${QT5_TESTSDIR}"
 
 		# force appropriate compiler
-		if [[ ${QT5_MINOR_VERSION} -ge 10 ]]; then
-			$(if use kernel_FreeBSD; then
+		$(if [[ ${QT5_MINOR_VERSION} -ge 10 ]]; then
+			if use kernel_FreeBSD; then
 				if tc-is-gcc; then
 					echo -platform freebsd-g++
 				elif tc-is-clang; then
@@ -558,8 +558,8 @@ qt5_base_configure() {
 				elif tc-is-clang; then
 					echo -platform linux-clang
 				fi
-			fi)
-		fi
+			fi
+		fi)
 
 		# configure in release mode by default,
 		# override via the CONFIG qmake variable
