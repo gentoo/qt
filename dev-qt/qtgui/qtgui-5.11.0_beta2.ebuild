@@ -71,8 +71,6 @@ PDEPEND="
 	ibus? ( app-i18n/ibus )
 "
 
-PATCHES=( "${FILESDIR}/${PN}-5.9.4-opengl.patch" ) # QTBUG-66420
-
 QT5_TARGET_SUBDIRS=(
 	src/tools/qvkgen
 	src/gui
