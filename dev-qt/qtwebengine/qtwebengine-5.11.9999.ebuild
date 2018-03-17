@@ -37,6 +37,7 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/harfbuzz:=
+	media-libs/libjpeg-turbo:=
 	media-libs/libpng:0=
 	>=media-libs/libvpx-1.5:=[svc]
 	media-libs/libwebp:=
@@ -80,8 +81,6 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	pax_kernel? ( sys-apps/elfix )
 "
-
-PATCHES=( "${FILESDIR}/${PN}-5.10.0-jpeg-9.patch" )
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
