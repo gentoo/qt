@@ -1,0 +1,17 @@
+diff -Naur a/src/network/ssl/qsslcontext_openssl11.cpp b/src/network/ssl/qsslcontext_openssl11.cpp
+--- a/src/network/ssl/qsslcontext_openssl11.cpp	2018-02-08 19:24:48.000000000 +0100
++++ b/src/network/ssl/qsslcontext_openssl11.cpp	2018-04-01 23:10:42.950616822 +0200
+@@ -266,11 +266,13 @@
+         curves.reserve(qcurves.size());
+         for (const auto &sslCurve : qcurves)
+             curves.push_back(sslCurve.id);
++#ifdef SSL_CTRL_SET_CURVES
+         if (!q_SSL_CTX_ctrl(sslContext->ctx, SSL_CTRL_SET_CURVES, long(curves.size()), &curves[0])) {
+             sslContext->errorStr = msgErrorSettingEllipticCurves(QSslSocketBackendPrivate::getErrorsFromOpenSsl());
+             sslContext->errorCode = QSslError::UnspecifiedError;
+         }
+ #endif
++#endif
+     }
+ }
+ 

@@ -1,0 +1,56 @@
+From e365993b72d64db441f3940d6c255e3dbb2ad76a Mon Sep 17 00:00:00 2001
+From: Timur Pocheptsov <timur.pocheptsov@qt.io>
+Date: Thu, 1 Feb 2018 16:12:49 +0100
+Subject: Fix configure.json for opensslv11 feature
+
+Both the test/feature had some errors (incorrect
+"use" and incomplete "condition") + remove "feature".
+
+Task-number: QTBUG-62733
+Change-Id: If4b8d2fe080d8fba961231834839afadaed0f0c5
+Reviewed-by: Oswald Buddenhagen <oswald.buddenhagen@qt.io>
+---
+ src/network/configure.json | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/src/network/configure.json b/src/network/configure.json
+index 770921f9a6..2f446becf1 100644
+--- a/src/network/configure.json
++++ b/src/network/configure.json
+@@ -123,10 +123,10 @@
+             "use": "network"
+         },
+         "openssl11": {
+-            "label": "OpenSSL v. 1.1 support",
++            "label": "OpenSSL 1.1 support",
+             "type": "compile",
+             "test": "unix/openssl11",
+-            "use": "network"
++            "use": "openssl"
+         }
+     },
+ 
+@@ -190,9 +190,9 @@
+             "output": [ "publicFeature", "feature" ]
+         },
+         "opensslv11": {
+-            "label": "OpenSSL v. 1.1",
+-            "condition": "tests.openssl11",
+-            "output": ["publicFeature", "feature"]
++            "label": "OpenSSL 1.1",
++            "condition": "features.openssl && tests.openssl11",
++            "output": [ "publicFeature" ]
+         },
+         "sctp": {
+             "label": "SCTP",
+@@ -307,6 +307,7 @@ For example:
+                 },
+                 "openssl",
+                 "openssl-linked",
++                "opensslv11",
+                 "sctp",
+                 "system-proxies"
+             ]
+-- 
+cgit v1.1-6-g87c4
+

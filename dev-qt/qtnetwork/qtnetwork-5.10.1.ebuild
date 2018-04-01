@@ -47,6 +47,15 @@ pkg_setup() {
 	use networkmanager && QT5_TARGET_SUBDIRS+=(src/plugins/bearer/networkmanager)
 }
 
+src_prepare() {
+	epatch ${FILESDIR}/"backport_opensslv11.patch"
+	epatch ${FILESDIR}/"backport_use_QT_CONFIG.patch"
+	epatch ${FILESDIR}/"qt-openssl-v111_support-part1_tests.patch"
+	epatch ${FILESDIR}/"qt-openssl-v111_support-part2_nocurves.patch"
+
+	qt5-build_src_prepare
+}
+
 src_configure() {
 	local myconf=(
 		$(use connman || use networkmanager && echo -dbus-linked)

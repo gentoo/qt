@@ -1,0 +1,12 @@
+diff -Naur a/config.tests/openssl/openssl.cpp b/config.tests/openssl/openssl.cpp
+--- a/config.tests/openssl/openssl.cpp	2018-02-08 19:24:48.000000000 +0100
++++ b/config.tests/openssl/openssl.cpp	2018-04-02 09:39:01.869229154 +0200
+@@ -45,7 +45,7 @@
+ 
+ #include <openssl/ssl.h>
+ 
+-#if OPENSSL_VERSION_NUMBER-0 >= 0x10002000L && !defined(OPENSSL_NO_EC) && !defined(SSL_CTRL_SET_CURVES)
++#if (OPENSSL_VERSION_NUMBER-0 <= 0x10100000L) && (OPENSSL_VERSION_NUMBER-0 >= 0x10002000L && !defined(OPENSSL_NO_EC) && !defined(SSL_CTRL_SET_CURVES))
+ #  error "OpenSSL was reported as >= 1.0.2 but is missing required features, possibly it's libressl which is unsupported"
+ #endif
+ 
