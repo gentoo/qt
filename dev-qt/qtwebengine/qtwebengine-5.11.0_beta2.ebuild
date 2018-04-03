@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 SRC_URI+=" system-icu? (
-	https://dev.gentoo.org/~chiitoo/distfiles/qtwebengine-5.11.0-icu-patches.tar.bz2
+	https://dev.gentoo.org/~chiitoo/distfiles/qtwebengine-5.11.0_beta2-icu-patches.tar.bz2
 )"
 
 IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
