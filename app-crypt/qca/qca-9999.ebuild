@@ -17,7 +17,7 @@ IUSE="botan debug doc examples gcrypt gpg libressl logger nss pkcs11 sasl softst
 
 COMMON_DEPEND="
 	dev-qt/qtcore:5
-	botan? ( dev-libs/botan:0 )
+	botan? ( dev-libs/botan:= )
 	gcrypt? ( dev-libs/libgcrypt:= )
 	gpg? ( app-crypt/gnupg )
 	nss? ( dev-libs/nss )
@@ -34,6 +34,7 @@ COMMON_DEPEND="
 "
 DEPEND="${COMMON_DEPEND}
 	dev-qt/qtnetwork:5
+	virtual/pkgconfig
 	doc? ( app-doc/doxygen )
 	test? ( dev-qt/qttest:5 )
 "
