@@ -7,7 +7,7 @@ inherit cmake-utils qmake-utils git-r3
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="https://userbase.kde.org/QCA"
-EGIT_REPO_URI=("git://anongit.kde.org/${PN}.git")
+EGIT_REPO_URI="https://anongit.kde.org/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="2"
