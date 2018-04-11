@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 SRC_URI+=" system-icu? (
-	https://dev.gentoo.org/~chiitoo/distfiles/qtwebengine-5.11.0-icu-patches.tar.bz2
+	https://dev.gentoo.org/~chiitoo/distfiles/qtwebengine-5.11.0-system-icu-patch.tar.bz2
 )"
 
 IUSE="alsa bindist geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
@@ -85,8 +85,8 @@ src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
 	use system-icu && has_version ">=dev-libs/icu-59" && \
 		PATCHES+=(
-			"${WORKDIR}/${PN}-5.11.0-system-icu-build.patch"
-			"${WORKDIR}/${PN}-5.11.0-update-shim-headers.patch"
+			"${WORKDIR}/${PN}-5.11.0-fix-system-icu.patch"
+			"${FILESDIR}/${PN}-5.11.0-update-shim-headers.patch"
 		)
 
 	# bug 620444 - ensure local headers are used
