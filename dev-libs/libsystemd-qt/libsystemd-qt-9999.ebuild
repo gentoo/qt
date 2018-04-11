@@ -25,6 +25,7 @@ IUSE="debug test"
 RDEPEND="
 	${SYSTEMD_VERSION}
 	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
 "
 DEPEND="${RDEPEND}
 	test? ( dev-qt/qttest:5 )
