@@ -28,11 +28,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-5.9.5-mariadb-10.2.patch"
-	# See also: https://codereview.qt-project.org/#/c/206850/
-)
-
 QT5_TARGET_SUBDIRS=(
 	src/sql
 	src/plugins/sqldrivers
