@@ -1,9 +1,9 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit cmake-utils multibuild qmake-utils git-r3
+inherit cmake-utils qmake-utils git-r3
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="https://userbase.kde.org/QCA"
@@ -13,15 +13,10 @@ LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS=""
 
-IUSE="botan debug doc examples gcrypt gpg libressl logger nss pkcs11 +qt4 qt5 sasl softstore +ssl test"
-REQUIRED_USE="|| ( qt4 qt5 )"
+IUSE="botan debug doc examples gcrypt gpg libressl logger nss pkcs11 sasl softstore +ssl test"
 
-RDEPEND="
-	!app-crypt/qca-cyrus-sasl
-	!app-crypt/qca-gnupg
-	!app-crypt/qca-logger
-	!app-crypt/qca-ossl
-	!app-crypt/qca-pkcs11
+COMMON_DEPEND="
+	dev-qt/qtcore:5
 	botan? ( dev-libs/botan:0 )
 	gcrypt? ( dev-libs/libgcrypt:= )
 	gpg? ( app-crypt/gnupg )
@@ -31,27 +26,24 @@ RDEPEND="
 		libressl? ( dev-libs/libressl )
 		dev-libs/pkcs11-helper
 	)
-	qt4? ( dev-qt/qtcore:4 )
-	qt5? (
-		dev-qt/qtcore:5
-		dev-qt/qtconcurrent:5
-		dev-qt/qtnetwork:5
-	)
 	sasl? ( dev-libs/cyrus-sasl:2 )
 	ssl? (
 		!libressl? ( >=dev-libs/openssl-1.0.1:0= )
 		libressl? ( dev-libs/libressl:= )
 	)
 "
-DEPEND="${RDEPEND}
+DEPEND="${COMMON_DEPEND}
+	dev-qt/qtnetwork:5
 	doc? ( app-doc/doxygen )
-	test? (
-		qt4? ( dev-qt/qttest:4 )
-		qt5? ( dev-qt/qttest:5 )
-	)
+	test? ( dev-qt/qttest:5 )
 "
-
-DOCS=( README TODO )
+RDEPEND="${COMMON_DEPEND}
+	!app-crypt/qca-cyrus-sasl
+	!app-crypt/qca-gnupg
+	!app-crypt/qca-logger
+	!app-crypt/qca-ossl
+	!app-crypt/qca-pkcs11
+"
 
 PATCHES=( "${FILESDIR}/${PN}-disable-pgp-test.patch" )
 
@@ -59,52 +51,31 @@ qca_plugin_use() {
 	echo -DWITH_${2:-$1}_PLUGIN=$(usex "$1")
 }
 
-pkg_setup() {
-	MULTIBUILD_VARIANTS=( $(usev qt4) $(usev qt5) )
-}
-
 src_configure() {
-	myconfigure() {
-		local mycmakeargs=(
-			-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}$(${MULTIBUILD_VARIANT}_get_mkspecsdir)/features"
-			-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}$(${MULTIBUILD_VARIANT}_get_plugindir)"
-			$(qca_plugin_use botan)
-			$(qca_plugin_use gcrypt)
-			$(qca_plugin_use gpg gnupg)
-			$(qca_plugin_use logger)
-			$(qca_plugin_use nss)
-			$(qca_plugin_use pkcs11)
-			$(qca_plugin_use sasl cyrus-sasl)
-			$(qca_plugin_use softstore)
-			$(qca_plugin_use ssl ossl)
-			-DBUILD_TESTS=$(usex test)
-		)
-
-		if [[ ${MULTIBUILD_VARIANT} == qt4 ]]; then
-			mycmakeargs+=(-DQT4_BUILD=ON)
-		fi
-
-		cmake-utils_src_configure
-	}
-
-	multibuild_foreach_variant myconfigure
-}
-
-src_compile() {
-	multibuild_foreach_variant cmake-utils_src_compile
+	local mycmakeargs=(
+		-DQCA_FEATURE_INSTALL_DIR="${EPREFIX}$(qt5_get_mkspecsdir)/features"
+		-DQCA_PLUGINS_INSTALL_DIR="${EPREFIX}$(qt5_get_plugindir)"
+		$(qca_plugin_use botan)
+		$(qca_plugin_use gcrypt)
+		$(qca_plugin_use gpg gnupg)
+		$(qca_plugin_use logger)
+		$(qca_plugin_use nss)
+		$(qca_plugin_use pkcs11)
+		$(qca_plugin_use sasl cyrus-sasl)
+		$(qca_plugin_use softstore)
+		$(qca_plugin_use ssl ossl)
+		-DBUILD_TESTS=$(usex test)
+	)
+	cmake-utils_src_configure
 }
 
 src_test() {
-	mytest() {
-		local -x QCA_PLUGIN_PATH="${BUILD_DIR}/lib/qca"
-		cmake-utils_src_test
-	}
-
-	multibuild_foreach_variant mytest
+	local -x QCA_PLUGIN_PATH="${BUILD_DIR}/lib/qca"
+	cmake-utils_src_test
 }
 
 src_install() {
-	multibuild_foreach_variant cmake-utils_src_install
+	cmake-utils_src_install
 
 	if use doc; then
 		pushd "${BUILD_DIR}" >/dev/null || die
