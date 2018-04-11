@@ -5,7 +5,4 @@
 		<email>qt@gentoo.org</email>
 		<name>Gentoo Qt Project</name>
 	</maintainer>
-	<use>
-		<flag name="qml">Build the QML plugin</flag>
-	</use>
 </pkgmetadata>

@@ -20,12 +20,11 @@ HOMEPAGE="https://github.com/scarpin0/libsystemd-qt"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="debug qml test"
+IUSE="debug test"
 
 RDEPEND="
 	${SYSTEMD_VERSION}
 	dev-qt/qtcore:5
-	qml? ( dev-qt/qtdeclarative:5 )
 "
 DEPEND="${RDEPEND}
 	test? ( dev-qt/qttest:5 )
@@ -35,7 +34,6 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_WITH_QT4=OFF
 		-DBUILD_QTSYSTEMD_TESTS=$(usex test)
-		-DBUILD_QTSYSTEMD_QMLPLUGIN=$(usex qml)
 	)
 
 	cmake-utils_src_configure
