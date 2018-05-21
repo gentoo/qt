@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -17,6 +17,7 @@ fi
 
 LICENSE="|| ( BSD LGPL-2.1+ )"
 SLOT="0"
+IUSE="policykit"
 
 RDEPEND="
 	>=dev-libs/libqtxdg-3.0.0
@@ -32,7 +33,10 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-qt/linguist-tools:5
 	>=dev-util/lxqt-build-tools-0.4.0
+	policykit? ( sys-auth/polkit-qt )
 "
+
+PATCHES=( "$FILESDIR/${PN}-make-polkit-optional.patch" )
 
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
@@ -42,6 +46,9 @@ pkg_pretend() {
 }
 
 src_configure() {
-	local mycmakeargs=( -DPULL_TRANSLATIONS=OFF )
+	local mycmakeargs=(
+		$(usex !policykit '-DBUILD_POLKIT=OFF')
+		-DPULL_TRANSLATIONS=OFF
+	)
 	cmake-utils_src_configure
 }
