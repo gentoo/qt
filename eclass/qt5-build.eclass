@@ -631,7 +631,7 @@ qt5_base_configure() {
 		-no-compile-examples
 
 		# disable rpath on non-prefix (bugs 380415 and 417169)
-		$(usex prefix '' -no-rpath)
+		$({ in_iuse prefix && use prefix; } || echo -no-rpath)
 
 		# print verbose information about each configure test
 		-verbose
