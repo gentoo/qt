@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 # @ECLASS: qmake-utils.eclass
@@ -6,6 +6,7 @@
 # qt@gentoo.org
 # @AUTHOR:
 # Davide Pesavento <pesa@gentoo.org>
+# @SUPPORTED_EAPIS: 5 6 7
 # @BLURB: Common functions for qmake-based packages.
 # @DESCRIPTION:
 # Utility eclass providing wrapper functions for Qt4 and Qt5 qmake.
@@ -16,7 +17,9 @@
 if [[ -z ${_QMAKE_UTILS_ECLASS} ]]; then
 _QMAKE_UTILS_ECLASS=1
 
-[[ ${EAPI:-0} == [012345] ]] && inherit eutils multilib
+[[ ${EAPI:-0} == [01234] ]] && die "qmake-utils.eclass: unsupported EAPI=${EAPI:-0}"
+
+[[ ${EAPI:-0} == 5 ]] && inherit eutils multilib
 inherit estack toolchain-funcs
 
 # @FUNCTION: qt4_get_bindir
@@ -24,8 +27,6 @@ inherit estack toolchain-funcs
 # Echoes the directory where Qt4 binaries are installed.
 # EPREFIX is already prepended to the returned path.
 qt4_get_bindir() {
-	has "${EAPI:-0}" 0 1 2 && use !prefix && EPREFIX=
-
 	local qtbindir=${EPREFIX}$(qt4_get_libdir)/bin
 	if [[ -d ${qtbindir} ]]; then
 		echo ${qtbindir}
@@ -67,8 +68,6 @@ qt4_get_plugindir() {
 # Echoes the directory where Qt5 binaries are installed.
 # EPREFIX is already prepended to the returned path.
 qt5_get_bindir() {
-	has "${EAPI:-0}" 0 1 2 && use !prefix && EPREFIX=
-
 	echo ${EPREFIX}$(qt5_get_libdir)/qt5/bin
 }
 
@@ -160,8 +159,6 @@ qmake-utils_find_pro_file() {
 # specified inside the top-level project file.
 eqmake4() {
 	debug-print-function ${FUNCNAME} "$@"
-
-	has "${EAPI:-0}" 0 1 2 && use !prefix && EPREFIX=
 
 	ebegin "Running qmake"
 
