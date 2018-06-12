@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit cmake-utils qmake-utils git-r3
+inherit cmake-utils git-r3 qmake-utils
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="https://userbase.kde.org/QCA"
@@ -15,7 +15,7 @@ KEYWORDS=""
 
 IUSE="botan debug doc examples gcrypt gpg libressl logger nss pkcs11 sasl softstore +ssl test"
 
-COMMON_DEPEND="
+RDEPEND="
 	dev-qt/qtcore:5
 	botan? ( dev-libs/botan:= )
 	gcrypt? ( dev-libs/libgcrypt:= )
@@ -32,18 +32,12 @@ COMMON_DEPEND="
 		libressl? ( dev-libs/libressl:= )
 	)
 "
-DEPEND="${COMMON_DEPEND}
-	dev-qt/qtnetwork:5
-	virtual/pkgconfig
+DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )
-	test? ( dev-qt/qttest:5 )
-"
-RDEPEND="${COMMON_DEPEND}
-	!app-crypt/qca-cyrus-sasl
-	!app-crypt/qca-gnupg
-	!app-crypt/qca-logger
-	!app-crypt/qca-ossl
-	!app-crypt/qca-pkcs11
+	test? (
+		dev-qt/qtnetwork:5
+		dev-qt/qttest:5
+	)
 "
 
 PATCHES=( "${FILESDIR}/${PN}-disable-pgp-test.patch" )
@@ -80,7 +74,7 @@ src_install() {
 
 	if use doc; then
 		pushd "${BUILD_DIR}" >/dev/null || die
-		doxygen Doxyfile.in || die
+		doxygen Doxyfile || die
 		dodoc -r apidocs/html
 		popd >/dev/null || die
 	fi
