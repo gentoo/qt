@@ -78,7 +78,6 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES=(
-	"${FILESDIR}/${PN}-5.9.3-icu-60.1.patch"
 	"${FILESDIR}/${PN}-5.9.4-jpeg-9-1.patch"
 	"${FILESDIR}/${PN}-5.9.4-jpeg-9-2.patch"
 )
