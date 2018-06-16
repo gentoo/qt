@@ -77,7 +77,10 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
-PATCHES+=( "${FILESDIR}/${PN}-5.11.0-fix-build-w-o-qtlocation.patch" )
+PATCHES+=(
+	"${FILESDIR}/${P}-fix-build-w-o-qtlocation.patch"
+	"${FILESDIR}/${P}-fix-page-render.patch"
+)
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
