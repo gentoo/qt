@@ -79,6 +79,10 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
+PATCHES+=(
+	"${FILESDIR}/${P}-libxml2-disable-catalogs.patch" # bug 653078
+)
+
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
 
