@@ -81,6 +81,7 @@ DEPEND="${RDEPEND}
 
 PATCHES+=(
 	"${FILESDIR}/${P}-libxml2-disable-catalogs.patch" # bug 653078
+	"${FILESDIR}/${P}-ffmpeg4.patch"
 )
 
 src_prepare() {
