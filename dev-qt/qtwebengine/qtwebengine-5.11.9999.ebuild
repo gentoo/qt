@@ -81,7 +81,6 @@ DEPEND="${RDEPEND}
 
 PATCHES+=(
 	"${FILESDIR}/${PN}-5.11.1-libxml2-disable-catalogs.patch" # bug 653078
-	"${FILESDIR}/${PN}-5.11.1-ffmpeg4.patch"
 	"${FILESDIR}/${PN}-5.11.1-nouveau-disable-gpu.patch" # bug 609752
 )
 
