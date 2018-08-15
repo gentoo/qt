@@ -51,7 +51,7 @@ src_configure() {
 		-widgets
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon system)
-		$(usex xcb '-xcb-xlib -xinput2 -xkb' '')
+		$(usex xcb '-xcb-xlib -xcb-xinput -xkb' '')
 	)
 	qt5-build_src_configure
 }
