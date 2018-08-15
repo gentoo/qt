@@ -54,8 +54,7 @@ RDEPEND="
 		x11-libs/libICE
 		x11-libs/libSM
 		x11-libs/libX11
-		>=x11-libs/libXi-1.7.5
-		>=x11-libs/libxcb-1.10:=[xkb]
+		>=x11-libs/libxcb-1.12:=[xkb]
 		>=x11-libs/libxkbcommon-0.4.1[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
@@ -116,7 +115,7 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-render:
 	xcb:xcb-sm:
 	xcb:xcb-xlib:
-	xcb:xinput2:
+	xcb:xcb-xinput:
 	xcb::XKB
 )
 
@@ -164,7 +163,7 @@ src_configure() {
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
 		$(qt_use xcb xkbcommon-x11 system)
-		$(usex xcb '-xcb-xlib -xinput2 -xkb' '')
+		$(usex xcb '-xcb-xlib -xcb-xinput -xkb' '')
 	)
 	qt5-build_src_configure
 }
