@@ -24,6 +24,5 @@ RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
 	src/assistant/help
-	src/assistant/qhelpconverter
 	src/assistant/qhelpgenerator
 )
