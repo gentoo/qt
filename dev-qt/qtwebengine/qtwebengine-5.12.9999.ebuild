@@ -110,7 +110,6 @@ src_configure() {
 		-opus
 		-printing-and-pdf
 		-webp
-		-no-webengine-webrtc
 		$(usex alsa '-alsa' '')
 		$(usex bindist '' '-proprietary-codecs')
 		$(usex pulseaudio '-pulseaudio' '')
