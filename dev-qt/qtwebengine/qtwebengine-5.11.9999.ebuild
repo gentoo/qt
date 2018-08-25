@@ -11,7 +11,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
-IUSE="alsa bindist designer geolocation pax_kernel pulseaudio +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist designer geolocation +jumbo-build pax_kernel pulseaudio
+	+system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
 RDEPEND="
@@ -85,6 +86,11 @@ PATCHES+=(
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
+
+	if ! use jumbo-build; then
+		sed -i -e 's|use_jumbo_build=true|use_jumbo_build=false|' \
+			src/core/config/common.pri || die
+	fi
 
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
