@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="alsa bindist designer geolocation +jumbo-build pax_kernel pulseaudio
-	+system-ffmpeg +system-icu widgets"
+	+system-ffmpeg +system-icu +system-libvpx widgets"
 REQUIRED_USE="designer? ( widgets )"
 
 RDEPEND="
@@ -79,7 +79,10 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
-PATCHES+=( "${FILESDIR}/${PN}-5.11.2-libxml2-disable-catalogs.patch" ) # bug 653078
+PATCHES+=(
+	"${FILESDIR}/${PN}-5.11.2-libxml2-disable-catalogs.patch" # bug 653078
+	"${FILESDIR}/${PN}-5.12.0-add-libvpx-options.patch"
+)
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
@@ -121,6 +124,7 @@ src_configure() {
 		$(usex pulseaudio '-pulseaudio' '')
 		$(usex system-ffmpeg '-ffmpeg' '')
 		$(usex system-icu '-webengine-icu' '')
+		$(usex system-libvpx '-system-webengine-libvpx' '-qt-webengine-libvpx')
 	)
 	qt5-build_src_configure
 }

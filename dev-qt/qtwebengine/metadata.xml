@@ -16,6 +16,8 @@
 			instead of bundled.</flag>
 		<flag name="system-icu">Use the system-wide <pkg>dev-libs/icu</pkg>
 			instead of bundled.</flag>
+		<flag name="system-libvpx">Use the system-wide <pkg>media-libs/libvpx</pkg>
+			instead of bundled.</flag>
 		<flag name="widgets">Enable QtWidgets support</flag>
 	</use>
 	<upstream>
