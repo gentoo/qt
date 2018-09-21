@@ -79,10 +79,7 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
-PATCHES+=(
-	"${FILESDIR}/${PN}-5.11.2-libxml2-disable-catalogs.patch" # bug 653078
-	"${FILESDIR}/${PN}-5.12.0-add-libvpx-options.patch"
-)
+PATCHES+=( "${FILESDIR}/${PN}-5.12.0-add-libvpx-options.patch" )
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
