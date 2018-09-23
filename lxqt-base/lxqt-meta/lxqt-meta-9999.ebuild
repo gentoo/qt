@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -24,9 +24,9 @@ RDEPEND="
 	>=lxqt-base/lxqt-qtplugin-${PV}
 	>=lxqt-base/lxqt-runner-${PV}
 	>=lxqt-base/lxqt-session-${PV}
-	>=lxqt-base/lxqt-themes-${PV}
 	virtual/ttf-fonts
 	>=x11-libs/libfm-qt-${PV}
+	>=x11-themes/lxqt-themes-${PV}
 	about? ( >=lxqt-base/lxqt-about-${PV} )
 	admin? ( >=lxqt-base/lxqt-admin-${PV} )
 	filemanager? ( >=x11-misc/pcmanfm-qt-${PV} )
