@@ -19,7 +19,7 @@ fi
 LICENSE="metapackage"
 SLOT="0"
 
-IUSE="+about admin +filemanager lightdm lximage minimal nls
+IUSE="+about admin +filemanager lightdm lximage minimal
 	+policykit powermanagement processviewer screenshot sddm
 	ssh-askpass sudo terminal"
 
