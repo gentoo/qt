@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit cmake-utils eapi7-ver
+inherit cmake-utils eapi7-ver xdg-utils
 
 if [[ "${PV}" == "9999" ]]; then
 	inherit git-r3
@@ -44,4 +44,12 @@ src_configure() {
 		-DPULL_TRANSLATIONS=OFF
 	)
 	cmake-utils_src_configure
+}
+
+pkg_postinst() {
+	xdg_desktop_database_update
+}
+
+pkg_postrm() {
+	xdg_desktop_database_update
 }
