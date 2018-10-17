@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="alsa bindist designer geolocation +jumbo-build pax_kernel pulseaudio
-	+system-ffmpeg +system-icu +system-libvpx widgets"
+	+system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
 RDEPEND="
@@ -78,8 +78,6 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	pax_kernel? ( sys-apps/elfix )
 "
-
-PATCHES+=( "${FILESDIR}/${PN}-5.12.0-add-libvpx-options.patch" )
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
