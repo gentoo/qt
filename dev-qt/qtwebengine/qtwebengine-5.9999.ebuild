@@ -119,7 +119,6 @@ src_configure() {
 		$(usex pulseaudio '-pulseaudio' '')
 		$(usex system-ffmpeg '-ffmpeg' '')
 		$(usex system-icu '-webengine-icu' '')
-		$(usex system-libvpx '-system-webengine-libvpx' '-qt-webengine-libvpx')
 	)
 	qt5-build_src_configure
 }
