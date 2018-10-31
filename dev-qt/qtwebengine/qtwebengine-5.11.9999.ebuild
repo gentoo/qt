@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -40,7 +40,6 @@ RDEPEND="
 	media-libs/libwebp:=
 	media-libs/mesa[egl]
 	media-libs/opus
-	net-libs/libsrtp:0=
 	sys-apps/dbus
 	sys-apps/pciutils
 	sys-libs/libcap
@@ -80,6 +79,7 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES+=(
+	"${FILESDIR}/${PN}-5.9.6-gcc8.patch" # bug 657124
 	"${FILESDIR}/${PN}-5.11.1-nouveau-disable-gpu.patch" # bug 609752
 )
 

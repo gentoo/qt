@@ -40,7 +40,6 @@ RDEPEND="
 	media-libs/libwebp:=
 	media-libs/mesa[egl]
 	media-libs/opus
-	net-libs/libsrtp:0=
 	sys-apps/dbus
 	sys-apps/pciutils
 	sys-libs/libcap
@@ -78,6 +77,8 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	pax_kernel? ( sys-apps/elfix )
 "
+
+PATCHES+=( "${FILESDIR}/${PN}-5.9.6-gcc8.patch" ) # bug 657124
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
