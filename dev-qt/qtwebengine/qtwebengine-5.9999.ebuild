@@ -81,7 +81,7 @@ DEPEND="${RDEPEND}
 PATCHES+=( "${FILESDIR}/${PN}-5.9.6-gcc8.patch" ) # bug 657124
 
 src_prepare() {
-	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.9.3-paxmark-mksnapshot.patch" )
+	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.11.2-paxmark-mksnapshot.patch" )
 
 	if ! use jumbo-build; then
 		sed -i -e 's|use_jumbo_build=true|use_jumbo_build=false|' \
