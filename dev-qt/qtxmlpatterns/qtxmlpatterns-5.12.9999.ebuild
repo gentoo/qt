@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,4 +16,6 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtnetwork-${PV}
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!<dev-qt/qtdeclarative-5.12.0_beta4:5
+"

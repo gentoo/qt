@@ -16,4 +16,6 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtnetwork-${PV}
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!<dev-qt/qtdeclarative-5.12.0_beta4:5
+"
