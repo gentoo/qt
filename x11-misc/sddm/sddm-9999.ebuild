@@ -1,79 +1,101 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit cmake-utils git-r3 user
+
+if [[ ${PV} == *9999* ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
+else
+	SRC_URI="https://github.com/${PN}/${PN}/releases/download/v${PV}/${P}.tar.gz"
+	KEYWORDS="amd64 ~arm ~arm64 x86"
+fi
+
+PLOCALES="ar bn ca cs da de es et fi fr hi_IN hu ie is it ja kk ko lt lv nb nl nn pl pt_BR pt_PT ro ru sk sr sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_CN zh_TW"
+inherit cmake-utils l10n systemd user
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
-EGIT_REPO_URI="git://github.com/${PN}/${PN}.git"
-KEYWORDS=""
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="consolekit +pam systemd"
+IUSE="consolekit elogind +pam systemd test"
 
-RDEPEND=">=dev-qt/qtcore-5.6:5
-	>=dev-qt/qtdbus-5.6:5
-	>=dev-qt/qtgui-5.6:5
-	>=dev-qt/qtdeclarative-5.6:5
-	>=dev-qt/qtnetwork-5.6:5
+REQUIRED_USE="?? ( elogind systemd )"
+
+RDEPEND="
+	>=dev-qt/qtcore-5.9.4:5
+	>=dev-qt/qtdbus-5.9.4:5
+	>=dev-qt/qtdeclarative-5.9.4:5
+	>=dev-qt/qtgui-5.9.4:5
+	>=dev-qt/qtnetwork-5.9.4:5
 	>=x11-base/xorg-server-1.15.1
-	x11-libs/libxcb[xkb(-)]
+	x11-libs/libxcb[xkb]
 	consolekit? ( >=sys-auth/consolekit-0.9.4 )
+	elogind? ( sys-auth/elogind )
 	pam? ( sys-libs/pam )
 	systemd? ( sys-apps/systemd:= )
-	!systemd? ( || ( sys-power/upower sys-power/upower-pm-utils ) )"
+	!systemd? ( sys-power/upower )"
 
 DEPEND="${RDEPEND}
 	dev-python/docutils
-	>=dev-qt/linguist-tools-5.6:5
-	>=dev-qt/qttest-5.6:5
+	>=dev-qt/linguist-tools-5.9.4:5
 	kde-frameworks/extra-cmake-modules
-	virtual/pkgconfig"
+	virtual/pkgconfig
+	test? ( >=dev-qt/qttest-5.9.4:5 )"
 
-pkg_pretend() {
-	if [[ ${MERGE_TYPE} != binary  && $(tc-getCC) == *gcc* ]]; then
-		if [[ $(gcc-major-version) -lt 4 || $(gcc-major-version) == 4 && $(gcc-minor-version) -lt 7 ]] ; then
-			die 'The active compiler needs to be gcc 4.7 (or newer)'
-		fi
-	fi
-}
+PATCHES=(
+	"${FILESDIR}/${PN}-0.12.0-respect-user-flags.patch" # fix for flags handling and bug 563108
+	"${FILESDIR}/${PN}-0.18.0-Xsession.patch" # bug 611210
+	# TODO: fix properly
+	"${FILESDIR}/${PN}-0.16.0-ck2-revert.patch" # bug 633920
+)
 
 src_prepare() {
-	# fix for flags handling and bug 563108
-	eapply "${FILESDIR}/${P}-respect-user-flags.patch"
-	use consolekit && eapply "${FILESDIR}/${P}-consolekit.patch"
-
 	cmake-utils_src_prepare
+
+	disable_locale() {
+		sed -e "/${1}\.ts/d" -i data/translations/CMakeLists.txt || die
+	}
+	l10n_find_plocales_changes "data/translations" "" ".ts"
+	l10n_for_each_disabled_locale_do disable_locale
+
+	if ! use test; then
+		sed -e "/^find_package/s/ Test//" -i CMakeLists.txt || die
+		cmake_comment_add_subdirectory test
+	fi
 }
 
 src_configure() {
 	local mycmakeargs=(
 		-DENABLE_PAM=$(usex pam)
 		-DNO_SYSTEMD=$(usex '!systemd')
+		-DUSE_ELOGIND=$(usex 'elogind')
 		-DBUILD_MAN_PAGES=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
-		)
-
+	)
 	cmake-utils_src_configure
 }
 
+src_install() {
+	cmake-utils_src_install
+
+	# Create a default.conf as upstream dropped /etc/sddm.conf w/o replacement
+	local confd="/usr/lib/sddm/sddm.conf.d"
+	dodir ${confd}
+	"${D}"/usr/bin/sddm --example-config > "${D}/${confd}"/00default.conf \
+		|| die "Failed to create 00default.conf"
+	sed -e "/^InputMethod/s/qtvirtualkeyboard//" \
+		-i "${D}/${confd}"/00default.conf || die
+}
+
 pkg_postinst() {
+	elog "Starting with 0.18.0, SDDM no longer installs /etc/sddm.conf"
+	elog "Use it to override specific options. SDDM defaults are now"
+	elog "found in: /usr/lib/sddm/sddm.conf.d/00default.conf"
+
 	enewgroup ${PN}
 	enewuser ${PN} -1 -1 /var/lib/${PN} ${PN},video
 
-	if use consolekit && use pam && [[ -e "${ROOT}"/etc/pam.d/system-login ]]; then
-		local line=$(grep "pam_ck_connector.*nox11" "${ROOT}"/etc/pam.d/system-login)
-		if [[ -z ${line} ]]; then
-			ewarn
-			ewarn "Erroneous /etc/pam.d/system-login settings detected!"
-			ewarn "Please restore 'nox11' option in the line containing pam_ck_connector:"
-			ewarn
-			ewarn "session      optional      pam_ck_connector.so nox11"
-			ewarn
-			ewarn "or 'emerge -1 sys-auth/pambase' and run etc-update."
-			ewarn
-		fi
-	fi
+	systemd_reenable sddm.service
 }
