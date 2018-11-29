@@ -20,7 +20,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 PDEPEND="
-	geoclue? ( app-misc/geoclue:0 )
+	geoclue? ( app-misc/geoclue:2.0 )
 "
 
 QT5_TARGET_SUBDIRS=(
@@ -32,7 +32,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 pkg_setup() {
-	use geoclue && QT5_TARGET_SUBDIRS+=(src/plugins/position/geoclue)
+	use geoclue && QT5_TARGET_SUBDIRS+=( src/plugins/position/geoclue2 )
 	use qml && QT5_TARGET_SUBDIRS+=(
 		src/positioningquick
 		src/imports/positioning
