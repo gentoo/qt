@@ -42,6 +42,8 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	:network
 )
 
+PATCHES=( "${FILESDIR}/${P}-openssl-1.1.0.patch" ) # QTBUG-71983
+
 pkg_setup() {
 	use connman && QT5_TARGET_SUBDIRS+=(src/plugins/bearer/connman)
 	use networkmanager && QT5_TARGET_SUBDIRS+=(src/plugins/bearer/networkmanager)
