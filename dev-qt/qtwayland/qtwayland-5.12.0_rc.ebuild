@@ -31,6 +31,10 @@ src_prepare() {
 		src/client/client.pro \
 		src/compositor/wayland_wrapper/wayland_wrapper.pri \
 		src/plugins/shellintegration/ivi-shell/ivi-shell.pro \
+		src/plugins/shellintegration/wl-shell/wl-shell.pro \
+		src/plugins/shellintegration/xdg-shell/xdg-shell.pro \
+		src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro \
+		src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro \
 		tests/auto/compositor/compositor/compositor.pro
 
 	use xcomposite || rm -r config.tests/xcomposite || die
