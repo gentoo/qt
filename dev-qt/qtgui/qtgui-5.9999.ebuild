@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -55,7 +55,7 @@ RDEPEND="
 		x11-libs/libSM
 		x11-libs/libX11
 		>=x11-libs/libxcb-1.12:=[xkb]
-		>=x11-libs/libxkbcommon-0.4.1[X]
+		>=x11-libs/libxkbcommon-0.5.0[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
@@ -102,7 +102,7 @@ QT5_GENTOO_CONFIG=(
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
 	libinput
-	libinput:xkbcommon-evdev:
+	libinput:xkbcommon:
 	:opengl
 	png:png:
 	png:system-png:IMAGEFORMAT_PNG
@@ -156,14 +156,15 @@ src_configure() {
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
 		$(qt_use libinput)
-		$(qt_use libinput xkbcommon-evdev)
 		-opengl $(usex gles2 es2 desktop)
 		$(qt_use png libpng system)
 		$(qt_use tslib)
 		$(qt_use udev libudev)
 		$(qt_use xcb xcb system)
-		$(qt_use xcb xkbcommon-x11 system)
 		$(usex xcb '-xcb-xlib -xcb-xinput -xkb' '')
 	)
+	if use libinput || use xcb; then
+		myconf+=( -xkbcommon )
+	fi
 	qt5-build_src_configure
 }
