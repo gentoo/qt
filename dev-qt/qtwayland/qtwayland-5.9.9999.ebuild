@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,7 +16,7 @@ DEPEND="
 	>=dev-libs/wayland-1.6.0
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}[egl,libinput?]
+	~dev-qt/qtgui-${PV}[egl,libinput=]
 	media-libs/mesa[egl]
 	>=x11-libs/libxkbcommon-0.2.0
 	xcomposite? (
