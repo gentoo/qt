@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -17,7 +17,7 @@ RDEPEND="
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtpositioning-${PV}
+	~dev-qt/qtpositioning-${PV}[qml]
 	~dev-qt/qtsql-${PV}
 	sys-libs/zlib
 "
