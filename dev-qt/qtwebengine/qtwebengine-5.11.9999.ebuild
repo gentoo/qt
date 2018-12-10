@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+
 PYTHON_COMPAT=( python2_7 )
 inherit multiprocessing pax-utils python-any-r1 qt5-build
 
@@ -15,17 +16,18 @@ IUSE="alsa bindist designer geolocation +jumbo-build pax_kernel pulseaudio
 	+system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
+QT_PV="5.11.1"
 RDEPEND="
 	app-arch/snappy:=
 	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}
-	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtprintsupport-${PV}
-	~dev-qt/qtwebchannel-${PV}[qml]
+	>=dev-qt/qtcore-${QT_PV}
+	>=dev-qt/qtdeclarative-${QT_PV}
+	>=dev-qt/qtgui-${QT_PV}
+	>=dev-qt/qtnetwork-${QT_PV}
+	>=dev-qt/qtprintsupport-${QT_PV}
+	>=dev-qt/qtwebchannel-${QT_PV}[qml]
 	dev-libs/expat
 	dev-libs/libevent:=
 	dev-libs/libxml2[icu]
@@ -59,14 +61,14 @@ RDEPEND="
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
-	designer? ( ~dev-qt/designer-${PV} )
-	geolocation? ( ~dev-qt/qtpositioning-${PV} )
+	designer? ( >=dev-qt/designer-${QT_PV} )
+	geolocation? ( >=dev-qt/qtpositioning-${QT_PV} )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
 	widgets? (
-		~dev-qt/qtdeclarative-${PV}[widgets]
-		~dev-qt/qtwidgets-${PV}
+		>=dev-qt/qtdeclarative-${QT_PV}[widgets]
+		>=dev-qt/qtwidgets-${QT_PV}
 	)
 "
 DEPEND="${RDEPEND}
