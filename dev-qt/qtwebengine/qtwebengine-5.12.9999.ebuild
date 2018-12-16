@@ -79,7 +79,10 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
-PATCHES+=( "${FILESDIR}/${PN}-5.9.6-gcc8.patch" ) # bug 657124
+PATCHES+=(
+	"${FILESDIR}/${PN}-5.9.6-gcc8.patch" # bug 657124
+	"${FILESDIR}/${PN}-5.11.1-nouveau-disable-gpu.patch" # bug 609752
+)
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.11.2-paxmark-mksnapshot.patch" )
