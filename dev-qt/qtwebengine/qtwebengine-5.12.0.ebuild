@@ -81,7 +81,7 @@ DEPEND="${RDEPEND}
 
 PATCHES+=(
 	"${FILESDIR}/${PN}-5.9.6-gcc8.patch" # bug 657124
-	"${FILESDIR}/${PN}-5.11.1-nouveau-disable-gpu.patch" # bug 609752
+	"${FILESDIR}/${PN}-5.12.0-nouveau-disable-gpu.patch" # bug 609752
 )
 
 src_prepare() {
