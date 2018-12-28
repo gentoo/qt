@@ -10,5 +10,6 @@
 	</upstream>
 	<use>
 		<flag name="monitor" restrict="&gt;=lxqt-base/lxqt-config-0.13.0">Build monitor settings tool</flag>
+		<flag name="touchpad" restrict="&gt;=lxqt-base/lxqt-config-0.13.0">Build touchpad settings tool</flag>
 	</use>
 </pkgmetadata>

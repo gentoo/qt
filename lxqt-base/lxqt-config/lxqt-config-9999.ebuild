@@ -18,7 +18,7 @@ fi
 
 LICENSE="GPL-2 GPL-2+ GPL-3 LGPL-2 LGPL-2+ LGPL-2.1+ WTFPL-2"
 SLOT="0"
-IUSE="+monitor"
+IUSE="+monitor +touchpad"
 
 RDEPEND="
 	>=dev-libs/libqtxdg-3.0.0
@@ -37,16 +37,24 @@ RDEPEND="
 	x11-libs/libXcursor
 	x11-libs/libXfixes
 	monitor? ( kde-plasma/libkscreen:5= )
+	touchpad? (
+		virtual/libudev
+		x11-drivers/xf86-input-libinput
+		x11-libs/libXext
+	)
 "
 DEPEND="${DEPEND}
 	dev-qt/linguist-tools:5
 	>=dev-util/lxqt-build-tools-0.5.0
 "
 
+PATCHES="${FILESDIR}/${PN}-0.14.0-make-touchpad-optional.patch"
+
 src_configure() {
 	local mycmakeargs=(
 		-DPULL_TRANSLATIONS=OFF
 		-DWITH_MONITOR="$(usex monitor)"
+		-DWITH_TOUCHPAD="$(usex touchpad)"
 	)
 	cmake-utils_src_configure
 }
@@ -58,6 +66,11 @@ src_install() {
 
 pkg_postinst() {
 	gnome2_icon_cache_update
+
+	if ! use touchpad; then
+		ewarn "Please do not report issues to upstream, if they are caused by"
+		ewarn "USE=\"-touchpad\", as upstream does not support such a build."
+	fi
 }
 
 pkg_postrm() {
