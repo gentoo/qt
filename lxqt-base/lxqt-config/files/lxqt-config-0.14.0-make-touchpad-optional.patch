@@ -1,21 +1,27 @@
-From 8219e93d5733d6c8e98028e6f21468f568d9848d Mon Sep 17 00:00:00 2001
+From 0d4690c116a1775e4e129878d9f5a2f5f77c068f Mon Sep 17 00:00:00 2001
 From: Jimi Huotari <chiitoo@gentoo.org>
 Date: Sun, 23 Dec 2018 23:30:57 +0200
 Subject: [PATCH] lxqt-config-input: make touchpad settings/dependencies
  optional
 
+Add a configure option for building the touchpad section of the
+'Keyboard and Mouse Settings' (enabled by default).  This allows
+for reducing the dependencies on systems that do not have a use
+for them.
+
+Closes: https://github.com/lxqt/lxqt-config/issues/358
 ---
- lxqt-config-input/CMakeLists.txt        | 73 ++++++++++++++++++++-----
+ lxqt-config-input/CMakeLists.txt        | 71 ++++++++++++++++++++-----
  lxqt-config-input/lxqt-config-input.cpp | 10 ++++
  lxqt-config-input/touchpad-config.h.in  |  1 +
- 3 files changed, 71 insertions(+), 13 deletions(-)
+ 3 files changed, 69 insertions(+), 13 deletions(-)
  create mode 100644 lxqt-config-input/touchpad-config.h.in
 
 diff --git a/lxqt-config-input/CMakeLists.txt b/lxqt-config-input/CMakeLists.txt
-index a315e71..2d87a17 100644
+index a315e71..8c4c0fb 100644
 --- a/lxqt-config-input/CMakeLists.txt
 +++ b/lxqt-config-input/CMakeLists.txt
-@@ -1,24 +1,46 @@
+@@ -1,24 +1,44 @@
  project(lxqt-config-input)
  
 +option(WITH_TOUCHPAD "Build touchpad settings" ON)
@@ -37,7 +43,6 @@ index a315e71..2d87a17 100644
 +set(lxqt-config-input_INCS
      ${X11_INCLUDE_DIR}
 -    ${XORG_LIBINPUT_INCLUDE_DIRS}
-+    ${CMAKE_CURRENT_BINARY_DIR}
      "${CMAKE_CURRENT_SOURCE_DIR}/../liblxqt-config-cursor"
  )
  
@@ -52,7 +57,6 @@ index a315e71..2d87a17 100644
 +    ${lxqt-config-input_INCS}
 +)
 +
-+#    "${CMAKE_CURRENT_SOURCE_DIR}/touchpad-config.h.in"
 +configure_file(
 +    "${CMAKE_CURRENT_SOURCE_DIR}/touchpad-config.h.in"
 +    "${CMAKE_CURRENT_SOURCE_DIR}/touchpad-config.h"
@@ -69,7 +73,7 @@ index a315e71..2d87a17 100644
  )
  
  set(lxqt-config-input_SRCS
-@@ -27,8 +49,6 @@ set(lxqt-config-input_SRCS
+@@ -27,8 +47,6 @@ set(lxqt-config-input_SRCS
      mouseconfig.cpp
      keyboardlayoutconfig.cpp
      selectkeyboardlayoutdialog.cpp
@@ -78,7 +82,7 @@ index a315e71..2d87a17 100644
  )
  
  set(lxqt-config-input_UIS
-@@ -36,9 +56,26 @@ set(lxqt-config-input_UIS
+@@ -36,9 +54,26 @@ set(lxqt-config-input_UIS
      keyboardconfig.ui
      keyboardlayoutconfig.ui
      selectkeyboardlayoutdialog.ui
@@ -106,7 +110,7 @@ index a315e71..2d87a17 100644
  # Translations **********************************
  lxqt_translate_ts(QM_FILES
      UPDATE_TRANSLATIONS
-@@ -67,14 +104,24 @@ add_executable(lxqt-config-input
+@@ -67,14 +102,24 @@ add_executable(lxqt-config-input
      ${QM_LOADER}
  )
  
