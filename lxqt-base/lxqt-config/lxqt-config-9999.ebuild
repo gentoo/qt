@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -48,8 +48,6 @@ DEPEND="${DEPEND}
 	>=dev-util/lxqt-build-tools-0.5.0
 "
 
-PATCHES="${FILESDIR}/${PN}-0.14.0-make-touchpad-optional.patch"
-
 src_configure() {
 	local mycmakeargs=(
 		-DPULL_TRANSLATIONS=OFF
@@ -66,11 +64,6 @@ src_install() {
 
 pkg_postinst() {
 	gnome2_icon_cache_update
-
-	if ! use touchpad; then
-		ewarn "Please do not report issues to upstream, if they are caused by"
-		ewarn "USE=\"-touchpad\", as upstream does not support such a build."
-	fi
 }
 
 pkg_postrm() {
