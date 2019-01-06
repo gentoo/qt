@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -17,7 +17,7 @@ DEPEND="
 	dev-libs/double-conversion:=
 	dev-libs/glib:2
 	dev-libs/libpcre2[pcre16,unicode]
-	sys-libs/zlib
+	sys-libs/zlib:=
 	icu? ( dev-libs/icu:= )
 	!icu? ( virtual/libiconv )
 	systemd? ( sys-apps/systemd:= )
