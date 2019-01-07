@@ -1,11 +1,11 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 QT5_MODULE="qttools"
 inherit desktop gnome2-utils qt5-build
 
-DESCRIPTION="WYSIWYG tool for designing and building Qt-based GUIs"
+DESCRIPTION="WYSIWYG tool for designing and building graphical user interfaces with QtWidgets"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86 ~amd64-fbsd"
