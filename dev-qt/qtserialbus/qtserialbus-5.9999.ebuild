@@ -1,10 +1,10 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 inherit qt5-build
 
-DESCRIPTION="Support for CAN and other serial buses"
+DESCRIPTION="Qt module to access CAN, ModBus, and other industrial serial buses and protocols"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~x86"
