@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -30,7 +30,7 @@ RDEPEND="
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
 	>=media-libs/harfbuzz-1.6.0:=
-	>=sys-libs/zlib-1.2.5
+	sys-libs/zlib:=
 	virtual/opengl
 	dbus? ( ~dev-qt/qtdbus-${PV} )
 	egl? ( media-libs/mesa[egl] )
