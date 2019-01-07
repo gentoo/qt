@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,7 +16,7 @@ RDEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtwidgets-${PV}
-	>=sys-libs/zlib-1.2.5
+	sys-libs/zlib:=
 "
 DEPEND="${RDEPEND}
 	test? ( ~dev-qt/qtxml-${PV} )
