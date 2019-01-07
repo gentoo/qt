@@ -84,20 +84,20 @@ QT5_TARGET_SUBDIRS=(
 
 QT5_GENTOO_CONFIG=(
 	accessibility:accessibility-atspi-bridge
-	egl
-	eglfs
+	egl:egl:
+	eglfs:eglfs:
 	eglfs:eglfs_egldevice:
 	eglfs:eglfs_gbm:
-	evdev
+	evdev:evdev:
 	evdev:mtdev:
-	:fontconfig
-	:system-freetype:FREETYPE
+	:fontconfig:
+	:system-freetype:
 	!:no-freetype:
 	!gif:no-gif:
 	gles2::OPENGL_ES
 	gles2:opengles2:OPENGL_ES_2
 	!:no-gui:
-	:system-harfbuzz:HARFBUZZ
+	:system-harfbuzz:
 	!:no-harfbuzz:
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
@@ -107,7 +107,7 @@ QT5_GENTOO_CONFIG=(
 	png:png:
 	png:system-png:IMAGEFORMAT_PNG
 	!png:no-png:
-	tslib
+	tslib:tslib:
 	udev:libudev:
 	xcb:xcb:
 	xcb:xcb-glx:
@@ -116,7 +116,6 @@ QT5_GENTOO_CONFIG=(
 	xcb:xcb-sm:
 	xcb:xcb-xlib:
 	xcb:xcb-xinput:
-	xcb::XKB
 )
 
 QT5_GENTOO_PRIVATE_CONFIG=(
@@ -125,7 +124,7 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 
 src_prepare() {
 	# egl_x11 is activated when both egl and xcb are enabled
-	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11) || QT5_GENTOO_CONFIG+=(egl:egl_x11)
+	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11:) || QT5_GENTOO_CONFIG+=(egl:egl_x11:)
 
 	qt_use_disable_config dbus dbus \
 		src/platformsupport/themes/genericunix/genericunix.pri

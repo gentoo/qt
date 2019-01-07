@@ -32,7 +32,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 QT5_GENTOO_CONFIG=(
-	libproxy
+	libproxy:libproxy:
 	ssl::SSL
 	ssl::OPENSSL
 	ssl:openssl-linked:LINKED_OPENSSL
