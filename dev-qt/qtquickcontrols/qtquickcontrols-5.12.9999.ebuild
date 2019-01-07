@@ -1,10 +1,10 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 inherit qt5-build
 
-DESCRIPTION="Set of controls used in conjunction with Qt Quick to build complete interfaces"
+DESCRIPTION="Set of Qt Quick controls to create complete user interfaces (deprecated)"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
