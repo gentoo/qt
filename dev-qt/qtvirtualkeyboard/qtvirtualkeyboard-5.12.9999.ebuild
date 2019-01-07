@@ -1,10 +1,10 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 inherit qt5-build
 
-DESCRIPTION="Virtual keyboard plugin for the Qt5 framework"
+DESCRIPTION="Customizable input framework and virtual keyboard for Qt"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86 ~amd64-fbsd"
