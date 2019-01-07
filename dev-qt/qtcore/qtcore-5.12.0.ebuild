@@ -44,6 +44,9 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 )
 
 src_prepare() {
+	# don't add -O3 to CXXFLAGS, bug 549140
+	sed -i -e '/CONFIG\s*+=/s/optimize_full//' src/corelib/corelib.pro || die
+
 	# fix missing qt_version_tag symbol w/ LTO, bug 674382
 	sed -i -e 's/^gcc:ltcg/gcc/' src/corelib/global/global.pri || die
 

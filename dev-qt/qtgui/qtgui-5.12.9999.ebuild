@@ -123,6 +123,9 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 )
 
 src_prepare() {
+	# don't add -O3 to CXXFLAGS, bug 549140
+	sed -i -e '/CONFIG\s*+=/s/optimize_full//' src/gui/gui.pro || die
+
 	# egl_x11 is activated when both egl and xcb are enabled
 	use egl && QT5_GENTOO_CONFIG+=(xcb:egl_x11:) || QT5_GENTOO_CONFIG+=(egl:egl_x11:)
 
