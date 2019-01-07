@@ -8,7 +8,7 @@ inherit qt5-build
 DESCRIPTION="Cross-platform application development framework"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86 ~amd64-fbsd"
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd"
 fi
 
 IUSE="icu systemd"
@@ -43,8 +43,16 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	!:xml
 )
 
+src_prepare() {
+	# fix missing qt_version_tag symbol w/ LTO, bug 674382
+	sed -i -e 's/^gcc:ltcg/gcc/' src/corelib/global/global.pri || die
+
+	qt5-build_src_prepare
+}
+
 src_configure() {
 	local myconf=(
+		-no-feature-statx	# bug 672856
 		$(qt_use icu)
 		$(qt_use !icu iconv)
 		$(qt_use systemd journald)
