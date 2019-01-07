@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -23,9 +23,9 @@ DEPEND="
 	freetds? ( dev-db/freetds )
 	mysql? ( virtual/libmysqlclient:= )
 	oci8? ( dev-db/oracle-instantclient-basic )
-	odbc? ( || ( dev-db/unixODBC dev-db/libiodbc ) )
+	odbc? ( dev-db/unixODBC )
 	postgres? ( dev-db/postgresql:* )
-	sqlite? ( >=dev-db/sqlite-3.8.10.2:3 )
+	sqlite? ( dev-db/sqlite:3 )
 "
 RDEPEND="${DEPEND}"
 
@@ -51,7 +51,6 @@ src_configure() {
 
 	use mysql && myconf+=("-I${EPREFIX}/usr/include/mysql" "-L${EPREFIX}/usr/$(get_libdir)/mysql")
 	use oci8 && myconf+=("-I${ORACLE_HOME}/include" "-L${ORACLE_HOME}/$(get_libdir)")
-	use odbc && myconf+=("-I${EPREFIX}/usr/include/iodbc")
 	use postgres && myconf+=("-I${EPREFIX}/usr/include/postgresql/pgsql")
 
 	qt5-build_src_configure
