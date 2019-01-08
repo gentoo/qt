@@ -21,7 +21,7 @@ REQUIRED_USE="
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	freetds? ( dev-db/freetds )
-	mysql? ( virtual/libmysqlclient:= )
+	mysql? ( dev-db/mysql-connector-c:= )
 	oci8? ( dev-db/oracle-instantclient-basic )
 	odbc? ( dev-db/unixODBC )
 	postgres? ( dev-db/postgresql:* )
@@ -49,7 +49,6 @@ src_configure() {
 		$(usex sqlite -system-sqlite '')
 	)
 
-	use mysql && myconf+=("-I${EPREFIX}/usr/include/mysql" "-L${EPREFIX}/usr/$(get_libdir)/mysql")
 	use oci8 && myconf+=("-I${ORACLE_HOME}/include" "-L${ORACLE_HOME}/$(get_libdir)")
 	use postgres && myconf+=("-I${EPREFIX}/usr/include/postgresql/pgsql")
 
