@@ -22,7 +22,7 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 	freetds? ( dev-db/freetds )
 	mysql? ( dev-db/mysql-connector-c:= )
-	oci8? ( dev-db/oracle-instantclient-basic )
+	oci8? ( dev-db/oracle-instantclient:=[sdk] )
 	odbc? ( dev-db/unixODBC )
 	postgres? ( dev-db/postgresql:* )
 	sqlite? ( dev-db/sqlite:3 )
