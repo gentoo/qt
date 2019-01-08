@@ -50,7 +50,6 @@ src_configure() {
 	)
 
 	use oci8 && myconf+=("-I${ORACLE_HOME}/include" "-L${ORACLE_HOME}/$(get_libdir)")
-	use postgres && myconf+=("-I${EPREFIX}/usr/include/postgresql/pgsql")
 
 	qt5-build_src_configure
 }
