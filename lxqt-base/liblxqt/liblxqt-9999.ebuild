@@ -21,7 +21,7 @@ SLOT="0/$(ver_cut 1-2)"
 IUSE="+policykit"
 
 RDEPEND="
-	>=dev-libs/libqtxdg-3.0.0
+	>=dev-libs/libqtxdg-3.3.0
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
@@ -35,7 +35,7 @@ RDEPEND="
 
 DEPEND="${RDEPEND}
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.5.0
+	>=dev-util/lxqt-build-tools-0.6.0
 	policykit? ( sys-auth/polkit-qt )
 "
 

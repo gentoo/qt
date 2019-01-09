@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -26,7 +26,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.5.0
+	>=dev-util/lxqt-build-tools-0.6.0
 "
 
 src_configure() {

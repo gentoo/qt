@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -21,13 +21,13 @@ SLOT="0"
 
 RDEPEND="
 	app-admin/sudo
-	>=dev-libs/libqtxdg-3.0.0
+	>=dev-libs/libqtxdg-3.3.0
 	dev-qt/qtcore:5
 	dev-qt/qtwidgets:5
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 "
 DEPEND="${RDEPEND}
-	>=dev-util/lxqt-build-tools-0.5.0
+	>=dev-util/lxqt-build-tools-0.6.0
 "
 
 src_configure() {
