@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -18,7 +18,7 @@ fi
 
 LICENSE="LGPL-2.1+ BSD"
 SLOT="0/$(ver_cut 1-2)"
-IUSE="policykit"
+IUSE="+policykit"
 
 RDEPEND="
 	>=dev-libs/libqtxdg-3.0.0
@@ -47,4 +47,11 @@ src_configure() {
 		$(usex !policykit '-DBUILD_POLKIT=OFF')
 	)
 	cmake-utils_src_configure
+}
+
+pkg_postinst() {
+	if ! use policykit; then
+		ewarn "Please do not report issues caused by USE=\"-policykit\" to upstream,"
+		ewarn "as they do not support such a build at this time."
+	fi
 }
