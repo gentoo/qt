@@ -19,9 +19,9 @@ fi
 LICENSE="metapackage"
 SLOT="0"
 
-IUSE="+about admin +filemanager lightdm lximage minimal
-	+policykit powermanagement processviewer screenshot sddm
-	ssh-askpass sudo terminal"
+IUSE="+about admin archiver +filemanager lightdm lximage
+	minimal +policykit powermanagement processviewer
+	screenshot sddm ssh-askpass sudo terminal"
 
 # Note: we prefer kde-frameworks/oxygen-icons over other icon sets, as the initial
 # install expects oxygen icons, until the user specifies otherwise (bug 543380)
@@ -39,6 +39,7 @@ RDEPEND="
 	=x11-themes/lxqt-themes-${MY_PV}
 	about? ( =lxqt-base/lxqt-about-${MY_PV} )
 	admin? ( =lxqt-base/lxqt-admin-${MY_PV} )
+	archiver? ( =app-arch/lxqt-archiver-${MY_PV} )
 	filemanager? ( =x11-misc/pcmanfm-qt-${MY_PV} )
 	lightdm? ( x11-misc/lightdm )
 	lximage? ( media-gfx/lximage-qt )
