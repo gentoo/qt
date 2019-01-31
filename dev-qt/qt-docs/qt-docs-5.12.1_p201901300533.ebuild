@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -50,8 +50,8 @@ src_prepare() {
 }
 
 src_install() {
-	# must be the same as QT_INSTALL_DOCS
-	local dest=/usr/share/doc/qt-${PV%_p*}
+	# must be the same as QT5_DOCDIR
+	local dest=/usr/share/qt5-doc
 	insinto "${dest}"
 	use html && doins -r */
 	use qch && doins *.qch
