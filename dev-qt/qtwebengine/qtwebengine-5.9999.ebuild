@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -78,8 +78,6 @@ DEPEND="${RDEPEND}
 	sys-devel/bison
 	pax_kernel? ( sys-apps/elfix )
 "
-
-PATCHES+=( "${FILESDIR}/${PN}-5.9.6-gcc8.patch" ) # bug 657124
 
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.11.2-paxmark-mksnapshot.patch" )
