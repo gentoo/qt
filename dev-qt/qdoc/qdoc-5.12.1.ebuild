@@ -28,10 +28,13 @@ src_prepare() {
 	qt_use_disable_mod qml qmldevtools-private \
 		src/qdoc/qdoc.pro
 
-	export LLVM_INSTALL_DIR="$(llvm-config --prefix)"
-	# this is normally loaded in qttools.pro, so skipped by using
-	# QT_TARGET_SUBDIRS causing build to fail
-	sed -e '1iload(qt_find_clang)\' -i src/qdoc/qdoc.pro || die
-
 	qt5-build_src_prepare
+}
+
+src_configure() {
+	# src/qdoc requires files that are only generated when qmake is
+	# run in the root directory. bug 676948; same fix as bug 633776
+	mkdir -p "${QT5_BUILD_DIR}"/src/qdoc || die
+	qt5_qmake "${QT5_BUILD_DIR}"
+	qt5-build_src_configure
 }
