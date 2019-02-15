@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils gnome2-utils xdg-utils git-r3
+inherit xdg cmake-utils git-r3
 
 # Upstream names the package PV-rX. We change that to
 # PV_pX so we can use portage revisions.
@@ -16,35 +16,36 @@ EGIT_REPO_URI="https://github.com/brezerk/q4wine.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
+
 IUSE="+dbus debug +ico +iso +wineappdb"
 
-CDEPEND="
+BDEPEND="
+	dev-qt/linguist-tools:5
+"
+DEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
-	dev-qt/qtsingleapplication[qt5,X]
+	dev-qt/qtsingleapplication[qt5(+),X]
 	dev-qt/qtsql:5[sqlite]
+	dev-qt/qtsvg:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtxml:5
 	dbus? ( dev-qt/qtdbus:5 )
 	ico? ( >=media-gfx/icoutils-0.26.0 )
 "
-DEPEND="${CDEPEND}
-	dev-qt/linguist-tools:5
-"
-RDEPEND="${CDEPEND}
+RDEPEND="${DEPEND}
 	app-admin/sudo
 	>=sys-apps/which-2.19
 	iso? ( sys-fs/fuseiso )
 "
 
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}"/${MY_P}
 
 DOCS=( AUTHORS ChangeLog README )
 
 src_configure() {
 	local mycmakeargs=(
-		-DQT5=ON
 		-DDEBUG=$(usex debug ON OFF)
 		-DWITH_ICOUTILS=$(usex ico ON OFF)
 		-DWITH_SYSTEM_SINGLEAPP=ON
@@ -54,14 +55,4 @@ src_configure() {
 		-DWITH_DBUS=$(usex dbus ON OFF)
 	)
 	cmake-utils_src_configure
-}
-
-pkg_postinst() {
-	gnome2_icon_cache_update
-	xdg_desktop_database_update
-}
-
-pkg_postrm() {
-	gnome2_icon_cache_update
-	xdg_desktop_database_update
 }
