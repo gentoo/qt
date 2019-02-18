@@ -46,6 +46,7 @@ RDEPEND="
 		x11-drivers/xf86-input-libinput
 		x11-libs/libXext
 	)
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${DEPEND}"
 

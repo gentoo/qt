@@ -35,6 +35,7 @@ RDEPEND="
 	kde-frameworks/kwindowsystem:5[X]
 	x11-libs/libX11
 	x11-libs/libXScrnSaver
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}
 	policykit? ( sys-auth/polkit-qt )

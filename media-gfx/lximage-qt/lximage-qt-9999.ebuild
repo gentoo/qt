@@ -39,5 +39,6 @@ RDEPEND="
 	>=x11-libs/libfm-qt-0.12.0:=
 	x11-libs/libX11
 	x11-libs/libXfixes
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

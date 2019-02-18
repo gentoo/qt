@@ -38,6 +38,7 @@ RDEPEND="
 	=lxqt-base/liblxqt-${MY_PV}
 	=lxqt-base/lxqt-globalkeys-${MY_PV}
 	!lxqt-base/lxqt-common
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"
 

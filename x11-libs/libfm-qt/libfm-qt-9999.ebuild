@@ -34,5 +34,6 @@ RDEPEND="
 	media-libs/libexif:=
 	>=x11-libs/libfm-1.2.0:=
 	x11-libs/libxcb:=
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

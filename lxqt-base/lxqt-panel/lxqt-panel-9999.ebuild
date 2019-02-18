@@ -67,6 +67,7 @@ RDEPEND="
 		)
 	)
 	!lxqt-base/lxqt-common
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"
 

@@ -32,6 +32,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	x11-wm/openbox:3
 	x11-libs/libX11
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}
 	sys-apps/sed

@@ -33,6 +33,7 @@ RDEPEND="
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 	sys-auth/polkit-qt[qt5(+)]
 	!lxqt-base/lxqt-common
+	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"
 
