@@ -29,10 +29,3 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	>=dev-util/lxqt-build-tools-0.6.0
 "
-
-src_configure() {
-	local mycmakeargs=(
-		-DPULL_TRANSLATIONS=OFF
-	)
-	cmake-utils_src_configure
-}

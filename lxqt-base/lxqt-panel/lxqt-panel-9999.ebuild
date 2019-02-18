@@ -71,8 +71,6 @@ DEPEND="${RDEPEND}
 
 src_configure() {
 	local mycmakeargs=(
-		-DPULL_TRANSLATIONS=OFF
-
 		# Plugins
 		-DCLOCK_PLUGIN=$(usex clock)
 		-DCOLORPICKER_PLUGIN=$(usex colorpicker)

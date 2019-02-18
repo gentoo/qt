@@ -43,7 +43,6 @@ PATCHES=( "$FILESDIR/${PN}-make-polkit-optional.patch" )
 
 src_configure() {
 	local mycmakeargs=(
-		-DPULL_TRANSLATIONS=OFF
 		$(usex !policykit '-DBUILD_POLKIT=OFF')
 	)
 	cmake-utils_src_configure

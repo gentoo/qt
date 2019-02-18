@@ -50,7 +50,6 @@ DEPEND="${DEPEND}
 
 src_configure() {
 	local mycmakeargs=(
-		-DPULL_TRANSLATIONS=OFF
 		-DWITH_MONITOR="$(usex monitor)"
 		-DWITH_TOUCHPAD="$(usex touchpad)"
 	)

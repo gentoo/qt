@@ -46,7 +46,6 @@ DEPEND="${RDEPEND}
 src_configure() {
 	local mycmakeargs=(
 		-DWITH_LIBUDEV=$(usex udev)
-		-DPULL_TRANSLATIONS=OFF
 	)
 	cmake-utils_src_configure
 }

@@ -35,13 +35,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
 
-src_configure() {
-	local mycmakeargs=(
-		-DPULL_TRANSLATIONS=OFF
-	)
-	cmake-utils_src_configure
-}
-
 src_install(){
 	cmake-utils_src_install
 	doman man/*.1
