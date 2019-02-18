@@ -6,7 +6,6 @@
 		<name>LXQt</name>
 	</maintainer>
 	<use>
-		<flag name="clock">Build clock plugin</flag>
 		<flag name="colorpicker">Build colorpicker plugin</flag>
 		<flag name="cpuload">Build cpuload plugin</flag>
 		<flag name="desktopswitch">Build desktopswitch plugin</flag>

@@ -20,7 +20,7 @@ fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
-IUSE="+alsa clock colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator +mainmenu
+IUSE="+alsa colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator +mainmenu
 	+mount networkmonitor pulseaudio +quicklaunch sensors +showdesktop
 	+spacer statusnotifier sysstat +taskbar +tray +volume +worldclock"
 REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
@@ -72,7 +72,6 @@ DEPEND="${RDEPEND}
 src_configure() {
 	local mycmakeargs=(
 		# Plugins
-		-DCLOCK_PLUGIN=$(usex clock)
 		-DCOLORPICKER_PLUGIN=$(usex colorpicker)
 		-DCPULOAD_PLUGIN=$(usex cpuload)
 		-DDESKTOPSWITCH_PLUGIN=$(usex desktopswitch)
