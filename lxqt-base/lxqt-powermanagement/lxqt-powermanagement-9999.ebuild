@@ -36,7 +36,6 @@ RDEPEND="
 	kde-frameworks/solid:5
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 	sys-power/upower
-	!lxqt-base/lxqt-common
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

@@ -36,7 +36,6 @@ RDEPEND="
 	x11-misc/xdg-utils
 	virtual/eject
 	virtual/freedesktop-icon-theme
-	!lxqt-base/lxqt-common
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

@@ -31,7 +31,6 @@ RDEPEND="
 	dev-qt/qtwidgets:5
 	kde-frameworks/kwindowsystem:5
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
-	!lxqt-base/lxqt-common
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

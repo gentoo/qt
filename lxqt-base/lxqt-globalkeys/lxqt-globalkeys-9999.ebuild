@@ -34,7 +34,6 @@ RDEPEND="
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 	kde-frameworks/kwindowsystem:5
 	x11-libs/libX11
-	!lxqt-base/lxqt-common
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

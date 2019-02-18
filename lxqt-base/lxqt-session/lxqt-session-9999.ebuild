@@ -40,7 +40,6 @@ RDEPEND="
 	x11-misc/xdg-user-dirs
 	themes? ( =x11-themes/lxqt-themes-${MY_PV} )
 	udev? ( virtual/libudev )
-	!lxqt-base/lxqt-common
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"

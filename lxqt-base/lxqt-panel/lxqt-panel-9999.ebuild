@@ -66,7 +66,6 @@ RDEPEND="
 			media-sound/pulseaudio
 		)
 	)
-	!lxqt-base/lxqt-common
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"
