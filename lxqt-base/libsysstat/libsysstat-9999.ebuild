@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit cmake-utils
 
@@ -19,7 +19,6 @@ fi
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0"
 
+BDEPEND=">=dev-util/lxqt-build-tools-0.6.0"
 RDEPEND="dev-qt/qtcore:5"
-DEPEND="${RDEPEND}
-	>=dev-util/lxqt-build-tools-0.6.0
-"
+DEPEND="${RDEPEND}"

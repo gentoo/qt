@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils gnome2-utils eapi7-ver
+inherit cmake-utils gnome2-utils
 
 DESCRIPTION="LXQt system configuration control center"
 HOMEPAGE="https://lxqt.org/"
@@ -20,6 +20,10 @@ LICENSE="GPL-2 GPL-2+ GPL-3 LGPL-2 LGPL-2+ LGPL-2.1+ WTFPL-2"
 SLOT="0"
 IUSE="+monitor +touchpad"
 
+BDEPEND="
+	dev-qt/linguist-tools:5
+	>=dev-util/lxqt-build-tools-0.6.0
+"
 RDEPEND="
 	>=dev-libs/libqtxdg-3.3.0
 	dev-qt/qtcore:5
@@ -43,10 +47,7 @@ RDEPEND="
 		x11-libs/libXext
 	)
 "
-DEPEND="${DEPEND}
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
-"
+DEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(

@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit cmake-utils gnome2-utils xdg-utils
 
@@ -19,6 +19,11 @@ fi
 LICENSE="GPL-2+"
 SLOT="0"
 
+BDEPEND="
+	dev-qt/linguist-tools:5
+	>=dev-util/lxqt-build-tools-0.5.0
+	virtual/pkgconfig
+"
 RDEPEND="
 	dev-libs/glib:2
 	dev-qt/qtcore:5
@@ -29,10 +34,7 @@ RDEPEND="
 	x11-libs/libX11
 "
 DEPEND="${RDEPEND}
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.5.0
 	sys-apps/sed
-	virtual/pkgconfig
 "
 
 pkg_postinst() {

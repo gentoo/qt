@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils eapi7-ver
+inherit cmake-utils
 
 DESCRIPTION="LXQt quick launcher"
 HOMEPAGE="https://lxqt.org/"
@@ -21,6 +21,11 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
+BDEPEND="
+	dev-qt/linguist-tools:5
+	>=dev-util/lxqt-build-tools-0.6.0
+	virtual/pkgconfig
+"
 RDEPEND="
 	>=dev-cpp/muParser-2.2.3:=
 	>=dev-libs/libqtxdg-3.3.0
@@ -34,11 +39,7 @@ RDEPEND="
 	=lxqt-base/lxqt-globalkeys-${MY_PV}
 	!lxqt-base/lxqt-common
 "
-DEPEND="${RDEPEND}
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
-	virtual/pkgconfig
-"
+DEPEND="${RDEPEND}"
 
 src_install(){
 	cmake-utils_src_install

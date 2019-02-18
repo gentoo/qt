@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils eapi7-ver
+inherit cmake-utils
 
 DESCRIPTION="LXQT session manager"
 HOMEPAGE="https://lxqt.org/"
@@ -23,6 +23,10 @@ IUSE="+themes +udev"
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
+BDEPEND="
+	dev-qt/linguist-tools:5
+	>=dev-util/lxqt-build-tools-0.6.0
+"
 RDEPEND="
 	>=dev-libs/libqtxdg-3.3.0
 	dev-qt/qtcore:5
@@ -38,10 +42,7 @@ RDEPEND="
 	udev? ( virtual/libudev )
 	!lxqt-base/lxqt-common
 "
-DEPEND="${RDEPEND}
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
-"
+DEPEND="${RDEPEND}"
 
 src_configure() {
 	local mycmakeargs=(

@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils eapi7-ver
+inherit cmake-utils
 
 DESCRIPTION="Qt port of libfm, a library providing components to build desktop file managers"
 HOMEPAGE="https://lxqt.org/"
@@ -19,6 +19,11 @@ fi
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0/5"
 
+BDEPEND="
+	dev-qt/linguist-tools:5
+	>=dev-util/lxqt-build-tools-0.5.0
+	virtual/pkgconfig
+"
 RDEPEND="
 	dev-libs/glib:2
 	dev-qt/qtcore:5
@@ -30,8 +35,4 @@ RDEPEND="
 	>=x11-libs/libfm-1.2.0:=
 	x11-libs/libxcb:=
 "
-DEPEND="${RDEPEND}
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.5.0
-	virtual/pkgconfig
-"
+DEPEND="${RDEPEND}"

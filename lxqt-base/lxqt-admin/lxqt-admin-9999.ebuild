@@ -1,9 +1,9 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils eapi7-ver
+inherit cmake-utils
 
 DESCRIPTION="LXQt system administration tool"
 HOMEPAGE="https://lxqt.org/"
@@ -19,6 +19,7 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
+BDEPEND=">=dev-util/lxqt-build-tools-0.6.0"
 RDEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -27,6 +28,4 @@ RDEPEND="
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 	kde-frameworks/kwindowsystem:5
 "
-DEPEND="${RDEPEND}
-	>=dev-util/lxqt-build-tools-0.6.0
-"
+DEPEND="${RDEPEND}"
