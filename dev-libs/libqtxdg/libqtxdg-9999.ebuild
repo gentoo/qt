@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit cmake-utils virtualx
 
@@ -20,6 +20,10 @@ LICENSE="LGPL-2.1+ Nokia-Qt-LGPL-Exception-1.1"
 SLOT="0"
 IUSE="test"
 
+BDEPEND="
+	virtual/pkgconfig
+	test? ( dev-qt/qttest:5 )
+"
 RDEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -29,10 +33,7 @@ RDEPEND="
 	dev-qt/qtxml:5
 	x11-misc/xdg-utils
 "
-DEPEND="${RDEPEND}
-	virtual/pkgconfig
-	test? ( dev-qt/qttest:5 )
-"
+DEPEND="${RDEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
