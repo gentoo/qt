@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
 inherit cmake-utils
 
 DESCRIPTION="A Simple and Lightweight Qt File Archiver"
@@ -20,7 +21,7 @@ SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.5.0
+	>=dev-util/lxqt-build-tools-0.6.0
 "
 RDEPEND="
 	dev-qt/qtcore:5

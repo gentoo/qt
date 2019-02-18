@@ -21,7 +21,7 @@ SLOT="0/5"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.5.0
+	>=dev-util/lxqt-build-tools-0.6.0
 	virtual/pkgconfig
 "
 RDEPEND="
