@@ -21,7 +21,7 @@ SLOT="0"
 
 BDEPEND=">=dev-util/lxqt-build-tools-0.6.0"
 RDEPEND="
-	>=dev-libs/libqtxdg-3.3.0
+	>=dev-libs/libqtxdg-3.3.1
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
