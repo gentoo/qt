@@ -79,6 +79,8 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
+PATCHES+=( "${FILESDIR}/${PN}-5.12.1-CVE-2019-5786.patch" ) # bug 679530
+
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.11.2-paxmark-mksnapshot.patch" )
 

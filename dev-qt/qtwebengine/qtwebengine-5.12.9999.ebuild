@@ -81,6 +81,7 @@ DEPEND="${RDEPEND}
 
 PATCHES+=(
 	"${FILESDIR}/${PN}-5.12.0-nouveau-disable-gpu.patch" # bug 609752
+	"${FILESDIR}/${PN}-5.12.1-CVE-2019-5786.patch" # bug 679530
 )
 
 src_prepare() {
