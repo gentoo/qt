@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils gnome2-utils
+inherit cmake-utils xdg-utils
 
 DESCRIPTION="LXQt system configuration control center"
 HOMEPAGE="https://lxqt.org/"
@@ -64,9 +64,9 @@ src_install() {
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
