@@ -22,7 +22,6 @@ IUSE="test"
 
 BDEPEND="
 	virtual/pkgconfig
-	test? ( dev-qt/qttest:5 )
 "
 RDEPEND="
 	dev-qt/qtcore:5
@@ -33,7 +32,9 @@ RDEPEND="
 	dev-qt/qtxml:5
 	x11-misc/xdg-utils
 "
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	test? ( dev-qt/qttest:5 )
+"
 
 src_configure() {
 	local mycmakeargs=(
