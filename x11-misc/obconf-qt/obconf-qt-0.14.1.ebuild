@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils gnome2-utils xdg-utils
+inherit cmake-utils xdg-utils
 
 DESCRIPTION="Openbox window manager configuration tool"
 HOMEPAGE="https://lxqt.org/"
@@ -40,10 +40,10 @@ DEPEND="${RDEPEND}
 
 pkg_postinst() {
 	xdg_desktop_database_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
 	xdg_desktop_database_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
