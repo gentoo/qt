@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -23,7 +23,7 @@ RDEPEND="
 		media-libs/gst-plugins-bad:1.0
 		media-libs/gst-plugins-base:1.0
 	)
-	pulseaudio? ( media-sound/pulseaudio )
+	pulseaudio? ( media-sound/pulseaudio[glib] )
 	qml? (
 		~dev-qt/qtdeclarative-${PV}
 		gles2? ( ~dev-qt/qtgui-${PV}[egl] )
