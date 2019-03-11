@@ -1,4 +1,5 @@
 Bug: https://bugs.gentoo.org/651012
+Bug: https://bugs.gentoo.org/679210
 
 --- a/src/plugins/tts/speechdispatcher/speechdispatcher.pro
 +++ b/src/plugins/tts/speechdispatcher/speechdispatcher.pro
@@ -10,3 +11,13 @@ Bug: https://bugs.gentoo.org/651012
  
  CONFIG += link_pkgconfig
  packagesExist(speech-dispatcher): PKGCONFIG = speech-dispatcher
+--- a/src/doc/doc.pro
++++ b/src/doc/doc.pro
+@@ -2,6 +2,7 @@
+ 
+ CONFIG += force_qt
+ QT += core-private
++QT -= doc
+ 
+ QMAKE_DOCS = $$PWD/qtspeech.qdocconf
+ 
