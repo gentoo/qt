@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -10,12 +10,21 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd"
 fi
 
-IUSE=""
+IUSE="qml"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtnetwork-${PV}
+	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
-RDEPEND="${DEPEND}
-	!<dev-qt/qtdeclarative-5.12.0_beta4:5
-"
+RDEPEND="${DEPEND}"
+
+src_prepare() {
+	qt_use_disable_mod qml qml \
+		src/src.pro \
+		src/imports/imports.pro
+
+	qt_use_disable_mod qml quick tests/auto/auto.pro
+
+	qt5-build_src_prepare
+}
