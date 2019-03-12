@@ -32,7 +32,6 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	>=lxde-base/menu-cache-1.1.0
 	media-libs/libexif:=
-	>=x11-libs/libfm-1.2.0:=
 	x11-libs/libxcb:=
 	!lxqt-base/lxqt-l10n
 "
