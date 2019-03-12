@@ -30,7 +30,6 @@ RDEPEND="
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
-	>=x11-libs/libfm-1.2.0:=
 	=x11-libs/libfm-qt-$(ver_cut 1-2)*
 	x11-libs/libxcb:=
 	x11-misc/xdg-utils
