@@ -24,7 +24,7 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-0.6.0
 	virtual/pkgconfig
 "
-RDEPEND="
+DEPEND="
 	dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -38,6 +38,7 @@ RDEPEND="
 	>=x11-libs/libfm-qt-0.12.0:=
 	x11-libs/libX11
 	x11-libs/libXfixes
+"
+RDEPEND="${DEPEND}
 	!lxqt-base/lxqt-l10n
 "
-DEPEND="${RDEPEND}"
