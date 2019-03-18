@@ -23,7 +23,7 @@ BDEPEND="
 	dev-qt/linguist-tools:5
 	>=dev-util/lxqt-build-tools-0.6.0
 "
-RDEPEND="
+DEPEND="
 	dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -35,9 +35,10 @@ RDEPEND="
 	x11-misc/xdg-utils
 	virtual/eject
 	virtual/freedesktop-icon-theme
+"
+RDEPEND="${DEPEND}
 	!lxqt-base/lxqt-l10n
 "
-DEPEND="${RDEPEND}"
 
 pkg_postinst() {
 	xdg_desktop_database_update
