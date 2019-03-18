@@ -24,7 +24,7 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-0.6.0
 	virtual/pkgconfig
 "
-RDEPEND="
+DEPEND="
 	dev-libs/glib:2
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
@@ -33,6 +33,7 @@ RDEPEND="
 	>=lxde-base/menu-cache-1.1.0
 	media-libs/libexif:=
 	x11-libs/libxcb:=
+"
+RDEPEND="${DEPEND}
 	!lxqt-base/lxqt-l10n
 "
-DEPEND="${RDEPEND}"
