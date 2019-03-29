@@ -23,7 +23,10 @@ SLOT="0"
 IUSE="+alsa colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator +mainmenu
 	+mount networkmonitor pulseaudio +quicklaunch sensors +showdesktop
 	+spacer statusnotifier sysstat +taskbar +tray +volume +worldclock"
-REQUIRED_USE="volume? ( || ( alsa pulseaudio ) )"
+REQUIRED_USE="
+	|| ( desktopswitch mainmenu showdesktop taskbar )
+	volume? ( || ( alsa pulseaudio ) )
+"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
