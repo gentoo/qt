@@ -15,7 +15,7 @@ IUSE="alsa bindist designer geolocation jumbo-build pax_kernel pulseaudio
 	+system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
-RDEPEND="
+COMMON_DEPEND="
 	app-arch/snappy:=
 	dev-libs/glib:2
 	dev-libs/nspr
@@ -69,7 +69,7 @@ RDEPEND="
 		~dev-qt/qtwidgets-${PV}
 	)
 "
-DEPEND="${RDEPEND}
+DEPEND="${COMMON_DEPEND}
 	${PYTHON_DEPS}
 	>=app-arch/gzip-1.7
 	dev-util/gperf
@@ -77,6 +77,9 @@ DEPEND="${RDEPEND}
 	dev-util/re2c
 	sys-devel/bison
 	pax_kernel? ( sys-apps/elfix )
+"
+RDEPEND="${COMMON_DEPEND}
+	!!=sys-devel/binutils-2.32-r0
 "
 
 PATCHES+=(
