@@ -32,6 +32,7 @@ QT5_TARGET_SUBDIRS=(
 	src/3rdparty/mapbox-gl-native
 	src/location
 	src/imports/location
+	src/imports/locationlabs
 	src/plugins/geoservices
 )
 
