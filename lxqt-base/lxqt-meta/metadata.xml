@@ -16,6 +16,8 @@
 			image viewer</flag>
 		<flag name="minimal">Do not install <pkg>x11-wm/openbox</pkg>
 			window manager</flag>
+		<flag name="nls">Install <pkg>dev-qt/qttranslations</pkg>
+			to better support different locales</flag>
 		<flag name="powermanagement" restrict="&gt;=lxqt-base/lxqt-meta-0.13.0">Install
 			<pkg>lxqt-base/lxqt-powermanagement</pkg> package</flag>
 		<flag name="processviewer">Install
@@ -29,5 +31,7 @@
 		<flag name="sudo">Install <pkg>lxqt-base/lxqt-sudo</pkg></flag>
 		<flag name="terminal" restrict="&gt;=lxqt-base/lxqt-meta-0.13.0">Install
 			<pkg>x11-terms/qterminal</pkg> package</flag>
+		<flag name="trash">Install <pkg>gnome-base/gvfs</pkg> to enable 'trash'
+			functionality in x11-misc/pcmanfm-qt</flag>
 	</use>
 </pkgmetadata>

@@ -17,9 +17,11 @@ fi
 LICENSE="metapackage"
 SLOT="0"
 
-IUSE="+about admin +filemanager lightdm lximage minimal
+IUSE="+about admin +filemanager lightdm lximage minimal nls
 	+policykit powermanagement processviewer screenshot sddm
-	ssh-askpass sudo terminal"
+	ssh-askpass sudo terminal +trash"
+
+REQUIRED_USE="trash? ( filemanager )"
 
 # Note: we prefer kde-frameworks/oxygen-icons over other icon sets, as the initial
 # install expects oxygen icons, until the user specifies otherwise (bug 543380)
@@ -44,6 +46,7 @@ RDEPEND="
 		x11-wm/openbox
 		x11-misc/obconf-qt
 	)
+	nls? ( dev-qt/qttranslations:5 )
 	policykit? ( =lxqt-base/lxqt-policykit-${MY_PV} )
 	powermanagement? ( =lxqt-base/lxqt-powermanagement-${MY_PV} )
 	processviewer? ( x11-misc/qps:0 )
@@ -52,4 +55,5 @@ RDEPEND="
 	ssh-askpass? ( =lxqt-base/lxqt-openssh-askpass-${MY_PV} )
 	sudo? ( =lxqt-base/lxqt-sudo-${MY_PV} )
 	terminal? ( x11-terms/qterminal:0 )
+	trash? ( gnome-base/gvfs )
 "
