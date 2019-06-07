@@ -24,6 +24,7 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-0.6.0
 "
 RDEPEND="
+	dev-libs/json-glib
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
