@@ -38,6 +38,8 @@ DEPEND="${RDEPEND}
 	gstreamer? ( x11-base/xorg-proto )
 "
 
+PATCHES=( "${FILESDIR}/${P}-fix-no-opengl.patch" )
+
 src_prepare() {
 	sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
 		src/multimedia/multimedia.pro || die
