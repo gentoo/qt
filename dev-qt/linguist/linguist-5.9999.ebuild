@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 QT5_MODULE="qttools"
-inherit desktop gnome2-utils qt5-build
+inherit desktop qt5-build xdg-utils
 
 DESCRIPTION="Graphical tool for translating Qt applications"
 
@@ -39,10 +39,10 @@ src_install() {
 
 pkg_postinst() {
 	qt5-build_pkg_postinst
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
 	qt5-build_pkg_postrm
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }

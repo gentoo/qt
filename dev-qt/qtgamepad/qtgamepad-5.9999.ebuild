@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 inherit qt5-build
 
 DESCRIPTION="Qt module to support gamepad hardware"
@@ -16,8 +16,8 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}[evdev?]
 	evdev? ( virtual/libudev:= )
-	sdl? ( media-libs/libsdl )
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
+	sdl? ( media-libs/libsdl )
 "
 RDEPEND="${DEPEND}"
 
