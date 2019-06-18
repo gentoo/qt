@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python2_7 python3_{4,5,6,7} )
 inherit python-any-r1 qt5-build
 
@@ -13,8 +13,9 @@ fi
 
 IUSE="gles2 +jit localstorage +widgets"
 
+BDEPEND="${PYTHON_DEPS}"
 # qtgui[gles2=] is needed because of bug 504322
-COMMON_DEPEND="
+DEPEND="
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtgui-${PV}[gles2=]
 	~dev-qt/qtnetwork-${PV}
@@ -22,10 +23,7 @@ COMMON_DEPEND="
 	localstorage? ( ~dev-qt/qtsql-${PV} )
 	widgets? ( ~dev-qt/qtwidgets-${PV}[gles2=] )
 "
-DEPEND="${COMMON_DEPEND}
-	${PYTHON_DEPS}
-"
-RDEPEND="${COMMON_DEPEND}
+RDEPEND="${DEPEND}
 	!<dev-qt/qtquickcontrols-5.7:5
 "
 

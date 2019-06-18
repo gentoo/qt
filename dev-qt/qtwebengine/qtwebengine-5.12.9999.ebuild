@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python2_7 )
 inherit multiprocessing pax-utils python-any-r1 qt5-build
 
@@ -128,9 +128,9 @@ src_install() {
 	qt5-build_src_install
 
 	# bug 601472
-	if [[ ! -f ${D%/}${QT5_LIBDIR}/libQt5WebEngine.so ]]; then
+	if [[ ! -f ${D}${QT5_LIBDIR}/libQt5WebEngine.so ]]; then
 		die "${CATEGORY}/${PF} failed to build anything. Please report to https://bugs.gentoo.org/"
 	fi
 
-	pax-mark m "${D%/}${QT5_LIBEXECDIR}"/QtWebEngineProcess
+	pax-mark m "${D}${QT5_LIBEXECDIR}"/QtWebEngineProcess
 }
