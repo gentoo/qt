@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit eutils git-r3 qmake-utils
+inherit desktop git-r3 qmake-utils
 
 DESCRIPTION="Feature-rich dictionary lookup program"
 HOMEPAGE="http://goldendict.org/"
@@ -14,7 +14,11 @@ SLOT="0"
 KEYWORDS=""
 IUSE="debug ffmpeg libav"
 
-RDEPEND="
+BDEPEND="
+	dev-qt/linguist-tools:5
+	virtual/pkgconfig
+"
+DEPEND="
 	app-arch/bzip2
 	>=app-text/hunspell-1.2:=
 	dev-libs/eb
@@ -24,7 +28,7 @@ RDEPEND="
 	dev-qt/qthelp:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtprintsupport:5
-	dev-qt/qtsingleapplication[qt5(+)]
+	dev-qt/qtsingleapplication[qt5(+),X]
 	dev-qt/qtsvg:5
 	dev-qt/qtwebkit:5
 	dev-qt/qtwidgets:5
@@ -41,19 +45,18 @@ RDEPEND="
 		!libav? ( media-video/ffmpeg:0= )
 	)
 "
-DEPEND="${RDEPEND}
-	virtual/pkgconfig
-"
+RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-qtsingleapplication-unbundle.patch" )
+PATCHES=( "${FILESDIR}/${PN}-1.5.0-qtsingleapplication-unbundle.patch" )
 
 src_prepare() {
 	default
 
+	# disable git
+	sed -i -e '/git describe/s/^/#/' ${PN}.pro || die
+
 	# fix installation path
-	sed -i \
-		-e '/PREFIX = /s:/usr/local:/usr:' \
-		${PN}.pro || die
+	sed -i -e '/PREFIX = /s:/usr/local:/usr:' ${PN}.pro || die
 
 	# add trailing semicolon
 	sed -i -e '/^Categories/s/$/;/' redist/${PN}.desktop || die
@@ -61,10 +64,7 @@ src_prepare() {
 
 src_configure() {
 	local myconf=()
-
-	if ! use ffmpeg && ! use libav ; then
-		myconf+=( DISABLE_INTERNAL_PLAYER=1 )
-	fi
+	use ffmpeg || myconf+=( DISABLE_INTERNAL_PLAYER=1 )
 
 	eqmake5 "${myconf[@]}"
 }
