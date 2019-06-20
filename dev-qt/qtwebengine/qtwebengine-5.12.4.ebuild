@@ -11,7 +11,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
-IUSE="alsa bindist designer geolocation jumbo-build pax_kernel pulseaudio
+IUSE="alsa bindist designer jumbo-build pax_kernel pulseaudio
 	+system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
@@ -24,6 +24,7 @@ RDEPEND="
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
+	~dev-qt/qtpositioning-${PV}
 	~dev-qt/qtprintsupport-${PV}
 	~dev-qt/qtwebchannel-${PV}[qml]
 	dev-libs/expat
@@ -59,7 +60,6 @@ RDEPEND="
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
 	designer? ( ~dev-qt/designer-${PV} )
-	geolocation? ( ~dev-qt/qtpositioning-${PV} )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
@@ -94,9 +94,6 @@ src_prepare() {
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
 
 	qt_use_disable_config alsa webengine-alsa src/core/config/linux.pri
-	qt_use_disable_config geolocation webengine-geolocation \
-		src/core/core_chromium.pri \
-		src/core/core_common.pri
 	qt_use_disable_config pulseaudio webengine-pulseaudio src/core/config/linux.pri
 
 	qt_use_disable_mod designer webenginewidgets src/plugins/plugins.pro
