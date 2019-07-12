@@ -1,45 +1,46 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-CMAKE_IN_SOURCE_BUILD="1"
-PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
+CMAKE_IN_SOURCE_BUILD=1
 
-inherit cmake-utils python-r1 virtualx git-r3
+inherit cmake-utils python-r1 virtualx
+
+MY_P=pyside-setup-everywhere-src-${PV}
 
 DESCRIPTION="PySide development tools (lupdate, rcc, uic)"
 HOMEPAGE="https://wiki.qt.io/PySide2"
-EGIT_REPO_URI="https://code.qt.io/pyside/pyside-tools.git"
-EGIT_BRANCH="5.9"
+SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${PV}-src/${MY_P}.tar.xz"
 
 # Although "LICENSE-uic" suggests the "pyside2uic" directory to be dual-licensed
 # under the BSD 3-clause and GPL v2 licenses, this appears to be an oversight;
 # all files in this (and every) directory are licensed only under the GPL v2.
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-# The "pyside2uic" package imports both the "PySide2.QtGui" and
-# "PySide2.QtWidgets" C extensions and hence requires "gui" and "widgets".
-RDEPEND="
-	${PYTHON_DEPS}
-	>=dev-python/pyside-${PV}:${SLOT}[gui,widgets,${PYTHON_USEDEP}]
-	>=dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
-	dev-qt/qtcore:5
+# The "pyside2uic" package imports the "PySide2.QtGui" and "PySide2.QtWidgets"
+# C extensions and thus requires "widgets", which includes "gui" as well.
+RDEPEND="${PYTHON_DEPS}
+	>=dev-python/pyside-${PV}:${SLOT}[widgets,${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}
 	test? ( virtual/pkgconfig )
 "
+
+S=${WORKDIR}/${MY_P}/sources/pyside2-tools
+DOCS=( AUTHORS README.md )
 
 src_prepare() {
 	cmake-utils_src_prepare
 
 	python_copy_sources
 
-	preparation() {
+	pyside-tools_prepare() {
 		pushd "${BUILD_DIR}" >/dev/null || die
 
 		if python_is_python3; then
@@ -60,51 +61,38 @@ src_prepare() {
 
 		popd >/dev/null || die
 	}
-	python_foreach_impl preparation
+	python_foreach_impl pyside-tools_prepare
 }
 
 src_configure() {
-	configuration() {
+	pyside-tools_configure() {
 		local mycmakeargs=(
 			-DBUILD_TESTS=$(usex test)
+			-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"
 		)
-
-		# Find the previously installed "Shiboken2Config.*.cmake" and
-		# "PySide2Config.*.cmake" files specific to this Python version.
-		if python_is_python3; then
-			# Extension tag unique to the current Python 3.x version (e.g.,
-			# ".cpython-34m" for CPython 3.4).
-			local EXTENSION_TAG="$("$(python_get_PYTHON_CONFIG)" --extension-suffix)"
-			EXTENSION_TAG="${EXTENSION_TAG%.so}"
-
-			mycmakeargs+=( -DPYTHON_CONFIG_SUFFIX="${EXTENSION_TAG}" )
-		else
-			mycmakeargs+=( -DPYTHON_CONFIG_SUFFIX="-python2.7" )
-		fi
-
 		CMAKE_USE_DIR="${BUILD_DIR}" cmake-utils_src_configure
 	}
-	python_foreach_impl configuration
+	python_foreach_impl pyside-tools_configure
 }
 
 src_compile() {
-	compilation() {
+	pyside-tools_compile() {
 		CMAKE_USE_DIR="${BUILD_DIR}" cmake-utils_src_compile
 	}
-	python_foreach_impl compilation
+	python_foreach_impl pyside-tools_compile
 }
 
 src_test() {
-	testing() {
+	pyside-tools_test() {
 		local -x PYTHONDONTWRITEBYTECODE
 		CMAKE_USE_DIR="${BUILD_DIR}" virtx cmake-utils_src_test
 	}
-	python_foreach_impl testing
+	python_foreach_impl pyside-tools_test
 }
 
 src_install() {
-	installation() {
+	pyside-tools_install() {
 		CMAKE_USE_DIR="${BUILD_DIR}" cmake-utils_src_install
 	}
-	python_foreach_impl installation
+	python_foreach_impl pyside-tools_install
 }
