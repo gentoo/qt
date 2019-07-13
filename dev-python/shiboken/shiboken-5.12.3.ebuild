@@ -4,7 +4,6 @@
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
-CMAKE_MIN_VERSION=3.1.0
 
 inherit cmake-utils llvm python-r1
 
@@ -24,9 +23,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+docstring numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-BDEPEND=">=sys-devel/clang-6.0.0:="
+# shiboken2 requires everything at runtime. See also "ldd /usr/bin/shiboken2".
 RDEPEND="${PYTHON_DEPS}
 	>=dev-qt/qtcore-${PV}:5
+	>=sys-devel/clang-6:=
 	docstring? (
 		>=dev-libs/libxml2-2.6.32
 		>=dev-libs/libxslt-1.1.19
@@ -56,7 +56,7 @@ src_prepare() {
 
 	# CMakeLists.txt assumes clang builtin includes are installed under
 	# LLVM_INSTALL_DIR. They are not on Gentoo. See bug 624682.
-	sed -i -e "s~clangPathLibDir = findClangLibDir()~clangPathLibDir = QLatin1String(\"${EPREFIX}/usr/lib\")~" \
+	sed -i -e "s~clangPathLibDir = findClangLibDir()~clangPathLibDir = QStringLiteral(\"${EPREFIX}/usr/lib\")~" \
 		ApiExtractor/clangparser/compilersupport.cpp || die
 
 	cmake-utils_src_prepare
@@ -68,8 +68,6 @@ src_configure() {
 			-DBUILD_TESTS=$(usex test)
 			-DDISABLE_DOCSTRINGS=$(usex !docstring)
 			-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"
-			-DPYTHON_EXECUTABLE="${PYTHON}"
-			-DPYTHON_SITE_PACKAGES="$(python_get_sitedir)"
 			-DUSE_PYTHON_VERSION="${EPYTHON#python}"
 		)
 		# CMakeLists.txt expects LLVM_INSTALL_DIR as an environment variable.
