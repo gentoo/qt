@@ -3,6 +3,14 @@
 
 EAPI=7
 
+# TODO: Split the "/usr/bin/shiboken2" binding generator from the
+# "/usr/lib64/libshiboken2-*.so" family of shared libraries. The former
+# requires everything (including Clang) at runtime; the latter only requires
+# Qt and Python at runtime. Note that "pip" separates these two as well. See:
+# https://doc.qt.io/qtforpython/shiboken2/faq.html#is-there-any-runtime-dependency-on-the-generated-binding
+# Once split, the PySide2 ebuild should be revised to require
+# "/usr/bin/shiboken2" at build time and "libshiboken2-*.so" at runtime.
+
 PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
 
 inherit cmake-utils llvm python-r1
