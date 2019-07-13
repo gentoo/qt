@@ -31,19 +31,22 @@ KEYWORDS="~amd64"
 IUSE="+docstrings numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+# Minimal supported version of Qt.
+QT_PV="$(ver_cut 1-2):5"
+
 RDEPEND="${PYTHON_DEPS}
-	>=dev-qt/qtcore-${PV}:5
+	>=dev-qt/qtcore-${QT_PV}
 	>=sys-devel/clang-6:=
 	docstrings? (
 		>=dev-libs/libxml2-2.6.32
 		>=dev-libs/libxslt-1.1.19
-		>=dev-qt/qtxml-${PV}:5
-		>=dev-qt/qtxmlpatterns-${PV}:5
+		>=dev-qt/qtxml-${QT_PV}
+		>=dev-qt/qtxmlpatterns-${QT_PV}
 	)
 	numpy? ( dev-python/numpy[${PYTHON_USEDEP}] )
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qttest-${PV}:5 )
+	test? ( >=dev-qt/qttest-${QT_PV} )
 "
 
 S=${WORKDIR}/${MY_P}/sources/shiboken2
