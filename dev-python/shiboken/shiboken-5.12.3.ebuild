@@ -27,7 +27,7 @@ SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${
 # arbitrarily relicensed. (TODO)
 LICENSE="|| ( GPL-2 GPL-3+ LGPL-3 ) GPL-3"
 SLOT="2"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="+docstring numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
