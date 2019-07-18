@@ -98,7 +98,19 @@ src_test() {
 src_install() {
 	shiboken_install() {
 		cmake-utils_src_install
+
+		# Uniquify this pkgconfig file to a version-specific basename. Although
+		# each successive call to this function overwrites the original file,
+		# copying rather than moving this file ensures that an original file
+		# targetting the last Python target is still usable by third parties.
 		cp "${ED}/usr/$(get_libdir)"/pkgconfig/${PN}2{,-${EPYTHON}}.pc || die
 	}
 	python_foreach_impl shiboken_install
+
+	# CMakeLists.txt installs a "Shiboken2Targets-gentoo.cmake" file forcing
+	# downstream consumers (e.g., PySide2) to target one "libshiboken2-*.so"
+	# library linked to a single Python interpreter. See also:
+	#     https://bugreports.qt.io/browse/PYSIDE-1053
+	sed -i -e 's~libshiboken2-python[[:digit:]]\+\.[[:digit:]]\+~libshiboken2${PYTHON_CONFIG_SUFFIX}~g' \
+		"${ED}/usr/$(get_libdir)/cmake/Shiboken2-${PV}/Shiboken2Targets-gentoo.cmake" || die
 }
