@@ -1,6 +1,6 @@
-From f1b587d2d0f77ed8ea95bcf28880d231f048e0ee Mon Sep 17 00:00:00 2001
-From: Jimi Huotari <chiitoo@gentoo.org>
-Date: Wed, 5 Dec 2018 21:16:13 +0200
+From 2b805344d81362237a21dcbed097f2fdd36cb4a4 Sat Jun 15 00:00:00 2019
+From: Arthur Zamarin <arthurzam@gmail.com>
+Date: Sun, 21 Jul 2019 14:26:13 +0200
 Subject: [PATCH] build: Make PolkitQt5-1 optional
 
 ---
@@ -8,15 +8,18 @@ Subject: [PATCH] build: Make PolkitQt5-1 optional
  1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 56d16c6..dfe90fe 100644
+index 6a26f19..14e592b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -41,8 +41,14 @@ find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
- find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Widgets DBus X11Extras LinguistTools)
+@@ -41,11 +41,17 @@ find_package(lxqt-build-tools ${LXQTBT_MINIMUM_VERSION} REQUIRED)
+ find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Widgets DBus LinguistTools)
  find_package(Qt5Xdg ${QTXDG_MINIMUM_VERSION} REQUIRED)
  find_package(KF5WindowSystem ${KF5_MINIMUM_VERSION} REQUIRED)
 -find_package(PolkitQt5-1 REQUIRED)
- find_package(X11 REQUIRED)
+ if (NOT APPLE)
+     find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED X11Extras)
+     find_package(X11 REQUIRED)
+ endif()
 +
 +# Optionally include the PolkitQt5-1 module.
 +option(BUILD_POLKIT "Install the PolkitQt5-1 files." ON)
@@ -27,7 +30,7 @@ index 56d16c6..dfe90fe 100644
  message(STATUS "Building ${PROJECT_NAME} with Qt ${Qt5Core_VERSION}")
  
  include(CMakePackageConfigHelpers)
-@@ -363,7 +369,9 @@ install(FILES ${LXQT_CONFIG_FILES}
+@@ -395,7 +401,9 @@ install(FILES ${LXQT_CONFIG_FILES}
      COMPONENT Runtime
  )
  
@@ -37,6 +40,3 @@ index 56d16c6..dfe90fe 100644
  
  #************************************************
  # Create and install pkgconfig file
--- 
-2.19.2
-
