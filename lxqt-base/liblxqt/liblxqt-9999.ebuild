@@ -18,7 +18,7 @@ fi
 
 LICENSE="LGPL-2.1+ BSD"
 SLOT="0/$(ver_cut 1-2)"
-IUSE="+policykit"
+IUSE="+backlight"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
@@ -38,21 +38,12 @@ RDEPEND="
 	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}
-	policykit? ( sys-auth/polkit-qt )
+	backlight? ( sys-auth/polkit-qt )
 "
-
-PATCHES=( "$FILESDIR/${PN}-make-polkit-optional.patch" )
 
 src_configure() {
 	local mycmakeargs=(
-		$(usex !policykit '-DBUILD_POLKIT=OFF')
+		-DBUILD_BACKLIGHT_LINUX_BACKEND=$(usex backlight)
 	)
 	cmake-utils_src_configure
-}
-
-pkg_postinst() {
-	if ! use policykit; then
-		ewarn "Please do not report issues caused by USE=\"-policykit\" to upstream,"
-		ewarn "as they do not support such a build at this time."
-	fi
 }

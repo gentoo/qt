@@ -5,6 +5,9 @@
 		<email>lxqt@gentoo.org</email>
 		<name>LXQt</name>
 	</maintainer>
+	<use>
+		<flag name="backlight">Build the Linux backend for the backlight</flag>
+	</use>
 	<upstream>
 		<remote-id type="github">lxqt/liblxqt</remote-id>
 	</upstream>
