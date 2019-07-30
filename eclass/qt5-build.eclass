@@ -58,6 +58,21 @@ esac
 # for tests you should proceed with setting VIRTUALX_REQUIRED=test.
 : ${VIRTUALX_REQUIRED:=manual}
 
+# @ECLASS-VARIABLE: QT5_DOCS
+# @DESCRIPTION:
+# List of docs tarballs that belong to a package. By default set to false.
+: ${QT5_DOCS:=false}
+
+# IMPORTANT: Don't forget to update on version bumps!
+# Key:Value pairs of known Qt5 documentation tarballs where key=<version> and
+# value=<upstream timestamp>, sorted by <version>, descending.
+QT5_DOCSMAP=(
+	5.13.1:201907301220
+	5.13.0:201906171600
+	5.12.4:201906140200
+)
+readonly QT5_DOCSMAP
+
 inherit estack flag-o-matic toolchain-funcs virtualx
 
 HOMEPAGE="https://www.qt.io/"
@@ -128,6 +143,28 @@ RDEPEND="
 	dev-qt/qtchooser
 "
 
+# QT5_DOCSPV: Selected Key:Value pair derived from ${QT5_DOCSMAP} based on ${PV}
+# Used for SRC_URI, later used in qt5_installdocs() to choose correct path
+for QT5_DOCSPV in ${QT5_DOCSMAP[@]}; do
+	# detect release version or release branch
+	[[ ${QT5_DOCSPV%:*} = ${PV%.9999} ]] && break
+	# dev branch always uses latest known tarballs
+	[[ ${QT5_MINOR_VERSION} = 9999 ]] && break
+	# stable branch or alpha/beta/rc use latest known tarball of branch
+	case ${QT5_DOCSPV%.?:*} in
+		${PV%.9999}|${PV%_alpha*}|${PV%_beta*}|${PV%_rc*}) break ;;
+	esac
+done
+
+if [[ ${QT5_DOCS} != false ]]; then
+	IUSE+=" doc"
+	BDEPEND+=" doc? ( app-arch/p7zip )"
+	RDEPEND+=" doc? ( !<dev-qt/qt-docs-5.12.4:5 )"
+	for DOCTAR in ${QT5_DOCS[*]}; do
+		SRC_URI+=" doc? ( https://download.qt.io/online/qtsdkrepository/linux_x64/desktop/qt5_$(ver_rs 1-3 '' ${QT5_DOCSPV%:*})_src_doc_examples/qt.qt5.$(ver_rs 1-3 '' ${QT5_DOCSPV%:*}).doc/${QT5_DOCSPV%:*}-0-${QT5_DOCSPV#*:}${DOCTAR}-documentation.7z )"
+	done
+	unset DOCTAR
+fi
 
 ######  Phase functions  ######
 
@@ -286,6 +323,7 @@ qt5-build_src_install() {
 	fi
 
 	qt5_install_module_config
+	[[ ${QT5_DOCS} != false ]] && qt5_installdocs
 
 	# prune libtool files
 	find "${D}" -name '*.la' -delete || die
@@ -907,4 +945,15 @@ qt5_regenerate_global_configs() {
 	else
 		ewarn "${qmodule_pri} or ${qmodule_pri_orig} does not exist or is not a regular file"
 	fi
+}
+
+qt5_installdocs() {
+	use doc || return
+
+	insinto ${QT5_DOCDIR}
+	local doctar
+	for doctar in ${QT5_DOCS[*]}; do
+		doins -r "${WORKDIR}"/Docs/Qt-${QT5_DOCSPV%:*}/${doctar}
+		doins "${WORKDIR}"/Docs/Qt-${QT5_DOCSPV%:*}/${doctar}.qch
+	done
 }
