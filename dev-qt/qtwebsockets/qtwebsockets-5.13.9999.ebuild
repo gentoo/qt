@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
+QT5_DOCS="${PN}"
 inherit qt5-build
 
 DESCRIPTION="Implementation of the WebSocket protocol for the Qt5 framework"

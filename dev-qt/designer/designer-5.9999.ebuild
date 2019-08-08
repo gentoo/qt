@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
+QT5_DOCS="qt${PN} qtuitools"
 QT5_MODULE="qttools"
 inherit desktop qt5-build xdg-utils
 

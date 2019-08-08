@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
+QT5_DOCS="qtquickcontrols1"
 inherit qt5-build
 
 DESCRIPTION="Set of Qt Quick controls to create complete user interfaces (deprecated)"

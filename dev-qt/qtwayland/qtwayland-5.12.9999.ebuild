@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
+QT5_DOCS="${PN}compositor"
 inherit qt5-build
 
 DESCRIPTION="Wayland platform plugin for Qt"

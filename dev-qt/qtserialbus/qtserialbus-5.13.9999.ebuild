@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
+QT5_DOCS="${PN}"
 inherit qt5-build
 
 DESCRIPTION="Qt module to access CAN, ModBus, and other industrial serial buses and protocols"
