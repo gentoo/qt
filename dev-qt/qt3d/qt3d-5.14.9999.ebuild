@@ -10,8 +10,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm64 ~x86"
 fi
 
-# TODO: gamepad, tools
-IUSE="gles2 qml"
+# TODO: tools
+IUSE="gamepad gles2 qml"
 
 DEPEND="
 	~dev-qt/qtconcurrent-${PV}
@@ -19,6 +19,7 @@ DEPEND="
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
 	>=media-libs/assimp-4.0.0
+	gamepad? ( ~dev-qt/qtgamepad-${PV} )
 	qml? ( ~dev-qt/qtdeclarative-${PV}[gles2=] )
 "
 RDEPEND="${DEPEND}"
@@ -26,6 +27,7 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	rm -r src/3rdparty/assimp/{code,contrib,include} || die
 
+	qt_use_disable_mod gamepad gamepad src/input/frontend/frontend.pri
 	qt_use_disable_mod qml quick src/src.pro
 
 	qt5-build_src_prepare
