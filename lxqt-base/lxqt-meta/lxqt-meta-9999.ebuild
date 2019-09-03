@@ -9,7 +9,7 @@ HOMEPAGE="https://lxqt.org/"
 MY_PV="$(ver_cut 1-2)*"
 
 if [[ ${PV} != *9999* ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 
 LICENSE="metapackage"
