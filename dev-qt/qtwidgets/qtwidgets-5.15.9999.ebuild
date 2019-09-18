@@ -49,8 +49,8 @@ src_configure() {
 		-gui
 		$(qt_use png libpng system)
 		-widgets
-		$(qt_use xcb xcb system)
-		$(usex xcb '-xcb-xlib -xcb-xinput -xkb -xkbcommon' '')
+		$(qt_use xcb)
+		$(usex xcb '-xcb-xlib -xkbcommon' '')
 	)
 	qt5-build_src_configure
 }
