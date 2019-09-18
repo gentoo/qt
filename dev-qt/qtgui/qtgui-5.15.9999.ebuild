@@ -164,8 +164,8 @@ src_configure() {
 		$(qt_use png libpng system)
 		$(qt_use tslib)
 		$(qt_use udev libudev)
-		$(qt_use xcb xcb system)
-		$(usex xcb '-xcb-xlib -xcb-xinput -xkb' '')
+		$(qt_use xcb)
+		$(usex xcb '-xcb-xlib' '')
 	)
 	if use libinput || use xcb; then
 		myconf+=( -xkbcommon )
