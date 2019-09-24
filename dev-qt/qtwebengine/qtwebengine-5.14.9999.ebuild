@@ -83,17 +83,17 @@ src_prepare() {
 
 	if ! use jumbo-build; then
 		sed -i -e 's|use_jumbo_build=true|use_jumbo_build=false|' \
-			src/core/config/common.pri || die
+			src/buildtools/config/common.pri || die
 	fi
 
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
 
-	qt_use_disable_config alsa webengine-alsa src/core/config/linux.pri
+	qt_use_disable_config alsa webengine-alsa src/buildtools/config/linux.pri
 	qt_use_disable_config geolocation webengine-geolocation \
 		src/core/core_chromium.pri \
 		src/core/core_common.pri
-	qt_use_disable_config pulseaudio webengine-pulseaudio src/core/config/linux.pri
+	qt_use_disable_config pulseaudio webengine-pulseaudio src/buildtools/config/linux.pri
 
 	qt_use_disable_mod designer webenginewidgets src/plugins/plugins.pro
 
