@@ -1,0 +1,34 @@
+From 947883141d9d8b3079a8a21981ad8a5ce3c4798e Mon Sep 17 00:00:00 2001
+From: David Faure <david.faure@kdab.com>
+Date: Mon, 9 Sep 2019 18:12:26 +0200
+Subject: [PATCH] QWidget::setFocusProxy: adjust focus widget properly
+
+My commit 3e7463411e adjusted the focus widget by setting
+QApplicationPrivate::focus_widget directly, while there is a method for
+doing this properly, including setFocus_sys() and emitting signals.
+
+Fixes: QTBUG-77364
+Change-Id: I218acf7a9de39173d282ced46def4f65594f80b4
+Reviewed-by: Florian Bruhin <qt-project.org@the-compiler.org>
+Reviewed-by: Volker Hilsheimer <volker.hilsheimer@qt.io>
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@qt.io>
+Reviewed-by: Shawn Rutledge <shawn.rutledge@qt.io>
+---
+ src/widgets/kernel/qwidget.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/widgets/kernel/qwidget.cpp b/src/widgets/kernel/qwidget.cpp
+index 04290a4ce12..0fa59077449 100644
+--- a/src/widgets/kernel/qwidget.cpp
++++ b/src/widgets/kernel/qwidget.cpp
+@@ -6446,7 +6446,7 @@ void QWidget::setFocusProxy(QWidget * w)
+ 
+     if (changingAppFocusWidget) {
+         QWidget *newDeepestFocusProxy = d_func()->deepestFocusProxy();
+-        QApplicationPrivate::focus_widget = newDeepestFocusProxy ? newDeepestFocusProxy : this;
++        QApplicationPrivate::setFocusWidget(newDeepestFocusProxy ? newDeepestFocusProxy : this, Qt::NoFocusReason);
+     }
+ }
+ 
+-- 
+2.16.3

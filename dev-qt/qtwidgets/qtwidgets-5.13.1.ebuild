@@ -42,6 +42,8 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	:widgets
 )
 
+PATCHES=( "${FILESDIR}/${P}-adjust-focus-widget-properly.patch" ) # QTBUG-77364
+
 src_configure() {
 	local myconf=(
 		-opengl $(usex gles2 es2 desktop)
