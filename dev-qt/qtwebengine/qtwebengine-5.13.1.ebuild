@@ -79,6 +79,7 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES+=(
+	"${FILESDIR}/${P}-pulseaudio-13.patch" # bug 694960
 	# QTBUG-76963, not yet upstream:
 	"${FILESDIR}/${PN}-5.13.1-webrtc-missing-header-w-linux-headers-5.2.patch"
 )
