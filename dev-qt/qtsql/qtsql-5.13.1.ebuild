@@ -38,6 +38,11 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	:sql
 )
 
+PATCHES+=(
+	# Backport from 5.14 branch, bug #696870
+	"${FILESDIR}/${P}-postgresql-12.patch"
+)
+
 src_configure() {
 	local myconf=(
 		$(qt_use freetds  sql-tds    plugin)
