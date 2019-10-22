@@ -3,18 +3,23 @@
 
 EAPI=7
 
+if [[ ${PV} = *9999 ]]; then
+	EGIT_BRANCH="qtwebkit-dev"
+	EGIT_REPO_URI="https://github.com/qtwebkit/qtwebkit.git"
+	inherit git-r3
+else
+	SRC_URI="https://github.com/annulen/webkit/releases/download/${MY_P}/${MY_P}.tar.xz"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
+fi
 PYTHON_COMPAT=( python2_7 )
-USE_RUBY="ruby24 ruby25 ruby26"
-MY_P="${PN}-${PV/_pre20190629/-alpha3}" # present as upgrade over previous snapshot
+USE_RUBY="ruby25 ruby26"
 inherit check-reqs cmake-utils flag-o-matic python-any-r1 qmake-utils ruby-single toolchain-funcs
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
 HOMEPAGE="https://www.qt.io/"
-SRC_URI="https://github.com/annulen/webkit/releases/download/${MY_P}/${MY_P}.tar.xz"
 
 LICENSE="BSD LGPL-2+"
-SLOT="5/5.212"
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
+SLOT="5/9999"
 IUSE="geolocation gles2 +gstreamer +hyphen +jit multimedia nsplugin opengl orientation +printsupport qml webp X"
 
 REQUIRED_USE="
@@ -24,7 +29,7 @@ REQUIRED_USE="
 "
 
 # Dependencies found at Source/cmake/OptionsQt.cmake
-QT_MIN_VER="5.9.1:5"
+QT_MIN_VER="5.12.3:5"
 BDEPEND="
 	${PYTHON_DEPS}
 	${RUBY_DEPS}
@@ -73,8 +78,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${MY_P}"
-
 CHECKREQS_DISK_BUILD="16G" # bug 417307
 
 _check_reqs() {
@@ -120,10 +123,8 @@ src_configure() {
 
 	if has_version "virtual/rubygems[ruby_targets_ruby26]"; then
 		mycmakeargs+=( -DRUBY_EXECUTABLE=$(type -P ruby26) )
-	elif has_version "virtual/rubygems[ruby_targets_ruby25]"; then
-		mycmakeargs+=( -DRUBY_EXECUTABLE=$(type -P ruby25) )
 	else
-		mycmakeargs+=( -DRUBY_EXECUTABLE=$(type -P ruby24) )
+		mycmakeargs+=( -DRUBY_EXECUTABLE=$(type -P ruby25) )
 	fi
 
 	cmake-utils_src_configure
