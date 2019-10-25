@@ -1,0 +1,31 @@
+From 4f88e0bbd1c014adc6db7a37e4754446c4c8f529 Mon Sep 17 00:00:00 2001
+From: Thiago Macieira <thiago.macieira@intel.com>
+Date: Sun, 6 Oct 2019 21:14:58 -0700
+Subject: [PATCH] Fix build: disable the HWRNG in bootstrapped mode
+
+qmake build fails:
+qrandom.o: in function `QRandomGenerator::SystemGenerator::generate(unsigned int*, unsigned int*)':
+/home/tjmaciei/src/qt/qt5/qtbase/src/corelib/global/qrandom.cpp:333: undefined reference to `qRandomCpu(void*, long long)'
+
+Fixes: QTBUG-78937
+Change-Id: Ib5d667bf77a740c28d2efffd15cb4236f765917c
+Reviewed-by: Edward Welbourne <edward.welbourne@qt.io>
+---
+ src/corelib/tools/qsimd_p.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/corelib/tools/qsimd_p.h b/src/corelib/tools/qsimd_p.h
+index d603631a244..397b0f55a68 100644
+--- a/src/corelib/tools/qsimd_p.h
++++ b/src/corelib/tools/qsimd_p.h
+@@ -346,7 +346,7 @@ extern Q_CORE_EXPORT QBasicAtomicInteger<unsigned> qt_cpu_features[2];
+ #endif
+ Q_CORE_EXPORT quint64 qDetectCpuFeatures();
+ 
+-#if defined(Q_PROCESSOR_X86) && QT_COMPILER_SUPPORTS_HERE(RDRND)
++#if defined(Q_PROCESSOR_X86) && QT_COMPILER_SUPPORTS_HERE(RDRND) && !defined(QT_BOOTSTRAPPED)
+ Q_CORE_EXPORT qsizetype qRandomCpu(void *, qsizetype) noexcept;
+ #else
+ static inline qsizetype qRandomCpu(void *, qsizetype) noexcept
+-- 
+2.16.3
