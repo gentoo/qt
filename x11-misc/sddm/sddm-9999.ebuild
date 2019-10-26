@@ -1,14 +1,14 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 else
 	SRC_URI="https://github.com/${PN}/${PN}/releases/download/v${PV}/${P}.tar.gz"
-	KEYWORDS="amd64 ~arm ~arm64 x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 
 PLOCALES="ar bn ca cs da de es et fi fr hi_IN hu ie is it ja kk ko lt lv nb nl nn pl pt_BR pt_PT ro ru sk sr sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_CN zh_TW"
@@ -23,6 +23,12 @@ IUSE="consolekit elogind +pam systemd test"
 
 REQUIRED_USE="?? ( elogind systemd )"
 
+BDEPEND="
+	dev-python/docutils
+	>=dev-qt/linguist-tools-5.9.4:5
+	kde-frameworks/extra-cmake-modules:5
+	virtual/pkgconfig
+"
 RDEPEND="
 	>=dev-qt/qtcore-5.9.4:5
 	>=dev-qt/qtdbus-5.9.4:5
@@ -35,18 +41,18 @@ RDEPEND="
 	elogind? ( sys-auth/elogind )
 	pam? ( sys-libs/pam )
 	systemd? ( sys-apps/systemd:= )
-	!systemd? ( sys-power/upower )"
-
+	!systemd? ( sys-power/upower )
+"
 DEPEND="${RDEPEND}
-	dev-python/docutils
-	>=dev-qt/linguist-tools-5.9.4:5
-	kde-frameworks/extra-cmake-modules
-	virtual/pkgconfig
-	test? ( >=dev-qt/qttest-5.9.4:5 )"
+	test? ( >=dev-qt/qttest-5.9.4:5 )
+"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0.12.0-respect-user-flags.patch" # fix for flags handling and bug 563108
 	"${FILESDIR}/${PN}-0.18.0-Xsession.patch" # bug 611210
+	# fix for groups: https://github.com/sddm/sddm/issues/1159
+	"${FILESDIR}/${PN}-0.18.1-revert-honor-PAM-supplemental-groups.patch"
+	"${FILESDIR}/${PN}-0.18.1-honor-PAM-supplemental-groups-v2.patch"
 	# TODO: fix properly
 	"${FILESDIR}/${PN}-0.16.0-ck2-revert.patch" # bug 633920
 )
@@ -85,7 +91,10 @@ src_install() {
 	dodir ${confd}
 	"${D}"/usr/bin/sddm --example-config > "${D}/${confd}"/00default.conf \
 		|| die "Failed to create 00default.conf"
+
 	sed -e "/^InputMethod/s/qtvirtualkeyboard//" \
+		-e "/^ReuseSession/s/false/true/" \
+		-e "/^EnableHiDPI/s/false/true/" \
 		-i "${D}/${confd}"/00default.conf || die
 }
 
