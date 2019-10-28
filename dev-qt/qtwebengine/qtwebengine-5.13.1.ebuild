@@ -79,10 +79,10 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES+=(
+	"${FILESDIR}/${PN}-5.12.5-icu-65.patch"
 	"${FILESDIR}/${P}-pulseaudio-13.patch" # bug 694960
-	"${FILESDIR}/${P}-icu-65.patch"
 	# QTBUG-76963, 5.13 branch:
-	"${FILESDIR}/${PN}-5.13.1-webrtc-missing-header-w-linux-headers-5.2.patch"
+	"${FILESDIR}/${P}-webrtc-missing-header-w-linux-headers-5.2.patch"
 	# bug 693668, upstream(?) TODO:
 	"${FILESDIR}/${P}-no-kcrash-reporting.patch"
 )

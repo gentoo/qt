@@ -3,15 +3,7 @@ From: Kirill Burtsev <kirill.burtsev@qt.io>
 Date: Fri, 23 Aug 2019 15:09:25 +0200
 Subject: Fix compilation with system ICU
 
-1. system_icu_config is missing default type for UCHAR_TYPE, that causes
-a mismatch of types all over Chromium. uint16_t is defined as a base type
-under linux in chromium/build/linux/unbundle/icu.gn.
-Necessary constructions were lost during recent refactorings,
-and seems to be restored in later chromium > 77.
-
-2. Update shim headers
-
-3. ICU upstream now requires that ICU4C API macros are used with a
+ICU upstream now requires that ICU4C API macros are used with a
 trailing semicolon.
 
 - https://unicode-org.atlassian.net/browse/ICU-20601
