@@ -1,0 +1,157 @@
+From 27947d92157b0987ceef9ae31fe0d3e7f8b653df Mon Sep 17 00:00:00 2001
+From: Kirill Burtsev <kirill.burtsev@qt.io>
+Date: Fri, 23 Aug 2019 15:09:25 +0200
+Subject: Fix compilation with system ICU
+
+1. system_icu_config is missing default type for UCHAR_TYPE, that causes
+a mismatch of types all over Chromium. uint16_t is defined as a base type
+under linux in chromium/build/linux/unbundle/icu.gn.
+Necessary constructions were lost during recent refactorings,
+and seems to be restored in later chromium > 77.
+
+2. Update shim headers
+
+3. ICU upstream now requires that ICU4C API macros are used with a
+trailing semicolon.
+
+- https://unicode-org.atlassian.net/browse/ICU-20601
+- https://github.com/unicode-org/icu/pull/759
+
+Change-Id: Ie05c005ebcded9a228386db5d9abe9863787ec2b
+Fixes: QTBUG-78911
+Reviewed-by: Jimi Huotari <chiitoo@gentoo.org>
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@qt.io>
+---
+ .../blink/renderer/core/dom/document.cc            |  2 +-
+ chromium/third_party/icu/BUILD.gn                  | 28 +++++++++++++++-------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
+
+diff --git a/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc b/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc
+index 920dab7c48d..43fd422393c 100644
+--- a/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc
++++ b/src/3rdparty/chromium/third_party/blink/renderer/core/dom/document.cc
+@@ -6065,7 +6065,7 @@ static ParseQualifiedNameResult ParseQualifiedNameInternal(
+ 
+   for (unsigned i = 0; i < length;) {
+     UChar32 c;
+-    U16_NEXT(characters, i, length, c)
++    U16_NEXT(characters, i, length, c);
+     if (c == ':') {
+       if (saw_colon)
+         return ParseQualifiedNameResult(kQNMultipleColons);
+diff --git a/src/3rdparty/chromium/third_party/icu/BUILD.gn b/src/3rdparty/chromium/third_party/icu/BUILD.gn
+index 8809dcfbcd4..489a87e6080 100644
+--- a/src/3rdparty/chromium/third_party/icu/BUILD.gn
++++ b/src/3rdparty/chromium/third_party/icu/BUILD.gn
+@@ -1176,6 +1176,12 @@ config("system_icu_config") {
+     "USING_SYSTEM_ICU=1",
+     "ICU_UTIL_DATA_IMPL=ICU_UTIL_DATA_STATIC",
+   ]
++
++  if (is_win) {
++    defines += [ "UCHAR_TYPE=wchar_t" ]
++  } else {
++    defines += [ "UCHAR_TYPE=uint16_t" ]
++  }
+ }
+ 
+ if (use_system_icu) {
+@@ -1193,9 +1199,7 @@ shim_headers("icui18n_shim") {
+   prefix = "unicode/"
+   headers = [
+     # This list can easily be updated using the command below:
+-    # find third_party/icu/source/i18n/unicode \
+-    # -iname '*.h' -printf '"%p",\n' | \
+-    # sed -e 's|third_party/icu/source/i18n/unicode/||' | sort -u
++    # find third_party/icu/source/i18n/unicode -iname '*.h' -printf '%f\n' | sort -Vu | sed -e 's/.*/"&",/'
+     "alphaindex.h",
+     "basictz.h",
+     "calendar.h",
+@@ -1217,15 +1221,18 @@ shim_headers("icui18n_shim") {
+     "fieldpos.h",
+     "fmtable.h",
+     "format.h",
++    "formattedvalue.h",
+     "fpositer.h",
+     "gender.h",
+     "gregocal.h",
++    "listformatter.h",
+     "measfmt.h",
+     "measunit.h",
+     "measure.h",
+     "msgfmt.h",
+     "nounit.h",
+     "numberformatter.h",
++    "numberrangeformatter.h",
+     "numfmt.h",
+     "numsys.h",
+     "plurfmt.h",
+@@ -1261,11 +1268,14 @@ shim_headers("icui18n_shim") {
+     "udatpg.h",
+     "ufieldpositer.h",
+     "uformattable.h",
++    "uformattedvalue.h",
+     "ugender.h",
++    "ulistformatter.h",
+     "ulocdata.h",
+     "umsg.h",
+     "unirepl.h",
+     "unum.h",
++    "unumberformatter.h",
+     "unumsys.h",
+     "upluralrules.h",
+     "uregex.h",
+@@ -1284,9 +1294,7 @@ shim_headers("icuuc_shim") {
+   prefix = "unicode/"
+   headers = [
+     # This list can easily be updated using the command below:
+-    # find third_party/icu/source/common/unicode \
+-    # -iname '*.h' -printf '"%p",\n' | \
+-    # sed -e 's|third_party/icu/source/common/unicode/||' | sort -u
++    # find third_party/icu/source/common/unicode -iname '*.h' -printf '%f\n' | sort -Vu | sed -e 's/.*/"&",/'
+     "appendable.h",
+     "brkiter.h",
+     "bytestream.h",
+@@ -1306,6 +1314,7 @@ shim_headers("icuuc_shim") {
+     "icudataver.h",
+     "icuplug.h",
+     "idna.h",
++    "localebuilder.h",
+     "localpointer.h",
+     "locdspnm.h",
+     "locid.h",
+@@ -1339,10 +1348,12 @@ shim_headers("icuuc_shim") {
+     "uchriter.h",
+     "uclean.h",
+     "ucnv.h",
++    "ucnvsel.h",
+     "ucnv_cb.h",
+     "ucnv_err.h",
+-    "ucnvsel.h",
+     "uconfig.h",
++    "ucpmap.h",
++    "ucptrie.h",
+     "ucurr.h",
+     "udata.h",
+     "udisplaycontext.h",
+@@ -1353,6 +1364,7 @@ shim_headers("icuuc_shim") {
+     "uloc.h",
+     "umachine.h",
+     "umisc.h",
++    "umutablecptrie.h",
+     "unifilt.h",
+     "unifunct.h",
+     "unimatch.h",
+@@ -1373,9 +1385,9 @@ shim_headers("icuuc_shim") {
+     "ustringtrie.h",
+     "utext.h",
+     "utf.h",
++    "utf8.h",
+     "utf16.h",
+     "utf32.h",
+-    "utf8.h",
+     "utf_old.h",
+     "utrace.h",
+     "utypes.h",
+-- 
+cgit v1.2.1
