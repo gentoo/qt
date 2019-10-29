@@ -80,8 +80,6 @@ DEPEND="${RDEPEND}
 
 PATCHES+=(
 	"${FILESDIR}/${P}-icu-65.patch"
-	# bug 693668, upstream(?) TODO:
-	"${FILESDIR}/${PN}-5.13.1-no-kcrash-reporting.patch"
 )
 
 src_prepare() {

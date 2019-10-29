@@ -78,11 +78,6 @@ DEPEND="${RDEPEND}
 	pax_kernel? ( sys-apps/elfix )
 "
 
-PATCHES+=(
-	# bug 693668, upstream(?) TODO:
-	"${FILESDIR}/${PN}-5.13.1-no-kcrash-reporting.patch"
-)
-
 src_prepare() {
 	use pax_kernel && PATCHES+=( "${FILESDIR}/${PN}-5.11.2-paxmark-mksnapshot.patch" )
 

@@ -83,8 +83,8 @@ PATCHES+=(
 	"${FILESDIR}/${P}-pulseaudio-13.patch" # bug 694960
 	# QTBUG-76963, 5.13 branch:
 	"${FILESDIR}/${P}-webrtc-missing-header-w-linux-headers-5.2.patch"
-	# bug 693668, upstream(?) TODO:
-	"${FILESDIR}/${P}-no-kcrash-reporting.patch"
+	# bug 693668
+	"${FILESDIR}/${P}-disable-crash-reports.patch"
 )
 
 src_prepare() {
