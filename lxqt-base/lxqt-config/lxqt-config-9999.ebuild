@@ -45,6 +45,7 @@ RDEPEND="
 		virtual/libudev
 		x11-drivers/xf86-input-libinput
 		x11-libs/libXext
+		x11-libs/libXi
 	)
 	!lxqt-base/lxqt-l10n
 "
