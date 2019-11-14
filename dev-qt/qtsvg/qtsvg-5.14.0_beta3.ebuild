@@ -21,3 +21,8 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	test? ( ~dev-qt/qtxml-${PV} )
 "
+
+PATCHES=(
+	"${FILESDIR}/${P}-fix-scaling.patch" # QTBUG-79933
+	"${FILESDIR}/${P}-allow-remove-viewbox.patch" # QTBUG-79933
+)
