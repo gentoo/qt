@@ -6,7 +6,6 @@
 		<name>Gentoo Qt Project</name>
 	</maintainer>
 	<use>
-		<flag name="gles2">Use GLES 2.0 or later instead of full OpenGL</flag>
 		<flag name="gtk">Build the GTK platform theme plugin</flag>
 	</use>
 	<upstream>
