@@ -26,6 +26,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-5.13.2-fix-linuxdmabuf-build.patch" )
+
 src_prepare() {
 	qt_use_disable_config libinput xkbcommon-evdev \
 		src/client/client.pro \
