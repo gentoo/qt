@@ -8,18 +8,18 @@ if [[ ${PV} = *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/qtwebkit/qtwebkit.git"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/annulen/webkit/releases/download/${MY_P}/${MY_P}.tar.xz"
+	SRC_URI="https://github.com/annulen/webkit/releases/download/${P}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
 fi
 PYTHON_COMPAT=( python2_7 )
 USE_RUBY="ruby25 ruby26"
-inherit check-reqs cmake-utils flag-o-matic python-any-r1 qmake-utils ruby-single toolchain-funcs
+inherit check-reqs cmake flag-o-matic python-any-r1 qmake-utils ruby-single toolchain-funcs
 
 DESCRIPTION="WebKit rendering library for the Qt5 framework (deprecated)"
 HOMEPAGE="https://www.qt.io/"
 
 LICENSE="BSD LGPL-2+"
-SLOT="5/9999"
+SLOT="5/5.9999"
 IUSE="geolocation gles2 +gstreamer +hyphen +jit multimedia nsplugin opengl orientation +printsupport qml webp X"
 
 REQUIRED_USE="
@@ -117,7 +117,7 @@ src_configure() {
 		-DENABLE_PRINT_SUPPORT=$(usex printsupport)
 		-DENABLE_DEVICE_ORIENTATION=$(usex orientation)
 		-DENABLE_WEBKIT2=$(usex qml)
-		$(cmake-utils_use_find_package webp WebP)
+		$(cmake_use_find_package webp WebP)
 		-DENABLE_X11_TARGET=$(usex X)
 	)
 
@@ -127,11 +127,11 @@ src_configure() {
 		mycmakeargs+=( -DRUBY_EXECUTABLE=$(type -P ruby25) )
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	# bug 572056
 	if [[ ! -f ${ED}$(qt5_get_libdir)/libQt5WebKit.so ]]; then
