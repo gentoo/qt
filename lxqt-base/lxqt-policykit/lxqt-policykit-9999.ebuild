@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="LXQt PolKit authentication agent"
 HOMEPAGE="https://lxqt.org/"
@@ -37,6 +37,6 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 src_install(){
-	cmake-utils_src_install
+	cmake_src_install
 	doman man/*.1
 }

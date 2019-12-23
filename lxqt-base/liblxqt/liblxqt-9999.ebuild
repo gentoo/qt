@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="Common base library for the LXQt desktop environment"
 HOMEPAGE="https://lxqt.org/"
@@ -45,5 +45,5 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_BACKLIGHT_LINUX_BACKEND=$(usex backlight)
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
