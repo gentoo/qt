@@ -14,6 +14,8 @@ SLOT="0"
 KEYWORDS=""
 IUSE="test"
 
+RESTRICT="!test? ( test )"
+
 DEPEND="test? (
 		dev-qt/qtcore:5
 		dev-qt/qttest:5
