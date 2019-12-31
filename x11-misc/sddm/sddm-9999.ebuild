@@ -12,7 +12,7 @@ else
 fi
 
 PLOCALES="ar bn ca cs da de es et fi fr hi_IN hu ie is it ja kk ko lt lv nb nl nn pl pt_BR pt_PT ro ru sk sr sr@ijekavian sr@ijekavianlatin sr@latin sv tr uk zh_CN zh_TW"
-inherit cmake-utils l10n systemd user
+inherit cmake l10n systemd user
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
@@ -22,6 +22,8 @@ SLOT="0"
 IUSE="consolekit elogind +pam systemd test"
 
 REQUIRED_USE="?? ( elogind systemd )"
+
+RESTRICT="!test? ( test )"
 
 BDEPEND="
 	dev-python/docutils
@@ -58,7 +60,7 @@ PATCHES=(
 )
 
 src_prepare() {
-	cmake-utils_src_prepare
+	cmake_src_prepare
 
 	disable_locale() {
 		sed -e "/${1}\.ts/d" -i data/translations/CMakeLists.txt || die
@@ -80,11 +82,11 @@ src_configure() {
 		-DBUILD_MAN_PAGES=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	# Create a default.conf as upstream dropped /etc/sddm.conf w/o replacement
 	local confd="/usr/lib/sddm/sddm.conf.d"
