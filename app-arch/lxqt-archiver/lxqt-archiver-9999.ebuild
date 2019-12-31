@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake xdg-utils
 
 DESCRIPTION="A Simple and Lightweight Qt File Archiver"
 HOMEPAGE="https://lxqt.org/"
@@ -33,10 +33,6 @@ RDEPEND="
 	>=x11-libs/libfm-qt-0.14.0
 "
 DEPEND="${RDEPEND}"
-
-src_configure() {
-	cmake-utils_src_configure
-}
 
 pkg_postinst() {
 	xdg_desktop_database_update
