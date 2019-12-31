@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 if [[ ${PV} == 9999* ]]; then
 	EGIT_REPO_URI="https://github.com/scarpin0/${PN}.git"
@@ -22,6 +22,8 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE="debug test"
 
+RESTRICT="!test? ( test )"
+
 RDEPEND="
 	${SYSTEMD_VERSION}
 	dev-qt/qtcore:5
@@ -37,5 +39,5 @@ src_configure() {
 		-DBUILD_QTSYSTEMD_TESTS=$(usex test)
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
