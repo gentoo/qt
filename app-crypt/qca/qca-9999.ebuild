@@ -3,17 +3,18 @@
 
 EAPI=7
 
-inherit cmake-utils git-r3 qmake-utils
+inherit kde.org cmake git-r3 qmake-utils
 
 DESCRIPTION="Qt Cryptographic Architecture (QCA)"
 HOMEPAGE="https://userbase.kde.org/QCA"
-EGIT_REPO_URI="https://anongit.kde.org/${PN}.git"
 
 LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS=""
 
 IUSE="botan debug doc examples gcrypt gpg libressl logger nss pkcs11 sasl softstore +ssl test"
+
+RESTRICT="!test? ( test )"
 
 BDEPEND="
 	doc? ( app-doc/doxygen )
@@ -63,16 +64,16 @@ src_configure() {
 		$(qca_plugin_use ssl ossl)
 		-DBUILD_TESTS=$(usex test)
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_test() {
 	local -x QCA_PLUGIN_PATH="${BUILD_DIR}/lib/qca"
-	cmake-utils_src_test
+	cmake_src_test
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	if use doc; then
 		pushd "${BUILD_DIR}" >/dev/null || die
