@@ -116,7 +116,7 @@ src_configure() {
 		-DENABLE_OPENGL=$(usex opengl)
 		-DENABLE_PRINT_SUPPORT=$(usex printsupport)
 		-DENABLE_DEVICE_ORIENTATION=$(usex orientation)
-		-DENABLE_WEBKIT2=$(usex qml)
+		-DENABLE_WEBKIT=$(usex qml)
 		$(cmake_use_find_package webp WebP)
 		-DENABLE_X11_TARGET=$(usex X)
 	)
