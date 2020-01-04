@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -51,6 +51,7 @@ DEPEND="
 	>=dev-qt/qtnetwork-${QT_MIN_VER}
 	>=dev-qt/qtwidgets-${QT_MIN_VER}=
 	media-libs/libpng:0=
+	media-libs/woff2
 	virtual/jpeg:0
 	geolocation? ( >=dev-qt/qtpositioning-${QT_MIN_VER} )
 	gstreamer? (
