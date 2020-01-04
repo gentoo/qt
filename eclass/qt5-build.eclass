@@ -208,9 +208,6 @@ qt5-build_src_compile() {
 # @DESCRIPTION:
 # Runs tests in the target directories.
 qt5-build_src_test() {
-	# disable broken cmake tests (bug 474004)
-	local myqmakeargs=("${myqmakeargs[@]}" -after SUBDIRS-=cmake SUBDIRS-=installed_cmake)
-
 	qt5_foreach_target_subdir qt5_qmake
 	qt5_foreach_target_subdir emake
 
@@ -649,6 +646,11 @@ qt5_base_configure() {
 		# module-specific options
 		"${myconf[@]}"
 	)
+
+	if [[ -f "${S}"/tests/auto/auto.pro ]] && use test; then
+		# disable broken cmake tests (bug 474004)
+		echo 'SUBDIRS-=cmake installed_cmake' >> "${S}"/tests/auto/auto.pro || die
+	fi
 
 	pushd "${QT5_BUILD_DIR}" >/dev/null || die
 
