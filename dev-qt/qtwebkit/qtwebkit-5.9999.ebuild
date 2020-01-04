@@ -20,7 +20,7 @@ HOMEPAGE="https://www.qt.io/"
 
 LICENSE="BSD LGPL-2+"
 SLOT="5/5.9999"
-IUSE="geolocation gles2 +gstreamer +hyphen +jit multimedia nsplugin opengl orientation +printsupport qml webp X"
+IUSE="crypt geolocation gles2 +gstreamer +hyphen +jit multimedia nsplugin opengl orientation +printsupport qml webp X"
 
 REQUIRED_USE="
 	nsplugin? ( X )
@@ -50,6 +50,10 @@ DEPEND="
 	>=dev-qt/qtwidgets-${QT_MIN_VER}=
 	media-libs/libpng:0=
 	virtual/jpeg:0
+	crypt? (
+		dev-libs/libgcrypt:=
+		dev-libs/libtasn1:=
+	)
 	geolocation? ( >=dev-qt/qtpositioning-${QT_MIN_VER} )
 	gstreamer? (
 		dev-libs/glib:2
@@ -107,6 +111,7 @@ src_configure() {
 		-DPORT=Qt
 		-DENABLE_API_TESTS=OFF
 		-DENABLE_TOOLS=OFF
+		-DENABLE_WEB_CRYPTO=$(usex crypt)
 		-DENABLE_GEOLOCATION=$(usex geolocation)
 		-DUSE_GSTREAMER=$(usex gstreamer)
 		-DUSE_LIBHYPHEN=$(usex hyphen)
