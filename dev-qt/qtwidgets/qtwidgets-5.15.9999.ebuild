@@ -50,7 +50,7 @@ src_configure() {
 		-gui
 		$(qt_use png libpng system)
 		-widgets
-		$(qt_use X)
+		$(qt_use X xcb)
 		$(usex X '-xcb-xlib -xkbcommon' '')
 	)
 	qt5-build_src_configure
