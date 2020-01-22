@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -36,8 +36,6 @@ src_prepare() {
 		src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro \
 		src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro \
 		tests/auto/compositor/compositor/compositor.pro
-
-	use xcomposite || rm -r config.tests/xcomposite || die
 
 	qt5-build_src_prepare
 }
