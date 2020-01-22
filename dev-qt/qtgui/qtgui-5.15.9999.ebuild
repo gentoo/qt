@@ -174,7 +174,7 @@ src_configure() {
 		$(qt_use png libpng system)
 		$(qt_use tslib)
 		$(qt_use udev libudev)
-		$(qt_use X)
+		$(qt_use X xcb)
 		$(usex X '-xcb-xlib' '')
 	)
 	if use libinput || use X; then
