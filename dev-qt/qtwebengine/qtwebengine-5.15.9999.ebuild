@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -88,6 +88,10 @@ src_prepare() {
 
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
+
+	# Disable 'qtpdf' for now to fix build.
+	sed -i -e 's|qtConfig(build-qtpdf)|false|g' \
+		src/src.pro || die
 
 	qt_use_disable_config alsa webengine-alsa src/buildtools/config/linux.pri
 	qt_use_disable_config pulseaudio webengine-pulseaudio src/buildtools/config/linux.pri
