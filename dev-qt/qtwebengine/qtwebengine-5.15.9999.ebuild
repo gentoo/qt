@@ -89,10 +89,6 @@ src_prepare() {
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
 
-	# Disable 'qtpdf' for now to fix build.
-	sed -i -e 's|qtConfig(build-qtpdf)|false|g' \
-		src/src.pro || die
-
 	qt_use_disable_config alsa webengine-alsa src/buildtools/config/linux.pri
 	qt_use_disable_config pulseaudio webengine-pulseaudio src/buildtools/config/linux.pri
 
@@ -109,14 +105,15 @@ src_configure() {
 
 	local myqmakeargs=(
 		--
-		-opus
+		-no-build-qtpdf
 		-printing-and-pdf
-		-webp
-		$(usex alsa '-alsa' '')
-		$(usex bindist '' '-proprietary-codecs')
-		$(usex pulseaudio '-pulseaudio' '')
-		$(usex system-ffmpeg '-ffmpeg' '')
-		$(usex system-icu '-webengine-icu' '')
+		-system-opus
+		-system-webp
+		$(usex alsa '-alsa' '-no-alsa')
+		$(usex bindist '-no-proprietary-codecs' '-proprietary-codecs')
+		$(usex pulseaudio '-pulseaudio' '-no-pulseaudio')
+		$(usex system-ffmpeg '-system-ffmpeg' '-qt-ffmpeg')
+		$(usex system-icu '-webengine-icu' '-no-webengine-icu')
 	)
 	qt5-build_src_configure
 }
