@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,8 +11,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
-IUSE="alsa bindist designer jumbo-build pax_kernel pulseaudio
-	+system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist designer geolocation jumbo-build pax_kernel
+	pulseaudio +system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
 RDEPEND="
@@ -24,7 +24,6 @@ RDEPEND="
 	~dev-qt/qtdeclarative-${PV}
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtpositioning-${PV}
 	~dev-qt/qtprintsupport-${PV}
 	~dev-qt/qtwebchannel-${PV}[qml]
 	dev-libs/expat
@@ -60,6 +59,7 @@ RDEPEND="
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
 	designer? ( ~dev-qt/designer-${PV} )
+	geolocation? ( ~dev-qt/qtpositioning-${PV} )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
@@ -105,14 +105,15 @@ src_configure() {
 
 	local myqmakeargs=(
 		--
-		-opus
 		-printing-and-pdf
-		-webp
-		$(usex alsa '-alsa' '')
-		$(usex bindist '' '-proprietary-codecs')
-		$(usex pulseaudio '-pulseaudio' '')
-		$(usex system-ffmpeg '-ffmpeg' '')
-		$(usex system-icu '-webengine-icu' '')
+		-system-opus
+		-system-webp
+		$(usex alsa '-alsa' '-no-alsa')
+		$(usex bindist '-no-proprietary-codecs' '-proprietary-codecs')
+		$(usex geolocation '-webengine-geolocation' '-no-webengine-geolocation')
+		$(usex pulseaudio '-pulseaudio' '-no-pulseaudio')
+		$(usex system-ffmpeg '-system-ffmpeg' '-qt-ffmpeg')
+		$(usex system-icu '-webengine-icu' '-no-webengine-icu')
 	)
 	qt5-build_src_configure
 }
