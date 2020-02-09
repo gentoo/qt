@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -41,6 +41,8 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	!:testlib
 	!:xml
 )
+
+PATCHES=( "${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" ) # bug 703306
 
 src_prepare() {
 	# don't add -O3 to CXXFLAGS, bug 549140
