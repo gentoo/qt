@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,7 +11,6 @@ HOMEPAGE="https://userbase.kde.org/QCA"
 LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS=""
-
 IUSE="botan debug doc examples gcrypt gpg libressl logger nss pkcs11 sasl softstore +ssl test"
 
 RESTRICT="!test? ( test )"
@@ -26,13 +25,13 @@ RDEPEND="
 	gpg? ( app-crypt/gnupg )
 	nss? ( dev-libs/nss )
 	pkcs11? (
-		!libressl? ( dev-libs/openssl:0 )
+		!libressl? ( >=dev-libs/openssl-1.1 )
 		libressl? ( dev-libs/libressl )
 		dev-libs/pkcs11-helper
 	)
 	sasl? ( dev-libs/cyrus-sasl:2 )
 	ssl? (
-		!libressl? ( >=dev-libs/openssl-1.0.1:0= )
+		!libressl? ( >=dev-libs/openssl-1.1:0= )
 		libressl? ( dev-libs/libressl:= )
 	)
 "
