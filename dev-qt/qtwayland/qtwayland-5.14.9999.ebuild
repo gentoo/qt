@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -27,7 +27,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt_use_disable_config libinput xkbcommon-evdev \
+	qt_use_disable_config libinput xkbcommon \
 		src/client/client.pro \
 		src/compositor/wayland_wrapper/wayland_wrapper.pri \
 		src/plugins/shellintegration/ivi-shell/ivi-shell.pro \
