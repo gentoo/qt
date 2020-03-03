@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
-IUSE="alsa bindist designer geolocation jumbo-build pulseaudio +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist designer geolocation jumbo-build kerberos pulseaudio +system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
 RDEPEND="
@@ -60,6 +60,7 @@ RDEPEND="
 	alsa? ( media-libs/alsa-lib )
 	designer? ( ~dev-qt/designer-${PV} )
 	geolocation? ( ~dev-qt/qtpositioning-${PV} )
+	kerberos? ( virtual/krb5 )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
@@ -128,6 +129,7 @@ src_configure() {
 		$(usex alsa '-alsa' '-no-alsa')
 		$(usex bindist '-no-proprietary-codecs' '-proprietary-codecs')
 		$(usex geolocation '-webengine-geolocation' '-no-webengine-geolocation')
+		$(usex kerberos '-webengine-kerberos' '-no-webengine-kerberos')
 		$(usex pulseaudio '-pulseaudio' '-no-pulseaudio')
 		$(usex system-ffmpeg '-system-ffmpeg' '-qt-ffmpeg')
 		$(usex system-icu '-webengine-icu' '-no-webengine-icu')

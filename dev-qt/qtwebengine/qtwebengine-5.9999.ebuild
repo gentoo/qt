@@ -12,7 +12,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
-IUSE="alsa bindist designer jumbo-build pulseaudio +system-ffmpeg +system-icu widgets"
+IUSE="alsa bindist designer jumbo-build kerberos pulseaudio +system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
 
 RDEPEND="
@@ -60,6 +60,7 @@ RDEPEND="
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
 	designer? ( ~dev-qt/designer-${PV} )
+	kerberos? ( virtual/krb5 )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
@@ -124,6 +125,7 @@ src_configure() {
 		-webp
 		$(usex alsa '-alsa' '')
 		$(usex bindist '' '-proprietary-codecs')
+		$(usex kerberos '-webengine-kerberos' '-no-webengine-kerberos')
 		$(usex pulseaudio '-pulseaudio' '')
 		$(usex system-ffmpeg '-ffmpeg' '')
 		$(usex system-icu '-webengine-icu' '')
