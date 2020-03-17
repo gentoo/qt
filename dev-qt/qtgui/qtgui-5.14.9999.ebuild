@@ -26,7 +26,7 @@ REQUIRED_USE="
 	X? ( gles2? ( egl ) )
 "
 
-COMMON_DEPEND="
+RDEPEND="
 	dev-libs/glib:2
 	~dev-qt/qtcore-${PV}
 	dev-util/gtk-update-icon-cache
@@ -66,16 +66,9 @@ COMMON_DEPEND="
 		x11-libs/xcb-util-wm
 	)
 "
-DEPEND="${COMMON_DEPEND}
+DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
 	udev? ( sys-kernel/linux-headers )
-"
-# bug 703306, _populate_Gui_plugin_properties breaks installed cmake modules
-RDEPEND="${COMMON_DEPEND}
-	!<dev-qt/qtimageformats-5.14.0:5
-	!<dev-qt/qtsvg-5.14.0:5
-	!<dev-qt/qtvirtualkeyboard-5.14.0:5
-	!<dev-qt/qtwayland-5.14.0:5
 "
 PDEPEND="
 	ibus? ( app-i18n/ibus )
