@@ -10,7 +10,7 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-IUSE="vulkan xcomposite"
+IUSE="vulkan X"
 
 DEPEND="
 	>=dev-libs/wayland-1.6.0
@@ -20,7 +20,7 @@ DEPEND="
 	media-libs/mesa[egl]
 	>=x11-libs/libxkbcommon-0.2.0
 	vulkan? ( dev-util/vulkan-headers )
-	xcomposite? (
+	X? (
 		x11-libs/libX11
 		x11-libs/libXcomposite
 	)
@@ -32,7 +32,16 @@ src_prepare() {
 		src/plugins/hardwareintegration/client/client.pro \
 		src/plugins/hardwareintegration/compositor/compositor.pro
 
-	use xcomposite || rm -r config.tests/xcomposite || die
+	use X || rm -r config.tests/xcomposite || die
 
 	qt5-build_src_prepare
+}
+
+src_configure() {
+	local myqmakeargs=(
+		--
+		$(qt_use X feature-xcomposite-egl)
+		$(qt_use X feature-xcomposite-glx)
+	)
+	qt5-build_src_configure
 }
