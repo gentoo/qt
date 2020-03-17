@@ -10,13 +10,13 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~x86"
 fi
 
-IUSE="+libinput vulkan xcomposite"
+IUSE="vulkan xcomposite"
 
 DEPEND="
 	>=dev-libs/wayland-1.6.0
 	~dev-qt/qtcore-${PV}
 	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}[egl,libinput=,vulkan=]
+	~dev-qt/qtgui-${PV}[egl,libinput,vulkan=]
 	media-libs/mesa[egl]
 	>=x11-libs/libxkbcommon-0.2.0
 	vulkan? ( dev-util/vulkan-headers )
@@ -28,16 +28,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt_use_disable_config libinput xkbcommon \
-		src/client/client.pro \
-		src/compositor/wayland_wrapper/wayland_wrapper.pri \
-		src/plugins/shellintegration/ivi-shell/ivi-shell.pro \
-		src/plugins/shellintegration/wl-shell/wl-shell.pro \
-		src/plugins/shellintegration/xdg-shell/xdg-shell.pro \
-		src/plugins/shellintegration/xdg-shell-v5/xdg-shell-v5.pro \
-		src/plugins/shellintegration/xdg-shell-v6/xdg-shell-v6.pro \
-		tests/auto/compositor/compositor/compositor.pro
-
 	qt_use_disable_config vulkan wayland-vulkan-server-buffer \
 		src/plugins/hardwareintegration/client/client.pro \
 		src/plugins/hardwareintegration/compositor/compositor.pro
