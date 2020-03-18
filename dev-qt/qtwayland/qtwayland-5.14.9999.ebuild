@@ -28,10 +28,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	qt_use_disable_config vulkan wayland-vulkan-server-buffer \
-		src/plugins/hardwareintegration/client/client.pro \
-		src/plugins/hardwareintegration/compositor/compositor.pro
-
 	use X || rm -r config.tests/xcomposite || die
 
 	qt5-build_src_prepare
@@ -40,6 +36,7 @@ src_prepare() {
 src_configure() {
 	local myqmakeargs=(
 		--
+		$(qt_use vulkan feature-wayland-vulkan-server-buffer)
 		$(qt_use X feature-xcomposite-egl)
 		$(qt_use X feature-xcomposite-glx)
 	)
