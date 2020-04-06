@@ -1,0 +1,25 @@
+From 3f9862db95ffbe1f87bc17b147b5c68954b4044d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jean-Micha=C3=ABl=20Celerier?=
+ <jeanmichael.celerier@gmail.com>
+Date: Sun, 5 Apr 2020 12:06:58 +0200
+Subject: [PATCH] Add missing endif() in a CMake file
+
+Change-Id: I545a91dafd26d0fc88c3b205aec9805629b9371e
+Reviewed-by: Kai Koehne <kai.koehne@qt.io>
+---
+ src/widgets/Qt5WidgetsConfigExtras.cmake.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/widgets/Qt5WidgetsConfigExtras.cmake.in b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
+index f05dae23ea7..83d8004a08f 100644
+--- a/src/widgets/Qt5WidgetsConfigExtras.cmake.in
++++ b/src/widgets/Qt5WidgetsConfigExtras.cmake.in
+@@ -16,7 +16,7 @@ endif()
+ 
+ if (QT5_STRICT_PLUGIN_GLOB OR Qt5$${CMAKE_MODULE_NAME}_STRICT_PLUGIN_GLOB)
+     include(\"${CMAKE_CURRENT_LIST_DIR}/Qt5Widgets_AccessibleFactory.cmake\" OPTIONAL)
+-
++endif()
+ set(Qt5Widgets_UIC_EXECUTABLE Qt5::uic)
+ 
+ # Create versionless tool targets.
