@@ -33,3 +33,13 @@ src_prepare() {
 
 	qt5-build_src_prepare
 }
+
+src_configure() {
+	# Most of qttools require files that are only generated when qmake is
+	# run in the root directory.
+	# Related bugs: 633776, 676948, and 716514.
+	mkdir -p "${QT5_BUILD_DIR}" || die
+	qt5_qmake "${QT_BUILD_DIR}"
+	cp "${S}"/qttools-config.pri "${QT5_BUILD_DIR}" || die
+	qt5-build_src_configure
+}

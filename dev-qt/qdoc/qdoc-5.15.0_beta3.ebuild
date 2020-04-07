@@ -36,5 +36,6 @@ src_configure() {
 	# run in the root directory. bug 676948; same fix as bug 633776
 	mkdir -p "${QT5_BUILD_DIR}"/src/qdoc || die
 	qt5_qmake "${QT5_BUILD_DIR}"
+	cp src/qdoc/qtqdoc-config.pri "${QT5_BUILD_DIR}"/src/qdoc || die
 	qt5-build_src_configure
 }
