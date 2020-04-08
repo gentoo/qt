@@ -14,7 +14,7 @@ fi
 IUSE="bindist connman gssapi libproxy networkmanager sctp +ssl"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
+	~dev-qt/qtcore-${PV}:5=
 	sys-libs/zlib:=
 	connman? ( ~dev-qt/qtdbus-${PV} )
 	gssapi? ( virtual/krb5 )

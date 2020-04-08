@@ -28,7 +28,7 @@ REQUIRED_USE="
 
 RDEPEND="
 	dev-libs/glib:2
-	~dev-qt/qtcore-${PV}
+	~dev-qt/qtcore-${PV}:5=
 	dev-util/gtk-update-icon-cache
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2

@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,7 +15,7 @@ fi
 IUSE="cups gles2-only"
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
+	~dev-qt/qtcore-${PV}:5=
 	~dev-qt/qtgui-${PV}[gles2-only=]
 	~dev-qt/qtwidgets-${PV}[gles2-only=]
 	cups? ( >=net-print/cups-1.4 )

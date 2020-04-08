@@ -15,7 +15,7 @@ fi
 IUSE="cups gles2-only"
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
+	~dev-qt/qtcore-${PV}:5=
 	~dev-qt/qtgui-${PV}[gles2-only=]
 	~dev-qt/qtwidgets-${PV}[gles2-only=]
 	cups? ( >=net-print/cups-1.4 )
