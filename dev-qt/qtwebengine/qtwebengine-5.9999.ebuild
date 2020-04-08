@@ -90,6 +90,19 @@ src_prepare() {
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | xargs sed -i -e 's|INCLUDEPATH += |&$$QTWEBENGINE_ROOT/include |' || die
 
+	if use system-icu; then
+		# Sanity check to ensure that bundled copy of ICU is not used.
+		# Whole src/3rdparty/chromium/third_party/icu directory cannot be deleted because
+		# src/3rdparty/chromium/third_party/icu/BUILD.gn is used by build system.
+		# If usage of headers of bundled copy of ICU occurs, then lists of shim headers in
+		# shim_headers("icui18n_shim") and shim_headers("icuuc_shim") in
+		# src/3rdparty/chromium/third_party/icu/BUILD.gn should be updated.
+		local file
+		for file in $(find src/3rdparty/chromium/third_party/icu -type f "(" -name "*.c" -o -name "*.cpp" -o -name "*.h" ")"); do
+			echo "#error This file should not be used!" > "${file}" || die
+		done
+	fi
+
 	qt_use_disable_config alsa webengine-alsa src/core/config/linux.pri
 	qt_use_disable_config pulseaudio webengine-pulseaudio src/core/config/linux.pri
 
