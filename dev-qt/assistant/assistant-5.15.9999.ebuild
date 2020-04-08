@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,7 +14,7 @@ fi
 IUSE="webkit"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
+	~dev-qt/qtcore-${PV}:5=
 	~dev-qt/qtgui-${PV}
 	~dev-qt/qthelp-${PV}
 	~dev-qt/qtnetwork-${PV}

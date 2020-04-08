@@ -15,8 +15,8 @@ IUSE=""
 
 DEPEND="
 	~dev-qt/designer-${PV}
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtgui-${PV}
+	~dev-qt/qtcore-${PV}:5=
+	~dev-qt/qtgui-${PV}:5=
 	~dev-qt/qtprintsupport-${PV}
 	~dev-qt/qtwidgets-${PV}
 	~dev-qt/qtxml-${PV}

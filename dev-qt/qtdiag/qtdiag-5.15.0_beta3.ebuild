@@ -14,8 +14,8 @@ fi
 IUSE="+network +widgets"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtgui-${PV}
+	~dev-qt/qtcore-${PV}:5=
+	~dev-qt/qtgui-${PV}:5=
 	network? ( ~dev-qt/qtnetwork-${PV}[ssl] )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
