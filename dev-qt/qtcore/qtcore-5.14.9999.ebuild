@@ -45,12 +45,11 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 PATCHES=( "${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" ) # bug 703306
 
 pkg_pretend() {
-	if use kernel_linux; then
-		get_running_version
-		if kernel_is -lt 3 17 && ! use old-kernel; then
-			ewarn "The running kernel is older than 3.17. USE=old-kernel is needed for ${CATEGORY}/${PN}"
-			ewarn "to function on this kernel properly.  See Bug #669994."
-		fi
+	use kernel_linux || return
+	get_running_version
+	if kernel_is -lt 3 17 && ! use old-kernel; then
+		ewarn "The running kernel is older than 3.17. USE=old-kernel is needed for ${CATEGORY}/${PN}"
+		ewarn "to function on this kernel properly.  See Bug #669994."
 	fi
 }
 
