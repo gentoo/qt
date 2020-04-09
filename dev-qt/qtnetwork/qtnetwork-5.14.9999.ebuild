@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,12 +11,13 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 fi
 
-IUSE="bindist connman libproxy networkmanager sctp +ssl"
+IUSE="bindist connman gssapi libproxy networkmanager sctp +ssl"
 
 DEPEND="
 	~dev-qt/qtcore-${PV}
 	sys-libs/zlib:=
 	connman? ( ~dev-qt/qtdbus-${PV} )
+	gssapi? ( virtual/krb5 )
 	libproxy? ( net-libs/libproxy )
 	networkmanager? ( ~dev-qt/qtdbus-${PV} )
 	sctp? ( kernel_linux? ( net-misc/lksctp-tools ) )
@@ -51,6 +52,7 @@ pkg_setup() {
 src_configure() {
 	local myconf=(
 		$(usex connman -dbus-linked '')
+		$(usex gssapi -feature-gssapi -no-feature-gssapi)
 		$(qt_use libproxy)
 		$(usex networkmanager -dbus-linked '')
 		$(qt_use sctp)
