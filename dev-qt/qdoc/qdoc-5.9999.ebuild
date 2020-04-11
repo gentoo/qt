@@ -35,6 +35,6 @@ src_configure() {
 	# src/qdoc requires files that are only generated when qmake is
 	# run in the root directory. bug 676948; same fix as bug 633776
 	mkdir -p "${QT5_BUILD_DIR}"/src/qdoc || die
-	qt5_qmake "${QT5_BUILD_DIR}"
+	qt5_qmake
 	qt5-build_src_configure
 }

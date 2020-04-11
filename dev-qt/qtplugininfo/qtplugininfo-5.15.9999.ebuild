@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -27,7 +27,7 @@ src_configure() {
 	# run in the root directory.
 	# Related bugs: 633776, 676948, and 716514.
 	mkdir -p "${QT5_BUILD_DIR}" || die
-	qt5_qmake "${QT_BUILD_DIR}"
+	qt5_qmake
 	cp "${S}"/qttools-config.pri "${QT5_BUILD_DIR}" || die
 	qt5-build_src_configure
 }
