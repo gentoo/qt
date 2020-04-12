@@ -49,9 +49,9 @@ PATCHES=( "${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" ) # bug 7
 pkg_pretend() {
 	use kernel_linux || return
 	get_running_version
-	if kernel_is -lt 3 17 && ! use old-kernel; then
-		ewarn "The running kernel is older than 3.17. USE=old-kernel is needed for"
-		ewarn "dev-qt/qtcore to function on this kernel properly. See Bug #669994."
+	if kernel_is -lt 4 11 && ! use old-kernel; then
+		ewarn "The running kernel is older than 4.11. USE=old-kernel is needed for"
+		ewarn "dev-qt/qtcore to function on this kernel properly. Bugs #669994, #672856"
 	fi
 }
 
@@ -67,7 +67,6 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
-		-no-feature-statx	# bug 672856
 		$(qt_use icu)
 		$(qt_use !icu iconv)
 		$(qt_use systemd journald)
@@ -75,6 +74,7 @@ src_configure() {
 	use old-kernel && myconf+=(
 		-no-feature-renameat2 # needs Linux 3.16, bug 669994
 		-no-feature-getentropy # needs Linux 3.17, bug 669994
+		-no-feature-statx # needs Linux 4.11, bug 672856
 	)
 	qt5-build_src_configure
 }

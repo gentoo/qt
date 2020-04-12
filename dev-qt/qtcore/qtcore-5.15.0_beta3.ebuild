@@ -67,7 +67,7 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
-		-no-feature-statx	# bug 672856
+		-no-feature-statx # needs Linux 4.11, bug 672856
 		$(qt_use icu)
 		$(qt_use !icu iconv)
 		$(qt_use systemd journald)
