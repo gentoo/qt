@@ -12,7 +12,7 @@ EGIT_REPO_URI="https://github.com/goldendict/goldendict.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
-IUSE="debug ffmpeg libav"
+IUSE="debug ffmpeg"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
@@ -41,8 +41,7 @@ DEPEND="
 	x11-libs/libXtst
 	ffmpeg? (
 		media-libs/libao
-		libav? ( media-video/libav:0= )
-		!libav? ( media-video/ffmpeg:0= )
+		media-video/ffmpeg:0=
 	)
 "
 RDEPEND="${DEPEND}"
