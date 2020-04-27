@@ -20,22 +20,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-QT5_TARGET_SUBDIRS=(
-	src/qdoc
-)
-
 src_prepare() {
 	qt_use_disable_mod qml qmldevtools-private \
 		src/qdoc/qdoc.pro
 
 	qt5-build_src_prepare
-}
-
-src_configure() {
-	# src/qdoc requires files that are only generated when qmake is
-	# run in the root directory. bug 676948; same fix as bug 633776
-	mkdir -p "${QT5_BUILD_DIR}"/src/qdoc || die
-	qt5_qmake "${QT5_BUILD_DIR}"
-	cp src/qdoc/qtqdoc-config.pri "${QT5_BUILD_DIR}"/src/qdoc || die
-	qt5-build_src_configure
 }

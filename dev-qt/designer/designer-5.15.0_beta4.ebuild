@@ -25,10 +25,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-QT5_TARGET_SUBDIRS=(
-	src/designer
-)
-
 src_prepare() {
 	qt_use_disable_mod declarative quickwidgets \
 		src/designer/src/plugins/plugins.pro
@@ -37,16 +33,6 @@ src_prepare() {
 		src/designer/src/plugins/plugins.pro
 
 	qt5-build_src_prepare
-}
-
-src_configure() {
-	# Most of qttools require files that are only generated when qmake is
-	# run in the root directory.
-	# Related bugs: 633776, 676948, and 716514.
-	mkdir -p "${QT5_BUILD_DIR}" || die
-	qt5_qmake "${QT_BUILD_DIR}"
-	cp "${S}"/qttools-config.pri "${QT5_BUILD_DIR}" || die
-	qt5-build_src_configure
 }
 
 src_install() {

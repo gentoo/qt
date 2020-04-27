@@ -21,10 +21,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-QT5_TARGET_SUBDIRS=(
-	src/qtdiag
-)
-
 src_prepare() {
 	qt_use_disable_mod network network \
 		src/qtdiag/qtdiag.pro
@@ -33,14 +29,4 @@ src_prepare() {
 		src/qtdiag/qtdiag.pro
 
 	qt5-build_src_prepare
-}
-
-src_configure() {
-	# Most of qttools require files that are only generated when qmake is
-	# run in the root directory.
-	# Related bugs: 633776, 676948, and 716514.
-	mkdir -p "${QT5_BUILD_DIR}" || die
-	qt5_qmake "${QT_BUILD_DIR}"
-	cp "${S}"/qttools-config.pri "${QT5_BUILD_DIR}" || die
-	qt5-build_src_configure
 }
