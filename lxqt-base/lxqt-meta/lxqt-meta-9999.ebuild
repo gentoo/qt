@@ -4,7 +4,7 @@
 EAPI=7
 
 DESCRIPTION="Meta ebuild for LXQt, the Lightweight Desktop Environment"
-HOMEPAGE="https://lxqt.org/"
+HOMEPAGE="https://lxqt.github.io/"
 
 MY_PV="$(ver_cut 1-2)*"
 
