@@ -1,8 +1,0 @@
-move dev-util/qtchooser dev-qt/qtchooser
-move x11-libs/qt-concurrent dev-qt/qtconcurrent
-move x11-libs/qt-location dev-qt/qtlocation
-move x11-libs/qt-network dev-qt/qtnetwork
-move x11-libs/qt-printsupport dev-qt/qtprintsupport
-move x11-libs/qt-widgets dev-qt/qtwidgets
-move x11-libs/qt-xml dev-qt/qtxml
-move x11-libs/qt3d dev-qt/qt3d
