@@ -42,7 +42,10 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	!:xml
 )
 
-PATCHES=( "${FILESDIR}/${PN}-5.14.1-cmake-macro-backward-compat.patch" ) # bug 703306
+PATCHES=(
+	"${FILESDIR}"/${PN}-5.14.1-cmake-macro-backward-compat.patch # bug 703306
+	"${FILESDIR}"/${PN}-5.15.1-timezone-{1,2}.patch # bug 737914
+)
 
 pkg_pretend() {
 	use kernel_linux || return
