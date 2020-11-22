@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -12,7 +12,7 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://code.qt.io/qtsdk/qtchooser.git"
 	inherit git-r3
 else
-	SRC_URI="http://download.qt.io/official_releases/${PN}/${P}.tar.xz"
+	SRC_URI="https://download.qt.io/official_releases/${PN}/${P}.tar.xz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~riscv ~sparc ~x86"
 fi
 
@@ -25,9 +25,9 @@ DEPEND="test? (
 		dev-qt/qtcore:5
 		dev-qt/qttest:5
 	)"
-RDEPEND="
-	!<dev-qt/qtcore-5.15.2-r10:5
-"
+RDEPEND="!<dev-qt/qtcore-5.15.3:5"
+
+PATCHES=( "${FILESDIR}/${PN}-9999-qt-5.15.3-compat.patch" )
 
 qtchooser_make() {
 	emake \

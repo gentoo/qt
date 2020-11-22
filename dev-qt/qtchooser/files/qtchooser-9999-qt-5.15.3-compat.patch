@@ -1,0 +1,35 @@
+--- a/Makefile
++++ b/Makefile
+@@ -4,22 +4,17 @@
+ TOOLS = \
+ 	androiddeployqt \
+ 	androidtestrunner \
+-	assistant \
+ 	balsam \
+ 	balsamui \
+ 	designer \
+ 	instancer \
+ 	lconvert \
+-	linguist \
+ 	lrelease \
+ 	lupdate \
+ 	meshdebug \
+ 	moc \
+-	pixeltool \
+ 	qcollectiongenerator \
+-	qdbus \
+ 	qdbuscpp2xml \
+-	qdbusviewer \
+ 	qdbusxml2cpp \
+ 	qdistancefieldgenerator \
+ 	qdoc \
+ 	repc \
+ 	shadergen \
+ 	uic \
+-	uic3 \
+-	xmlpatterns \
+-	xmlpatternsvalidator \
++	uic3
+ 
+ # keep the above line empty
+ 
