@@ -1,7 +1,8 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
 inherit qt5-build
 
 DESCRIPTION="XPath, XQuery, XSLT, and XML Schema validation library for the Qt5 framework"
@@ -17,7 +18,9 @@ DEPEND="
 	~dev-qt/qtnetwork-${PV}
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!<=dev-qt/qtchooser-66
+"
 
 src_prepare() {
 	qt_use_disable_mod qml qml \
@@ -27,4 +30,10 @@ src_prepare() {
 	qt_use_disable_mod qml quick tests/auto/auto.pro
 
 	qt5-build_src_prepare
+}
+
+src_install() {
+	qt5-build_src_install
+	qt5_symlink_binary_to_path xmlpatterns
+	qt5_symlink_binary_to_path xmlpatternsvalidator
 }
