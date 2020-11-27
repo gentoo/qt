@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -19,8 +19,16 @@ DEPEND="
 	=dev-qt/qtdbus-${QT5_PV}*
 	=dev-qt/qtxml-${QT5_PV}*
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!dev-qt/${PN}:5
+	!<dev-qt/qtchooser-66-r2
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/qdbus/qdbus
 )
+
+src_install() {
+	qt5-build_src_install
+	qt5_symlink_binary_to_path qdbus
+}
