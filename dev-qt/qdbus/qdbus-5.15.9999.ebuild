@@ -1,7 +1,8 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
 QT5_MODULE="qttools"
 inherit qt5-build
 
@@ -18,8 +19,15 @@ DEPEND="
 	~dev-qt/qtdbus-${PV}
 	~dev-qt/qtxml-${PV}
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!<=dev-qt/qtchooser-66
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/qdbus/qdbus
 )
+
+src_install() {
+	qt5-build_src_install
+	qt5_symlink_binary_to_path qdbus
+}
