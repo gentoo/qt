@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -23,7 +23,10 @@ DEPEND="
 	=dev-qt/qtsql-${QT5_PV}*[sqlite]
 	=dev-qt/qtwidgets-${QT5_PV}*
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!dev-qt/${PN}:5
+	!<dev-qt/qtchooser-66-r2
+"
 
 QT5_TARGET_SUBDIRS=(
 	src/assistant/assistant
@@ -38,6 +41,7 @@ src_prepare() {
 
 src_install() {
 	qt5-build_src_install
+	qt5_symlink_binary_to_path assistant
 
 	doicon -s 32 src/assistant/assistant/images/assistant.png
 	newicon -s 128 src/assistant/assistant/images/assistant-128.png assistant.png
