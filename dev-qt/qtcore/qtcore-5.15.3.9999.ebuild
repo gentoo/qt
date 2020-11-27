@@ -81,6 +81,7 @@ src_configure() {
 
 src_install() {
 	qt5-build_src_install
+	qt5_symlink_binary_to_path qmake 5
 
 	local flags=(
 		DBUS FREETYPE IMAGEFORMAT_JPEG IMAGEFORMAT_PNG
