@@ -1,4 +1,4 @@
-# Copyright 2009-2021 Gentoo Authors
+# Copyright 2009-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -55,4 +55,13 @@ src_configure() {
 		-qml-debug
 	)
 	qt5-build_src_configure
+}
+
+src_install() {
+	qt5-build_src_install
+	qt5_symlink_binary_to_path qml 5
+	qt5_symlink_binary_to_path qmleasing 5
+	qt5_symlink_binary_to_path qmljs 5
+	qt5_symlink_binary_to_path qmlpreview 5
+	qt5_symlink_binary_to_path qmlscene 5
 }
