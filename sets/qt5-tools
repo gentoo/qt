@@ -1,10 +1,10 @@
-dev-qt/assistant:5
+dev-qt/assistant:0
 dev-qt/designer:5
-dev-qt/linguist:5
+dev-qt/linguist:0
 dev-qt/linguist-tools:5
 dev-qt/pixeltool:5
-dev-qt/qdbus:5
-dev-qt/qdbusviewer:5
+dev-qt/qdbus:0
+dev-qt/qdbusviewer:0
 dev-qt/qdoc:5
 dev-qt/qtdiag:5
 dev-qt/qthelp:5
