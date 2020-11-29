@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+
 inherit qt5-build
 
 DESCRIPTION="Wayland platform plugin for Qt"
@@ -14,9 +15,9 @@ IUSE="vulkan X"
 
 DEPEND="
 	>=dev-libs/wayland-1.6.0
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}[egl,libinput,vulkan=]
+	~dev-qt/qtcore-${PV}:5=
+	~dev-qt/qtdeclarative-${PV}:5=
+	~dev-qt/qtgui-${PV}:5=[egl,libinput,vulkan=]
 	media-libs/mesa[egl]
 	>=x11-libs/libxkbcommon-0.2.0
 	vulkan? ( dev-util/vulkan-headers )
