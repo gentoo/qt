@@ -49,11 +49,13 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0.12.0-respect-user-flags.patch" # fix for flags handling and bug 563108
-	"${FILESDIR}/${PN}-0.18.0-Xsession.patch" # bug 611210
+	# Pending upstream
 	# fix for groups: https://github.com/sddm/sddm/issues/1159
-	"${FILESDIR}/${PN}-0.18.1-revert-honor-PAM-supplemental-groups.patch"
-	"${FILESDIR}/${PN}-0.18.1-honor-PAM-supplemental-groups-v2.patch"
+	"${FILESDIR}"/${PN}-0.18.1-revert-honor-PAM-supplemental-groups.patch
+	"${FILESDIR}"/${PN}-0.18.1-honor-PAM-supplemental-groups-v2.patch
+	# Downstream patches
+	"${FILESDIR}"/${PN}-0.18.1-respect-user-flags.patch # bug 563108
+	"${FILESDIR}"/${PN}-0.19.0-Xsession.patch # bug 611210
 )
 
 src_prepare() {
