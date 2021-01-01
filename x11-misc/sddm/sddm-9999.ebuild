@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -19,7 +19,7 @@ HOMEPAGE="https://github.com/sddm/sddm"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="consolekit elogind +pam systemd test"
+IUSE="elogind +pam systemd test"
 
 REQUIRED_USE="?? ( elogind systemd )"
 
@@ -39,7 +39,6 @@ RDEPEND="
 	>=dev-qt/qtnetwork-5.9.4:5
 	>=x11-base/xorg-server-1.15.1
 	x11-libs/libxcb[xkb]
-	consolekit? ( >=sys-auth/consolekit-0.9.4 )
 	elogind? ( sys-auth/elogind )
 	pam? ( sys-libs/pam )
 	systemd? ( sys-apps/systemd:= )
@@ -55,8 +54,6 @@ PATCHES=(
 	# fix for groups: https://github.com/sddm/sddm/issues/1159
 	"${FILESDIR}/${PN}-0.18.1-revert-honor-PAM-supplemental-groups.patch"
 	"${FILESDIR}/${PN}-0.18.1-honor-PAM-supplemental-groups-v2.patch"
-	# TODO: fix properly
-	"${FILESDIR}/${PN}-0.16.0-ck2-revert.patch" # bug 633920
 )
 
 src_prepare() {

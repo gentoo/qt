@@ -10,7 +10,6 @@
 		<name>Gentoo KDE Project</name>
 	</maintainer>
 	<use>
-		<flag name="consolekit">Use ck-launch-session from sys-auth/consolekit (no native support)</flag>
 		<flag name="elogind">Use <pkg>sys-auth/elogind</pkg> for session tracking.</flag>
 	</use>
 	<longdescription lang="en">
