@@ -4,12 +4,13 @@
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
+QTMIN=5.15.2
 inherit multiprocessing python-any-r1 qt5-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt5 C++ and QML applications"
 
 # patchset based on https://github.com/chromium-ppc64le releases
-SRC_URI+=" ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.0-ppc64.tar.xz )"
+SRC_URI+=" ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.2-ppc64.tar.xz )"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
@@ -23,17 +24,17 @@ RDEPEND="
 	dev-libs/glib:2
 	dev-libs/nspr
 	dev-libs/nss
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}
-	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtprintsupport-${PV}
-	~dev-qt/qtwebchannel-${PV}[qml]
 	dev-libs/expat
 	dev-libs/libevent:=
 	dev-libs/libxml2[icu]
 	dev-libs/libxslt
 	dev-libs/re2:=
+	>=dev-qt/qtcore-${QTMIN}:5
+	>=dev-qt/qtdeclarative-${QTMIN}:5
+	>=dev-qt/qtgui-${QTMIN}:5
+	>=dev-qt/qtnetwork-${QTMIN}:5
+	>=dev-qt/qtprintsupport-${QTMIN}:5
+	>=dev-qt/qtwebchannel-${QTMIN}:5[qml]
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/harfbuzz:=
@@ -61,15 +62,15 @@ RDEPEND="
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
-	designer? ( ~dev-qt/designer-${PV} )
-	geolocation? ( ~dev-qt/qtpositioning-${PV} )
+	designer? ( >=dev-qt/designer-${QTMIN}:5 )
+	geolocation? ( >=dev-qt/qtpositioning-${QTMIN}:5 )
 	kerberos? ( virtual/krb5 )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
 	widgets? (
-		~dev-qt/qtdeclarative-${PV}[widgets]
-		~dev-qt/qtwidgets-${PV}
+		>=dev-qt/qtdeclarative-${QTMIN}:5[widgets]
+		>=dev-qt/qtwidgets-${QTMIN}:5
 	)
 "
 DEPEND="${RDEPEND}
@@ -85,10 +86,6 @@ DEPEND="${RDEPEND}
 PATCHES=( "${FILESDIR}/${PN}-5.15.0-disable-fatal-warnings.patch" ) # bug 695446
 
 src_prepare() {
-	if use ppc64; then
-		eapply "${WORKDIR}/${PN}-ppc64"
-	fi
-
 	if ! use jumbo-build; then
 		sed -i -e 's|use_jumbo_build=true|use_jumbo_build=false|' \
 			src/buildtools/config/common.pri || die
@@ -123,6 +120,22 @@ src_prepare() {
 	qt_use_disable_mod widgets widgets src/src.pro
 
 	qt5-build_src_prepare
+
+	# we need to generate ppc64 stuff because upstream does not ship it yet
+	if use ppc64; then
+		einfo "Patching for ppc64le and generating build files"
+		eapply "${WORKDIR}/${PN}-ppc64"
+		pushd src/3rdparty/chromium/third_party/libvpx > /dev/null || die
+		mkdir -vp source/config/linux/ppc64 || die
+		mkdir -p source/libvpx/test || die
+		touch source/libvpx/test/test.mk || die
+		# generate_gni.sh runs git at the end of process, prevent it.
+		git() {	: ; }
+		export -f git
+		./generate_gni.sh || die
+		unset git
+		popd >/dev/null || die
+	fi
 }
 
 src_configure() {
