@@ -114,7 +114,7 @@ BDEPEND="
 	virtual/pkgconfig
 "
 if [[ ${PN} != qttest ]]; then
-	DEPEND+=" test? ( >=dev-qt/qttest-5.15.2 )"
+	DEPEND+=" test? ( >=dev-qt/qttest-5.15.2:5 )"
 fi
 
 ######  Phase functions  ######
