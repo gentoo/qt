@@ -4,17 +4,21 @@
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
-QTMIN=5.15.2
+QTVER=$(ver_cut 1-3)
 inherit multiprocessing python-any-r1 qt5-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt5 C++ and QML applications"
 
-# patchset based on https://github.com/chromium-ppc64le releases
-SRC_URI+=" ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.2-ppc64.tar.xz )"
-
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
+	if [[ ${PV} == ${QTVER}_p* ]]; then
+		SRC_URI="https://dev.gentoo.org/~asturm/distfiles/${P}.tar.xz"
+		S="${WORKDIR}/${P}"
+	fi
 fi
+
+# patchset based on https://github.com/chromium-ppc64le releases
+SRC_URI+=" ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.2-ppc64.tar.xz )"
 
 IUSE="alsa bindist designer geolocation jumbo-build kerberos pulseaudio +system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
@@ -29,12 +33,12 @@ RDEPEND="
 	dev-libs/libxml2[icu]
 	dev-libs/libxslt
 	dev-libs/re2:=
-	>=dev-qt/qtcore-${QTMIN}:5
-	>=dev-qt/qtdeclarative-${QTMIN}:5
-	>=dev-qt/qtgui-${QTMIN}:5
-	>=dev-qt/qtnetwork-${QTMIN}:5
-	>=dev-qt/qtprintsupport-${QTMIN}:5
-	>=dev-qt/qtwebchannel-${QTMIN}:5[qml]
+	~dev-qt/qtcore-${QTVER}
+	~dev-qt/qtdeclarative-${QTVER}
+	~dev-qt/qtgui-${QTVER}
+	~dev-qt/qtnetwork-${QTVER}
+	~dev-qt/qtprintsupport-${QTVER}
+	~dev-qt/qtwebchannel-${QTVER}[qml]
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/harfbuzz:=
@@ -62,15 +66,15 @@ RDEPEND="
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
-	designer? ( >=dev-qt/designer-${QTMIN}:5 )
-	geolocation? ( >=dev-qt/qtpositioning-${QTMIN}:5 )
+	designer? ( ~dev-qt/designer-${QTVER} )
+	geolocation? ( ~dev-qt/qtpositioning-${QTVER} )
 	kerberos? ( virtual/krb5 )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
 	system-icu? ( >=dev-libs/icu-60.2:= )
 	widgets? (
-		>=dev-qt/qtdeclarative-${QTMIN}:5[widgets]
-		>=dev-qt/qtwidgets-${QTMIN}:5
+		~dev-qt/qtdeclarative-${QTVER}[widgets]
+		~dev-qt/qtwidgets-${QTVER}
 	)
 "
 DEPEND="${RDEPEND}
@@ -86,6 +90,15 @@ DEPEND="${RDEPEND}
 PATCHES=( "${FILESDIR}/${PN}-5.15.0-disable-fatal-warnings.patch" ) # bug 695446
 
 src_prepare() {
+	if [[ ${PV} == ${QTVER}_p* ]]; then
+		# This is made from git, and for some reason will fail w/o .git directories.
+		mkdir -p .git src/3rdparty/chromium/.git || die
+
+		# We need to make sure this integrates well into Qt 5.15.2 installation.
+		# Otherwise revdeps fail w/o heavy changes. This is the simplest way to do it.
+		sed -e "/^MODULE_VERSION/s/5.*/${QTMIN}/" -i .qmake.conf || die
+	fi
+
 	if ! use jumbo-build; then
 		sed -i -e 's|use_jumbo_build=true|use_jumbo_build=false|' \
 			src/buildtools/config/common.pri || die
