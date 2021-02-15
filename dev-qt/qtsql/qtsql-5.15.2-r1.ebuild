@@ -13,15 +13,17 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~ppc ~ppc64 ~sparc ~x86"
 fi
 
-IUSE="freetds mysql oci8 odbc postgres +sqlite"
+IUSE="freetds mariadb mysql oci8 odbc postgres +sqlite"
 
 REQUIRED_USE="
-	|| ( freetds mysql oci8 odbc postgres sqlite )
+	|| ( freetds mariadb mysql oci8 odbc postgres sqlite )
+	?? ( mariadb mysql )
 "
 
 DEPEND="
 	~dev-qt/qtcore-${PV}:5=
 	freetds? ( dev-db/freetds )
+	mariadb? ( dev-db/mariadb-connector-c:= )
 	mysql? ( dev-db/mysql-connector-c:= )
 	oci8? ( dev-db/oracle-instantclient:=[sdk] )
 	odbc? ( dev-db/unixODBC )
@@ -41,16 +43,27 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 
 PATCHES=( "${FILESDIR}/${P}-mysql-use-pkgconfig.patch" )
 
+src_prepare() {
+	qt5-build_src_prepare
+	if use mariadb; then
+		sed -e "/type.*pkgConfig.*mysqlclient/s/mysqlclient/libmariadb/" \
+		-i src/plugins/sqldrivers/configure.json || die
+	fi
+}
+
 src_configure() {
 	local myconf=(
 		$(qt_use freetds  sql-tds    plugin)
-		$(qt_use mysql    sql-mysql  plugin)
 		$(qt_use oci8     sql-oci    plugin)
 		$(qt_use odbc     sql-odbc   plugin)
 		$(qt_use postgres sql-psql   plugin)
 		$(qt_use sqlite   sql-sqlite plugin)
 		$(usex sqlite -system-sqlite '')
 	)
+
+	if use mariadb || use mysql; then
+		myconf+=( -plugin-sql-mysql )
+	fi
 
 	use oci8 && myconf+=("-I${ORACLE_HOME}/include" "-L${ORACLE_HOME}/$(get_libdir)")
 
