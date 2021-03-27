@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -22,6 +22,7 @@ SLOT="0"
 BDEPEND="
 	dev-qt/linguist-tools:5
 	>=dev-util/lxqt-build-tools-0.6.0
+	sys-apps/sed
 	virtual/pkgconfig
 "
 RDEPEND="
@@ -32,11 +33,8 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	x11-wm/openbox:3
 	x11-libs/libX11
-	!lxqt-base/lxqt-l10n
 "
-DEPEND="${RDEPEND}
-	sys-apps/sed
-"
+DEPEND="${RDEPEND}"
 
 pkg_postinst() {
 	xdg_desktop_database_update
