@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -37,7 +37,6 @@ RDEPEND="
 	>=lxde-base/menu-cache-0.5.1
 	=lxqt-base/liblxqt-${MY_PV}
 	=lxqt-base/lxqt-globalkeys-${MY_PV}
-	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"
 
