@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -27,6 +27,5 @@ RDEPEND="
 	dev-qt/qtwidgets:5
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 	kde-frameworks/kwindowsystem:5
-	!lxqt-base/lxqt-l10n
 "
 DEPEND="${RDEPEND}"
