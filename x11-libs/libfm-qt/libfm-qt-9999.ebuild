@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake
+inherit cmake xdg-utils
 
 DESCRIPTION="Qt port of libfm, a library providing components to build desktop file managers"
 HOMEPAGE="https://lxqt.org/"
@@ -35,3 +35,11 @@ DEPEND="
 	x11-libs/libxcb:=
 "
 RDEPEND="${DEPEND}"
+
+pkg_postinst() {
+	xdg_mimeinfo_database_update
+}
+
+pkg_postrm() {
+	xdg_mimeinfo_database_update
+}
