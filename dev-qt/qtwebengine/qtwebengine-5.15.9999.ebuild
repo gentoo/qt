@@ -16,6 +16,12 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 		S="${WORKDIR}/${P}"
 		QT5_BUILD_DIR="${S}_build"
 	fi
+else
+	EGIT_BRANCH="5.15"
+	EGIT_REPO_URI=(
+		"https://code.qt.io/qt/${QT5_MODULE}.git"
+		"https://github.com/qt/${QT5_MODULE}.git"
+	)
 fi
 
 # patchset based on https://github.com/chromium-ppc64le releases
