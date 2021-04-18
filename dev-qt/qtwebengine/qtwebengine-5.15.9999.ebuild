@@ -84,13 +84,12 @@ RDEPEND="
 		~dev-qt/qtwidgets-${QTVER}
 	)
 "
-DEPEND="${RDEPEND}
+BDEPEND="${RDEPEND}
 	${PYTHON_DEPS}
-	>=app-arch/gzip-1.7
 	dev-util/gperf
 	dev-util/ninja
 	dev-util/re2c
-	net-libs/nodejs
+	net-libs/nodejs[inspector]
 	sys-devel/bison
 "
 
