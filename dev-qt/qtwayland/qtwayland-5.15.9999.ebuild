@@ -14,7 +14,7 @@ fi
 IUSE="vulkan X"
 
 DEPEND="
-	>=dev-libs/wayland-1.6.0
+	dev-libs/wayland
 	~dev-qt/qtcore-${PV}:5=
 	~dev-qt/qtdeclarative-${PV}:5=
 	~dev-qt/qtgui-${PV}:5=[egl,libinput,vulkan=]
