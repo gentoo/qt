@@ -22,9 +22,7 @@ DEPEND="
 	libproxy? ( net-libs/libproxy )
 	networkmanager? ( ~dev-qt/qtdbus-${PV} )
 	sctp? ( kernel_linux? ( net-misc/lksctp-tools ) )
-	ssl? (
-		>=dev-libs/openssl-1.1.1:0=[bindist=]
-	)
+	ssl? ( >=dev-libs/openssl-1.1.1:0=[bindist(-)=] )
 "
 RDEPEND="${DEPEND}
 	connman? ( net-misc/connman )
