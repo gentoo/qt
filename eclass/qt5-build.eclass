@@ -74,11 +74,19 @@ _QT5_P=${QT5_MODULE}-everywhere-src-${PV}
 # for tests you should proceed with setting VIRTUALX_REQUIRED=test.
 : ${VIRTUALX_REQUIRED:=manual}
 
-inherit estack flag-o-matic toolchain-funcs virtualx
+inherit eapi8-dosym estack flag-o-matic toolchain-funcs virtualx
 
 HOMEPAGE="https://www.qt.io/"
 LICENSE="|| ( GPL-2 GPL-3 LGPL-3 ) FDL-1.3"
-SLOT=5/$(ver_cut 1-2)
+
+case ${PN} in
+	assistant|linguist|qdbus|qdbusviewer)
+		SLOT=0 ;;
+	linguist-tools|qtdiag|qtimageformats|qtpaths|qttranslations)
+		SLOT=5 ;;
+	*)
+		SLOT=5/$(ver_cut 1-2) ;;
+esac
 
 case ${PV} in
 	5.15.9999)
@@ -303,6 +311,16 @@ qt5-build_pkg_postrm() {
 
 
 ######  Public helpers  ######
+
+# @FUNCTION: qt5_symlink_binary_to_path
+# @USAGE: <target binary name> [suffix]
+# @DESCRIPTION:
+# Symlink a given binary from QT5_BINDIR to QT5_PREFIX/bin, with optional suffix
+qt5_symlink_binary_to_path() {
+	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
+
+	dosym8 -r "${QT5_BINDIR#${EPREFIX}}"/${1} /usr/bin/${1}${2}
+}
 
 # @FUNCTION: qt_use
 # @USAGE: <flag> [feature] [enableval]

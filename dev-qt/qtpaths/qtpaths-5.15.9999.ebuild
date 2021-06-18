@@ -18,3 +18,8 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 "
 RDEPEND="${DEPEND}"
+
+src_install() {
+	qt5-build_src_install
+	qt5_symlink_binary_to_path qtpaths 5
+}

@@ -54,3 +54,8 @@ src_configure() {
 	)
 	qt5-build_src_configure
 }
+
+src_install() {
+	qt5-build_src_install
+	qt5_symlink_binary_to_path qml 5
+}
