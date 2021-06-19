@@ -170,6 +170,11 @@ src_prepare() {
 		done < <(find src/3rdparty/chromium/third_party/icu -type f "(" -name "*.c" -o -name "*.cpp" -o -name "*.h" ")" 2>/dev/null)
 	fi
 
+	# src/3rdparty/gn fails with libc++ due to passing of `-static-libstdc++`
+	if tc-is-clang && has_version 'sys-devel/clang[default-libcxx]'; then
+		eapply "${FILESDIR}/${PN}-5.15.2_p20210521-clang-libc++.patch"
+	fi
+
 	qt_use_disable_config alsa webengine-alsa src/buildtools/config/linux.pri
 	qt_use_disable_config pulseaudio webengine-pulseaudio src/buildtools/config/linux.pri
 
