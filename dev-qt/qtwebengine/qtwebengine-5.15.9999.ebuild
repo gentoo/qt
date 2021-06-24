@@ -115,10 +115,6 @@ src_prepare() {
 			src/buildtools/config/common.pri || die
 	fi
 
-	# bug 630834 - pass appropriate options to ninja when building GN
-	sed -e "s/\['ninja'/&, '-j$(makeopts_jobs)', '-l$(makeopts_loadavg "${MAKEOPTS}" 0)', '-v'/" \
-		-i src/3rdparty/chromium/tools/gn/bootstrap/bootstrap.py || die
-
 	# bug 620444 - ensure local headers are used
 	find "${S}" -type f -name "*.pr[fio]" | \
 		xargs sed -i -e 's|INCLUDEPATH += |&$${QTWEBENGINE_ROOT}_build/include $${QTWEBENGINE_ROOT}/include |' || die
