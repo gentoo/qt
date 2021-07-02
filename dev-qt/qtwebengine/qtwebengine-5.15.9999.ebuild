@@ -100,6 +100,17 @@ PATCHES=(
 	"${FILESDIR}/${PN}-5.15.2_p20210224-disable-git.patch" # downstream snapshot fix
 )
 
+pkg_preinst() {
+	elog "This version of Qt WebEngine is based on Chromium version 87.0.4280, with"
+	elog "additional security fixes from newer versions. Extensive as it is, the"
+	elog "list of backports is impossible to evaluate, but always bound to be behind"
+	elog "Chromium's release schedule."
+	elog "In addition, various online services may deny service based on an outdated"
+	elog "user agent version (and/or other checks). Google is already known to do so."
+	elog
+	elog "tldr: Your web browsing experience will be compromised."
+}
+
 src_prepare() {
 	if [[ ${PV} == ${QTVER}_p* ]]; then
 		# This is made from git, and for some reason will fail w/o .git directories.
