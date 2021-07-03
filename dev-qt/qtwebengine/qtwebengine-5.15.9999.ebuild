@@ -5,9 +5,10 @@ EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
 QTVER=$(ver_cut 1-3)
-inherit multiprocessing python-any-r1 qt5-build
+inherit estack flag-o-matic multiprocessing python-any-r1 qt5-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt5 C++ and QML applications"
+HOMEPAGE="https://www.qt.io/"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
@@ -22,6 +23,7 @@ else
 		"https://code.qt.io/qt/${QT5_MODULE}.git"
 		"https://github.com/qt/${QT5_MODULE}.git"
 	)
+	inherit git-r3
 fi
 
 # patchset based on https://github.com/chromium-ppc64le releases
@@ -68,6 +70,7 @@ RDEPEND="
 	x11-libs/libXext
 	x11-libs/libXfixes
 	x11-libs/libXi
+	x11-libs/libxkbfile
 	x11-libs/libXrandr
 	x11-libs/libXrender
 	x11-libs/libXScrnSaver
@@ -78,15 +81,14 @@ RDEPEND="
 	kerberos? ( virtual/krb5 )
 	pulseaudio? ( media-sound/pulseaudio:= )
 	system-ffmpeg? ( media-video/ffmpeg:0= )
-	system-icu? ( >=dev-libs/icu-68.2:= )
+	system-icu? ( >=dev-libs/icu-69.1:= )
 	widgets? (
 		~dev-qt/qtdeclarative-${QTVER}[widgets]
 		~dev-qt/qtwidgets-${QTVER}
 	)
 "
 DEPEND="${RDEPEND}"
-BDEPEND="
-	${PYTHON_DEPS}
+BDEPEND="${PYTHON_DEPS}
 	dev-util/gperf
 	dev-util/ninja
 	dev-util/re2c
@@ -109,6 +111,24 @@ pkg_preinst() {
 	elog "user agent version (and/or other checks). Google is already known to do so."
 	elog
 	elog "tldr: Your web browsing experience will be compromised."
+}
+
+src_unpack() {
+	# bug 307861
+	eshopts_push -s extglob
+	if is-flagq '-g?(gdb)?([1-9])'; then
+		ewarn
+		ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
+		ewarn "You may experience really long compilation times and/or increased memory usage."
+		ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
+		ewarn
+	fi
+	eshopts_pop
+
+	case ${QT5_BUILD_TYPE} in
+		live)    git-r3_src_unpack ;&
+		release) default ;;
+	esac
 }
 
 src_prepare() {
