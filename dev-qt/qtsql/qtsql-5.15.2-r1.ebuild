@@ -41,7 +41,7 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	:sql
 )
 
-PATCHES=( "${FILESDIR}/${PN}-5.15.2-mysql-use-pkgconfig.patch" )
+PATCHES=( "${FILESDIR}/${P}-mysql-use-pkgconfig.patch" )
 
 src_prepare() {
 	qt5-build_src_prepare
