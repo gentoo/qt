@@ -10,15 +10,14 @@
 # @BLURB: Eclass for Qt5 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt5.
-# Requires EAPI 7.
 
 if [[ ${CATEGORY} != dev-qt ]]; then
-	die "qt5-build.eclass is only to be used for building Qt 5"
+	die "${ECLASS} is only to be used for building Qt 5"
 fi
 
 case ${EAPI} in
-	7)	: ;;
-	*)	die "qt5-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
+	7) ;;
+	*) die "${ECLASS}: EAPI ${EAPI:-0} not supported" ;;
 esac
 
 # @ECLASS-VARIABLE: QT5_BUILD_TYPE
@@ -26,7 +25,7 @@ esac
 # Default value is "release".
 # If PV matches "*9999*", this is automatically set to "live".
 QT5_BUILD_TYPE=release
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == *9999* ]]; then
 	QT5_BUILD_TYPE=live
 fi
 readonly QT5_BUILD_TYPE
@@ -68,6 +67,7 @@ _QT5_P=${QT5_MODULE}-everywhere-src-${PV}
 # system to obtain the global qmodule.pri file.
 
 # @ECLASS-VARIABLE: VIRTUALX_REQUIRED
+# @PRE_INHERIT
 # @DESCRIPTION:
 # For proper description see virtualx.eclass man page.
 # Here we redefine default value to be manual, if your package needs virtualx
