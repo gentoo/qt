@@ -27,3 +27,19 @@ Bugs should be reported on https://bugs.gentoo.org. Be sure to include
 
 Users wanting to contribute should first read the
 [Qt project policies](https://wiki.gentoo.org/wiki/Project:Qt/Policies).
+
+# Usage
+
+## Using Layman
+
+Run the following command:
+
+    layman -f -a qt
+
+And you're done.
+
+If you want to refresh the overlay (and all another overlays), go:
+
+    layman -S
+
+
