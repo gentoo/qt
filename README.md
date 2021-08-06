@@ -1,7 +1,5 @@
 # Welcome to the qt overlay!
 
-[![Repoman Status](https://travis-ci.org/gentoo/qt.png)](https://travis-ci.org/gentoo/qt)
-
 This is where the Gentoo Qt project develops and maintains ebuilds for
 experimental Qt versions (pre-releases and "live" code from git) and
 Qt-related packages. For your convenience, we also provide a few package
