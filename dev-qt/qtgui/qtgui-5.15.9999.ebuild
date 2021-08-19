@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 QT5_MODULE="qtbase"
 inherit qt5-build
@@ -14,7 +14,6 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 # TODO: linuxfb
-
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
 	+libinput +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
