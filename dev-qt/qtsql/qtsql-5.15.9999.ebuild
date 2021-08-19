@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 QT5_MODULE="qtbase"
 inherit qt5-build
@@ -14,7 +14,6 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="freetds mysql oci8 odbc postgres +sqlite"
-
 REQUIRED_USE="
 	|| ( freetds mysql oci8 odbc postgres sqlite )
 "
@@ -47,7 +46,7 @@ src_configure() {
 		$(qt_use odbc     sql-odbc   plugin)
 		$(qt_use postgres sql-psql   plugin)
 		$(qt_use sqlite   sql-sqlite plugin)
-		$(usex sqlite -system-sqlite '')
+		$(usev sqlite -system-sqlite)
 	)
 
 	use oci8 && myconf+=("-I${ORACLE_HOME}/include" "-L${ORACLE_HOME}/$(get_libdir)")
