@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 QT5_MODULE="qtbase"
 inherit qt5-build
@@ -52,12 +52,12 @@ pkg_setup() {
 
 src_configure() {
 	local myconf=(
-		$(usex connman -dbus-linked '')
+		$(usev connman -dbus-linked)
 		$(usex gssapi -feature-gssapi -no-feature-gssapi)
 		$(qt_use libproxy)
-		$(usex networkmanager -dbus-linked '')
+		$(usev networkmanager -dbus-linked)
 		$(qt_use sctp)
-		$(usex ssl -openssl-linked '')
+		$(usev ssl -openssl-linked)
 	)
 	qt5-build_src_configure
 }
