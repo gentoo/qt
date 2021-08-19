@@ -1,7 +1,7 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 QT5_MODULE="qtbase"
 inherit qt5-build
@@ -51,7 +51,7 @@ src_configure() {
 		$(qt_use png libpng system)
 		-widgets
 		$(qt_use X xcb)
-		$(usex X '-xcb-xlib -xkbcommon' '')
+		$(usev X '-xcb-xlib -xkbcommon')
 	)
 	qt5-build_src_configure
 }
