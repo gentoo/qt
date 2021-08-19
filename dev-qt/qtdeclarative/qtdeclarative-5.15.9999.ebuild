@@ -1,9 +1,9 @@
 # Copyright 2009-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 inherit python-any-r1 qt5-build
 
 DESCRIPTION="The QML and Quick modules for the Qt5 framework"
@@ -14,7 +14,6 @@ fi
 
 IUSE="gles2-only +jit localstorage vulkan +widgets"
 
-BDEPEND="${PYTHON_DEPS}"
 # qtgui[gles2-only=] is needed because of bug 504322
 DEPEND="
 	~dev-qt/qtcore-${PV}
@@ -25,6 +24,7 @@ DEPEND="
 	widgets? ( ~dev-qt/qtwidgets-${PV}[gles2-only=] )
 "
 RDEPEND="${DEPEND}"
+BDEPEND="${PYTHON_DEPS}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-5.14.2-QQuickItemView-fix-maxXY-extent.patch" # QTBUG-83890
