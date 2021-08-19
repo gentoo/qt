@@ -6,7 +6,7 @@
 # qt@gentoo.org
 # @AUTHOR:
 # Davide Pesavento <pesa@gentoo.org>
-# @SUPPORTED_EAPIS: 7 8
+# @SUPPORTED_EAPIS: 8
 # @BLURB: Eclass for Qt5 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt5.
@@ -16,7 +16,7 @@ if [[ ${CATEGORY} != dev-qt ]]; then
 fi
 
 case ${EAPI} in
-	7|8) ;;
+	8) ;;
 	*) die "${ECLASS}: EAPI ${EAPI:-0} not supported" ;;
 esac
 
@@ -99,9 +99,9 @@ SLOT=5/$(ver_cut 1-2)
 IUSE="debug test"
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	RESTRICT+=" test" # bug 457182
+	RESTRICT="test" # bug 457182
 else
-	RESTRICT+=" !test? ( test )"
+	RESTRICT="!test? ( test )"
 fi
 
 BDEPEND="
