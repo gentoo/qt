@@ -11,11 +11,25 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
-# TODO: flite plugin - needs 2.0.0 (not yet in tree)
-IUSE=""
+IUSE="alsa flite"
 
 RDEPEND="
 	>=app-accessibility/speech-dispatcher-0.8.7
 	~dev-qt/qtcore-${PV}
+	flite? (
+		>=app-accessibility/flite-2[alsa?]
+		~dev-qt/qtmultimedia-${PV}[alsa?]
+		alsa? ( media-libs/alsa-lib )
+	)
 "
 DEPEND="${RDEPEND}"
+
+src_prepare() {
+	qt_use_disable_config flite flite \
+		src/plugins/tts/tts.pro
+
+	qt_use_disable_config alsa flite_alsa \
+		src/plugins/tts/flite/flite.pro
+
+	qt5-build_src_prepare
+}
