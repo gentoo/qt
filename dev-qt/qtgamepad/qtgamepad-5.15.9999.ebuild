@@ -18,7 +18,7 @@ DEPEND="
 	~dev-qt/qtgui-${PV}[evdev?]
 	evdev? ( virtual/libudev:= )
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
-	sdl? ( media-libs/libsdl )
+	sdl? ( media-libs/libsdl2 )
 "
 RDEPEND="${DEPEND}"
 
