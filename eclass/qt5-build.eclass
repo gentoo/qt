@@ -239,7 +239,7 @@ qt5-build_src_install() {
 			"${D}${QT5_HEADERDIR}"/QtCore/qconfig.h \
 			|| die "sed failed (qconfig.h)"
 
-		if ver_test -lt 5.15.2-r3; then
+		if ver_test -lt 5.15.2-r10; then
 			# install qtchooser configuration file
 			cat > "${T}/qt5-${CHOST}.conf" <<-_EOF_ || die
 				${QT5_BINDIR}
