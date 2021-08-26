@@ -35,3 +35,11 @@ src_prepare() {
 
 	qt5-build_src_prepare
 }
+
+src_configure() {
+	local myqmakeargs=(
+		--
+		-system-assimp
+	)
+	qt5-build_src_configure
+}
