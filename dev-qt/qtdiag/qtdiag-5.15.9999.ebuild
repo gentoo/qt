@@ -20,10 +20,7 @@ RDEPEND="
 	network? ( ~dev-qt/qtnetwork-${PV}[ssl] )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
-# TODO: we know it is bogus, figure out how to disable checks, bug 728278
-DEPEND="${RDEPEND}
-	~dev-qt/qtxml-${PV}
-"
+DEPEND="${RDEPEND}"
 
 src_prepare() {
 	qt_use_disable_mod network network \

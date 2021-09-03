@@ -17,7 +17,4 @@ IUSE=""
 RDEPEND="
 	~dev-qt/qtcore-${PV}
 "
-# TODO: we know it is bogus, figure out how to disable checks, bug 795237
-DEPEND="${RDEPEND}
-	~dev-qt/qtxml-${PV}
-"
+DEPEND="${RDEPEND}"

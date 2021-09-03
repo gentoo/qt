@@ -19,10 +19,7 @@ RDEPEND="
 	sys-devel/clang:=
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
-# TODO: we know it is bogus, figure out how to disable checks, bug 802492
-DEPEND="${RDEPEND}
-	~dev-qt/qtxml-${PV}
-"
+DEPEND="${RDEPEND}"
 
 src_prepare() {
 	qt_use_disable_mod qml qmldevtools-private \
