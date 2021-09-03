@@ -108,6 +108,10 @@ BDEPEND="
 	dev-lang/perl
 	virtual/pkgconfig
 "
+# TODO: we know it is bogus, figure out how to disable checks, bug 728278
+if [[ ${QT5_MODULE} == qttools ]]; then
+	DEPEND+=" ~dev-qt/qtxml-$(ver_cut 1-3)"
+fi
 if [[ ${PN} != qttest ]]; then
 	DEPEND+=" test? ( ~dev-qt/qttest-$(ver_cut 1-3) )"
 fi
