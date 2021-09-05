@@ -14,16 +14,17 @@ fi
 
 IUSE="+network +widgets"
 
-RDEPEND="
+DEPEND="
 	~dev-qt/qtcore-${PV}:5=
 	~dev-qt/qtgui-${PV}:5=
 	network? ( ~dev-qt/qtnetwork-${PV}[ssl] )
 	widgets? ( ~dev-qt/qtwidgets-${PV} )
 "
-# TODO: we know it is bogus, figure out how to disable checks, bug 728278
-DEPEND="${RDEPEND}
-	~dev-qt/qtxml-${PV}
-"
+RDEPEND="${DEPEND}"
+
+QT5_TARGET_SUBDIRS=(
+	src/qtdiag
+)
 
 src_prepare() {
 	qt_use_disable_mod network network \

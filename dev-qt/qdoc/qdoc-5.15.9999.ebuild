@@ -14,15 +14,16 @@ fi
 
 IUSE="qml"
 
-RDEPEND="
+DEPEND="
 	~dev-qt/qtcore-${PV}:5=
 	sys-devel/clang:=
 	qml? ( ~dev-qt/qtdeclarative-${PV} )
 "
-# TODO: we know it is bogus, figure out how to disable checks, bug 802492
-DEPEND="${RDEPEND}
-	~dev-qt/qtxml-${PV}
-"
+RDEPEND="${DEPEND}"
+
+QT5_TARGET_SUBDIRS=(
+	src/qdoc
+)
 
 src_prepare() {
 	qt_use_disable_mod qml qmldevtools-private \

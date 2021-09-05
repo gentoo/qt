@@ -18,3 +18,7 @@ DEPEND="
 	~dev-qt/qtcore-${PV}
 "
 RDEPEND="${DEPEND}"
+
+QT5_TARGET_SUBDIRS=(
+	src/qtpaths
+)

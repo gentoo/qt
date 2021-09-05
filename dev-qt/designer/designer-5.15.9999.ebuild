@@ -25,6 +25,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+QT5_TARGET_SUBDIRS=(
+	src/designer
+)
+
 src_prepare() {
 	qt_use_disable_mod declarative quickwidgets \
 		src/designer/src/plugins/plugins.pro

@@ -14,10 +14,11 @@ fi
 
 IUSE=""
 
-RDEPEND="
+DEPEND="
 	~dev-qt/qtcore-${PV}
 "
-# TODO: we know it is bogus, figure out how to disable checks, bug 795237
-DEPEND="${RDEPEND}
-	~dev-qt/qtxml-${PV}
-"
+RDEPEND="${DEPEND}"
+
+QT5_TARGET_SUBDIRS=(
+	src/qtplugininfo
+)

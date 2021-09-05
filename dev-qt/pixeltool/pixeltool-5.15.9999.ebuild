@@ -20,3 +20,7 @@ DEPEND="
 	~dev-qt/qtwidgets-${PV}
 "
 RDEPEND="${DEPEND}"
+
+QT5_TARGET_SUBDIRS=(
+	src/pixeltool
+)
