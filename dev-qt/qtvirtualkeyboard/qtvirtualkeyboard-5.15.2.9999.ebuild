@@ -15,10 +15,10 @@ fi
 IUSE="handwriting +spell +X"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}
-	~dev-qt/qtsvg-${PV}
+	=dev-qt/qtcore-${QT5_PV}*
+	=dev-qt/qtdeclarative-${QT5_PV}*
+	=dev-qt/qtgui-${QT5_PV}*
+	=dev-qt/qtsvg-${QT5_PV}*
 	spell? ( app-text/hunspell:= )
 	X? ( x11-libs/libxcb:= )
 "

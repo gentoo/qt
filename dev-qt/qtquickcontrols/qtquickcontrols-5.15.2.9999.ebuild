@@ -14,10 +14,10 @@ fi
 IUSE="+widgets"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdeclarative-${PV}
-	~dev-qt/qtgui-${PV}
-	widgets? ( ~dev-qt/qtwidgets-${PV} )
+	=dev-qt/qtcore-${QT5_PV}*
+	=dev-qt/qtdeclarative-${QT5_PV}*
+	=dev-qt/qtgui-${QT5_PV}*
+	widgets? ( =dev-qt/qtwidgets-${QT5_PV}* )
 "
 RDEPEND="${DEPEND}"
 

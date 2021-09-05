@@ -15,13 +15,13 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtgui-${PV}
-	~dev-qt/qthelp-${PV}
-	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtprintsupport-${PV}
-	~dev-qt/qtsql-${PV}[sqlite]
-	~dev-qt/qtwidgets-${PV}
+	=dev-qt/qtcore-${QT5_PV}*:5=
+	=dev-qt/qtgui-${QT5_PV}*
+	=dev-qt/qthelp-${QT5_PV}*
+	=dev-qt/qtnetwork-${QT5_PV}*
+	=dev-qt/qtprintsupport-${QT5_PV}*
+	=dev-qt/qtsql-${QT5_PV}*[sqlite]
+	=dev-qt/qtwidgets-${QT5_PV}*
 "
 RDEPEND="${DEPEND}"
 

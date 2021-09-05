@@ -14,10 +14,10 @@ fi
 IUSE="+jit scripttools"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
+	=dev-qt/qtcore-${QT5_PV}*
 	scripttools? (
-		~dev-qt/qtgui-${PV}
-		~dev-qt/qtwidgets-${PV}
+		=dev-qt/qtgui-${QT5_PV}*
+		=dev-qt/qtwidgets-${QT5_PV}*
 	)
 "
 RDEPEND="${DEPEND}"

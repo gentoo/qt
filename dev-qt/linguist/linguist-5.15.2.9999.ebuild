@@ -15,12 +15,12 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/designer-${PV}
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtgui-${PV}:5=
-	~dev-qt/qtprintsupport-${PV}
-	~dev-qt/qtwidgets-${PV}
-	~dev-qt/qtxml-${PV}
+	=dev-qt/designer-${QT5_PV}*
+	=dev-qt/qtcore-${QT5_PV}*:5=
+	=dev-qt/qtgui-${QT5_PV}*:5=
+	=dev-qt/qtprintsupport-${QT5_PV}*
+	=dev-qt/qtwidgets-${QT5_PV}*
+	=dev-qt/qtxml-${QT5_PV}*
 "
 RDEPEND="${DEPEND}"
 

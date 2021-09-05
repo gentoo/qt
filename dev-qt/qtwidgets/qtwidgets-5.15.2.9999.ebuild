@@ -16,10 +16,10 @@ fi
 IUSE="gles2-only gtk +png +X"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtgui-${PV}[gles2-only=,png=,X?]
+	=dev-qt/qtcore-${QT5_PV}*:5=
+	=dev-qt/qtgui-${QT5_PV}*[gles2-only=,png=,X?]
 	gtk? (
-		~dev-qt/qtgui-${PV}[dbus]
+		=dev-qt/qtgui-${QT5_PV}*[dbus]
 		x11-libs/gtk+:3
 		x11-libs/libX11
 		x11-libs/pango

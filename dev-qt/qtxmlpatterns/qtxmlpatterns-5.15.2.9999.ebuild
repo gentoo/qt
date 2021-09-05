@@ -14,9 +14,9 @@ fi
 IUSE="qml"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtnetwork-${PV}
-	qml? ( ~dev-qt/qtdeclarative-${PV} )
+	=dev-qt/qtcore-${QT5_PV}*
+	=dev-qt/qtnetwork-${QT5_PV}*
+	qml? ( =dev-qt/qtdeclarative-${QT5_PV}* )
 "
 RDEPEND="${DEPEND}"
 

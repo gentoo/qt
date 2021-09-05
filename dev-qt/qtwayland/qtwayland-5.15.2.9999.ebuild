@@ -15,14 +15,14 @@ IUSE="vulkan X"
 
 DEPEND="
 	dev-libs/wayland
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtdeclarative-${PV}:5=
-	~dev-qt/qtgui-${PV}:5=[egl,libinput,vulkan=,X?]
+	=dev-qt/qtcore-${QT5_PV}*:5=
+	=dev-qt/qtdeclarative-${QT5_PV}*:5=
+	=dev-qt/qtgui-${QT5_PV}*:5=[egl,libinput,vulkan=,X?]
 	media-libs/mesa[egl]
 	>=x11-libs/libxkbcommon-0.2.0
 	vulkan? ( dev-util/vulkan-headers )
 	X? (
-		~dev-qt/qtgui-${PV}[-gles2-only]
+		=dev-qt/qtgui-${QT5_PV}*[-gles2-only]
 		x11-libs/libX11
 		x11-libs/libXcomposite
 	)

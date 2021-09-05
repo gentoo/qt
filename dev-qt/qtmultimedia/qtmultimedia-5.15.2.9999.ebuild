@@ -14,9 +14,9 @@ fi
 IUSE="alsa gles2-only gstreamer openal pulseaudio qml widgets"
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtgui-${PV}[gles2-only=]
-	~dev-qt/qtnetwork-${PV}
+	=dev-qt/qtcore-${QT5_PV}*
+	=dev-qt/qtgui-${QT5_PV}*[gles2-only=]
+	=dev-qt/qtnetwork-${QT5_PV}*
 	alsa? ( media-libs/alsa-lib )
 	gstreamer? (
 		dev-libs/glib:2
@@ -26,13 +26,13 @@ RDEPEND="
 	)
 	pulseaudio? ( media-sound/pulseaudio[glib] )
 	qml? (
-		~dev-qt/qtdeclarative-${PV}
-		gles2-only? ( ~dev-qt/qtgui-${PV}[egl] )
+		=dev-qt/qtdeclarative-${QT5_PV}*
+		gles2-only? ( =dev-qt/qtgui-${QT5_PV}*[egl] )
 		openal? ( media-libs/openal )
 	)
 	widgets? (
-		~dev-qt/qtopengl-${PV}
-		~dev-qt/qtwidgets-${PV}[gles2-only=]
+		=dev-qt/qtopengl-${QT5_PV}*
+		=dev-qt/qtwidgets-${QT5_PV}*[gles2-only=]
 	)
 "
 DEPEND="${RDEPEND}

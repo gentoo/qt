@@ -15,9 +15,9 @@ fi
 IUSE="gles2-only qml"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtgui-${PV}[gles2-only=]
-	qml? ( ~dev-qt/qtdeclarative-${PV}[gles2-only=] )
+	=dev-qt/qtcore-${QT5_PV}*
+	=dev-qt/qtgui-${QT5_PV}*[gles2-only=]
+	qml? ( =dev-qt/qtdeclarative-${QT5_PV}*[gles2-only=] )
 "
 RDEPEND="${DEPEND}"
 

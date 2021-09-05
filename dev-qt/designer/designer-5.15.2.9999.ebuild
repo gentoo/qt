@@ -15,13 +15,13 @@ fi
 IUSE="declarative"
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtgui-${PV}:5=
-	~dev-qt/qtnetwork-${PV}
-	~dev-qt/qtprintsupport-${PV}
-	~dev-qt/qtwidgets-${PV}
-	~dev-qt/qtxml-${PV}
-	declarative? ( ~dev-qt/qtdeclarative-${PV}[widgets] )
+	=dev-qt/qtcore-${QT5_PV}*:5=
+	=dev-qt/qtgui-${QT5_PV}*:5=
+	=dev-qt/qtnetwork-${QT5_PV}*
+	=dev-qt/qtprintsupport-${QT5_PV}*
+	=dev-qt/qtwidgets-${QT5_PV}*
+	=dev-qt/qtxml-${QT5_PV}*
+	declarative? ( =dev-qt/qtdeclarative-${QT5_PV}*[widgets] )
 "
 RDEPEND="${DEPEND}"
 

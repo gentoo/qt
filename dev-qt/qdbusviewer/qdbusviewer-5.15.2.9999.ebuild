@@ -15,11 +15,11 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}
-	~dev-qt/qtdbus-${PV}
-	~dev-qt/qtgui-${PV}
-	~dev-qt/qtwidgets-${PV}
-	~dev-qt/qtxml-${PV}
+	=dev-qt/qtcore-${QT5_PV}*
+	=dev-qt/qtdbus-${QT5_PV}*
+	=dev-qt/qtgui-${QT5_PV}*
+	=dev-qt/qtwidgets-${QT5_PV}*
+	=dev-qt/qtxml-${QT5_PV}*
 "
 RDEPEND="${DEPEND}"
 

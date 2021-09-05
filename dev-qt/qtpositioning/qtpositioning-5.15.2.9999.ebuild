@@ -15,9 +15,9 @@ fi
 IUSE="geoclue +qml"
 
 RDEPEND="
-	~dev-qt/qtcore-${PV}
-	geoclue? ( ~dev-qt/qtdbus-${PV} )
-	qml? ( ~dev-qt/qtdeclarative-${PV} )
+	=dev-qt/qtcore-${QT5_PV}*
+	geoclue? ( =dev-qt/qtdbus-${QT5_PV}* )
+	qml? ( =dev-qt/qtdeclarative-${QT5_PV}* )
 "
 DEPEND="${RDEPEND}"
 PDEPEND="

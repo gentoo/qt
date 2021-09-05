@@ -15,7 +15,7 @@ fi
 IUSE=""
 
 DEPEND="
-	~dev-qt/qtcore-${PV}:5=
+	=dev-qt/qtcore-${QT5_PV}*:5=
 "
 RDEPEND="${DEPEND}"
 
