@@ -55,7 +55,6 @@ RDEPEND="
 	media-libs/libpng:0=
 	>=media-libs/libvpx-1.5:=[svc(+)]
 	media-libs/libwebp:=
-	media-libs/mesa[egl,X(+)]
 	media-libs/opus
 	sys-apps/dbus
 	sys-apps/pciutils
@@ -86,7 +85,9 @@ RDEPEND="
 		=dev-qt/qtwidgets-${QT5_PV}*
 	)
 "
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	media-libs/libglvnd
+"
 BDEPEND="${PYTHON_DEPS}
 	dev-util/gperf
 	dev-util/ninja
