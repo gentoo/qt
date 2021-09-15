@@ -53,7 +53,7 @@ pkg_setup() {
 src_configure() {
 	local myconf=(
 		$(usev connman -dbus-linked)
-		$(usex gssapi -feature-gssapi -no-feature-gssapi)
+		$(qt_use gssapi feature-gssapi)
 		$(qt_use libproxy)
 		$(usev networkmanager -dbus-linked)
 		$(qt_use sctp)
@@ -64,6 +64,7 @@ src_configure() {
 
 src_install() {
 	qt5-build_src_install
+
 	# workaround for bug 652650
 	if use ssl; then
 		sed -e "/^#define QT_LINKED_OPENSSL/s/$/ true/" \
