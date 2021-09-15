@@ -26,9 +26,9 @@ RDEPEND="${DEPEND}"
 
 src_configure() {
 	local myqmakeargs=(
-		$(usex handwriting CONFIG+=lipi-toolkit '')
-		$(usex spell '' CONFIG+=disable-hunspell)
-		$(usex X '' CONFIG+=disable-desktop)
+		$(usev handwriting CONFIG+=lipi-toolkit)
+		$(usev !spell CONFIG+=disable-hunspell)
+		$(usev !X CONFIG+=disable-desktop)
 		CONFIG+="lang-ar_AR lang-bg_BG lang-cs_CZ lang-da_DK lang-de_DE \
 			lang-el_GR lang-en_GB lang-en_US lang-es_ES lang-es_MX \
 			lang-et_EE lang-fa_FA lang-fi_FI lang-fr_CA lang-fr_FR \
@@ -38,6 +38,5 @@ src_configure() {
 			lang-sl_SI lang-sq_AL lang-sr_SP lang-sv_SE lang-tr_TR \
 			lang-uk_UA lang-vi_VN"
 	)
-
 	qt5-build_src_configure
 }
