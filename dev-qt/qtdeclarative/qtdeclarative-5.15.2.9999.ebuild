@@ -20,6 +20,7 @@ DEPEND="
 	=dev-qt/qtgui-${QT5_PV}*:5=[gles2-only=,vulkan=]
 	=dev-qt/qtnetwork-${QT5_PV}*
 	=dev-qt/qttest-${QT5_PV}*
+	media-libs/libglvnd
 	localstorage? ( =dev-qt/qtsql-${QT5_PV}* )
 	widgets? ( =dev-qt/qtwidgets-${QT5_PV}*[gles2-only=] )
 "
