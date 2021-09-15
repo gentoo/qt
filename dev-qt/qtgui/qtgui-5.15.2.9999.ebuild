@@ -154,15 +154,15 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
-		$(usex dbus -dbus-linked '')
+		$(usev dbus -dbus-linked)
 		$(qt_use egl)
 		$(qt_use eglfs)
-		$(usex eglfs '-gbm -kms' '')
+		$(usev eglfs '-gbm -kms')
 		$(qt_use evdev)
 		$(qt_use evdev mtdev)
 		-fontconfig
 		-system-freetype
-		$(usex gif '' -no-gif)
+		$(usev !gif -no-gif)
 		-gui
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
@@ -174,7 +174,7 @@ src_configure() {
 		$(qt_use udev libudev)
 		$(qt_use vulkan)
 		$(qt_use X xcb)
-		$(usex X '-xcb-xlib -DUSE_X11' '')
+		$(usev X '-xcb-xlib -DUSE_X11')
 	)
 	if use libinput || use X; then
 		myconf+=( -xkbcommon )
