@@ -33,6 +33,7 @@ RDEPEND="
 	widgets? (
 		=dev-qt/qtopengl-${QT5_PV}*
 		=dev-qt/qtwidgets-${QT5_PV}*[gles2-only=]
+		media-libs/libglvnd
 	)
 "
 DEPEND="${RDEPEND}
