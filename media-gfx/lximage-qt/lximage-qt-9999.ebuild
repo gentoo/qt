@@ -5,10 +5,10 @@ EAPI=7
 
 inherit cmake xdg-utils
 
-DESCRIPTION="LXImage Image Viewer - GPicView replacement"
+DESCRIPTION="Qt Image Viewer"
 HOMEPAGE="https://lxqt.github.io/"
 
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
@@ -16,12 +16,12 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
-LICENSE="GPL-2+ LGPL-2.1+"
+LICENSE="GPL-2 GPL-2+"
 SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 	virtual/pkgconfig
 "
 DEPEND="
@@ -35,7 +35,7 @@ DEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	media-libs/libexif
-	>=x11-libs/libfm-qt-0.12.0:=
+	>=x11-libs/libfm-qt-0.17.0:=
 	x11-libs/libX11
 	x11-libs/libXfixes
 "
