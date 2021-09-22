@@ -3,10 +3,10 @@
 
 EAPI=7
 
+MY_PV="$(ver_cut 1-2)*"
+
 DESCRIPTION="Meta ebuild for LXQt, the Lightweight Desktop Environment"
 HOMEPAGE="https://lxqt.github.io/"
-
-MY_PV="$(ver_cut 1-2)*"
 
 if [[ ${PV} != *9999* ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
@@ -15,9 +15,9 @@ fi
 LICENSE="metapackage"
 SLOT="0"
 
-IUSE="+about admin +filemanager lightdm lximage minimal nls
-	+policykit powermanagement processviewer screenshot sddm
-	ssh-askpass sudo terminal +trash"
+IUSE="+about admin archiver +display-manager +filemanager lximage
+minimal nls +policykit powermanagement processviewer screenshot +sddm
+ssh-askpass sudo terminal +trash"
 
 REQUIRED_USE="trash? ( filemanager )"
 
@@ -34,11 +34,16 @@ RDEPEND="
 	=lxqt-base/lxqt-runner-${MY_PV}
 	=lxqt-base/lxqt-session-${MY_PV}
 	virtual/ttf-fonts
+	x11-terms/xterm
 	=x11-themes/lxqt-themes-${MY_PV}
 	about? ( =lxqt-base/lxqt-about-${MY_PV} )
 	admin? ( =lxqt-base/lxqt-admin-${MY_PV} )
+	archiver? ( app-arch/lxqt-archiver )
+	display-manager? (
+		sddm? ( >=x11-misc/sddm-0.11.0 )
+		!sddm? ( x11-misc/lightdm )
+	)
 	filemanager? ( =x11-misc/pcmanfm-qt-${MY_PV} )
-	lightdm? ( x11-misc/lightdm )
 	lximage? ( media-gfx/lximage-qt )
 	!minimal? (
 		x11-wm/openbox
