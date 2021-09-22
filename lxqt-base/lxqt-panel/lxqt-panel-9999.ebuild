@@ -18,11 +18,13 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
-LICENSE="LGPL-2.1+"
+LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
-IUSE="+alsa colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator +mainmenu
-	+mount networkmonitor pulseaudio +quicklaunch sensors +showdesktop
-	+spacer statusnotifier sysstat +taskbar +tray +volume +worldclock"
+IUSE="+alsa colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator
++mainmenu +mount networkmonitor pulseaudio +quicklaunch lm-sensors +showdesktop
++spacer +statusnotifier sysstat +taskbar tray +volume +worldclock"
+
+# Work around a missing header issue: https://bugs.gentoo.org/666278
 REQUIRED_USE="
 	|| ( desktopswitch mainmenu showdesktop taskbar )
 	volume? ( || ( alsa pulseaudio ) )
@@ -30,10 +32,10 @@ REQUIRED_USE="
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 	virtual/pkgconfig
 "
-RDEPEND="
+DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -50,10 +52,13 @@ RDEPEND="
 	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	kbindicator? ( x11-libs/libxkbcommon )
+	lm-sensors? ( sys-apps/lm-sensors )
 	mount? ( kde-frameworks/solid:5 )
 	networkmonitor? ( sys-libs/libstatgrab )
-	sensors? ( sys-apps/lm-sensors )
-	statusnotifier? ( dev-libs/libdbusmenu-qt[qt5(+)] )
+	statusnotifier? (
+		dev-libs/libdbusmenu-qt[qt5(+)]
+		dev-qt/qtconcurrent:5
+	)
 	sysstat? ( >=lxqt-base/libsysstat-0.4.1 )
 	tray? (
 		x11-libs/libxcb:=
@@ -70,7 +75,7 @@ RDEPEND="
 		)
 	)
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
@@ -85,7 +90,7 @@ src_configure() {
 		-DMOUNT_PLUGIN=$(usex mount)
 		-DNETWORKMONITOR_PLUGIN=$(usex networkmonitor)
 		-DQUICKLAUNCH_PLUGIN=$(usex quicklaunch)
-		-DSENSORS_PLUGIN=$(usex sensors)
+		-DSENSORS_PLUGIN=$(usex lm-sensors)
 		-DSHOWDESKTOP_PLUGIN=$(usex showdesktop)
 		-DSPACER_PLUGIN=$(usex spacer)
 		-DSTATUSNOTIFIER_PLUGIN=$(usex statusnotifier)
@@ -106,7 +111,7 @@ src_configure() {
 	cmake_src_configure
 }
 
-src_install(){
+src_install() {
 	cmake_src_install
 	doman panel/man/*.1
 }
