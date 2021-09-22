@@ -13,13 +13,17 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 fi
 
 # keep IUSE defaults in sync with qtgui
-IUSE="gles2-only gtk +png +X"
+IUSE="dbus gles2-only gtk +png +X"
+
+REQUIRED_USE="gtk? ( dbus )"
 
 DEPEND="
 	=dev-qt/qtcore-${QT5_PV}*:5=
-	=dev-qt/qtgui-${QT5_PV}*[gles2-only=,png=,X?]
+	=dev-qt/qtgui-${QT5_PV}*:5=[gles2-only=,png=,X?]
+	dbus? ( =dev-qt/qtdbus-${QT5_PV}* )
 	gtk? (
-		=dev-qt/qtgui-${QT5_PV}*[dbus]
+		dev-libs/glib:2
+		=dev-qt/qtgui-${QT5_PV}*:5=[dbus]
 		x11-libs/gtk+:3
 		x11-libs/libX11
 		x11-libs/pango
@@ -34,6 +38,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 QT5_GENTOO_CONFIG=(
+	dbus:xdgdesktopportal:
 	gtk:gtk3:
 	::widgets
 	!:no-widgets:
@@ -46,6 +51,7 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 src_configure() {
 	local myconf=(
 		-opengl $(usex gles2-only es2 desktop)
+		$(qt_use dbus)
 		$(qt_use gtk)
 		-gui
 		$(qt_use png libpng system)
