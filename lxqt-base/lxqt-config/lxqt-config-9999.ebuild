@@ -22,9 +22,9 @@ IUSE="+monitor +touchpad"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 "
-RDEPEND="
+DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -48,12 +48,12 @@ RDEPEND="
 		x11-libs/libXi
 	)
 "
-DEPEND="${DEPEND}"
+RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
-		-DWITH_MONITOR="$(usex monitor)"
-		-DWITH_TOUCHPAD="$(usex touchpad)"
+		-DWITH_MONITOR=$(usex monitor)
+		-DWITH_TOUCHPAD=$(usex touchpad)
 	)
 	cmake_src_configure
 }
