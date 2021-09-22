@@ -22,10 +22,10 @@ IUSE="+backlight"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 "
-RDEPEND="
-	>=dev-libs/libqtxdg-3.3.1
+DEPEND="
+	>=dev-libs/libqtxdg-3.7.0
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
@@ -35,10 +35,9 @@ RDEPEND="
 	kde-frameworks/kwindowsystem:5[X]
 	x11-libs/libX11
 	x11-libs/libXScrnSaver
-"
-DEPEND="${RDEPEND}
 	backlight? ( sys-auth/polkit-qt )
 "
+RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
