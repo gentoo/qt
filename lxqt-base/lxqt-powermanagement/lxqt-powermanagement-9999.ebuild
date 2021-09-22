@@ -8,7 +8,9 @@ inherit cmake
 DESCRIPTION="LXQt daemon for power management and auto-suspend"
 HOMEPAGE="https://lxqt.github.io/"
 
-if [[ ${PV} = *9999* ]]; then
+LXQTPV="$(ver_cut 1-2)*"
+
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
@@ -16,15 +18,15 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~riscv ~x86"
 fi
 
-LICENSE="LGPL-2.1+"
+LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 	virtual/pkgconfig
 "
-RDEPEND="
+DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -34,7 +36,8 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	kde-frameworks/kidletime:5
 	kde-frameworks/solid:5
-	=lxqt-base/liblxqt-$(ver_cut 1-2)*
+	=lxqt-base/liblxqt-${LXQTPV}
+	=lxqt-base/lxqt-globalkeys-${LXQTPV}
 	sys-power/upower
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
