@@ -16,7 +16,7 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
-LICENSE="GPL-2+"
+LICENSE="GPL-2 GPL-2+"
 SLOT="0"
 
 BDEPEND="
