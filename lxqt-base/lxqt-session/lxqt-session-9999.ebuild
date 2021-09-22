@@ -5,7 +5,7 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="LXQT session manager"
+DESCRIPTION="LXQt session manager"
 HOMEPAGE="https://lxqt.org/"
 
 MY_PV="$(ver_cut 1-2)*"
@@ -18,16 +18,16 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 fi
 
-IUSE="+themes +udev"
+IUSE="+udev"
 
-LICENSE="LGPL-2.1+"
+LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 "
-RDEPEND="
+DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -38,10 +38,9 @@ RDEPEND="
 	=lxqt-base/liblxqt-${MY_PV}
 	x11-libs/libX11
 	x11-misc/xdg-user-dirs
-	themes? ( =x11-themes/lxqt-themes-${MY_PV} )
 	udev? ( virtual/libudev )
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
@@ -50,10 +49,11 @@ src_configure() {
 	cmake_src_configure
 }
 
-src_install(){
+src_install() {
 	cmake_src_install
 	doman lxqt-config-session/man/*.1 lxqt-session/man/*.1
 
-	echo XDG_CONFIG_DIRS=\"${EPREFIX}/usr/share\" >> 91lxqt-config-dir
-	doenvd 91lxqt-config-dir
+	newenvd - 91lxqt-config-dir <<- _EOF_
+		XDG_CONFIG_DIRS='${EPREFIX}/usr/share'
+	_EOF_
 }
