@@ -16,25 +16,25 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
-LICENSE="LGPL-2.1+"
+LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 "
-RDEPEND="
+DEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtwidgets:5
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
 
-src_install(){
+src_install() {
 	cmake_src_install
 	doman man/*.1
 
-	echo "SSH_ASKPASS='${EPREFIX}/usr/bin/lxqt-openssh-askpass'" >> "${T}/99${PN}" \
-		|| die
-	doenvd "${T}/99${PN}"
+	newenvd - 99${PN} <<- _EOF_
+		SSH_ASKPASS='${EPREFIX}/usr/bin/lxqt-openssh-askpass'
+	_EOF_
 }
