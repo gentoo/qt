@@ -5,7 +5,7 @@ EAPI=7
 
 inherit cmake xdg-utils
 
-DESCRIPTION="Openbox window manager configuration tool"
+DESCRIPTION="Qt GUI Openbox Configuration Tool"
 HOMEPAGE="https://lxqt.org/"
 
 if [[ ${PV} = *9999* ]]; then
@@ -21,7 +21,7 @@ SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.8.0
 	sys-apps/sed
 	virtual/pkgconfig
 "
@@ -31,8 +31,8 @@ RDEPEND="
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
-	x11-wm/openbox:3
 	x11-libs/libX11
+	x11-wm/openbox:3
 "
 DEPEND="${RDEPEND}"
 
