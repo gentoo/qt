@@ -19,13 +19,14 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.6.0"
-RDEPEND="
+BDEPEND=">=dev-util/lxqt-build-tools-0.9.0"
+DEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	=lxqt-base/liblxqt-$(ver_cut 1-2)*
 	kde-frameworks/kwindowsystem:5
+	>=sys-auth/polkit-qt-0.113.0
 "
-DEPEND="${RDEPEND}"
+RDEPEND="${DEPEND}"
