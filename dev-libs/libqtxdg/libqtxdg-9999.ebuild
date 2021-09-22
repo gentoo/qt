@@ -3,9 +3,9 @@
 
 EAPI=7
 
-inherit cmake virtualx
+inherit cmake optfeature virtualx
 
-DESCRIPTION="A Qt implementation of XDG standards"
+DESCRIPTION="Qt implementation of XDG standards"
 HOMEPAGE="https://lxqt.github.io/"
 
 if [[ ${PV} == *9999 ]]; then
@@ -20,8 +20,10 @@ LICENSE="LGPL-2.1+ Nokia-Qt-LGPL-Exception-1.1"
 SLOT="0"
 IUSE="test"
 
+RESTRICT="!test? ( test )"
+
 BDEPEND="
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 	virtual/pkgconfig
 "
 RDEPEND="
@@ -47,4 +49,8 @@ src_configure() {
 src_test() {
 	# Tests don't work with C
 	LC_ALL=en_US.utf8 virtx cmake_src_test
+}
+
+pkg_postinst() {
+	! has_version lxqt-base/lxqt-meta && optfeature "features that require a terminal emulator" x11-terms/xterm
 }
