@@ -5,10 +5,10 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="Themes, graphics and icons for LXQt"
+DESCRIPTION="LXQt Themes"
 HOMEPAGE="https://lxqt.github.io/"
 
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
@@ -19,6 +19,4 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.6.0"
-RDEPEND=""
-DEPEND="${RDEPEND}"
+BDEPEND=">=dev-util/lxqt-build-tools-0.9.0"
