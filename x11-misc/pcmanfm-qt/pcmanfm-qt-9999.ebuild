@@ -3,9 +3,12 @@
 
 EAPI=7
 
-inherit cmake xdg-utils
+inherit cmake optfeature xdg-utils
 
-if [[ "${PV}" == "9999" ]]; then
+DESCRIPTION="Qt GUI Tabbed Filemanager"
+HOMEPAGE="https://lxqt.github.io/"
+
+if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
@@ -13,15 +16,12 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
-DESCRIPTION="Fast lightweight tabbed filemanager (Qt port)"
-HOMEPAGE="https://lxqt.github.io/"
-
-LICENSE="GPL-2+ LGPL-2.1+"
+LICENSE="GPL-2 GPL-2+ LGPL-2.1+"
 SLOT="0"
 
 BDEPEND="
 	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.6.0
+	>=dev-util/lxqt-build-tools-0.9.0
 "
 DEPEND="
 	dev-libs/glib:2
@@ -30,22 +30,21 @@ DEPEND="
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
+	sys-apps/util-linux
 	=x11-libs/libfm-qt-$(ver_cut 1-2)*
 	x11-libs/libxcb:=
 	x11-misc/xdg-utils
 	virtual/freedesktop-icon-theme
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	>=lxde-base/lxmenu-data-0.1.5
+"
 
 pkg_postinst() {
 	xdg_desktop_database_update
 
-	if ! has_version lxqt-base/lxqt-meta && ! has_version gnome-base/gvfs; then
-		elog
-		elog "To make use of the 'trash' functionality, please install"
-		elog "the 'gnome-base/gvfs' package."
-		elog
-	fi
+	optfeature "mount password storing" gnome-base/gnome-keyring
+	! has_version lxqt-base/lxqt-meta && optfeature "trash functionality" gnome-base/gvfs
 }
 
 pkg_postrm() {
