@@ -172,7 +172,7 @@ src_configure() {
 		$(qt_use udev libudev)
 		$(qt_use vulkan)
 		$(qt_use X xcb)
-		$(usev X '-xcb-xlib -DUSE_X11')
+		$(usev X '-xcb-xlib')
 	)
 	if use libinput || use X; then
 		myconf+=( -xkbcommon )
