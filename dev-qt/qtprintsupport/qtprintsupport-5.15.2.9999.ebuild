@@ -19,7 +19,7 @@ RDEPEND="
 	=dev-qt/qtcore-${QT5_PV}*:5=
 	=dev-qt/qtgui-${QT5_PV}*[gles2-only=]
 	=dev-qt/qtwidgets-${QT5_PV}*[gles2-only=]
-	cups? ( >=net-print/cups-1.4 )
+	cups? ( net-print/cups )
 "
 DEPEND="${RDEPEND}
 	test? ( =dev-qt/qtnetwork-${QT5_PV}* )
