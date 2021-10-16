@@ -4,6 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python2_7 )
+PYTHON_REQ_USE="xml(+)"
 inherit estack flag-o-matic multiprocessing python-any-r1 qt5-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt5 C++ and QML applications"
