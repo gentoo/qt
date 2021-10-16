@@ -31,7 +31,6 @@ RDEPEND="
 	media-libs/fontconfig
 	media-libs/freetype:2
 	media-libs/harfbuzz:=
-	media-libs/libglvnd[X?]
 	sys-libs/zlib:=
 	dbus? ( =dev-qt/qtdbus-${QT5_PV}* )
 	eglfs? (
@@ -40,6 +39,8 @@ RDEPEND="
 	)
 	evdev? ( sys-libs/mtdev )
 	jpeg? ( virtual/jpeg )
+	gles2-only? ( media-libs/libglvnd )
+	!gles2-only? ( media-libs/libglvnd[X] )
 	libinput? (
 		dev-libs/libinput:=
 		x11-libs/libxkbcommon
