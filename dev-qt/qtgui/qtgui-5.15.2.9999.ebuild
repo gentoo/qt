@@ -31,7 +31,7 @@ RDEPEND="
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
 	>=media-libs/harfbuzz-1.6.0:=
-	media-libs/libglvnd
+	media-libs/libglvnd[X?]
 	sys-libs/zlib:=
 	dbus? ( =dev-qt/qtdbus-${QT5_PV}* )
 	eglfs? (
