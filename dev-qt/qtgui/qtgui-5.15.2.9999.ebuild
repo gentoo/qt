@@ -16,7 +16,7 @@ fi
 IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
 	+libinput linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
-	|| ( eglfs X )
+	|| ( eglfs linuxfb vnc X )
 	accessibility? ( dbus X )
 	eglfs? ( egl )
 	ibus? ( dbus )
@@ -64,6 +64,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}
 	evdev? ( sys-kernel/linux-headers )
+	linuxfb? ( sys-kernel/linux-headers )
 	udev? ( sys-kernel/linux-headers )
 "
 PDEPEND="
