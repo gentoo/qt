@@ -16,7 +16,7 @@ IUSE=""
 
 DEPEND="
 	=dev-qt/qtcore-${QT5_PV}*:5=
-	>=sys-apps/dbus-1.4.20
+	sys-apps/dbus
 "
 RDEPEND="${DEPEND}"
 
