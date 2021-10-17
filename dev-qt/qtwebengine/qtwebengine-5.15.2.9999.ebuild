@@ -105,6 +105,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-5.15.2-extra_gn.patch" # downstream, bug 774186
 	"${FILESDIR}/${PN}-5.15.2_p20210224-chromium-87-v8-icu68.patch" # downstream, bug 757606
 	"${FILESDIR}/${PN}-5.15.2_p20210224-disable-git.patch" # downstream snapshot fix
+	"${FILESDIR}/${PN}-5.15.2_p20211015-pdfium-system-lcms2.patch" # by Debian, QTBUG-61746
+	"${FILESDIR}/${PN}-5.15.2_p20211210-sandbox-glibc-2.34.patch" # bug 828099, systemwide-clang?
 	"${WORKDIR}/${PN}-5.15.2_p20211019-jumbo-build.patch" # bug 813957
 )
 
