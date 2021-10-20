@@ -29,6 +29,9 @@ DEPEND="
 	)
 "
 RDEPEND="${DEPEND}"
+BDEPEND="
+	dev-util/wayland-scanner
+"
 
 src_configure() {
 	local myqmakeargs=(
