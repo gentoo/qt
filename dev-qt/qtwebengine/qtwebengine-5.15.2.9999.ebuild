@@ -26,8 +26,9 @@ else
 	inherit git-r3
 fi
 
-# patchset based on https://github.com/chromium-ppc64le releases
-SRC_URI+=" ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.2-r1-chromium87-ppc64le.tar.xz )"
+# ppc64 patchset based on https://github.com/chromium-ppc64le releases
+SRC_URI+="https://dev.gentoo.org/~sam/distfiles/${CATEGORY}/${PN}/${PN}-5.15.2_p20211019-jumbo-build.patch.bz2
+	ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.2-r1-chromium87-ppc64le.tar.xz )"
 
 IUSE="alsa bindist designer geolocation +jumbo-build kerberos pulseaudio +system-ffmpeg +system-icu widgets"
 REQUIRED_USE="designer? ( widgets )"
@@ -104,6 +105,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-5.15.2-extra_gn.patch" # downstream, bug 774186
 	"${FILESDIR}/${PN}-5.15.2_p20210224-chromium-87-v8-icu68.patch" # downstream, bug 757606
 	"${FILESDIR}/${PN}-5.15.2_p20210224-disable-git.patch" # downstream snapshot fix
+	"${WORKDIR}/${PN}-5.15.2_p20211019-jumbo-build.patch" # bug 813957
 )
 
 pkg_preinst() {
