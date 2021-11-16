@@ -1,31 +1,24 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-if [[ ${PV} == *9999* ]]; then
-	EGIT_BRANCH="dev"
-	EGIT_REPO_URI=( "https://code.qt.io/qt/${PN}.git" )
-	inherit git-r3
-else
-	MY_P=everywhere-src-${PV/_/-}
-	SRC_URI="https://download.qt.io/development_releases/qt/${PV%.*}/${PV/_/-}/submodules/${MY_P}.tar.xz"
-	KEYWORDS="~amd64"
-	S=${WORKDIR}/${MY_P}
-fi
-
-inherit cmake
+inherit qt6-build
 
 DESCRIPTION="Cross-platform application development framework"
-HOMEPAGE="https://www.qt.io/"
 
-LICENSE="|| ( GPL-2 GPL-3 LGPL-3 ) FDL-1.3"
-SLOT=6/$(ver_cut 1-2)
+if [[ ${QT6_BUILD_TYPE} == release ]]; then
+	KEYWORDS="~amd64"
+fi
+
 # Qt Modules
 IUSE="+concurrent +dbus +gui +network +sql opengl +widgets +xml"
-REQUIRED_USE="opengl? ( gui ) widgets? ( gui )"
+REQUIRED_USE="
+	opengl? ( gui ) widgets? ( gui )
+	X? ( || ( evdev libinput ) )
+"
 
-QTGUI_IUSE="accessibility egl eglfs evdev +gif gles2-only +ico +jpeg libinput tslib tuio vulkan +X"
+QTGUI_IUSE="accessibility egl eglfs evdev +gif gles2-only +ico +jpeg +libinput tslib tuio vulkan +X"
 QTNETWORK_IUSE="gssapi libproxy sctp +ssl vnc"
 QTSQL_IUSE="freetds mysql oci8 odbc postgres +sqlite"
 IUSE+=" ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} cups gtk icu systemd +udev"
@@ -49,13 +42,14 @@ REQUIRED_USE+="
 # TODO:
 # qtimageformats: mng not done yet, qtimageformats.git upstream commit 9443239c
 # qtnetwork: connman, networkmanager
-BDEPEND="virtual/pkgconfig"
 DEPEND="
+	app-arch/brotli:=
+	app-arch/libarchive[zstd]
 	app-arch/zstd:=
+	app-crypt/libb2
 	dev-libs/double-conversion:=
 	dev-libs/glib:2
-	dev-libs/libpcre2[pcre16,unicode]
-	>=dev-util/cmake-3.17.0
+	dev-libs/libpcre2:=[pcre16,unicode]
 	dev-util/gtk-update-icon-cache
 	media-libs/fontconfig
 	>=media-libs/freetype-2.6.1:2
@@ -65,8 +59,9 @@ DEPEND="
 	sys-libs/zlib:=
 	virtual/opengl
 	egl? ( media-libs/mesa[egl] )
-	gles2-only? ( media-libs/mesa[gles2] )
+	evdev? ( sys-libs/mtdev )
 	freetds? ( dev-db/freetds )
+	gles2-only? ( media-libs/mesa[gles2] )
 	gssapi? ( virtual/krb5 )
 	gtk? (
 		x11-libs/gtk+:3
@@ -94,6 +89,7 @@ DEPEND="
 	udev? ( virtual/libudev:= )
 	vulkan? ( dev-util/vulkan-headers )
 	X? (
+		x11-libs/libdrm
 		x11-libs/libICE
 		x11-libs/libSM
 		x11-libs/libX11
@@ -105,21 +101,10 @@ DEPEND="
 		x11-libs/xcb-util-wm
 	)
 "
-RDEPEND="${DEPEND}
-	dev-qt/qtchooser
-"
-
-# @FUNCTION: qt_feature
-# @USAGE: <flag> [feature]
-# @DESCRIPTION:
-# <flag> is the name of a flag in IUSE.
-qt_feature() {
-	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
-	echo "-DQT_FEATURE_${2:-$1}=$(usex $1 ON OFF)"
-}
+RDEPEND="${DEPEND}"
 
 src_prepare() {
-	cmake_src_prepare
+	qt6-build_src_prepare
 
 	# TODO: fails without QtGui
 	sed -e "/androiddeployqt/s/^/#DONT/" -e "/androidtestrunner/s/^/#DONT/" \
@@ -127,33 +112,9 @@ src_prepare() {
 }
 
 src_configure() {
-	QT6_PREFIX=${EPREFIX}/usr
-	QT6_HEADERDIR=${QT6_PREFIX}/include/qt6
-	QT6_LIBDIR=${QT6_PREFIX}/$(get_libdir)
-	QT6_ARCHDATADIR=${QT6_PREFIX}/$(get_libdir)/qt6
-	QT6_BINDIR=${QT6_ARCHDATADIR}/bin
-	QT6_PLUGINDIR=${QT6_ARCHDATADIR}/plugins
-	QT6_LIBEXECDIR=${QT6_ARCHDATADIR}/libexec
-	QT6_IMPORTDIR=${QT6_ARCHDATADIR}/imports
-	QT6_QMLDIR=${QT6_ARCHDATADIR}/qml
-	QT6_DATADIR=${QT6_PREFIX}/share/qt6
-	QT6_DOCDIR=${QT6_PREFIX}/share/qt6-doc
-	QT6_TRANSLATIONDIR=${QT6_DATADIR}/translations
-	QT6_EXAMPLESDIR=${QT6_DATADIR}/examples
-	QT6_TESTSDIR=${QT6_DATADIR}/tests
-	QT6_SYSCONFDIR=${EPREFIX}/etc/xdg
-
 	local mycmakeargs=(
 		-DINSTALL_BINDIR=${QT6_BINDIR}
-# 		-DINSTALL_INCLUDEDIR=${QT6_HEADERDIR}
-# TODO: breaks cmake macro:
-# CMake Error at cmake/QtBuild.cmake:1997 (file):
-#   file STRINGS file
-#   "${WORKDIR}/qtbase-6.9999_build/include/qt6/QtOpenGLWidgets/headers.pri"
-#   cannot be read.
-# Call Stack (most recent call first):
-#   cmake/QtBuild.cmake:2503 (qt_read_headers_pri)
-#   src/openglwidgets/CMakeLists.txt:7 (qt_add_module)
+		-DINSTALL_INCLUDEDIR=${QT6_HEADERDIR}
 		-DINSTALL_LIBDIR=${QT6_LIBDIR}
 		-DINSTALL_ARCHDATADIR=${QT6_ARCHDATADIR}
 		-DINSTALL_PLUGINSDIR=${QT6_PLUGINDIR}
@@ -177,7 +138,6 @@ src_configure() {
 		$(qt_feature udev libudev)
 		$(qt_feature xml)
 	)
-	use icu || mycmakeargs+=( -DQT_FEATURE_iconv=ON )
 	use gui && mycmakeargs+=(
 		$(qt_feature accessibility accessibility_atspi_bridge)
 		$(qt_feature egl)
@@ -220,5 +180,5 @@ src_configure() {
 		$(qt_feature sqlite sql_sqlite)
 		$(qt_feature sqlite system_sqlite)
 	)
-	cmake_src_configure
+	qt6-build_src_configure
 }
