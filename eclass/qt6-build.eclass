@@ -1,23 +1,21 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # @ECLASS: qt6-build.eclass
 # @MAINTAINER:
 # qt@gentoo.org
-# @AUTHOR:
-# Davide Pesavento <pesa@gentoo.org>
-# @SUPPORTED_EAPIS: 7
+# @SUPPORTED_EAPIS: 8
 # @BLURB: Eclass for Qt6 split ebuilds.
 # @DESCRIPTION:
 # This eclass contains various functions that are used when building Qt6.
-# Requires EAPI 7.
+# Requires EAPI 8.
 
 if [[ ${CATEGORY} != dev-qt ]]; then
 	die "qt6-build.eclass is only to be used for building Qt 6"
 fi
 
 case ${EAPI} in
-	7)	: ;;
+	8)	: ;;
 	*)	die "qt6-build.eclass: unsupported EAPI=${EAPI:-0}" ;;
 esac
 
@@ -92,14 +90,41 @@ BDEPEND="
 	dev-lang/perl
 	virtual/pkgconfig
 "
-if [[ ${PN} != qttest ]]; then
-	DEPEND+=" test? ( ~dev-qt/qttest-${PV} )"
-fi
-RDEPEND="
-	dev-qt/qtchooser
-"
+# TODO: Tests have not been split from qtbase.
+#if [[ ${PN} != qttest ]]; then
+#	DEPEND+=" test? ( ~dev-qt/qttest-${PV} )"
+#fi
+
+EXPORT_FUNCTIONS src_prepare src_configure
+
+######  Phase functions  ######
+
+# @FUNCTION: qt6-build_src_prepare
+# @DESCRIPTION:
+# Prepares the environment and patches the sources if necessary.
+qt6-build_src_prepare() {
+	qt6_prepare_env
+
+	cmake_src_prepare
+}
+
+# @FUNCTION: qt6-build_src_configure
+# @DESCRIPTION:
+# Configures sources.
+qt6-build_src_configure() {
+	cmake_src_configure
+}
 
 ######  Public helpers  ######
+
+# @FUNCTION: qt_feature
+# @USAGE: <flag> [feature]
+# @DESCRIPTION:
+# <flag> is the name of a flag in IUSE.
+qt_feature() {
+	[[ $# -ge 1 ]] || die "${FUNCNAME}() requires at least one argument"
+	echo "-DQT_FEATURE_${2:-$1}=$(usex $1 ON OFF)"
+}
 
 ######  Internal functions  ######
 
