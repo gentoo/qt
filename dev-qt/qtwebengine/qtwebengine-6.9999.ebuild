@@ -72,7 +72,7 @@ RDEPEND="
 	x11-libs/libXScrnSaver
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
-	geolocation? ( =dev-qt/qtlocation-${PV}* )
+	geolocation? ( =dev-qt/qtpositioning-${PV}* )
 	kerberos? ( virtual/krb5 )
 	pipewire? ( media-video/pipewire )
 	pulseaudio? ( media-sound/pulseaudio:= )
