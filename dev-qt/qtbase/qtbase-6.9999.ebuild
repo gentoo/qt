@@ -103,14 +103,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-src_prepare() {
-	qt6-build_src_prepare
-
-	# TODO: fails without QtGui
-	sed -e "/androiddeployqt/s/^/#DONT/" -e "/androidtestrunner/s/^/#DONT/" \
-		-i src/tools/CMakeLists.txt || die
-}
-
 src_configure() {
 	local mycmakeargs=(
 		-DINSTALL_BINDIR=${QT6_BINDIR}
@@ -126,6 +118,7 @@ src_configure() {
 		-DINSTALL_SYSCONFDIR=${QT6_SYSCONFDIR}
 		-DINSTALL_MKSPECSDIR=${QT6_ARCHDATADIR}/mkspecs
 		-DINSTALL_EXAMPLESDIR=${QT6_EXAMPLESDIR}
+		-DQT_FEATURE_androiddeployqt=OFF
 		-DQT_FEATURE_zstd=ON
 		$(qt_feature concurrent)
 		$(qt_feature dbus)
