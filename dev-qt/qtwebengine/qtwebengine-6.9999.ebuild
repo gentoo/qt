@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{9,10} )
 PYTHON_REQ_USE="xml(+)"
 CHROMIUM_VER="94.0.4606.126"
 CHROMIUM_PATCHES_VER="94.0.4606.126"
@@ -109,7 +109,10 @@ src_unpack() {
 	fi
 	eshopts_pop
 
-	default
+	case ${QT6_BUILD_TYPE} in
+		live)    git-r3_src_unpack ;&
+		release) default ;;
+	esac
 }
 
 src_prepare() {
