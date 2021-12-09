@@ -5,8 +5,8 @@ EAPI=8
 
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="xml(+)"
-CHROMIUM_VER="90.0.4430.228"
-CHROMIUM_PATCHES_VER="94.0.4606.61"
+CHROMIUM_VER="94.0.4606.126"
+CHROMIUM_PATCHES_VER="94.0.4606.126"
 
 inherit estack flag-o-matic multiprocessing python-any-r1 qt6-build
 
