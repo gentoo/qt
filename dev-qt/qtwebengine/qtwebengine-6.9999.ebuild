@@ -23,6 +23,7 @@ IUSE="
 REQUIRED_USE="designer? ( widgets )"
 
 BDEPEND="${PYTHON_DEPS}
+	$(python_gen_any_dep 'dev-python/html5lib[${PYTHON_USEDEP}]')
 	>=dev-util/gn-0.1807
 	dev-util/gperf
 	dev-util/ninja
@@ -85,6 +86,10 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	media-libs/libglvnd
 "
+
+python_check_deps() {
+	has_version "dev-python/html5lib[${PYTHON_USEDEP}]"
+}
 
 pkg_preinst() {
 	elog "This version of Qt WebEngine is based on Chromium version ${CHROMIUM_VER}, with"
