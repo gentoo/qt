@@ -34,7 +34,7 @@ RDEPEND="
 	sys-libs/zlib:=
 	dbus? ( =dev-qt/qtdbus-${QT5_PV}* )
 	eglfs? (
-		media-libs/mesa[gbm]
+		media-libs/mesa[gbm(+)]
 		x11-libs/libdrm
 	)
 	evdev? ( sys-libs/mtdev )
