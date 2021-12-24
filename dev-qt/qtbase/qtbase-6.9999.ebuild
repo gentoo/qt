@@ -58,10 +58,10 @@ DEPEND="
 	>=sys-apps/dbus-1.4.20
 	sys-libs/zlib:=
 	virtual/opengl
-	egl? ( media-libs/mesa[egl] )
 	evdev? ( sys-libs/mtdev )
 	freetds? ( dev-db/freetds )
-	gles2-only? ( media-libs/mesa[gles2] )
+	gles2-only? ( media-libs/libglvnd )
+	!gles2-only? ( media-libs/libglvnd[X] )
 	gssapi? ( virtual/krb5 )
 	gtk? (
 		x11-libs/gtk+:3
