@@ -84,7 +84,11 @@ EGIT_REPO_URI=(
 
 IUSE="debug test"
 
-[[ ${QT6_BUILD_TYPE} == release ]] && RESTRICT+=" test" # bug 457182
+if [[ ${QT6_BUILD_TYPE} == release ]]; then
+	RESTRICT="test" # bug 457182
+else
+	RESTRICT="!test? ( test )"
+fi
 
 BDEPEND="
 	dev-lang/perl
