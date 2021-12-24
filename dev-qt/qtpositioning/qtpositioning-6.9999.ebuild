@@ -15,4 +15,6 @@ DEPEND="
 	=dev-qt/qtbase-${PV}*
 	=dev-qt/qtdeclarative-${PV}*
 "
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	!<dev-qt/qtlocation-6.2.2:6
+"
