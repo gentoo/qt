@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -44,7 +44,6 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-5.14.1-cmake-macro-backward-compat.patch # bug 703306
-	"${FILESDIR}"/${PN}-5.15.1-timezone-{1,2}.patch # bug 737914
 )
 
 pkg_pretend() {
