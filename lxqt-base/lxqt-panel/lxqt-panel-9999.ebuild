@@ -1,14 +1,14 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
 DESCRIPTION="LXQt desktop panel and plugins"
-HOMEPAGE="https://lxqt.github.io/"
+HOMEPAGE="https://lxqt-project.org/"
 
-MY_PV="$(ver_cut 1-2)*"
+MY_PV="$(ver_cut 1-2)"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
@@ -31,35 +31,35 @@ REQUIRED_USE="
 "
 
 BDEPEND="
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.9.0
+	>=dev-qt/linguist-tools-5.15:5
+	>=dev-util/lxqt-build-tools-0.10.0
 	virtual/pkgconfig
 "
 DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
-	dev-qt/qtsvg:5
-	dev-qt/qtwidgets:5
-	dev-qt/qtx11extras:5
-	dev-qt/qtxml:5
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtdbus-5.15:5
+	>=dev-qt/qtgui-5.15:5
+	>=dev-qt/qtsvg-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtx11extras-5.15:5
+	>=dev-qt/qtxml-5.15:5
 	kde-frameworks/kwindowsystem:5[X]
 	>=lxde-base/lxmenu-data-0.1.5
 	>=lxde-base/menu-cache-1.1.0
-	=lxqt-base/liblxqt-${MY_PV}
-	=lxqt-base/lxqt-globalkeys-${MY_PV}
+	=lxqt-base/liblxqt-${MY_PV}*:=
+	=lxqt-base/lxqt-globalkeys-${MY_PV}*
 	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	kbindicator? ( x11-libs/libxkbcommon )
-	lm-sensors? ( sys-apps/lm-sensors )
+	lm-sensors? ( sys-apps/lm-sensors:= )
 	mount? ( kde-frameworks/solid:5 )
 	networkmonitor? ( sys-libs/libstatgrab )
 	statusnotifier? (
 		dev-libs/libdbusmenu-qt[qt5(+)]
-		dev-qt/qtconcurrent:5
+		>=dev-qt/qtconcurrent-5.15:5
 	)
-	sysstat? ( >=lxqt-base/libsysstat-0.4.1 )
+	sysstat? ( >=lxqt-base/libsysstat-0.4.6 )
 	tray? (
 		x11-libs/libxcb:=
 		x11-libs/libXcomposite

@@ -1,14 +1,14 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
-DESCRIPTION="LXQt session manager"
-HOMEPAGE="https://lxqt.github.io/"
+DESCRIPTION="LXQt Session Manager"
+HOMEPAGE="https://lxqt-project.org/"
 
-MY_PV="$(ver_cut 1-2)*"
+MY_PV="$(ver_cut 1-2)"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
@@ -24,21 +24,22 @@ LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
 BDEPEND="
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.9.0
+	>=dev-qt/linguist-tools-5.15:5
+	>=dev-util/lxqt-build-tools-0.10.0
 "
 DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
-	dev-qt/qtwidgets:5
-	dev-qt/qtx11extras:5
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtdbus-5.15:5
+	>=dev-qt/qtgui-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtx11extras-5.15:5
 	kde-frameworks/kwindowsystem:5[X]
-	=lxqt-base/liblxqt-${MY_PV}
+	=lxqt-base/liblxqt-${MY_PV}*:=
+	sys-process/procps:=
 	x11-libs/libX11
 	x11-misc/xdg-user-dirs
-	udev? ( virtual/libudev )
+	udev? ( virtual/libudev:= )
 "
 RDEPEND="${DEPEND}"
 

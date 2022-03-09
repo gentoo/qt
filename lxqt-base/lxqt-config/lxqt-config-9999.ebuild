@@ -1,12 +1,14 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
+
+MY_PV="$(ver_cut 1-2)"
 
 inherit cmake xdg-utils
 
 DESCRIPTION="LXQt system configuration control center"
-HOMEPAGE="https://lxqt.github.io/"
+HOMEPAGE="https://lxqt-project.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
@@ -21,19 +23,18 @@ SLOT="0"
 IUSE="+monitor +touchpad"
 
 BDEPEND="
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.9.0
+	>=dev-qt/linguist-tools-5.15:5
 "
 DEPEND="
 	>=dev-libs/libqtxdg-3.3.1
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
-	dev-qt/qtwidgets:5
-	dev-qt/qtx11extras:5
-	dev-qt/qtxml:5
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtgui-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtsvg-5.15:5
+	>=dev-qt/qtx11extras-5.15:5
+	>=dev-qt/qtxml-5.15:5
 	kde-frameworks/kwindowsystem:5
-	=lxqt-base/liblxqt-$(ver_cut 1-2)*
+	=lxqt-base/liblxqt-${MY_PV}*:=
 	sys-libs/zlib:=
 	x11-apps/setxkbmap
 	x11-libs/libxcb:=
@@ -42,9 +43,8 @@ DEPEND="
 	x11-libs/libXfixes
 	monitor? ( kde-plasma/libkscreen:5= )
 	touchpad? (
-		virtual/libudev
+		virtual/libudev:=
 		x11-drivers/xf86-input-libinput
-		x11-libs/libXext
 		x11-libs/libXi
 	)
 "

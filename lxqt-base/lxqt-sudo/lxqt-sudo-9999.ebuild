@@ -1,12 +1,12 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
 DESCRIPTION="LXQt GUI frontend for sudo"
-HOMEPAGE="https://lxqt.github.io/"
+HOMEPAGE="https://lxqt-project.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
@@ -19,12 +19,12 @@ fi
 LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.9.0"
+BDEPEND=">=dev-util/lxqt-build-tools-0.10.0"
 DEPEND="
 	app-admin/sudo
-	>=dev-libs/libqtxdg-3.3.1
-	dev-qt/qtcore:5
-	dev-qt/qtwidgets:5
-	=lxqt-base/liblxqt-$(ver_cut 1-2)*
+	>=dev-qt/qtgui-5.15:5
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	~lxqt-base/liblxqt-${PV}:=
 "
 RDEPEND="${DEPEND}"

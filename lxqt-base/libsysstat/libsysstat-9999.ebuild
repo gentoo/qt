@@ -1,14 +1,14 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
 DESCRIPTION="Qt GUI for System Statistics"
-HOMEPAGE="https://lxqt.github.io/"
+HOMEPAGE="https://lxqt-project.org/"
 
-if [[ ${PV} == *9999* ]]; then
+if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
@@ -19,6 +19,6 @@ fi
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.9.0"
-DEPEND="dev-qt/qtcore:5"
+BDEPEND=">=dev-util/lxqt-build-tools-0.10.0"
+DEPEND=">=dev-qt/qtcore-5.15:5"
 RDEPEND="${DEPEND}"
