@@ -1,12 +1,12 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake xdg-utils
 
-DESCRIPTION="Qt library for building file managers"
-HOMEPAGE="https://lxqt.github.io/"
+DESCRIPTION="Qt Library for Building File Managers"
+HOMEPAGE="https://lxqt-project.org/"
 
 if [[ "${PV}" == "9999" ]]; then
 	inherit git-r3
@@ -20,19 +20,19 @@ LICENSE="BSD GPL-2+ LGPL-2.1+"
 SLOT="0/7"
 
 BDEPEND="
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.9.0
+	>=dev-qt/linguist-tools-5.15:5
+	>=dev-util/lxqt-build-tools-0.10.0
 	virtual/pkgconfig
 "
 DEPEND="
 	dev-libs/glib:2
-	dev-qt/qtcore:5
-	dev-qt/qtgui:5=
-	dev-qt/qtwidgets:5
-	dev-qt/qtx11extras:5
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtgui-5.15:5=
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtx11extras-5.15:5
 	>=lxde-base/menu-cache-1.1.0:=
 	media-libs/libexif
-	x11-libs/libxcb
+	x11-libs/libxcb:=
 "
 RDEPEND="${DEPEND}"
 
