@@ -1,12 +1,12 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
-DESCRIPTION="LXQt Build tools"
-HOMEPAGE="https://lxqt.github.io/"
+DESCRIPTION="LXQt Build Tools"
+HOMEPAGE="https://lxqt-project.org/"
 
 if [[ ${PV} = *9999* ]]; then
 	inherit git-r3
@@ -21,6 +21,6 @@ SLOT="0"
 
 DEPEND="
 	>=dev-libs/glib-2.50.0
-	dev-qt/qtcore:5
+	>=dev-qt/qtcore-5.15:5
 "
 RDEPEND="${DEPEND}"
