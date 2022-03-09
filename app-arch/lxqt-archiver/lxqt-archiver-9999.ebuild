@@ -1,12 +1,14 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
+
+MY_PV="$(ver_cut 1-2)"
 
 inherit cmake xdg-utils
 
 DESCRIPTION="Qt GUI File Archiver"
-HOMEPAGE="https://lxqt.github.io/"
+HOMEPAGE="https://lxqt-project.org/"
 
 if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
@@ -20,21 +22,23 @@ LICENSE="GPL-2 GPL-2+"
 SLOT="0"
 
 BDEPEND="
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.9.0
+	>=dev-qt/linguist-tools-5.15:5
+	>=dev-util/lxqt-build-tools-0.10.0
 "
 DEPEND="
+	dev-libs/glib:2
 	dev-libs/json-glib
-	dev-qt/qtcore:5
-	dev-qt/qtgui:5
-	dev-qt/qtwidgets:5
-	dev-qt/qtx11extras:5
-	>=x11-libs/libfm-qt-0.17.0
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtgui-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtx11extras-5.15:5
+	>=x11-libs/libfm-qt-1:=
 "
 RDEPEND="${DEPEND}"
 
 pkg_postinst() {
 	xdg_desktop_database_update
+	xdg_icon_cache_update
 
 	elog "Please note that this is only a graphical front-end, and additional"
 	elog "packages are needed to have support for specific file formats."
