@@ -1,12 +1,12 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake optfeature virtualx
 
-DESCRIPTION="Qt implementation of XDG standards"
-HOMEPAGE="https://lxqt.github.io/"
+DESCRIPTION="Qt Implementation of XDG Standards"
+HOMEPAGE="https://lxqt-project.org/"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
@@ -23,20 +23,20 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	>=dev-util/lxqt-build-tools-0.9.0
+	>=dev-util/lxqt-build-tools-0.10.0
 	virtual/pkgconfig
 "
 RDEPEND="
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5=
-	dev-qt/qtsvg:5
-	dev-qt/qtwidgets:5
-	dev-qt/qtxml:5
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtdbus-5.15:5
+	>=dev-qt/qtgui-5.15:5=
+	>=dev-qt/qtsvg-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtxml-5.15:5
 	x11-misc/xdg-utils
 "
 DEPEND="${RDEPEND}
-	test? ( dev-qt/qttest:5 )
+	test? ( >=dev-qt/qttest-5.15:5 )
 "
 
 src_configure() {
