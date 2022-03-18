@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -17,11 +17,13 @@ IUSE=""
 DEPEND="
 	=dev-qt/qtcore-${QT5_PV}*:5=
 	=dev-qt/qtgui-${QT5_PV}*
-	=dev-qt/qtnetwork-${QT5_PV}*
 	=dev-qt/qtsql-${QT5_PV}*[sqlite]
 	=dev-qt/qtwidgets-${QT5_PV}*
 "
 RDEPEND="${DEPEND}"
+
+# https://invent.kde.org/qt/qt/qttools/-/merge_requests/2
+PATCHES=( "${FILESDIR}/${PN}-5.15.3-bogusdep.patch" )
 
 QT5_TARGET_SUBDIRS=(
 	src/assistant/help
