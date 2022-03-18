@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -14,16 +14,15 @@ fi
 
 IUSE="qml"
 
-RDEPEND="
+DEPEND="
 	=dev-qt/qtconcurrent-${QT5_PV}*
 	=dev-qt/qtcore-${QT5_PV}*:5=
 	=dev-qt/qtdbus-${QT5_PV}*
+	=dev-qt/qtnetwork-${QT5_PV}*
 	>=net-wireless/bluez-5:=
 	qml? ( =dev-qt/qtdeclarative-${QT5_PV}* )
 "
-DEPEND="${RDEPEND}
-	=dev-qt/qtnetwork-${QT5_PV}*
-"
+RDEPEND="${DEPEND}"
 
 src_prepare() {
 	sed -i -e 's/nfc//' src/src.pro || die
