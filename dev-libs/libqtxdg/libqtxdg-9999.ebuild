@@ -27,6 +27,7 @@ BDEPEND="
 	virtual/pkgconfig
 "
 RDEPEND="
+	dev-libs/glib:2
 	>=dev-qt/qtcore-5.15:5
 	>=dev-qt/qtdbus-5.15:5
 	>=dev-qt/qtgui-5.15:5=
