@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,7 +6,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_{9,10} )
 PYTHON_REQ_USE="xml(+)"
 CHROMIUM_VER="94.0.4606.126"
-CHROMIUM_PATCHES_VER="94.0.4606.126"
+CHROMIUM_PATCHES_VER="98.0.4758.102"
 
 inherit estack flag-o-matic multiprocessing python-any-r1 qt6-build
 
