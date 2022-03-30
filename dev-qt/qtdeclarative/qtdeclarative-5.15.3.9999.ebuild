@@ -29,7 +29,6 @@ BDEPEND="${PYTHON_DEPS}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-5.14.2-QQuickItemView-fix-maxXY-extent.patch" # QTBUG-83890
-	"${FILESDIR}/${PN}-5.15.2-riscv-atomic.patch" # bug 790689
 )
 
 src_prepare() {
