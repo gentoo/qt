@@ -11,6 +11,7 @@
 =dev-qt/qtlocation-6*
 =dev-qt/qtmultimedia-6*
 =dev-qt/qtpositioning-6*
+=dev-qt/qtquicktimeline-6*
 =dev-qt/qtshadertools-6*
 =dev-qt/qtsvg-6*
 =dev-qt/qttools-6*
