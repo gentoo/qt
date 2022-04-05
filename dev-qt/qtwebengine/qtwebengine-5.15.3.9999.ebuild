@@ -106,8 +106,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-5.15.2_p20210224-chromium-87-v8-icu68.patch" # downstream, bug 757606
 	"${FILESDIR}/${PN}-5.15.2_p20210224-disable-git.patch" # downstream snapshot fix
 	"${FILESDIR}/${PN}-5.15.2_p20211015-pdfium-system-lcms2.patch" # by Debian, QTBUG-61746
-	"${WORKDIR}/${PN}-5.15.2_p20211019-jumbo-build.patch" # bug 813957
 	"${FILESDIR}/${PN}-5.15.3_p20220329-clang14.patch" # fixes build with clang 14
+	"${WORKDIR}/${PN}-5.15.2_p20211019-jumbo-build.patch" # bug 813957
 )
 
 qtwebengine_check-reqs() {
@@ -197,6 +197,10 @@ src_prepare() {
 	# src/3rdparty/gn fails with libc++ due to passing of `-static-libstdc++`
 	if tc-is-clang && has_version 'sys-devel/clang[default-libcxx]'; then
 		eapply "${FILESDIR}/${PN}-5.15.2_p20210521-clang-libc++.patch"
+	fi
+
+	if use system-ffmpeg && has_version '>=media-video/ffmpeg-5'; then
+		eapply "${FILESDIR}/${PN}-5.15.3_p20220330-ffmpeg5.patch" # by Archlinux, bug 831437
 	fi
 
 	qt_use_disable_config alsa webengine-alsa src/buildtools/config/linux.pri
