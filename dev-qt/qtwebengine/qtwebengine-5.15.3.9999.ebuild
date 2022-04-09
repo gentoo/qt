@@ -169,10 +169,10 @@ src_prepare() {
 		# This is made from git, and for some reason will fail w/o .git directories.
 		mkdir -p .git src/3rdparty/chromium/.git || die
 	fi
-	# We need to make sure this integrates well into Qt 5.15.2 installation.
+	# We need to make sure this integrates well into Qt 5.15.3 installation.
 	# Otherwise revdeps fail w/o heavy changes. This is the simplest way to do it.
 	# See also: https://www.qt.io/blog/building-qt-webengine-against-other-qt-versions
-	sed -e "/^MODULE_VERSION/s/5\.15\.[3456789]/${QT5_PV}/" -i .qmake.conf || die
+	sed -E "/^MODULE_VERSION/s/5\.15\.[0-9]+/${QT5_PV}/" -i .qmake.conf || die
 
 	# QTBUG-88657 - jumbo-build could still make trouble
 	if ! use jumbo-build; then
