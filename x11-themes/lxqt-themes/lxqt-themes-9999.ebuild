@@ -19,7 +19,7 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.10.0"
+BDEPEND=">=dev-util/lxqt-build-tools-0.11.0"
 
 pkg_postinst() {
 	xdg_icon_cache_update
