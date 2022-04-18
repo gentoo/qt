@@ -23,7 +23,7 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.10.0
+	>=dev-util/lxqt-build-tools-0.11.0
 "
 DEPEND="
 	dev-libs/glib:2
