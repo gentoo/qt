@@ -23,12 +23,12 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.10.0
+	>=dev-util/lxqt-build-tools-0.11.0
 	virtual/pkgconfig
 "
 DEPEND="
 	>=dev-cpp/muParser-2.2.3
-	>=dev-libs/libqtxdg-3.3.1
+	>=dev-libs/libqtxdg-3.9.0
 	>=dev-qt/qtcore-5.15:5
 	>=dev-qt/qtgui-5.15:5
 	>=dev-qt/qtwidgets-5.15:5

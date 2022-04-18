@@ -21,9 +21,9 @@ fi
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.10.0"
+BDEPEND=">=dev-util/lxqt-build-tools-0.11.0"
 DEPEND="
-	>=dev-libs/libqtxdg-3.3.1
+	>=dev-libs/libqtxdg-3.9.0
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5

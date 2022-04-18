@@ -26,7 +26,7 @@ BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.3.1
+	>=dev-libs/libqtxdg-3.9.0
 	>=dev-qt/qtcore-5.15:5
 	>=dev-qt/qtgui-5.15:5
 	>=dev-qt/qtwidgets-5.15:5
