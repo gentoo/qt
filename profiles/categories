@@ -3,10 +3,12 @@ app-crypt
 app-emulation
 app-text
 dev-libs
+dev-python
 dev-qt
 dev-util
 lxqt-base
 media-gfx
+www-client
 x11-libs
 x11-misc
 x11-themes
