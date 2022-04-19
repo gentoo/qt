@@ -21,3 +21,5 @@
 =dev-qt/qtwebchannel-6*
 =dev-qt/qtwebengine-6*
 =dev-qt/qtwebsockets-6*
+dev-python/PyQt6
+dev-python/PyQt6_WebEngine
