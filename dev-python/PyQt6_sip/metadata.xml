@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>ionen@gentoo.org</email>
+		<name>Ionen Wolkens</name>
+	</maintainer>
+	<maintainer type="project">
+		<email>qt@gentoo.org</email>
+		<name>Gentoo Qt Project</name>
+	</maintainer>
+	<upstream>
+		<changelog>https://www.riverbankcomputing.com/hg/sip/file/tip/NEWS</changelog>
+		<bugs-to>https://www.riverbankcomputing.com/mailman/listinfo/pyqt/</bugs-to>
+		<doc>https://www.riverbankcomputing.com/static/Docs/sip/</doc>
+		<remote-id type="pypi">PyQt6-sip</remote-id>
+	</upstream>
+</pkgmetadata>
