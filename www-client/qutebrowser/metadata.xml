@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>ionen@gentoo.org</email>
+		<name>Ionen Wolkens</name>
+	</maintainer>
+	<stabilize-allarches/>
+	<upstream>
+		<remote-id type="github">qutebrowser/qutebrowser</remote-id>
+	</upstream>
+	<use>
+		<flag name="adblock">Enable Brave's ABP-style adblocker library
+			for improved adblocking</flag>
+		<flag name="qt6">Add support for the Qt 6 application and UI
+			framework</flag>
+		<flag name="widevine">Unsupported closed-source DRM capability
+			(required by Netflix VOD)</flag>
+	</use>
+</pkgmetadata>
