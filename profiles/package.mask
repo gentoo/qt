@@ -6,6 +6,7 @@
 
 # Jimi Huotari <chiitoo@gentoo.org> (2021-11-11)
 # Very work in progress.
+=dev-qt/qt5compat-6*
 =dev-qt/qtbase-6*
 =dev-qt/qtdeclarative-6*
 =dev-qt/qtlocation-6*
