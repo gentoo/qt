@@ -87,6 +87,8 @@ DEPEND="${RDEPEND}
 	media-libs/libglvnd
 "
 
+PATCHES=( "${FILESDIR}/${PN}-6.3.0-system-icu.patch" ) # https://bugs.gentoo.org/838742
+
 python_check_deps() {
 	has_version "dev-python/html5lib[${PYTHON_USEDEP}]"
 }
