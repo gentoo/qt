@@ -17,6 +17,7 @@
 =dev-qt/qtshadertools-6*
 =dev-qt/qtsvg-6*
 =dev-qt/qttools-6*
+=dev-qt/qtwayland-6*
 =dev-qt/qtwebchannel-6*
 =dev-qt/qtwebengine-6*
 =dev-qt/qtwebsockets-6*
