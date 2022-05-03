@@ -28,7 +28,8 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-0.11.0
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.9.0
+	>=app-misc/qtxdg-tools-3.9.1
+	>=dev-libs/libqtxdg-3.9.1
 	>=dev-qt/qtcore-5.15:5
 	>=dev-qt/qtdbus-5.15:5
 	>=dev-qt/qtgui-5.15:5
