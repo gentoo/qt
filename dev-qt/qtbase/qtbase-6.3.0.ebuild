@@ -71,7 +71,7 @@ DEPEND="
 	gui? ( media-libs/libpng:0= )
 	icu? ( dev-libs/icu:= )
 	!icu? ( virtual/libiconv )
-	jpeg? ( virtual/jpeg:0 )
+	jpeg? ( media-libs/libjpeg-turbo:= )
 	libinput? (
 		dev-libs/libinput:=
 		>=x11-libs/libxkbcommon-0.5.0

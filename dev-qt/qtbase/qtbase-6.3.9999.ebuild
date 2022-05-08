@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -71,7 +71,7 @@ DEPEND="
 	gui? ( media-libs/libpng:0= )
 	icu? ( dev-libs/icu:= )
 	!icu? ( virtual/libiconv )
-	jpeg? ( virtual/jpeg:0 )
+	jpeg? ( media-libs/libjpeg-turbo:= )
 	libinput? (
 		dev-libs/libinput:=
 		>=x11-libs/libxkbcommon-0.5.0
