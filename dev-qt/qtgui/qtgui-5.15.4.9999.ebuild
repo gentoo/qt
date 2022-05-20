@@ -38,7 +38,7 @@ RDEPEND="
 		x11-libs/libdrm
 	)
 	evdev? ( sys-libs/mtdev )
-	jpeg? ( virtual/jpeg )
+	jpeg? ( media-libs/libjpeg-turbo:= )
 	gles2-only? ( media-libs/libglvnd )
 	!gles2-only? ( media-libs/libglvnd[X] )
 	libinput? (
