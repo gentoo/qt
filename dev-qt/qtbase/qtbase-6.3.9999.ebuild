@@ -12,7 +12,8 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 fi
 
 # Qt Modules
-IUSE="+concurrent +dbus +gui +network +sql opengl +widgets +xml"
+# TODO: Restore/patch xml flag support (seems fixed in 6.9999).
+IUSE="+concurrent +dbus +gui +network +sql opengl +widgets"
 REQUIRED_USE="
 	opengl? ( gui ) widgets? ( gui )
 	X? ( || ( evdev libinput ) )
@@ -129,7 +130,6 @@ src_configure() {
 		$(qt_feature systemd journald)
 		-DQT_FEATURE_testlib=ON # TODO: install QtTest by default?
 		$(qt_feature udev libudev)
-		$(qt_feature xml)
 	)
 	use gui && mycmakeargs+=(
 		$(qt_feature accessibility accessibility_atspi_bridge)
