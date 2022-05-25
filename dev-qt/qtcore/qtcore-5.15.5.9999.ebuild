@@ -4,7 +4,7 @@
 EAPI=8
 
 QT5_MODULE="qtbase"
-inherit linux-info qt5-build
+inherit linux-info flag-o-matic qt5-build
 
 DESCRIPTION="Cross-platform application development framework"
 SLOT=5/${QT5_PV}
@@ -57,6 +57,25 @@ src_prepare() {
 
 	# fix missing qt_version_tag symbol w/ LTO, bug 674382
 	sed -i -e 's/^gcc:ltcg/gcc/' src/corelib/global/global.pri || die
+
+	# Broken with FORTIFY_SOURCE=3
+	# Our toolchain sets F_S=2 by default w/ >= -O2, so we need
+	# to unset F_S first, then explicitly set 2, to negate any default
+	# and anything set by the user if they're choosing 3 (or if they've
+	# modified GCC to set 3).
+	#
+	# Refs:
+	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105078
+	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105709
+	# https://bugreports.qt.io/browse/QTBUG-103782
+	# bug #847145
+	if is-flagq '-O[23]' || is-flagq '-Ofast' ; then
+		# We can't unconditionally do this b/c we fortify needs
+		# some level of optimisation.
+		filter-flags -D_FORTIFY_SOURCE=3
+		# (Qt doesn't seem to respect CPPFLAGS?)
+		append-flags -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
+	fi
 
 	qt5-build_src_prepare
 }
