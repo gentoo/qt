@@ -6,6 +6,7 @@
 		<name>Gentoo Qt Project</name>
 	</maintainer>
 	<use>
+		<flag name="brotli">Enable support for Brotli decompression</flag>
 		<flag name="concurrent">Build Qt6Concurrent module</flag>
 		<flag name="dbus">Build Qt6DBus module</flag>
 		<flag name="egl">Enable EGL integration</flag>
@@ -14,7 +15,6 @@
 		<flag name="gssapi">Enable support for GSSAPI (<pkg>virtual/krb5</pkg>)</flag>
 		<flag name="gtk">Build the GTK platform theme plugin</flag>
 		<flag name="gui">Build Qt6Gui module</flag>
-		<flag name="ico">Enable ico image support</flag>
 		<flag name="libinput">Enable support for input devices via <pkg>dev-libs/libinput</pkg></flag>
 		<flag name="libproxy">Use <pkg>net-libs/libproxy</pkg> for automatic HTTP/SOCKS proxy configuration</flag>
 		<flag name="network">Build Qt6Network module</flag>

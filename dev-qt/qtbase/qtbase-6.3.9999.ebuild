@@ -13,14 +13,15 @@ fi
 
 # Qt Modules
 # TODO: Restore/patch xml flag support (seems fixed in 6.9999).
-IUSE="+concurrent +dbus +gui +network +sql opengl +widgets"
+IUSE="+concurrent +dbus +gui +network +sql opengl +widgets zstd"
 REQUIRED_USE="
-	opengl? ( gui ) widgets? ( gui )
+	opengl? ( gui )
+	widgets? ( gui )
 	X? ( || ( evdev libinput ) )
 "
 
-QTGUI_IUSE="accessibility egl eglfs evdev +gif gles2-only +ico +jpeg +libinput tslib tuio vulkan +X"
-QTNETWORK_IUSE="gssapi libproxy sctp +ssl vnc"
+QTGUI_IUSE="accessibility egl eglfs evdev gles2-only +jpeg +libinput tslib tuio vulkan +X"
+QTNETWORK_IUSE="brotli gssapi libproxy sctp +ssl vnc"
 QTSQL_IUSE="freetds mysql oci8 odbc postgres +sqlite"
 IUSE+=" ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} cups gtk icu systemd +udev"
 # QtPrintSupport = QtGui + QtWidgets enabled.
@@ -44,9 +45,6 @@ REQUIRED_USE+="
 # qtimageformats: mng not done yet, qtimageformats.git upstream commit 9443239c
 # qtnetwork: connman, networkmanager
 DEPEND="
-	app-arch/brotli:=
-	app-arch/libarchive[zstd]
-	app-arch/zstd:=
 	app-crypt/libb2
 	dev-libs/double-conversion:=
 	dev-libs/glib:2
@@ -58,7 +56,7 @@ DEPEND="
 	media-libs/tiff:0
 	>=sys-apps/dbus-1.4.20
 	sys-libs/zlib:=
-	virtual/opengl
+	brotli? ( app-arch/brotli:= )
 	evdev? ( sys-libs/mtdev )
 	freetds? ( dev-db/freetds )
 	gles2-only? ( media-libs/libglvnd )
@@ -84,7 +82,7 @@ DEPEND="
 	postgres? ( dev-db/postgresql:* )
 	sctp? ( kernel_linux? ( net-misc/lksctp-tools ) )
 	sqlite? ( dev-db/sqlite:3 )
-	ssl? ( dev-libs/openssl:0= )
+	ssl? ( dev-libs/openssl:= )
 	systemd? ( sys-apps/systemd:= )
 	tslib? ( >=x11-libs/tslib-1.21 )
 	udev? ( virtual/libudev:= )
@@ -101,6 +99,7 @@ DEPEND="
 		x11-libs/xcb-util-renderutil
 		x11-libs/xcb-util-wm
 	)
+	zstd? ( app-arch/zstd:= )
 "
 RDEPEND="${DEPEND}"
 
@@ -120,16 +119,16 @@ src_configure() {
 		-DINSTALL_MKSPECSDIR=${QT6_ARCHDATADIR}/mkspecs
 		-DINSTALL_EXAMPLESDIR=${QT6_EXAMPLESDIR}
 		-DQT_FEATURE_androiddeployqt=OFF
-		-DQT_FEATURE_zstd=ON
 		$(qt_feature concurrent)
 		$(qt_feature dbus)
 		$(qt_feature gui)
+		$(qt_feature gui testlib)
 		$(qt_feature icu)
 		$(qt_feature network)
 		$(qt_feature sql)
 		$(qt_feature systemd journald)
-		-DQT_FEATURE_testlib=ON # TODO: install QtTest by default?
 		$(qt_feature udev libudev)
+		$(qt_feature zstd)
 	)
 	use gui && mycmakeargs+=(
 		$(qt_feature accessibility accessibility_atspi_bridge)
@@ -138,7 +137,7 @@ src_configure() {
 		$(qt_feature eglfs eglfs_gbm)
 		$(qt_feature evdev)
 		$(qt_feature evdev mtdev)
-		$(qt_feature gif)
+		-DQT_FEATURE_gif=ON
 		$(qt_feature jpeg)
 		$(qt_feature opengl)
 		$(qt_feature gles2-only opengles2)
@@ -158,6 +157,7 @@ src_configure() {
 		mycmakeargs+=( -DQT_FEATURE_xkbcommon=ON )
 	fi
 	use network && mycmakeargs+=(
+		$(qt_feature brotli)
 		$(qt_feature gssapi)
 		$(qt_feature libproxy)
 		$(qt_feature sctp)
