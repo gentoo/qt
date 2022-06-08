@@ -26,7 +26,6 @@ QTSQL_IUSE="freetds mysql oci8 odbc postgres +sqlite"
 IUSE+=" ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} cups gtk icu systemd +udev"
 # QtPrintSupport = QtGui + QtWidgets enabled.
 # ibus = xkbcommon + dbus, and xkbcommon needs either libinput or X
-# moved vnc logically to QtNetwork as that is upstream condition for it
 REQUIRED_USE+="
 	$(printf '%s? ( gui ) ' ${QTGUI_IUSE//+/})
 	$(printf '%s? ( network ) ' ${QTNETWORK_IUSE//+/})
@@ -38,6 +37,7 @@ REQUIRED_USE+="
 	gui? ( || ( eglfs X ) || ( libinput X ) )
 	libinput? ( udev )
 	sql? ( || ( freetds mysql oci8 odbc postgres sqlite ) )
+	vnc? ( gui )
 	X? ( gles2-only? ( egl ) )
 "
 
@@ -173,5 +173,6 @@ src_configure() {
 		$(qt_feature sqlite sql_sqlite)
 		$(qt_feature sqlite system_sqlite)
 	)
+
 	qt6-build_src_configure
 }
