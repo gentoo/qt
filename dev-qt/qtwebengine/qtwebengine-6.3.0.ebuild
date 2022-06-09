@@ -87,7 +87,10 @@ DEPEND="${RDEPEND}
 	media-libs/libglvnd
 "
 
-PATCHES=( "${FILESDIR}/${PN}-6.3.0-system-icu.patch" ) # https://bugs.gentoo.org/838742
+PATCHES=(
+	"${FILESDIR}/${PN}-6.3.0-system-icu.patch" # https://bugs.gentoo.org/838742
+	"${FILESDIR}/${PN}-6.3.0-fix-user-navigation.patch" # https://bugreports.qt.io/browse/QTBUG-103778
+)
 
 python_check_deps() {
 	has_version "dev-python/html5lib[${PYTHON_USEDEP}]"
