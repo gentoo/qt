@@ -8,7 +8,7 @@ PYTHON_REQ_USE="xml(+)"
 CHROMIUM_VER="94.0.4606.126"
 CHROMIUM_PATCHES_VER="99.0.4844.84"
 
-inherit estack flag-o-matic multiprocessing python-any-r1 qt6-build
+inherit check-reqs estack flag-o-matic multiprocessing python-any-r1 qt6-build
 
 DESCRIPTION="Library for rendering dynamic web content in Qt6 C++ and QML applications"
 
@@ -22,9 +22,8 @@ IUSE="
 "
 REQUIRED_USE="designer? ( widgets )"
 
-BDEPEND="${PYTHON_DEPS}
+BDEPEND="
 	$(python_gen_any_dep 'dev-python/html5lib[${PYTHON_USEDEP}]')
-	>=dev-util/gn-0.1807
 	dev-util/gperf
 	dev-util/ninja
 	dev-util/re2c
@@ -49,7 +48,7 @@ RDEPEND="
 	media-libs/harfbuzz:=
 	media-libs/lcms:2
 	media-libs/libjpeg-turbo:=
-	media-libs/libpng:0=
+	media-libs/libpng:=
 	>=media-libs/libvpx-1.5:=[svc(+)]
 	media-libs/libwebp:=
 	media-libs/opus
@@ -75,9 +74,9 @@ RDEPEND="
 	alsa? ( media-libs/alsa-lib )
 	geolocation? ( =dev-qt/qtpositioning-${PV}* )
 	kerberos? ( virtual/krb5 )
-	pipewire? ( media-video/pipewire )
+	pipewire? ( media-video/pipewire:= )
 	pulseaudio? ( media-sound/pulseaudio:= )
-	system-ffmpeg? ( media-video/ffmpeg:0= )
+	system-ffmpeg? ( media-video/ffmpeg:= )
 	system-icu? ( >=dev-libs/icu-69.1:= )
 	widgets? (
 		=dev-qt/qtbase-${PV}*[widgets]
@@ -88,7 +87,51 @@ DEPEND="${RDEPEND}
 "
 
 python_check_deps() {
-	has_version "dev-python/html5lib[${PYTHON_USEDEP}]"
+	python_has_version "dev-python/html5lib[${PYTHON_USEDEP}]"
+}
+
+qtwebengine_check-reqs() {
+	# bug #307861
+	eshopts_push -s extglob
+	if is-flagq '-g?(gdb)?([1-9])'; then
+		ewarn "You have enabled debug info (probably have -g or -ggdb in your CFLAGS/CXXFLAGS)."
+		ewarn "You may experience really long compilation times and/or increased memory usage."
+		ewarn "If compilation fails, please try removing -g/-ggdb before reporting a bug."
+	fi
+	eshopts_pop
+
+	[[ ${MERGE_TYPE} == binary ]] && return
+
+	# (check-reqs added for bug #570534)
+	#
+	# Estimate the amount of RAM required
+	# Multiplier is *10 because Bash doesn't do floating point maths.
+	# Let's crudely assume ~2GB per compiler job for GCC.
+	local multiplier=20
+
+	# And call it ~1.5GB for Clang.
+	if tc-is-clang ; then
+		multiplier=15
+	fi
+
+	local CHECKREQS_DISK_BUILD="7G"
+	local CHECKREQS_DISK_USR="150M"
+	if ! has "distcc" ${FEATURES} ; then
+		# bug #830661
+		# Not super realistic to come up with good estimates for distcc right now
+		local CHECKREQS_MEMORY=$(($(makeopts_jobs)*multiplier/10))G
+	fi
+
+	check-reqs_${EBUILD_PHASE_FUNC}
+}
+
+pkg_pretend() {
+	qtwebengine_check-reqs
+}
+
+pkg_setup() {
+	qtwebengine_check-reqs
+	python-any-r1_pkg_setup
 }
 
 pkg_preinst() {
@@ -122,8 +165,8 @@ src_unpack() {
 
 src_prepare() {
 	# bug 620444 - ensure local headers are used
-	find "${S}" -type f -name "*.pr[fio]" | \
-		xargs sed -i -e 's|INCLUDEPATH += |&$${QTWEBENGINE_ROOT}_build/include $${QTWEBENGINE_ROOT}/include |' || die
+	find . -type f -name "*.pr[fio]" -exec \
+		sed -i -e 's|INCLUDEPATH += |&$${QTWEBENGINE_ROOT}_build/include $${QTWEBENGINE_ROOT}/include |' {} + || die
 
 	if use system-icu; then
 		# Sanity check to ensure that bundled copy of ICU is not used.
@@ -142,35 +185,35 @@ src_prepare() {
 }
 
 src_configure() {
-	export NINJA_PATH=/usr/bin/ninja
+	export NINJA_PATH="${BROOT}"/usr/bin/ninja
 	export NINJAFLAGS="${NINJAFLAGS:--j$(makeopts_jobs) -l$(makeopts_loadavg "${MAKEOPTS}" 0) -v}"
 
 	local mycmakeargs=(
-#		-DQT_FEATURE_accessibility=off
-#		-DQT_FEATURE_force_asserts=off
-#		-DQT_FEATURE_opengl=off
-#		-DQT_FEATURE_printer=off
+		#-DQT_FEATURE_accessibility=off
+		#-DQT_FEATURE_force_asserts=off
+		#-DQT_FEATURE_opengl=off
+		#-DQT_FEATURE_printer=off
 		-DQT_FEATURE_qtpdf_build=off
 		-DQT_FEATURE_qtpdf_quick_build=off
 		-DQT_FEATURE_qtpdf_widgets_build=off
 		-DQT_FEATURE_qtwebengine_build=on
 		-DQT_FEATURE_qtwebengine_quick_build=on
 		-DQT_FEATURE_qtwebengine_widgets_build=on
-#		-DQT_FEATURE_ssl=off
-#		-DQT_FEATURE_static=off
-#		-DQT_FEATURE_system_zlib=off
-#		-DQT_FEATURE_system_png=off
-#		-DQT_FEATURE_system_jpeg=off
-#		-DQT_FEATURE_system_freetype=off
-#		-DQT_FEATURE_system_harfbuzz=off
-#		-DQT_FEATURE_use_gold_linker=off
-#		-DQT_FEATURE_use_lld_linker=off
+		#-DQT_FEATURE_ssl=off
+		#-DQT_FEATURE_static=off
+		#-DQT_FEATURE_system_zlib=off
+		#-DQT_FEATURE_system_png=off
+		#-DQT_FEATURE_system_jpeg=off
+		#-DQT_FEATURE_system_freetype=off
+		#-DQT_FEATURE_system_harfbuzz=off
+		#-DQT_FEATURE_use_gold_linker=off
+		#-DQT_FEATURE_use_lld_linker=off
 		-DQT_FEATURE_webengine_embedded_build=off
 		-DQT_FEATURE_webengine_extensions=on
-#		-DQT_FEATURE_webengine_full_debug_info=$(usex debug)
+		#-DQT_FEATURE_webengine_full_debug_info=$(usex debug)
 		-DQT_FEATURE_webengine_geolocation=$(usex geolocation on off)
 		-DQT_FEATURE_webengine_jumbo_build=$(usex jumbo-build)
-#		-DQT_FEATURE_webengine_jumbo_file_merge_limit
+		#-DQT_FEATURE_webengine_jumbo_file_merge_limit
 		-DQT_FEATURE_webengine_kerberos=$(usex kerberos on off)
 		-DQT_FEATURE_webengine_native_spellchecker=off
 		-DQT_FEATURE_webengine_ozone_x11=on
@@ -183,7 +226,6 @@ src_configure() {
 		-DQT_FEATURE_webengine_system_libwebp=on
 		-DQT_FEATURE_webengine_system_alsa=$(usex alsa on off)
 		-DQT_FEATURE_webengine_system_ffmpeg=$(usex system-ffmpeg)
-		-DQT_FEATURE_webengine_system_gn=on
 		-DQT_FEATURE_webengine_system_icu=$(usex system-icu)
 		-DQT_FEATURE_webengine_system_libevent=on
 		-DQT_FEATURE_webengine_system_libpci=on
@@ -193,7 +235,7 @@ src_configure() {
 		-DQT_FEATURE_webengine_webchannel=on
 		-DQT_FEATURE_webengine_webrtc=on
 		-DQT_FEATURE_webengine_webrtc_pipewire=$(usex pipewire on off)
-#		-DQT_FEATURE_xcb=off
+		#-DQT_FEATURE_xcb=off
 	)
 
 	qt6-build_src_configure
