@@ -12,8 +12,7 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 fi
 
 DEPEND="
-	=dev-qt/qtbase-${PV}*
+	=dev-qt/qtbase-${PV}*[gui,widgets]
 	sys-libs/zlib:=
-
 "
 RDEPEND="${DEPEND}"
