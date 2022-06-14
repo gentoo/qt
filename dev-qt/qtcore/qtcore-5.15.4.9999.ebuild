@@ -42,11 +42,6 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 	!:xml
 )
 
-PATCHES=(
-	"${FILESDIR}"/${PN}-5.14.1-cmake-macro-backward-compat.patch # bug 703306
-	"${FILESDIR}"/${PN}-5.15.3-pthread.patch # bug 803470
-)
-
 pkg_pretend() {
 	use kernel_linux || return
 	get_running_version
