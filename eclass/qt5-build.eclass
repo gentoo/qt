@@ -122,7 +122,7 @@ if [[ ${PN} != qtwebengine ]]; then
 	esac
 fi
 
-if [[ ${QT5_MODULE} == qtbase ]] && [[ ${PV} == 5.15.[4-9]* ]]; then
+if [[ ${QT5_MODULE} == qtbase ]] && [[ ${PV} == 5.15.[5-9]* ]]; then
 	_QT5_GENTOOPATCHSET_REV=1
 	SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/qtbase-5.15-gentoo-patchset-${_QT5_GENTOOPATCHSET_REV}.tar.xz"
 fi
