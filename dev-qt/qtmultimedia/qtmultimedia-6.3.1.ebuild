@@ -14,9 +14,10 @@ fi
 IUSE="gstreamer"
 
 RDEPEND="
-	=dev-qt/qtbase-${PV}*
+	=dev-qt/qtbase-${PV}*[gui,network,widgets]
 	=dev-qt/qtdeclarative-${PV}*
 	=dev-qt/qtshadertools-${PV}*
+	=dev-qt/qtsvg-${PV}*
 	gstreamer? (
 		dev-libs/glib:2
 		media-libs/gstreamer:1.0
@@ -36,5 +37,6 @@ src_configure() {
 		-DQT_FEATURE_pulseaudio=off
 		$(qt_feature gstreamer)
 	)
+
 	qt6-build_src_configure
 }
