@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -12,9 +12,8 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 fi
 
 DEPEND="
-	=dev-qt/qtbase-${PV}*
+	=dev-qt/qtbase-${PV}*[dbus,gui,widgets]
 	=dev-qt/qtdeclarative-${PV}*
+	=dev-qt/qtserialport-${PV}*
 "
-RDEPEND="${DEPEND}
-	!<dev-qt/qtlocation-6.2.2:6
-"
+RDEPEND="${DEPEND}"

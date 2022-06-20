@@ -12,9 +12,8 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 fi
 
 DEPEND="
-	=dev-qt/qtbase-${PV}*
+	=dev-qt/qtbase-${PV}*[dbus,gui,widgets]
 	=dev-qt/qtdeclarative-${PV}*
+	=dev-qt/qtserialport-${PV}*
 "
-RDEPEND="${DEPEND}
-	!<dev-qt/qtlocation-6.2.2:6
-"
+RDEPEND="${DEPEND}"
