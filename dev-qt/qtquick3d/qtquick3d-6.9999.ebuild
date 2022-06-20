@@ -15,7 +15,7 @@ elif [[ ${QT6_BUILD_TYPE} == live ]]; then
 fi
 
 DEPEND="
-	=dev-qt/qtbase-${PV}*
+	=dev-qt/qtbase-${PV}*[concurrent,network,widgets]
 	=dev-qt/qtdeclarative-${PV}*
 	=dev-qt/qtshadertools-${PV}*
 	=dev-qt/qtquicktimeline-${PV}*
@@ -27,5 +27,6 @@ src_configure() {
 	local mycmakeargs=(
 		-DQT_FEATURE_system_assimp=ON
 	)
+
 	qt6-build_src_configure
 }
