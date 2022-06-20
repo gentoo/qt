@@ -173,5 +173,6 @@ src_configure() {
 		$(qt_feature sqlite sql_sqlite)
 		$(qt_feature sqlite system_sqlite)
 	)
+
 	qt6-build_src_configure
 }
