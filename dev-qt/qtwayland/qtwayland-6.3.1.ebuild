@@ -11,6 +11,7 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64"
 fi
 
+BDEPEND="dev-util/wayland-scanner"
 DEPEND="
 	dev-libs/wayland
 	=dev-qt/qtbase-${PV}*[gui,opengl]
