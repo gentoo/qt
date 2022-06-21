@@ -14,11 +14,8 @@ fi
 IUSE="opengl sql widgets"
 
 DEPEND="
-	=dev-qt/qtbase-${PV}*[network]
+	=dev-qt/qtbase-${PV}*[network,opengl=,sql=,widgets=]
 	=dev-qt/qtshadertools-${PV}*
-	opengl? ( =dev-qt/qtbase-${PV}*[opengl] )
-	sql? ( =dev-qt/qtbase-${PV}*[sql] )
-	widgets? ( =dev-qt/qtbase-${PV}*[widgets] )
 "
 RDEPEND="${DEPEND}"
 
