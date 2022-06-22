@@ -11,7 +11,7 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64"
 fi
 
-IUSE="opengl sql widgets"
+IUSE="opengl +sql +widgets"
 
 DEPEND="
 	=dev-qt/qtbase-${PV}*[network,opengl=,sql=,widgets=]
