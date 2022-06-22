@@ -19,7 +19,7 @@ DEPEND="
 	=dev-qt/qtdeclarative-${PV}*
 	=dev-qt/qtshadertools-${PV}*
 	=dev-qt/qtquicktimeline-${PV}*
-	media-libs/assimp
+	media-libs/assimp:=
 "
 RDEPEND="${DEPEND}"
 
