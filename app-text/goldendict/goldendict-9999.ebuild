@@ -56,21 +56,18 @@ src_prepare() {
 
 	# fix installation path
 	sed -i -e '/PREFIX = /s:/usr/local:/usr:' ${PN}.pro || die
-
-	# add trailing semicolon
-	sed -i -e '/^Categories/s/$/;/' redist/${PN}.desktop || die
 }
 
 src_configure() {
 	local myconf=()
 	use ffmpeg || myconf+=( DISABLE_INTERNAL_PLAYER=1 )
 
-	eqmake5 "${myconf[@]}"
+	eqmake5 "${myconf[@]}" ${PN}.pro
 }
 
 src_install() {
 	dobin ${PN}
-	domenu redist/${PN}.desktop
+	domenu redist/*.desktop
 	doicon redist/icons/${PN}.png
 
 	insinto /usr/share/apps/${PN}/locale
