@@ -13,8 +13,8 @@ if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
 fi
 
-IUSE="accessibility dbus egl eglfs evdev +gif gles2-only ibus jpeg
-	+libinput linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
+IUSE="accessibility dbus egl eglfs evdev gles2-only ibus jpeg +libinput
+	linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
 	|| ( eglfs linuxfb vnc X )
 	accessibility? ( dbus X )
@@ -96,7 +96,6 @@ QT5_GENTOO_CONFIG=(
 	:fontconfig:
 	:system-freetype:FREETYPE
 	!:no-freetype:
-	!gif:no-gif:
 	gles2-only::OPENGL_ES
 	gles2-only:opengles2:OPENGL_ES_2
 	!:no-gui:
@@ -157,7 +156,6 @@ src_configure() {
 		$(qt_use evdev mtdev)
 		-fontconfig
 		-system-freetype
-		$(usev !gif -no-gif)
 		-gui
 		-system-harfbuzz
 		$(qt_use jpeg libjpeg system)
