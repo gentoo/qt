@@ -3,20 +3,19 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
+fi
+
 QT5_MODULE="qttools"
 inherit qt5-build
 
 DESCRIPTION="Command line client to QStandardPaths"
 
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
-fi
-
 IUSE=""
 
-DEPEND="
-	=dev-qt/qtcore-${QT5_PV}*
-"
+DEPEND="=dev-qt/qtcore-${QT5_PV}*"
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
