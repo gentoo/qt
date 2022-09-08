@@ -14,9 +14,7 @@ fi
 
 IUSE=""
 
-DEPEND="
-	=dev-qt/qtcore-${QT5_PV}*:5=
-"
+DEPEND="=dev-qt/qtcore-${QT5_PV}*:5="
 RDEPEND="${DEPEND}"
 
 QT5_TARGET_SUBDIRS=(
