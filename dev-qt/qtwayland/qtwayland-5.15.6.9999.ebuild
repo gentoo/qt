@@ -3,15 +3,16 @@
 
 EAPI=8
 
-inherit qt5-build
-
-DESCRIPTION="Wayland platform plugin for Qt"
-SLOT=5/${QT5_PV} # bug 815646
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
 	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
 fi
 
+inherit qt5-build
+
+DESCRIPTION="Wayland platform plugin for Qt"
+
+SLOT=5/${QT5_PV} # bug 815646
 IUSE="vulkan X"
 
 DEPEND="
@@ -28,9 +29,7 @@ DEPEND="
 	)
 "
 RDEPEND="${DEPEND}"
-BDEPEND="
-	dev-util/wayland-scanner
-"
+BDEPEND="dev-util/wayland-scanner"
 
 src_configure() {
 	local myqmakeargs=(

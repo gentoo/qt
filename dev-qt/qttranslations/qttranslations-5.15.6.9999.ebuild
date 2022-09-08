@@ -3,13 +3,14 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
+fi
+
 inherit qt5-build
 
 DESCRIPTION="Translation files for the Qt5 framework"
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
-fi
 
 IUSE=""
 

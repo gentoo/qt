@@ -3,18 +3,18 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
+fi
+
 QT5_MODULE="qtbase"
 inherit qt5-build
 
 DESCRIPTION="Set of components for creating classic desktop-style UIs for the Qt5 framework"
 
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
-fi
-
 # keep IUSE defaults in sync with qtgui
 IUSE="dbus gles2-only gtk +png +X"
-
 REQUIRED_USE="gtk? ( dbus )"
 
 DEPEND="

@@ -3,13 +3,14 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
+fi
+
 inherit qt5-build
 
 DESCRIPTION="Customizable input framework and virtual keyboard for Qt"
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
-fi
 
 # TODO: unbundle libraries for more layouts
 IUSE="handwriting +spell +X"

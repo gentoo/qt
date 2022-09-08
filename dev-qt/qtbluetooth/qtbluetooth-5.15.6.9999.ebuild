@@ -3,14 +3,15 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
+fi
+
 QT5_MODULE="qtconnectivity"
 inherit qt5-build
 
 DESCRIPTION="Bluetooth support library for the Qt5 framework"
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
-fi
 
 IUSE="qml"
 

@@ -3,16 +3,17 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
+fi
+
 QT5_MODULE="qtbase"
 inherit qt5-build
 
 DESCRIPTION="The GUI module and platform plugins for the Qt5 framework"
+
 SLOT=5/${QT5_PV} # bug 707658
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
-fi
-
 IUSE="accessibility dbus egl eglfs evdev gles2-only ibus jpeg +libinput
 	linuxfb +png tslib tuio +udev vnc vulkan wayland +X"
 REQUIRED_USE="
