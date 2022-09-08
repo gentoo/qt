@@ -3,16 +3,17 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
+fi
+
 QT5_MODULE="qtbase"
 inherit qt5-build
 
 DESCRIPTION="SQL abstraction library for the Qt5 framework"
+
 SLOT=5/${QT5_PV} # bug 639140
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~hppa ~loong ~ppc ~ppc64 ~riscv ~sparc ~x86"
-fi
-
 IUSE="freetds mysql oci8 odbc postgres +sqlite"
 REQUIRED_USE="
 	|| ( freetds mysql oci8 odbc postgres sqlite )
