@@ -74,6 +74,9 @@ PDEPEND="
 	wayland? ( =dev-qt/qtwayland-${QT5_PV}* )
 "
 
+# workaround the fact that QT_CONFIG(dbus) does not work for us
+PATCHES=( "${FILESDIR}/${P}-fix-no-dbus.patch" )
+
 QT5_TARGET_SUBDIRS=(
 	src/tools/qvkgen
 	src/gui
