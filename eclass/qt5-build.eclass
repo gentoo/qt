@@ -802,10 +802,22 @@ qt5_install_module_config() {
 
 		if [[ -z ${flag} ]] || { [[ ${flag} != '!' ]] && use ${flag}; }; then
 			[[ -n ${feature} ]] && qconfig_add+="${qconfig_add:+ }${feature}"
-			[[ -n ${macro} ]] && echo "#define QT_${macro}" >> "${T}"/${PN}-qconfig.h
+			if [[ -n ${macro} ]]; then
+				if [[ ${macro} == FEATURE_* ]]; then
+					echo "#define QT_${macro} 1" >> "${T}"/${PN}-qconfig.h
+				else
+					echo "#define QT_${macro}" >> "${T}"/${PN}-qconfig.h
+				fi
+			fi
 		else
 			[[ -n ${feature} ]] && qconfig_remove+="${qconfig_remove:+ }${feature}"
-			[[ -n ${macro} ]] && echo "#define QT_NO_${macro}" >> "${T}"/${PN}-qconfig.h
+			if [[ -n ${macro} ]]; then
+				if [[ ${macro} == FEATURE_* ]]; then
+					echo "#define QT_${macro} -1" >> "${T}"/${PN}-qconfig.h
+				else
+					echo "#define QT_NO_${macro}" >> "${T}"/${PN}-qconfig.h
+				fi
+			fi
 		fi
 	done
 
