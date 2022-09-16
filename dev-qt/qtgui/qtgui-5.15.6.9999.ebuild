@@ -98,6 +98,7 @@ QT5_GENTOO_CONFIG=(
 	!:no-freetype:
 	gles2-only::OPENGL_ES
 	gles2-only:opengles2:OPENGL_ES_2
+	::FEATURE_gui
 	!:no-gui:
 	:system-harfbuzz:
 	!:no-harfbuzz:
