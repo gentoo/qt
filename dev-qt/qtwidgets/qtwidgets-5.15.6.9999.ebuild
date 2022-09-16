@@ -40,7 +40,7 @@ QT5_TARGET_SUBDIRS=(
 QT5_GENTOO_CONFIG=(
 	dbus:xdgdesktopportal:
 	gtk:gtk3:
-	::widgets
+	::WIDGETS
 	!:no-widgets:
 )
 
