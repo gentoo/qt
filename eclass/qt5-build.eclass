@@ -672,6 +672,10 @@ qt5_base_configure() {
 		basedir=""
 	fi
 	cp src/corelib/global/qconfig.h "${basedir}"include/QtCore/ || die
+	if [[ ${PN} != qtcore ]]; then
+		mkdir "${basedir}"include/QtCore/private || die
+		cp src/corelib/global/qconfig_p.h "${basedir}"include/QtCore/private/ || die
+	fi
 
 	popd >/dev/null || die
 
