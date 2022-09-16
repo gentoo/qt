@@ -41,6 +41,7 @@ QT5_GENTOO_CONFIG=(
 	dbus:xdgdesktopportal:
 	gtk:gtk3:
 	::WIDGETS
+	::FEATURE_widgets
 	!:no-widgets:
 )
 
