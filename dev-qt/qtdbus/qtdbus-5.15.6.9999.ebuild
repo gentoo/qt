@@ -28,8 +28,8 @@ QT5_TARGET_SUBDIRS=(
 
 QT5_GENTOO_CONFIG=(
 	::DBUS
-	:dbus:
-	:dbus-linked:
+	:dbus:FEATURE_dbus
+	:dbus-linked:FEATURE_dbus_linked
 )
 
 QT5_GENTOO_PRIVATE_CONFIG=(
