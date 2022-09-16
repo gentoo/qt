@@ -803,7 +803,6 @@ qt5_install_module_config() {
 		local feature=${x%%:*}
 		x=${x#${feature}:}
 		local macro=${x}
-		macro=$(tr 'a-z-' 'A-Z_' <<< "${macro}")
 
 		if [[ -z ${flag} ]] || { [[ ${flag} != '!' ]] && use ${flag}; }; then
 			[[ -n ${feature} ]] && qconfig_add+=" ${feature}"
