@@ -6,7 +6,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_{9,10} )
 PYTHON_REQ_USE="xml(+)"
 CHROMIUM_VER="94.0.4606.126"
-CHROMIUM_PATCHES_VER="101.0.4951.64"
+CHROMIUM_PATCHES_VER="104.0.5112.81"
 
 inherit check-reqs estack flag-o-matic multiprocessing python-any-r1 qt6-build
 
@@ -17,7 +17,7 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="
-	alsa bindist designer geolocation +jumbo-build kerberos pipewire pulseaudio
+	alsa bindist designer geolocation +jumbo-build kerberos pulseaudio screencast
 	+system-ffmpeg +system-icu widgets
 "
 REQUIRED_USE="designer? ( widgets )"
@@ -74,8 +74,8 @@ RDEPEND="
 	alsa? ( media-libs/alsa-lib )
 	geolocation? ( =dev-qt/qtpositioning-${PV}* )
 	kerberos? ( virtual/krb5 )
-	pipewire? ( media-video/pipewire:= )
-	pulseaudio? ( media-sound/pulseaudio:= )
+	pulseaudio? ( media-libs/libpulse:= )
+	screencast? ( media-video/pipewire:= )
 	system-ffmpeg? ( media-video/ffmpeg:= )
 	system-icu? ( >=dev-libs/icu-69.1:= )
 	widgets? (
@@ -234,7 +234,7 @@ src_configure() {
 		-DQT_FEATURE_webengine_system_zlib=on
 		-DQT_FEATURE_webengine_webchannel=on
 		-DQT_FEATURE_webengine_webrtc=on
-		-DQT_FEATURE_webengine_webrtc_pipewire=$(usex pipewire on off)
+		-DQT_FEATURE_webengine_webrtc_pipewire=$(usex screencast on off)
 		#-DQT_FEATURE_xcb=off
 	)
 
