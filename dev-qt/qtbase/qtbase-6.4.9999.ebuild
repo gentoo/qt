@@ -11,22 +11,20 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64"
 fi
 
-# Qt Modules
-# TODO: Restore/patch xml flag support (seems fixed in 6.9999).
-IUSE="+concurrent +dbus +gui +network +sql opengl +widgets zstd"
-REQUIRED_USE="
-	opengl? ( gui )
-	widgets? ( gui )
-	X? ( || ( evdev libinput ) )
-"
-
+# QtPrintSupport = QtGui + QtWidgets enabled.
+# ibus = xkbcommon + dbus, and xkbcommon needs either libinput or X
+QTCORE_IUSE="icu systemd"
 QTGUI_IUSE="accessibility egl eglfs evdev gles2-only +jpeg +libinput tslib tuio vulkan +X"
 QTNETWORK_IUSE="brotli gssapi libproxy sctp +ssl vnc"
 QTSQL_IUSE="freetds mysql oci8 odbc postgres +sqlite"
-IUSE+=" ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} cups gtk icu systemd +udev"
-# QtPrintSupport = QtGui + QtWidgets enabled.
-# ibus = xkbcommon + dbus, and xkbcommon needs either libinput or X
-REQUIRED_USE+="
+QTWIDGETS_IUSE="gtk"
+
+# Qt Modules
+IUSE="
+	${QTCORE_IUSE} ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} ${QTWIDGETS_IUSE}
+	+concurrent cups +dbus +gui +network opengl +sql +udev +widgets +xml zstd
+"
+REQUIRED_USE="
 	$(printf '%s? ( gui ) ' ${QTGUI_IUSE//+/})
 	$(printf '%s? ( network ) ' ${QTNETWORK_IUSE//+/})
 	$(printf '%s? ( sql ) ' ${QTSQL_IUSE//+/})
@@ -36,9 +34,10 @@ REQUIRED_USE+="
 	gtk? ( widgets )
 	gui? ( || ( eglfs X ) || ( libinput X ) )
 	libinput? ( udev )
-	sql? ( || ( freetds mysql oci8 odbc postgres sqlite ) )
+	opengl? ( gui )
 	vnc? ( gui )
-	X? ( gles2-only? ( egl ) )
+	widgets? ( gui )
+	X? ( gles2-only? ( egl ) || ( evdev libinput ) )
 "
 
 # TODO:
@@ -128,6 +127,7 @@ src_configure() {
 		$(qt_feature sql)
 		$(qt_feature systemd journald)
 		$(qt_feature udev libudev)
+		$(qt_feature xml)
 		$(qt_feature zstd)
 	)
 	use gui && mycmakeargs+=(
