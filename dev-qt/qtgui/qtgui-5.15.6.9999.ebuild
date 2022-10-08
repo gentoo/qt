@@ -56,7 +56,7 @@ RDEPEND="
 		x11-libs/libICE
 		x11-libs/libSM
 		x11-libs/libX11
-		x11-libs/libxcb:=[xkb]
+		x11-libs/libxcb:=
 		x11-libs/libxkbcommon[X]
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
