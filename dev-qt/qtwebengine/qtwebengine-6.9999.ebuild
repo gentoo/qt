@@ -70,6 +70,7 @@ RDEPEND="
 	x11-libs/libXrandr
 	x11-libs/libXrender
 	x11-libs/libXScrnSaver
+	x11-libs/libxshmfence:=
 	x11-libs/libXtst
 	alsa? ( media-libs/alsa-lib )
 	geolocation? ( =dev-qt/qtpositioning-${PV}* )
