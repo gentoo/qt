@@ -32,6 +32,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-6.4.0-clang-15-build.patch" # Bug 873640
+)
+
 src_configure() {
 	local mycmakeargs=(
 		$(qt_feature assistant)
