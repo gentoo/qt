@@ -1,30 +1,27 @@
 Gentoo Bug: https://bugs.gentoo.org/873640
 Qt Bug: https://bugreports.qt.io/browse/QTBUG-106224
-Patch: https://codereview.qt-project.org/c/qt/qttools/+/430427
+Patch: https://codereview.qt-project.org/c/qt/qttools/+/436135
 
-From d5142f3ad86f1cc685a36e1cd4c8a401d8842f01 Mon Sep 17 00:00:00 2001
-From: =?utf8?q?Bernhard=20Rosenkr=C3=A4nzer?= <bero@lindev.ch>
-Date: Fri, 2 Sep 2022 19:11:27 +0200
-Subject: [PATCH] lupdate: Port to clang 15.0
+From 6495329e6de803025e6e4e8291b648f94893551c Mon Sep 17 00:00:00 2001
+From: =?utf8?q?Bj=C3=B6rn=20Sch=C3=A4pers?= <bjoern@hazardy.de>
+Date: Sat, 1 Oct 2022 07:19:52 +0200
+Subject: [PATCH] lupdate: Fix build with clang 15+
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf8
 Content-Transfer-Encoding: 8bit
 
-Clang 15.0 changes the API of InclusionDirective a little,
-passing an llvm::Optional<clang::FileEntryRef> instead of
-a const clang::FileEntry *
+The signature of InclusionDirective changed for clang 15.
 
-Adapt lupdate accordingly.
-
-Signed-off-by: Bernhard RosenkrÃ¤nzer <bero@lindev.ch>
-Change-Id: I9a5d8b54a8c223d06c439d8a17539c8e64c3e0a2
+Pick-to: 6.4
+Change-Id: Ic259b3508088671b40f6f615524137ce8837c487
+Reviewed-by: JÃ¶rg Bornemann <joerg.bornemann@qt.io>
 ---
- src/linguist/lupdate/lupdatepreprocessoraction.cpp | 11 ++++++++++-
+ src/linguist/lupdate/lupdatepreprocessoraction.cpp | 13 +++++++++++--
  src/linguist/lupdate/lupdatepreprocessoraction.h   |  7 ++++++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/src/linguist/lupdate/lupdatepreprocessoraction.cpp b/src/linguist/lupdate/lupdatepreprocessoraction.cpp
-index d7446c364e..91c061721e 100644
+index abfab34e5c..d963747d8e 100644
 --- a/src/linguist/lupdate/lupdatepreprocessoraction.cpp
 +++ b/src/linguist/lupdate/lupdatepreprocessoraction.cpp
 @@ -156,14 +156,23 @@ void LupdatePPCallbacks::SourceRangeSkipped(clang::SourceRange sourceRange,
@@ -33,10 +30,10 @@ index d7446c364e..91c061721e 100644
      const clang::Token & /*includeTok*/, clang::StringRef /*fileName*/, bool /*isAngled*/,
 -    clang::CharSourceRange /*filenameRange*/, const clang::FileEntry *file,
 +    clang::CharSourceRange /*filenameRange*/,
-+#if LLVM_VERSION_MAJOR < 15
-+    const clang::FileEntry *file,
++#if (LUPDATE_CLANG_VERSION >= LUPDATE_CLANG_VERSION_CHECK(15,0,0))
++    const clang::Optional<clang::FileEntryRef> file,
 +#else
-+    llvm::Optional<clang::FileEntryRef> file,
++    const clang::FileEntry *file,
 +#endif
      clang::StringRef /*searchPath*/, clang::StringRef /*relativePath*/,
      const clang::Module */*imported*/, clang::SrcMgr::CharacteristicKind /*fileType*/)
@@ -44,16 +41,17 @@ index d7446c364e..91c061721e 100644
      if (!file)
          return;
  
-+#if LLVM_VERSION_MAJOR < 15
-     clang::StringRef fileNameRealPath = file->tryGetRealPathName();
-+#else
-+    clang::StringRef fileNameRealPath = file->getFileEntry().tryGetRealPathName();
+-    clang::StringRef fileNameRealPath = file->tryGetRealPathName();
++    clang::StringRef fileNameRealPath = file->
++#if (LUPDATE_CLANG_VERSION >= LUPDATE_CLANG_VERSION_CHECK(15,0,0))
++        getFileEntry().
 +#endif
++        tryGetRealPathName();
      if (!LupdatePrivate::isFileSignificant(fileNameRealPath.str()))
          return;
  
 diff --git a/src/linguist/lupdate/lupdatepreprocessoraction.h b/src/linguist/lupdate/lupdatepreprocessoraction.h
-index b1ee468d4e..b615c8a213 100644
+index b1ee468d4e..3e44cee839 100644
 --- a/src/linguist/lupdate/lupdatepreprocessoraction.h
 +++ b/src/linguist/lupdate/lupdatepreprocessoraction.h
 @@ -51,7 +51,12 @@ private:
@@ -62,10 +60,10 @@ index b1ee468d4e..b615c8a213 100644
                              clang::StringRef /*fileName*/, bool /*isAngled*/,
 -                            clang::CharSourceRange /*filenameRange*/, const clang::FileEntry *file,
 +                            clang::CharSourceRange /*filenameRange*/,
-+#if LLVM_VERSION_MAJOR < 15
-+                            const clang::FileEntry *file,
++#if (LUPDATE_CLANG_VERSION >= LUPDATE_CLANG_VERSION_CHECK(15,0,0))
++                            const clang::Optional<clang::FileEntryRef> file,
 +#else
-+                            llvm::Optional<clang::FileEntryRef> file,
++                            const clang::FileEntry *file,
 +#endif
                              clang::StringRef /*searchPath*/, clang::StringRef /*relativePath*/,
                              const clang::Module */*imported*/,
