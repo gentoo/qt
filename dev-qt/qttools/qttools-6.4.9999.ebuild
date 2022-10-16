@@ -12,10 +12,9 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 fi
 
 IUSE="
-	assistant designer distancefieldgenerator linguist pixeltool
+	assistant designer distancefieldgenerator +linguist pixeltool
 	qdbus qdoc qtattributionsscanner qtdiag qtplugininfo
 "
-REQUIRED_USE="linguist? ( designer )"
 
 DEPEND="
 	=dev-qt/qtbase-${PV}*[network]
