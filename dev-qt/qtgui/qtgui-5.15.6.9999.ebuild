@@ -87,7 +87,7 @@ QT5_TARGET_SUBDIRS=(
 )
 
 QT5_GENTOO_CONFIG=(
-	accessibility:accessibility-atspi-bridge
+	accessibility:accessibility-atspi-bridge:ACCESSIBILITY_ATSPI_BRIDGE
 	egl:egl:
 	eglfs:eglfs:
 	eglfs:eglfs_egldevice:
@@ -99,14 +99,15 @@ QT5_GENTOO_CONFIG=(
 	!:no-freetype:
 	gles2-only::OPENGL_ES
 	gles2-only:opengles2:OPENGL_ES_2
+	::FEATURE_gui
 	!:no-gui:
 	:system-harfbuzz:
 	!:no-harfbuzz:
 	jpeg:system-jpeg:IMAGEFORMAT_JPEG
 	!jpeg:no-jpeg:
-	libinput
+	libinput:libinput:LIBINPUT
 	libinput:xkbcommon:
-	:opengl
+	:opengl:OPENGL
 	png:png:
 	png:system-png:IMAGEFORMAT_PNG
 	!png:no-png:

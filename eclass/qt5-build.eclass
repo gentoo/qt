@@ -672,6 +672,10 @@ qt5_base_configure() {
 		basedir=""
 	fi
 	cp src/corelib/global/qconfig.h "${basedir}"include/QtCore/ || die
+	if [[ ${PN} != qtcore ]]; then
+		mkdir "${basedir}"include/QtCore/private || die
+		cp src/corelib/global/qconfig_p.h "${basedir}"include/QtCore/private/ || die
+	fi
 
 	popd >/dev/null || die
 
@@ -790,7 +794,7 @@ qt5_qmake() {
 # Creates and installs gentoo-specific ${PN}-qconfig.{h,pri} and
 # ${PN}-qmodule.pri files.
 qt5_install_module_config() {
-	local x qconfig_add= qconfig_remove= qprivateconfig_add= qprivateconfig_remove=
+	local x flag feature macro qconfig_add qconfig_remove qprivateconfig_add qprivateconfig_remove
 
 	> "${T}"/${PN}-qconfig.h
 	> "${T}"/${PN}-qconfig.pri
@@ -798,19 +802,26 @@ qt5_install_module_config() {
 
 	# generate qconfig_{add,remove} and ${PN}-qconfig.h
 	for x in "${QT5_GENTOO_CONFIG[@]}"; do
-		local flag=${x%%:*}
-		x=${x#${flag}:}
-		local feature=${x%%:*}
-		x=${x#${feature}:}
-		local macro=${x}
-		macro=$(tr 'a-z-' 'A-Z_' <<< "${macro}")
+		IFS=: read -r flag feature macro <<<"${x}"
 
 		if [[ -z ${flag} ]] || { [[ ${flag} != '!' ]] && use ${flag}; }; then
-			[[ -n ${feature} ]] && qconfig_add+=" ${feature}"
-			[[ -n ${macro} ]] && echo "#define QT_${macro}" >> "${T}"/${PN}-qconfig.h
+			[[ -n ${feature} ]] && qconfig_add+="${qconfig_add:+ }${feature}"
+			if [[ -n ${macro} ]]; then
+				if [[ ${macro} == FEATURE_* ]]; then
+					echo "#define QT_${macro} 1" >> "${T}"/${PN}-qconfig.h
+				else
+					echo "#define QT_${macro}" >> "${T}"/${PN}-qconfig.h
+				fi
+			fi
 		else
-			[[ -n ${feature} ]] && qconfig_remove+=" ${feature}"
-			[[ -n ${macro} ]] && echo "#define QT_NO_${macro}" >> "${T}"/${PN}-qconfig.h
+			[[ -n ${feature} ]] && qconfig_remove+="${qconfig_remove:+ }${feature}"
+			if [[ -n ${macro} ]]; then
+				if [[ ${macro} == FEATURE_* ]]; then
+					echo "#define QT_${macro} -1" >> "${T}"/${PN}-qconfig.h
+				else
+					echo "#define QT_NO_${macro}" >> "${T}"/${PN}-qconfig.h
+				fi
+			fi
 		fi
 	done
 
@@ -830,15 +841,12 @@ qt5_install_module_config() {
 
 	# generate qprivateconfig
 	for x in "${QT5_GENTOO_PRIVATE_CONFIG[@]}"; do
-		local flag=${x%%:*}
-		x=${x#${flag}:}
-		local feature=${x%%:*}
-		x=${x#${feature}:}
+		IFS=: read -r flag feature <<<"${x}"
 
 		if [[ -z ${flag} ]] || { [[ ${flag} != '!' ]] && use ${flag}; }; then
-			[[ -n ${feature} ]] && qprivateconfig_add+=" ${feature}"
+			[[ -n ${feature} ]] && qprivateconfig_add+="${qprivateconfig_add:+ }${feature}"
 		else
-			[[ -n ${feature} ]] && qprivateconfig_remove+=" ${feature}"
+			[[ -n ${feature} ]] && qprivateconfig_remove+="${qprivateconfig_remove:+ }${feature}"
 		fi
 	done
 

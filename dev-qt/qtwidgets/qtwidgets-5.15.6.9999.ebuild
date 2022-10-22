@@ -40,7 +40,8 @@ QT5_TARGET_SUBDIRS=(
 QT5_GENTOO_CONFIG=(
 	dbus:xdgdesktopportal:
 	gtk:gtk3:
-	::widgets
+	::WIDGETS
+	::FEATURE_widgets
 	!:no-widgets:
 )
 
@@ -51,7 +52,7 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 src_configure() {
 	local myconf=(
 		-opengl $(usex gles2-only es2 desktop)
-		$(qt_use dbus)
+		$(usev dbus -dbus-linked)
 		$(qt_use gtk)
 		-gui
 		$(qt_use png libpng system)
