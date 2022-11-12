@@ -75,7 +75,13 @@ PDEPEND="
 "
 
 # workaround the fact that QT_CONFIG(dbus) does not work for us
-PATCHES=( "${FILESDIR}/${P}-fix-no-dbus.patch" )
+PATCHES=(
+	# Pending:
+	# https://invent.kde.org/qt/qt/qtbase/-/merge_requests/211
+	"${FILESDIR}/${P}-xcb-correctly-disconnect-xsettings-callbacks.patch"
+	# Downstream:
+	"${FILESDIR}/${P}-fix-no-dbus.patch"
+)
 
 QT5_TARGET_SUBDIRS=(
 	src/tools/qvkgen
