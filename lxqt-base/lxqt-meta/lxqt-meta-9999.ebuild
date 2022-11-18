@@ -9,15 +9,15 @@ DESCRIPTION="Meta ebuild for LXQt, the Lightweight Desktop Environment"
 HOMEPAGE="https://lxqt-project.org/"
 
 if [[ ${PV} != *9999* ]]; then
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="metapackage"
 SLOT="0"
 
-IUSE="+about admin archiver +display-manager +filemanager lximage
-minimal nls +policykit powermanagement processviewer screenshot +sddm
-ssh-askpass sudo terminal +trash"
+IUSE="+about admin archiver +desktop-portal +display-manager +filemanager
+lximage minimal nls +policykit powermanagement processviewer screenshot
++sddm ssh-askpass sudo terminal +trash"
 
 REQUIRED_USE="trash? ( filemanager )"
 
@@ -39,6 +39,7 @@ RDEPEND="
 	about? ( =lxqt-base/lxqt-about-${MY_PV}* )
 	admin? ( =lxqt-base/lxqt-admin-${MY_PV}* )
 	archiver? ( app-arch/lxqt-archiver )
+	desktop-portal? ( gui-libs/xdg-desktop-portal-lxqt )
 	display-manager? (
 		sddm? ( >=x11-misc/sddm-0.11.0 )
 		!sddm? ( x11-misc/lightdm )

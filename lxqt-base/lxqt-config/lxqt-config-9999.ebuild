@@ -15,7 +15,7 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="GPL-2 GPL-2+ GPL-3 LGPL-2 LGPL-2+ LGPL-2.1+ WTFPL-2"
@@ -26,7 +26,7 @@ BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.9.0
+	>=dev-libs/libqtxdg-3.10.0
 	>=dev-qt/qtcore-5.15:5
 	>=dev-qt/qtgui-5.15:5
 	>=dev-qt/qtwidgets-5.15:5
@@ -54,6 +54,7 @@ src_configure() {
 		-DWITH_MONITOR=$(usex monitor)
 		-DWITH_TOUCHPAD=$(usex touchpad)
 	)
+
 	cmake_src_configure
 }
 
