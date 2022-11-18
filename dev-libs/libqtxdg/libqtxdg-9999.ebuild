@@ -13,17 +13,16 @@ if [[ ${PV} == *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1+ Nokia-Qt-LGPL-Exception-1.1"
 SLOT="0"
 IUSE="test"
-
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	>=dev-util/lxqt-build-tools-0.11.0
+	>=dev-util/lxqt-build-tools-0.12.0
 	virtual/pkgconfig
 "
 RDEPEND="
@@ -44,6 +43,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_TESTS=$(usex test)
 	)
+
 	cmake_src_configure
 }
 
