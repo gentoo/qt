@@ -15,7 +15,7 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~loong ~riscv ~x86"
 fi
 
 LICENSE="GPL-2 GPL-2+"
@@ -23,7 +23,7 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.11.0
+	>=dev-util/lxqt-build-tools-0.12.0
 "
 DEPEND="
 	dev-libs/glib:2
@@ -32,7 +32,7 @@ DEPEND="
 	>=dev-qt/qtgui-5.15:5
 	>=dev-qt/qtwidgets-5.15:5
 	>=dev-qt/qtx11extras-5.15:5
-	>=x11-libs/libfm-qt-1.1:=
+	>=x11-libs/libfm-qt-1.2:=
 "
 RDEPEND="${DEPEND}"
 
