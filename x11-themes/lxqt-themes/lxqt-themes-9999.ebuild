@@ -13,13 +13,13 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.11.0"
+BDEPEND=">=dev-util/lxqt-build-tools-0.12.0"
 
 pkg_postinst() {
 	xdg_icon_cache_update
