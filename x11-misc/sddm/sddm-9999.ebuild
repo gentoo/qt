@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -32,7 +32,7 @@ COMMON_DEPEND="
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
 	x11-base/xorg-server
-	x11-libs/libxcb
+	x11-libs/libxcb:=
 	elogind? ( sys-auth/elogind )
 	pam? ( sys-libs/pam )
 	!pam? ( virtual/libcrypt:= )
