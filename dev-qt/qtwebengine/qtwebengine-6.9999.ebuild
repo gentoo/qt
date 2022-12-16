@@ -3,10 +3,10 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9,10} )
+PYTHON_COMPAT=( python3_{9..11} )
 PYTHON_REQ_USE="xml(+)"
-CHROMIUM_VER="102.0.5005.177"
-CHROMIUM_PATCHES_VER="104.0.5112.102"
+CHROMIUM_VER="106.0.5249.207"
+CHROMIUM_PATCHES_VER="106.0.5249.207"
 
 inherit check-reqs estack flag-o-matic multiprocessing python-any-r1 qt6-build
 
