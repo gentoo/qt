@@ -133,6 +133,7 @@ src_configure() {
 	use gui && mycmakeargs+=(
 		$(qt_feature accessibility accessibility_atspi_bridge)
 		$(qt_feature egl)
+		$(qt_feature egl xcb_egl_plugin)
 		$(qt_feature eglfs eglfs_egldevice)
 		$(qt_feature eglfs eglfs_gbm)
 		$(qt_feature evdev)
