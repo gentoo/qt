@@ -27,8 +27,8 @@ src_configure() {
 		$(qt_feature mng)
 		-DQT_FEATURE_tiff=ON
 		-DQT_FEATURE_webp=ON
-		-DQT_FEATURE_system-tiff=ON
-		-DQT_FEATURE_system-webp=ON
+		-DQT_FEATURE_system_tiff=ON
+		-DQT_FEATURE_system_webp=ON
 	)
 
 	qt6-build_src_configure
