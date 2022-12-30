@@ -66,33 +66,24 @@ REQUIRED_USE="
 "
 
 # minimum Qt version required
-QT_PV="5.15.2:5"
+QT_PV="6.6.0:6"
 
 BDEPEND="
-	>=dev-qt/linguist-tools-${QT_PV}
-	doc? ( >=dev-qt/qdoc-${QT_PV} )
-	help? ( !webengine? ( virtual/pkgconfig ) )
+	>=dev-qt/qttools-${QT_PV}[linguist(+)]
+	doc? ( >=dev-qt/qttools-${QT_PV}[qdoc(+)] )
 "
 CDEPEND="
 	clang? (
 		>=dev-cpp/yaml-cpp-0.6.2:=
 		sys-devel/clang:14=
 	)
-	>=dev-qt/qtconcurrent-${QT_PV}
-	>=dev-qt/qtcore-${QT_PV}
-	>=dev-qt/qtdeclarative-${QT_PV}[widgets]
-	>=dev-qt/qtgui-${QT_PV}
-	>=dev-qt/qtnetwork-${QT_PV}[ssl]
-	>=dev-qt/qtprintsupport-${QT_PV}
-	>=dev-qt/qtquickcontrols-${QT_PV}
-	>=dev-qt/qtsql-${QT_PV}[sqlite]
-	>=dev-qt/qtwidgets-${QT_PV}
-	>=dev-qt/qtxml-${QT_PV}
-	>=kde-frameworks/syntax-highlighting-5.87:5
+	>=dev-qt/qt5compat-${QT_PV}
+	>=dev-qt/qtbase-${QT_PV}[concurrent,gui,network,sql,widgets]
+	>=dev-qt/qtdeclarative-${QT_PV}
 
-	designer? ( >=dev-qt/designer-${QT_PV} )
+	designer? ( >=dev-qt/qttools-${QT_PV}[designer(+)] )
 	help? (
-		>=dev-qt/qthelp-${QT_PV}
+		>=dev-qt/qttools-${QT_PV}[assistant(+)]
 		webengine? ( >=dev-qt/qtwebengine-${QT_PV}[widgets] )
 		!webengine? ( dev-libs/gumbo )
 	)
@@ -100,6 +91,10 @@ CDEPEND="
 	perfprofiler? (
 		app-arch/zstd
 		dev-libs/elfutils
+	)
+	qml? (
+		>=dev-qt/qtshadertools-${QT_PV}
+		>=dev-qt/qtquick3d-${QT_PV}
 	)
 	serialterminal? ( >=dev-qt/qtserialport-${QT_PV} )
 	systemd? ( sys-apps/systemd:= )
@@ -112,13 +107,13 @@ DEPEND="
 		dev-cpp/eigen
 		dev-cpp/gtest
 		dev-libs/boost
-		>=dev-qt/qttest-${QT_PV}
+		>=dev-qt/qtbase-${QT_PV}[test]
 	)
 "
 RDEPEND="
 	${CDEPEND}
 	qml? ( >=dev-qt/qtquicktimeline-${QT_PV} )
-	wayland? ( >=dev-qt/qtgui-${QT_PV}[wayland] )
+	wayland? ( >=dev-qt/qtbase-${QT_PV}[egl] )
 "
 
 # qt translations must also be installed or qt-creator translations won't be loaded
@@ -166,7 +161,7 @@ src_prepare() {
 	cmake_src_prepare
 
 	# Remove automagic dep for qt5/qt6
-	sed -e "/^find_package(Qt6/,/else()/ s|if (NOT Qt6_FOUND)|if (1)|" \
+	sed -e "/^find_package(Qt6/,/else()/ s|if (NOT Qt6_FOUND)|if (0)|" \
 		-i cmake/FindQt5.cmake || die
 
 	# PLUGIN_RECOMMENDS is treated like a hard-dependency
@@ -246,8 +241,8 @@ src_configure() {
 		# Don't use SANITIZE_FLAGS to pass extra CXXFLAGS
 		-DWITH_SANITIZE=NO
 
-		# Don't build bundled ksyntaxhighlighting
-		-DBUILD_LIBRARY_KSYNTAXHIGHLIGHTING=NO
+		# Can only use bundled version until plasma-6 release
+		-DBUILD_LIBRARY_KSYNTAXHIGHLIGHTING=YES
 
 		-DWITH_DOCS=$(usex doc)
 		-DBUILD_DEVELOPER_DOCS=$(usex doc)
@@ -342,11 +337,11 @@ src_configure() {
 		-DBUILD_PLUGIN_CLANGFORMAT=$(usex clang)
 
 		# QML stuff
-		# -DBUILD_PLUGIN_QMLDESIGNER=$(usex qml) #Qt6 only
+		-DBUILD_PLUGIN_QMLDESIGNER=$(usex qml)
 		-DBUILD_PLUGIN_QMLJSEDITOR=$(usex qml)
 		-DBUILD_PLUGIN_QMLPREVIEW=$(usex qml)
 		-DBUILD_PLUGIN_QMLPROJECTMANAGER=$(usex qml)
-		# -DBUILD_PLUGIN_STUDIOWELCOME=$(usex qml) #Qt6 only
+		-DBUILD_PLUGIN_STUDIOWELCOME=$(usex qml)
 
 		# Don't spam "created by a different GCC executable [-Winvalid-pch]"
 		-DBUILD_WITH_PCH=NO
