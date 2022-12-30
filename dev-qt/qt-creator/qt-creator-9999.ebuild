@@ -226,6 +226,16 @@ src_prepare() {
 			src/libs/qlitehtml/src/CMakeLists.txt || die
 	fi
 
+	# QT Design Studio related. Default-disabled for now.
+	#
+	# # Use QmlDom from system's qtdeclarative instead of auto-downloading and building
+	# if use qml; then
+	# 	local PAT_REP='/\sget_and_add_as_subdirectory(/,/LIBRARY_OUTPUT_DIRECTORY>\")$/'
+	# 	sed -i -e "${PAT_REP}c\find_package(Qt5 COMPONENTS QmlDomPrivate REQUIRED)" \
+	# 		-e 's|qmldomlib|Qt6\:\:QmlDomPrivate|g' \
+	# 		src/plugins/qmldesigner/CMakeLists.txt || die
+	# fi
+
 	if use test; then
 		# Find "GoogleBenchmark" as "benchmark" and change bundled "Googletest"
 		# to external "GTest"
@@ -330,6 +340,12 @@ src_configure() {
 		-DBUILD_PLUGIN_IOS=NO
 		# Use portage to update
 		-DBUILD_PLUGIN_UPDATEINFO=NO
+
+		# QT Design Studio related. Not sure how neccessary these are but they
+		# should be left default-disabled for now
+		#
+		# -DWITH_QMLDOM=YES
+		# -DUSE_PROJECTSTORAGE=YES
 	)
 
 	# Clang stuff
