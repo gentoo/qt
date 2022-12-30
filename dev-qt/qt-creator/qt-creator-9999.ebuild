@@ -172,6 +172,21 @@ src_prepare() {
 	sed -i -e '/PLUGIN_RECOMMENDS /d' \
 		src/plugins/*/CMakeLists.txt || die
 
+	# fix translations
+	local languages=()
+	for lang in ${PLOCALES}; do
+		use l10n_${lang} && languages+=( "${lang/-/_}" )
+	done
+	sed -i -e "s|^set(languages.*|set(languages ${languages[*]})|" \
+		share/qtcreator/translations/CMakeLists.txt || die
+
+	# misc automagic
+	cmake_use_remove_addsubdirectory clang clangcodemodel \
+		src/plugins/CMakeLists.txt
+	cmake_use_remove_addsubdirectory clang clangformat \
+		src/plugins/CMakeLists.txt
+	cmake_use_remove_addsubdirectory clang clangtools \
+		src/plugins/CMakeLists.txt
 	cmake_use_remove_addsubdirectory glsl glsl src/libs/CMakeLists.txt
 	cmake_use_remove_addsubdirectory lsp languageserverprotocol \
 		src/libs/CMakeLists.txt tests/auto/CMakeLists.txt
@@ -182,26 +197,12 @@ src_prepare() {
 	cmake_use_remove_addsubdirectory test test \
 		src/plugins/mcusupport/CMakeLists.txt
 
-	# fix translations
-	local languages=()
-	for lang in ${PLOCALES}; do
-		use l10n_${lang} && languages+=( "${lang/-/_}" )
-	done
-	sed -i -e "s|^set(languages.*|set(languages ${languages[*]})|" \
-		share/qtcreator/translations/CMakeLists.txt || die
-
 	# remove bundled yaml-cpp
 	rm -r src/libs/3rdparty/yaml-cpp || die
 
 	# remove bundled qbs
 	rm -r src/shared/qbs || die
 
-	cmake_use_remove_addsubdirectory clang clangcodemodel \
-		src/plugins/CMakeLists.txt
-	cmake_use_remove_addsubdirectory clang clangformat \
-		src/plugins/CMakeLists.txt
-	cmake_use_remove_addsubdirectory clang clangtools \
-		src/plugins/CMakeLists.txt
 	# qt-creator hardcodes the CLANG_INCLUDE_DIR to the default.
 	# However, in sys-devel/clang, the directory changes with respect to
 	# -DCLANG_RESOURCE_DIR.  We sed in the correct include dir.
