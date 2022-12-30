@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-LLVM_MAX_SLOT=14
+LLVM_MAX_SLOT=15
 PLOCALES="cs da de fr hr ja pl ru sl uk zh-CN zh-TW"
 
 inherit cmake llvm optfeature virtualx xdg
@@ -75,7 +75,11 @@ BDEPEND="
 CDEPEND="
 	clang? (
 		>=dev-cpp/yaml-cpp-0.6.2:=
-		sys-devel/clang:14=
+		|| (
+			sys-devel/clang:15
+			sys-devel/clang:14
+		)
+		<sys-devel/clang-$((LLVM_MAX_SLOT + 1)):=
 	)
 	>=dev-qt/qt5compat-${QT_PV}
 	>=dev-qt/qtbase-${QT_PV}[concurrent,gui,network,sql,widgets]
@@ -175,8 +179,6 @@ src_prepare() {
 		src/libs/CMakeLists.txt
 	cmake_use_remove_addsubdirectory qml advanceddockingsystem \
 		src/libs/CMakeLists.txt
-	cmake_use_remove_addsubdirectory clang clangtools \
-		src/plugins/CMakeLists.txt
 	cmake_use_remove_addsubdirectory test test \
 		src/plugins/mcusupport/CMakeLists.txt
 
@@ -194,6 +196,12 @@ src_prepare() {
 	# remove bundled qbs
 	rm -r src/shared/qbs || die
 
+	cmake_use_remove_addsubdirectory clang clangcodemodel \
+		src/plugins/CMakeLists.txt
+	cmake_use_remove_addsubdirectory clang clangformat \
+		src/plugins/CMakeLists.txt
+	cmake_use_remove_addsubdirectory clang clangtools \
+		src/plugins/CMakeLists.txt
 	# qt-creator hardcodes the CLANG_INCLUDE_DIR to the default.
 	# However, in sys-devel/clang, the directory changes with respect to
 	# -DCLANG_RESOURCE_DIR.  We sed in the correct include dir.
@@ -332,10 +340,6 @@ src_configure() {
 		-DBUILD_EXECUTABLE_PERFPARSER=$(usex perfprofiler)
 		-DBUILD_EXECUTABLE_QML2PUPPET=$(usex qml)
 
-		# Clang stuff
-		-DBUILD_PLUGIN_CLANGCODEMODEL=$(usex clang)
-		-DBUILD_PLUGIN_CLANGFORMAT=$(usex clang)
-
 		# QML stuff
 		-DBUILD_PLUGIN_QMLDESIGNER=$(usex qml)
 		-DBUILD_PLUGIN_QMLJSEDITOR=$(usex qml)
@@ -353,12 +357,15 @@ src_configure() {
 		-DBUILD_PLUGIN_UPDATEINFO=NO
 	)
 
+	# Clang stuff
 	if use clang; then
 		mycmakeargs+=(
+			-DBUILD_PLUGIN_CLANGCODEMODEL=YES
+			-DBUILD_PLUGIN_CLANGFORMAT=YES
+			-DBUILD_PLUGIN_CLANGTOOLS=YES
+			-DCLANGTOOLING_LINK_CLANG_DYLIB=YES
 			-DClang_DIR="${CLANG_PREFIX}/$(get_libdir)/cmake/clang"
 			-DLLVM_DIR="${CLANG_PREFIX}/$(get_libdir)/cmake/llvm"
-			-DCLANGTOOLING_LINK_CLANG_DYLIB=YES
-			-DBUILD_PLUGIN_CLANGTOOLS=YES
 		)
 	fi
 	if use help; then
