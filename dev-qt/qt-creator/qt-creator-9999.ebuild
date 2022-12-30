@@ -35,7 +35,7 @@ QTCREATOR_PLUGINS=(
 	# Misc
 	+autotest beautifier coco conan cppcheck ctfvisualizer +designer docker
 	+help imageviewer modeling perfprofiler qmlprofiler scxml serialterminal
-	silversearcher valgrind
+	silversearcher squish valgrind
 
 	# Buildsystems
 	autotools +cmake incredibuild meson qbs +qmake
@@ -301,6 +301,7 @@ src_configure() {
 		-DBUILD_PLUGIN_SCXMLEDITOR=$(usex scxml)
 		-DBUILD_PLUGIN_SERIALTERMINAL=$(usex serialterminal)
 		-DBUILD_PLUGIN_SILVERSEARCHER=$(usex silversearcher)
+		-DBUILD_PLUGIN_SQUISH=$(usex squish)
 		-DBUILD_PLUGIN_VALGRIND=$(usex valgrind)
 
 		# Buildsystems

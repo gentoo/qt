@@ -48,6 +48,7 @@
 		<flag name="scxml">Build the graphical SCXML editor plugin</flag>
 		<flag name="serialterminal">Build the serial terminal plugin</flag>
 		<flag name="silversearcher">Enable integration with <pkg>sys-apps/the_silver_searcher</pkg></flag>
+		<flag name="squish">Enable integration with Squish automated GUI testing tool</flag>
 		<flag name="systemd">Add support for retrieving application output from journald</flag>
 		<flag name="valgrind">Enable integration with <pkg>dev-util/valgrind</pkg></flag>
 		<flag name="webassembly">Build WebAssembly plugin</flag>
