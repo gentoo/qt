@@ -113,6 +113,7 @@ PATCHES=(
 	"${WORKDIR}/${PN}-5.15.2_p20211019-jumbo-build.patch" # bug 813957
 	"${WORKDIR}/${PN}-5.15.3_p20220406-patchset" # bug 698988 (py2--), pipewire-3
 	"${FILESDIR}/${P}-v8-opcode-constexpr.patch" # bug 889042
+	"${FILESDIR}/${P}-widevine.patch" # bug 888783
 )
 
 qtwebengine_check-reqs() {
