@@ -11,6 +11,7 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
+QTMIN=5.15.2
 inherit cmake linux-info systemd tmpfiles
 
 DESCRIPTION="Simple Desktop Display Manager"
@@ -26,11 +27,11 @@ RESTRICT="!test? ( test )"
 COMMON_DEPEND="
 	acct-group/sddm
 	acct-user/sddm
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtdeclarative:5
-	dev-qt/qtgui:5
-	dev-qt/qtnetwork:5
+	>=dev-qt/qtcore-${QTMIN}:5
+	>=dev-qt/qtdbus-${QTMIN}:5
+	>=dev-qt/qtdeclarative-${QTMIN}:5
+	>=dev-qt/qtgui-${QTMIN}:5
+	>=dev-qt/qtnetwork-${QTMIN}:5
 	x11-base/xorg-server
 	x11-libs/libxcb:=
 	elogind? ( sys-auth/elogind )
@@ -40,22 +41,27 @@ COMMON_DEPEND="
 	!systemd? ( sys-power/upower )
 "
 DEPEND="${COMMON_DEPEND}
-	test? ( dev-qt/qttest:5 )
+	test? ( >=dev-qt/qttest-${QTMIN}:5 )
 "
 RDEPEND="${COMMON_DEPEND}
 	!systemd? ( gui-libs/display-manager-init )
 "
 BDEPEND="
 	dev-python/docutils
-	dev-qt/linguist-tools:5
+	>=dev-qt/linguist-tools-${QTMIN}:5
 	kde-frameworks/extra-cmake-modules:5
 	virtual/pkgconfig
 "
 
 PATCHES=(
 	# Downstream patches
-	"${FILESDIR}/${PN}-0.18.1-respect-user-flags.patch" # bug 563108
+	"${FILESDIR}/${PN}-0.20.0-respect-user-flags.patch"
 	"${FILESDIR}/${PN}-0.19.0-Xsession.patch" # bug 611210
+	"${FILESDIR}/${PN}-0.20.0-sddm.pam-use-substack.patch" # bug 728550
+	"${FILESDIR}/${PN}-0.20.0-disable-etc-debian-check.patch"
+	"${FILESDIR}/${PN}-0.20.0-no-default-pam_systemd-module.patch" # bug 669980
+	# TODO: add this: https://github.com/sddm/sddm/pull/1230 ...ACK'd
+	#  for merge but pending testing. by openSUSE, Fedora usage for >1y
 )
 
 pkg_setup() {
@@ -64,6 +70,32 @@ pkg_setup() {
 }
 
 src_prepare() {
+	touch 01gentoo.conf || die
+
+	if use elogind || use systemd; then
+cat <<-EOF >> 01gentoo.conf
+[General]
+# Halt/Reboot command
+HaltCommand=$(usex elogind "loginctl" "systemctl") poweroff
+RebootCommand=$(usex elogind "loginctl" "systemctl") reboot
+
+EOF
+	fi
+
+cat <<-EOF >> 01gentoo.conf
+# Remove qtvirtualkeyboard as InputMethod default
+InputMethod=
+
+[Users]
+ReuseSession=true
+
+[Wayland]
+EnableHiDPI=true
+
+[X11]
+EnableHiDPI=true
+EOF
+
 	cmake_src_prepare
 
 	if ! use test; then
@@ -74,11 +106,11 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DENABLE_PAM=$(usex pam)
-		-DNO_SYSTEMD=$(usex '!systemd')
-		-DUSE_ELOGIND=$(usex 'elogind')
 		-DBUILD_MAN_PAGES=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
+		-DENABLE_PAM=$(usex pam)
+		-DNO_SYSTEMD=$(usex !systemd)
+		-DUSE_ELOGIND=$(usex elogind)
 	)
 	cmake_src_configure
 }
@@ -88,30 +120,22 @@ src_install() {
 
 	newtmpfiles "${FILESDIR}/${PN}.tmpfiles" "${PN}.conf"
 
-	# Create a default.conf as upstream dropped /etc/sddm.conf w/o replacement
-	local confd="/usr/lib/sddm/sddm.conf.d"
-	dodir ${confd}
-	"${D}"/usr/bin/sddm --example-config > "${D}/${confd}"/00default.conf \
-		|| die "Failed to create 00default.conf"
-
-	sed -e "/^InputMethod/s/qtvirtualkeyboard//" \
-		-e "/^ReuseSession/s/false/true/" \
-		-e "/^EnableHiDPI/s/false/true/" \
-		-i "${D}/${confd}"/00default.conf || die
+	insinto /etc/sddm.conf.d/
+	doins "${S}"/01gentoo.conf
 }
 
 pkg_postinst() {
 	tmpfiles_process "${PN}.conf"
 
-	elog "Starting with 0.18.0, SDDM no longer installs /etc/sddm.conf"
-	elog "Use it to override specific options. SDDM defaults are now"
-	elog "found in: /usr/lib/sddm/sddm.conf.d/00default.conf"
-	elog
 	elog "NOTE: If SDDM startup appears to hang then entropy pool is too low."
 	elog "This can be fixed by configuring one of the following:"
 	elog "  - Enable CONFIG_RANDOM_TRUST_CPU in linux kernel"
 	elog "  - # emerge sys-apps/haveged && rc-update add haveged boot"
 	elog "  - # emerge sys-apps/rng-tools && rc-update add rngd boot"
+	elog
+	elog "SDDM example config can be shown with:"
+	elog "  ${EROOT}/usr/bin/sddm --example-config"
+	elog "Use ${EROOT}/etc/sddm.conf.d/ directory to override specific options."
 	elog
 	elog "For more information on how to configure SDDM, please visit the wiki:"
 	elog "  https://wiki.gentoo.org/wiki/SDDM"
