@@ -19,7 +19,7 @@ HOMEPAGE="https://github.com/sddm/sddm"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="+elogind +pam systemd test"
+IUSE="+elogind +pam systemd test +X"
 
 REQUIRED_USE="?? ( elogind systemd )"
 RESTRICT="!test? ( test )"
@@ -32,7 +32,6 @@ COMMON_DEPEND="
 	>=dev-qt/qtdeclarative-${QTMIN}:5
 	>=dev-qt/qtgui-${QTMIN}:5
 	>=dev-qt/qtnetwork-${QTMIN}:5
-	x11-base/xorg-server
 	x11-libs/libxcb:=
 	elogind? ( sys-auth/elogind )
 	pam? ( sys-libs/pam )
@@ -44,6 +43,7 @@ DEPEND="${COMMON_DEPEND}
 	test? ( >=dev-qt/qttest-${QTMIN}:5 )
 "
 RDEPEND="${COMMON_DEPEND}
+	X? ( x11-base/xorg-server )
 	!systemd? ( gui-libs/display-manager-init )
 "
 BDEPEND="
@@ -72,9 +72,12 @@ pkg_setup() {
 src_prepare() {
 	touch 01gentoo.conf || die
 
-	if use elogind || use systemd; then
 cat <<-EOF >> 01gentoo.conf
 [General]
+EOF
+
+	if use elogind || use systemd; then
+cat <<-EOF >> 01gentoo.conf
 # Halt/Reboot command
 HaltCommand=$(usex elogind "loginctl" "systemctl") poweroff
 RebootCommand=$(usex elogind "loginctl" "systemctl") reboot
