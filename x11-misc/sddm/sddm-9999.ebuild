@@ -32,6 +32,7 @@ COMMON_DEPEND="
 	>=dev-qt/qtdeclarative-${QTMIN}:5
 	>=dev-qt/qtgui-${QTMIN}:5
 	>=dev-qt/qtnetwork-${QTMIN}:5
+	x11-libs/libXau
 	x11-libs/libxcb:=
 	elogind? ( sys-auth/elogind )
 	pam? ( sys-libs/pam )
@@ -60,8 +61,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0.20.0-sddm.pam-use-substack.patch" # bug 728550
 	"${FILESDIR}/${PN}-0.20.0-disable-etc-debian-check.patch"
 	"${FILESDIR}/${PN}-0.20.0-no-default-pam_systemd-module.patch" # bug 669980
-	# TODO: add this: https://github.com/sddm/sddm/pull/1230 ...ACK'd
-	#  for merge but pending testing. by openSUSE, Fedora usage for >1y
 )
 
 pkg_setup() {
