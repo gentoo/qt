@@ -110,6 +110,8 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_MAN_PAGES=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
+		-DRUNTIME_DIR=/run
+		-DSYSTEMD_TMPFILES_DIR="/usr/lib/tmpfiles.d"
 		-DENABLE_PAM=$(usex pam)
 		-DNO_SYSTEMD=$(usex !systemd)
 		-DUSE_ELOGIND=$(usex elogind)
@@ -119,8 +121,6 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-
-	newtmpfiles "${FILESDIR}/${PN}.tmpfiles" "${PN}.conf"
 
 	insinto /etc/sddm.conf.d/
 	doins "${S}"/01gentoo.conf
