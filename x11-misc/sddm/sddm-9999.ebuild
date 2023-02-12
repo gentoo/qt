@@ -110,7 +110,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_MAN_PAGES=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
-		-DRUNTIME_DIR=/run
+		-DRUNTIME_DIR=/run/sddm
 		-DSYSTEMD_TMPFILES_DIR="/usr/lib/tmpfiles.d"
 		-DENABLE_PAM=$(usex pam)
 		-DNO_SYSTEMD=$(usex !systemd)
