@@ -73,29 +73,8 @@ src_prepare() {
 
 cat <<-EOF >> 01gentoo.conf
 [General]
-EOF
-
-	if use elogind || use systemd; then
-cat <<-EOF >> 01gentoo.conf
-# Halt/Reboot command
-HaltCommand=$(usex elogind "loginctl" "systemctl") poweroff
-RebootCommand=$(usex elogind "loginctl" "systemctl") reboot
-
-EOF
-	fi
-
-cat <<-EOF >> 01gentoo.conf
 # Remove qtvirtualkeyboard as InputMethod default
 InputMethod=
-
-[Users]
-ReuseSession=true
-
-[Wayland]
-EnableHiDPI=true
-
-[X11]
-EnableHiDPI=true
 EOF
 
 	cmake_src_prepare
