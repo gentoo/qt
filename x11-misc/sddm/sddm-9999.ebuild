@@ -19,9 +19,9 @@ HOMEPAGE="https://github.com/sddm/sddm"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="+elogind +pam systemd test +X"
+IUSE="+elogind systemd test +X"
 
-REQUIRED_USE="?? ( elogind systemd )"
+REQUIRED_USE="^^ ( elogind systemd )"
 RESTRICT="!test? ( test )"
 
 COMMON_DEPEND="
@@ -32,12 +32,11 @@ COMMON_DEPEND="
 	>=dev-qt/qtdeclarative-${QTMIN}:5
 	>=dev-qt/qtgui-${QTMIN}:5
 	>=dev-qt/qtnetwork-${QTMIN}:5
+	sys-libs/pam
 	x11-libs/libXau
 	x11-libs/libxcb:=
-	elogind? ( sys-auth/elogind )
-	pam? ( sys-libs/pam )
-	!pam? ( virtual/libcrypt:= )
-	systemd? ( sys-apps/systemd:= )
+	elogind? ( sys-auth/elogind[pam] )
+	systemd? ( sys-apps/systemd:=[pam] )
 	!systemd? ( sys-power/upower )
 "
 DEPEND="${COMMON_DEPEND}
@@ -91,7 +90,6 @@ src_configure() {
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
 		-DRUNTIME_DIR=/run/sddm
 		-DSYSTEMD_TMPFILES_DIR="/usr/lib/tmpfiles.d"
-		-DENABLE_PAM=$(usex pam)
 		-DNO_SYSTEMD=$(usex !systemd)
 		-DUSE_ELOGIND=$(usex elogind)
 	)
