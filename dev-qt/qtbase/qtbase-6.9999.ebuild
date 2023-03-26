@@ -182,5 +182,5 @@ src_install() {
 	qt6-build_src_install
 
 	# https://bugs.gentoo.org/863395
-	dosym ../$(get_libdir)/qt6/bin/qmake /usr/bin/qmake6
+	qt6_symlink_binary_to_path qmake 6
 }
