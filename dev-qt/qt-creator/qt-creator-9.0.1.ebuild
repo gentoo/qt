@@ -66,7 +66,7 @@ REQUIRED_USE="
 "
 
 # minimum Qt version required
-QT_PV="6.6.0:6"
+QT_PV="6.2.0:6"
 
 BDEPEND="
 	>=dev-qt/qttools-${QT_PV}[linguist(+)]
