@@ -164,10 +164,6 @@ pkg_setup() {
 src_prepare() {
 	cmake_src_prepare
 
-	# Remove automagic dep for qt5/qt6
-	sed -e "/^find_package(Qt6/,/else()/ s|if (NOT Qt6_FOUND)|if (0)|" \
-		-i cmake/FindQt5.cmake || die
-
 	# PLUGIN_RECOMMENDS is treated like a hard-dependency
 	sed -i -e '/PLUGIN_RECOMMENDS /d' \
 		src/plugins/*/CMakeLists.txt || die
