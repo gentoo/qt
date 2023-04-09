@@ -35,7 +35,7 @@ QTCREATOR_PLUGINS=(
 	# Misc
 	+autotest beautifier coco conan cppcheck ctfvisualizer +designer docker
 	+help imageviewer modeling perfprofiler qmlprofiler scxml serialterminal
-	silversearcher squish valgrind vcpkg
+	silversearcher squish terminal valgrind vcpkg
 
 	# Buildsystems
 	autotools +cmake incredibuild meson qbs +qmake
@@ -193,6 +193,10 @@ src_prepare() {
 		src/libs/CMakeLists.txt
 	cmake_use_remove_addsubdirectory test test \
 		src/plugins/mcusupport/CMakeLists.txt
+	cmake_use_remove_addsubdirectory terminal libvterm \
+		src/libs/3rdparty/CMakeLists.txt
+	cmake_use_remove_addsubdirectory terminal libptyqt \
+		src/libs/3rdparty/CMakeLists.txt
 
 	# remove bundled yaml-cpp
 	rm -r src/libs/3rdparty/yaml-cpp || die
@@ -284,6 +288,7 @@ src_configure() {
 		-DBUILD_PLUGIN_SERIALTERMINAL=$(usex serialterminal)
 		-DBUILD_PLUGIN_SILVERSEARCHER=$(usex silversearcher)
 		-DBUILD_PLUGIN_SQUISH=$(usex squish)
+		-DBUILD_PLUGIN_TERMINAL=$(usex terminal)
 		-DBUILD_PLUGIN_VALGRIND=$(usex valgrind)
 		-DBUILD_PLUGIN_VCPKG=$(usex vcpkg)
 

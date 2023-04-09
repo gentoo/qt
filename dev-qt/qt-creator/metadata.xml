@@ -50,6 +50,7 @@
 		<flag name="silversearcher">Enable integration with <pkg>sys-apps/the_silver_searcher</pkg></flag>
 		<flag name="squish">Enable integration with Squish automated GUI testing tool</flag>
 		<flag name="systemd">Add support for retrieving application output from journald</flag>
+		<flag name="terminal">Build the terminal plugin for embedded terminal support</flag>
 		<flag name="valgrind">Enable integration with <pkg>dev-util/valgrind</pkg></flag>
 		<flag name="vcpkg">Enable vcpkg package manager integration</flag>
 		<flag name="webassembly">Build WebAssembly plugin</flag>
