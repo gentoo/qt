@@ -7,3 +7,4 @@
 # Peter Levine <plevine457@gmail.com> (2023-09-05)
 # qtcreator testing
 =dev-qt/qt-creator-9*
+=dev-qt/qt-creator-10*
