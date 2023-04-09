@@ -33,9 +33,9 @@ SLOT="0"
 
 QTCREATOR_PLUGINS=(
 	# Misc
-	+autotest beautifier coco conan cppcheck ctfvisualizer +designer docker
-	+help imageviewer modeling perfprofiler qmlprofiler scxml serialterminal
-	silversearcher squish terminal valgrind vcpkg
+	+autotest beautifier coco conan copilot cppcheck ctfvisualizer +designer
+	docker +help imageviewer modeling perfprofiler qmlprofiler scxml
+	serialterminal silversearcher squish terminal valgrind vcpkg
 
 	# Buildsystems
 	autotools +cmake incredibuild meson qbs +qmake
@@ -58,6 +58,7 @@ REQUIRED_USE="
 	boot2qt? ( remotelinux )
 	clang? ( lsp )
 	coco? ( lsp )
+	copilot? ( lsp )
 	mcu? ( baremetal cmake )
 	python? ( lsp )
 	qml? ( qmake )
@@ -275,6 +276,7 @@ src_configure() {
 		-DBUILD_PLUGIN_BEAUTIFIER=$(usex beautifier)
 		-DBUILD_PLUGIN_COCO=$(usex coco)
 		-DBUILD_PLUGIN_CONAN=$(usex conan)
+		-DBUILD_PLUGIN_COPILOT=$(usex copilot)
 		-DBUILD_PLUGIN_CPPCHECK=$(usex cppcheck)
 		-DBUILD_PLUGIN_CTFVISUALIZER=$(usex ctfvisualizer)
 		-DBUILD_PLUGIN_DESIGNER=$(usex designer)

@@ -22,6 +22,7 @@
 		<flag name="cmake">Build plugin for CMake-based projects</flag>
 		<flag name="coco">Build plugin to support Coco code coverage tool</flag>
 		<flag name="conan">Build plugin to integrate with the Conan package manager</flag>
+		<flag name="copilot">Build plugin to integrate with the GitHub Copilot AI engine</flag>
 		<flag name="cppcheck">Enable integration with <pkg>dev-util/cppcheck</pkg></flag>
 		<flag name="ctfvisualizer">Build the Chrome Trace Format visualizer plugin</flag>
 		<flag name="designer">Enable designer for QtWidgets-based UIs</flag>
