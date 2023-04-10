@@ -47,7 +47,7 @@ QTCREATOR_PLUGINS=(
 	android baremetal boot2qt mcu qnx remotelinux webassembly
 
 	# VCS
-	bazaar clearcase cvs +git mercurial perforce subversion
+	bazaar clearcase cvs fossil +git mercurial perforce subversion
 )
 
 IUSE="+clang debug doc +qml systemd test wayland webengine
@@ -320,6 +320,7 @@ src_configure() {
 		-DBUILD_PLUGIN_BAZAAR=$(usex bazaar)
 		-DBUILD_PLUGIN_CLEARCASE=$(usex clearcase)
 		-DBUILD_PLUGIN_CVS=$(usex cvs)
+		-DBUILD_PLUGIN_FOSSIL=$(usex fossil)
 		-DBUILD_PLUGIN_GIT=$(usex git)
 		-DBUILD_PLUGIN_GITLAB=$(usex git)
 		-DBUILD_PLUGIN_MERCURIAL=$(usex mercurial)
@@ -435,6 +436,7 @@ pkg_postinst() {
 	use cvs && optfeature "cvs vcs integration" dev-vcs/cvs
 	use docker && optfeature "using a docker image as a device" \
 		app-containers/docker
+	use fossil && optfeature "fossil vcs integration" dev-vcs/fossil
 	use git && optfeature "git vcs integration" dev-vcs/git
 	use mercurial && optfeature "mercurial vcs integration" dev-vcs/mercurial
 	use meson && optfeature "meson buildsystem support" dev-util/meson

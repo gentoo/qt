@@ -27,6 +27,7 @@
 		<flag name="ctfvisualizer">Build the Chrome Trace Format visualizer plugin</flag>
 		<flag name="designer">Enable designer for QtWidgets-based UIs</flag>
 		<flag name="docker">Build plugin for Docker support</flag>
+		<flag name="fossil">Add support for <pkg>dev-vcs/fossil</pkg> version control system</flag>
 		<flag name="glsl">Build the GLSL editor plugin</flag>
 		<flag name="help">Enable the integrated documentation viewer</flag>
 		<flag name="imageviewer">Build plugin to open and view image files</flag>
