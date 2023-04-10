@@ -40,8 +40,6 @@ DEPEND="${RDEPEND}
 	gstreamer? ( x11-base/xorg-proto )
 "
 
-PATCHES=( "${FILESDIR}/${PN}-5.15.2-no-qtopengl.patch" )
-
 src_prepare() {
 	sed -i -e '/CONFIG\s*+=/ s/optimize_full//' \
 		src/multimedia/multimedia.pro || die
