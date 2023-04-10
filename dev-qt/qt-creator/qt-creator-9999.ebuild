@@ -41,7 +41,7 @@ QTCREATOR_PLUGINS=(
 	autotools +cmake incredibuild meson qbs +qmake
 
 	# Languages
-	glsl +lsp nim python
+	glsl haskell +lsp nim python
 
 	# Platforms
 	android baremetal boot2qt mcu qnx remotelinux webassembly
@@ -304,6 +304,7 @@ src_configure() {
 
 		# Languages
 		-DBUILD_PLUGIN_GLSLEDITOR=$(usex glsl)
+		-DBUILD_PLUGIN_HASKELL=$(usex haskell)
 		-DBUILD_PLUGIN_LANGUAGECLIENT=$(usex lsp)
 		-DBUILD_PLUGIN_NIM=$(usex nim)
 		-DBUILD_PLUGIN_PYTHON=$(usex python)
