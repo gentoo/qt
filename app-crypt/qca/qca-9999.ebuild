@@ -17,7 +17,7 @@ REQUIRED_USE="|| ( qt5 qt6 )"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	botan? ( dev-libs/botan:= )
+	botan? ( dev-libs/botan:2= )
 	gcrypt? ( dev-libs/libgcrypt:= )
 	gpg? ( app-crypt/gnupg )
 	nss? ( dev-libs/nss )
