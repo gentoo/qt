@@ -18,7 +18,7 @@ fi
 
 IUSE="
 	alsa bindist designer geolocation +jumbo-build kerberos pulseaudio screencast
-	+system-ffmpeg +system-icu widgets
+	+system-icu widgets
 "
 REQUIRED_USE="designer? ( widgets )"
 
@@ -77,7 +77,6 @@ RDEPEND="
 	kerberos? ( virtual/krb5 )
 	pulseaudio? ( media-libs/libpulse:= )
 	screencast? ( media-video/pipewire:= )
-	system-ffmpeg? ( media-video/ffmpeg:= )
 	system-icu? ( >=dev-libs/icu-69.1:= )
 	widgets? (
 		=dev-qt/qtbase-${PV}*[widgets]
@@ -226,7 +225,7 @@ src_configure() {
 		-DQT_FEATURE_webengine_system_opus=on
 		-DQT_FEATURE_webengine_system_libwebp=on
 		-DQT_FEATURE_webengine_system_alsa=$(usex alsa on off)
-		-DQT_FEATURE_webengine_system_ffmpeg=$(usex system-ffmpeg)
+		-DQT_FEATURE_webengine_system_ffmpeg=off # https://bugs.gentoo.org/831487
 		-DQT_FEATURE_webengine_system_icu=$(usex system-icu)
 		-DQT_FEATURE_webengine_system_libevent=on
 		-DQT_FEATURE_webengine_system_libpci=on
