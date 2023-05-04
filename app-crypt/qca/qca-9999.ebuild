@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -17,7 +17,7 @@ REQUIRED_USE="|| ( qt5 qt6 )"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	botan? ( dev-libs/botan:2= )
+	botan? ( dev-libs/botan:3= )
 	gcrypt? ( dev-libs/libgcrypt:= )
 	gpg? ( app-crypt/gnupg )
 	nss? ( dev-libs/nss )
