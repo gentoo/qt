@@ -25,9 +25,9 @@ REQUIRED_USE="trash? ( filemanager )"
 # install expects oxygen icons, until the user specifies otherwise (bug 543380)
 RDEPEND="
 	kde-frameworks/oxygen-icons
-	>=lxde-base/lxmenu-data-0.1.5
 	=lxqt-base/lxqt-config-${MY_PV}*
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*
+	=lxqt-base/lxqt-menu-data-${MY_PV}*
 	=lxqt-base/lxqt-notificationd-${MY_PV}*
 	=lxqt-base/lxqt-panel-${MY_PV}*
 	=lxqt-base/lxqt-qtplugin-${MY_PV}*
