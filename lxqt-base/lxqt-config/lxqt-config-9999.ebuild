@@ -34,6 +34,7 @@ DEPEND="
 	>=dev-qt/qtx11extras-5.15:5
 	>=dev-qt/qtxml-5.15:5
 	=lxqt-base/liblxqt-${MY_PV}*:=
+	=lxqt-base/lxqt-menu-data-${MY_PV}*
 	sys-libs/zlib:=
 	x11-apps/setxkbmap
 	x11-libs/libxcb:=
