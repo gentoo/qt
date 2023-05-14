@@ -19,7 +19,7 @@ fi
 LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.12.0"
+BDEPEND=">=dev-util/lxqt-build-tools-0.13.0"
 DEPEND="
 	app-admin/sudo
 	>=dev-qt/qtgui-5.15:5
