@@ -45,10 +45,10 @@ DEPEND="
 	>=dev-qt/qtx11extras-5.15:5
 	>=dev-qt/qtxml-5.15:5
 	kde-frameworks/kwindowsystem:5[X]
-	>=lxde-base/lxmenu-data-0.1.5
 	>=lxde-base/menu-cache-1.1.0
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*
+	=lxqt-base/lxqt-menu-data-${MY_PV}*
 	x11-libs/libX11
 	cpuload? ( sys-libs/libstatgrab )
 	kbindicator? ( x11-libs/libxkbcommon )
