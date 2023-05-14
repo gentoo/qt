@@ -39,7 +39,7 @@ DEPEND="
 	x11-misc/xdg-utils
 "
 RDEPEND="${DEPEND}
-	>=lxde-base/lxmenu-data-0.1.5
+	=lxqt-base/lxqt-menu-data-${MY_PV}*
 "
 
 pkg_postinst() {
