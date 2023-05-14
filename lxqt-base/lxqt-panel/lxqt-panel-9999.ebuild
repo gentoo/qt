@@ -32,7 +32,7 @@ REQUIRED_USE="
 
 BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.12.0
+	>=dev-util/lxqt-build-tools-0.13.0
 	virtual/pkgconfig
 "
 DEPEND="
