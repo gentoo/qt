@@ -3,6 +3,8 @@
 
 EAPI=8
 
+MY_PV="$(ver_cut 1-2)"
+
 inherit cmake xdg-utils
 
 DESCRIPTION="Qt Library for Building File Managers"
@@ -21,7 +23,7 @@ SLOT="0/7"
 
 BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.12.0
+	>=dev-util/lxqt-build-tools-0.13.0
 	virtual/pkgconfig
 "
 DEPEND="
@@ -31,6 +33,7 @@ DEPEND="
 	>=dev-qt/qtwidgets-5.15:5
 	>=dev-qt/qtx11extras-5.15:5
 	>=lxde-base/menu-cache-1.1.0:=
+	=lxqt-base/lxqt-menu-data-${MY_PV}*
 	media-libs/libexif
 	x11-libs/libxcb:=
 "
