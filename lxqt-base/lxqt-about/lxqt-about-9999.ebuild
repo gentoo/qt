@@ -23,7 +23,7 @@ SLOT="0"
 
 BDEPEND=">=dev-util/lxqt-build-tools-0.13.0"
 DEPEND="
-	>=dev-libs/libqtxdg-3.10.0
+	>=dev-libs/libqtxdg-3.11.0
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtwidgets:5
