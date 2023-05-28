@@ -33,10 +33,10 @@ RDEPEND="
 		x11-libs/libXrandr
 	)
 	pulseaudio? ( media-libs/libpulse[glib] )
-	v4l? ( sys-kernel/linux-headers )
 "
 DEPEND="${RDEPEND}
 	x11-base/xorg-proto
+	v4l? ( sys-kernel/linux-headers )
 "
 
 src_configure() {
