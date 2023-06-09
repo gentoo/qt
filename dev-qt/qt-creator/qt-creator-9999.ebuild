@@ -34,7 +34,7 @@ SLOT="0"
 QTCREATOR_PLUGINS=(
 	# Misc
 	+autotest axivion beautifier coco conan copilot cppcheck ctfvisualizer
-	+designer docker +help imageviewer modeling perfprofiler qmlprofiler
+	+designer docker +help imageviewer insight modeling perfprofiler qmlprofiler
 	saferenderer scxml serialterminal silversearcher squish terminal valgrind vcpkg
 
 	# Buildsystems
@@ -59,6 +59,7 @@ REQUIRED_USE="
 	clang? ( lsp )
 	coco? ( lsp )
 	copilot? ( lsp )
+	insight? ( qml )
 	mcu? ( baremetal cmake )
 	python? ( lsp )
 	qml? ( qmake )
@@ -284,6 +285,7 @@ src_configure() {
 		-DBUILD_PLUGIN_DOCKER=$(usex docker)
 		-DBUILD_PLUGIN_HELP=$(usex help)
 		-DBUILD_PLUGIN_IMAGEVIEWER=$(usex imageviewer)
+		-DBUILD_PLUGIN_INSIGHT=$(usex insight)
 		-DBUILD_PLUGIN_MODELEDITOR=$(usex modeling)
 		-DBUILD_PLUGIN_PERFPROFILER=$(usex perfprofiler)
 		-DBUILD_PLUGIN_QMLPROFILER=$(usex qmlprofiler)

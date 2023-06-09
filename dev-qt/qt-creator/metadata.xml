@@ -34,6 +34,7 @@
 		<flag name="help">Enable the integrated documentation viewer</flag>
 		<flag name="imageviewer">Build plugin to open and view image files</flag>
 		<flag name="incredibuild">Enable integration with Incredibuild</flag>
+		<flag name="insight">Add support for Qt Insight application analytics</flag>
 		<flag name="lsp">Add support for the Language Server Protocol (LSP)</flag>
 		<flag name="mcu">Build plugin for MCU devices</flag>
 		<flag name="mercurial">Add support for <pkg>dev-vcs/mercurial</pkg> version control system</flag>
