@@ -13,6 +13,7 @@
 		<flag name="android">Build plugin for Android devices</flag>
 		<flag name="autotest">Enable integration with popular unit testing frameworks (QtTest, GoogleTest, Boost.Test, Catch2)</flag>
 		<flag name="autotools">Build plugin for autotools-based projects</flag>
+		<flag name="axivion">Build plugin to integrate the Axivion static code analysis dashboard</flag>
 		<flag name="baremetal">Build plugin for bare metal devices</flag>
 		<flag name="bazaar">Add support for GNU Bazaar version control system (requires manual installation of Bazaar client)</flag>
 		<flag name="beautifier">Build the beautifier plugin (supports astyle, clang-format, and uncrustify)</flag>

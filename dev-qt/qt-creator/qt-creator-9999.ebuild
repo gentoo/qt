@@ -33,9 +33,9 @@ SLOT="0"
 
 QTCREATOR_PLUGINS=(
 	# Misc
-	+autotest beautifier coco conan copilot cppcheck ctfvisualizer +designer
-	docker +help imageviewer modeling perfprofiler qmlprofiler saferenderer
-	scxml serialterminal silversearcher squish terminal valgrind vcpkg
+	+autotest axivion beautifier coco conan copilot cppcheck ctfvisualizer
+	+designer docker +help imageviewer modeling perfprofiler qmlprofiler
+	saferenderer scxml serialterminal silversearcher squish terminal valgrind vcpkg
 
 	# Buildsystems
 	autotools +cmake incredibuild meson qbs +qmake
@@ -273,6 +273,7 @@ src_configure() {
 
 		# Misc
 		-DBUILD_PLUGIN_AUTOTEST=$(usex autotest)
+		-DBUILD_PLUGIN_AXIVION=$(usex axivion)
 		-DBUILD_PLUGIN_BEAUTIFIER=$(usex beautifier)
 		-DBUILD_PLUGIN_COCO=$(usex coco)
 		-DBUILD_PLUGIN_CONAN=$(usex conan)
