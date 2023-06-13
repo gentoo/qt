@@ -23,9 +23,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-# https://invent.kde.org/qt/qt/qttools/-/merge_requests/2
-PATCHES=( "${FILESDIR}/${PN}-5.15.4-bogusdep.patch" )
-
 QT5_TARGET_SUBDIRS=(
 	src/assistant/help
 	src/assistant/qcollectiongenerator
