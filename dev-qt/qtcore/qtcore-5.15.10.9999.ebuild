@@ -79,6 +79,9 @@ src_prepare() {
 	fi
 
 	qt5-build_src_prepare
+
+	# workaround for a79a370c (...Annotate-QMutex-...patch) adding a header
+	qt5_syncqt_version
 }
 
 src_configure() {
