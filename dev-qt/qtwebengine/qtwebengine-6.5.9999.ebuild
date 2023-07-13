@@ -1,4 +1,4 @@
-# Copyright 2021-2022 Gentoo Authors
+# Copyright 2021-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,7 +6,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_{9..11} )
 PYTHON_REQ_USE="xml(+)"
 CHROMIUM_VER="108.0.5359.181"
-CHROMIUM_PATCHES_VER="110.0.5481.104"
+CHROMIUM_PATCHES_VER="113.0.5672.126"
 
 inherit check-reqs estack flag-o-matic multiprocessing python-any-r1 qt6-build
 
@@ -51,6 +51,7 @@ RDEPEND="
 	media-libs/libpng:=
 	>=media-libs/libvpx-1.5:=[svc(+)]
 	media-libs/libwebp:=
+	media-libs/openjpeg:2=
 	media-libs/opus
 	sys-apps/dbus
 	sys-apps/pciutils
@@ -228,6 +229,7 @@ src_configure() {
 		-DQT_FEATURE_webengine_system_ffmpeg=off # https://bugs.gentoo.org/831487
 		-DQT_FEATURE_webengine_system_icu=$(usex system-icu)
 		-DQT_FEATURE_webengine_system_libevent=on
+		-DQT_FEATURE_webengine_system_libopenjpeg2=on
 		-DQT_FEATURE_webengine_system_libpci=on
 		-DQT_FEATURE_webengine_system_libpng=on
 		-DQT_FEATURE_webengine_system_pulseaudio=$(usex pulseaudio on off)

@@ -1,4 +1,4 @@
-# Copyright 2021-2022 Gentoo Authors
+# Copyright 2021-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,7 +22,7 @@ REQUIRED_USE="
 QTGUI_IUSE="accessibility egl eglfs evdev gles2-only +jpeg +libinput tslib tuio vulkan +X"
 QTNETWORK_IUSE="brotli gssapi libproxy sctp +ssl vnc"
 QTSQL_IUSE="freetds mysql oci8 odbc postgres +sqlite"
-IUSE+=" ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} cups gtk icu systemd +udev"
+IUSE+=" ${QTGUI_IUSE} ${QTNETWORK_IUSE} ${QTSQL_IUSE} cups gtk icu systemd +udev wayland"
 # QtPrintSupport = QtGui + QtWidgets enabled.
 # ibus = xkbcommon + dbus, and xkbcommon needs either libinput or X
 REQUIRED_USE+="
@@ -93,6 +93,7 @@ DEPEND="
 		x11-libs/libX11
 		>=x11-libs/libxcb-1.12:=
 		>=x11-libs/libxkbcommon-0.5.0[X]
+		x11-libs/xcb-util-cursor
 		x11-libs/xcb-util-image
 		x11-libs/xcb-util-keysyms
 		x11-libs/xcb-util-renderutil
@@ -101,6 +102,7 @@ DEPEND="
 	zstd? ( app-arch/zstd:= )
 "
 RDEPEND="${DEPEND}"
+PDEPEND="wayland? ( =dev-qt/qtwayland-${PV}* )"
 
 src_configure() {
 	local mycmakeargs=(

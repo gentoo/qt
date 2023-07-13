@@ -11,7 +11,12 @@ if [[ ${QT6_BUILD_TYPE} == release ]]; then
 	KEYWORDS="~amd64"
 fi
 
-IUSE="alsa ffmpeg pulseaudio v4l"
+IUSE="alsa +ffmpeg gstreamer pulseaudio v4l vaapi"
+
+REQUIRED_USE="
+	|| ( ffmpeg gstreamer )
+	vaapi? ( ffmpeg )
+"
 
 RDEPEND="
 	=dev-qt/qtbase-${PV}*[gui,network,widgets]
@@ -19,11 +24,6 @@ RDEPEND="
 	=dev-qt/qtquick3d-${PV}*
 	=dev-qt/qtshadertools-${PV}*
 	=dev-qt/qtsvg-${PV}*
-	dev-libs/glib:2
-	media-libs/gstreamer:1.0
-	media-libs/gst-plugins-bad:1.0
-	media-libs/gst-plugins-base:1.0
-	media-libs/libglvnd
 	alsa? ( media-libs/alsa-lib )
 	ffmpeg? (
 		media-libs/libva:=
@@ -32,20 +32,33 @@ RDEPEND="
 		x11-libs/libXext
 		x11-libs/libXrandr
 	)
+	gstreamer? (
+		dev-libs/glib:2
+		media-libs/gstreamer:1.0
+		media-libs/gst-plugins-bad:1.0
+		media-libs/gst-plugins-base:1.0
+		media-libs/libglvnd
+	)
 	pulseaudio? ( media-libs/libpulse[glib] )
+	vaapi? (
+		=dev-qt/qtbase-${PV}*[opengl]
+		media-libs/libglvnd
+		media-libs/libva:=
+	)
 "
 DEPEND="${RDEPEND}
-	x11-base/xorg-proto
+	gstreamer? ( x11-base/xorg-proto )
 	v4l? ( sys-kernel/linux-headers )
 "
 
 src_configure() {
 	local mycmakeargs=(
-		-DQT_FEATURE_gstreamer=on
 		$(qt_feature alsa)
 		$(qt_feature ffmpeg)
+		$(qt_feature gstreamer)
 		$(qt_feature v4l linux_v4l)
 		$(qt_feature pulseaudio)
+		$(qt_feature vaapi)
 	)
 
 	qt6-build_src_configure

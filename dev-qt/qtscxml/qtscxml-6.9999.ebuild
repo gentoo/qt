@@ -14,7 +14,7 @@ fi
 IUSE=""
 
 DEPEND="
-	=dev-qt/qtbase-${PV}*
+	=dev-qt/qtbase-${PV}*[gui,network,opengl,widgets]
 	=dev-qt/qtdeclarative-${PV}*
 "
 RDEPEND="${DEPEND}"
