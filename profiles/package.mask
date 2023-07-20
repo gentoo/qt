@@ -3,25 +3,3 @@
 # When you add an entry to the top of this file, add your name, the date, and
 # an explanation of why something is getting masked. Please be extremely
 # careful not to commit atoms that are not valid.
-
-# Jimi Huotari <chiitoo@gentoo.org> (2021-11-11)
-# Very work in progress.
-=dev-qt/qt5compat-6*
-=dev-qt/qtbase-6*
-=dev-qt/qtcharts-6*
-=dev-qt/qtdeclarative-6*
-=dev-qt/qtimageformats-6*
-=dev-qt/qtlocation-6*
-=dev-qt/qtmultimedia-6*
-=dev-qt/qtnetworkauth-6*
-=dev-qt/qtpositioning-6*
-=dev-qt/qtquick3d-6*
-=dev-qt/qtquicktimeline-6*
-=dev-qt/qtserialport-6*
-=dev-qt/qtshadertools-6*
-=dev-qt/qtsvg-6*
-=dev-qt/qttools-6*
-=dev-qt/qtwayland-6*
-=dev-qt/qtwebchannel-6*
-=dev-qt/qtwebengine-6*
-=dev-qt/qtwebsockets-6*
