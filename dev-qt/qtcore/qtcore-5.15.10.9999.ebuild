@@ -14,7 +14,7 @@ inherit linux-info flag-o-matic qt5-build
 DESCRIPTION="Cross-platform application development framework"
 SLOT=5/${QT5_PV}
 
-IUSE="icu old-kernel systemd"
+IUSE="icu systemd"
 
 DEPEND="
 	dev-libs/double-conversion:=
@@ -46,9 +46,9 @@ QT5_GENTOO_PRIVATE_CONFIG=(
 pkg_pretend() {
 	use kernel_linux || return
 	get_running_version
-	if kernel_is -lt 4 11 && ! use old-kernel; then
-		ewarn "The running kernel is older than 4.11. USE=old-kernel is needed for"
-		ewarn "dev-qt/qtcore to function on this kernel properly. Bugs #669994, #672856"
+	if kernel_is -lt 4 11; then
+		ewarn "The running kernel is older than 4.11. This is unsupported."
+		ewarn "Bugs #669994, #672856"
 	fi
 }
 
@@ -89,11 +89,6 @@ src_configure() {
 		$(qt_use icu)
 		$(qt_use !icu iconv)
 		$(qt_use systemd journald)
-	)
-	use old-kernel && myconf+=(
-		-no-feature-renameat2 # needs Linux 3.16, bug 669994
-		-no-feature-getentropy # needs Linux 3.17, bug 669994
-		-no-feature-statx # needs Linux 4.11, bug 672856
 	)
 	qt5-build_src_configure
 }
