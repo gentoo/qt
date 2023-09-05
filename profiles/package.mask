@@ -6,5 +6,4 @@
 
 # Peter Levine <plevine457@gmail.com> (2023-09-05)
 # qtcreator testing
-=dev-qt/qt-creator-10*
 =dev-qt/qt-creator-11*
