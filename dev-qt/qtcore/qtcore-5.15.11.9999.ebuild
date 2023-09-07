@@ -14,7 +14,7 @@ inherit linux-info flag-o-matic qt5-build
 DESCRIPTION="Cross-platform application development framework"
 SLOT=5/${QT5_PV}
 
-IUSE="icu old-kernel systemd"
+IUSE="icu old-kernel"
 
 DEPEND="
 	dev-libs/double-conversion:=
@@ -23,7 +23,6 @@ DEPEND="
 	sys-libs/zlib:=
 	icu? ( dev-libs/icu:= )
 	!icu? ( virtual/libiconv )
-	systemd? ( sys-apps/systemd:= )
 "
 RDEPEND="${DEPEND}"
 
@@ -88,7 +87,6 @@ src_configure() {
 	local myconf=(
 		$(qt_use icu)
 		$(qt_use !icu iconv)
-		$(qt_use systemd journald)
 	)
 	use old-kernel && myconf+=(
 		-no-feature-renameat2 # needs Linux 3.16, bug 669994
