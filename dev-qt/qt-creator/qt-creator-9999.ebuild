@@ -120,7 +120,7 @@ DEPEND="
 RDEPEND="
 	${CDEPEND}
 	qml? ( >=dev-qt/qtquicktimeline-${QT_PV} )
-	wayland? ( >=dev-qt/qtbase-${QT_PV}[egl] )
+	wayland? ( >=dev-qt/qtbase-${QT_PV}[opengl] )
 "
 
 # qt translations must also be installed or qt-creator translations won't be loaded
