@@ -6,7 +6,7 @@
 		<name>Gentoo Qt Project</name>
 	</maintainer>
 	<use>
-		<flag name="vulkan">Enable support for Vulkan-based server buffer integration</flag>
+		<flag name="compositor">Enable support for the wayland compositor / server APIs</flag>
 	</use>
 	<upstream>
 		<bugs-to>https://bugreports.qt.io/</bugs-to>
