@@ -20,6 +20,7 @@ RDEPEND="
 	=dev-qt/qtcore-${QT5_PV}*:5=
 	=dev-qt/qtgui-${QT5_PV}*:5=[egl,libinput]
 	media-libs/libglvnd
+	x11-libs/libxkbcommon
 	compositor? (
 		=dev-qt/qtdeclarative-${QT5_PV}*:5=
 		=dev-qt/qtgui-${QT5_PV}*:5=[vulkan]
