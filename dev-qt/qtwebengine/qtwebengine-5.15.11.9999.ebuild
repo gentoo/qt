@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+PATCHSET="${PN}-5.15.10_p20230815-patchset"
+PYTHON_COMPAT=( python3_{10..11} )
 PYTHON_REQ_USE="xml(+)"
 inherit check-reqs estack flag-o-matic multiprocessing python-any-r1 qt5-build toolchain-funcs
 
@@ -27,7 +28,7 @@ else
 fi
 
 # ppc64 patchset based on https://github.com/chromium-ppc64le releases
-SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${PN}-5.15.8_p20230313-patchset.tar.xz
+SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${PATCHSET}.tar.xz
 	ppc64? ( https://dev.gentoo.org/~gyakovlev/distfiles/${PN}-5.15.2-r1-chromium87-ppc64le.tar.xz )"
 
 IUSE="alsa bindist designer geolocation +jumbo-build kerberos pulseaudio screencast +system-icu widgets"
@@ -100,7 +101,7 @@ BDEPEND="${PYTHON_DEPS}
 	ppc64? ( >=dev-util/gn-0.1807 )
 "
 
-PATCHES=( "${WORKDIR}/${PN}-5.15.8_p20230313-patchset" )
+PATCHES=( "${WORKDIR}/${PATCHSET}" )
 
 qtwebengine_check-reqs() {
 	# bug #307861
@@ -154,6 +155,9 @@ src_unpack() {
 }
 
 src_prepare() {
+	# upstreamed, but not spinning new patchset just yet
+	rm "${WORKDIR}"/${PATCHSET}/018-gcc13-includes.patch || die
+
 	if [[ ${PV} == ${QT5_PV}_p* ]]; then
 		# This is made from git, and for some reason will fail w/o .git directories.
 		mkdir -p .git src/3rdparty/chromium/.git || die
