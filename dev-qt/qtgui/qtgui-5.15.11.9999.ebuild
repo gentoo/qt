@@ -33,6 +33,7 @@ RDEPEND="
 	media-libs/freetype:2
 	media-libs/harfbuzz:=
 	sys-libs/zlib:=
+	accessibility? ( app-accessibility/at-spi2-core:2 )
 	dbus? ( =dev-qt/qtdbus-${QT5_PV}* )
 	eglfs? (
 		media-libs/mesa[gbm(+)]
@@ -150,6 +151,7 @@ src_prepare() {
 
 src_configure() {
 	local myconf=(
+		$(qt_use accessibility feature-accessibility-atspi-bridge)
 		$(usev dbus -dbus-linked)
 		$(qt_use egl)
 		$(qt_use eglfs)
