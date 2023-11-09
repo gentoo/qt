@@ -32,7 +32,7 @@ DEPEND="
 	>=dev-qt/qtgui-5.15:5
 	>=dev-qt/qtwidgets-5.15:5
 	>=dev-qt/qtx11extras-5.15:5
-	>=x11-libs/libfm-qt-1.3:=
+	>=x11-libs/libfm-qt-1.4:=
 "
 RDEPEND="${DEPEND}"
 
