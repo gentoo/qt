@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -23,7 +23,7 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.12.0
+	>=dev-util/lxqt-build-tools-0.13.0
 "
 DEPEND="
 	dev-libs/glib:2
@@ -32,7 +32,7 @@ DEPEND="
 	>=dev-qt/qtgui-5.15:5
 	>=dev-qt/qtwidgets-5.15:5
 	>=dev-qt/qtx11extras-5.15:5
-	>=x11-libs/libfm-qt-1.2:=
+	>=x11-libs/libfm-qt-1.3:=
 "
 RDEPEND="${DEPEND}"
 
