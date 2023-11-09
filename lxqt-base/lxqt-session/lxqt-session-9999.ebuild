@@ -29,7 +29,7 @@ BDEPEND="
 "
 DEPEND="
 	>=app-misc/qtxdg-tools-3.11.0
-	>=dev-libs/libqtxdg-3.11.0
+	>=dev-libs/libqtxdg-3.12.0
 	>=dev-qt/qtcore-5.15:5
 	>=dev-qt/qtdbus-5.15:5
 	>=dev-qt/qtgui-5.15:5

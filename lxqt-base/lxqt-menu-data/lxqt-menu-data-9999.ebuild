@@ -22,4 +22,4 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 IUSE=""
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.12.0"
+BDEPEND=">=dev-util/lxqt-build-tools-0.13.0"
