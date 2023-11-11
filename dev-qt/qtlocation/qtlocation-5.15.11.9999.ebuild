@@ -3,6 +3,7 @@
 
 EAPI=8
 
+PATCHSET="${PN}-5.15.11-patchset"
 inherit qt5-build
 
 DESCRIPTION="Location (places, maps, navigation) library for the Qt5 framework"
@@ -10,7 +11,7 @@ DESCRIPTION="Location (places, maps, navigation) library for the Qt5 framework"
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 	MAPBOXGL_COMMIT=4c88f2c0e61daa89f584a8a9a3eba210221c6920
 	SRC_URI+=" https://invent.kde.org/qt/qt/${PN}-mapboxgl/-/archive/${MAPBOXGL_COMMIT}/${PN}-mapboxgl-${MAPBOXGL_COMMIT}.tar.gz -> ${PN}-mapboxgl-${PV}-${MAPBOXGL_COMMIT:0:8}.tar.gz
-	https://dev.gentoo.org/~asturm/distfiles/${PN}-5.15.11-fix-appendChildNode.patch.xz"
+	https://dev.gentoo.org/~asturm/distfiles/${PATCHSET}.tar.xz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
@@ -41,7 +42,7 @@ QT5_TARGET_SUBDIRS=(
 
 if [[ ${QT5_BUILD_TYPE} == release ]]; then
 
-PATCHES=( "${WORKDIR}/${PN}-5.15.11-fix-appendChildNode.patch" )
+PATCHES=( "${WORKDIR}/${PATCHSET}" )
 
 src_prepare() {
 	rm -rf src/3rdparty/mapbox-gl-native/* || die
