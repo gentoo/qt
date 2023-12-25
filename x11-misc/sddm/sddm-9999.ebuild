@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -101,6 +101,12 @@ src_install() {
 
 	insinto /etc/sddm.conf.d/
 	doins "${S}"/01gentoo.conf
+
+	# with systemd logs are sent to journald, so no point to bother in that case
+	if ! use systemd; then
+		insinto /etc/logrotate.d
+		newins "${FILESDIR}/sddm.logrotate" sddm
+	fi
 }
 
 pkg_postinst() {
