@@ -1,7 +1,7 @@
-From 9cbeb07664f4bd4273c2b62a522a864f6d4f27ae Mon Sep 17 00:00:00 2001
+From 0f0def036cb13d5cf4160d27cc46be20eebcbdca Mon Sep 17 00:00:00 2001
 From: Andreas Sturmlechner <asturm@gentoo.org>
 Date: Sat, 4 Feb 2023 13:31:36 +0100
-Subject: [PATCH] sddm.pam: Change to substack for system-login
+Subject: [PATCH 3/5] sddm.pam: Change to substack for system-login
 
 Signed-off-by: Andreas Sturmlechner <asturm@gentoo.org>
 ---
@@ -33,5 +33,5 @@ index df11003..0a073f4 100644
  -session    optional    pam_gnome_keyring.so    auto_start
  -session    optional    pam_kwallet5.so         auto_start
 -- 
-2.39.1
+2.43.0
 
