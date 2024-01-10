@@ -185,7 +185,7 @@ qt5-build_src_prepare() {
 		append-ldflags $(test-flags-CCLD -Wl,--undefined-version)
 	fi
 
-	# many bugs, no one to fix (already done for qtbase)
+	# many bugs, no one to fix
 	filter-lto
 
 	if [[ ${QT5_BUILD_TYPE} == live ]] || [[ -n ${KDE_ORG_COMMIT} ]]; then
