@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -13,21 +13,18 @@ inherit qt5-build
 DESCRIPTION="Wayland platform plugin for Qt"
 
 SLOT=5/${QT5_PV} # bug 815646
-IUSE="compositor"
+IUSE="compositor vulkan"
 
 RDEPEND="
 	dev-libs/wayland
 	=dev-qt/qtcore-${QT5_PV}*:5=
-	=dev-qt/qtgui-${QT5_PV}*:5=[egl,libinput]
+	=dev-qt/qtgui-${QT5_PV}*:5=[egl,libinput,vulkan=]
 	media-libs/libglvnd
 	x11-libs/libxkbcommon
-	compositor? (
-		=dev-qt/qtdeclarative-${QT5_PV}*:5=
-		=dev-qt/qtgui-${QT5_PV}*:5=[vulkan]
-	)
+	compositor? ( =dev-qt/qtdeclarative-${QT5_PV}*:5= )
 "
 DEPEND="${RDEPEND}
-	compositor? ( dev-util/vulkan-headers )
+	vulkan? ( dev-util/vulkan-headers )
 "
 BDEPEND="dev-util/wayland-scanner"
 
@@ -40,8 +37,12 @@ src_configure() {
 		$(qt_use compositor feature-wayland-dmabuf-server-buffer)
 		$(qt_use compositor feature-wayland-drm-egl-server-buffer)
 		$(qt_use compositor feature-wayland-shm-emulation-server-buffer)
-		$(qt_use compositor feature-wayland-vulkan-server-buffer)
 	)
+
+	use compositor && myqmakeargs+=(
+		$(qt_use vulkan feature-wayland-vulkan-server-buffer)
+	)
+
 	qt5-build_src_configure
 }
 
