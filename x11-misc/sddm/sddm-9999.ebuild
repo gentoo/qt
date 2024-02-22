@@ -11,7 +11,7 @@ else
 	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
-QTMIN=5.15.2
+QTMIN=6.6.2
 inherit cmake linux-info systemd tmpfiles
 
 DESCRIPTION="Simple Desktop Display Manager"
@@ -19,7 +19,7 @@ HOMEPAGE="https://github.com/sddm/sddm"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="+elogind systemd test +X"
+IUSE="+elogind +qt5 systemd test +X"
 
 REQUIRED_USE="^^ ( elogind systemd )"
 RESTRICT="!test? ( test )"
@@ -27,20 +27,29 @@ RESTRICT="!test? ( test )"
 COMMON_DEPEND="
 	acct-group/sddm
 	acct-user/sddm
-	>=dev-qt/qtcore-${QTMIN}:5
-	>=dev-qt/qtdbus-${QTMIN}:5
-	>=dev-qt/qtdeclarative-${QTMIN}:5
-	>=dev-qt/qtgui-${QTMIN}:5
-	>=dev-qt/qtnetwork-${QTMIN}:5
 	sys-libs/pam
 	x11-libs/libXau
 	x11-libs/libxcb:=
 	elogind? ( sys-auth/elogind[pam] )
+	qt5? (
+		>=dev-qt/qtcore-5.15.12:5
+		>=dev-qt/qtdbus-5.15.12:5
+		>=dev-qt/qtdeclarative-5.15.12:5
+		>=dev-qt/qtgui-5.15.12:5
+		>=dev-qt/qtnetwork-5.15.12:5
+	)
+	!qt5? (
+		>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network]
+		>=dev-qt/qtdeclarative-${QTMIN}:6
+	)
 	systemd? ( sys-apps/systemd:=[pam] )
 	!systemd? ( sys-power/upower )
 "
 DEPEND="${COMMON_DEPEND}
-	test? ( >=dev-qt/qttest-${QTMIN}:5 )
+	test? (
+		qt5? ( >=dev-qt/qttest-5.15.12:5 )
+		!qt5? ( >=dev-qt/qtbase-${QTMIN}:6[network,test] )
+	)
 "
 RDEPEND="${COMMON_DEPEND}
 	X? ( x11-base/xorg-server )
@@ -48,7 +57,9 @@ RDEPEND="${COMMON_DEPEND}
 "
 BDEPEND="
 	dev-python/docutils
-	>=dev-qt/linguist-tools-${QTMIN}:5
+	>=dev-build/cmake-3.25.0
+	qt5? ( >=dev-qt/linguist-tools-5.15.12:5 )
+	!qt5? ( >=dev-qt/qttools-${QTMIN}[linguist] )
 	kde-frameworks/extra-cmake-modules:0
 	virtual/pkgconfig
 "
@@ -87,6 +98,7 @@ EOF
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_MAN_PAGES=ON
+		-DBUILD_WITH_QT6=$(usex !qt5)
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
 		-DRUNTIME_DIR=/run/sddm
 		-DSYSTEMD_TMPFILES_DIR="/usr/lib/tmpfiles.d"
