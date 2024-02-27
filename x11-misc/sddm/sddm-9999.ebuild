@@ -7,7 +7,7 @@ if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 else
-	SRC_URI="https://github.com/${PN}/${PN}/releases/download/v${PV}/${P}.tar.gz"
+	SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
@@ -67,10 +67,10 @@ BDEPEND="
 PATCHES=(
 	# Downstream patches
 	"${FILESDIR}/${PN}-0.20.0-respect-user-flags.patch"
-	"${FILESDIR}/${P}-Xsession.patch" # bug 611210
+	"${FILESDIR}/${PN}-0.21.0-Xsession.patch" # bug 611210
 	"${FILESDIR}/${PN}-0.20.0-sddm.pam-use-substack.patch" # bug 728550
-	"${FILESDIR}/${P}-disable-etc-debian-check.patch"
-	"${FILESDIR}/${P}-no-default-pam_systemd-module.patch" # bug 669980
+	"${FILESDIR}/${PN}-0.21.0-disable-etc-debian-check.patch"
+	"${FILESDIR}/${PN}-0.21.0-no-default-pam_systemd-module.patch" # bug 669980
 )
 
 pkg_setup() {
