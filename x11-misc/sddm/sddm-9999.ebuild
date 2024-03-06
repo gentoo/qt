@@ -12,7 +12,7 @@ else
 fi
 
 QTMIN=6.6.2
-inherit cmake linux-info systemd tmpfiles
+inherit cmake linux-info pam systemd tmpfiles
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
@@ -68,9 +68,6 @@ PATCHES=(
 	# Downstream patches
 	"${FILESDIR}/${PN}-0.20.0-respect-user-flags.patch"
 	"${FILESDIR}/${PN}-0.21.0-Xsession.patch" # bug 611210
-	"${FILESDIR}/${PN}-0.20.0-sddm.pam-use-substack.patch" # bug 728550
-	"${FILESDIR}/${PN}-0.21.0-disable-etc-debian-check.patch"
-	"${FILESDIR}/${PN}-0.21.0-no-default-pam_systemd-module.patch" # bug 669980
 )
 
 pkg_setup() {
@@ -113,6 +110,11 @@ src_install() {
 
 	insinto /etc/sddm.conf.d/
 	doins "${S}"/01gentoo.conf
+
+	# install pam configuration
+	newpamd "${FILESDIR}/pam.d/sddm" sddm
+	newpamd "${FILESDIR}/pam.d/sddm-autologin" sddm-autologin
+	newpamd "${FILESDIR}/pam.d/sddm-greeter" sddm-greeter
 
 	# with systemd logs are sent to journald, so no point to bother in that case
 	if ! use systemd; then
