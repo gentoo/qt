@@ -17,7 +17,7 @@ inherit cmake linux-info pam systemd tmpfiles
 
 DESCRIPTION="Simple Desktop Display Manager"
 HOMEPAGE="https://github.com/sddm/sddm"
-SRC_URI="https://dev.gentoo.org/~asturm/distfiles/${PAM_TAR}.tar.xz"
+SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${PAM_TAR}.tar.xz"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
