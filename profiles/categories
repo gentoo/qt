@@ -4,6 +4,7 @@ app-emulation
 dev-libs
 dev-qt
 dev-util
+gui-apps
 lxqt-base
 media-gfx
 x11-libs

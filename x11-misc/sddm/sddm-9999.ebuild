@@ -21,7 +21,7 @@ SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${PAM_TAR}.tar.xz"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="+elogind +qt5 systemd test +X"
+IUSE="+elogind +qt5 systemd test"
 
 REQUIRED_USE="^^ ( elogind systemd )"
 RESTRICT="!test? ( test )"
@@ -54,7 +54,7 @@ DEPEND="${COMMON_DEPEND}
 	)
 "
 RDEPEND="${COMMON_DEPEND}
-	X? ( x11-base/xorg-server )
+	gui-apps/sddm-gentoo-config
 	!systemd? ( gui-libs/display-manager-init )
 "
 BDEPEND="
@@ -83,14 +83,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	touch 01gentoo.conf || die
-
-cat <<-EOF >> 01gentoo.conf
-[General]
-# Remove qtvirtualkeyboard as InputMethod default
-InputMethod=
-EOF
-
 	cmake_src_prepare
 
 	if ! use test; then
@@ -119,9 +111,6 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-
-	insinto /etc/sddm.conf.d/
-	doins "${S}"/01gentoo.conf
 
 	# with systemd logs are sent to journald, so no point to bother in that case
 	if ! use systemd; then
