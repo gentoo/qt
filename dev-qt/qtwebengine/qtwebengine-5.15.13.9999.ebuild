@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PATCHSET="${PN}-5.15.10_p20230815-patchset"
+PATCHSET="${PN}-5.15.13_p20240322-patchset"
 PYTHON_COMPAT=( python3_{10..11} )
 PYTHON_REQ_USE="xml(+)"
 inherit check-reqs estack flag-o-matic multiprocessing python-any-r1 qt5-build toolchain-funcs
@@ -152,9 +152,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	# upstreamed, but not spinning new patchset just yet
-	rm "${WORKDIR}"/${PATCHSET}/018-gcc13-includes.patch || die
-
 	if [[ ${PV} == ${QT5_PV}_p* ]]; then
 		# This is made from git, and for some reason will fail w/o .git directories.
 		mkdir -p .git src/3rdparty/chromium/.git || die
