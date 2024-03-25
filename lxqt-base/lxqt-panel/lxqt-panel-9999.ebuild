@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -31,20 +31,15 @@ REQUIRED_USE="
 "
 
 BDEPEND="
-	>=dev-qt/linguist-tools-5.15:5
-	>=dev-util/lxqt-build-tools-0.13.0
+	>=dev-qt/qttools-6.6:6[linguist]
+	>=dev-util/lxqt-build-tools-2.0.0
 	virtual/pkgconfig
 "
 DEPEND="
 	>=dev-libs/libqtxdg-3.11.0
-	>=dev-qt/qtcore-5.15:5
-	>=dev-qt/qtdbus-5.15:5
-	>=dev-qt/qtgui-5.15:5
-	>=dev-qt/qtsvg-5.15:5
-	>=dev-qt/qtwidgets-5.15:5
-	>=dev-qt/qtx11extras-5.15:5
-	>=dev-qt/qtxml-5.15:5
-	kde-frameworks/kwindowsystem:5[X]
+	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
+	>=dev-qt/qtsvg-6.6:6
+	kde-frameworks/kwindowsystem:6[X]
 	>=lxde-base/menu-cache-1.1.0
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*
@@ -53,13 +48,13 @@ DEPEND="
 	cpuload? ( sys-libs/libstatgrab )
 	kbindicator? ( x11-libs/libxkbcommon )
 	lm-sensors? ( sys-apps/lm-sensors:= )
-	mount? ( kde-frameworks/solid:5 )
+	mount? ( kde-frameworks/solid:6 )
 	networkmonitor? ( sys-libs/libstatgrab )
 	statusnotifier? (
-		dev-libs/libdbusmenu-qt[qt5(+)]
-		>=dev-qt/qtconcurrent-5.15:5
+		dev-libs/libdbusmenu-lxqt
+		>=dev-qt/qtbase-6.6:6[concurrent]
 	)
-	sysstat? ( >=lxqt-base/libsysstat-0.4.6 )
+	sysstat? ( >=lxqt-base/libsysstat-2.0.0 )
 	tray? (
 		x11-libs/libxcb:=
 		x11-libs/libXcomposite
