@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,16 +22,14 @@ LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
 
 BDEPEND="
-	dev-qt/linguist-tools:5
-	>=dev-util/lxqt-build-tools-0.13.0
+	>=dev-qt/qttools-6.6:6[linguist]
+	>=dev-util/lxqt-build-tools-2.0.0
 "
 DEPEND="
 	>=dev-libs/libqtxdg-3.11.0
-	>=dev-qt/qtcore-5.15:5
-	>=dev-qt/qtdbus-5.15:5
-	>=dev-qt/qtgui-5.15:5
-	>=dev-qt/qtwidgets-5.15:5
-	kde-frameworks/kwindowsystem:5
+	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
+	kde-frameworks/kwindowsystem:6
+	>=kde-plasma/layer-shell-qt-6.0:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
 "
 RDEPEND="${DEPEND}"
