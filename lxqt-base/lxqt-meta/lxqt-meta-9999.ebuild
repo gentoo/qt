@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -45,7 +45,7 @@ RDEPEND="
 		!sddm? ( x11-misc/lightdm )
 	)
 	filemanager? ( =x11-misc/pcmanfm-qt-${MY_PV}* )
-	lximage? ( media-gfx/lximage-qt )
+	lximage? ( =media-gfx/lximage-qt-${MY_PV}* )
 	!minimal? (
 		x11-wm/openbox
 		x11-misc/obconf-qt
