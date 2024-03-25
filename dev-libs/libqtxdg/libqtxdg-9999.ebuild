@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,21 +22,17 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	>=dev-util/lxqt-build-tools-0.13.0
+	>=dev-util/lxqt-build-tools-2.0.0
 	virtual/pkgconfig
 "
 RDEPEND="
 	dev-libs/glib:2
-	>=dev-qt/qtcore-5.15:5
-	>=dev-qt/qtdbus-5.15:5
-	>=dev-qt/qtgui-5.15:5=
-	>=dev-qt/qtsvg-5.15:5
-	>=dev-qt/qtwidgets-5.15:5
-	>=dev-qt/qtxml-5.15:5
+	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
+	>=dev-qt/qtsvg-6.6:6
 	x11-misc/xdg-utils
 "
 DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qttest-5.15:5 )
+	test? ( >=dev-qt/qtbase-6.6:6[test] )
 "
 
 src_configure() {
