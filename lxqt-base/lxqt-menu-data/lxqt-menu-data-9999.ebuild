@@ -1,4 +1,4 @@
-# Copyright 2023 Gentoo Authors
+# Copyright 2023-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -15,11 +15,18 @@ if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE=""
 
-BDEPEND=">=dev-util/lxqt-build-tools-0.13.0"
+BDEPEND="
+	>=dev-qt/qttools-6.6:6[linguist]
+	>=dev-util/lxqt-build-tools-2.0.0
+"
+RDEPEND="
+	!<lxqt-base/lxqt-config-1.4.0
+	!<lxqt-base/lxqt-panel-1.4.0
+	!<x11-misc/pcmanfm-qt-1.4.0
+"
