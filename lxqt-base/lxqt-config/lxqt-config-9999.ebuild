@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,17 +22,11 @@ LICENSE="GPL-2 GPL-2+ GPL-3 LGPL-2 LGPL-2+ LGPL-2.1+ WTFPL-2"
 SLOT="0"
 IUSE="+monitor +touchpad"
 
-BDEPEND="
-	>=dev-qt/linguist-tools-5.15:5
-"
+BDEPEND=">=dev-qt/qttools-6.6:6[linguist]"
 DEPEND="
 	>=dev-libs/libqtxdg-3.11.0
-	>=dev-qt/qtcore-5.15:5
-	>=dev-qt/qtgui-5.15:5
-	>=dev-qt/qtwidgets-5.15:5
-	>=dev-qt/qtsvg-5.15:5
-	>=dev-qt/qtx11extras-5.15:5
-	>=dev-qt/qtxml-5.15:5
+	>=dev-qt/qtbase-6.6:6[gui,widgets,xml]
+	>=dev-qt/qtsvg-6.6:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	=lxqt-base/lxqt-menu-data-${MY_PV}*
 	sys-libs/zlib:=
@@ -41,7 +35,7 @@ DEPEND="
 	x11-libs/libX11
 	x11-libs/libXcursor
 	x11-libs/libXfixes
-	monitor? ( >=kde-plasma/libkscreen-5.27.0:5= )
+	monitor? ( >=kde-plasma/libkscreen-6:6= )
 	touchpad? (
 		virtual/libudev:=
 		x11-drivers/xf86-input-libinput
