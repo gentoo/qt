@@ -21,10 +21,11 @@ lximage minimal nls +policykit powermanagement processviewer screenshot
 
 REQUIRED_USE="trash? ( filemanager )"
 
-# Note: we prefer kde-frameworks/oxygen-icons over other icon sets, as the initial
-# install expects oxygen icons, until the user specifies otherwise (bug 543380)
+# Pull in 'kde-frameworks/breeze-icons' as an upstream default.
+# https://bugs.gentoo.org/543380
+# https://github.com/lxqt/lxqt-session/commit/5d32ff434d4
 RDEPEND="
-	kde-frameworks/oxygen-icons
+	kde-frameworks/breeze-icons:6
 	=lxqt-base/lxqt-config-${MY_PV}*
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*
 	=lxqt-base/lxqt-menu-data-${MY_PV}*
