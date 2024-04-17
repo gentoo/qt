@@ -17,15 +17,6 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 3e46428..7bb1e66 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3,7 +3,7 @@ project(dbusmenu-lxqt)
- set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
- 
- # Build options
--option(WITH_DOC "Build documentation (requires Doxygen)" ON)
-+option(WITH_DOC "Build documentation (requires Doxygen)" OFF)
- 
- # Versions
- ## Package version
 @@ -49,9 +49,7 @@ endif (__DBUSMENU_HAVE_CXX17)
  
  include(CMakePackageConfigHelpers)
