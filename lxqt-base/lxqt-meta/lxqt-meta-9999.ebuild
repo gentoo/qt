@@ -39,8 +39,8 @@ RDEPEND="
 	=x11-themes/lxqt-themes-${MY_PV}*
 	about? ( =lxqt-base/lxqt-about-${MY_PV}* )
 	admin? ( =lxqt-base/lxqt-admin-${MY_PV}* )
-	archiver? ( app-arch/lxqt-archiver )
-	desktop-portal? ( gui-libs/xdg-desktop-portal-lxqt )
+	archiver? ( >=app-arch/lxqt-archiver-1.0 )
+	desktop-portal? ( >=gui-libs/xdg-desktop-portal-lxqt-1.0 )
 	display-manager? (
 		sddm? ( >=x11-misc/sddm-0.11.0 )
 		!sddm? ( x11-misc/lightdm )
@@ -51,14 +51,14 @@ RDEPEND="
 		x11-wm/openbox
 		x11-misc/obconf-qt
 	)
-	nls? ( dev-qt/qttranslations:5 )
+	nls? ( dev-qt/qttranslations:6 )
 	policykit? ( =lxqt-base/lxqt-policykit-${MY_PV}* )
 	powermanagement? ( =lxqt-base/lxqt-powermanagement-${MY_PV}* )
-	processviewer? ( x11-misc/qps:0 )
-	screenshot? ( x11-misc/screengrab:0 )
+	processviewer? ( >=x11-misc/qps-2.9 )
+	screenshot? ( >=x11-misc/screengrab-2.8 )
 	sddm? ( >=x11-misc/sddm-0.11.0 )
 	ssh-askpass? ( =lxqt-base/lxqt-openssh-askpass-${MY_PV}* )
 	sudo? ( =lxqt-base/lxqt-sudo-${MY_PV}* )
-	terminal? ( x11-terms/qterminal:0 )
+	terminal? ( =x11-terms/qterminal-${MY_PV}* )
 	trash? ( gnome-base/gvfs )
 "
