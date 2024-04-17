@@ -38,10 +38,11 @@ BDEPEND="
 	virtual/pkgconfig
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.11.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
 	>=dev-qt/qtsvg-6.6:6
 	kde-frameworks/kwindowsystem:6[X]
+	kde-plasma/layer-shell-qt:6
 	>=lxde-base/menu-cache-1.1.0
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*

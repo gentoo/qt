@@ -25,7 +25,7 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-2.0.0
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.12.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
 	kde-frameworks/kwindowsystem:6[X]
 	x11-libs/libX11

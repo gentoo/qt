@@ -21,7 +21,7 @@ SLOT="0"
 
 BDEPEND=">=dev-util/lxqt-build-tools-2.0.0"
 RDEPEND="
-	>=dev-libs/libqtxdg-3.12.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6
 "
 DEPEND="${RDEPEND}"

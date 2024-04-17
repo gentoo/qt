@@ -24,7 +24,7 @@ IUSE="+monitor +touchpad"
 
 BDEPEND=">=dev-qt/qttools-6.6:6[linguist]"
 DEPEND="
-	>=dev-libs/libqtxdg-3.11.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[gui,widgets,xml]
 	>=dev-qt/qtsvg-6.6:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
@@ -35,7 +35,7 @@ DEPEND="
 	x11-libs/libX11
 	x11-libs/libXcursor
 	x11-libs/libXfixes
-	monitor? ( >=kde-plasma/libkscreen-6:6= )
+	monitor? ( kde-plasma/libkscreen:6= )
 	touchpad? (
 		virtual/libudev:=
 		x11-drivers/xf86-input-libinput

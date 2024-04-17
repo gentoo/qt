@@ -27,7 +27,7 @@ BDEPEND="
 	virtual/pkgconfig
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.11.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	>=dev-qt/qtsvg-6.6:6
 	kde-frameworks/kwindowsystem:6

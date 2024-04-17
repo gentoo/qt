@@ -27,10 +27,11 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-2.0.0
 "
 DEPEND="
-	>=app-misc/qtxdg-tools-3.11.0
-	>=dev-libs/libqtxdg-3.12.0
+	>=app-misc/qtxdg-tools-4.0.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	kde-frameworks/kwindowsystem:6[X]
+	kde-plasma/layer-shell-qt:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	sys-process/procps:=
 	x11-libs/libX11

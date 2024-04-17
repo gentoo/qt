@@ -28,7 +28,7 @@ BDEPEND="
 "
 DEPEND="
 	>=dev-cpp/muParser-2.2.3
-	>=dev-libs/libqtxdg-3.12.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
 	kde-frameworks/kwindowsystem:6
 	>=kde-plasma/layer-shell-qt-6.0:6

@@ -23,7 +23,7 @@ SLOT="0"
 
 BDEPEND=">=dev-util/lxqt-build-tools-2.0.0"
 DEPEND="
-	>=dev-libs/libqtxdg-3.11.0
+	>=dev-libs/libqtxdg-4.0.0
 	=lxqt-base/liblxqt-${MY_PV}*:=
 "
 RDEPEND="${DEPEND}"

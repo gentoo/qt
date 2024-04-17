@@ -26,7 +26,7 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-2.0.0
 "
 DEPEND="
-	>=dev-libs/libqtxdg-3.11.0
+	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	kde-frameworks/kwindowsystem:6
 	>=kde-plasma/layer-shell-qt-6.0:6
