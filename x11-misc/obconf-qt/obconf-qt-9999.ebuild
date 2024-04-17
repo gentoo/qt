@@ -8,7 +8,7 @@ inherit cmake xdg-utils
 DESCRIPTION="Qt GUI Openbox Configuration Tool"
 HOMEPAGE="https://lxqt.github.io/"
 
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else

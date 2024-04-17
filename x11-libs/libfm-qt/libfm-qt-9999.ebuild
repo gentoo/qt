@@ -10,7 +10,7 @@ inherit cmake xdg-utils
 DESCRIPTION="Qt Library for Building File Managers"
 HOMEPAGE="https://lxqt-project.org/"
 
-if [[ "${PV}" == "9999" ]]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else

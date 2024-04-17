@@ -10,7 +10,7 @@ HOMEPAGE="https://lxqt-project.org/"
 
 MY_PV="$(ver_cut 1-2)"
 
-if [[ ${PV} = *9999* ]]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
@@ -20,9 +20,11 @@ fi
 
 LICENSE="LGPL-2.1 LGPL-2.1+"
 SLOT="0"
-IUSE="+alsa colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator
-+mainmenu +mount networkmonitor pulseaudio +quicklaunch lm-sensors +showdesktop
-+spacer +statusnotifier sysstat +taskbar tray +volume +worldclock"
+IUSE="
+	+alsa colorpicker cpuload +desktopswitch +directorymenu dom +kbindicator
+	+mainmenu +mount networkmonitor pulseaudio +quicklaunch lm-sensors +showdesktop
+	+spacer +statusnotifier sysstat +taskbar tray +volume +worldclock
+"
 
 # Work around a missing header issue: https://bugs.gentoo.org/666278
 REQUIRED_USE="

@@ -8,7 +8,7 @@ inherit cmake optfeature virtualx
 DESCRIPTION="Qt Implementation of XDG Standards"
 HOMEPAGE="https://lxqt-project.org/"
 
-if [[ ${PV} == *9999 ]]; then
+if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
