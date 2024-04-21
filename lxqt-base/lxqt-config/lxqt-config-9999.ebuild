@@ -22,7 +22,10 @@ LICENSE="GPL-2 GPL-2+ GPL-3 LGPL-2 LGPL-2+ LGPL-2.1+ WTFPL-2"
 SLOT="0"
 IUSE="+monitor +touchpad"
 
-BDEPEND=">=dev-qt/qttools-6.6:6[linguist]"
+BDEPEND="
+	>=dev-qt/qttools-6.6:6[linguist]
+	>=dev-util/lxqt-build-tools-2.0.0
+"
 DEPEND="
 	>=dev-libs/libqtxdg-4.0.0
 	>=dev-qt/qtbase-6.6:6[gui,widgets,xml]
