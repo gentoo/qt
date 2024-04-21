@@ -57,13 +57,15 @@ DEPEND="
 		dev-libs/libdbusmenu-lxqt
 		>=dev-qt/qtbase-6.6:6[concurrent]
 	)
-	sysstat? ( >=lxqt-base/libsysstat-2.0.0 )
+	sysstat? ( >=lxqt-base/libsysstat-1.0.0 )
 	tray? (
 		x11-libs/libxcb:=
 		x11-libs/libXcomposite
 		x11-libs/libXdamage
 		x11-libs/libXrender
+		x11-libs/libXtst
 		x11-libs/xcb-util
+		x11-libs/xcb-util-image
 	)
 	volume? (
 		alsa? ( media-libs/alsa-lib )
