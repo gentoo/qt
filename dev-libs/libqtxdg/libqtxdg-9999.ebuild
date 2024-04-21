@@ -31,9 +31,7 @@ RDEPEND="
 	>=dev-qt/qtsvg-6.6:6
 	x11-misc/xdg-utils
 "
-DEPEND="${RDEPEND}
-	test? ( >=dev-qt/qtbase-6.6:6[test] )
-"
+DEPEND="${RDEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
