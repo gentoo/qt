@@ -26,7 +26,6 @@ DEPEND="
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	x11-libs/libX11
 	~x11-libs/qtermwidget-${PV}:=
-	test? ( dev-qt/qtbase:6[test] )
 "
 RDEPEND="${DEPEND}"
 
