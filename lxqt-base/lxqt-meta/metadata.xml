@@ -11,9 +11,9 @@
 		<flag name="archiver">Install <pkg>app-arch/lxqt-archiver</pkg></flag>
 		<flag name="desktop-portal">Enable the LXQt <pkg>sys-apps/xdg-desktop-portal</pkg> backend implementation</flag>
 		<flag name="display-manager">Install a graphical display manager</flag>
-		<flag name="filemanager">Install <pkg>x11-misc/pcmanfm-qt</pkg>file manager</flag>
-		<flag name="lximage">Install <pkg>media-gfx/lximage-qt</pkg>image viewer</flag>
-		<flag name="minimal">Do not install <pkg>kde-plasma/kwin</pkg>window manager</flag>
+		<flag name="filemanager">Install <pkg>x11-misc/pcmanfm-qt</pkg> file manager</flag>
+		<flag name="lximage">Install <pkg>media-gfx/lximage-qt</pkg> image viewer</flag>
+		<flag name="minimal">Do not install <pkg>kde-plasma/kwin</pkg> window manager</flag>
 		<flag name="nls">Install <pkg>dev-qt/qttranslations</pkg> to better support different locales</flag>
 		<flag name="powermanagement">Install <pkg>lxqt-base/lxqt-powermanagement</pkg> package</flag>
 		<flag name="processviewer">Install <pkg>x11-misc/qps</pkg> package</flag>
