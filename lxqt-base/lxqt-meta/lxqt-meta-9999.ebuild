@@ -17,7 +17,7 @@ SLOT="0"
 
 IUSE="
 	+about admin archiver +desktop-portal +display-manager +filemanager
-	lximage nls +policykit powermanagement processviewer screenshot
+	lximage minimal nls +policykit powermanagement processviewer screenshot
 	+sddm ssh-askpass sudo terminal +trash
 "
 
@@ -49,6 +49,7 @@ RDEPEND="
 	)
 	filemanager? ( =x11-misc/pcmanfm-qt-${MY_PV}* )
 	lximage? ( =media-gfx/lximage-qt-${MY_PV}* )
+	!minimal? ( kde-plasma/kwin:6 )
 	nls? ( dev-qt/qttranslations:6 )
 	policykit? ( =lxqt-base/lxqt-policykit-${MY_PV}* )
 	powermanagement? ( =lxqt-base/lxqt-powermanagement-${MY_PV}* )
@@ -60,11 +61,3 @@ RDEPEND="
 	terminal? ( =x11-terms/qterminal-${MY_PV}* )
 	trash? ( gnome-base/gvfs )
 "
-
-pkg_postinst() {
-	einfo "Since there is no upstream default for a window manager, none"
-	einfo "is included as a dependency here."
-	einfo
-	einfo "Please make sure to install at least one to be able to start a"
-	einfo "functional desktop session."
-}
