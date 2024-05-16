@@ -13,6 +13,7 @@
 		<flag name="display-manager">Install a graphical display manager</flag>
 		<flag name="filemanager">Install <pkg>x11-misc/pcmanfm-qt</pkg> file manager</flag>
 		<flag name="lximage">Install <pkg>media-gfx/lximage-qt</pkg> image viewer</flag>
+		<flag name="minimal" restrict="&lt;lxqt-base/lxqt-meta-2.0">Do not install <pkg>x11-wm/openbox</pkg> window manager</flag>
 		<flag name="minimal">Do not install <pkg>kde-plasma/kwin</pkg> window manager</flag>
 		<flag name="nls">Install <pkg>dev-qt/qttranslations</pkg> to better support different locales</flag>
 		<flag name="powermanagement">Install <pkg>lxqt-base/lxqt-powermanagement</pkg> package</flag>
