@@ -47,11 +47,11 @@ RDEPEND="${DEPEND}
 	!<=lxqt-base/lxqt-sudo-2
 	!<=media-gfx/lximage-qt-2
 	!<=x11-libs/libfm-qt-2
-	x11-libs/qtermwidget
-	x11-misc/obconf-qt
+	!<=x11-libs/qtermwidget-9999
+	!x11-misc/obconf-qt
 	!<=x11-misc/pcmanfm-qt-2
 	!<=x11-misc/qps-2.9
 	!<=x11-misc/screengrab-2.8
-	x11-terms/qterminal
+	!<=x11-terms/qterminal-9999
 	!<=x11-themes/lxqt-themes-2
 "
