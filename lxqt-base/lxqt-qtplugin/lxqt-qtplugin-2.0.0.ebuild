@@ -28,7 +28,7 @@ BDEPEND="
 DEPEND="
 	dev-libs/libdbusmenu-lxqt
 	>=dev-libs/libqtxdg-4.0.0
-	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
+	>=dev-qt/qtbase-6.6:6=[dbus,gui,widgets]
 	=x11-libs/libfm-qt-${MY_PV}*
 "
 RDEPEND="${DEPEND}"
