@@ -27,7 +27,7 @@ BDEPEND="
 "
 RDEPEND="
 	dev-libs/glib:2
-	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
+	>=dev-qt/qtbase-6.6:6=[dbus,gui,widgets,xml]
 	>=dev-qt/qtsvg-6.6:6
 	x11-misc/xdg-utils
 "
