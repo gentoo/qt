@@ -9,10 +9,10 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 else
 	SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc64 ~riscv ~x86"
+	KEYWORDS="~amd64"
 fi
 
-QTMIN=6.6.2
+QTMIN=6.7.1
 inherit cmake linux-info pam systemd tmpfiles
 
 DESCRIPTION="Simple Desktop Display Manager"
@@ -21,7 +21,7 @@ SRC_URI+=" https://dev.gentoo.org/~asturm/distfiles/${PAM_TAR}.tar.xz"
 
 LICENSE="GPL-2+ MIT CC-BY-3.0 CC-BY-SA-3.0 public-domain"
 SLOT="0"
-IUSE="+elogind +qt5 systemd test +X"
+IUSE="+elogind systemd test +X"
 
 REQUIRED_USE="^^ ( elogind systemd )"
 RESTRICT="!test? ( test )"
@@ -29,29 +29,17 @@ RESTRICT="!test? ( test )"
 COMMON_DEPEND="
 	acct-group/sddm
 	acct-user/sddm
+	>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network]
+	>=dev-qt/qtdeclarative-${QTMIN}:6
 	sys-libs/pam
 	x11-libs/libXau
 	x11-libs/libxcb:=
 	elogind? ( sys-auth/elogind[pam] )
-	qt5? (
-		>=dev-qt/qtcore-5.15.12:5
-		>=dev-qt/qtdbus-5.15.12:5
-		>=dev-qt/qtdeclarative-5.15.12:5
-		>=dev-qt/qtgui-5.15.12:5
-		>=dev-qt/qtnetwork-5.15.12:5
-	)
-	!qt5? (
-		>=dev-qt/qtbase-${QTMIN}:6[dbus,gui,network]
-		>=dev-qt/qtdeclarative-${QTMIN}:6
-	)
 	systemd? ( sys-apps/systemd:=[pam] )
 	!systemd? ( sys-power/upower )
 "
 DEPEND="${COMMON_DEPEND}
-	test? (
-		qt5? ( >=dev-qt/qttest-5.15.12:5 )
-		!qt5? ( >=dev-qt/qtbase-${QTMIN}:6[network,test] )
-	)
+	test? ( >=dev-qt/qtbase-${QTMIN}:6[network,test] )
 "
 RDEPEND="${COMMON_DEPEND}
 	X? ( x11-base/xorg-server )
@@ -60,8 +48,7 @@ RDEPEND="${COMMON_DEPEND}
 BDEPEND="
 	dev-python/docutils
 	>=dev-build/cmake-3.25.0
-	qt5? ( >=dev-qt/linguist-tools-5.15.12:5 )
-	!qt5? ( >=dev-qt/qttools-${QTMIN}[linguist] )
+	>=dev-qt/qttools-${QTMIN}[linguist]
 	kde-frameworks/extra-cmake-modules:0
 	virtual/pkgconfig
 "
@@ -107,7 +94,7 @@ EOF
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_MAN_PAGES=ON
-		-DBUILD_WITH_QT6=$(usex !qt5)
+		-DBUILD_WITH_QT6=ON
 		-DDBUS_CONFIG_FILENAME="org.freedesktop.sddm.conf"
 		-DRUNTIME_DIR=/run/sddm
 		-DSYSTEMD_TMPFILES_DIR="/usr/lib/tmpfiles.d"
