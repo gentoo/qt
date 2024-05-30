@@ -3,14 +3,15 @@
 
 EAPI=8
 
+if [[ ${PV} != *9999* ]]; then
+	QT5_KDEPATCHSET_REV=1
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
+fi
+
 inherit qt5-build
 
 DESCRIPTION="Network authorization library for the Qt5 framework"
 LICENSE="GPL-3"
-
-if [[ ${QT5_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
-fi
 
 IUSE=""
 
