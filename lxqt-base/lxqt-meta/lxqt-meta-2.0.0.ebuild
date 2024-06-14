@@ -59,5 +59,8 @@ RDEPEND="
 	sudo? ( =lxqt-base/lxqt-sudo-${MY_PV}* )
 	terminal? ( =x11-terms/qterminal-${MY_PV}* )
 	trash? ( gnome-base/gvfs )
-	window-manager? ( kde-plasma/kwin:6 )
+	window-manager? (
+		kde-plasma/kwin:6
+		kde-plasma/systemsettings:6
+	)
 "
