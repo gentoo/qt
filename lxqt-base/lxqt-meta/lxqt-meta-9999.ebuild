@@ -16,9 +16,9 @@ LICENSE="metapackage"
 SLOT="0"
 
 IUSE="
-	+about admin archiver +desktop-portal +display-manager +filemanager
-	lximage nls +policykit powermanagement processviewer screenshot
-	+sddm ssh-askpass sudo terminal +trash +window-manager
+	+about admin +archiver +desktop-portal +display-manager +filemanager
+	+lximage nls +policykit powermanagement +processviewer +screenshot
+	+sddm ssh-askpass +sudo +terminal +trash +window-manager
 "
 
 REQUIRED_USE="trash? ( filemanager )"
