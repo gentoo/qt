@@ -17,7 +17,7 @@ SLOT="0"
 
 IUSE="
 	+about admin archiver +desktop-portal +display-manager +filemanager
-	lximage minimal nls +policykit powermanagement processviewer screenshot
+	lximage nls +policykit powermanagement processviewer screenshot
 	+sddm ssh-askpass sudo terminal +trash +window-manager
 "
 
