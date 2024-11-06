@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake xdg-utils
+inherit cmake xdg
 
 DESCRIPTION="LXQt daemon for power management and auto-suspend"
 HOMEPAGE="https://lxqt-project.org/"
@@ -15,7 +15,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1 LGPL-2.1+"
@@ -23,11 +23,11 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.0.0
+	>=dev-util/lxqt-build-tools-2.1.0
 	virtual/pkgconfig
 "
 DEPEND="
-	>=dev-libs/libqtxdg-4.0.0
+	>=dev-libs/libqtxdg-4.1.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	>=dev-qt/qtsvg-6.6:6
 	kde-frameworks/kwindowsystem:6
@@ -38,11 +38,3 @@ DEPEND="
 	sys-power/upower
 "
 RDEPEND="${DEPEND}"
-
-pkg_postinst() {
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_icon_cache_update
-}
