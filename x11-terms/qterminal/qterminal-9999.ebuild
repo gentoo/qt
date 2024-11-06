@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake xdg-utils
+inherit cmake xdg
 
 DESCRIPTION="Qt-based multitab terminal emulator"
 HOMEPAGE="https://lxqt-project.org/"
@@ -13,7 +13,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="GPL-2 GPL-2+"
@@ -21,7 +21,7 @@ SLOT="0"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-BDEPEND=">=dev-util/lxqt-build-tools-2.0.0"
+BDEPEND=">=dev-util/lxqt-build-tools-2.1.0"
 DEPEND="
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,X]
 	x11-libs/libX11
@@ -35,12 +35,4 @@ src_configure() {
 	)
 
 	cmake_src_configure
-}
-
-pkg_postinst() {
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_icon_cache_update
 }
