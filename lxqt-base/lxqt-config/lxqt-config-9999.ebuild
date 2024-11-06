@@ -5,7 +5,7 @@ EAPI=8
 
 MY_PV="$(ver_cut 1-2)"
 
-inherit cmake xdg-utils
+inherit cmake xdg
 
 DESCRIPTION="LXQt system configuration control center"
 HOMEPAGE="https://lxqt-project.org/"
@@ -15,7 +15,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="GPL-2 GPL-2+ GPL-3 LGPL-2 LGPL-2+ LGPL-2.1+ WTFPL-2"
@@ -24,10 +24,10 @@ IUSE="+monitor +touchpad"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.0.0
+	>=dev-util/lxqt-build-tools-2.1.0
 "
 DEPEND="
-	>=dev-libs/libqtxdg-4.0.0
+	>=dev-libs/libqtxdg-4.1.0
 	>=dev-qt/qtbase-6.6:6[gui,widgets,xml]
 	>=dev-qt/qtsvg-6.6:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
@@ -59,12 +59,4 @@ src_configure() {
 src_install() {
 	cmake_src_install
 	doman man/*.1 liblxqt-config-cursor/man/*.1 lxqt-config-appearance/man/*.1
-}
-
-pkg_postinst() {
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_icon_cache_update
 }
