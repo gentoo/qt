@@ -15,7 +15,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1 LGPL-2.1+"
@@ -24,11 +24,11 @@ IUSE="+udev"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.0.0
+	>=dev-util/lxqt-build-tools-2.1.0
 "
 DEPEND="
-	>=app-misc/qtxdg-tools-4.0.0
-	>=dev-libs/libqtxdg-4.0.0
+	>=app-misc/qtxdg-tools-4.1.0
+	>=dev-libs/libqtxdg-4.1.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	kde-frameworks/kwindowsystem:6[X]
 	kde-plasma/layer-shell-qt:6
