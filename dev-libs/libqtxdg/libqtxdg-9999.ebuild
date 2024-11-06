@@ -13,7 +13,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="LGPL-2.1+ Nokia-Qt-LGPL-Exception-1.1"
@@ -22,7 +22,7 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	>=dev-util/lxqt-build-tools-2.0.0
+	>=dev-util/lxqt-build-tools-2.1.0
 	virtual/pkgconfig
 "
 RDEPEND="
