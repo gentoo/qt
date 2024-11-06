@@ -5,7 +5,7 @@ EAPI=8
 
 MY_PV="$(ver_cut 1-2)"
 
-inherit cmake optfeature xdg-utils
+inherit cmake optfeature xdg
 
 DESCRIPTION="Qt GUI Tabbed Filemanager"
 HOMEPAGE="https://lxqt-project.org/"
@@ -15,7 +15,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="GPL-2 GPL-2+ LGPL-2.1+"
@@ -23,7 +23,7 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.0.0
+	>=dev-util/lxqt-build-tools-2.1.0
 "
 DEPEND="
 	dev-libs/glib:2
@@ -40,14 +40,8 @@ RDEPEND="${DEPEND}
 "
 
 pkg_postinst() {
-	xdg_desktop_database_update
-	xdg_icon_cache_update
+	default
 
 	optfeature "mount password storing" gnome-base/gnome-keyring
 	! has_version lxqt-base/lxqt-meta && optfeature "trash functionality" gnome-base/gvfs
-}
-
-pkg_postrm() {
-	xdg_desktop_database_update
-	xdg_icon_cache_update
 }
