@@ -13,7 +13,7 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/lxqt/${PN}.git"
 else
 	SRC_URI="https://github.com/lxqt/${PN}/releases/download/${PV}/${P}.tar.xz"
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64 ~loong ~ppc64 ~riscv ~x86"
 fi
 
 LICENSE="BSD"
@@ -49,7 +49,7 @@ RDEPEND="${DEPEND}
 	!<=media-sound/pavucontrol-qt-2
 	!<=x11-libs/libfm-qt-2
 	!<=x11-libs/qtermwidget-2
-	!x11-misc/obconf-qt
+	!<=x11-misc/obconf-qt-0.16.4
 	!<=x11-misc/pcmanfm-qt-2
 	!<=x11-misc/qps-2.9
 	!<=x11-misc/screengrab-2.8
