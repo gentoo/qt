@@ -3,8 +3,6 @@
 
 EAPI=8
 
-MY_PV="$(ver_cut 1-2)"
-
 inherit cmake
 
 DESCRIPTION="LXQt Wayland Session Support"
@@ -29,7 +27,7 @@ BDEPEND="
 DEPEND="
 	>=app-misc/qtxdg-tools-4.1.0
 	kde-plasma/layer-shell-qt:6
-	=lxqt-base/lxqt-session-${MY_PV}*
+	>=lxqt-base/lxqt-session-2.1.0
 	x11-misc/xdg-user-dirs
 "
 RDEPEND="${DEPEND}"
