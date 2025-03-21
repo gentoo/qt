@@ -1,5 +1,0 @@
-/var/log/sddm.log {
-	missingok
-	notifempty
-	copytruncate
-}
