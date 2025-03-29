@@ -17,17 +17,13 @@ SLOT="0"
 
 IUSE="
 	+about admin +archiver +desktop-portal +display-manager +filemanager
-	+lximage nls +policykit powermanagement +processviewer +screenshot
-	+sddm ssh-askpass +sudo +terminal +trash +window-manager
+	+icons +lximage nls +policykit powermanagement +processviewer +screenshot
+	+sddm ssh-askpass +sudo +terminal +trash wayland +window-manager
 "
 
 REQUIRED_USE="trash? ( filemanager )"
 
-# Pull in 'kde-frameworks/breeze-icons' as an upstream default.
-# https://bugs.gentoo.org/543380
-# https://github.com/lxqt/lxqt-session/commit/5d32ff434d4
 RDEPEND="
-	kde-frameworks/breeze-icons:6
 	=lxqt-base/lxqt-config-${MY_PV}*
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*
 	=lxqt-base/lxqt-menu-data-${MY_PV}*
@@ -48,6 +44,7 @@ RDEPEND="
 		!sddm? ( x11-misc/lightdm )
 	)
 	filemanager? ( =x11-misc/pcmanfm-qt-${MY_PV}* )
+	icons? ( kde-frameworks/breeze-icons:6 )
 	lximage? ( =media-gfx/lximage-qt-${MY_PV}* )
 	nls? ( dev-qt/qttranslations:6 )
 	policykit? ( =lxqt-base/lxqt-policykit-${MY_PV}* )
@@ -59,6 +56,7 @@ RDEPEND="
 	sudo? ( =lxqt-base/lxqt-sudo-${MY_PV}* )
 	terminal? ( =x11-terms/qterminal-${MY_PV}* )
 	trash? ( gnome-base/gvfs )
+	wayland? ( lxqt-base/lxqt-wayland-session )
 	window-manager? (
 		kde-plasma/kwin:6
 		kde-plasma/systemsettings:6
