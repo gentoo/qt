@@ -45,7 +45,6 @@ DEPEND="
 	>=dev-qt/qtwayland-6.6:6
 	kde-frameworks/kwindowsystem:6[X]
 	kde-plasma/layer-shell-qt:6
-	>=lxde-base/menu-cache-1.1.0
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	=lxqt-base/lxqt-globalkeys-${MY_PV}*
 	=lxqt-base/lxqt-menu-data-${MY_PV}*
