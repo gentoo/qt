@@ -34,8 +34,9 @@ RDEPEND="${DEPEND}"
 
 pkg_postinst() {
 	einfo "By default, the labwc compositor will be used."
-	einfo "To change the default, set, for example, 'compositor=kwin_wayland' in '.config/lxqt/session.conf'."
+	einfo "To use something else, define, for example, the following in '.config/lxqt/session.conf':"
+	einfo "    compositor=kwin_wayland"
 	einfo ""
 	einfo "For more configuration details, and a list of supported compositors, see:"
-	einfo "    '/usr/share/doc/${P}/README*'"
+	einfo "    /usr/share/doc/${P}/README*"
 }
