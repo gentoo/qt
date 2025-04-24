@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,10 +22,10 @@ IUSE="+backlight"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.1.0
+	>=dev-util/lxqt-build-tools-2.2.0
 "
 DEPEND="
-	>=dev-libs/libqtxdg-4.1.0
+	>=dev-libs/libqtxdg-4.2.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
 	kde-frameworks/kwindowsystem:6[X]
 	x11-libs/libX11
