@@ -1,4 +1,4 @@
-# Copyright 2022-2024 Gentoo Authors
+# Copyright 2022-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -19,9 +19,9 @@ fi
 LICENSE="LGPL-2.1"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-2.1.0"
+BDEPEND=">=dev-util/lxqt-build-tools-2.2.0"
 RDEPEND="
-	>=dev-libs/libqtxdg-4.1.0
+	>=dev-libs/libqtxdg-4.2.0
 	>=dev-qt/qtbase-6.6:6
 "
 DEPEND="${RDEPEND}"
