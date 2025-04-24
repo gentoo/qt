@@ -26,7 +26,7 @@ BDEPEND="
 	>=dev-util/lxqt-build-tools-2.2.0
 "
 DEPEND="
-	dev-libs/libdbusmenu-lxqt
+	>=dev-libs/libdbusmenu-lxqt-0.3.0
 	>=dev-libs/libqtxdg-4.2.0
 	>=dev-qt/qtbase-6.6:6=[dbus,gui,widgets]
 	=x11-libs/libfm-qt-${MY_PV}*
