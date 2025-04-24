@@ -25,7 +25,7 @@ BDEPEND="
 	virtual/pkgconfig
 "
 DEPEND="
-	>=app-misc/qtxdg-tools-4.1.0
+	>=app-misc/qtxdg-tools-4.2.0
 	kde-plasma/layer-shell-qt:6
 	>=lxqt-base/lxqt-session-2.1.0
 	x11-misc/xdg-user-dirs
