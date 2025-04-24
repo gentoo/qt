@@ -29,7 +29,7 @@ DEPEND="
 	dev-libs/glib:2
 	dev-libs/json-glib
 	>=dev-qt/qtbase-6.6:6[gui,widgets]
-	>=x11-libs/libfm-qt-2.1:=
+	>=x11-libs/libfm-qt-2.2:=
 "
 RDEPEND="${DEPEND}"
 
