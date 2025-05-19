@@ -25,6 +25,7 @@ BDEPEND="
 "
 DEPEND="
 	>=dev-libs/libqtxdg-4.2.0
+	dev-libs/wayland
 	>=dev-qt/qtbase-6.6:6[dbus,gui,network,widgets]
 	>=dev-qt/qtwayland-6.6:6
 	kde-frameworks/kwindowsystem:6[X]
