@@ -58,7 +58,8 @@ RDEPEND="
 	trash? ( gnome-base/gvfs )
 	wayland? ( lxqt-base/lxqt-wayland-session )
 	window-manager? (
-		kde-plasma/kwin:6
 		kde-plasma/systemsettings:6
+		wayland? ( kde-plasma/kwin:6 )
+		!wayland? ( kde-plasma/kwin-x11:6 )
 	)
 "
