@@ -22,7 +22,7 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 BDEPEND="
-	>=dev-util/lxqt-build-tools-2.2.0
+	>=dev-util/lxqt-build-tools-2.3.0
 	virtual/pkgconfig
 "
 RDEPEND="
