@@ -21,10 +21,10 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.2.0
+	>=dev-util/lxqt-build-tools-2.3.0
 "
 DEPEND="
 	>=dev-qt/qtbase-6.6:6[gui,widgets]
-	>=lxqt-base/liblxqt-2.1:=
+	>=lxqt-base/liblxqt-2.3:=
 "
 RDEPEND="${DEPEND}"
