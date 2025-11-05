@@ -23,13 +23,13 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.2.0
+	>=dev-util/lxqt-build-tools-2.3.0
 "
 DEPEND="
 	dev-libs/glib:2
 	dev-libs/json-glib
 	>=dev-qt/qtbase-6.6:6[gui,widgets]
-	>=x11-libs/libfm-qt-2.2:=
+	>=x11-libs/libfm-qt-2.3:=
 "
 RDEPEND="${DEPEND}"
 
