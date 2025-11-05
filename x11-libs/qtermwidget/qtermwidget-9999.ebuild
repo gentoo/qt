@@ -21,7 +21,7 @@ SLOT="0/${PV}"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.2.0
+	>=dev-util/lxqt-build-tools-2.3.0
 "
 DEPEND="
 	>=dev-qt/qtbase-6.6:6[gui,widgets]
