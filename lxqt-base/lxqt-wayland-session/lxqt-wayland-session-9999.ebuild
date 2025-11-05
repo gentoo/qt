@@ -21,11 +21,11 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.2.0
+	>=dev-util/lxqt-build-tools-2.3.0
 	virtual/pkgconfig
 "
 DEPEND="
-	>=app-misc/qtxdg-tools-4.2.0
+	>=app-misc/qtxdg-tools-4.3.0
 	kde-plasma/layer-shell-qt:6
 	>=lxqt-base/lxqt-session-2.1.0
 	x11-misc/xdg-user-dirs

@@ -24,11 +24,11 @@ IUSE="+udev"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.2.0
+	>=dev-util/lxqt-build-tools-2.3.0
 "
 DEPEND="
-	>=app-misc/qtxdg-tools-4.2.0
-	>=dev-libs/libqtxdg-4.2.0
+	>=app-misc/qtxdg-tools-4.3.0
+	>=dev-libs/libqtxdg-4.3.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets]
 	kde-frameworks/kwindowsystem:6[X]
 	kde-plasma/layer-shell-qt:6

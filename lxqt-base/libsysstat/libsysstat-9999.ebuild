@@ -19,6 +19,6 @@ fi
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-2.2.0"
+BDEPEND=">=dev-util/lxqt-build-tools-2.3.0"
 DEPEND=">=dev-qt/qtbase-6.6:6"
 RDEPEND="${DEPEND}"
