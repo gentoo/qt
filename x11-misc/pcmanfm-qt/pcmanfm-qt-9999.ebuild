@@ -23,6 +23,7 @@ fi
 
 LICENSE="GPL-2 GPL-2+ LGPL-2.1+"
 SLOT="0"
+IUSE="trash"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
@@ -40,6 +41,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}
 	=lxqt-base/lxqt-menu-data-${MY_PV}*
+	trash? ( gnome-base/gvfs )
 "
 
 pkg_postinst() {
@@ -47,5 +49,4 @@ pkg_postinst() {
 	xdg_icon_cache_update
 
 	optfeature "password storage used for mounts" virtual/secret-service
-	! has_version lxqt-base/lxqt-meta && optfeature "trash functionality" gnome-base/gvfs
 }
