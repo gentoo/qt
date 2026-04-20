@@ -26,11 +26,11 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.3.0
+	>=dev-util/lxqt-build-tools-2.4.0
 "
 DEPEND="
-	>=dev-libs/libdbusmenu-lxqt-0.3.0
-	>=dev-libs/libqtxdg-4.3.0
+	>=dev-libs/libdbusmenu-lxqt-0.4.0
+	>=dev-libs/libqtxdg-4.4.0
 	>=dev-qt/qtbase-6.6:6=[dbus,gui,widgets]
 	=x11-libs/libfm-qt-${MY_PV}*
 "
