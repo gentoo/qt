@@ -3,9 +3,9 @@
 
 EAPI=8
 
-MY_PV="$(ver_cut 1-2)"
-
 inherit cmake xdg
+
+MY_PV="$(ver_cut 1-2)"
 
 DESCRIPTION="Qt Image Viewer"
 HOMEPAGE="
