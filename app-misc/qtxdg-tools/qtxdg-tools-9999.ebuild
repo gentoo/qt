@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="User Tools from libqtxdg"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/qtxdg-tools/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
