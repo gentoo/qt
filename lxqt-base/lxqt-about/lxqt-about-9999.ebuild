@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake xdg
 
 MY_PV="$(ver_cut 1-2)"
 
