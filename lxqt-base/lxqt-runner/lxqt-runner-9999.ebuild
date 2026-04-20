@@ -26,12 +26,12 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.3.0
+	>=dev-util/lxqt-build-tools-2.4.0
 	virtual/pkgconfig
 "
 DEPEND="
 	>=dev-cpp/muParser-2.2.3:=
-	>=dev-libs/libqtxdg-4.3.0
+	>=dev-libs/libqtxdg-4.4.0
 	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
 	kde-frameworks/kwindowsystem:6
 	>=kde-plasma/layer-shell-qt-6.0:6
