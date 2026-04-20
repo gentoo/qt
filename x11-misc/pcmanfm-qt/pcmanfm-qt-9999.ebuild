@@ -46,6 +46,6 @@ pkg_postinst() {
 	xdg_desktop_database_update
 	xdg_icon_cache_update
 
-	optfeature "mount password storing" gnome-base/gnome-keyring
+	optfeature "password storage used for mounts" virtual/secret-service
 	! has_version lxqt-base/lxqt-meta && optfeature "trash functionality" gnome-base/gvfs
 }
