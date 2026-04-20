@@ -43,7 +43,12 @@ RDEPEND="
 		sddm? ( x11-misc/sddm )
 		!sddm? ( x11-misc/lightdm )
 	)
-	filemanager? ( =x11-misc/pcmanfm-qt-${MY_PV}* )
+	filemanager? (
+		trash? ( ||
+			( =x11-misc/pcmanfm-qt-${MY_PV}*[trash] )
+			( =x11-misc/pcmanfm-qt-${MY_PV}* )
+		)
+	)
 	icons? ( kde-frameworks/breeze-icons:6 )
 	lximage? ( =media-gfx/lximage-qt-${MY_PV}* )
 	nls? ( dev-qt/qttranslations:6 )
@@ -55,7 +60,6 @@ RDEPEND="
 	ssh-askpass? ( =lxqt-base/lxqt-openssh-askpass-${MY_PV}* )
 	sudo? ( =lxqt-base/lxqt-sudo-${MY_PV}* )
 	terminal? ( =x11-terms/qterminal-${MY_PV}* )
-	trash? ( gnome-base/gvfs )
 	wayland? ( lxqt-base/lxqt-wayland-session )
 	window-manager? (
 		kde-plasma/systemsettings:6
