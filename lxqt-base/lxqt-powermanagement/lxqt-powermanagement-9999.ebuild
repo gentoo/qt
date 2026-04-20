@@ -5,13 +5,13 @@ EAPI=8
 
 inherit cmake xdg
 
+MY_PV="$(ver_cut 1-2)"
+
 DESCRIPTION="LXQt daemon for power management and auto-suspend"
 HOMEPAGE="
 	https://lxqt-project.org/
 	https://github.com/lxqt/lxqt-powermanagement/
 "
-
-MY_PV="$(ver_cut 1-2)"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

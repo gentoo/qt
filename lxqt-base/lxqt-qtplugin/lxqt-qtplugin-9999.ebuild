@@ -3,9 +3,9 @@
 
 EAPI=8
 
-MY_PV="$(ver_cut 1-2)"
-
 inherit cmake
+
+MY_PV="$(ver_cut 1-2)"
 
 DESCRIPTION="LXQt system integration plugin for Qt"
 HOMEPAGE="

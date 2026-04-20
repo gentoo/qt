@@ -5,13 +5,13 @@ EAPI=8
 
 inherit cmake
 
+MY_PV="$(ver_cut 1-2)"
+
 DESCRIPTION="LXQt Session Manager"
 HOMEPAGE="
 	https://lxqt-project.org/
 	https://github.com/lxqt/lxqt-session/
 "
-
-MY_PV="$(ver_cut 1-2)"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

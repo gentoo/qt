@@ -5,13 +5,13 @@ EAPI=8
 
 inherit cmake
 
+MY_PV="$(ver_cut 1-2)"
+
 DESCRIPTION="LXQt desktop panel and plugins"
 HOMEPAGE="
 	https://lxqt-project.org/
 	https://github.com/lxqt/lxqt-panel/
 "
-
-MY_PV="$(ver_cut 1-2)"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
