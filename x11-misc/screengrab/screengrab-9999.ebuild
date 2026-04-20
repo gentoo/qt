@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="Qt GUI Screenshot Utility"
-HOMEPAGE="https://lxqt.github.io/"
+HOMEPAGE="
+	https://lxqt.github.io/
+	https://github.com/lxqt/screengrab/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
