@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="Qt-based multitab terminal emulator"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/qterminal/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
