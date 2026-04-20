@@ -45,8 +45,5 @@ RDEPEND="${DEPEND}
 "
 
 pkg_postinst() {
-	xdg_desktop_database_update
-	xdg_icon_cache_update
-
 	optfeature "password storage used for mounts" virtual/secret-service
 }
