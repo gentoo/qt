@@ -37,8 +37,8 @@ RDEPEND="
 	=x11-themes/lxqt-themes-${MY_PV}*
 	about? ( =lxqt-base/lxqt-about-${MY_PV}* )
 	admin? ( =lxqt-base/lxqt-admin-${MY_PV}* )
-	archiver? ( >=app-arch/lxqt-archiver-1.0 )
-	desktop-portal? ( >=gui-libs/xdg-desktop-portal-lxqt-1.1 )
+	archiver? ( >=app-arch/lxqt-archiver-1.4 )
+	desktop-portal? ( >=gui-libs/xdg-desktop-portal-lxqt-1.4 )
 	display-manager? (
 		sddm? ( x11-misc/sddm )
 		!sddm? ( x11-misc/lightdm )
@@ -49,8 +49,8 @@ RDEPEND="
 	nls? ( dev-qt/qttranslations:6 )
 	policykit? ( =lxqt-base/lxqt-policykit-${MY_PV}* )
 	powermanagement? ( =lxqt-base/lxqt-powermanagement-${MY_PV}* )
-	processviewer? ( >=x11-misc/qps-2.10 )
-	screenshot? ( >=x11-misc/screengrab-2.9 )
+	processviewer? ( >=x11-misc/qps-2.13 )
+	screenshot? ( >=x11-misc/screengrab-3.2 )
 	sddm? ( x11-misc/sddm )
 	ssh-askpass? ( =lxqt-base/lxqt-openssh-askpass-${MY_PV}* )
 	sudo? ( =lxqt-base/lxqt-sudo-${MY_PV}* )
