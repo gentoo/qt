@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Qt terminal emulator widget"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/qtermwidget/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
