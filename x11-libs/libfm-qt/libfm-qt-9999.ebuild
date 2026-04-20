@@ -8,7 +8,10 @@ MY_PV="$(ver_cut 1-2)"
 inherit cmake xdg
 
 DESCRIPTION="Qt Library for Building File Managers"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/libfm-qt/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
