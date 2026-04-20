@@ -24,7 +24,7 @@ SLOT="0"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.3.0
+	>=dev-util/lxqt-build-tools-2.4.0
 	virtual/pkgconfig
 "
 DEPEND="
