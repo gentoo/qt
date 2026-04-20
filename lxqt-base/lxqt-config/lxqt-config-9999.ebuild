@@ -27,10 +27,10 @@ IUSE="+monitor +touchpad"
 
 BDEPEND="
 	>=dev-qt/qttools-6.6:6[linguist]
-	>=dev-util/lxqt-build-tools-2.3.0
+	>=dev-util/lxqt-build-tools-2.4.0
 "
 DEPEND="
-	>=dev-libs/libqtxdg-4.3.0
+	>=dev-libs/libqtxdg-4.4.0
 	>=dev-qt/qtbase-6.6:6[gui,widgets,xml]
 	>=dev-qt/qtsvg-6.6:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
