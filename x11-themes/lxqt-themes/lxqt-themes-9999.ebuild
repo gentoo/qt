@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="LXQt Themes"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-themes/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
