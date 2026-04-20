@@ -5,6 +5,10 @@ EAPI=8
 
 inherit cmake optfeature virtualx
 
+# The notice is triggered by an example file, which is unused here.
+# https://bugs.gentoo.org/951350
+CMAKE_QA_COMPAT_SKIP=1
+
 DESCRIPTION="Qt Implementation of XDG Standards"
 HOMEPAGE="
 	https://lxqt-project.org/
