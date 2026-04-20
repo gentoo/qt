@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="Qt GUI Process Manager"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/qps/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
