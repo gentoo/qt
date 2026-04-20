@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="LXQt Wayland Session Support"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-wayland-session/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

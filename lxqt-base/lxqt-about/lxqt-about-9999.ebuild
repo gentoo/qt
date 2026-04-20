@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="LXQt about dialog"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-about/
+"
 
 MY_PV="$(ver_cut 1-2)"
 

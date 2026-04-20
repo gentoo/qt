@@ -8,7 +8,10 @@ MY_PV="$(ver_cut 1-2)"
 inherit cmake
 
 DESCRIPTION="LXQt system integration plugin for Qt"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-qtplugin/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

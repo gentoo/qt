@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="LXQt quick launcher"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-runner/
+"
 
 MY_PV="$(ver_cut 1-2)"
 

@@ -8,7 +8,10 @@ MY_PV="$(ver_cut 1-2)"
 inherit cmake
 
 DESCRIPTION="LXQt Menu Files and Translations for Menu Categories"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-menu-data/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

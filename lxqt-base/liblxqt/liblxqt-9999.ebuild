@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Common base library for the LXQt desktop environment"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/liblxqt/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

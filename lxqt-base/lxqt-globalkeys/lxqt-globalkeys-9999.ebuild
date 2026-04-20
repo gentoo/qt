@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Daemon and library for global keyboard shortcuts registration"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-globalkeys/
+"
 
 MY_PV="$(ver_cut 1-2)"
 

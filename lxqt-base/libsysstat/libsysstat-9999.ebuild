@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Qt GUI for System Statistics"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/libsysstat/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3

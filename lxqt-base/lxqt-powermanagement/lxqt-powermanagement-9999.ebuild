@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="LXQt daemon for power management and auto-suspend"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-powermanagement/
+"
 
 MY_PV="$(ver_cut 1-2)"
 
