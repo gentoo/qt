@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="LXQt DBusMenu Implementation"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/libdbusmenu-lxqt/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
