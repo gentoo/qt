@@ -22,9 +22,9 @@ fi
 LICENSE="LGPL-2.1"
 SLOT="0"
 
-BDEPEND=">=dev-util/lxqt-build-tools-2.3.0"
+BDEPEND=">=dev-util/lxqt-build-tools-2.4.0"
 RDEPEND="
-	>=dev-libs/libqtxdg-4.3.0
+	>=dev-libs/libqtxdg-4.4.0
 	>=dev-qt/qtbase-6.6:6
 "
 DEPEND="${RDEPEND}"
