@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Qt GUI Pulseaudio Mixer"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/pavucontrol-qt/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
