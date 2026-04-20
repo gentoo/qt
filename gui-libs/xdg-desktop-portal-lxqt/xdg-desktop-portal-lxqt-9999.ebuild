@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Backend implementation for xdg-desktop-portal using Qt/KF5/libfm-qt"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/xdg-desktop-portal-lxqt/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
