@@ -6,7 +6,10 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="LXQt Build Tools"
-HOMEPAGE="https://lxqt-project.org/"
+HOMEPAGE="
+	https://lxqt-project.org/
+	https://github.com/lxqt/lxqt-build-tools/
+"
 
 if [[ ${PV} == 9999 ]]; then
 	inherit git-r3
