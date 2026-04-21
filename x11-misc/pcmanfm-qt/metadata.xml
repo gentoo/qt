@@ -8,10 +8,4 @@
 	<upstream>
 		<remote-id type="github">lxqt/pcmanfm-qt</remote-id>
 	</upstream>
-	<use>
-		<flag name="trash">
-			Install <pkg>gnome-base/gvfs</pkg> to enable 'trash:///', 'computer:///' and other such "places" in
-			<pkg>x11-misc/pcmanfm-qt</pkg>.
-		</flag>
-	</use>
 </pkgmetadata>
