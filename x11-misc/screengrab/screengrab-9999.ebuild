@@ -7,7 +7,7 @@ inherit cmake xdg
 
 DESCRIPTION="Qt GUI Screenshot Utility"
 HOMEPAGE="
-	https://lxqt.github.io/
+	https://lxqt-project.org/
 	https://github.com/lxqt/screengrab/
 "
 
