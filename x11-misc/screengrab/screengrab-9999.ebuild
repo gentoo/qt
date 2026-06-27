@@ -29,7 +29,7 @@ BDEPEND="
 DEPEND="
 	>=dev-libs/libqtxdg-4.4.0
 	dev-libs/wayland
-	>=dev-qt/qtbase-6.6:6[dbus,gui,network,wayland,widgets]
+	>=dev-qt/qtbase-6.6:6=[dbus,gui,network,wayland,widgets]
 	kde-frameworks/kwindowsystem:6[X]
 	kde-plasma/layer-shell-qt:6
 	x11-libs/libX11
