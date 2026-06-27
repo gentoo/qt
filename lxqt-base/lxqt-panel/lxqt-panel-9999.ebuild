@@ -43,9 +43,8 @@ BDEPEND="
 DEPEND="
 	>=dev-libs/libqtxdg-4.4.0
 	dev-libs/wayland
-	>=dev-qt/qtbase-6.6:6[dbus,gui,widgets,xml]
+	>=dev-qt/qtbase-6.6:6[dbus,gui,wayland,widgets,xml]
 	>=dev-qt/qtsvg-6.6:6
-	>=dev-qt/qtwayland-6.6:6
 	kde-frameworks/kwindowsystem:6[X]
 	kde-plasma/layer-shell-qt:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
