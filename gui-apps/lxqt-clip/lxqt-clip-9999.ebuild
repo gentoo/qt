@@ -5,6 +5,8 @@ EAPI=8
 
 inherit cmake xdg
 
+MY_PV="$(ver_cut 1-2)"
+
 DESCRIPTION="Clipboard History Applet for X11 and Wayland"
 HOMEPAGE="
 	https://lxqt-project.org/
@@ -27,6 +29,7 @@ RDEPEND="
 	dev-qt/qtbase:6=[gui,widgets]
 	dev-qt/qtsvg:6
 	kde-frameworks/kguiaddons:6
+	=lxqt-base/liblxqt-${MY_PV}*:=
 	x11-libs/libX11
 "
 DEPEND="${RDEPEND}"
