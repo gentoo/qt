@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake xdg
 
-DESCRIPTION="LXQt Clipboard History Applet"
+DESCRIPTION="Clipboard History Applet for X11 and Wayland"
 HOMEPAGE="
 	https://lxqt-project.org/
 	https://github.com/lxqt/lxqt-clip/
@@ -19,8 +19,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-# qmenuview/* and qxt/* are licensed under GPL-3+ and BSD respectively.
-LICENSE="BSD GPL-2+ GPL-3+"
+LICENSE="BSD GPL-2+"
 SLOT="0"
 
 BDEPEND="dev-qt/qttools:6[linguist]"
