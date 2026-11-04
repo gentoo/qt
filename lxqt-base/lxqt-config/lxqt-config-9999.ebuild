@@ -41,7 +41,7 @@ DEPEND="
 	x11-libs/libX11
 	x11-libs/libXcursor
 	x11-libs/libXfixes
-	monitor? ( kde-plasma/libkscreen:6= )
+	monitor? ( <kde-plasma/libkscreen-6.8:= )
 	touchpad? (
 		virtual/libudev:=
 		x11-drivers/xf86-input-libinput
