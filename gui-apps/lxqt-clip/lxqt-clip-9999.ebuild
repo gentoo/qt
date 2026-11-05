@@ -27,7 +27,6 @@ SLOT="0"
 BDEPEND="dev-qt/qttools:6[linguist]"
 RDEPEND="
 	dev-qt/qtbase:6=[gui,widgets]
-	dev-qt/qtsvg:6
 	kde-frameworks/kguiaddons:6
 	=lxqt-base/liblxqt-${MY_PV}*:=
 	x11-libs/libX11
