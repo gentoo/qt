@@ -1,0 +1,6 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+# Jimi Huotari <chiitoo@gentoo.org> (2026-11-05)
+# Not tested on many arches yet.
+lxqt-base/lxqt-meta clip

@@ -16,7 +16,7 @@ LICENSE="metapackage"
 SLOT="0"
 
 IUSE="
-	+about admin +archiver +desktop-portal +display-manager +filemanager
+	+about admin +archiver clip +desktop-portal +display-manager +filemanager
 	+icons +lximage nls +policykit powermanagement +processviewer +screenshot
 	+sddm ssh-askpass +sudo +terminal +trash wayland +window-manager
 "
@@ -38,6 +38,7 @@ RDEPEND="
 	about? ( =lxqt-base/lxqt-about-${MY_PV}* )
 	admin? ( =lxqt-base/lxqt-admin-${MY_PV}* )
 	archiver? ( >=app-arch/lxqt-archiver-1.5 )
+	clip? ( =gui-apps/lxqt-clip-${MY_PV}* )
 	desktop-portal? ( >=gui-libs/xdg-desktop-portal-lxqt-1.5 )
 	display-manager? (
 		sddm? ( gui-apps/sddm )
