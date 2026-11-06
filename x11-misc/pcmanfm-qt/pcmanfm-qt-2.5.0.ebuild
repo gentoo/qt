@@ -46,6 +46,6 @@ pkg_postinst() {
 	xdg_desktop_database_update
 	xdg_icon_cache_update
 
-	optfeature "computer/trash and similar features" gnome-base/gvfs
+	optfeature "desktop places (computer/network/trash etc.)" gnome-base/gvfs
 	optfeature "password storage used for mounts" virtual/secret-service
 }
