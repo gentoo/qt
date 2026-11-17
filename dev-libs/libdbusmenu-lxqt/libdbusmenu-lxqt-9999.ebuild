@@ -23,5 +23,3 @@ LICENSE="LGPL-2"
 SLOT="0"
 
 RDEPEND=">=dev-qt/qtbase-6.6:6[dbus,widgets]"
-
-PATCHES=( "${FILESDIR}/${PN}-0.5.0-cmake.patch" )
