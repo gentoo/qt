@@ -22,4 +22,8 @@ fi
 LICENSE="LGPL-2"
 SLOT="0"
 
+BDEPEND="
+	>=dev-util/lxqt-build-tools-2.5.0
+	virtual/pkgconfig
+"
 RDEPEND=">=dev-qt/qtbase-6.6:6[dbus,widgets]"
